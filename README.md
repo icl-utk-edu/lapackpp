@@ -46,7 +46,7 @@ a C++ API for the Basic Linear Algebra Subprograms (BLAS).
 Resources
 =========
 
-* Visit the [blas++ repository](https://bitbucket.org/icl/blaspp) for more information about the C++ API for BLAS.
+* Visit the [BLAS++ repository](https://bitbucket.org/icl/blaspp) for more information about the C++ API for BLAS.
 * Visit the [ECP website](https://exascaleproject.org) to find out more about the DOE Exascale Computing Initiative.
 * Visit the [SLATE website](http://icl.utk.edu/slate/) for more information about the SLATE project.
 * Visit the [SLATE Working Notes](http://www.icl.utk.edu/publications/series/swans) to find out more about ongoing SLATE developments.

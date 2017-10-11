@@ -49,7 +49,7 @@ Resources
 * Visit the [blas++ repository](https://bitbucket.org/icl/blaspp) for more information about the C++ API for BLAS.
 * Visit the [ECP website](https://exascaleproject.org) to find out more about the DOE Exascale Computing Initiative.
 * Visit the [SLATE website](http://icl.utk.edu/slate/) for more information about the SLATE project.
-* Visit the [SLATE Working Notes](http://www.icl.utk.edu/publications/series/swans) to find out more about the ongoing SLATE developments.
+* Visit the [SLATE Working Notes](http://www.icl.utk.edu/publications/series/swans) to find out more about ongoing SLATE developments.
 * Feel free to join the [SLATE User](https://groups.google.com/a/icl.utk.edu/forum/#!forum/slate-user) Google group by following the link and clicking *Apply to join group*. Then email your questions and comments to *slate-user@icl.utk.edu*.
 
 * * *

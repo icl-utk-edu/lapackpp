@@ -42,10 +42,11 @@ int64_t gelsd(
         throw Error();
     }
     blas_int lwork_ = real(qry_work[0]);
+    blas_int liwork_ = qry_iwork[0];
 
     // allocate workspace
     std::vector< float > work( lwork_ );
-    std::vector< blas_int > iwork( (max( (int64_t) 1, liwork)) );
+    std::vector< blas_int > iwork( liwork_ );
 
     LAPACK_sgelsd( &m_, &n_, &nrhs_, A, &lda_, B, &ldb_, S, &rcond, &rank_, &work[0], &lwork_, &iwork[0], &info_ );
     if (info_ < 0) {
@@ -88,10 +89,11 @@ int64_t gelsd(
         throw Error();
     }
     blas_int lwork_ = real(qry_work[0]);
+    blas_int liwork_ = qry_iwork[0];
 
     // allocate workspace
     std::vector< double > work( lwork_ );
-    std::vector< blas_int > iwork( (max( (int64_t) 1, liwork)) );
+    std::vector< blas_int > iwork( liwork_ );
 
     LAPACK_dgelsd( &m_, &n_, &nrhs_, A, &lda_, B, &ldb_, S, &rcond, &rank_, &work[0], &lwork_, &iwork[0], &info_ );
     if (info_ < 0) {
@@ -135,11 +137,13 @@ int64_t gelsd(
         throw Error();
     }
     blas_int lwork_ = real(qry_work[0]);
+    blas_int lrwork_ = qry_rwork[0];
+    blas_int liwork_ = qry_iwork[0];
 
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
-    std::vector< float > rwork( (max( (int64_t) 1, lrwork)) );
-    std::vector< blas_int > iwork( (max( (int64_t) 1, liwork)) );
+    std::vector< float > rwork( lrwork_ );
+    std::vector< blas_int > iwork( liwork_ );
 
     LAPACK_cgelsd( &m_, &n_, &nrhs_, A, &lda_, B, &ldb_, S, &rcond, &rank_, &work[0], &lwork_, &rwork[0], &iwork[0], &info_ );
     if (info_ < 0) {
@@ -183,11 +187,13 @@ int64_t gelsd(
         throw Error();
     }
     blas_int lwork_ = real(qry_work[0]);
+    blas_int lrwork_ = qry_rwork[0];
+    blas_int liwork_ = qry_iwork[0];
 
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );
-    std::vector< double > rwork( (max( (int64_t) 1, lrwork)) );
-    std::vector< blas_int > iwork( (max( (int64_t) 1, liwork)) );
+    std::vector< double > rwork( lrwork_ );
+    std::vector< blas_int > iwork( liwork_ );
 
     LAPACK_zgelsd( &m_, &n_, &nrhs_, A, &lda_, B, &ldb_, S, &rcond, &rank_, &work[0], &lwork_, &rwork[0], &iwork[0], &info_ );
     if (info_ < 0) {

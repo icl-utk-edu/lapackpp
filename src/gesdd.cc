@@ -125,7 +125,7 @@ int64_t gesdd(
 
     // query for workspace size
     std::complex<float> qry_work[1];
-    float qry_rwork[1];
+    float qry_rwork[1] = { 0 };
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
     LAPACK_cgesdd( &jobz_, &m_, &n_, A, &lda_, S, U, &ldu_, VT, &ldvt_, qry_work, &ineg_one, qry_rwork, qry_iwork, &info_ );
@@ -133,10 +133,23 @@ int64_t gesdd(
         throw Error();
     }
     blas_int lwork_ = real(qry_work[0]);
+    blas_int lrwork_ = qry_rwork[0];
+    if (lrwork_ == 0) {
+        // if query doesn't work, this is from documentation
+        blas_int mx = max( m, n );
+        blas_int mn = min( m, n );
+        if (jobz == lapack::Job::NoVec) {
+            lrwork_ = 7*mn;  // LAPACK > 3.6 needs only 5*mn
+        }
+        else {
+            lrwork_ = max( 5*mn*mn + 5*mn, 2*mx*mn + 2*mn*mn + mn );
+        }
+        lrwork_ = max( 1, lrwork_ );
+    }
 
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
-    std::vector< float > rwork( (max( (int64_t) 1, lrwork)) );
+    std::vector< float > rwork( lrwork_ );
     std::vector< blas_int > iwork( (8*min(m,n)) );
 
     LAPACK_cgesdd( &jobz_, &m_, &n_, A, &lda_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &rwork[0], &iwork[0], &info_ );
@@ -172,7 +185,7 @@ int64_t gesdd(
 
     // query for workspace size
     std::complex<double> qry_work[1];
-    double qry_rwork[1];
+    double qry_rwork[1] = { 0 };
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
     LAPACK_zgesdd( &jobz_, &m_, &n_, A, &lda_, S, U, &ldu_, VT, &ldvt_, qry_work, &ineg_one, qry_rwork, qry_iwork, &info_ );
@@ -180,10 +193,23 @@ int64_t gesdd(
         throw Error();
     }
     blas_int lwork_ = real(qry_work[0]);
+    blas_int lrwork_ = qry_rwork[0];
+    if (lrwork_ == 0) {
+        // if query doesn't work, this is from documentation
+        blas_int mx = max( m, n );
+        blas_int mn = min( m, n );
+        if (jobz == lapack::Job::NoVec) {
+            lrwork_ = 7*mn;  // LAPACK > 3.6 needs only 5*mn
+        }
+        else {
+            lrwork_ = max( 5*mn*mn + 5*mn, 2*mx*mn + 2*mn*mn + mn );
+        }
+        lrwork_ = max( 1, lrwork_ );
+    }
 
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );
-    std::vector< double > rwork( (max( (int64_t) 1, lrwork)) );
+    std::vector< double > rwork( lrwork_ );
     std::vector< blas_int > iwork( (8*min(m,n)) );
 
     LAPACK_zgesdd( &jobz_, &m_, &n_, A, &lda_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &rwork[0], &iwork[0], &info_ );

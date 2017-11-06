@@ -11,7 +11,7 @@ using blas::real;
 
 // -----------------------------------------------------------------------------
 int64_t ggsvd3(
-    lapack::Job jobu, lapack::Job jobv, lapack::JobQ jobq, int64_t m, int64_t n, int64_t p,
+    lapack::JobU jobu, lapack::JobV jobv, lapack::JobQ jobq, int64_t m, int64_t n, int64_t p,
     int64_t* k,
     int64_t* l,
     float* A, int64_t lda,
@@ -33,8 +33,8 @@ int64_t ggsvd3(
         throw_if_( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
         throw_if_( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
     }
-    char jobu_ = job2char( jobu );
-    char jobv_ = job2char( jobv );
+    char jobu_ = jobu2char( jobu );
+    char jobv_ = jobv2char( jobv );
     char jobq_ = jobq2char( jobq );
     blas_int m_ = (blas_int) m;
     blas_int n_ = (blas_int) n;
@@ -73,7 +73,7 @@ int64_t ggsvd3(
 
 // -----------------------------------------------------------------------------
 int64_t ggsvd3(
-    lapack::Job jobu, lapack::Job jobv, lapack::JobQ jobq, int64_t m, int64_t n, int64_t p,
+    lapack::JobU jobu, lapack::JobV jobv, lapack::JobQ jobq, int64_t m, int64_t n, int64_t p,
     int64_t* k,
     int64_t* l,
     double* A, int64_t lda,
@@ -95,8 +95,8 @@ int64_t ggsvd3(
         throw_if_( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
         throw_if_( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
     }
-    char jobu_ = job2char( jobu );
-    char jobv_ = job2char( jobv );
+    char jobu_ = jobu2char( jobu );
+    char jobv_ = jobv2char( jobv );
     char jobq_ = jobq2char( jobq );
     blas_int m_ = (blas_int) m;
     blas_int n_ = (blas_int) n;
@@ -135,7 +135,7 @@ int64_t ggsvd3(
 
 // -----------------------------------------------------------------------------
 int64_t ggsvd3(
-    lapack::Job jobu, lapack::Job jobv, lapack::JobQ jobq, int64_t m, int64_t n, int64_t p,
+    lapack::JobU jobu, lapack::JobV jobv, lapack::JobQ jobq, int64_t m, int64_t n, int64_t p,
     int64_t* k,
     int64_t* l,
     std::complex<float>* A, int64_t lda,
@@ -157,8 +157,8 @@ int64_t ggsvd3(
         throw_if_( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
         throw_if_( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
     }
-    char jobu_ = job2char( jobu );
-    char jobv_ = job2char( jobv );
+    char jobu_ = jobu2char( jobu );
+    char jobv_ = jobv2char( jobv );
     char jobq_ = jobq2char( jobq );
     blas_int m_ = (blas_int) m;
     blas_int n_ = (blas_int) n;
@@ -199,7 +199,7 @@ int64_t ggsvd3(
 
 // -----------------------------------------------------------------------------
 int64_t ggsvd3(
-    lapack::Job jobu, lapack::Job jobv, lapack::JobQ jobq, int64_t m, int64_t n, int64_t p,
+    lapack::JobU jobu, lapack::JobV jobv, lapack::JobQ jobq, int64_t m, int64_t n, int64_t p,
     int64_t* k,
     int64_t* l,
     std::complex<double>* A, int64_t lda,
@@ -221,8 +221,8 @@ int64_t ggsvd3(
         throw_if_( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
         throw_if_( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
     }
-    char jobu_ = job2char( jobu );
-    char jobv_ = job2char( jobv );
+    char jobu_ = jobu2char( jobu );
+    char jobv_ = jobv2char( jobv );
     char jobq_ = jobq2char( jobq );
     blas_int m_ = (blas_int) m;
     blas_int n_ = (blas_int) n;

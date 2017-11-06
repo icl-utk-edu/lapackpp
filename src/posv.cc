@@ -143,7 +143,7 @@ int64_t posv(
     blas_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (n,nrhs) );
+    std::vector< double > work( (n)*(nrhs) );
     std::vector< float > swork( (n*(n+nrhs)) );
 
     LAPACK_dsposv( &uplo_, &n_, &nrhs_, A, &lda_, B, &ldb_, X, &ldx_, &work[0], &swork[0], &iter_, &info_ );
@@ -180,7 +180,7 @@ int64_t posv(
     blas_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (n,nrhs) );
+    std::vector< std::complex<double> > work( (n)*(nrhs) );
     std::vector< std::complex<float> > swork( (n*(n+nrhs)) );
     std::vector< double > rwork( (n) );
 

@@ -26,8 +26,11 @@ void larfx(
     blas_int n_ = (blas_int) n;
     blas_int ldc_ = (blas_int) ldc;
 
+    // from docs
+    int64_t lwork = (side == Side::Left ? n : m);
+
     // allocate workspace
-    std::vector< float > work( n if side = 'l'; m if side = 'r' );
+    std::vector< float > work( lwork );
 
     LAPACK_slarfx( &side_, &m_, &n_, V, &tau, C, &ldc_, &work[0] );
 }
@@ -49,8 +52,11 @@ void larfx(
     blas_int n_ = (blas_int) n;
     blas_int ldc_ = (blas_int) ldc;
 
+    // from docs
+    int64_t lwork = (side == Side::Left ? n : m);
+
     // allocate workspace
-    std::vector< double > work( n if side = 'l'; m if side = 'r' );
+    std::vector< double > work( lwork );
 
     LAPACK_dlarfx( &side_, &m_, &n_, V, &tau, C, &ldc_, &work[0] );
 }
@@ -72,8 +78,11 @@ void larfx(
     blas_int n_ = (blas_int) n;
     blas_int ldc_ = (blas_int) ldc;
 
+    // from docs
+    int64_t lwork = (side == Side::Left ? n : m);
+
     // allocate workspace
-    std::vector< std::complex<float> > work( n if side = 'l'; m if side = 'r' );
+    std::vector< std::complex<float> > work( lwork );
 
     LAPACK_clarfx( &side_, &m_, &n_, V, &tau, C, &ldc_, &work[0] );
 }
@@ -95,8 +104,11 @@ void larfx(
     blas_int n_ = (blas_int) n;
     blas_int ldc_ = (blas_int) ldc;
 
+    // from docs
+    int64_t lwork = (side == Side::Left ? n : m);
+
     // allocate workspace
-    std::vector< std::complex<double> > work( n if side = 'l'; m if side = 'r' );
+    std::vector< std::complex<double> > work( lwork );
 
     LAPACK_zlarfx( &side_, &m_, &n_, V, &tau, C, &ldc_, &work[0] );
 }

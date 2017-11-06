@@ -35,7 +35,7 @@ int64_t hetri2x(
     blas_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<float> > work( (n+nb+1,nb+3) );
+    std::vector< std::complex<float> > work( (n+nb+1) * (nb+3) );
 
     LAPACK_chetri2x( &uplo_, &n_, A, &lda_, ipiv_ptr, &work[0], &nb_, &info_ );
     if (info_ < 0) {
@@ -70,7 +70,7 @@ int64_t hetri2x(
     blas_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (n+nb+1,nb+3) );
+    std::vector< std::complex<double> > work( (n+nb+1) * (nb+3) );
 
     LAPACK_zhetri2x( &uplo_, &n_, A, &lda_, ipiv_ptr, &work[0], &nb_, &info_ );
     if (info_ < 0) {

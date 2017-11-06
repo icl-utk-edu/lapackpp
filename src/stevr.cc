@@ -35,7 +35,7 @@ int64_t stevr(
     blas_int ldz_ = (blas_int) ldz;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > isuppz_( ( 2*max( (int64_t) 1, m) ) );
+        std::vector< blas_int > isuppz_( ( 2*max( (int64_t) 1, n) ) );  // was m; n >= m
         blas_int* isuppz_ptr = &isuppz_[0];
     #else
         blas_int* isuppz_ptr = isuppz;
@@ -63,7 +63,7 @@ int64_t stevr(
     }
     *m = m_;
     #if 1
-        std::copy( isuppz_.begin(), isuppz_.end(), isuppz );
+        std::copy( &isuppz_[0], &isuppz_[m_], isuppz );  // was begin to end
     #endif
     return info_;
 }
@@ -94,7 +94,7 @@ int64_t stevr(
     blas_int ldz_ = (blas_int) ldz;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > isuppz_( ( 2*max( (int64_t) 1, m) ) );
+        std::vector< blas_int > isuppz_( ( 2*max( (int64_t) 1, n) ) );  // was m; n >= m
         blas_int* isuppz_ptr = &isuppz_[0];
     #else
         blas_int* isuppz_ptr = isuppz;
@@ -122,7 +122,7 @@ int64_t stevr(
     }
     *m = m_;
     #if 1
-        std::copy( isuppz_.begin(), isuppz_.end(), isuppz );
+        std::copy( &isuppz_[0], &isuppz_[m_], isuppz );  // was begin to end
     #endif
     return info_;
 }

@@ -55,7 +55,7 @@ int64_t orcsd2by1(
 
     // allocate workspace
     std::vector< float > work( lwork_ );
-    std::vector< blas_int > iwork( (m-min(p,m-p,q,m-q)) );
+    std::vector< blas_int > iwork( (m - min( p, min( m-p, min( q, m-q )))) );
 
     LAPACK_sorcsd2by1( &jobu1_, &jobu2_, &jobv1t_, &m_, &p_, &q_, X11, &ldx11_, X21, &ldx21_, THETA, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, &work[0], &lwork_, &iwork[0], &info_ );
     if (info_ < 0) {
@@ -110,7 +110,7 @@ int64_t orcsd2by1(
 
     // allocate workspace
     std::vector< double > work( lwork_ );
-    std::vector< blas_int > iwork( (m-min(p,m-p,q,m-q)) );
+    std::vector< blas_int > iwork( (m - min( p, min( m-p, min( q, m-q )))) );
 
     LAPACK_dorcsd2by1( &jobu1_, &jobu2_, &jobv1t_, &m_, &p_, &q_, X11, &ldx11_, X21, &ldx21_, THETA, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, &work[0], &lwork_, &iwork[0], &info_ );
     if (info_ < 0) {

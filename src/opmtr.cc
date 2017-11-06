@@ -30,8 +30,11 @@ int64_t opmtr(
     blas_int ldc_ = (blas_int) ldc;
     blas_int info_ = 0;
 
+    // from docs
+    int64_t lwork = (side == Side::Left ? n : m);
+
     // allocate workspace
-    std::vector< float > work( n if side = 'l'; m if side = 'r' );
+    std::vector< float > work( lwork );
 
     LAPACK_sopmtr( &side_, &uplo_, &trans_, &m_, &n_, AP, TAU, C, &ldc_, &work[0], &info_ );
     if (info_ < 0) {
@@ -61,8 +64,11 @@ int64_t opmtr(
     blas_int ldc_ = (blas_int) ldc;
     blas_int info_ = 0;
 
+    // from docs
+    int64_t lwork = (side == Side::Left ? n : m);
+
     // allocate workspace
-    std::vector< double > work( n if side = 'l'; m if side = 'r' );
+    std::vector< double > work( lwork );
 
     LAPACK_dopmtr( &side_, &uplo_, &trans_, &m_, &n_, AP, TAU, C, &ldc_, &work[0], &info_ );
     if (info_ < 0) {

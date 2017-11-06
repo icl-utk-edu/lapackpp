@@ -35,7 +35,7 @@ int64_t sytri2x(
     blas_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (n+nb+1,nb+3) );
+    std::vector< float > work( (n+nb+1)*(nb+3) );
 
     LAPACK_ssytri2x( &uplo_, &n_, A, &lda_, ipiv_ptr, &work[0], &nb_, &info_ );
     if (info_ < 0) {
@@ -70,7 +70,7 @@ int64_t sytri2x(
     blas_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (n+nb+1,nb+3) );
+    std::vector< double > work( (n+nb+1)*(nb+3) );
 
     LAPACK_dsytri2x( &uplo_, &n_, A, &lda_, ipiv_ptr, &work[0], &nb_, &info_ );
     if (info_ < 0) {
@@ -105,7 +105,7 @@ int64_t sytri2x(
     blas_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<float> > work( (n+nb+1,nb+3) );
+    std::vector< std::complex<float> > work( (n+nb+1)*(nb+3) );
 
     LAPACK_csytri2x( &uplo_, &n_, A, &lda_, ipiv_ptr, &work[0], &nb_, &info_ );
     if (info_ < 0) {
@@ -140,7 +140,7 @@ int64_t sytri2x(
     blas_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (n+nb+1,nb+3) );
+    std::vector< std::complex<double> > work( (n+nb+1)*(nb+3) );
 
     LAPACK_zsytri2x( &uplo_, &n_, A, &lda_, ipiv_ptr, &work[0], &nb_, &info_ );
     if (info_ < 0) {

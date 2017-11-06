@@ -47,7 +47,7 @@ int64_t sbgvx(
     blas_int ldz_ = (blas_int) ldz;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ifail_( (m) );
+        std::vector< blas_int > ifail_( n );  // was m; n >= m
         blas_int* ifail_ptr = &ifail_[0];
     #else
         blas_int* ifail_ptr = ifail;
@@ -64,7 +64,7 @@ int64_t sbgvx(
     }
     *m = m_;
     #if 1
-        std::copy( ifail_.begin(), ifail_.end(), ifail );
+        std::copy( &ifail_[0], &ifail_[m_], ifail );  // was begin to end
     #endif
     return info_;
 }
@@ -107,7 +107,7 @@ int64_t sbgvx(
     blas_int ldz_ = (blas_int) ldz;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ifail_( (m) );
+        std::vector< blas_int > ifail_( n );  // was m; n >= m
         blas_int* ifail_ptr = &ifail_[0];
     #else
         blas_int* ifail_ptr = ifail;
@@ -124,7 +124,7 @@ int64_t sbgvx(
     }
     *m = m_;
     #if 1
-        std::copy( ifail_.begin(), ifail_.end(), ifail );
+        std::copy( &ifail_[0], &ifail_[m_], ifail );  // was begin to end
     #endif
     return info_;
 }

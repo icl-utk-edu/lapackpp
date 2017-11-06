@@ -24,6 +24,9 @@ float lanhe(
     blas_int n_ = (blas_int) n;
     blas_int lda_ = (blas_int) lda;
 
+    // from docs
+    int64_t lwork = (norm == Norm::Inf ? n : 1);
+
     // allocate workspace
     std::vector< float > work( max( (int64_t) 1, lwork) );
 
@@ -44,6 +47,9 @@ double lanhe(
     char uplo_ = uplo2char( uplo );
     blas_int n_ = (blas_int) n;
     blas_int lda_ = (blas_int) lda;
+
+    // from docs
+    int64_t lwork = (norm == Norm::Inf ? n : 1);
 
     // allocate workspace
     std::vector< double > work( max( (int64_t) 1, lwork) );

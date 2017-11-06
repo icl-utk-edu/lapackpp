@@ -30,14 +30,20 @@ int64_t bdsdc(
     blas_int n_ = (blas_int) n;
     blas_int ldu_ = (blas_int) ldu;
     blas_int ldvt_ = (blas_int) ldvt;
-    #if 1
-        // 32-bit copy
-        std::vector< blas_int > IQ_( (ldiq) );
-        blas_int* IQ_ptr = &IQ_[0];
-    #else
-        blas_int* IQ_ptr = IQ;
-    #endif
     blas_int info_ = 0;
+
+    // IQ disabled for now, due to complicated dimension
+    blas_int IQ_[1];
+    blas_int *IQ_ptr = &IQ_[0];
+
+    // formulas from docs
+    int64_t lwork;
+    switch (compq) {
+        case CompQ::NoVec:      lwork = 4*n; break;
+        case CompQ::Vec:        lwork = 6*n; break;
+        case CompQ::CompactVec: lwork = 3*n*n + 4*n; break;
+        case CompQ::Update:     assert( false ); break;
+    }
 
     // allocate workspace
     std::vector< float > work( (max( (int64_t) 1, lwork)) );
@@ -47,9 +53,6 @@ int64_t bdsdc(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
-        std::copy( IQ_.begin(), IQ_.end(), IQ );
-    #endif
     return info_;
 }
 
@@ -74,14 +77,20 @@ int64_t bdsdc(
     blas_int n_ = (blas_int) n;
     blas_int ldu_ = (blas_int) ldu;
     blas_int ldvt_ = (blas_int) ldvt;
-    #if 1
-        // 32-bit copy
-        std::vector< blas_int > IQ_( (ldiq) );
-        blas_int* IQ_ptr = &IQ_[0];
-    #else
-        blas_int* IQ_ptr = IQ;
-    #endif
     blas_int info_ = 0;
+
+    // IQ disabled for now, due to complicated dimension
+    blas_int IQ_[1];
+    blas_int *IQ_ptr = &IQ_[0];
+
+    // formulas from docs
+    int64_t lwork;
+    switch (compq) {
+        case CompQ::NoVec:      lwork = 4*n; break;
+        case CompQ::Vec:        lwork = 6*n; break;
+        case CompQ::CompactVec: lwork = 3*n*n + 4*n; break;
+        case CompQ::Update:     assert( false ); break;
+    }
 
     // allocate workspace
     std::vector< double > work( (max( (int64_t) 1, lwork)) );
@@ -91,9 +100,6 @@ int64_t bdsdc(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
-        std::copy( IQ_.begin(), IQ_.end(), IQ );
-    #endif
     return info_;
 }
 

@@ -160,6 +160,9 @@ int64_t gesvdx(
     }
     blas_int lwork_ = real(qry_work[0]);
 
+    // from docs
+    int64_t lrwork = min(m,n)*(min(m,n)*2 + 15*min(m,n));
+
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
     std::vector< float > rwork( (max( (int64_t) 1, lrwork)) );
@@ -215,6 +218,9 @@ int64_t gesvdx(
         throw Error();
     }
     blas_int lwork_ = real(qry_work[0]);
+
+    // from docs
+    int64_t lrwork = min(m,n)*(min(m,n)*2 + 15*min(m,n));
 
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );

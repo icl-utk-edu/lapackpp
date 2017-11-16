@@ -5,8 +5,8 @@
 
 namespace lapack {
 
-using std::max;
-using std::min;
+using blas::max;
+using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ int64_t heev(
 
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
-    std::vector< float > rwork( (max( (int64_t) 1, 3*n-2)) );
+    std::vector< float > rwork( (max( 1, 3*n-2 )) );
 
     LAPACK_cheev( &jobz_, &uplo_, &n_, A, &lda_, W, &work[0], &lwork_, &rwork[0], &info_ );
     if (info_ < 0) {
@@ -76,7 +76,7 @@ int64_t heev(
 
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );
-    std::vector< double > rwork( (max( (int64_t) 1, 3*n-2)) );
+    std::vector< double > rwork( (max( 1, 3*n-2 )) );
 
     LAPACK_zheev( &jobz_, &uplo_, &n_, A, &lda_, W, &work[0], &lwork_, &rwork[0], &info_ );
     if (info_ < 0) {

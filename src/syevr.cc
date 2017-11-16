@@ -5,8 +5,8 @@
 
 namespace lapack {
 
-using std::max;
-using std::min;
+using blas::max;
+using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
@@ -37,7 +37,7 @@ int64_t syevr(
     blas_int ldz_ = (blas_int) ldz;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > isuppz_( ( 2*max( (int64_t) 1, n) ) );  // was max(1,m), n >= m
+        std::vector< blas_int > isuppz_( (2*max( 1, n )) );  // was max(1,m), n >= m
         blas_int* isuppz_ptr = &isuppz_[0];
     #else
         blas_int* isuppz_ptr = isuppz;
@@ -98,7 +98,7 @@ int64_t syevr(
     blas_int ldz_ = (blas_int) ldz;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > isuppz_( ( 2*max( (int64_t) 1, n) ) );  // was max(1,m), n >= m
+        std::vector< blas_int > isuppz_( (2*max( 1, n )) );  // was max(1,m), n >= m
         blas_int* isuppz_ptr = &isuppz_[0];
     #else
         blas_int* isuppz_ptr = isuppz;

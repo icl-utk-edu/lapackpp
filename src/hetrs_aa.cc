@@ -7,8 +7,8 @@
 
 namespace lapack {
 
-using std::max;
-using std::min;
+using blas::max;
+using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
@@ -42,7 +42,7 @@ int64_t hetrs_aa(
     blas_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<float> > work( (max( (int64_t) 1, lwork)) );
+    std::vector< std::complex<float> > work( (max( 1, lwork )) );
 
     LAPACK_chetrs_aa( &uplo_, &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
@@ -82,7 +82,7 @@ int64_t hetrs_aa(
     blas_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (max( (int64_t) 1, lwork)) );
+    std::vector< std::complex<double> > work( (max( 1, lwork )) );
 
     LAPACK_zhetrs_aa( &uplo_, &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {

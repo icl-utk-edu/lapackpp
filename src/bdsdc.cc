@@ -5,8 +5,8 @@
 
 namespace lapack {
 
-using std::max;
-using std::min;
+using blas::max;
+using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
@@ -37,7 +37,7 @@ int64_t bdsdc(
     blas_int *IQ_ptr = &IQ_[0];
 
     // formulas from docs
-    int64_t lwork;
+    int64_t lwork = 0;
     switch (compq) {
         case CompQ::NoVec:      lwork = 4*n; break;
         case CompQ::Vec:        lwork = 6*n; break;
@@ -46,7 +46,7 @@ int64_t bdsdc(
     }
 
     // allocate workspace
-    std::vector< float > work( (max( (int64_t) 1, lwork)) );
+    std::vector< float > work( (max( 1, lwork )) );
     std::vector< blas_int > iwork( (8*n) );
 
     LAPACK_sbdsdc( &uplo_, &compq_, &n_, D, E, U, &ldu_, VT, &ldvt_, Q, IQ_ptr, &work[0], &iwork[0], &info_ );
@@ -84,7 +84,7 @@ int64_t bdsdc(
     blas_int *IQ_ptr = &IQ_[0];
 
     // formulas from docs
-    int64_t lwork;
+    int64_t lwork = 0;
     switch (compq) {
         case CompQ::NoVec:      lwork = 4*n; break;
         case CompQ::Vec:        lwork = 6*n; break;
@@ -93,7 +93,7 @@ int64_t bdsdc(
     }
 
     // allocate workspace
-    std::vector< double > work( (max( (int64_t) 1, lwork)) );
+    std::vector< double > work( (max( 1, lwork )) );
     std::vector< blas_int > iwork( (8*n) );
 
     LAPACK_dbdsdc( &uplo_, &compq_, &n_, D, E, U, &ldu_, VT, &ldvt_, Q, IQ_ptr, &work[0], &iwork[0], &info_ );

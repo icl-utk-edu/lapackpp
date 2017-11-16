@@ -5,8 +5,8 @@
 
 namespace lapack {
 
-using std::max;
-using std::min;
+using blas::max;
+using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
@@ -32,7 +32,7 @@ int64_t sbev(
     blas_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (max( (int64_t) 1, 3*n-2)) );
+    std::vector< float > work( (max( 1, 3*n-2 )) );
 
     LAPACK_ssbev( &jobz_, &uplo_, &n_, &kd_, AB, &ldab_, W, Z, &ldz_, &work[0], &info_ );
     if (info_ < 0) {
@@ -64,7 +64,7 @@ int64_t sbev(
     blas_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (max( (int64_t) 1, 3*n-2)) );
+    std::vector< double > work( (max( 1, 3*n-2 )) );
 
     LAPACK_dsbev( &jobz_, &uplo_, &n_, &kd_, AB, &ldab_, W, Z, &ldz_, &work[0], &info_ );
     if (info_ < 0) {

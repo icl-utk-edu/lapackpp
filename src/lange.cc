@@ -5,8 +5,8 @@
 
 namespace lapack {
 
-using std::max;
-using std::min;
+using blas::max;
+using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
@@ -29,7 +29,7 @@ float lange(
     int64_t lwork = (norm == Norm::Inf ? m : 1);
 
     // allocate workspace
-    std::vector< float > work( max( (int64_t) 1, lwork) );
+    std::vector< float > work( max( 1, lwork ) );
 
     return LAPACK_slange( &norm_, &m_, &n_, A, &lda_, &work[0] );
 }
@@ -54,7 +54,7 @@ double lange(
     int64_t lwork = (norm == Norm::Inf ? m : 1);
 
     // allocate workspace
-    std::vector< double > work( max( (int64_t) 1, lwork) );
+    std::vector< double > work( max( 1, lwork ) );
 
     return LAPACK_dlange( &norm_, &m_, &n_, A, &lda_, &work[0] );
 }
@@ -79,7 +79,7 @@ float lange(
     int64_t lwork = (norm == Norm::Inf ? m : 1);
 
     // allocate workspace
-    std::vector< float > work( max( (int64_t) 1, lwork) );
+    std::vector< float > work( max( 1, lwork ) );
 
     return LAPACK_clange( &norm_, &m_, &n_, A, &lda_, &work[0] );
 }
@@ -104,7 +104,7 @@ double lange(
     int64_t lwork = (norm == Norm::Inf ? m : 1);
 
     // allocate workspace
-    std::vector< double > work( max( (int64_t) 1, lwork) );
+    std::vector< double > work( max( 1, lwork ) );
 
     return LAPACK_zlange( &norm_, &m_, &n_, A, &lda_, &work[0] );
 }

@@ -5,8 +5,8 @@
 
 namespace lapack {
 
-using std::max;
-using std::min;
+using blas::max;
+using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
@@ -27,7 +27,7 @@ int64_t steqr(
     blas_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (max( (int64_t) 1, 2*n-2)) );
+    std::vector< float > work( (max( 1, 2*n-2 )) );
 
     LAPACK_ssteqr( &compz_, &n_, D, E, Z, &ldz_, &work[0], &info_ );
     if (info_ < 0) {
@@ -54,7 +54,7 @@ int64_t steqr(
     blas_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (max( (int64_t) 1, 2*n-2)) );
+    std::vector< double > work( (max( 1, 2*n-2 )) );
 
     LAPACK_dsteqr( &compz_, &n_, D, E, Z, &ldz_, &work[0], &info_ );
     if (info_ < 0) {
@@ -81,7 +81,7 @@ int64_t steqr(
     blas_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (max( (int64_t) 1, 2*n-2)) );
+    std::vector< float > work( (max( 1, 2*n-2 )) );
 
     LAPACK_csteqr( &compz_, &n_, D, E, Z, &ldz_, &work[0], &info_ );
     if (info_ < 0) {
@@ -108,7 +108,7 @@ int64_t steqr(
     blas_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (max( (int64_t) 1, 2*n-2)) );
+    std::vector< double > work( (max( 1, 2*n-2 )) );
 
     LAPACK_zsteqr( &compz_, &n_, D, E, Z, &ldz_, &work[0], &info_ );
     if (info_ < 0) {

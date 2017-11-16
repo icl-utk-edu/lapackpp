@@ -5,8 +5,8 @@
 
 namespace lapack {
 
-using std::max;
-using std::min;
+using blas::max;
+using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
@@ -26,7 +26,7 @@ int64_t getrf(
     blas_int lda_ = (blas_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( (min(m,n)) );
+        std::vector< blas_int > ipiv_( max( 1, min( m, n )) );
         blas_int* ipiv_ptr = &ipiv_[0];
     #else
         blas_int* ipiv_ptr = ipiv;
@@ -60,7 +60,7 @@ int64_t getrf(
     blas_int lda_ = (blas_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( (min(m,n)) );
+        std::vector< blas_int > ipiv_( max( 1, min( m, n )) );
         blas_int* ipiv_ptr = &ipiv_[0];
     #else
         blas_int* ipiv_ptr = ipiv;
@@ -94,7 +94,7 @@ int64_t getrf(
     blas_int lda_ = (blas_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( (min(m,n)) );
+        std::vector< blas_int > ipiv_( max( 1, min( m, n )) );
         blas_int* ipiv_ptr = &ipiv_[0];
     #else
         blas_int* ipiv_ptr = ipiv;
@@ -128,7 +128,7 @@ int64_t getrf(
     blas_int lda_ = (blas_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( (min(m,n)) );
+        std::vector< blas_int > ipiv_( max( 1, min( m, n )) );
         blas_int* ipiv_ptr = &ipiv_[0];
     #else
         blas_int* ipiv_ptr = ipiv;

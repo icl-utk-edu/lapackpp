@@ -5,8 +5,8 @@
 
 namespace lapack {
 
-using std::max;
-using std::min;
+using blas::max;
+using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
@@ -28,7 +28,7 @@ float lansy(
     int64_t lwork = (norm == Norm::Inf ? n : 1);
 
     // allocate workspace
-    std::vector< float > work( max( (int64_t) 1, lwork) );
+    std::vector< float > work( max( 1, lwork ) );
 
     return LAPACK_slansy( &norm_, &uplo_, &n_, A, &lda_, &work[0] );
 }
@@ -52,7 +52,7 @@ double lansy(
     int64_t lwork = (norm == Norm::Inf ? n : 1);
 
     // allocate workspace
-    std::vector< double > work( max( (int64_t) 1, lwork) );
+    std::vector< double > work( max( 1, lwork ) );
 
     return LAPACK_dlansy( &norm_, &uplo_, &n_, A, &lda_, &work[0] );
 }
@@ -76,7 +76,7 @@ float lansy(
     int64_t lwork = (norm == Norm::Inf ? n : 1);
 
     // allocate workspace
-    std::vector< float > work( max( (int64_t) 1, lwork) );
+    std::vector< float > work( max( 1, lwork ) );
 
     return LAPACK_clansy( &norm_, &uplo_, &n_, A, &lda_, &work[0] );
 }
@@ -100,7 +100,7 @@ double lansy(
     int64_t lwork = (norm == Norm::Inf ? n : 1);
 
     // allocate workspace
-    std::vector< double > work( max( (int64_t) 1, lwork) );
+    std::vector< double > work( max( 1, lwork ) );
 
     return LAPACK_zlansy( &norm_, &uplo_, &n_, A, &lda_, &work[0] );
 }

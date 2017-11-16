@@ -7,8 +7,8 @@
 
 namespace lapack {
 
-using std::max;
-using std::min;
+using blas::max;
+using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
@@ -167,7 +167,7 @@ int64_t gesvdx(
 
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
-    std::vector< float > rwork( (max( (int64_t) 1, lrwork)) );
+    std::vector< float > rwork( (max( 1, lrwork )) );
     std::vector< blas_int > iwork( (12*min(m,n)) );
 
     LAPACK_cgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &ns_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &rwork[0], &iwork[0], &info_ );
@@ -226,7 +226,7 @@ int64_t gesvdx(
 
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );
-    std::vector< double > rwork( (max( (int64_t) 1, lrwork)) );
+    std::vector< double > rwork( (max( 1, lrwork )) );
     std::vector< blas_int > iwork( (12*min(m,n)) );
 
     LAPACK_zgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &ns_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &rwork[0], &iwork[0], &info_ );

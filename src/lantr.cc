@@ -5,8 +5,8 @@
 
 namespace lapack {
 
-using std::max;
-using std::min;
+using blas::max;
+using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
@@ -31,7 +31,7 @@ float lantr(
     int64_t lwork = (norm == Norm::Inf ? m : 1);
 
     // allocate workspace
-    std::vector< float > work( max( (int64_t) 1, lwork) );
+    std::vector< float > work( max( 1, lwork ) );
 
     return LAPACK_slantr( &norm_, &uplo_, &diag_, &m_, &n_, A, &lda_, &work[0] );
 }
@@ -58,7 +58,7 @@ double lantr(
     int64_t lwork = (norm == Norm::Inf ? m : 1);
 
     // allocate workspace
-    std::vector< double > work( max( (int64_t) 1, lwork) );
+    std::vector< double > work( max( 1, lwork ) );
 
     return LAPACK_dlantr( &norm_, &uplo_, &diag_, &m_, &n_, A, &lda_, &work[0] );
 }
@@ -85,7 +85,7 @@ float lantr(
     int64_t lwork = (norm == Norm::Inf ? m : 1);
 
     // allocate workspace
-    std::vector< float > work( max( (int64_t) 1, lwork) );
+    std::vector< float > work( max( 1, lwork ) );
 
     return LAPACK_clantr( &norm_, &uplo_, &diag_, &m_, &n_, A, &lda_, &work[0] );
 }
@@ -112,7 +112,7 @@ double lantr(
     int64_t lwork = (norm == Norm::Inf ? m : 1);
 
     // allocate workspace
-    std::vector< double > work( max( (int64_t) 1, lwork) );
+    std::vector< double > work( max( 1, lwork ) );
 
     return LAPACK_zlantr( &norm_, &uplo_, &diag_, &m_, &n_, A, &lda_, &work[0] );
 }

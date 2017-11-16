@@ -5,8 +5,8 @@
 
 namespace lapack {
 
-using std::max;
-using std::min;
+using blas::max;
+using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
@@ -16,8 +16,8 @@ int64_t ggbal(
     float* B, int64_t ldb,
     int64_t* ilo,
     int64_t* ihi,
-    float* LSCALE,
-    float* RSCALE )
+    float* lscale,
+    float* rscale )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -34,12 +34,12 @@ int64_t ggbal(
     blas_int info_ = 0;
 
     // from docs
-    int64_t lwork = (balance == Balance::Scale || balance == Balance::Both ? max( (int64_t) 1, 6*n ) : 1);
+    int64_t lwork = (balance == Balance::Scale || balance == Balance::Both ? max( 1, 6*n ) : 1);
 
     // allocate workspace
     std::vector< float > work( (lwork) );
 
-    LAPACK_sggbal( &balance_, &n_, A, &lda_, B, &ldb_, &ilo_, &ihi_, LSCALE, RSCALE, &work[0], &info_ );
+    LAPACK_sggbal( &balance_, &n_, A, &lda_, B, &ldb_, &ilo_, &ihi_, lscale, rscale, &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -55,8 +55,8 @@ int64_t ggbal(
     double* B, int64_t ldb,
     int64_t* ilo,
     int64_t* ihi,
-    double* LSCALE,
-    double* RSCALE )
+    double* lscale,
+    double* rscale )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -73,12 +73,12 @@ int64_t ggbal(
     blas_int info_ = 0;
 
     // from docs
-    int64_t lwork = (balance == Balance::Scale || balance == Balance::Both ? max( (int64_t) 1, 6*n ) : 1);
+    int64_t lwork = (balance == Balance::Scale || balance == Balance::Both ? max( 1, 6*n ) : 1);
 
     // allocate workspace
     std::vector< double > work( (lwork) );
 
-    LAPACK_dggbal( &balance_, &n_, A, &lda_, B, &ldb_, &ilo_, &ihi_, LSCALE, RSCALE, &work[0], &info_ );
+    LAPACK_dggbal( &balance_, &n_, A, &lda_, B, &ldb_, &ilo_, &ihi_, lscale, rscale, &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -94,8 +94,8 @@ int64_t ggbal(
     std::complex<float>* B, int64_t ldb,
     int64_t* ilo,
     int64_t* ihi,
-    float* LSCALE,
-    float* RSCALE )
+    float* lscale,
+    float* rscale )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -112,12 +112,12 @@ int64_t ggbal(
     blas_int info_ = 0;
 
     // from docs
-    int64_t lwork = (balance == Balance::Scale || balance == Balance::Both ? max( (int64_t) 1, 6*n ) : 1);
+    int64_t lwork = (balance == Balance::Scale || balance == Balance::Both ? max( 1, 6*n ) : 1);
 
     // allocate workspace
     std::vector< float > work( (lwork) );
 
-    LAPACK_cggbal( &balance_, &n_, A, &lda_, B, &ldb_, &ilo_, &ihi_, LSCALE, RSCALE, &work[0], &info_ );
+    LAPACK_cggbal( &balance_, &n_, A, &lda_, B, &ldb_, &ilo_, &ihi_, lscale, rscale, &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -133,8 +133,8 @@ int64_t ggbal(
     std::complex<double>* B, int64_t ldb,
     int64_t* ilo,
     int64_t* ihi,
-    double* LSCALE,
-    double* RSCALE )
+    double* lscale,
+    double* rscale )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -151,12 +151,12 @@ int64_t ggbal(
     blas_int info_ = 0;
 
     // from docs
-    int64_t lwork = (balance == Balance::Scale || balance == Balance::Both ? max( (int64_t) 1, 6*n ) : 1);
+    int64_t lwork = (balance == Balance::Scale || balance == Balance::Both ? max( 1, 6*n ) : 1);
 
     // allocate workspace
     std::vector< double > work( (lwork) );
 
-    LAPACK_zggbal( &balance_, &n_, A, &lda_, B, &ldb_, &ilo_, &ihi_, LSCALE, RSCALE, &work[0], &info_ );
+    LAPACK_zggbal( &balance_, &n_, A, &lda_, B, &ldb_, &ilo_, &ihi_, lscale, rscale, &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

@@ -1,5 +1,7 @@
+#include "lapack.hh"
 #include "lapack_fortran.h"
-#include "lapack_util.hh"
+
+#ifdef LAPACK_MATGEN
 
 #include <vector>
 
@@ -162,3 +164,5 @@ int64_t lagsy(
 }
 
 }  // namespace lapack
+
+#endif  // LAPACK_MATGEN

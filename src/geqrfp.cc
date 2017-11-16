@@ -1,5 +1,7 @@
+#include "lapack.hh"
 #include "lapack_fortran.h"
-#include "lapack_util.hh"
+
+#if LAPACK_VERSION_MAJOR >= 3 && LAPACK_VERSION_MINOR >= 3  // >= v3.3
 
 #include <vector>
 
@@ -154,3 +156,5 @@ int64_t geqrfp(
 }
 
 }  // namespace lapack
+
+#endif  // LAPACK >= v3.3

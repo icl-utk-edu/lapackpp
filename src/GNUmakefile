@@ -1,11 +1,29 @@
-CXX = g++
-CXXFLAGS = -Wall -I../../blaspp/include -I../include -std=c++11 -DLAPACK_COMPLEX_CPP -Wno-unused-local-typedefs
+CXX      = g++
+CXXFLAGS = -Wall -O2 -fPIC -I../../blaspp/include -I../include -std=c++11 -DLAPACK_COMPLEX_CPP -Wno-unused-local-typedefs
+
+# Accelerate missing *gbrfsx, looks like LAPACK 3.1
+CXXFLAGS += -DLAPACK_VERSION_MAJOR=3 -DLAPACK_VERSION_MINOR=1 -DLAPACK_VERSION_MICRO=0
+#CXXFLAGS += -DLAPACK_MATGEN
+LIBS     = -framework Accelerate
 
 src = ${wildcard *.cc}
 obj = ${addsuffix .o, ${basename ${src}}}
 dep = ${addsuffix .d, ${basename ${src}}}
 
-all: ${obj}
+default: shared
+
+all: shared static
+
+shared: ../lib/liblapackpp.so
+
+static: ../lib/liblapackpp.a
+
+../lib/liblapackpp.so: ${obj}
+	${CXX} -shared -o $@ $^ ${LIBS}
+
+../lib/liblapackpp.a: ${obj}
+	ar cr $@ $^
+	ranlib $@
 
 echo:
 	@echo "src ${src}"

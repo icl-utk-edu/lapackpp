@@ -1,5 +1,7 @@
+#include "lapack.hh"
 #include "lapack_fortran.h"
-#include "lapack_util.hh"
+
+#if LAPACK_VERSION_MAJOR >= 3 && LAPACK_VERSION_MINOR >= 7  // >= 3.7
 
 #include <vector>
 
@@ -100,3 +102,5 @@ int64_t hetrf_aa(
 }
 
 }  // namespace lapack
+
+#endif  // LAPACK >= 3.7

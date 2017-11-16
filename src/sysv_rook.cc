@@ -1,5 +1,7 @@
+#include "lapack.hh"
 #include "lapack_fortran.h"
-#include "lapack_util.hh"
+
+#if LAPACK_VERSION_MAJOR >= 3 && LAPACK_VERSION_MINOR >= 5  // >= 3.5
 
 #include <vector>
 
@@ -210,3 +212,5 @@ int64_t sysv_rook(
 }
 
 }  // namespace lapack
+
+#endif  // LAPACK >= 3.5

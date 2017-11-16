@@ -1,5 +1,7 @@
+#include "lapack.hh"
 #include "lapack_fortran.h"
-#include "lapack_util.hh"
+
+#if LAPACK_VERSION_MAJOR >= 3 && LAPACK_VERSION_MINOR >= 2  // >= v3.2
 
 #include <vector>
 
@@ -254,3 +256,5 @@ int64_t gbrfsx(
 }
 
 }  // namespace lapack
+
+#endif  // LAPACK >= v3.2

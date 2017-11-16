@@ -1,5 +1,5 @@
-#ifndef LAPACK_UTIL_HH
-#define LAPACK_UTIL_HH
+#ifndef ICL_LAPACK_UTIL_HH
+#define ICL_LAPACK_UTIL_HH
 
 #include <exception>
 #include <complex>
@@ -234,4 +234,4 @@ inline void throw_if( bool cond, const char* condstr, const char* func, const ch
 
 }  // namespace lapack
 
-#endif        //  #ifndef LAPACK_UTIL_HH
+#endif  // ICL_LAPACK_UTIL_HH

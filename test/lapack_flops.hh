@@ -2,8 +2,11 @@
 #define ICL_LAPACK_FLOPS_H
 
 #include "lapack.hh"
+#include "blas_flops.hh"
 
 #include <complex>
+
+namespace lapack {
 
 //==============================================================================
 // Generic formulas come from LAWN 41
@@ -13,120 +16,6 @@
 // (e.g., syr2k, unmqr).
 // Formulas may give negative results for invalid combinations of m, n, k
 // (e.g., ungqr, unmqr).
-
-//==============================================================================
-// Level 2 BLAS
-//==============================================================================
-
-//------------------------------------------------------------ gemv
-static double fmuls_gemv(double m, double n)
-    { return m*n; }
-
-static double fadds_gemv(double m, double n)
-    { return m*n; }
-
-//------------------------------------------------------------ symv/hemv
-static double fmuls_symv(double n)
-    { return fmuls_gemv(n, n); }
-
-static double fadds_symv(double n)
-    { return fadds_gemv(n, n); }
-
-static double fmuls_hemv(double n)
-    { return fmuls_symv(n); }
-
-static double fadds_hemv(double n)
-    { return fadds_symv(n); }
-
-//==============================================================================
-// Level 3 BLAS
-//==============================================================================
-
-//------------------------------------------------------------ gemm
-static double fmuls_gemm(double m, double n, double k)
-    { return m*n*k; }
-
-static double fadds_gemm(double m, double n, double k)
-    { return m*n*k; }
-
-//------------------------------------------------------------ symm/hemm
-static double fmuls_symm(lapack::Side side, double m, double n)
-{
-    return (side == lapack::Side::Left)
-        ? fmuls_gemm(m, m, n)
-        : fmuls_gemm(m, n, n);
-}
-
-static double fadds_symm(lapack::Side side, double m, double n)
-{
-    return (side == lapack::Side::Left)
-        ? fadds_gemm(m, m, n)
-        : fadds_gemm(m, n, n);
-}
-
-static double fmuls_hemm(lapack::Side side, double m, double n)
-    { return fmuls_symm(side, m, n); }
-
-static double fadds_hemm(lapack::Side side, double m, double n)
-    { return fadds_symm(side, m, n); }
-
-//------------------------------------------------------------ syrk/herk
-static double fmuls_syrk(double n, double k)
-    { return 0.5*k*n*(n + 1); }
-
-static double fadds_syrk(double n, double k)
-    { return 0.5*k*n*(n + 1); }
-
-static double fmuls_herk(double n, double k)
-    { return fmuls_syrk(n, k); }
-
-static double fadds_herk(double n, double k)
-    { return fadds_syrk(n, k); }
-
-//------------------------------------------------------------ syr2k/her2k
-static double fmuls_syr2k(double n, double k)
-    { return k*n*n; }
-
-static double fadds_syr2k(double n, double k)
-    { return k*n*n + n; }
-
-static double fmuls_her2k(double n, double k)
-    { return fmuls_syr2k(n, k); }
-
-static double fadds_her2k(double n, double k)
-    { return fadds_syr2k(n, k); }
-
-//------------------------------------------------------------ trmm
-static double fmuls_trmm_2(double m, double n)
-    { return 0.5*n*m*(m + 1); }
-
-static double fadds_trmm_2(double m, double n)
-    { return 0.5*n*m*(m - 1); }
-
-static double fmuls_trmm(lapack::Side side, double m, double n)
-{
-    return (side == lapack::Side::Left)
-        ? fmuls_trmm_2(m, n)
-        : fmuls_trmm_2(n, m);
-}
-
-static double fadds_trmm(lapack::Side side, double m, double n)
-{
-    return (side == lapack::Side::Left)
-        ? fadds_trmm_2(m, n)
-        : fadds_trmm_2(n, m);
-}
-
-//------------------------------------------------------------ trsm
-static double fmuls_trsm(lapack::Side side, double m, double n)
-    { return fmuls_trmm(side, m, n); }
-
-static double fadds_trsm(lapack::Side side, double m, double n)
-    { return fadds_trmm(side, m, n); }
-
-//==============================================================================
-// LAPACK
-//==============================================================================
 
 //------------------------------------------------------------ getrf
 // LAWN 41 omits (m < n) case
@@ -394,37 +283,25 @@ static double fadds_lanhe(double n, lapack::Norm norm)
 
 //==============================================================================
 // template class. Example:
-// gflop< float >::gemm( m, n, k ) yields flops for sgemm.
-// gflop< std::complex<float> >::gemm( m, n, k ) yields flops for cgemm.
+// gbyte< float >::gemv( m, n ) yields bytes transferred for sgemv.
+// gbyte< std::complex<float> >::gemv( m, n ) yields bytes transferred for cgemv.
 //==============================================================================
 template< typename T >
-class Gflop
+class Gbyte:
+    public blas::Gbyte<T>
+{
+};
+
+//==============================================================================
+// template class. Example:
+// gflop< float >::getrf( m, n ) yields flops for sgetrf.
+// gflop< std::complex<float> >::getrf( m, n ) yields flops for cgetrf.
+//==============================================================================
+template< typename T >
+class Gflop:
+    public blas::Gflop<T>
 {
 public:
-    static double gemv(double m, double n)
-        { return 1e-9 * (fmuls_gemv(m, n) + fadds_gemv(m, n)); }
-
-    static double symv(double n)
-        { return 1e-9 * (fmuls_symv(n) + fadds_symv(n)); }
-
-    static double gemm(double m, double n, double k)
-        { return 1e-9 * (fmuls_gemm(m, n, k) + fadds_gemm(m, n, k)); }
-
-    static double symm(lapack::Side side, double m, double n)
-        { return 1e-9 * (fmuls_symm(side, m, n) + fadds_symm(side, m, n)); }
-
-    static double syrk(double n, double k)
-        { return 1e-9 * (fmuls_syrk(n, k) + fadds_syrk(n, k)); }
-
-    static double syr2k(double n, double k)
-        { return 1e-9 * (fmuls_syr2k(n, k) + fadds_syr2k(n, k)); }
-
-    static double trmm(lapack::Side side, double m, double n)
-        { return 1e-9 * (fmuls_trmm(side, m, n) + fadds_trmm(side, m, n)); }
-
-    static double trsm(lapack::Side side, double m, double n)
-        { return 1e-9 * (fmuls_trsm(side, m, n) + fadds_trsm(side, m, n)); }
-
     static double getrf(double m, double n)
         { return 1e-9 * (fmuls_getrf(m, n) + fadds_getrf(m, n)); }
 
@@ -515,47 +392,13 @@ public:
 
 //==============================================================================
 // specialization for complex
+// flops = 6*muls + 2*adds
 //==============================================================================
 template< typename T >
-class Gflop< std::complex<T> >
+class Gflop< std::complex<T> >:
+    public blas::Gflop< std::complex<T> >
 {
 public:
-    static double gemv(double m, double n)
-        { return 1e-9 * (6*fmuls_gemv(m, n) + 2*fadds_gemv(m, n)); }
-
-    static double hemv(double n)
-        { return 1e-9 * (6*fmuls_hemv(n) + 2*fadds_hemv(n)); }
-
-    static double symv(double n)
-        { return 1e-9 * (6*fmuls_symv(n) + 2*fadds_symv(n)); }
-
-    static double gemm(double m, double n, double k)
-        { return 1e-9 * (6*fmuls_gemm(m, n, k) + 2*fadds_gemm(m, n, k)); }
-
-    static double hemm(lapack::Side side, double m, double n)
-        { return 1e-9 * (6*fmuls_hemm(side, m, n) + 2*fadds_hemm(side, m, n)); }
-
-    static double symm(lapack::Side side, double m, double n)
-        { return 1e-9 * (6*fmuls_symm(side, m, n) + 2*fadds_symm(side, m, n)); }
-
-    static double herk(double n, double k)
-        { return 1e-9 * (6*fmuls_herk(n, k) + 2*fadds_herk(n, k)); }
-
-    static double syrk(double n, double k)
-        { return 1e-9 * (6*fmuls_syrk(n, k) + 2*fadds_syrk(n, k)); }
-
-    static double her2k(double n, double k)
-        { return 1e-9 * (6*fmuls_her2k(n, k) + 2*fadds_her2k(n, k)); }
-
-    static double syr2k(double n, double k)
-        { return 1e-9 * (6*fmuls_syr2k(n, k) + 2*fadds_syr2k(n, k)); }
-
-    static double trmm(lapack::Side side, double m, double n)
-        { return 1e-9 * (6*fmuls_trmm(side, m, n) + 2*fadds_trmm(side, m, n)); }
-
-    static double trsm(lapack::Side side, double m, double n)
-        { return 1e-9 * (6*fmuls_trsm(side, m, n) + 2*fadds_trsm(side, m, n)); }
-
     static double getrf(double m, double n)
         { return 1e-9 * (6*fmuls_getrf(m, n) + 2*fadds_getrf(m, n)); }
 
@@ -643,5 +486,7 @@ public:
     static double lanhe(double n, lapack::Norm norm)
         { return 1e-9 * (6*fmuls_lanhe(n, norm) + 2*fadds_lanhe(n, norm)); }
 };
+
+}  // namespace lapack
 
 #endif  // ICL_LAPACK_FLOPS_H

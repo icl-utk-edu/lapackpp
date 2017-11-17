@@ -1,7 +1,7 @@
 #include "test.hh"
 #include "lapack.hh"
+#include "lapack_flops.hh"
 #include "print_matrix.hh"
-#include "flops.hh"
 #include "error.hh"
 
 #include <vector>
@@ -91,7 +91,7 @@ void test_getrf_work( Params& params, bool run )
         fprintf( stderr, "lapack::getrf returned error %lld\n", (lld) info_tst );
     }
 
-    double gflop = Gflop< scalar_t >::getrf( m, n );
+    double gflop = lapack::Gflop< scalar_t >::getrf( m, n );
     params.time.value()   = time;
     params.gflops.value() = gflop / time;
 

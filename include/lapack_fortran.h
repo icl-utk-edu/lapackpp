@@ -5724,7 +5724,7 @@ void LAPACK_zunmhr(
 /* ----- balance matrix for eigenvalues */
 #define LAPACK_sgebal LAPACK_GLOBAL(sgebal,SGEBAL)
 void LAPACK_sgebal(
-    char const* job,
+    char const* balance,
     lapack_int const* n,
     float* a, lapack_int const* lda,
     lapack_int* ilo, lapack_int* ihi,
@@ -5732,7 +5732,7 @@ void LAPACK_sgebal(
     lapack_int* info );
 #define LAPACK_dgebal LAPACK_GLOBAL(dgebal,DGEBAL)
 void LAPACK_dgebal(
-    char const* job,
+    char const* balance,
     lapack_int const* n,
     double* a, lapack_int const* lda,
     lapack_int* ilo, lapack_int* ihi,
@@ -5740,7 +5740,7 @@ void LAPACK_dgebal(
     lapack_int* info );
 #define LAPACK_cgebal LAPACK_GLOBAL(cgebal,CGEBAL)
 void LAPACK_cgebal(
-    char const* job,
+    char const* balance,
     lapack_int const* n,
     lapack_complex_float* a, lapack_int const* lda,
     lapack_int* ilo, lapack_int* ihi,
@@ -5748,7 +5748,7 @@ void LAPACK_cgebal(
     lapack_int* info );
 #define LAPACK_zgebal LAPACK_GLOBAL(zgebal,ZGEBAL)
 void LAPACK_zgebal(
-    char const* job,
+    char const* balance,
     lapack_int const* n,
     lapack_complex_double* a, lapack_int const* lda,
     lapack_int* ilo, lapack_int* ihi,
@@ -6203,7 +6203,7 @@ void LAPACK_zgghd3(
 /* ----- generalized balance matrix for eigenvalues */
 #define LAPACK_sggbal LAPACK_GLOBAL(sggbal,SGGBAL)
 void LAPACK_sggbal(
-    char const* job,
+    char const* balance,
     lapack_int const* n,
     float* a, lapack_int const* lda,
     float* b, lapack_int const* ldb,
@@ -6213,7 +6213,7 @@ void LAPACK_sggbal(
     lapack_int* info );
 #define LAPACK_dggbal LAPACK_GLOBAL(dggbal,DGGBAL)
 void LAPACK_dggbal(
-    char const* job,
+    char const* balance,
     lapack_int const* n,
     double* a, lapack_int const* lda,
     double* b, lapack_int const* ldb,
@@ -6223,7 +6223,7 @@ void LAPACK_dggbal(
     lapack_int* info );
 #define LAPACK_cggbal LAPACK_GLOBAL(cggbal,CGGBAL)
 void LAPACK_cggbal(
-    char const* job,
+    char const* balance,
     lapack_int const* n,
     lapack_complex_float* a, lapack_int const* lda,
     lapack_complex_float* b, lapack_int const* ldb,
@@ -6233,7 +6233,7 @@ void LAPACK_cggbal(
     lapack_int* info );
 #define LAPACK_zggbal LAPACK_GLOBAL(zggbal,ZGGBAL)
 void LAPACK_zggbal(
-    char const* job,
+    char const* balance,
     lapack_int const* n,
     lapack_complex_double* a, lapack_int const* lda,
     lapack_complex_double* b, lapack_int const* ldb,

@@ -11,7 +11,7 @@ using blas::real;
 
 // -----------------------------------------------------------------------------
 int64_t gges(
-    lapack::Job jobvsl, lapack::Job jobvsr, lapack::Sort sort, LAPACK_S_SELECT3 select, int64_t n,
+    lapack::Job jobvsl, lapack::Job jobvsr, lapack::Sort sort, lapack_s_select3 select, int64_t n,
     float* A, int64_t lda,
     float* B, int64_t ldb,
     int64_t* sdim,
@@ -64,7 +64,7 @@ int64_t gges(
 
 // -----------------------------------------------------------------------------
 int64_t gges(
-    lapack::Job jobvsl, lapack::Job jobvsr, lapack::Sort sort, LAPACK_D_SELECT3 select, int64_t n,
+    lapack::Job jobvsl, lapack::Job jobvsr, lapack::Sort sort, lapack_d_select3 select, int64_t n,
     double* A, int64_t lda,
     double* B, int64_t ldb,
     int64_t* sdim,
@@ -117,7 +117,7 @@ int64_t gges(
 
 // -----------------------------------------------------------------------------
 int64_t gges(
-    lapack::Job jobvsl, lapack::Job jobvsr, lapack::Sort sort, LAPACK_C_SELECT2 select, int64_t n,
+    lapack::Job jobvsl, lapack::Job jobvsr, lapack::Sort sort, lapack_c_select2 select, int64_t n,
     std::complex<float>* A, int64_t lda,
     std::complex<float>* B, int64_t ldb,
     int64_t* sdim,
@@ -171,7 +171,7 @@ int64_t gges(
 
 // -----------------------------------------------------------------------------
 int64_t gges(
-    lapack::Job jobvsl, lapack::Job jobvsr, lapack::Sort sort, LAPACK_Z_SELECT2 select, int64_t n,
+    lapack::Job jobvsl, lapack::Job jobvsr, lapack::Sort sort, lapack_z_select2 select, int64_t n,
     std::complex<double>* A, int64_t lda,
     std::complex<double>* B, int64_t ldb,
     int64_t* sdim,

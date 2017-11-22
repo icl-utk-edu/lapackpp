@@ -11,7 +11,7 @@ using blas::real;
 
 // -----------------------------------------------------------------------------
 int64_t gees(
-    lapack::Job jobvs, lapack::Sort sort, LAPACK_S_SELECT2 select, int64_t n,
+    lapack::Job jobvs, lapack::Sort sort, lapack_s_select2 select, int64_t n,
     float* A, int64_t lda,
     int64_t* sdim,
     float* WR,
@@ -56,7 +56,7 @@ int64_t gees(
 
 // -----------------------------------------------------------------------------
 int64_t gees(
-    lapack::Job jobvs, lapack::Sort sort, LAPACK_D_SELECT2 select, int64_t n,
+    lapack::Job jobvs, lapack::Sort sort, lapack_d_select2 select, int64_t n,
     double* A, int64_t lda,
     int64_t* sdim,
     double* WR,
@@ -101,7 +101,7 @@ int64_t gees(
 
 // -----------------------------------------------------------------------------
 int64_t gees(
-    lapack::Job jobvs, lapack::Sort sort, LAPACK_C_SELECT1 select, int64_t n,
+    lapack::Job jobvs, lapack::Sort sort, lapack_c_select1 select, int64_t n,
     std::complex<float>* A, int64_t lda,
     int64_t* sdim,
     std::complex<float>* W,
@@ -147,7 +147,7 @@ int64_t gees(
 
 // -----------------------------------------------------------------------------
 int64_t gees(
-    lapack::Job jobvs, lapack::Sort sort, LAPACK_Z_SELECT1 select, int64_t n,
+    lapack::Job jobvs, lapack::Sort sort, lapack_z_select1 select, int64_t n,
     std::complex<double>* A, int64_t lda,
     int64_t* sdim,
     std::complex<double>* W,

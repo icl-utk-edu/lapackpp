@@ -11,6 +11,23 @@
 namespace lapack {
 
 // -----------------------------------------------------------------------------
+// Callback logical functions of one, two, or three arguments are used
+// to select eigenvalues to sort to the top left of the Schur form in gees and gges.
+// The value is selected if function returns TRUE (non-zero).
+
+typedef blas_int (*lapack_s_select2) ( float const* omega_real, float const* omega_imag );
+typedef blas_int (*lapack_s_select3) ( float const* alpha_real, float const* alpha_imag, float const* beta );
+
+typedef blas_int (*lapack_d_select2) ( double const* omega_real, double const* omega_imag );
+typedef blas_int (*lapack_d_select3) ( double const* alpha_real, double const* alpha_imag, double const* beta );
+
+typedef blas_int (*lapack_c_select1) ( std::complex<float> const* omega );
+typedef blas_int (*lapack_c_select2) ( std::complex<float> const* alpha, std::complex<float> const* beta );
+
+typedef blas_int (*lapack_z_select1) ( std::complex<double> const* omega );
+typedef blas_int (*lapack_z_select2) ( std::complex<double> const* alpha, std::complex<double> const* beta );
+
+// -----------------------------------------------------------------------------
 typedef blas::Layout Layout;
 typedef blas::Op Op;
 typedef blas::Uplo Uplo;

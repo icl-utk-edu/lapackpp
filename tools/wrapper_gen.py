@@ -37,10 +37,15 @@ header_top = '''\
 
 #include "lapack_util.hh"
 
+namespace lapack {
+
 '''
 
 header_bottom = '''\
-#endif /* ICL_LAPACK_WRAPPERS_HH */
+
+}  // namespace lapack
+
+#endif // ICL_LAPACK_WRAPPERS_HH
 '''
 
 # --------------------
@@ -88,17 +93,17 @@ typemap = {
     'complex*16'       : 'std::complex<double>',
     'logical'          : 'bool',
 
-    'logical function of two real arguments'               : 'LAPACK_S_SELECT2',
-    'logical function of three real arguments'             : 'LAPACK_S_SELECT3',
+    'logical function of two real arguments'               : 'lapack_s_select2',
+    'logical function of three real arguments'             : 'lapack_s_select3',
 
-    'logical function of two double precision arguments'   : 'LAPACK_D_SELECT2',
-    'logical function of three double precision arguments' : 'LAPACK_D_SELECT3',
+    'logical function of two double precision arguments'   : 'lapack_d_select2',
+    'logical function of three double precision arguments' : 'lapack_d_select3',
 
-    'logical function of one complex argument'     : 'LAPACK_C_SELECT1',
-    'logical function of two complex arguments'    : 'LAPACK_C_SELECT2',
+    'logical function of one complex argument'     : 'lapack_c_select1',
+    'logical function of two complex arguments'    : 'lapack_c_select2',
 
-    'logical function of one complex*16 argument'  : 'LAPACK_Z_SELECT1',
-    'logical function of two complex*16 arguments' : 'LAPACK_Z_SELECT2',
+    'logical function of one complex*16 argument'  : 'lapack_z_select1',
+    'logical function of two complex*16 arguments' : 'lapack_z_select2',
 }
 
 enum_map = {
@@ -144,6 +149,7 @@ enum_map = {
     'fact'   : 'Factored',    # *svx
     'sense'  : 'Sense',       # geesx
     'balanc' : 'Balance',     # geevx
+    'balance': 'Balance',
 }
 
 # 4 space indent
@@ -401,8 +407,16 @@ def parse_lapack( path ):
         if (not arg.array or arg.name in
                 ('WORK', 'SWORK', 'RWORK', 'IWORK', 'BWORK',
                 'IPIV', 'JPIV', 'JPVT', 'PIV',
-                'BERR', 'FERR', 'SELECT', 'TAU',
-                'ISUPPZ', 'IFAIL', 'ISEED', 'IBLOCK', 'ISPLIT')):
+                'BERR', 'FERR', 'SELECT',
+                'TAU', 'TAUP', 'TAUQ', 'TAUA', 'TAUB',
+                'ISUPPZ', 'IFAIL', 'ISEED', 'IBLOCK', 'ISPLIT',
+                'SCALE', 'LSCALE', 'RSCALE',
+                'ALPHA', 'ALPHAR', 'ALPHAI',
+                'BETA', 'BETAR', 'BETAI',
+                'THETA', 'PHI',
+                'HOUS2',
+                'ERR_BNDS_NORM', 'ERR_BNDS_COMP', 'PARAMS',
+                'RCONDE', 'RCONDV')):
             arg.name = arg.name.lower()
 
         # mark work, lwork, ldwork, etc.

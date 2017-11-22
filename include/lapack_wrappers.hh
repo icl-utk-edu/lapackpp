@@ -369,6 +369,49 @@ int64_t ormqr(
     double* C, int64_t ldc );
 
 // -----------------------------------------------------------------------------
+float lange(
+    lapack::Norm norm, int64_t m, int64_t n,
+    float const* A, int64_t lda );
+
+double lange(
+    lapack::Norm norm, int64_t m, int64_t n,
+    double const* A, int64_t lda );
+
+float lange(
+    lapack::Norm norm, int64_t m, int64_t n,
+    std::complex<float> const* A, int64_t lda );
+
+double lange(
+    lapack::Norm norm, int64_t m, int64_t n,
+    std::complex<double> const* A, int64_t lda );
+
+// -----------------------------------------------------------------------------
+float lanhe(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    std::complex<float> const* A, int64_t lda );
+
+double lanhe(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    std::complex<double> const* A, int64_t lda );
+
+// -----------------------------------------------------------------------------
+float lansy(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    float const* A, int64_t lda );
+
+double lansy(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    double const* A, int64_t lda );
+
+float lansy(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    std::complex<float> const* A, int64_t lda );
+
+double lansy(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    std::complex<double> const* A, int64_t lda );
+
+// -----------------------------------------------------------------------------
 void larnv(
     int64_t idist,
     int64_t* iseed, int64_t n,

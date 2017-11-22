@@ -159,6 +159,7 @@ class Arg:
         self.desc   = ''
 
         self.use_query = False
+        self.is_enum   = False
         self.is_array  = False
         self.dtype     = None
         self.dim       = None
@@ -313,9 +314,9 @@ state_verb  = 2
 state_desc  = 3
 
 # ------------------------------------------------------------------------------
-# Processes a single file, reading its function arguments.
+# Parses a single LAPACK src file, reading its function arguments.
 # Returns a string with the wrapper.
-def process( path ):
+def parse_lapack( path ):
     (d, filename) = os.path.split( path )
     (funcname, ext) = os.path.splitext( filename )
     func   = Func( funcname )
@@ -452,6 +453,7 @@ def process( path ):
 
         # map char to enum (after doing lname)
         if (arg.dtype == 'char'):
+            arg.is_enum = True
             arg.dtype = 'lapack::' + enum_map[ arg.name ]
 
         if (debug):
@@ -667,6 +669,8 @@ def generate_tester( funcs ):
     arrays   = ''
     init     = (tab + 'int64_t idist = 1;\n'
              +  tab + 'int64_t iseed[4] = { 0, 1, 2, 3 };\n')
+    copy     = ''
+    flop_args = [] # arguments for calling Gflops::foo(), pre-array
     tst_args = []  # arguments for calling C++ test
     ref_args = []  # arguments for calling Fortran reference
     verify   = ''
@@ -689,18 +693,16 @@ def generate_tester( funcs ):
             if (arg.array):
                 pre_arrays = False
 
-                # look for 2-D arrays, "(m,n)"
+                # look for 2-D arrays: (m,n), change to: m * n
                 s = re.search( r'^ *\( *(\w+), *(\w+) *\) *$', arg.dim )
-                #print( 'dim', arg.dim )
                 if (s):
-                    #print( 's', s.groups() )
                     dim = s.group(1) + ' * ' + s.group(2)
                 else:
                     dim = arg.dim
 
                 sizes += tab + 'size_t size_' + arg.name + ' = (size_t) ' + dim + ';\n';
-                if (arg.intent == 'in'):
-                    arrays     += tab + 'std::vector< ' + arg.ttype + ' > ' + arg.name + '( size_' + arg.name + ' );\n'
+                if (arg.intent == 'in' and not arg.dtype in ('int64_t')):
+                    arrays += tab + 'std::vector< ' + arg.ttype + ' > ' + arg.name + '( size_' + arg.name + ' );\n'
                     if (arg.dtype in ('float', 'double', 'std::complex<float>', 'std::complex<double>')):
                         init += tab + 'lapack::larnv( idist, iseed, ' + arg.name + '.size(), &' + arg.name + '[0] );\n'
                     else:
@@ -712,26 +714,39 @@ def generate_tester( funcs ):
                            +   tab + 'std::vector< ' + arg.ttype_ref + ' > ' + arg.name + '_ref( size_' + arg.name + ' );\n')
                     if (arg.dtype in ('float', 'double', 'std::complex<float>', 'std::complex<double>')):
                         init += tab + 'lapack::larnv( idist, iseed, ' + arg.name + '_tst.size(), &' + arg.name + '_tst[0] );\n'
-                        init += tab + arg.name + '_ref = ' + arg.name + '_tst;\n'
-                    elif (arg.intent == 'in,out'):
-                        init += tab + '// todo: initialize ' + arg.name + '_tst and ' + arg.name + '_ref'
+                        copy += tab + arg.name + '_ref = ' + arg.name + '_tst;\n'
+                    elif ('in' in arg.intent):
+                        init += tab + '// todo: initialize ' + arg.name + '_tst and ' + arg.name + '_ref\n'
                     tst_args.append( '&' + arg.name + '_tst[0]' )
                     ref_args.append( '&' + arg.name + '_ref[0]' )
-                    verify += tab*2 + 'error += abs_error( ' + arg.name + '_tst, ' + arg.name + '_ref );\n'
+                    if ('out' in arg.intent):
+                        verify += tab*2 + 'error += abs_error( ' + arg.name + '_tst, ' + arg.name + '_ref );\n'
                 # end
             else:
+                # not array
                 if (arg.intent == 'in'):
                     if (pre_arrays):
+                        if (arg.name not in ('uplo')):
+                            flop_args.append( arg.name )
                         if (arg.name in ('m', 'n', 'k')):
                             scalars += tab + arg.dtype + ' ' + arg.name + ' = params.dim.' + arg.name + '();\n'
                         else:
                             scalars += tab + arg.dtype + ' ' + arg.name + ' = params.' + arg.name + '.value();\n'
                     elif (arg.lbound):
-                        scalars2 += tab + arg.dtype + ' ' + arg.name + ' = ' + arg.lbound + ';\n'
+                        if (arg.name.startswith('ld')):
+                            scalars2 += tab + arg.dtype + ' ' + arg.name + ' = roundup( ' + arg.lbound + ', align );\n'
+                        else:
+                            scalars2 += tab + arg.dtype + ' ' + arg.name + ' = ' + arg.lbound + ';\n'
                     else:
                         scalars2 += tab + arg.dtype + ' ' + arg.name + ';  // todo value\n'
                     tst_args.append( arg.name )
-                    ref_args.append( arg.name )
+                    if (arg.is_enum):
+                        # convert enum to char, e.g., uplo2char(uplo)
+                        s = re.search( '^lapack::(\w+)', arg.dtype )
+                        assert( s is not None )
+                        ref_args.append( s.group(1).lower() + '2char(' + arg.name + ')' )
+                    else:
+                        ref_args.append( arg.name )
                 else:
                     if (pre_arrays):
                         scalars += tab + arg.dtype + ' ' + arg.name + '_tst = params.' + arg.name + '.get();\n'
@@ -758,6 +773,8 @@ def generate_tester( funcs ):
         for arg in func.args:
             if (arg.name in ('info', 'work', 'rwork', 'iwork', 'lwork', 'lrwork', 'ldwork', 'liwork')):
                 continue
+            elif (arg.is_enum):
+                lapacke_proto.append( 'char ' + arg.name )
             elif (arg.dtype in ('int64_t')):
                 if (arg.array):
                     lapacke_proto.append( 'lapack_int* ' + arg.name )
@@ -773,13 +790,14 @@ def generate_tester( funcs ):
         # end
         lapacke_proto = ', '.join( lapacke_proto )
         lapacke_args  = ', '.join( lapacke_args )
-        lapacke += ('lapack_int LAPACKE_' + func.name + '(\n'
+        lapacke += ('static lapack_int LAPACKE_' + func.name + '(\n'
                 +   tab + lapacke_proto + ' )\n'
                 +   '{\n'
                 +   tab + 'return LAPACKE_' + func.xname + '( LAPACK_COL_MAJOR, ' + lapacke_args + ' );\n'
                 +   '}\n\n')
     # end
 
+    flop_args = ', '.join( flop_args )
     tst_args = ', '.join( tst_args )
     ref_args = ', '.join( ref_args )
 
@@ -823,7 +841,7 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  '\n'
         +  tab + '// get & mark input values\n'
         +  scalars
-        #+ tab + 'int64_t align   = params.align.value();\n'
+        +  tab + 'int64_t align = params.align.value();\n'
         #+ tab + 'int64_t verbose = params.verbose.value();\n'
         +  '\n'
         +  tab + '// mark non-standard output values\n'
@@ -840,6 +858,7 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  arrays
         +  '\n'
         +  init
+        +  copy
         +  '\n'
         +  tab + '// ---------- run test\n'
         +  tab + 'libtest::flush_cache( params.cache.value() );\n'
@@ -850,7 +869,7 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  tab + '    fprintf( stderr, "lapack::' + func.name + ' returned error %lld\\n", (lld) info_tst );\n'
         +  tab + '}\n'
         +  '\n'
-        +  tab + 'double gflop = lapack::Gflop< scalar_t >::' + func.name + '( m, n );\n'
+        +  tab + 'double gflop = lapack::Gflop< scalar_t >::' + func.name + '( ' + flop_args + ' );\n'
         +  tab + 'params.time.value()   = time;\n'
         +  tab + 'params.gflops.value() = gflop / time;\n'
         +  '\n'
@@ -900,7 +919,7 @@ if (args.header):
 for arg in args.argv:
     files = []
     for subdir in ('SRC', 'TESTING/MATGEN'):
-        for p in ('s', 'd', 'c', 'z', 'ds', 'zc'):
+        for p in ('s', 'd', 'c', 'z'):  #, 'ds', 'zc'):
             f = lapack + '/' + subdir + '/' + p + arg + ".f"
             if (os.path.exists( f )):
                 files.append( f )
@@ -930,7 +949,7 @@ for arg in args.argv:
     funcs = []
     for f in files:
         print( '    ' + f )
-        func = process( f )
+        func = parse_lapack( f )
         funcs.append( func )
         if (args.header):
             txt = generate_wrapper( func, header=True )

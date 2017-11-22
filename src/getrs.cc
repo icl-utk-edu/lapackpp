@@ -29,7 +29,8 @@ int64_t getrs(
     blas_int lda_ = (blas_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        std::vector< blas_int > ipiv_( max( 1, (n) ) );
+        std::copy( &ipiv[0], &ipiv[(n)], ipiv_.begin() );
         blas_int const* ipiv_ptr = &ipiv_[0];
     #else
         blas_int const* ipiv_ptr = ipiv_;
@@ -64,7 +65,8 @@ int64_t getrs(
     blas_int lda_ = (blas_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        std::vector< blas_int > ipiv_( max( 1, (n) ) );
+        std::copy( &ipiv[0], &ipiv[(n)], ipiv_.begin() );
         blas_int const* ipiv_ptr = &ipiv_[0];
     #else
         blas_int const* ipiv_ptr = ipiv_;
@@ -99,7 +101,8 @@ int64_t getrs(
     blas_int lda_ = (blas_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        std::vector< blas_int > ipiv_( max( 1, (n) ) );
+        std::copy( &ipiv[0], &ipiv[(n)], ipiv_.begin() );
         blas_int const* ipiv_ptr = &ipiv_[0];
     #else
         blas_int const* ipiv_ptr = ipiv_;
@@ -134,7 +137,8 @@ int64_t getrs(
     blas_int lda_ = (blas_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        std::vector< blas_int > ipiv_( max( 1, (n) ) );
+        std::copy( &ipiv[0], &ipiv[(n)], ipiv_.begin() );
         blas_int const* ipiv_ptr = &ipiv_[0];
     #else
         blas_int const* ipiv_ptr = ipiv_;

@@ -28,7 +28,7 @@ int64_t gesv(
     blas_int lda_ = (blas_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( (n) );
+        std::vector< blas_int > ipiv_( max( 1, (n) ) );
         blas_int* ipiv_ptr = &ipiv_[0];
     #else
         blas_int* ipiv_ptr = ipiv;
@@ -65,7 +65,7 @@ int64_t gesv(
     blas_int lda_ = (blas_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( (n) );
+        std::vector< blas_int > ipiv_( max( 1, (n) ) );
         blas_int* ipiv_ptr = &ipiv_[0];
     #else
         blas_int* ipiv_ptr = ipiv;
@@ -102,7 +102,7 @@ int64_t gesv(
     blas_int lda_ = (blas_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( (n) );
+        std::vector< blas_int > ipiv_( max( 1, (n) ) );
         blas_int* ipiv_ptr = &ipiv_[0];
     #else
         blas_int* ipiv_ptr = ipiv;
@@ -139,7 +139,7 @@ int64_t gesv(
     blas_int lda_ = (blas_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( (n) );
+        std::vector< blas_int > ipiv_( max( 1, (n) ) );
         blas_int* ipiv_ptr = &ipiv_[0];
     #else
         blas_int* ipiv_ptr = ipiv;
@@ -179,7 +179,7 @@ int64_t gesv(
     blas_int lda_ = (blas_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( (n) );
+        std::vector< blas_int > ipiv_( max( 1, (n) ) );
         blas_int* ipiv_ptr = &ipiv_[0];
     #else
         blas_int* ipiv_ptr = ipiv;
@@ -226,7 +226,7 @@ int64_t gesv(
     blas_int lda_ = (blas_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( (n) );
+        std::vector< blas_int > ipiv_( max( 1, (n) ) );
         blas_int* ipiv_ptr = &ipiv_[0];
     #else
         blas_int* ipiv_ptr = ipiv;

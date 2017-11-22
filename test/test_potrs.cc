@@ -71,6 +71,16 @@ void test_potrs_work( Params& params, bool run )
     lapack::larnv( idist, iseed, B_tst.size(), &B_tst[0] );
     B_ref = B_tst;
 
+    // diagonally dominant -> positive definite
+    for (int64_t i = 0; i < n; ++i) {
+        A[ i + i*lda ] += n;
+    }
+    // factor A into LL^T
+    int64_t info = lapack::potrf( uplo, n, &A[0], lda );
+    if (info != 0) {
+        fprintf( stderr, "lapack::potrf returned error %lld\n", (lld) info );
+    }
+
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
     double time = omp_get_wtime();

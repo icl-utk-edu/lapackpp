@@ -35,6 +35,32 @@ static lapack_int LAPACKE_potri(
 }
 
 // -----------------------------------------------------------------------------
+// simple overloaded wrappers around LAPACKE
+static lapack_int LAPACKE_potrf(
+    char uplo, lapack_int n, float* A, lapack_int lda )
+{
+    return LAPACKE_spotrf( LAPACK_COL_MAJOR, uplo, n, A, lda );
+}
+
+static lapack_int LAPACKE_potrf(
+    char uplo, lapack_int n, double* A, lapack_int lda )
+{
+    return LAPACKE_dpotrf( LAPACK_COL_MAJOR, uplo, n, A, lda );
+}
+
+static lapack_int LAPACKE_potrf(
+    char uplo, lapack_int n, std::complex<float>* A, lapack_int lda )
+{
+    return LAPACKE_cpotrf( LAPACK_COL_MAJOR, uplo, n, A, lda );
+}
+
+static lapack_int LAPACKE_potrf(
+    char uplo, lapack_int n, std::complex<double>* A, lapack_int lda )
+{
+    return LAPACKE_zpotrf( LAPACK_COL_MAJOR, uplo, n, A, lda );
+}
+
+// -----------------------------------------------------------------------------
 template< typename scalar_t >
 void test_potri_work( Params& params, bool run )
 {
@@ -64,7 +90,18 @@ void test_potri_work( Params& params, bool run )
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, A_tst.size(), &A_tst[0] );
+
+    // diagonally dominant -> positive definite
+    for (int64_t i = 0; i < n; ++i) {
+        A_tst[ i + i*lda ] += n;
+    }
     A_ref = A_tst;
+
+    // factor A into LL^T
+    int64_t info = lapack::potrf( uplo, n, &A_tst[0], lda );
+    if (info != 0) {
+        fprintf( stderr, "lapack::potrf returned error %lld\n", (lld) info );
+    }
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
@@ -80,6 +117,12 @@ void test_potri_work( Params& params, bool run )
     params.gflops.value() = gflop / time;
 
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
+        // factor A into LL^T
+        info = LAPACKE_potrf( uplo2char(uplo), n, &A_ref[0], lda );
+        if (info != 0) {
+            fprintf( stderr, "LAPACKE_potrf returned error %lld\n", (lld) info );
+        }
+
         // ---------- run reference
         libtest::flush_cache( params.cache.value() );
         time = omp_get_wtime();

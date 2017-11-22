@@ -71,9 +71,15 @@ void test_getrs_work( Params& params, bool run )
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, A.size(), &A[0] );
-    // todo: initialize ipiv_tst and ipiv_ref
     lapack::larnv( idist, iseed, B_tst.size(), &B_tst[0] );
     B_ref = B_tst;
+
+    // factor A into LU
+    int64_t info = lapack::getrf( n, n, &A[0], lda, &ipiv_tst[0] );
+    if (info != 0) {
+        fprintf( stderr, "lapack::getrf returned error %lld\n", (lld) info );
+    }
+    std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
@@ -84,7 +90,7 @@ void test_getrs_work( Params& params, bool run )
         fprintf( stderr, "lapack::getrs returned error %lld\n", (lld) info_tst );
     }
 
-    double gflop = lapack::Gflop< scalar_t >::getrs( trans, n, nrhs );
+    double gflop = lapack::Gflop< scalar_t >::getrs( n, nrhs );
     params.time.value()   = time;
     params.gflops.value() = gflop / time;
 

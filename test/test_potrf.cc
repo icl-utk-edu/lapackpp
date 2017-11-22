@@ -64,6 +64,11 @@ void test_potrf_work( Params& params, bool run )
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, A_tst.size(), &A_tst[0] );
+
+    // diagonally dominant -> positive definite
+    for (int64_t i = 0; i < n; ++i) {
+        A_tst[ i + i*lda ] += n;
+    }
     A_ref = A_tst;
 
     // ---------- run test

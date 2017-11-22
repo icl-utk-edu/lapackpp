@@ -47,6 +47,7 @@ void test_potrs_work( Params& params, bool run )
     int64_t n = params.dim.n();
     int64_t nrhs = params.nrhs.value();
     int64_t align = params.align.value();
+    int64_t verbose = params.verbose.value();
 
     // mark non-standard output values
     params.ref_time.value();
@@ -81,6 +82,26 @@ void test_potrs_work( Params& params, bool run )
         fprintf( stderr, "lapack::potrf returned error %lld\n", (lld) info );
     }
 
+    if (verbose >= 1) {
+        printf( "\n"
+                "A n=%5lld, lda=%5lld\n"
+                "B n=%5lld, nrhs=%5lld, ldb=%5lld",
+                n, lda, n, nrhs, ldb );
+    }
+    if (verbose >= 2) {
+        printf( "A = " ); print_matrix( n, n, &A[0], lda );
+        printf( "B = " ); print_matrix( n, nrhs, &B_tst[0], lda );
+    }
+
+    // test error exits
+    if (params.error_exit.value() == 'y') {
+        assert_throw( lapack::potrs( Uplo(0),  n, nrhs, &A[0], lda, &B_tst[0], ldb ), lapack::Error );
+        assert_throw( lapack::potrs( uplo,    -1, nrhs, &A[0], lda, &B_tst[0], ldb ), lapack::Error );
+        assert_throw( lapack::potrs( uplo,     n,   -1, &A[0], lda, &B_tst[0], ldb ), lapack::Error );
+        assert_throw( lapack::potrs( uplo,     n, nrhs, &A[0], n-1, &B_tst[0], ldb ), lapack::Error );
+        assert_throw( lapack::potrs( uplo,     n, nrhs, &A[0], lda, &B_tst[0], n-1 ), lapack::Error );
+    }
+
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
     double time = omp_get_wtime();
@@ -94,6 +115,10 @@ void test_potrs_work( Params& params, bool run )
     params.time.value()   = time;
     params.gflops.value() = gflop / time;
 
+    if (verbose >= 2) {
+        printf( "B2 = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
+    }
+
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache.value() );
@@ -106,6 +131,10 @@ void test_potrs_work( Params& params, bool run )
 
         params.ref_time.value()   = time;
         params.ref_gflops.value() = gflop / time;
+
+        if (verbose >= 2) {
+            printf( "B2ref = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
+        }
 
         // ---------- check error compared to reference
         real_t error = 0;

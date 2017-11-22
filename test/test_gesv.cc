@@ -46,6 +46,7 @@ void test_gesv_work( Params& params, bool run )
     int64_t n = params.dim.n();
     int64_t nrhs = params.nrhs.value();
     int64_t align = params.align.value();
+    int64_t verbose = params.verbose.value();
 
     // mark non-standard output values
     params.ref_time.value();
@@ -75,6 +76,25 @@ void test_gesv_work( Params& params, bool run )
     A_ref = A_tst;
     B_ref = B_tst;
 
+    if (verbose >= 1) {
+        printf( "\n"
+                "A n=%5lld, lda=%5lld\n"
+                "B n=%5lld, nrhs=%5lld, ldb=%5lld",
+                n, lda, n, nrhs, ldb );
+    }
+    if (verbose >= 2) {
+        printf( "A = " ); print_matrix( n, n, &A_tst[0], lda );
+        printf( "B = " ); print_matrix( n, nrhs, &B_tst[0], lda );
+    }
+
+    // test error exits
+    if (params.error_exit.value() == 'y') {
+        assert_throw( lapack::gesv( -1, nrhs, &A_tst[0], lda, &ipiv_tst[0], &B_tst[0], ldb ), lapack::Error );
+        assert_throw( lapack::gesv(  n,   -1, &A_tst[0], lda, &ipiv_tst[0], &B_tst[0], ldb ), lapack::Error );
+        assert_throw( lapack::gesv(  n, nrhs, &A_tst[0], n-1, &ipiv_tst[0], &B_tst[0], ldb ), lapack::Error );
+        assert_throw( lapack::gesv(  n, nrhs, &A_tst[0], lda, &ipiv_tst[0], &B_tst[0], n-1 ), lapack::Error );
+    }
+
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
     double time = omp_get_wtime();
@@ -88,6 +108,11 @@ void test_gesv_work( Params& params, bool run )
     params.time.value()   = time;
     params.gflops.value() = gflop / time;
 
+    if (verbose >= 2) {
+        printf( "A2 = " ); print_matrix( n, n, &A_tst[0], lda );
+        printf( "B2 = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
+    }
+
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache.value() );
@@ -100,6 +125,11 @@ void test_gesv_work( Params& params, bool run )
 
         params.ref_time.value()   = time;
         params.ref_gflops.value() = gflop / time;
+
+        if (verbose >= 2) {
+            printf( "A2ref = " ); print_matrix( n, n, &A_ref[0], lda );
+            printf( "B2ref = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
+        }
 
         // ---------- check error compared to reference
         real_t error = 0;

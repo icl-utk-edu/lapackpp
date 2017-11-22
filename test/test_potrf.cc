@@ -46,6 +46,7 @@ void test_potrf_work( Params& params, bool run )
     lapack::Uplo uplo = params.uplo.value();
     int64_t n = params.dim.n();
     int64_t align = params.align.value();
+    int64_t verbose = params.verbose.value();
 
     // mark non-standard output values
     params.ref_time.value();
@@ -71,6 +72,22 @@ void test_potrf_work( Params& params, bool run )
     }
     A_ref = A_tst;
 
+    if (verbose >= 1) {
+        printf( "\n"
+                "A n=%5lld, lda=%5lld\n",
+                n, lda );
+    }
+    if (verbose >= 2) {
+        printf( "A = " ); print_matrix( n, n, &A_tst[0], lda );
+    }
+
+    // test error exits
+    if (params.error_exit.value() == 'y') {
+        assert_throw( lapack::potrf( Uplo(0),  n, &A_tst[0], lda ), lapack::Error );
+        assert_throw( lapack::potrf( uplo,    -1, &A_tst[0], lda ), lapack::Error );
+        assert_throw( lapack::potrf( uplo,     n, &A_tst[0], n-1 ), lapack::Error );
+    }
+
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
     double time = omp_get_wtime();
@@ -84,6 +101,10 @@ void test_potrf_work( Params& params, bool run )
     params.time.value()   = time;
     params.gflops.value() = gflop / time;
 
+    if (verbose >= 2) {
+        printf( "A2 = " ); print_matrix( n, n, &A_tst[0], lda );
+    }
+
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache.value() );
@@ -96,6 +117,10 @@ void test_potrf_work( Params& params, bool run )
 
         params.ref_time.value()   = time;
         params.ref_gflops.value() = gflop / time;
+
+        if (verbose >= 2) {
+            printf( "A2ref = " ); print_matrix( n, n, &A_ref[0], lda );
+        }
 
         // ---------- check error compared to reference
         real_t error = 0;

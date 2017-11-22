@@ -302,6 +302,9 @@ class Gflop:
     public blas::Gflop<T>
 {
 public:
+    static double gesv(double n, double nrhs)
+        { return getrf(n, n) + getrs(n, nrhs); }
+
     static double getrf(double m, double n)
         { return 1e-9 * (fmuls_getrf(m, n) + fadds_getrf(m, n)); }
 
@@ -310,6 +313,9 @@ public:
 
     static double getrs(double n, double nrhs)
         { return 1e-9 * (fmuls_getrs(n, nrhs) + fadds_getrs(n, nrhs)); }
+
+    static double posv(double n, double nrhs)
+        { return potrf(n) + potrs(n, nrhs); }
 
     static double potrf(double n)
         { return 1e-9 * (fmuls_potrf(n) + fadds_potrf(n)); }
@@ -399,6 +405,9 @@ class Gflop< std::complex<T> >:
     public blas::Gflop< std::complex<T> >
 {
 public:
+    static double gesv(double n, double nrhs)
+        { return getrf(n, n) + getrs(n, nrhs); }
+
     static double getrf(double m, double n)
         { return 1e-9 * (6*fmuls_getrf(m, n) + 2*fadds_getrf(m, n)); }
 
@@ -407,6 +416,9 @@ public:
 
     static double getrs(double n, double nrhs)
         { return 1e-9 * (6*fmuls_getrs(n, nrhs) + 2*fadds_getrs(n, nrhs)); }
+
+    static double posv(double n, double nrhs)
+        { return potrf(n) + potrs(n, nrhs); }
 
     static double potrf(double n)
         { return 1e-9 * (6*fmuls_potrf(n) + 2*fadds_potrf(n)); }

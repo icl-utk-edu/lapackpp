@@ -19,7 +19,7 @@ LIBS     = -L../lib -llapackpp \
            -L${LAPACKDIR} -llapacke \
            -framework Accelerate \
 
-src = test.cc test_getrf.cc
+src = ${wildcard *.cc}
 obj = ${addsuffix .o, ${basename ${src}}}
 dep = ${addsuffix .d, ${basename ${src}}}
 

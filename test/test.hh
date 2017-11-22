@@ -36,6 +36,7 @@ public:
     libtest::ParamEnum< lapack::Diag >      diag;
 
     libtest::ParamInt3   dim;
+    libtest::ParamInt    nrhs;
     libtest::ParamDouble alpha;
     libtest::ParamDouble beta;
     libtest::ParamInt    incx;
@@ -58,9 +59,6 @@ public:
     libtest::ParamOkay       okay;
 };
 
-// -----------------------------------------------------------------------------
-// LAPACK
-void test_getrf ( Params& params, bool run );
 
 // -----------------------------------------------------------------------------
 template< typename T >
@@ -82,5 +80,18 @@ inline T roundup( T x, T y )
             printf( "Caught expected exception: %s\n", err.what() ); \
         } \
     }
+
+
+// -----------------------------------------------------------------------------
+// LAPACK
+void test_gesv  ( Params& params, bool run );
+void test_getrf ( Params& params, bool run );
+void test_getri ( Params& params, bool run );
+void test_getrs ( Params& params, bool run );
+
+void test_posv  ( Params& params, bool run );
+void test_potrf ( Params& params, bool run );
+void test_potri ( Params& params, bool run );
+void test_potrs ( Params& params, bool run );
 
 #endif  //  #ifndef TEST_HH

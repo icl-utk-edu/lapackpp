@@ -18,11 +18,14 @@ shared: ../lib/liblapackpp.so
 
 static: ../lib/liblapackpp.a
 
-../lib/liblapackpp.so: ${obj}
-	${CXX} -shared -o $@ $^ ${LIBS}
+../lib:
+	mkdir $@
 
-../lib/liblapackpp.a: ${obj}
-	ar cr $@ $^
+../lib/liblapackpp.so: ${obj} | ../lib
+	${CXX} -shared -o $@ ${obj} ${LIBS}
+
+../lib/liblapackpp.a: ${obj} | ../lib
+	ar cr $@ ${obj}
 	ranlib $@
 
 echo:

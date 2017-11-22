@@ -133,7 +133,61 @@ void test_potri_work( Params& params, bool run )
     params.time.value()   = time;
     params.gflops.value() = gflop / time;
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (verbose >= 2) {
+        printf( "A2 = " ); print_matrix( n, n, &A_tst[0], lda );
+    }
+
+    if (params.check.value() == 'y') {
+        // ---------- check error
+        // comparing to ref. solution doesn't work due to roundoff errors
+        real_t eps = std::numeric_limits< real_t >::epsilon();
+        real_t tol = params.tol.value();
+
+        // symmetrize A^{-1}, in order to use hemm
+        if (uplo == Uplo::Lower) {
+            for (int64_t j = 0; j < n; ++j)
+                for (int64_t i = 0; i < j; ++i)
+                    A_tst[ i + j*lda ] = A_tst[ j + i*lda ];
+        }
+        else {
+            for (int64_t j = 0; j < n; ++j)
+                for (int64_t i = 0; i < j; ++i)
+                    A_tst[ j + i*lda ] = A_tst[ i + j*lda ];
+        }
+        if (verbose >= 2) {
+            printf( "A2b = " ); print_matrix( n, n, &A_tst[0], lda );
+        }
+
+        // R = I
+        std::vector< scalar_t > R( size_A );
+        // todo: laset; needs uplo=general
+        for (int64_t j = 0; j < n; ++j) {
+            for (int64_t i = 0; i < n; ++i) {
+                R[ i + j*lda ] = 0;
+            }
+            R[ j + j*lda ] = 1;
+        }
+
+        // R = I - A A^{-1}, A is Hermitian, A^{-1} is treated as general
+        blas::hemm( Layout::ColMajor, Side::Left, uplo, n, n,
+                    -1.0, &A_ref[0], lda,
+                          &A_tst[0], lda,
+                     1.0, &R[0], lda );
+        if (verbose >= 2) {
+            printf( "R = " ); print_matrix( n, n, &R[0], lda );
+        }
+
+        // error = ||I - A A^{-1}|| / (n ||A|| ||A^{-1}||)
+        // todo: use lanhe; needs lanhe overloaded for real
+        real_t Rnorm     = lapack::lange( lapack::Norm::Fro, n, n, &R[0], lda );
+        real_t Anorm     = lapack::lansy( lapack::Norm::Fro, uplo, n, &A_ref[0], lda );
+        real_t Ainv_norm = lapack::lansy( lapack::Norm::Fro, uplo, n, &A_tst[0], lda );
+        real_t error = Rnorm / (n * Anorm * Ainv_norm);
+        params.error.value() = error;
+        params.okay.value() = (error < tol*eps);
+    }
+
+    if (params.ref.value() == 'y') {
         // factor A into LL^T
         info = LAPACKE_potrf( uplo2char(uplo), n, &A_ref[0], lda );
         if (info != 0) {
@@ -155,15 +209,6 @@ void test_potri_work( Params& params, bool run )
         if (verbose >= 2) {
             printf( "A2ref = " ); print_matrix( n, n, &A_ref[0], lda );
         }
-
-        // ---------- check error compared to reference
-        real_t error = 0;
-        if (info_tst != info_ref) {
-            error = 1;
-        }
-        error += abs_error( A_tst, A_ref );
-        params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 

@@ -133,7 +133,41 @@ void test_getri_work( Params& params, bool run )
         printf( "A2 = " ); print_matrix( n, n, &A_tst[0], lda );
     }
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (params.check.value() == 'y') {
+        // ---------- check error
+        // comparing to ref. solution doesn't work due to roundoff errors
+        real_t eps = std::numeric_limits< real_t >::epsilon();
+        real_t tol = params.tol.value();
+
+        // R = I
+        std::vector< scalar_t > R( size_A );
+        // todo: laset; needs uplo=general
+        for (int64_t j = 0; j < n; ++j) {
+            for (int64_t i = 0; i < n; ++i) {
+                R[ i + j*lda ] = 0;
+            }
+            R[ j + j*lda ] = 1;
+        }
+
+        // R = I - A A^{-1}
+        blas::gemm( Layout::ColMajor, Op::NoTrans, Op::NoTrans, n, n, n,
+                    -1.0, &A_ref[0], lda,
+                          &A_tst[0], lda,
+                     1.0, &R[0], lda );
+        if (verbose >= 2) {
+            printf( "R = " ); print_matrix( n, n, &R[0], lda );
+        }
+
+        // error = ||I - A A^{-1}|| / (n ||A|| ||A^{-1}||)
+        real_t Rnorm     = lapack::lange( lapack::Norm::Fro, n, n, &R[0],     lda );
+        real_t Anorm     = lapack::lange( lapack::Norm::Fro, n, n, &A_ref[0], lda );
+        real_t Ainv_norm = lapack::lange( lapack::Norm::Fro, n, n, &A_tst[0], lda );
+        real_t error = Rnorm / (n * Anorm * Ainv_norm);
+        params.error.value() = error;
+        params.okay.value() = (error < tol*eps);
+    }
+
+    if (params.ref.value() == 'y') {
         // factor A into LU
         info = LAPACKE_getrf( n, n, &A_ref[0], lda, &ipiv_ref[0] );
         if (info != 0) {
@@ -155,15 +189,6 @@ void test_getri_work( Params& params, bool run )
         if (verbose >= 2) {
             printf( "A2ref = " ); print_matrix( n, n, &A_ref[0], lda );
         }
-
-        // ---------- check error compared to reference
-        real_t error = 0;
-        if (info_tst != info_ref) {
-            error = 1;
-        }
-        error += abs_error( A_tst, A_ref );
-        params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 

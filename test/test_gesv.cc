@@ -79,7 +79,8 @@ void test_gesv_work( Params& params, bool run )
         printf( "\n"
                 "A n=%5lld, lda=%5lld\n"
                 "B n=%5lld, nrhs=%5lld, ldb=%5lld",
-                n, lda, n, nrhs, ldb );
+                (lld) n, (lld) lda,
+                (lld) n, (lld) nrhs, (lld) ldb );
     }
     if (verbose >= 2) {
         printf( "A = " ); print_matrix( n, n, &A_tst[0], lda );

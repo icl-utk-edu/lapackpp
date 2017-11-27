@@ -97,7 +97,7 @@ void test_getri_work( Params& params, bool run )
     if (verbose >= 1) {
         printf( "\n"
                 "A n=%5lld, lda=%5lld\n",
-                n, lda );
+                (lld) n, (lld) lda );
     }
     if (verbose >= 2) {
         printf( "A = " ); print_matrix( n, n, &A_tst[0], lda );

@@ -72,7 +72,7 @@ void test_getrf_work( Params& params, bool run )
     if (verbose >= 1) {
         printf( "\n"
                 "A m=%5lld, n=%5lld, lda=%5lld\n",
-                m, n, lda );
+                (lld) m, (lld) n, (lld) lda );
     }
     if (verbose >= 2) {
         printf( "A = " ); print_matrix( m, n, &A_tst[0], lda );

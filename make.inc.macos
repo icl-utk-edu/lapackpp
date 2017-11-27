@@ -1,0 +1,20 @@
+# MacOS Accelerate framework with GNU gcc/g++
+# Note that Apple's clang doesn't yet support OpenMP, as of version 8.0.0.
+# See http://hpc.sourceforge.net/ for GNU compilers for MacOS.
+# Assumes $LAPACKDIR is set to where lapacke library exists, e.g., in ~/.bashrc:
+#     export LAPACKDIR=${HOME}/lapack
+
+CXX       = g++
+
+LDFLAGS   = -fPIC -fopenmp
+CXXFLAGS  = -fPIC -fopenmp -MMD -std=c++11 -pedantic \
+            -Wall -Wmissing-declarations \
+            -Wno-unused-local-typedefs
+
+# Accelerate missing *gbrfsx, looks like LAPACK 3.1
+CXXFLAGS += -I${LAPACKDIR}/LAPACKE/include \
+            -DLAPACK_VERSION_MAJOR=3 -DLAPACK_VERSION_MINOR=1 -DLAPACK_VERSION_MICRO=0 \
+            -DHAVE_MACOS_ACCELERATE \
+            -DBLAS_COMPLEX_RETURN_ARGUMENT
+
+LIBS      = -L${LAPACKDIR} -llapacke -framework Accelerate

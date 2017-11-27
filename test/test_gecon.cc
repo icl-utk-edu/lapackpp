@@ -6,7 +6,6 @@
 
 #include <vector>
 #include <omp.h>
-#include <lapacke.h>
 
 // -----------------------------------------------------------------------------
 // simple overloaded wrappers around LAPACKE

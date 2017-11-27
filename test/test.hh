@@ -4,6 +4,12 @@
 #include "libtest.hh"
 #include "lapack_util.hh"
 
+#ifdef HAVE_MKL
+    #include <mkl_lapacke.h>
+#else
+    #include <lapacke.h>
+#endif
+
 // -----------------------------------------------------------------------------
 class Params: public libtest::ParamsBase
 {

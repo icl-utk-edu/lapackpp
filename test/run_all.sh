@@ -7,6 +7,8 @@ export       mn="${square} ${tall} ${wide}"
 export     type='--type=s,d,c,z'
 export    trans='--trans=n,t,c'
 export     uplo='--uplo=l,u'
+export     norm='--norm 1,inf,fro,max'
+export     diag='--diag n,u'
 
 # echo commands
 set -x
@@ -30,7 +32,7 @@ set -x
 ./test poequ ${type} ${square} # only diagonal elements
 
 # auxilary - norms
-./test lange ${type} ${mn}
-./test lanhe ${type} ${square} ${uplo}
-./test lansy ${type} ${square} ${uplo}
-./test lantr ${type} ${square} ${uplo}
+./test lange ${type} ${mn}             ${norm}
+./test lanhe ${type} ${square} ${uplo} ${norm}
+./test lansy ${type} ${square} ${uplo} ${norm}
+./test lantr ${type} ${square} ${uplo} ${norm} ${diag}

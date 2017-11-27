@@ -178,10 +178,9 @@ void test_potri_work( Params& params, bool run )
         }
 
         // error = ||I - A A^{-1}|| / (n ||A|| ||A^{-1}||)
-        // todo: use lanhe; needs lanhe overloaded for real
         real_t Rnorm     = lapack::lange( lapack::Norm::Fro, n, n, &R[0], lda );
-        real_t Anorm     = lapack::lansy( lapack::Norm::Fro, uplo, n, &A_ref[0], lda );
-        real_t Ainv_norm = lapack::lansy( lapack::Norm::Fro, uplo, n, &A_tst[0], lda );
+        real_t Anorm     = lapack::lanhe( lapack::Norm::Fro, uplo, n, &A_ref[0], lda );
+        real_t Ainv_norm = lapack::lanhe( lapack::Norm::Fro, uplo, n, &A_tst[0], lda );
         real_t error = Rnorm / (n * Anorm * Ainv_norm);
         params.error.value() = error;
         params.okay.value() = (error < tol*eps);

@@ -54,6 +54,15 @@
 #define lapack_logical          lapack_int
 #endif
 
+// -----------------------------------------------------------------------------
+// f2c, hence MacOS Accelerate, returns double instead of float
+// for sdot, slange, clange, etc.
+#if defined(HAVE_MACOS_ACCELERATE) || defined(HAVE_F2C)
+    typedef double lapack_float_return;
+#else
+    typedef float lapack_float_return;
+#endif
+
 #ifndef LAPACK_COMPLEX_CUSTOM
 
 #if defined(LAPACK_COMPLEX_STRUCTURE)

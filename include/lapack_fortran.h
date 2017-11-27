@@ -9537,7 +9537,7 @@ void LAPACK_zlaswp(
 
 /* ----- matrix norm */
 #define LAPACK_slange LAPACK_GLOBAL(slange,SLANGE)
-float LAPACK_slange(
+lapack_float_return LAPACK_slange(
     char const* norm,
     lapack_int const* m, lapack_int const* n,
     float const* a, lapack_int const* lda,
@@ -9549,7 +9549,7 @@ double LAPACK_dlange(
     double const* a, lapack_int const* lda,
     double* work );
 #define LAPACK_clange LAPACK_GLOBAL(clange,CLANGE)
-float LAPACK_clange(
+lapack_float_return LAPACK_clange(
     char const* norm,
     lapack_int const* m, lapack_int const* n,
     lapack_complex_float const* a, lapack_int const* lda,
@@ -9562,7 +9562,7 @@ double LAPACK_zlange(
     double* work );
 
 #define LAPACK_slansy LAPACK_GLOBAL(slansy,SLANSY)
-float LAPACK_slansy(
+lapack_float_return LAPACK_slansy(
     char const* norm, char const* uplo,
     lapack_int const* n,
     float const* a, lapack_int const* lda,
@@ -9574,7 +9574,7 @@ double LAPACK_dlansy(
     double const* a, lapack_int const* lda,
     double* work );
 #define LAPACK_clansy LAPACK_GLOBAL(clansy,CLANSY)
-float LAPACK_clansy(
+lapack_float_return LAPACK_clansy(
     char const* norm, char const* uplo,
     lapack_int const* n,
     lapack_complex_float const* a, lapack_int const* lda,
@@ -9586,7 +9586,7 @@ double LAPACK_zlansy(
     lapack_complex_double const* a, lapack_int const* lda,
     double* work );
 #define LAPACK_clanhe LAPACK_GLOBAL(clanhe,CLANHE)
-float LAPACK_clanhe(
+lapack_float_return LAPACK_clanhe(
     char const* norm, char const* uplo,
     lapack_int const* n,
     lapack_complex_float const* a, lapack_int const* lda,
@@ -9599,7 +9599,7 @@ double LAPACK_zlanhe(
     double* work );
 
 #define LAPACK_slantr LAPACK_GLOBAL(slantr,SLANTR)
-float LAPACK_slantr(
+lapack_float_return LAPACK_slantr(
     char const* norm, char const* uplo, char const* diag,
     lapack_int const* m,
     lapack_int const* n,
@@ -9613,7 +9613,7 @@ double LAPACK_dlantr(
     double const* a, lapack_int const* lda,
     double* work );
 #define LAPACK_clantr LAPACK_GLOBAL(clantr,CLANTR)
-float LAPACK_clantr(
+lapack_float_return LAPACK_clantr(
     char const* norm, char const* uplo, char const* diag,
     lapack_int const* m,
     lapack_int const* n,
@@ -9629,7 +9629,7 @@ double LAPACK_zlantr(
 
 /* ----- machine properties */
 #define LAPACK_slamch LAPACK_GLOBAL(slamch,SLAMCH)
-float LAPACK_slamch(
+lapack_float_return LAPACK_slamch(
     char const* cmach );
 #define LAPACK_dlamch LAPACK_GLOBAL(dlamch,DLAMCH)
 double LAPACK_dlamch(
@@ -10137,13 +10137,13 @@ void LAPACK_zlapmt(
 
 /* ----- sqrt( x^2 + y^2 ) and sqrt( x^2 + y^2 + z^2 ) */
 #define LAPACK_slapy2 LAPACK_GLOBAL(slapy2,SLAPY2)
-float LAPACK_slapy2(
+lapack_float_return LAPACK_slapy2(
     float  const* x, float  const* y );
 #define LAPACK_dlapy2 LAPACK_GLOBAL(dlapy2,DLAPY2)
 double LAPACK_dlapy2(
     double const* x, double const* y );
 #define LAPACK_slapy3 LAPACK_GLOBAL(slapy3,SLAPY3)
-float LAPACK_slapy3(
+lapack_float_return LAPACK_slapy3(
     float  const* x, float  const* y, float  const* z );
 #define LAPACK_dlapy3 LAPACK_GLOBAL(dlapy3,DLAPY3)
 double LAPACK_dlapy3(

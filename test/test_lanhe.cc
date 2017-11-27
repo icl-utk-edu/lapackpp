@@ -10,13 +10,25 @@
 
 // -----------------------------------------------------------------------------
 // simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_lanhe(
+static float LAPACKE_lanhe(
+    char norm, char uplo, lapack_int n, float* A, lapack_int lda )
+{
+    return LAPACKE_slansy( LAPACK_COL_MAJOR, norm, uplo, n, A, lda );
+}
+
+static double LAPACKE_lanhe(
+    char norm, char uplo, lapack_int n, double* A, lapack_int lda )
+{
+    return LAPACKE_dlansy( LAPACK_COL_MAJOR, norm, uplo, n, A, lda );
+}
+
+static float LAPACKE_lanhe(
     char norm, char uplo, lapack_int n, std::complex<float>* A, lapack_int lda )
 {
     return LAPACKE_clanhe( LAPACK_COL_MAJOR, norm, uplo, n, A, lda );
 }
 
-static lapack_int LAPACKE_lanhe(
+static double LAPACKE_lanhe(
     char norm, char uplo, lapack_int n, std::complex<double>* A, lapack_int lda )
 {
     return LAPACKE_zlanhe( LAPACK_COL_MAJOR, norm, uplo, n, A, lda );
@@ -38,7 +50,7 @@ void test_lanhe_work( Params& params, bool run )
 
     // mark non-standard output values
     params.ref_time.value();
-    params.ref_gflops.value();
+    //params.ref_gflops.value();
 
     if (! run)
         return;
@@ -56,34 +68,26 @@ void test_lanhe_work( Params& params, bool run )
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
     double time = omp_get_wtime();
-    int64_t info_tst = lapack::lanhe( norm, uplo, n, &A[0], lda );
+    real_t norm_tst = lapack::lanhe( norm, uplo, n, &A[0], lda );
     time = omp_get_wtime() - time;
-    if (info_tst != 0) {
-        fprintf( stderr, "lapack::lanhe returned error %lld\n", (lld) info_tst );
-    }
 
-    double gflop = lapack::Gflop< scalar_t >::lanhe( norm, n );
+    //double gflop = lapack::Gflop< scalar_t >::lanhe( norm, n );
     params.time.value()   = time;
-    params.gflops.value() = gflop / time;
+    //params.gflops.value() = gflop / time;
 
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache.value() );
         time = omp_get_wtime();
-        int64_t info_ref = LAPACKE_lanhe( norm2char(norm), uplo2char(uplo), n, &A[0], lda );
+        real_t norm_ref = LAPACKE_lanhe( norm2char(norm), uplo2char(uplo), n, &A[0], lda );
         time = omp_get_wtime() - time;
-        if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_lanhe returned error %lld\n", (lld) info_ref );
-        }
 
         params.ref_time.value()   = time;
-        params.ref_gflops.value() = gflop / time;
+        //params.ref_gflops.value() = gflop / time;
 
         // ---------- check error compared to reference
         real_t error = 0;
-        if (info_tst != info_ref) {
-            error = 1;
-        }
+        error += std::abs( norm_tst - norm_ref );
         params.error.value() = error;
         params.okay.value() = (error == 0);  // expect lapackpp == lapacke
     }

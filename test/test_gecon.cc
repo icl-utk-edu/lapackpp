@@ -11,25 +11,25 @@
 // -----------------------------------------------------------------------------
 // simple overloaded wrappers around LAPACKE
 static lapack_int LAPACKE_gecon(
-    char norm, lapack_int n, float* A, lapack_int lda, float anorm, float rcond )
+    char norm, lapack_int n, float* A, lapack_int lda, float anorm, float* rcond )
 {
     return LAPACKE_sgecon( LAPACK_COL_MAJOR, norm, n, A, lda, anorm, rcond );
 }
 
 static lapack_int LAPACKE_gecon(
-    char norm, lapack_int n, double* A, lapack_int lda, double anorm, double rcond )
+    char norm, lapack_int n, double* A, lapack_int lda, double anorm, double* rcond )
 {
     return LAPACKE_dgecon( LAPACK_COL_MAJOR, norm, n, A, lda, anorm, rcond );
 }
 
 static lapack_int LAPACKE_gecon(
-    char norm, lapack_int n, std::complex<float>* A, lapack_int lda, float anorm, float rcond )
+    char norm, lapack_int n, std::complex<float>* A, lapack_int lda, float anorm, float* rcond )
 {
     return LAPACKE_cgecon( LAPACK_COL_MAJOR, norm, n, A, lda, anorm, rcond );
 }
 
 static lapack_int LAPACKE_gecon(
-    char norm, lapack_int n, std::complex<double>* A, lapack_int lda, double anorm, double rcond )
+    char norm, lapack_int n, std::complex<double>* A, lapack_int lda, double anorm, double* rcond )
 {
     return LAPACKE_zgecon( LAPACK_COL_MAJOR, norm, n, A, lda, anorm, rcond );
 }
@@ -49,16 +49,16 @@ void test_gecon_work( Params& params, bool run )
 
     // mark non-standard output values
     params.ref_time.value();
-    params.ref_gflops.value();
+    //params.ref_gflops.value();
 
     if (! run)
         return;
 
     // ---------- setup
     int64_t lda = roundup( max( 1, n ), align );
-    float anorm;  // todo value
-    float rcond_tst;  // todo value
-    float rcond_ref;  // todo value
+    real_t anorm;
+    real_t rcond_tst;
+    real_t rcond_ref;
     size_t size_A = (size_t) lda * n;
 
     std::vector< scalar_t > A( size_A );
@@ -66,6 +66,8 @@ void test_gecon_work( Params& params, bool run )
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, A.size(), &A[0] );
+
+    anorm = lapack::lange( norm, n, n, &A[0], lda );
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
@@ -76,9 +78,9 @@ void test_gecon_work( Params& params, bool run )
         fprintf( stderr, "lapack::gecon returned error %lld\n", (lld) info_tst );
     }
 
-    double gflop = lapack::Gflop< scalar_t >::gecon( norm, n );
+    //double gflop = lapack::Gflop< scalar_t >::gecon( norm, n );
     params.time.value()   = time;
-    params.gflops.value() = gflop / time;
+    //params.gflops.value() = gflop / time;
 
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
         // ---------- run reference
@@ -91,7 +93,7 @@ void test_gecon_work( Params& params, bool run )
         }
 
         params.ref_time.value()   = time;
-        params.ref_gflops.value() = gflop / time;
+        //params.ref_gflops.value() = gflop / time;
 
         // ---------- check error compared to reference
         real_t error = 0;

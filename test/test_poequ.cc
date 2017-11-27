@@ -11,25 +11,25 @@
 // -----------------------------------------------------------------------------
 // simple overloaded wrappers around LAPACKE
 static lapack_int LAPACKE_poequ(
-    lapack_int n, float* A, lapack_int lda, float* S, float scond, float amax )
+    lapack_int n, float* A, lapack_int lda, float* S, float* scond, float* amax )
 {
     return LAPACKE_spoequ( LAPACK_COL_MAJOR, n, A, lda, S, scond, amax );
 }
 
 static lapack_int LAPACKE_poequ(
-    lapack_int n, double* A, lapack_int lda, double* S, double scond, double amax )
+    lapack_int n, double* A, lapack_int lda, double* S, double* scond, double* amax )
 {
     return LAPACKE_dpoequ( LAPACK_COL_MAJOR, n, A, lda, S, scond, amax );
 }
 
 static lapack_int LAPACKE_poequ(
-    lapack_int n, std::complex<float>* A, lapack_int lda, float* S, float scond, float amax )
+    lapack_int n, std::complex<float>* A, lapack_int lda, float* S, float* scond, float* amax )
 {
     return LAPACKE_cpoequ( LAPACK_COL_MAJOR, n, A, lda, S, scond, amax );
 }
 
 static lapack_int LAPACKE_poequ(
-    lapack_int n, std::complex<double>* A, lapack_int lda, double* S, double scond, double amax )
+    lapack_int n, std::complex<double>* A, lapack_int lda, double* S, double* scond, double* amax )
 {
     return LAPACKE_zpoequ( LAPACK_COL_MAJOR, n, A, lda, S, scond, amax );
 }
@@ -48,29 +48,27 @@ void test_poequ_work( Params& params, bool run )
 
     // mark non-standard output values
     params.ref_time.value();
-    params.ref_gflops.value();
+    //params.ref_gflops.value();
 
     if (! run)
         return;
 
     // ---------- setup
     int64_t lda = roundup( max( 1, n ), align );
-    float scond_tst = 0;
-    float scond_ref = 0;
-    float amax_tst;  // todo value
-    float amax_ref;  // todo value
+    real_t scond_tst = 0;
+    real_t scond_ref = 0;
+    real_t amax_tst;
+    real_t amax_ref;
     size_t size_A = (size_t) lda * n;
     size_t size_S = (size_t) (n);
 
     std::vector< scalar_t > A( size_A );
-    std::vector< scalar_t > S_tst( size_S );
-    std::vector< scalar_t > S_ref( size_S );
+    std::vector< real_t > S_tst( size_S );
+    std::vector< real_t > S_ref( size_S );
 
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, A.size(), &A[0] );
-    lapack::larnv( idist, iseed, S_tst.size(), &S_tst[0] );
-    S_ref = S_tst;
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
@@ -81,9 +79,9 @@ void test_poequ_work( Params& params, bool run )
         fprintf( stderr, "lapack::poequ returned error %lld\n", (lld) info_tst );
     }
 
-    double gflop = lapack::Gflop< scalar_t >::poequ( n );
+    //double gflop = lapack::Gflop< scalar_t >::poequ( n );
     params.time.value()   = time;
-    params.gflops.value() = gflop / time;
+    //params.gflops.value() = gflop / time;
 
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
         // ---------- run reference
@@ -96,7 +94,7 @@ void test_poequ_work( Params& params, bool run )
         }
 
         params.ref_time.value()   = time;
-        params.ref_gflops.value() = gflop / time;
+        //params.ref_gflops.value() = gflop / time;
 
         // ---------- check error compared to reference
         real_t error = 0;

@@ -11,25 +11,25 @@
 // -----------------------------------------------------------------------------
 // simple overloaded wrappers around LAPACKE
 static lapack_int LAPACKE_geequ(
-    lapack_int m, lapack_int n, float* A, lapack_int lda, float* R, float* C, float rowcnd, float colcnd, float amax )
+    lapack_int m, lapack_int n, float* A, lapack_int lda, float* R, float* C, float* rowcnd, float* colcnd, float* amax )
 {
     return LAPACKE_sgeequ( LAPACK_COL_MAJOR, m, n, A, lda, R, C, rowcnd, colcnd, amax );
 }
 
 static lapack_int LAPACKE_geequ(
-    lapack_int m, lapack_int n, double* A, lapack_int lda, double* R, double* C, double rowcnd, double colcnd, double amax )
+    lapack_int m, lapack_int n, double* A, lapack_int lda, double* R, double* C, double* rowcnd, double* colcnd, double* amax )
 {
     return LAPACKE_dgeequ( LAPACK_COL_MAJOR, m, n, A, lda, R, C, rowcnd, colcnd, amax );
 }
 
 static lapack_int LAPACKE_geequ(
-    lapack_int m, lapack_int n, std::complex<float>* A, lapack_int lda, float* R, float* C, float rowcnd, float colcnd, float amax )
+    lapack_int m, lapack_int n, std::complex<float>* A, lapack_int lda, float* R, float* C, float* rowcnd, float* colcnd, float* amax )
 {
     return LAPACKE_cgeequ( LAPACK_COL_MAJOR, m, n, A, lda, R, C, rowcnd, colcnd, amax );
 }
 
 static lapack_int LAPACKE_geequ(
-    lapack_int m, lapack_int n, std::complex<double>* A, lapack_int lda, double* R, double* C, double rowcnd, double colcnd, double amax )
+    lapack_int m, lapack_int n, std::complex<double>* A, lapack_int lda, double* R, double* C, double* rowcnd, double* colcnd, double* amax )
 {
     return LAPACKE_zgeequ( LAPACK_COL_MAJOR, m, n, A, lda, R, C, rowcnd, colcnd, amax );
 }
@@ -49,36 +49,32 @@ void test_geequ_work( Params& params, bool run )
 
     // mark non-standard output values
     params.ref_time.value();
-    params.ref_gflops.value();
+    //params.ref_gflops.value();
 
     if (! run)
         return;
 
     // ---------- setup
     int64_t lda = roundup( max( 1, m ), align );
-    float rowcnd_tst = 0;
-    float rowcnd_ref = 0;
-    float colcnd_tst = 0;
-    float colcnd_ref = 0;
-    float amax_tst;  // todo value
-    float amax_ref;  // todo value
+    real_t rowcnd_tst = 0;
+    real_t rowcnd_ref = 0;
+    real_t colcnd_tst = 0;
+    real_t colcnd_ref = 0;
+    real_t amax_tst;  // todo value
+    real_t amax_ref;  // todo value
     size_t size_A = (size_t) lda * n;
     size_t size_R = (size_t) (m);
     size_t size_C = (size_t) (n);
 
     std::vector< scalar_t > A( size_A );
-    std::vector< scalar_t > R_tst( size_R );
-    std::vector< scalar_t > R_ref( size_R );
-    std::vector< scalar_t > C_tst( size_C );
-    std::vector< scalar_t > C_ref( size_C );
+    std::vector< real_t > R_tst( size_R );
+    std::vector< real_t > R_ref( size_R );
+    std::vector< real_t > C_tst( size_C );
+    std::vector< real_t > C_ref( size_C );
 
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, A.size(), &A[0] );
-    lapack::larnv( idist, iseed, R_tst.size(), &R_tst[0] );
-    lapack::larnv( idist, iseed, C_tst.size(), &C_tst[0] );
-    R_ref = R_tst;
-    C_ref = C_tst;
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
@@ -89,9 +85,9 @@ void test_geequ_work( Params& params, bool run )
         fprintf( stderr, "lapack::geequ returned error %lld\n", (lld) info_tst );
     }
 
-    double gflop = lapack::Gflop< scalar_t >::geequ( m, n );
+    //double gflop = lapack::Gflop< scalar_t >::geequ( m, n );
     params.time.value()   = time;
-    params.gflops.value() = gflop / time;
+    //params.gflops.value() = gflop / time;
 
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
         // ---------- run reference
@@ -104,7 +100,7 @@ void test_geequ_work( Params& params, bool run )
         }
 
         params.ref_time.value()   = time;
-        params.ref_gflops.value() = gflop / time;
+        //params.ref_gflops.value() = gflop / time;
 
         // ---------- check error compared to reference
         real_t error = 0;

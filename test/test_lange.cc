@@ -10,25 +10,25 @@
 
 // -----------------------------------------------------------------------------
 // simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_lange(
+static float LAPACKE_lange(
     char norm, lapack_int m, lapack_int n, float* A, lapack_int lda )
 {
     return LAPACKE_slange( LAPACK_COL_MAJOR, norm, m, n, A, lda );
 }
 
-static lapack_int LAPACKE_lange(
+static double LAPACKE_lange(
     char norm, lapack_int m, lapack_int n, double* A, lapack_int lda )
 {
     return LAPACKE_dlange( LAPACK_COL_MAJOR, norm, m, n, A, lda );
 }
 
-static lapack_int LAPACKE_lange(
+static float LAPACKE_lange(
     char norm, lapack_int m, lapack_int n, std::complex<float>* A, lapack_int lda )
 {
     return LAPACKE_clange( LAPACK_COL_MAJOR, norm, m, n, A, lda );
 }
 
-static lapack_int LAPACKE_lange(
+static double LAPACKE_lange(
     char norm, lapack_int m, lapack_int n, std::complex<double>* A, lapack_int lda )
 {
     return LAPACKE_zlange( LAPACK_COL_MAJOR, norm, m, n, A, lda );
@@ -47,10 +47,11 @@ void test_lange_work( Params& params, bool run )
     int64_t m = params.dim.m();
     int64_t n = params.dim.n();
     int64_t align = params.align.value();
+    int64_t verbose = params.verbose.value();
 
     // mark non-standard output values
     params.ref_time.value();
-    params.ref_gflops.value();
+    //params.ref_gflops.value();
 
     if (! run)
         return;
@@ -65,37 +66,46 @@ void test_lange_work( Params& params, bool run )
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, A.size(), &A[0] );
 
+    if (verbose >= 1) {
+        printf( "\n"
+                "A m=%5lld, n=%5lld, lda=%5lld\n",
+                m, n, lda );
+    }
+    if (verbose >= 2) {
+        printf( "A = " ); print_matrix( m, n, &A[0], lda );
+    }
+
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
     double time = omp_get_wtime();
-    int64_t info_tst = lapack::lange( norm, m, n, &A[0], lda );
+    real_t norm_tst = lapack::lange( norm, m, n, &A[0], lda );
     time = omp_get_wtime() - time;
-    if (info_tst != 0) {
-        fprintf( stderr, "lapack::lange returned error %lld\n", (lld) info_tst );
-    }
 
-    double gflop = lapack::Gflop< scalar_t >::lange( norm, m, n );
+    //double gflop = lapack::Gflop< scalar_t >::lange( norm, m, n );
     params.time.value()   = time;
-    params.gflops.value() = gflop / time;
+    //params.gflops.value() = gflop / time;
+
+    if (verbose >= 1) {
+        printf( "norm_tst %.8e\n", norm_tst );
+    }
 
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache.value() );
         time = omp_get_wtime();
-        int64_t info_ref = LAPACKE_lange( norm2char(norm), m, n, &A[0], lda );
+        real_t norm_ref = LAPACKE_lange( norm2char(norm), m, n, &A[0], lda );
         time = omp_get_wtime() - time;
-        if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_lange returned error %lld\n", (lld) info_ref );
-        }
 
         params.ref_time.value()   = time;
-        params.ref_gflops.value() = gflop / time;
+        //params.ref_gflops.value() = gflop / time;
+
+        if (verbose >= 1) {
+            printf( "norm_ref %.8e\n", norm_ref );
+        }
 
         // ---------- check error compared to reference
         real_t error = 0;
-        if (info_tst != info_ref) {
-            error = 1;
-        }
+        error += std::abs( norm_tst - norm_ref );
         params.error.value() = error;
         params.okay.value() = (error == 0);  // expect lapackpp == lapacke
     }

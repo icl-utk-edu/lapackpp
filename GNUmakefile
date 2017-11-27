@@ -26,7 +26,7 @@ LAPACKPP_FLAGS = -I../libtest \
                  -DLAPACK_COMPLEX_CPP
 
 LAPACKPP_LIBS  = -L../libtest -Wl,-rpath,${pwd}/../libtest -ltest \
-                 -Llib -llapackpp
+                 -Llib -Wl,-rpath,${pwd}/lib -llapackpp
 
 # ------------------------------------------------------------------------------
 # files
@@ -38,6 +38,15 @@ test_src = ${wildcard test/*.cc}
 test_obj = ${addsuffix .o, ${basename ${test_src}}}
 test_dep = ${addsuffix .d, ${basename ${test_src}}}
 
+liblapackpp_so = lib/liblapackpp.so
+liblapackpp_a  = lib/liblapackpp.a
+
+# ------------------------------------------------------------------------------
+# MacOS likes shared library's path to be set; see make.inc.macos
+ifneq (${INSTALL_NAME},)
+    ${liblapackpp_so}: LDFLAGS += ${INSTALL_NAME} @rpath/${notdir ${liblapackpp_so}}
+endif
+
 # ------------------------------------------------------------------------------
 # rules
 .PHONY: default all shared static include src test clean test_headers
@@ -46,9 +55,9 @@ default: shared test
 
 all: shared static test
 
-shared: lib/liblapackpp.so
+shared: ${liblapackpp_so}
 
-static: lib/liblapackpp.a
+static: ${liblapackpp_a}
 
 lib:
 	mkdir lib
@@ -60,13 +69,13 @@ src: shared
 
 test: test/test
 
-test/test: ${test_obj} lib/liblapackpp.so
+test/test: ${test_obj} ${liblapackpp_so}
 	${CXX} ${LDFLAGS} -o $@ ${test_obj} ${LAPACKPP_LIBS} ${LIBS}
 
-lib/liblapackpp.so: ${obj} | lib
+${liblapackpp_so}: ${obj} | lib
 	${CXX} ${LDFLAGS} -shared -o $@ ${obj} ${LIBS}
 
-lib/liblapackpp.a: ${obj} | lib
+${liblapackpp_a}: ${obj} | lib
 	ar cr $@ ${obj}
 	ranlib $@
 

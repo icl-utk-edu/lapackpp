@@ -18,3 +18,6 @@ CXXFLAGS += -I${LAPACKDIR}/LAPACKE/include \
             -DBLAS_COMPLEX_RETURN_ARGUMENT
 
 LIBS      = -L${LAPACKDIR} -llapacke -framework Accelerate
+
+# MacOS likes the library's path to be set
+INSTALL_NAME = -install_name

@@ -1,7 +1,92 @@
 #!/usr/bin/env python
-#
-# generate C++ wrappers for the LAPACK Fortran functions by parsing
-# doxygen comments in LAPACK's SRC *.f files.
+
+'''
+wrapper_gen.py generates C++ wrappers, header prototypes, and testers for the
+LAPACK Fortran routines by parsing doxygen comments in LAPACK's SRC *.f files.
+It needs a copy of Netlib LAPACK source code, pointed to by $LAPACKDIR.
+It takes a list of routines, without precision prefix (so "getrf" instead of "sgetrf", "dgetrf", ...).
+It generates files in lapackpp/gen/ directory, which can then be manually moved to the appropriate place.
+
+Arguments:
+    -H, --header   generate header   in ../gen/lapack_wrappers.hh to go in ../include
+    -w, --wrapper  generate wrappers in ../gen/foo.cc             to go in ../src
+    -t, --tester   generate testers  in ../gen/test_foo.cc        to go in ../test
+
+Example creating tester:
+    slate> cd lapackpp/test
+
+    # assume $LAPACKDIR is set
+    slate/lapackpp/test> echo $LAPACKDIR
+    /Users/mgates/Documents/lapack
+
+    slate/lapackpp/test> ../tools/wrapper_gen.py -t posv
+    generating ../gen/test_posv.cc
+        /Users/mgates/Documents/lapack/SRC/sposv.f
+        /Users/mgates/Documents/lapack/SRC/dposv.f
+        /Users/mgates/Documents/lapack/SRC/cposv.f
+        /Users/mgates/Documents/lapack/SRC/zposv.f
+
+    slate/lapackpp/test> mv ../gen/test_posv.cc .
+    slate/lapackpp/test> edit test.cc     # uncomment posv line
+    slate/lapackpp/test> edit run_all.sh  # add posv line
+
+    slate/lapackpp/test> make
+    g++ ... -c -o test.o test.cc
+    g++ ... -c -o test_posv.o test_posv.cc
+    g++ ... -o test ...
+
+    # initial version fails because matrix isn't positive definite
+    slate/lapackpp/test> ./test posv
+    input: ./test posv
+                                               LAPACK++     LAPACK++     LAPACK++         Ref.         Ref.
+      type    uplo       n    nrhs   align        error     time (s)      Gflop/s     time (s)      Gflop/s  status
+    lapack::posv returned error 2
+    LAPACKE_posv returned error 2
+         d   lower     100      10       1   0.0000e+00       0.0000      20.7156       0.0000      14.2013  pass
+    lapack::posv returned error 3
+    LAPACKE_posv returned error 3
+         d   lower     200      10       1   0.0000e+00       0.0001      23.7022       0.0001      27.6451  pass
+    lapack::posv returned error 2
+    LAPACKE_posv returned error 2
+         d   lower     300      10       1   0.0000e+00       0.0001     135.7834       0.0002      65.2617  pass
+    lapack::posv returned error 3
+    LAPACKE_posv returned error 3
+         d   lower     400      10       1   0.0000e+00       0.0001     300.1049       0.0002     121.8844  pass
+    lapack::posv returned error 3
+    LAPACKE_posv returned error 3
+         d   lower     500      10       1   0.0000e+00       0.0001     676.7546       0.0002     195.6718  pass
+    All tests passed.
+
+    # add code to make matrix positive definite (e.g., diagonally dominant)
+    slate/lapackpp/test> edit test_posv.cc
+    slate/lapackpp/test> make
+    g++ ... -c -o test_posv.o test_posv.cc
+    g++ ... -o test ...
+
+    # now tests pass; commit changes.
+    slate/lapackpp/test> ./test posv --type s,d,c,z --dim 100:300:100
+    input: ./test posv --type s,d,c,z --dim 100:300:100
+                                               LAPACK++     LAPACK++     LAPACK++         Ref.         Ref.
+      type    uplo       n    nrhs   align        error     time (s)      Gflop/s     time (s)      Gflop/s  status
+         s   lower     100      10       1   0.0000e+00       0.0002       2.6913       0.0001       4.2364  pass
+         s   lower     200      10       1   0.0000e+00       0.0005       6.4226       0.0004       7.9437  pass
+         s   lower     300      10       1   0.0000e+00       0.0008      14.2683       0.0008      14.0091  pass
+
+         d   lower     100      10       1   0.0000e+00       0.0002       2.7205       0.0001       3.8142  pass
+         d   lower     200      10       1   0.0000e+00       0.0007       5.0169       0.0006       5.5775  pass
+         d   lower     300      10       1   0.0000e+00       0.0009      11.4896       0.0009      11.7115  pass
+
+         c   lower     100      10       1   0.0000e+00       0.0004       5.5265       0.0004       5.6153  pass
+         c   lower     200      10       1   0.0000e+00       0.0011      12.7330       0.0012      11.9307  pass
+         c   lower     300      10       1   0.0000e+00       0.0025      17.1538       0.0026      16.9923  pass
+
+         z   lower     100      10       1   0.0000e+00       0.0005       4.4325       0.0005       4.4412  pass
+         z   lower     200      10       1   0.0000e+00       0.0015       9.0585       0.0014      10.1714  pass
+         z   lower     300      10       1   0.0000e+00       0.0035      12.3321       0.0032      13.7915  pass
+    All tests passed.
+
+    slate/lapackpp/test> hg commit -m 'test posv' test.cc test_posv.cc
+'''
 
 from __future__ import print_function
 
@@ -773,7 +858,7 @@ def generate_tester( funcs ):
                         scalars2 += tab + arg.dtype + ' ' + arg.name + '_ref;  // todo value\n'
                     tst_args.append( '&' + arg.name + '_tst' )
                     ref_args.append( '&' + arg.name + '_ref' )
-                    verify += tab + 'error += std::abs( ' + arg.name + '_tst - ' + arg.name + '_ref );\n'
+                    verify += tab*2 + 'error += std::abs( ' + arg.name + '_tst - ' + arg.name + '_ref );\n'
                 # end
             # end
         # end

@@ -549,23 +549,23 @@ int64_t gebrd(
 // -----------------------------------------------------------------------------
 int64_t gecon(
     lapack::Norm norm, int64_t n,
-    float const* A, int64_t lda, float anorm,
-    float* rcond );
+    float const* A, int64_t lda,
+    float anorm, float* rcond );
 
 int64_t gecon(
     lapack::Norm norm, int64_t n,
-    double const* A, int64_t lda, double anorm,
-    double* rcond );
+    double const* A, int64_t lda,
+    double anorm, double* rcond );
 
 int64_t gecon(
     lapack::Norm norm, int64_t n,
-    std::complex<float> const* A, int64_t lda, float anorm,
-    float* rcond );
+    std::complex<float> const* A, int64_t lda,
+    float anorm, float* rcond );
 
 int64_t gecon(
     lapack::Norm norm, int64_t n,
-    std::complex<double> const* A, int64_t lda, double anorm,
-    double* rcond );
+    std::complex<double> const* A, int64_t lda,
+    double anorm, double* rcond );
 
 // -----------------------------------------------------------------------------
 int64_t geequ(
@@ -3599,6 +3599,20 @@ float lansy(
 double lansy(
     lapack::Norm norm, lapack::Uplo uplo, int64_t n,
     std::complex<double> const* A, int64_t lda );
+
+inline float lanhe(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    float const* A, int64_t lda )
+{
+    return lansy( norm, uplo, n, A, lda );
+}
+
+inline double lanhe(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    double const* A, int64_t lda )
+{
+    return lansy( norm, uplo, n, A, lda );
+}
 
 // -----------------------------------------------------------------------------
 float lantr(

@@ -162,7 +162,6 @@ tester_top = '''\
 
 #include <vector>
 #include <omp.h>
-#include <lapacke.h>
 
 '''
 

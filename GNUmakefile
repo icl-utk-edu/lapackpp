@@ -23,7 +23,7 @@ LAPACKPP_FLAGS = -I../libtest \
                  -I../blaspp/include \
                  -I../blaspp/test \
                  -Iinclude \
-                 -DLAPACK_COMPLEX_CPP
+                 -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_CPP
 
 LAPACKPP_LIBS  = -L../libtest -Wl,-rpath,${pwd}/../libtest -ltest \
                  -Llib -Wl,-rpath,${pwd}/lib -llapackpp

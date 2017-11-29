@@ -146,12 +146,12 @@ void test_potri_work( Params& params, bool run )
         if (uplo == Uplo::Lower) {
             for (int64_t j = 0; j < n; ++j)
                 for (int64_t i = 0; i < j; ++i)
-                    A_tst[ i + j*lda ] = A_tst[ j + i*lda ];
+                    A_tst[ i + j*lda ] = conj( A_tst[ j + i*lda ] );
         }
         else {
             for (int64_t j = 0; j < n; ++j)
                 for (int64_t i = 0; i < j; ++i)
-                    A_tst[ j + i*lda ] = A_tst[ i + j*lda ];
+                    A_tst[ j + i*lda ] = conj( A_tst[ i + j*lda ] );
         }
         if (verbose >= 2) {
             printf( "A2b = " ); print_matrix( n, n, &A_tst[0], lda );

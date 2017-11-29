@@ -34,6 +34,7 @@ public:
 
     // ----- routine parameters
     libtest::ParamEnum< libtest::DataType > datatype;
+    libtest::ParamEnum< blas::Layout >      layout;
     libtest::ParamEnum< lapack::Side >      side;
     libtest::ParamEnum< lapack::Uplo >      uplo;
     libtest::ParamEnum< lapack::Op >        trans;
@@ -318,5 +319,8 @@ void test_lagge ( Params& params, bool run );
 void test_lagsy ( Params& params, bool run );
 void test_laghe ( Params& params, bool run );
 void test_lagtr ( Params& params, bool run );
+
+// additional BLAS
+void test_syr   ( Params& params, bool run );
 
 #endif  //  #ifndef TEST_HH

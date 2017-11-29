@@ -35,6 +35,7 @@ enum Section {
     aux_norm,
     aux_householder,
     aux_gen,
+    blas_section,
 };
 
 const char* section_names[] = {
@@ -53,6 +54,7 @@ const char* section_names[] = {
    "auxiliary - norms",
    "auxiliary - Householder",
    "auxiliary - matrix generation",
+   "additional BLAS",
 };
 
 // { "", nullptr, Section::newline } entries force newline in help
@@ -360,6 +362,10 @@ std::vector< libtest::routines_t > routines = {
   //{ "laghe",              test_laghe,     Section::aux_gen },
   //{ "lagtr",              test_lagtr,     Section::aux_gen },
     { "",                   nullptr,        Section::newline },
+
+    // additional BLAS
+    { "syr",                test_syr,       Section::blas_section },
+    { "",                   nullptr,        Section::newline },
 };
 
 // -----------------------------------------------------------------------------
@@ -387,6 +393,7 @@ Params::Params():
     // ----- routine parameters
     //          name,      w,    type,            def,                    char2enum,         enum2char,         enum2str,         help
     datatype  ( "type",    4,    ParamType::List, DataType::Double,       char2datatype,     datatype2char,     datatype2str,     "s=single (float), d=double, c=complex-single, z=complex-double" ),
+    layout    ( "layout",  6,    ParamType::List, blas::Layout::ColMajor, blas::char2layout, blas::layout2char, blas::layout2str, "layout: r=row major, c=column major" ),
     side      ( "side",    6,    ParamType::List, blas::Side::Left,       blas::char2side,   blas::side2char,   blas::side2str,   "side: l=left, r=right" ),
     uplo      ( "uplo",    6,    ParamType::List, blas::Uplo::Lower,      blas::char2uplo,   blas::uplo2char,   blas::uplo2str,   "triangle: l=lower, u=upper" ),
     trans     ( "trans",   7,    ParamType::List, blas::Op::NoTrans,      blas::char2op,     blas::op2char,     blas::op2str,     "transpose: n=no-trans, t=trans, c=conj-trans" ),

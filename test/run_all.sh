@@ -36,3 +36,6 @@ set -x
 ./test lanhe ${type} ${square} ${uplo} ${norm}
 ./test lansy ${type} ${square} ${uplo} ${norm}
 ./test lantr ${type} ${square} ${uplo} ${norm} ${diag}
+
+# additional blas
+./test syr ${type} ${square} ${uplo}

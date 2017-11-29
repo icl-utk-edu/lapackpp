@@ -6096,15 +6096,23 @@ int64_t sygvx(
     int64_t* ifail );
 
 // -----------------------------------------------------------------------------
+}  // namespace lapack
+namespace blas {
+
 void syr(
-    lapack::Uplo uplo, int64_t n, std::complex<float> alpha,
+    blas::Layout layout,
+    blas::Uplo uplo, int64_t n, std::complex<float> alpha,
     std::complex<float> const* X, int64_t incx,
     std::complex<float>* A, int64_t lda );
 
 void syr(
-    lapack::Uplo uplo, int64_t n, std::complex<double> alpha,
+    blas::Layout layout,
+    blas::Uplo uplo, int64_t n, std::complex<double> alpha,
     std::complex<double> const* X, int64_t incx,
     std::complex<double>* A, int64_t lda );
+
+}  // namespace blas
+namespace lapack {
 
 // -----------------------------------------------------------------------------
 int64_t syrfs(

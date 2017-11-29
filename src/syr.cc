@@ -1,56 +1,90 @@
 #include "lapack.hh"
 #include "lapack_fortran.h"
 
-#if LAPACK_VERSION_MAJOR >= 3 && LAPACK_VERSION_MINOR >= 5  // >= 3.5
-
-#include <vector>
-
-namespace lapack {
+// while [cz]syr are in LAPACK, [sd]syr are in BLAS,
+// so we put them all in the blas namespace
+namespace blas {
 
 using blas::max;
 using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup syr
 void syr(
-    lapack::Uplo uplo, int64_t n, std::complex<float> alpha,
-    std::complex<float> const* X, int64_t incx,
-    std::complex<float>* A, int64_t lda )
+    blas::Layout layout,
+    blas::Uplo uplo,
+    int64_t n,
+    std::complex<float> alpha,
+    std::complex<float> const *x, int64_t incx,
+    std::complex<float>       *A, int64_t lda )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(incx) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-    }
-    char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int incx_ = (blas_int) incx;
-    blas_int lda_ = (blas_int) lda;
+    // check arguments
+    throw_if_( layout != Layout::ColMajor &&
+               layout != Layout::RowMajor );
+    throw_if_( uplo != Uplo::Lower &&
+               uplo != Uplo::Upper );
+    throw_if_( n < 0 );
+    throw_if_( lda < n );
+    throw_if_( incx == 0 );
 
-    LAPACK_csyr( &uplo_, &n_, &alpha, X, &incx_, A, &lda_ );
+    // check for overflow in native BLAS integer type, if smaller than int64_t
+    if (sizeof(int64_t) > sizeof(blas_int)) {
+        throw_if_( n              > std::numeric_limits<blas_int>::max() );
+        throw_if_( lda            > std::numeric_limits<blas_int>::max() );
+        throw_if_( std::abs(incx) > std::numeric_limits<blas_int>::max() );
+    }
+
+    blas_int n_    = (blas_int) n;
+    blas_int lda_  = (blas_int) lda;
+    blas_int incx_ = (blas_int) incx;
+
+    if (layout == Layout::RowMajor) {
+        // swap lower <=> upper
+        uplo = (uplo == Uplo::Lower ? Uplo::Upper : Uplo::Lower);
+    }
+
+    char uplo_ = uplo2char( uplo );
+    LAPACK_csyr( &uplo_, &n_, &alpha, x, &incx_, A, &lda_ );
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup syr
 void syr(
-    lapack::Uplo uplo, int64_t n, std::complex<double> alpha,
-    std::complex<double> const* X, int64_t incx,
-    std::complex<double>* A, int64_t lda )
+    blas::Layout layout,
+    blas::Uplo uplo,
+    int64_t n,
+    std::complex<double> alpha,
+    std::complex<double> const *x, int64_t incx,
+    std::complex<double>       *A, int64_t lda )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(incx) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-    }
-    char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int incx_ = (blas_int) incx;
-    blas_int lda_ = (blas_int) lda;
+    // check arguments
+    throw_if_( layout != Layout::ColMajor &&
+               layout != Layout::RowMajor );
+    throw_if_( uplo != Uplo::Lower &&
+               uplo != Uplo::Upper );
+    throw_if_( n < 0 );
+    throw_if_( lda < n );
+    throw_if_( incx == 0 );
 
-    LAPACK_zsyr( &uplo_, &n_, &alpha, X, &incx_, A, &lda_ );
+    // check for overflow in native BLAS integer type, if smaller than int64_t
+    if (sizeof(int64_t) > sizeof(blas_int)) {
+        throw_if_( n              > std::numeric_limits<blas_int>::max() );
+        throw_if_( lda            > std::numeric_limits<blas_int>::max() );
+        throw_if_( std::abs(incx) > std::numeric_limits<blas_int>::max() );
+    }
+
+    blas_int n_    = (blas_int) n;
+    blas_int lda_  = (blas_int) lda;
+    blas_int incx_ = (blas_int) incx;
+
+    if (layout == Layout::RowMajor) {
+        // swap lower <=> upper
+        uplo = (uplo == Uplo::Lower ? Uplo::Upper : Uplo::Lower);
+    }
+
+    char uplo_ = uplo2char( uplo );
+    LAPACK_zsyr( &uplo_, &n_, &alpha, x, &incx_, A, &lda_ );
 }
 
-}  // namespace lapack
-
-#endif  // LAPACK >= 3.5
+}  // namespace blas

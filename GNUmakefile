@@ -85,8 +85,16 @@ ${liblapackpp_a}: ${obj} | lib
 %.i: %.cc
 	${CXX} ${CXXFLAGS} ${LAPACKPP_FLAGS} -E -o $@ $<
 
-clean:
-	-${RM} lib/*.a lib/*.so src/*.o src/*.d test/*.o test/*.d test/test
+clean: include/clean src/clean test/clean
+
+include/clean:
+	-${RM} gch/include/*.gch
+
+src/clean:
+	-${RM} lib/*.{a,so} src/*.{o,d}
+
+test/clean:
+	-${RM} test/test test/*.{o,d} gch/test/*.gch
 
 -include ${dep} ${test_dep}
 

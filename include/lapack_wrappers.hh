@@ -3868,19 +3868,19 @@ int64_t lascl(
 
 // -----------------------------------------------------------------------------
 void laset(
-    lapack::Uplo uplo, int64_t m, int64_t n, float alpha, float beta,
+    lapack::MatrixType matrixtype, int64_t m, int64_t n, float alpha, float beta,
     float* A, int64_t lda );
 
 void laset(
-    lapack::Uplo uplo, int64_t m, int64_t n, double alpha, double beta,
+    lapack::MatrixType matrixtype, int64_t m, int64_t n, double alpha, double beta,
     double* A, int64_t lda );
 
 void laset(
-    lapack::Uplo uplo, int64_t m, int64_t n, std::complex<float> alpha, std::complex<float> beta,
+    lapack::MatrixType matrixtype, int64_t m, int64_t n, std::complex<float> alpha, std::complex<float> beta,
     std::complex<float>* A, int64_t lda );
 
 void laset(
-    lapack::Uplo uplo, int64_t m, int64_t n, std::complex<double> alpha, std::complex<double> beta,
+    lapack::MatrixType matrixtype, int64_t m, int64_t n, std::complex<double> alpha, std::complex<double> beta,
     std::complex<double>* A, int64_t lda );
 
 // -----------------------------------------------------------------------------

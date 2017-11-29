@@ -31,6 +31,11 @@ set -x
 ./test porfs ${type} ${square} ${uplo}
 ./test poequ ${type} ${square} # only diagonal elements
 
+# auxilary
+./test lacpy ${type} ${mn} --matrixtype=g,l,u
+./test laset ${type} ${mn} --matrixtype=g,l,u
+./test laswp ${type} ${mn}
+
 # auxilary - norms
 ./test lange ${type} ${mn}             ${norm}
 ./test lanhe ${type} ${square} ${uplo} ${norm}

@@ -42,6 +42,7 @@ public:
     libtest::ParamEnum< lapack::Op >        transB;
     libtest::ParamEnum< lapack::Diag >      diag;
     libtest::ParamEnum< lapack::Norm >      norm;
+    libtest::ParamEnum< lapack::MatrixType > matrixtype;
 
     libtest::ParamInt3   dim;
     libtest::ParamInt    nrhs;
@@ -298,8 +299,8 @@ void test_gesvj ( Params& params, bool run );
 
 // auxiliary
 void test_lacpy ( Params& params, bool run );
-void test_laswp ( Params& params, bool run );
 void test_laset ( Params& params, bool run );
+void test_laswp ( Params& params, bool run );
 
 // auxiliary - Householder
 void test_larfg ( Params& params, bool run );

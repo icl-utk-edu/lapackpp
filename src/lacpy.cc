@@ -11,7 +11,7 @@ using blas::real;
 
 // -----------------------------------------------------------------------------
 void lacpy(
-    lapack::Uplo uplo, int64_t m, int64_t n,
+    lapack::MatrixType matrixtype, int64_t m, int64_t n,
     float const* A, int64_t lda,
     float* B, int64_t ldb )
 {
@@ -22,18 +22,18 @@ void lacpy(
         throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
         throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
+    char matrixtype_ = matrixtype2char( matrixtype );
     blas_int m_ = (blas_int) m;
     blas_int n_ = (blas_int) n;
     blas_int lda_ = (blas_int) lda;
     blas_int ldb_ = (blas_int) ldb;
 
-    LAPACK_slacpy( &uplo_, &m_, &n_, A, &lda_, B, &ldb_ );
+    LAPACK_slacpy( &matrixtype_, &m_, &n_, A, &lda_, B, &ldb_ );
 }
 
 // -----------------------------------------------------------------------------
 void lacpy(
-    lapack::Uplo uplo, int64_t m, int64_t n,
+    lapack::MatrixType matrixtype, int64_t m, int64_t n,
     double const* A, int64_t lda,
     double* B, int64_t ldb )
 {
@@ -44,18 +44,18 @@ void lacpy(
         throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
         throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
+    char matrixtype_ = matrixtype2char( matrixtype );
     blas_int m_ = (blas_int) m;
     blas_int n_ = (blas_int) n;
     blas_int lda_ = (blas_int) lda;
     blas_int ldb_ = (blas_int) ldb;
 
-    LAPACK_dlacpy( &uplo_, &m_, &n_, A, &lda_, B, &ldb_ );
+    LAPACK_dlacpy( &matrixtype_, &m_, &n_, A, &lda_, B, &ldb_ );
 }
 
 // -----------------------------------------------------------------------------
 void lacpy(
-    lapack::Uplo uplo, int64_t m, int64_t n,
+    lapack::MatrixType matrixtype, int64_t m, int64_t n,
     std::complex<float> const* A, int64_t lda,
     std::complex<float>* B, int64_t ldb )
 {
@@ -66,18 +66,18 @@ void lacpy(
         throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
         throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
+    char matrixtype_ = matrixtype2char( matrixtype );
     blas_int m_ = (blas_int) m;
     blas_int n_ = (blas_int) n;
     blas_int lda_ = (blas_int) lda;
     blas_int ldb_ = (blas_int) ldb;
 
-    LAPACK_clacpy( &uplo_, &m_, &n_, A, &lda_, B, &ldb_ );
+    LAPACK_clacpy( &matrixtype_, &m_, &n_, A, &lda_, B, &ldb_ );
 }
 
 // -----------------------------------------------------------------------------
 void lacpy(
-    lapack::Uplo uplo, int64_t m, int64_t n,
+    lapack::MatrixType matrixtype, int64_t m, int64_t n,
     std::complex<double> const* A, int64_t lda,
     std::complex<double>* B, int64_t ldb )
 {
@@ -88,13 +88,13 @@ void lacpy(
         throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
         throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
+    char matrixtype_ = matrixtype2char( matrixtype );
     blas_int m_ = (blas_int) m;
     blas_int n_ = (blas_int) n;
     blas_int lda_ = (blas_int) lda;
     blas_int ldb_ = (blas_int) ldb;
 
-    LAPACK_zlacpy( &uplo_, &m_, &n_, A, &lda_, B, &ldb_ );
+    LAPACK_zlacpy( &matrixtype_, &m_, &n_, A, &lda_, B, &ldb_ );
 }
 
 }  // namespace lapack

@@ -481,7 +481,7 @@ enum class MatrixType {
     Band        = 'Z',
 };
 
-inline char matrixtype2char( lapack::MatrixType type     )
+inline char matrixtype2char( lapack::MatrixType type )
 {
     return char( type );
 }
@@ -494,7 +494,7 @@ inline lapack::MatrixType char2matrixtype( char type )
     return lapack::MatrixType( type );
 }
 
-inline const char* matrixtype2str( lapack::MatrixType type     )
+inline const char* matrixtype2str( lapack::MatrixType type )
 {
     switch (type) {
         case lapack::MatrixType::General:    return "general";

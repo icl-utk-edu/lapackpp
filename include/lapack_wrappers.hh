@@ -3451,22 +3451,22 @@ void lacp2(
 
 // -----------------------------------------------------------------------------
 void lacpy(
-    lapack::Uplo uplo, int64_t m, int64_t n,
+    lapack::MatrixType matrixtype, int64_t m, int64_t n,
     float const* A, int64_t lda,
     float* B, int64_t ldb );
 
 void lacpy(
-    lapack::Uplo uplo, int64_t m, int64_t n,
+    lapack::MatrixType matrixtype, int64_t m, int64_t n,
     double const* A, int64_t lda,
     double* B, int64_t ldb );
 
 void lacpy(
-    lapack::Uplo uplo, int64_t m, int64_t n,
+    lapack::MatrixType matrixtype, int64_t m, int64_t n,
     std::complex<float> const* A, int64_t lda,
     std::complex<float>* B, int64_t ldb );
 
 void lacpy(
-    lapack::Uplo uplo, int64_t m, int64_t n,
+    lapack::MatrixType matrixtype, int64_t m, int64_t n,
     std::complex<double> const* A, int64_t lda,
     std::complex<double>* B, int64_t ldb );
 

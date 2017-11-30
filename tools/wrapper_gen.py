@@ -847,8 +847,8 @@ def generate_tester( funcs ):
                         ref_args.append( arg.name )
                 else:
                     if (pre_arrays):
-                        scalars += tab + arg.dtype + ' ' + arg.name + '_tst = params.' + arg.name + '.get();\n'
-                        scalars += tab + arg.dtype + ' ' + arg.name + '_ref = params.' + arg.name + '.get();\n'
+                        scalars += tab + arg.dtype + ' ' + arg.name + '_tst = params.' + arg.name + '.value();\n'
+                        scalars += tab + arg.dtype + ' ' + arg.name + '_ref = params.' + arg.name + '.value();\n'
                     elif (arg.lbound):
                         scalars2 += tab + arg.dtype + ' ' + arg.name + '_tst = ' + arg.lbound + ';\n'
                         scalars2 += tab + arg.dtype + ' ' + arg.name + '_ref = ' + arg.lbound + ';\n'

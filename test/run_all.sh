@@ -45,6 +45,12 @@ set -x
 ./test porfs ${type} ${square} ${uplo}
 ./test poequ ${type} ${square} # only diagonal elements
 
+# symmetric indefinite
+./test sysv  ${type} ${square} ${uplo}
+./test sytrf ${type} ${square} ${uplo}
+./test sytrs ${type} ${square} ${uplo}
+./test sytri ${type} ${square} ${uplo}
+
 # auxilary
 ./test lacpy ${type} ${mn} --matrixtype=g,l,u
 ./test laset ${type} ${mn} --matrixtype=g,l,u

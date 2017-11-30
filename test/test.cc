@@ -143,19 +143,19 @@ std::vector< libtest::routines_t > routines = {
 
     // -----
     // symmetric indefinite
-  //{ "sysv",               test_sysv,      Section::sysv },
+    { "sysv",               test_sysv,      Section::sysv },
   //{ "spsv",               test_spsv,      Section::sysv },
     { "",                   nullptr,        Section::newline },
 
-  //{ "sytrf",              test_sytrf,     Section::sysv },
+    { "sytrf",              test_sytrf,     Section::sysv },
   //{ "sptrf",              test_sptrf,     Section::sysv },
     { "",                   nullptr,        Section::newline },
 
-  //{ "sytrs",              test_sytrs,     Section::sysv },
+    { "sytrs",              test_sytrs,     Section::sysv },
   //{ "sptrs",              test_sptrs,     Section::sysv },
     { "",                   nullptr,        Section::newline },
 
-  //{ "sytri",              test_sytri,     Section::sysv },
+    { "sytri",              test_sytri,     Section::sysv },
   //{ "sptri",              test_sptri,     Section::sysv },
     { "",                   nullptr,        Section::newline },
 

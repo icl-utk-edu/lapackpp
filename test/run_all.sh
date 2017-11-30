@@ -31,6 +31,12 @@ set -x
 ./test porfs ${type} ${square} ${uplo}
 ./test poequ ${type} ${square} # only diagonal elements
 
+# symmetric indefinite
+./test sysv  ${type} ${square} ${uplo} 
+./test sytrf ${type} ${square} ${uplo} 
+./test sytrs ${type} ${square} ${uplo} 
+./test sytri ${type} ${square} ${uplo} 
+
 # auxilary - norms
 ./test lange ${type} ${mn}             ${norm}
 ./test lanhe ${type} ${square} ${uplo} ${norm}

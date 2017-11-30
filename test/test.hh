@@ -42,6 +42,8 @@ public:
     libtest::ParamEnum< lapack::Op >        transB;
     libtest::ParamEnum< lapack::Diag >      diag;
     libtest::ParamEnum< lapack::Norm >      norm;
+    libtest::ParamEnum< lapack::Direct >    direct;
+    libtest::ParamEnum< lapack::StoreV >    storev;
     libtest::ParamEnum< lapack::MatrixType > matrixtype;
 
     libtest::ParamInt3   dim;

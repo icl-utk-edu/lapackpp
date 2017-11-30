@@ -44,6 +44,7 @@ void test_laswp_work( Params& params, bool run )
     // get & mark input values
     int64_t m = params.dim.m();
     int64_t n = params.dim.n();
+    int64_t incx = params.incx.value();
     int64_t align = params.align.value();
 
     // mark non-standard output values
@@ -58,7 +59,6 @@ void test_laswp_work( Params& params, bool run )
     int64_t lda = roundup( max( 1, m ), align );
     int64_t k1 = 1;
     int64_t k2 = nb;
-    int64_t incx = 1;
     size_t size_A = (size_t) lda * n;
     size_t size_ipiv = (size_t) (k1+(k2-k1)*abs(incx));
 

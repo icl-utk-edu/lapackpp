@@ -342,11 +342,11 @@ std::vector< libtest::routines_t > routines = {
     { "",                   nullptr,        Section::newline },
 
     // auxiliary: Householder
-  //{ "larfg",              test_larfg,     Section::aux_householder },
-  //{ "larf",               test_larf,      Section::aux_householder },
-  //{ "larfx",              test_larfx,     Section::aux_householder },
-  //{ "larfb",              test_larfb,     Section::aux_householder },
-  //{ "larft",              test_larft,     Section::aux_householder },
+    { "larfg",              test_larfg,     Section::aux_householder },
+    { "larf",               test_larf,      Section::aux_householder },
+    { "larfx",              test_larfx,     Section::aux_householder },
+    { "larfb",              test_larfb,     Section::aux_householder },
+    { "larft",              test_larft,     Section::aux_householder },
     { "",                   nullptr,        Section::newline },
 
     // auxiliary: norms
@@ -401,6 +401,8 @@ Params::Params():
     transB    ( "transB",  7,    ParamType::List, blas::Op::NoTrans,      blas::char2op,     blas::op2char,     blas::op2str,     "transpose of B: n=no-trans, t=trans, c=conj-trans" ),
     diag      ( "diag",    7,    ParamType::List, blas::Diag::NonUnit,    blas::char2diag,   blas::diag2char,   blas::diag2str,   "diagonal: n=non-unit, u=unit" ),
     norm      ( "norm",    7,    ParamType::List, lapack::Norm::One,      lapack::char2norm, lapack::norm2char, lapack::norm2str, "norm: o=one, 2=two, i=inf, f=fro, m=max" ),
+    direct    ( "direct",  8,    ParamType::List, lapack::Direct::Forward, lapack::char2direct, lapack::direct2char, lapack::direct2str, "direction: f=forward, b=backward" ),
+    storev    ( "storev", 10,    ParamType::List, lapack::StoreV::Columnwise, lapack::char2storev, lapack::storev2char, lapack::storev2str, "store vectors: c=columnwise, r=rowwise" ),
     matrixtype( "matrixtype", 10, ParamType::List, lapack::MatrixType::General,
                 lapack::char2matrixtype, lapack::matrixtype2char, lapack::matrixtype2str,
                 "matrix type: g=general, l=lower, u=upper, h=Hessenberg, z=band-general, b=band-lower, q=band-upper" ),

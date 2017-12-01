@@ -810,11 +810,13 @@ def generate_tester( funcs ):
                 else:
                     arrays += (tab + 'std::vector< ' + arg.ttype     + ' > ' + arg.name + '_tst( size_' + arg.name + ' );\n'
                            +   tab + 'std::vector< ' + arg.ttype_ref + ' > ' + arg.name + '_ref( size_' + arg.name + ' );\n')
-                    if (arg.dtype in ('float', 'double', 'std::complex<float>', 'std::complex<double>')):
-                        init += tab + 'lapack::larnv( idist, iseed, ' + arg.name + '_tst.size(), &' + arg.name + '_tst[0] );\n'
-                        copy += tab + arg.name + '_ref = ' + arg.name + '_tst;\n'
-                    elif ('in' in arg.intent):
-                        init += tab + '// todo: initialize ' + arg.name + '_tst and ' + arg.name + '_ref\n'
+                    if ('in' in arg.intent):
+                        if (arg.dtype in ('float', 'double', 'std::complex<float>', 'std::complex<double>')):
+                            init += tab + 'lapack::larnv( idist, iseed, ' + arg.name + '_tst.size(), &' + arg.name + '_tst[0] );\n'
+                            copy += tab + arg.name + '_ref = ' + arg.name + '_tst;\n'
+                        elif ('in' in arg.intent):
+                            init += tab + '// todo: initialize ' + arg.name + '_tst and ' + arg.name + '_ref\n'
+                    # end
                     tst_args.append( '&' + arg.name + '_tst[0]' )
                     ref_args.append( '&' + arg.name + '_ref[0]' )
                     if ('out' in arg.intent):

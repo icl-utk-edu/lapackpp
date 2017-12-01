@@ -773,12 +773,17 @@ def generate_tester( funcs ):
     ref_args = []  # arguments for calling Fortran reference
     verify   = ''
 
-    func = funcs[0]
+    func = funcs[-1]  # guess last one is complex, to get real_t below
     for arg in func.args:
         if (not (arg.is_work or arg.is_lwork or arg.name == 'info')):
             # determine template type from data type
-            # todo: detect real arrays in complex functions, single arrays in double functions, etc.
-            if (arg.dtype in ('float', 'double', 'std::complex<float>', 'std::complex<double>')):
+            if (arg.dtype in ('float', 'double')):
+                if (re.search( r'^[cz]', func.xname )):
+                    arg.ttype = 'real_t'
+                else:
+                    arg.ttype = 'scalar_t'
+                arg.ttype_ref = arg.ttype
+            elif (arg.dtype in ('std::complex<float>', 'std::complex<double>')):
                 arg.ttype = 'scalar_t'
                 arg.ttype_ref = arg.ttype
             elif (arg.dtype in ('int64_t')):
@@ -829,16 +834,18 @@ def generate_tester( funcs ):
                         if (arg.name not in ('uplo')):
                             flop_args.append( arg.name )
                         if (arg.name in ('m', 'n', 'k')):
-                            scalars += tab + arg.dtype + ' ' + arg.name + ' = params.dim.' + arg.name + '();\n'
+                            scalars += tab + arg.ttype + ' ' + arg.name + ' = params.dim.' + arg.name + '();\n'
                         else:
-                            scalars += tab + arg.dtype + ' ' + arg.name + ' = params.' + arg.name + '.value();\n'
+                            scalars += tab + arg.ttype + ' ' + arg.name + ' = params.' + arg.name + '.value();\n'
                     elif (arg.lbound):
                         if (arg.name.startswith('ld')):
-                            scalars2 += tab + arg.dtype + ' ' + arg.name + ' = roundup( ' + arg.lbound + ', align );\n'
+                            scalars2 += tab + arg.ttype + ' ' + arg.name + ' = roundup( ' + arg.lbound + ', align );\n'
                         else:
-                            scalars2 += tab + arg.dtype + ' ' + arg.name + ' = ' + arg.lbound + ';\n'
+                            scalars2 += tab + arg.ttype + ' ' + arg.name + ' = ' + arg.lbound + ';\n'
+                    elif ('in' in arg.intent):
+                        scalars2 += tab + arg.ttype + ' ' + arg.name + ';  // todo value\n'
                     else:
-                        scalars2 += tab + arg.dtype + ' ' + arg.name + ';  // todo value\n'
+                        scalars2 += tab + arg.ttype + ' ' + arg.name + ';\n'
                     tst_args.append( arg.name )
                     if (arg.is_enum):
                         # convert enum to char, e.g., uplo2char(uplo)
@@ -849,14 +856,17 @@ def generate_tester( funcs ):
                         ref_args.append( arg.name )
                 else:
                     if (pre_arrays):
-                        scalars += tab + arg.dtype + ' ' + arg.name + '_tst = params.' + arg.name + '.value();\n'
-                        scalars += tab + arg.dtype + ' ' + arg.name + '_ref = params.' + arg.name + '.value();\n'
+                        scalars += tab + arg.ttype + ' ' + arg.name + '_tst = params.' + arg.name + '.value();\n'
+                        scalars += tab + arg.ttype + ' ' + arg.name + '_ref = params.' + arg.name + '.value();\n'
                     elif (arg.lbound):
-                        scalars2 += tab + arg.dtype + ' ' + arg.name + '_tst = ' + arg.lbound + ';\n'
-                        scalars2 += tab + arg.dtype + ' ' + arg.name + '_ref = ' + arg.lbound + ';\n'
+                        scalars2 += tab + arg.ttype + ' ' + arg.name + '_tst = ' + arg.lbound + ';\n'
+                        scalars2 += tab + arg.ttype + ' ' + arg.name + '_ref = ' + arg.lbound + ';\n'
+                    elif ('in' in arg.intent):
+                        scalars2 += tab + arg.ttype + ' ' + arg.name + '_tst;  // todo value\n'
+                        scalars2 += tab + arg.ttype + ' ' + arg.name + '_ref;  // todo value\n'
                     else:
-                        scalars2 += tab + arg.dtype + ' ' + arg.name + '_tst;  // todo value\n'
-                        scalars2 += tab + arg.dtype + ' ' + arg.name + '_ref;  // todo value\n'
+                        scalars2 += tab + arg.ttype + ' ' + arg.name + '_tst;\n'
+                        scalars2 += tab + arg.ttype + ' ' + arg.name + '_ref;\n'
                     tst_args.append( '&' + arg.name + '_tst' )
                     ref_args.append( '&' + arg.name + '_ref' )
                     verify += tab*2 + 'error += std::abs( ' + arg.name + '_tst - ' + arg.name + '_ref );\n'
@@ -881,7 +891,7 @@ def generate_tester( funcs ):
                 else:
                     lapacke_proto.append( 'lapack_int ' + arg.name )
             else:
-                if (arg.array):
+                if (arg.array or ('out' in arg.intent)):
                     lapacke_proto.append( arg.dtype + '* ' + arg.name )
                 else:
                     lapacke_proto.append( arg.dtype + ' ' + arg.name )

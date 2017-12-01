@@ -50,6 +50,8 @@ set -x
 ./test sytrf ${type} ${square} ${uplo}
 ./test sytrs ${type} ${square} ${uplo}
 ./test sytri ${type} ${square} ${uplo}
+./test sycon ${type} ${square} ${uplo}
+./test syrfs ${type} ${square} ${uplo}
 
 # auxilary
 ./test lacpy ${type} ${mn} --matrixtype=g,l,u

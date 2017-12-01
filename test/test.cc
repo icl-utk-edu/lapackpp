@@ -159,11 +159,11 @@ std::vector< libtest::routines_t > routines = {
   //{ "sptri",              test_sptri,     Section::sysv },
     { "",                   nullptr,        Section::newline },
 
-  //{ "sycon",              test_sycon,     Section::sysv },
+    { "sycon",              test_sycon,     Section::sysv },
   //{ "spcon",              test_spcon,     Section::sysv },
     { "",                   nullptr,        Section::newline },
 
-  //{ "syrfs",              test_syrfs,     Section::sysv },
+    { "syrfs",              test_syrfs,     Section::sysv },
   //{ "sprfs",              test_sprfs,     Section::sysv },
     { "",                   nullptr,        Section::newline },
 

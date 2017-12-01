@@ -100,7 +100,7 @@ void test_larfg_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_larfg( n, &alpha_ref, &X_ref[0], incx, &tau_ref );
         time = omp_get_wtime() - time;
         if (info_ref != 0) {
-            printf( "LAPACKE_larfg returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_larfg returned error %lld\n", (lld) info_ref );
         }
 
         params.ref_time.value()   = time;

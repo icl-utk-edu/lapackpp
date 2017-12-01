@@ -59,8 +59,8 @@ void test_geequ_work( Params& params, bool run )
     real_t rowcnd_ref = 0;
     real_t colcnd_tst = 0;
     real_t colcnd_ref = 0;
-    real_t amax_tst;  // todo value
-    real_t amax_ref;  // todo value
+    real_t amax_tst;
+    real_t amax_ref;
     size_t size_A = (size_t) lda * n;
     size_t size_R = (size_t) (m);
     size_t size_C = (size_t) (n);

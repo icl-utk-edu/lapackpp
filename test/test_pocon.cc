@@ -56,7 +56,7 @@ void test_pocon_work( Params& params, bool run )
 
     // ---------- setup
     int64_t lda = roundup( max( 1, n ), align );
-    real_t anorm;  // todo value
+    real_t anorm;
     real_t rcond_tst;
     real_t rcond_ref;
     size_t size_A = (size_t) lda * n;

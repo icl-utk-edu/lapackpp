@@ -980,8 +980,8 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  tab + '    fprintf( stderr, "lapack::' + func.name + ' returned error %lld\\n", (lld) info_tst );\n'
         +  tab + '}\n'
         +  '\n'
+        +  tab + 'params.time.value() = time;\n'
         +  tab + 'double gflop = lapack::Gflop< scalar_t >::' + func.name + '( ' + flop_args + ' );\n'
-        +  tab + 'params.time.value()   = time;\n'
         +  tab + 'params.gflops.value() = gflop / time;\n'
         +  '\n'
         +  tab + "if (params.ref.value() == 'y' || params.check.value() == 'y') {\n"
@@ -994,7 +994,7 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  tab*2 + '    fprintf( stderr, "LAPACKE_' + func.name + ' returned error %lld\\n", (lld) info_ref );\n'
         +  tab*2 + '}\n'
         +  '\n'
-        +  tab*2 + 'params.ref_time.value()   = time;\n'
+        +  tab*2 + 'params.ref_time.value() = time;\n'
         +  tab*2 + 'params.ref_gflops.value() = gflop / time;\n'
         +  '\n'
         +  tab*2 + '// ---------- check error compared to reference\n'

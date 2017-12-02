@@ -77,8 +77,8 @@ void test_lacpy_work( Params& params, bool run )
     lapack::lacpy( matrixtype, m, n, &A[0], lda, &B_tst[0], ldb );
     time = omp_get_wtime() - time;
 
+    params.time.value() = time;
     //double gflop = lapack::Gflop< scalar_t >::lacpy( m, n );
-    params.time.value()   = time;
     //params.gflops.value() = gflop / time;
 
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
@@ -91,7 +91,7 @@ void test_lacpy_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_lacpy returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value()   = time;
+        params.ref_time.value() = time;
         //params.ref_gflops.value() = gflop / time;
 
         // ---------- check error compared to reference

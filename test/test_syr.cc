@@ -53,7 +53,7 @@ void test_syr_work( Params& params, bool run )
 
     // get & mark input values
     blas::Layout layout = params.layout.value();
-    blas::Uplo uplo = params.uplo .value();
+    blas::Uplo uplo = params.uplo.value();
     scalar_t alpha  = params.alpha.value();
     int64_t n       = params.dim.n();
     int64_t incx    = params.incx.value();
@@ -61,7 +61,7 @@ void test_syr_work( Params& params, bool run )
     int64_t verbose = params.verbose.value();
 
     // mark non-standard output values
-    params.ref_time  .value();
+    params.ref_time.value();
     params.ref_gflops.value();
     params.gflops.value();
 
@@ -113,8 +113,8 @@ void test_syr_work( Params& params, bool run )
     blas::syr( layout, uplo, n, alpha, x, incx, A, lda );
     time = omp_get_wtime() - time;
 
+    params.time.value() = time * 1000;  // msec
     double gflop = gflop_syr( n, x );
-    params.time.value()   = time * 1000;  // msec
     params.gflops.value() = gflop / time;
 
     if (verbose >= 2) {
@@ -129,7 +129,7 @@ void test_syr_work( Params& params, bool run )
                    n, alpha, x, incx, Aref, lda );
         time = omp_get_wtime() - time;
 
-        params.ref_time.value()   = time * 1000;  // msec
+        params.ref_time.value() = time * 1000;  // msec
         params.ref_gflops.value() = gflop / time;
 
         if (verbose >= 2) {

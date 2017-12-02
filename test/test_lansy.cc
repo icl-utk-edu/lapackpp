@@ -71,8 +71,8 @@ void test_lansy_work( Params& params, bool run )
     real_t norm_tst = lapack::lansy( norm, uplo, n, &A[0], lda );
     time = omp_get_wtime() - time;
 
+    params.time.value() = time;
     //double gflop = lapack::Gflop< scalar_t >::lansy( norm, n );
-    params.time.value()   = time;
     //params.gflops.value() = gflop / time;
 
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
@@ -82,7 +82,7 @@ void test_lansy_work( Params& params, bool run )
         real_t norm_ref = LAPACKE_lansy( norm2char(norm), uplo2char(uplo), n, &A[0], lda );
         time = omp_get_wtime() - time;
 
-        params.ref_time.value()   = time;
+        params.ref_time.value() = time;
         //params.ref_gflops.value() = gflop / time;
 
         // ---------- check error compared to reference

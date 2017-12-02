@@ -86,8 +86,8 @@ void test_larfx_work( Params& params, bool run )
     lapack::larfx( side, m, n, &V[0], tau, &C_tst[0], ldc );
     time = omp_get_wtime() - time;
 
+    params.time.value() = time;
     //double gflop = lapack::Gflop< scalar_t >::larf( side, m, n );
-    params.time.value()   = time;
     //params.gflops.value() = gflop / time;
 
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
@@ -100,7 +100,7 @@ void test_larfx_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_larfx returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value()   = time;
+        params.ref_time.value() = time;
         //params.ref_gflops.value() = gflop / time;
 
         // ---------- check error compared to reference

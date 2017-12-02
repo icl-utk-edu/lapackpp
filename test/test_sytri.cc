@@ -112,8 +112,8 @@ void test_sytri_work( Params& params, bool run )
         fprintf( stderr, "lapack::sytri returned error %lld\n", (lld) info_tst );
     }
 
+    params.time.value() = time;
     // double gflop = lapack::Gflop< scalar_t >::sytri( n );
-    params.time.value()   = time;
     // params.gflops.value() = gflop / time;
 
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
@@ -131,7 +131,7 @@ void test_sytri_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_sytri returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value()   = time;
+        params.ref_time.value() = time;
         // params.ref_gflops.value() = gflop / time;
 
         // ---------- check error compared to reference

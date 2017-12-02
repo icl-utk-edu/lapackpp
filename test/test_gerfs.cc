@@ -111,8 +111,8 @@ void test_gerfs_work( Params& params, bool run )
         fprintf( stderr, "lapack::gerfs returned error %lld\n", (lld) info_tst );
     }
 
+    params.time.value() = time;
     //double gflop = lapack::Gflop< scalar_t >::gerfs( trans, n, nrhs );
-    params.time.value()   = time;
     //params.gflops.value() = gflop / time;
 
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
@@ -125,7 +125,7 @@ void test_gerfs_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_gerfs returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value()   = time;
+        params.ref_time.value() = time;
         //params.ref_gflops.value() = gflop / time;
 
         // ---------- check error compared to reference

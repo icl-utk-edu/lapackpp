@@ -81,8 +81,8 @@ void test_lange_work( Params& params, bool run )
     real_t norm_tst = lapack::lange( norm, m, n, &A[0], lda );
     time = omp_get_wtime() - time;
 
+    params.time.value() = time;
     //double gflop = lapack::Gflop< scalar_t >::lange( norm, m, n );
-    params.time.value()   = time;
     //params.gflops.value() = gflop / time;
 
     if (verbose >= 1) {
@@ -96,7 +96,7 @@ void test_lange_work( Params& params, bool run )
         real_t norm_ref = LAPACKE_lange( norm2char(norm), m, n, &A[0], lda );
         time = omp_get_wtime() - time;
 
-        params.ref_time.value()   = time;
+        params.ref_time.value() = time;
         //params.ref_gflops.value() = gflop / time;
 
         if (verbose >= 1) {

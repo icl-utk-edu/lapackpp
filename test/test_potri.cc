@@ -129,8 +129,8 @@ void test_potri_work( Params& params, bool run )
         fprintf( stderr, "lapack::potri returned error %lld\n", (lld) info_tst );
     }
 
+    params.time.value() = time;
     double gflop = lapack::Gflop< scalar_t >::potri( n );
-    params.time.value()   = time;
     params.gflops.value() = gflop / time;
 
     if (verbose >= 2) {
@@ -202,7 +202,7 @@ void test_potri_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_potri returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value()   = time;
+        params.ref_time.value() = time;
         params.ref_gflops.value() = gflop / time;
 
         if (verbose >= 2) {

@@ -75,8 +75,8 @@ void test_laset_work( Params& params, bool run )
     lapack::laset( matrixtype, m, n, alpha, beta, &A_tst[0], lda );
     time = omp_get_wtime() - time;
 
+    params.time.value() = time;
     //double gflop = lapack::Gflop< scalar_t >::laset( m, n, alpha, beta );
-    params.time.value()   = time;
     //params.gflops.value() = gflop / time;
 
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
@@ -89,7 +89,7 @@ void test_laset_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_laset returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value()   = time;
+        params.ref_time.value() = time;
         //params.ref_gflops.value() = gflop / time;
 
         // ---------- check error compared to reference

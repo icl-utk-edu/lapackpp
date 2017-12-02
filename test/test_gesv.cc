@@ -105,8 +105,8 @@ void test_gesv_work( Params& params, bool run )
         fprintf( stderr, "lapack::gesv returned error %lld\n", (lld) info_tst );
     }
 
+    params.time.value() = time;
     double gflop = lapack::Gflop< scalar_t >::gesv( n, nrhs );
-    params.time.value()   = time;
     params.gflops.value() = gflop / time;
 
     if (verbose >= 2) {
@@ -124,7 +124,7 @@ void test_gesv_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_gesv returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value()   = time;
+        params.ref_time.value() = time;
         params.ref_gflops.value() = gflop / time;
 
         if (verbose >= 2) {

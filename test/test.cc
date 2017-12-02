@@ -419,7 +419,7 @@ Params::Params():
 
     // ----- output parameters
     // min, max are ignored
-    //          name,                  w, p, type,              def, min, max, help
+    //          name,                     w, p, type,              def, min, max, help
     error     ( "LAPACK++\nerror",       11, 4, ParamType::Output, nan,   0,   0, "numerical error" ),
     ortho     ( "LAPACK++\north. error", 11, 4, ParamType::Output, nan,   0,   0, "orthogonality error" ),
     time      ( "LAPACK++\ntime (s)",    11, 4, ParamType::Output, nan,   0,   0, "time to solution" ),

@@ -138,8 +138,8 @@ void test_larft_work( Params& params, bool run )
     lapack::larft( direct, storev, n, k, &V[0], ldv, &tau[0], &T_tst[0], ldt );
     time = omp_get_wtime() - time;
 
+    params.time.value() = time;
     //double gflop = lapack::Gflop< scalar_t >::larft( direct, storev, n, k );
-    params.time.value()   = time;
     //params.gflops.value() = gflop / time;
 
     if (verbose >= 3) {
@@ -156,7 +156,7 @@ void test_larft_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_larft returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value()   = time;
+        params.ref_time.value() = time;
         //params.ref_gflops.value() = gflop / time;
 
         if (verbose >= 3) {

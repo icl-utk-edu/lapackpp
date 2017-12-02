@@ -84,8 +84,8 @@ void test_larfg_work( Params& params, bool run )
     lapack::larfg( n, &alpha_tst, &X_tst[0], incx, &tau_tst );
     time = omp_get_wtime() - time;
 
+    params.time.value() = time;
     double gflop = lapack::Gflop< scalar_t >::larfg( n );
-    params.time.value()   = time;
     params.gflops.value() = gflop / time;
 
     if (verbose >= 2) {
@@ -104,9 +104,8 @@ void test_larfg_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_larfg returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value()   = time;
+        params.ref_time.value() = time;
         params.ref_gflops.value() = gflop / time;
-
 
         if (verbose >= 2) {
             printf( "alpha2ref = %.4e\n", real(alpha_ref) );

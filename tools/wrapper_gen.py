@@ -957,6 +957,7 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  tab + '// mark non-standard output values\n'
         +  tab + 'params.ref_time.value();\n'
         +  tab + 'params.ref_gflops.value();\n'
+        +  tab + 'params.gflops.value();\n'
         +  '\n'
         +  tab + 'if (! run)\n'
         +  tab*2 + 'return;\n'

@@ -51,6 +51,7 @@ void test_potrs_work( Params& params, bool run )
     // mark non-standard output values
     params.ref_time.value();
     params.ref_gflops.value();
+    params.gflops.value();
 
     if (! run)
         return;

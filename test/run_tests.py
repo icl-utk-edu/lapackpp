@@ -192,6 +192,8 @@ if (args.sysv):
     [ 'sytrf', dtype + square + uplo ],
     [ 'sytrs', dtype + square + uplo ],
     [ 'sytri', dtype + square + uplo ],
+    [ 'sycon', dtype + square + uplo ],
+    [ 'syrfs', dtype + square + uplo ],
     ]
 
 # symmetric indefinite, rook

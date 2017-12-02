@@ -26,102 +26,120 @@ import argparse
 # command line arguments
 parser = argparse.ArgumentParser()
 
-group1 = parser.add_argument_group( 'precisions (default is all)' )
-group1.add_argument( '-f', '--float',          action='store_true', help='run float (single precision) tests' )
-group1.add_argument( '-d', '--double',         action='store_true', help='run double precision tests' )
-group1.add_argument( '-c', '--complex-float',  action='store_true', help='run complex-float precision tests' )
-group1.add_argument( '-z', '--complex-double', action='store_true', help='run complex-double precision tests' )
+group_type = parser.add_argument_group( 'precisions (default is all)' )
+group_type.add_argument( '-f', '--float',          action='store_true', help='run float (single precision) tests' )
+group_type.add_argument( '-d', '--double',         action='store_true', help='run double precision tests' )
+group_type.add_argument( '-c', '--complex-float',  action='store_true', help='run complex-float precision tests' )
+group_type.add_argument( '-z', '--complex-double', action='store_true', help='run complex-double precision tests' )
 
-group2 = parser.add_argument_group( 'matrix dimensions (default is medium)' )
-group2.add_argument( '-s', '--small',  action='store_true', help='run small tests' )
-group2.add_argument( '-m', '--medium', action='store_true', help='run medium tests' )
-group2.add_argument( '-l', '--large',  action='store_true', help='run large tests' )
+group_size = parser.add_argument_group( 'matrix dimensions (default is medium)' )
+group_size.add_argument( '-x', '--xsmall', action='store_true', help='run x-small tests' )
+group_size.add_argument( '-s', '--small',  action='store_true', help='run small tests' )
+group_size.add_argument( '-m', '--medium', action='store_true', help='run medium tests' )
+group_size.add_argument( '-l', '--large',  action='store_true', help='run large tests' )
+group_size.add_argument(       '--dim',    action='store',      help='explicitly specify size', default='' )
 
-group3 = parser.add_argument_group( 'category (default is all)' )
+group_cat = parser.add_argument_group( 'category (default is all)' )
 categories = [
-    group3.add_argument( '--lu',            action='store_true', help='run LU tests' ),
-    group3.add_argument( '--chol',          action='store_true', help='run Cholesky tests' ),
-    group3.add_argument( '--sysv',          action='store_true', help='run symmetric indefinite (Bunch-Kaufman) tests' ),
-    group3.add_argument( '--rook',          action='store_true', help='run symmetric indefinite (rook) tests' ),
-    group3.add_argument( '--aasen',         action='store_true', help='run symmetric indefinite (Aasen) tests' ),
-    group3.add_argument( '--least-squares', action='store_true', help='run least squares tests' ),
-    group3.add_argument( '--qr',            action='store_true', help='run QR tests' ),
-    group3.add_argument( '--lq',            action='store_true', help='run LQ tests' ),
-    group3.add_argument( '--ql',            action='store_true', help='run QL tests' ),
-    group3.add_argument( '--rq',            action='store_true', help='run RQ tests' ),
-    group3.add_argument( '--syev',          action='store_true', help='run symmetric eigenvalues tests' ),
-    group3.add_argument( '--geev',          action='store_true', help='run non-symmetric eigenvalues tests' ),
-    group3.add_argument( '--svd',           action='store_true', help='run svd tests' ),
-    group3.add_argument( '--aux',           action='store_true', help='run auxiliary tests' ),
-    group3.add_argument( '--aux-house',     action='store_true', help='run auxiliary Householder tests' ),
-    group3.add_argument( '--aux-norm',      action='store_true', help='run auxiliary norm tests' ),
-    group3.add_argument( '--blas',          action='store_true', help='run additional BLAS tests' ),
+    group_cat.add_argument( '--lu',            action='store_true', help='run LU tests' ),
+    group_cat.add_argument( '--chol',          action='store_true', help='run Cholesky tests' ),
+    group_cat.add_argument( '--sysv',          action='store_true', help='run symmetric indefinite (Bunch-Kaufman) tests' ),
+    group_cat.add_argument( '--rook',          action='store_true', help='run symmetric indefinite (rook) tests' ),
+    group_cat.add_argument( '--aasen',         action='store_true', help='run symmetric indefinite (Aasen) tests' ),
+    group_cat.add_argument( '--least-squares', action='store_true', help='run least squares tests' ),
+    group_cat.add_argument( '--qr',            action='store_true', help='run QR tests' ),
+    group_cat.add_argument( '--lq',            action='store_true', help='run LQ tests' ),
+    group_cat.add_argument( '--ql',            action='store_true', help='run QL tests' ),
+    group_cat.add_argument( '--rq',            action='store_true', help='run RQ tests' ),
+    group_cat.add_argument( '--syev',          action='store_true', help='run symmetric eigenvalues tests' ),
+    group_cat.add_argument( '--geev',          action='store_true', help='run non-symmetric eigenvalues tests' ),
+    group_cat.add_argument( '--svd',           action='store_true', help='run svd tests' ),
+    group_cat.add_argument( '--aux',           action='store_true', help='run auxiliary tests' ),
+    group_cat.add_argument( '--aux-house',     action='store_true', help='run auxiliary Householder tests' ),
+    group_cat.add_argument( '--aux-norm',      action='store_true', help='run auxiliary norm tests' ),
+    group_cat.add_argument( '--blas',          action='store_true', help='run additional BLAS tests' ),
 ]
 categories = map( lambda x: x.dest, categories ) # map to names: ['lu', 'chol', ...]
 
 parser.add_argument( 'tests', nargs=argparse.REMAINDER )
-args = parser.parse_args()
+opts = parser.parse_args()
 
 # by default, run all precisions
-if (not (args.float or args.double or args.complex_float or args.complex_double)):
-    args.float          = True
-    args.double         = True
-    args.complex_float  = True
-    args.complex_double = True
+if (not (opts.float or opts.double or opts.complex_float or opts.complex_double)):
+    opts.float          = True
+    opts.double         = True
+    opts.complex_float  = True
+    opts.complex_double = True
 
 # by default, run medium sizes
-if (not (args.small or args.medium or args.large)):
-    args.medium = True
+if (not (opts.xsmall or opts.small or opts.medium or opts.large)):
+    opts.medium = True
 
 # by default, run all categories
-if (args.tests or not any( map( lambda c: args.__dict__[ c ], categories ))):
+if (opts.tests or not any( map( lambda c: opts.__dict__[ c ], categories ))):
     for c in categories:
-        args.__dict__[ c ] = True
+        opts.__dict__[ c ] = True
 
 # ------------------------------------------------------------------------------
 # parameters
 # begin with space to ease concatenation
 
-square   = ''
-tall     = ''
-wide     = ''
-mnk      = ''
-nk_tall  = ''
-nk_wide  = ''
+# if given, use explicit dim
+dim = ' --dim ' + opts.dim if (opts.dim) else ''
+n        = dim
+tall     = dim
+wide     = dim
+mn       = dim
+mnk      = dim
+nk_tall  = dim
+nk_wide  = dim
+nk       = dim
 
-if (args.small):
-    square  += ' --dim 25:100:25'
-    tall    += ' --dim 50:200:50x25:100:25'  # 2:1
-    wide    += ' --dim 25:100:25x50:200:50'  # 1:2
-    mnk     += ' --dim 25x50x75 --dim 50x25x75' \
-            +  ' --dim 25x75x50 --dim 50x75x25' \
-            +  ' --dim 75x25x50 --dim 75x50x25'
-    nk_tall += ' --dim 1x50:200:50x25:100:25'
-    nk_wide += ' --dim 1x25:100:25x50:200:50'
+if (not opts.dim):
+    if (opts.xsmall):
+        n       += ' --dim 10'
+        tall    += ' --dim 20x10'
+        wide    += ' --dim 10x20'
+        mnk     += ' --dim 10x15x20 --dim 15x10x20' \
+                +  ' --dim 10x20x15 --dim 15x20x10' \
+                +  ' --dim 20x10x15 --dim 20x15x10'
+        nk_tall += ' --dim 1x20x10'
+        nk_wide += ' --dim 1x10x20'
 
-if (args.medium):
-    square  += ' --dim 100:500:100'
-    tall    += ' --dim 200:1000:200x100:500:100'  # 2:1
-    wide    += ' --dim 100:500:100x200:1000:200'  # 1:2
-    mnk     += ' --dim 100x300x600 --dim 300x100x600' \
-            +  ' --dim 100x600x300 --dim 300x600x100' \
-            +  ' --dim 600x100x300 --dim 600x300x100'
-    nk_tall += ' --dim 1x200:1000:200x100:500:100'
-    nk_wide += ' --dim 1x100:500:100x200:1000:200'
+    if (opts.small):
+        n       += ' --dim 25:100:25'
+        tall    += ' --dim 50:200:50x25:100:25'  # 2:1
+        wide    += ' --dim 25:100:25x50:200:50'  # 1:2
+        mnk     += ' --dim 25x50x75 --dim 50x25x75' \
+                +  ' --dim 25x75x50 --dim 50x75x25' \
+                +  ' --dim 75x25x50 --dim 75x50x25'
+        nk_tall += ' --dim 1x50:200:50x25:100:25'
+        nk_wide += ' --dim 1x25:100:25x50:200:50'
 
-if (args.large):
-    square  += ' --dim 1000:5000:1000'
-    tall    += ' --dim 2000:10000:2000x1000:5000:1000'  # 2:1
-    wide    += ' --dim 1000:5000:1000x2000:10000:2000'  # 1:2
-    mnk     += ' --dim 1000x3000x6000 --dim 3000x1000x6000' \
-            +  ' --dim 1000x6000x3000 --dim 3000x6000x1000' \
-            +  ' --dim 6000x1000x3000 --dim 6000x3000x1000'
-    nk_tall += ' --dim 1x2000:10000:2000x1000:5000:1000'
-    nk_wide += ' --dim 1x1000:5000:1000x2000:10000:2000'
+    if (opts.medium):
+        n       += ' --dim 100:500:100'
+        tall    += ' --dim 200:1000:200x100:500:100'  # 2:1
+        wide    += ' --dim 100:500:100x200:1000:200'  # 1:2
+        mnk     += ' --dim 100x300x600 --dim 300x100x600' \
+                +  ' --dim 100x600x300 --dim 300x600x100' \
+                +  ' --dim 600x100x300 --dim 600x300x100'
+        nk_tall += ' --dim 1x200:1000:200x100:500:100'
+        nk_wide += ' --dim 1x100:500:100x200:1000:200'
 
-mn       = square + tall + wide
-mnk      = mn + mnk
-nk       = square + nk_tall + nk_wide
+    if (opts.large):
+        n       += ' --dim 1000:5000:1000'
+        tall    += ' --dim 2000:10000:2000x1000:5000:1000'  # 2:1
+        wide    += ' --dim 1000:5000:1000x2000:10000:2000'  # 1:2
+        mnk     += ' --dim 1000x3000x6000 --dim 3000x1000x6000' \
+                +  ' --dim 1000x6000x3000 --dim 3000x6000x1000' \
+                +  ' --dim 6000x1000x3000 --dim 6000x3000x1000'
+        nk_tall += ' --dim 1x2000:10000:2000x1000:5000:1000'
+        nk_wide += ' --dim 1x1000:5000:1000x2000:10000:2000'
+
+    mn  = n + tall + wide
+    mnk = mn + mnk
+    nk  = n + nk_tall + nk_wide
+# end
 
 incx_pos = ' --incx 1,2'
 incx     = ' --incx 1,2,-1,-2'
@@ -129,21 +147,21 @@ incy_pos = ' --incy 1,2'
 incy     = ' --incy 1,2,-1,-2'
 
 dtypes = []
-if (args.float):  dtypes.append( 's' )
-if (args.double): dtypes.append( 'd' )
-if (args.complex_float):  dtypes.append( 'c' )
-if (args.complex_double): dtypes.append( 'z' )
-dtype         = ' --type=' + ','.join( dtypes )
+if (opts.float):  dtypes.append( 's' )
+if (opts.double): dtypes.append( 'd' )
+if (opts.complex_float):  dtypes.append( 'c' )
+if (opts.complex_double): dtypes.append( 'z' )
+dtype         = ' --type ' + ','.join( dtypes )
 
 r = filter( lambda x: x in ('s', 'd'), dtypes )
 if (r):
-    dtype_real = ' --type=' + ','.join( r )
+    dtype_real = ' --type ' + ','.join( r )
 else:
     dtype_real = ''
 
 c = filter( lambda x: x in ('c', 'z'), dtypes )
 if (c):
-    dtype_complex = ' --type=' + ','.join( c )
+    dtype_complex = ' --type ' + ','.join( c )
 else:
     dtype_complex = ''
 
@@ -157,195 +175,196 @@ direct   = ' --direct f,b'
 storev   = ' --storev c,r'
 side     = ' --side l,r'
 mtype    = ' --matrixtype g,l,u'
+align    = ' --align 32'
 
 # ------------------------------------------------------------------------------
 cmds = []
 
 # LU
-if (args.lu):
+if (opts.lu):
     cmds += [
-    [ 'gesv',  dtype + square ],
-    [ 'getrf', dtype + mn ],
-    [ 'getrs', dtype + square + trans ],
-    [ 'getri', dtype + square ],
-    [ 'gecon', dtype + square ],
-    [ 'gerfs', dtype + square + trans ],
-    [ 'geequ', dtype + square ],
+    [ 'gesv',  dtype + align + n ],
+    [ 'getrf', dtype + align + mn ],
+    [ 'getrs', dtype + align + n + trans ],
+    [ 'getri', dtype + align + n ],
+    [ 'gecon', dtype + align + n ],
+    [ 'gerfs', dtype + align + n + trans ],
+    [ 'geequ', dtype + align + n ],
     ]
 
 # Cholesky
-if (args.chol):
+if (opts.chol):
     cmds += [
-    [ 'posv',  dtype + square + uplo ],
-    [ 'potrf', dtype + square + uplo ],
-    [ 'potrs', dtype + square + uplo ],
-    [ 'potri', dtype + square + uplo ],
-    [ 'pocon', dtype + square + uplo ],
-    [ 'porfs', dtype + square + uplo ],
-    [ 'poequ', dtype + square ],  # only diagonal elements
+    [ 'posv',  dtype + align + n + uplo ],
+    [ 'potrf', dtype + align + n + uplo ],
+    [ 'potrs', dtype + align + n + uplo ],
+    [ 'potri', dtype + align + n + uplo ],
+    [ 'pocon', dtype + align + n + uplo ],
+    [ 'porfs', dtype + align + n + uplo ],
+    [ 'poequ', dtype + align + n ],  # only diagonal elements (no uplo)
     ]
 
 # symmetric indefinite, Bunch-Kaufman
-if (args.sysv):
+if (opts.sysv):
     cmds += [
-    [ 'sysv',  dtype + square + uplo ],
-    [ 'sytrf', dtype + square + uplo ],
-    [ 'sytrs', dtype + square + uplo ],
-    [ 'sytri', dtype + square + uplo ],
-    [ 'sycon', dtype + square + uplo ],
-    [ 'syrfs', dtype + square + uplo ],
+    [ 'sysv',  dtype + align + n + uplo ],
+    [ 'sytrf', dtype + align + n + uplo ],
+    [ 'sytrs', dtype + align + n + uplo ],
+    [ 'sytri', dtype + align + n + uplo ],
+    [ 'sycon', dtype + align + n + uplo ],
+    [ 'syrfs', dtype + align + n + uplo ],
     ]
 
 # symmetric indefinite, rook
-#if (args.rook):
+#if (opts.rook):
 #    cmds += [
-#    [ 'sysv_rook',  dtype + square + uplo ],
-#    [ 'sytrf_rook', dtype + square + uplo ],
-#    [ 'sytrs_rook', dtype + square + uplo ],
-#    [ 'sytri_rook', dtype + square + uplo ],
+#    [ 'sysv_rook',  dtype + align + n + uplo ],
+#    [ 'sytrf_rook', dtype + align + n + uplo ],
+#    [ 'sytrs_rook', dtype + align + n + uplo ],
+#    [ 'sytri_rook', dtype + align + n + uplo ],
 #    ]
 
 # symmetric indefinite, Aasen
-#if (args.aasen):
+#if (opts.aasen):
 #    cmds += [
-#    [ 'sysv_aasen',  dtype + square + uplo ],
-#    [ 'sytrf_aasen', dtype + square + uplo ],
-#    [ 'sytrs_aasen', dtype + square + uplo ],
-#    [ 'sytri_aasen', dtype + square + uplo ],
-#    [ 'sysv_aasen_2stage',  dtype + square + uplo ],
-#    [ 'sytrf_aasen_2stage', dtype + square + uplo ],
-#    [ 'sytrs_aasen_2stage', dtype + square + uplo ],
-#    [ 'sytri_aasen_2stage', dtype + square + uplo ],
+#    [ 'sysv_aasen',  dtype + align + n + uplo ],
+#    [ 'sytrf_aasen', dtype + align + n + uplo ],
+#    [ 'sytrs_aasen', dtype + align + n + uplo ],
+#    [ 'sytri_aasen', dtype + align + n + uplo ],
+#    [ 'sysv_aasen_2stage',  dtype + align + n + uplo ],
+#    [ 'sytrf_aasen_2stage', dtype + align + n + uplo ],
+#    [ 'sytrs_aasen_2stage', dtype + align + n + uplo ],
+#    [ 'sytri_aasen_2stage', dtype + align + n + uplo ],
 #    ]
 
 # least squares
-#if (args.least_squares):
+#if (opts.least_squares):
 #    cmds += [
-#    [ 'gels',   dtype + mn ],
-#    [ 'gelsy',  dtype + mn ],
-#    [ 'gelsd',  dtype + mn ],
-#    [ 'gelss',  dtype + mn ],
-#    [ 'getsls', dtype + mn ],
+#    [ 'gels',   dtype + align + mn ],
+#    [ 'gelsy',  dtype + align + mn ],
+#    [ 'gelsd',  dtype + align + mn ],
+#    [ 'gelss',  dtype + align + mn ],
+#    [ 'getsls', dtype + align + mn ],
 #    ]
 
 # QR
-#if (args.qr):
+#if (opts.qr):
 #    cmds += [
-#    [ 'geqrf', dtype + mn ],
-#    [ 'ggqrf', dtype + mn ],
-#    [ 'ungqr', dtype + mn ],
-#    [ 'unmqr', dtype + mn ],
+#    [ 'geqrf', dtype + align + mn ],
+#    [ 'ggqrf', dtype + align + mn ],
+#    [ 'ungqr', dtype + align + mn ],
+#    [ 'unmqr', dtype + align + mn ],
 #    ]
 
 # LQ
-#if (args.lq):
+#if (opts.lq):
 #    cmds += [
-#    [ 'gelqf', dtype + mn ],
-#    [ 'gglqf', dtype + mn ],
-#    [ 'unglq', dtype + mn ],
-#    [ 'unmlq', dtype + mn ],
+#    [ 'gelqf', dtype + align + mn ],
+#    [ 'gglqf', dtype + align + mn ],
+#    [ 'unglq', dtype + align + mn ],
+#    [ 'unmlq', dtype + align + mn ],
 #    ]
 
 # QL
-#if (args.ql):
+#if (opts.ql):
 #    cmds += [
-#    [ 'geqlf', dtype + mn ],
-#    [ 'ggqlf', dtype + mn ],
-#    [ 'ungql', dtype + mn ],
-#    [ 'unmql', dtype + mn ],
+#    [ 'geqlf', dtype + align + mn ],
+#    [ 'ggqlf', dtype + align + mn ],
+#    [ 'ungql', dtype + align + mn ],
+#    [ 'unmql', dtype + align + mn ],
 #    ]
 
 # RQ
-#if (args.rq):
+#if (opts.rq):
 #    cmds += [
-#    [ 'gerqf', dtype + mn ],
-#    [ 'ggrqf', dtype + mn ],
-#    [ 'ungrq', dtype + mn ],
-#    [ 'unmrq', dtype + mn ],
+#    [ 'gerqf', dtype + align + mn ],
+#    [ 'ggrqf', dtype + align + mn ],
+#    [ 'ungrq', dtype + align + mn ],
+#    [ 'unmrq', dtype + align + mn ],
 #    ]
 
 # symmetric eigenvalues
 # todo: add jobs
-#if (args.syev):
+#if (opts.syev):
 #    cmds += [
-#    [ 'syev',  dtype + square + uplo ],
-#    [ 'syevx', dtype + square + uplo ],
-#    [ 'syevd', dtype + square + uplo ],
-#    [ 'syevr', dtype + square + uplo ],
-#    [ 'sytrd', dtype + square + uplo ],
-#    [ 'orgtr', dtype + square + uplo ],
-#    [ 'ormtr', dtype + square + uplo ],
+#    [ 'syev',  dtype + align + n + uplo ],
+#    [ 'syevx', dtype + align + n + uplo ],
+#    [ 'syevd', dtype + align + n + uplo ],
+#    [ 'syevr', dtype + align + n + uplo ],
+#    [ 'sytrd', dtype + align + n + uplo ],
+#    [ 'orgtr', dtype + align + n + uplo ],
+#    [ 'ormtr', dtype + align + n + uplo ],
 #    ]
 
 # generalized symmetric eigenvalues
 # todo: add jobs
-#if (args.sygv):
+#if (opts.sygv):
 #    cmds += [
-#    [ 'sygv',  dtype + square + uplo ],
-#    [ 'sygvx', dtype + square + uplo ],
-#    [ 'sygvd', dtype + square + uplo ],
-#    [ 'sygvr', dtype + square + uplo ],
-#    [ 'sygst', dtype + square + uplo ],
+#    [ 'sygv',  dtype + align + n + uplo ],
+#    [ 'sygvx', dtype + align + n + uplo ],
+#    [ 'sygvd', dtype + align + n + uplo ],
+#    [ 'sygvr', dtype + align + n + uplo ],
+#    [ 'sygst', dtype + align + n + uplo ],
 #    ]
 
 # non-symmetric eigenvalues
 # todo: add jobs
-#if (args.syev):
+#if (opts.syev):
 #    cmds += [
-#    [ 'syev',  dtype + mn ],
-#    [ 'syevx', dtype + mn ],
-#    [ 'syevd', dtype + mn ],
-#    [ 'syevr', dtype + mn ],
-#    [ 'sytrd', dtype + mn ],
-#    [ 'orgtr', dtype + mn ],
-#    [ 'ormtr', dtype + mn ],
+#    [ 'syev',  dtype + align + mn ],
+#    [ 'syevx', dtype + align + mn ],
+#    [ 'syevd', dtype + align + mn ],
+#    [ 'syevr', dtype + align + mn ],
+#    [ 'sytrd', dtype + align + mn ],
+#    [ 'orgtr', dtype + align + mn ],
+#    [ 'ormtr', dtype + align + mn ],
 #    ]
 
 # svd
 # todo: add jobs
-#if (args.svd):
+#if (opts.svd):
 #    cmds += [
-#    [ 'gesvd',         dtype + mn ],
-#    [ 'gesdd',         dtype + mn ],
-#    [ 'gesvdx',        dtype + mn ],
-#    [ 'gesvd_2stage',  dtype + mn ],
-#    [ 'gesdd_2stage',  dtype + mn ],
-#    [ 'gesvdx_2stage', dtype + mn ],
-#    [ 'gejsv',         dtype + mn ],
-#    [ 'gesvj',         dtype + mn ],
+#    [ 'gesvd',         dtype + align + mn ],
+#    [ 'gesdd',         dtype + align + mn ],
+#    [ 'gesvdx',        dtype + align + mn ],
+#    [ 'gesvd_2stage',  dtype + align + mn ],
+#    [ 'gesdd_2stage',  dtype + align + mn ],
+#    [ 'gesvdx_2stage', dtype + align + mn ],
+#    [ 'gejsv',         dtype + align + mn ],
+#    [ 'gesvj',         dtype + align + mn ],
 #    ]
 
 # auxilary
-if (args.aux):
+if (opts.aux):
     cmds += [
-    [ 'lacpy', dtype + mn + mtype ],
-    [ 'laset', dtype + mn + mtype ],
-    [ 'laswp', dtype + mn ],
+    [ 'lacpy', dtype + align + mn + mtype ],
+    [ 'laset', dtype + align + mn + mtype ],
+    [ 'laswp', dtype + align + mn ],
     ]
 
 # auxilary - householder
-if (args.aux_house):
+if (opts.aux_house):
     cmds += [
-    [ 'larfg', dtype + square + incx_pos ],
-    [ 'larf',  dtype + mn     + incx + side ],
-    [ 'larfx', dtype + mn     + side ],
-    [ 'larfb', dtype + mnk    + side + trans + direct + storev ],
-    [ 'larft', dtype + nk     + direct + storev ],
+    [ 'larfg', dtype         + n   + incx_pos ],
+    [ 'larf',  dtype + align + mn  + incx + side ],
+    [ 'larfx', dtype + align + mn  + side ],
+    [ 'larfb', dtype + align + mnk + side + trans + direct + storev ],
+    [ 'larft', dtype + align + nk  + direct + storev ],
     ]
 
 # auxilary - norms
-if (args.aux):
+if (opts.aux):
     cmds += [
-    [ 'lange', dtype + mn +     norm ],
-    [ 'lanhe', dtype + square + norm + uplo ],
-    [ 'lansy', dtype + square + norm + uplo ],
-    [ 'lantr', dtype + square + norm + uplo + diag ],
+    [ 'lange', dtype + align + mn + norm ],
+    [ 'lanhe', dtype + align + n  + norm + uplo ],
+    [ 'lansy', dtype + align + n  + norm + uplo ],
+    [ 'lantr', dtype + align + n  + norm + uplo + diag ],
     ]
 
 # additional blas
-if (args.blas):
+if (opts.blas):
     cmds += [
-    [ 'syr',   dtype + square + uplo ],
+    [ 'syr',   dtype + align + n + uplo ],
     ]
 
 # ------------------------------------------------------------------------------
@@ -355,7 +374,7 @@ output_redirected = not sys.stdout.isatty()
 
 # ------------------------------------------------------------------------------
 def run_test( cmd ):
-    cmd = './test ' + ' '.join( cmd )
+    cmd = './test %-6s%s' % tuple(cmd)
     print( cmd, file=sys.stderr )
     err = os.system( cmd )
     if (err):
@@ -374,9 +393,9 @@ def run_test( cmd ):
 
 # ------------------------------------------------------------------------------
 failures = []
-run_all = (len(args.tests) == 0)
+run_all = (len(opts.tests) == 0)
 for cmd in cmds:
-    if (run_all or cmd[0] in args.tests):
+    if (run_all or cmd[0] in opts.tests):
         err = run_test( cmd )
         if (err != 0):
             failures.append( cmd[0] )

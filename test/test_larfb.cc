@@ -62,10 +62,6 @@ void test_larfb_work( Params& params, bool run )
     if ((side == lapack::Side::Left  && m < k) ||
         (side == lapack::Side::Right && n < k))
     {
-        params.time.value() = nan("");
-        params.ref_time.value() = nan("");
-        params.error.value() = nan("");
-        params.okay.value() = -1;
         printf( "skipping because larfb requires m >= k >= 0 (left) or n >= k >= 0 (right)\n" );
         return;
     }

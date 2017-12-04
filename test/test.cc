@@ -512,6 +512,7 @@ int main( int argc, char** argv )
             }
             params.print();
             status += ! params.okay.value();
+            params.reset_output();
         }
         if (repeat > 1) {
             printf( "\n" );

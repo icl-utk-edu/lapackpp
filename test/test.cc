@@ -416,24 +416,24 @@ Params::Params():
     incy      ( "incy",    6,    ParamType::List,   1, -1000,    1000, "stride of y vector" ),
     align     ( "align",   6,    ParamType::List,   1,     1,    1024, "column alignment (sets lda, ldb, etc. to multiple of align)" ),
 
-
     // ----- output parameters
     // min, max are ignored
-    //          name,                     w, p, type,              def, min, max, help
-    error     ( "LAPACK++\nerror",       11, 4, ParamType::Output, nan,   0,   0, "numerical error" ),
-    ortho     ( "LAPACK++\north. error", 11, 4, ParamType::Output, nan,   0,   0, "orthogonality error" ),
-    time      ( "LAPACK++\ntime (s)",    11, 4, ParamType::Output, nan,   0,   0, "time to solution" ),
-    gflops    ( "LAPACK++\nGflop/s",     11, 4, ParamType::Output, nan,   0,   0, "Gflop/s rate" ),
-    iters     ( "LAPACK++\niters",        6,    ParamType::Output,   0,   0,   0, "iterations to solution" ),
+    //          name,                     w, p, type,              default,               min, max, help
+    error     ( "LAPACK++\nerror",       11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
+    ortho     ( "LAPACK++\north. error", 11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "orthogonality error" ),
+    time      ( "LAPACK++\ntime (s)",    11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "time to solution" ),
+    gflops    ( "LAPACK++\nGflop/s",     11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "Gflop/s rate" ),
+    iters     ( "LAPACK++\niters",        6,    ParamType::Output,                     0,   0,   0, "iterations to solution" ),
 
-    ref_error ( "Ref.\nerror",        11, 4, ParamType::Output, nan,   0,   0, "reference numerical error" ),
-    ref_ortho ( "Ref.\north. error",  11, 4, ParamType::Output, nan,   0,   0, "reference orthogonality error" ),
-    ref_time  ( "Ref.\ntime (s)",     11, 4, ParamType::Output, nan,   0,   0, "reference time to solution" ),
-    ref_gflops( "Ref.\nGflop/s",      11, 4, ParamType::Output, nan,   0,   0, "reference Gflop/s rate" ),
-    ref_iters ( "Ref.\niters",         6,    ParamType::Output,   0,   0,   0, "reference iterations to solution" ),
+    ref_error ( "Ref.\nerror",           11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "reference numerical error" ),
+    ref_ortho ( "Ref.\north. error",     11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "reference orthogonality error" ),
+    ref_time  ( "Ref.\ntime (s)",        11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "reference time to solution" ),
+    ref_gflops( "Ref.\nGflop/s",         11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "reference Gflop/s rate" ),
+    ref_iters ( "Ref.\niters",            6,    ParamType::Output,                     0,   0,   0, "reference iterations to solution" ),
 
     // default -1 means "no check"
-    okay      ( "status",              6,    ParamType::Output,  -1,   0,   0, "success indicator" )
+    //          name,     w, type,              def, min, max, help
+    okay      ( "status", 6, ParamType::Output,  -1,   0,   0, "success indicator" )
 {
     // mark standard set of output fields as used
     okay  .value();

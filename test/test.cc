@@ -25,6 +25,7 @@ enum Section {
     posv,
     sysv,
     sysv2,
+    hesv,
     gels,
     qr,
     syev,
@@ -187,6 +188,32 @@ std::vector< libtest::routines_t > routines = {
   //{ "sytri_aasen",        test_sytri_aasen,        Section::sysv2 },
   //{ "sytri_aasen_2stage", test_sytri_aasen_2stage, Section::sysv2 },
     { "",                   nullptr,                 Section::newline },
+
+    // -----
+    // hermetian
+  //{ "hesv",               test_hesv,      Section::hesv },
+  //{ "hpsv",               test_hpsv,      Section::hesv },
+    { "",                   nullptr,        Section::newline },
+
+  //{ "hetrf",              test_hetrf,     Section::hesv },
+  //{ "hptrf",              test_hptrf,     Section::hesv },
+    { "",                   nullptr,        Section::newline },
+
+  //{ "hetrs",              test_hetrs,     Section::hesv },
+  //{ "hptrs",              test_hptrs,     Section::hesv },
+    { "",                   nullptr,        Section::newline },
+
+  //{ "hetri",              test_hetri,     Section::hesv },
+  //{ "hptri",              test_hptri,     Section::hesv },
+    { "",                   nullptr,        Section::newline },
+
+  //{ "hecon",              test_hecon,     Section::hesv },
+  //{ "hpcon",              test_hpcon,     Section::hesv },
+    { "",                   nullptr,        Section::newline },
+
+  //{ "herfs",              test_herfs,     Section::hesv },
+  //{ "hprfs",              test_hprfs,     Section::hesv },
+    { "",                   nullptr,        Section::newline },
 
     // -----
     // least squares

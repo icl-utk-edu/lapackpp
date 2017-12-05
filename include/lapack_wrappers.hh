@@ -3588,9 +3588,25 @@ float lansy(
     lapack::Norm norm, lapack::Uplo uplo, int64_t n,
     float const* A, int64_t lda );
 
+// lanhe alias to lansy
+inline float lanhe(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    float const* A, int64_t lda )
+{
+    return lansy( norm, uplo, n, A, lda );
+}
+
 double lansy(
     lapack::Norm norm, lapack::Uplo uplo, int64_t n,
     double const* A, int64_t lda );
+
+// lanhe alias to lansy
+inline double lanhe(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    double const* A, int64_t lda )
+{
+    return lansy( norm, uplo, n, A, lda );
+}
 
 float lansy(
     lapack::Norm norm, lapack::Uplo uplo, int64_t n,
@@ -3599,20 +3615,6 @@ float lansy(
 double lansy(
     lapack::Norm norm, lapack::Uplo uplo, int64_t n,
     std::complex<double> const* A, int64_t lda );
-
-inline float lanhe(
-    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
-    float const* A, int64_t lda )
-{
-    return lansy( norm, uplo, n, A, lda );
-}
-
-inline double lanhe(
-    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
-    double const* A, int64_t lda )
-{
-    return lansy( norm, uplo, n, A, lda );
-}
 
 // -----------------------------------------------------------------------------
 float lantr(
@@ -3953,11 +3955,31 @@ int64_t opgtr(
     float const* tau,
     float* Q, int64_t ldq );
 
+// upgtr alias to opgtr
+inline int64_t upgtr(
+    lapack::Uplo uplo, int64_t n,
+    float const* AP,
+    float const* tau,
+    float* Q, int64_t ldq )
+{
+    return opgtr( uplo, n, AP, tau, Q, ldq );
+}
+
 int64_t opgtr(
     lapack::Uplo uplo, int64_t n,
     double const* AP,
     double const* tau,
     double* Q, int64_t ldq );
+
+// upgtr alias to opgtr
+inline int64_t upgtr(
+    lapack::Uplo uplo, int64_t n,
+    double const* AP,
+    double const* tau,
+    double* Q, int64_t ldq )
+{
+    return opgtr( uplo, n, AP, tau, Q, ldq );
+}
 
 // -----------------------------------------------------------------------------
 int64_t opmtr(
@@ -3966,11 +3988,31 @@ int64_t opmtr(
     float const* tau,
     float* C, int64_t ldc );
 
+// upmtr alias to opmtr
+inline int64_t upmtr(
+    lapack::Side side, lapack::Uplo uplo, lapack::Op trans, int64_t m, int64_t n,
+    float const* AP,
+    float const* tau,
+    float* C, int64_t ldc )
+{
+    return opmtr( side, uplo, trans, m, n, AP, tau, C, ldc );
+}
+
 int64_t opmtr(
     lapack::Side side, lapack::Uplo uplo, lapack::Op trans, int64_t m, int64_t n,
     double const* AP,
     double const* tau,
     double* C, int64_t ldc );
+
+// upmtr alias to opmtr
+inline int64_t upmtr(
+    lapack::Side side, lapack::Uplo uplo, lapack::Op trans, int64_t m, int64_t n,
+    double const* AP,
+    double const* tau,
+    double* C, int64_t ldc )
+{
+    return opmtr( side, uplo, trans, m, n, AP, tau, C, ldc );
+}
 
 // -----------------------------------------------------------------------------
 int64_t orcsd2by1(
@@ -3982,6 +4024,19 @@ int64_t orcsd2by1(
     float* U2, int64_t ldu2,
     float* V1T, int64_t ldv1t );
 
+// uncsd2by1 alias to orcsd2by1
+inline int64_t uncsd2by1(
+    lapack::JobCS jobu1, lapack::JobCS jobu2, lapack::JobCS jobv1t, int64_t m, int64_t p, int64_t q,
+    float* X11, int64_t ldx11,
+    float* X21, int64_t ldx21,
+    float* theta,
+    float* U1, int64_t ldu1,
+    float* U2, int64_t ldu2,
+    float* V1T, int64_t ldv1t )
+{
+    return orcsd2by1( jobu1, jobu2, jobv1t, m, p, q, X11, ldx11, X21, ldx21, theta, U1, ldu1, U2, ldu2, V1T, ldv1t );
+}
+
 int64_t orcsd2by1(
     lapack::JobCS jobu1, lapack::JobCS jobu2, lapack::JobCS jobv1t, int64_t m, int64_t p, int64_t q,
     double* X11, int64_t ldx11,
@@ -3991,16 +4046,47 @@ int64_t orcsd2by1(
     double* U2, int64_t ldu2,
     double* V1T, int64_t ldv1t );
 
+// uncsd2by1 alias to orcsd2by1
+inline int64_t uncsd2by1(
+    lapack::JobCS jobu1, lapack::JobCS jobu2, lapack::JobCS jobv1t, int64_t m, int64_t p, int64_t q,
+    double* X11, int64_t ldx11,
+    double* X21, int64_t ldx21,
+    double* theta,
+    double* U1, int64_t ldu1,
+    double* U2, int64_t ldu2,
+    double* V1T, int64_t ldv1t )
+{
+    return orcsd2by1( jobu1, jobu2, jobv1t, m, p, q, X11, ldx11, X21, ldx21, theta, U1, ldu1, U2, ldu2, V1T, ldv1t );
+}
+
 // -----------------------------------------------------------------------------
 int64_t orgbr(
     lapack::Vect vect, int64_t m, int64_t n, int64_t k,
     float* A, int64_t lda,
     float const* tau );
 
+// ungbr alias to orgbr
+inline int64_t ungbr(
+    lapack::Vect vect, int64_t m, int64_t n, int64_t k,
+    float* A, int64_t lda,
+    float const* tau )
+{
+    return orgbr( vect, m, n, k, A, lda, tau );
+}
+
 int64_t orgbr(
     lapack::Vect vect, int64_t m, int64_t n, int64_t k,
     double* A, int64_t lda,
     double const* tau );
+
+// ungbr alias to orgbr
+inline int64_t ungbr(
+    lapack::Vect vect, int64_t m, int64_t n, int64_t k,
+    double* A, int64_t lda,
+    double const* tau )
+{
+    return orgbr( vect, m, n, k, A, lda, tau );
+}
 
 // -----------------------------------------------------------------------------
 int64_t orghr(
@@ -4008,21 +4094,57 @@ int64_t orghr(
     float* A, int64_t lda,
     float const* tau );
 
+// unghr alias to orghr
+inline int64_t unghr(
+    int64_t n, int64_t ilo, int64_t ihi,
+    float* A, int64_t lda,
+    float const* tau )
+{
+    return orghr( n, ilo, ihi, A, lda, tau );
+}
+
 int64_t orghr(
     int64_t n, int64_t ilo, int64_t ihi,
     double* A, int64_t lda,
     double const* tau );
 
+// unghr alias to orghr
+inline int64_t unghr(
+    int64_t n, int64_t ilo, int64_t ihi,
+    double* A, int64_t lda,
+    double const* tau )
+{
+    return orghr( n, ilo, ihi, A, lda, tau );
+}
+
 // -----------------------------------------------------------------------------
 int64_t orglq(
     int64_t m, int64_t n, int64_t k,
     float* A, int64_t lda,
     float const* tau );
 
+// unglq alias to orglq
+inline int64_t unglq(
+    int64_t m, int64_t n, int64_t k,
+    float* A, int64_t lda,
+    float const* tau )
+{
+    return orglq( m, n, k, A, lda, tau );
+}
+
 int64_t orglq(
     int64_t m, int64_t n, int64_t k,
     double* A, int64_t lda,
     double const* tau );
+
+// unglq alias to orglq
+inline int64_t unglq(
+    int64_t m, int64_t n, int64_t k,
+    double* A, int64_t lda,
+    double const* tau )
+{
+    return orglq( m, n, k, A, lda, tau );
+}
 
 // -----------------------------------------------------------------------------
 int64_t orgql(
@@ -4030,21 +4152,57 @@ int64_t orgql(
     float* A, int64_t lda,
     float const* tau );
 
+// ungql alias to orgql
+inline int64_t ungql(
+    int64_t m, int64_t n, int64_t k,
+    float* A, int64_t lda,
+    float const* tau )
+{
+    return orgql( m, n, k, A, lda, tau );
+}
+
 int64_t orgql(
     int64_t m, int64_t n, int64_t k,
     double* A, int64_t lda,
     double const* tau );
 
+// ungql alias to orgql
+inline int64_t ungql(
+    int64_t m, int64_t n, int64_t k,
+    double* A, int64_t lda,
+    double const* tau )
+{
+    return orgql( m, n, k, A, lda, tau );
+}
+
 // -----------------------------------------------------------------------------
 int64_t orgqr(
     int64_t m, int64_t n, int64_t k,
     float* A, int64_t lda,
     float const* tau );
 
+// ungqr alias to orgqr
+inline int64_t ungqr(
+    int64_t m, int64_t n, int64_t k,
+    float* A, int64_t lda,
+    float const* tau )
+{
+    return orgqr( m, n, k, A, lda, tau );
+}
+
 int64_t orgqr(
     int64_t m, int64_t n, int64_t k,
     double* A, int64_t lda,
     double const* tau );
+
+// ungqr alias to orgqr
+inline int64_t ungqr(
+    int64_t m, int64_t n, int64_t k,
+    double* A, int64_t lda,
+    double const* tau )
+{
+    return orgqr( m, n, k, A, lda, tau );
+}
 
 // -----------------------------------------------------------------------------
 int64_t orgrq(
@@ -4052,10 +4210,28 @@ int64_t orgrq(
     float* A, int64_t lda,
     float const* tau );
 
+// ungrq alias to orgrq
+inline int64_t ungrq(
+    int64_t m, int64_t n, int64_t k,
+    float* A, int64_t lda,
+    float const* tau )
+{
+    return orgrq( m, n, k, A, lda, tau );
+}
+
 int64_t orgrq(
     int64_t m, int64_t n, int64_t k,
     double* A, int64_t lda,
     double const* tau );
+
+// ungrq alias to orgrq
+inline int64_t ungrq(
+    int64_t m, int64_t n, int64_t k,
+    double* A, int64_t lda,
+    double const* tau )
+{
+    return orgrq( m, n, k, A, lda, tau );
+}
 
 // -----------------------------------------------------------------------------
 int64_t orgtr(
@@ -4063,10 +4239,28 @@ int64_t orgtr(
     float* A, int64_t lda,
     float const* tau );
 
+// ungtr alias to orgtr
+inline int64_t ungtr(
+    lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda,
+    float const* tau )
+{
+    return orgtr( uplo, n, A, lda, tau );
+}
+
 int64_t orgtr(
     lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     double const* tau );
+
+// ungtr alias to orgtr
+inline int64_t ungtr(
+    lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda,
+    double const* tau )
+{
+    return orgtr( uplo, n, A, lda, tau );
+}
 
 // -----------------------------------------------------------------------------
 int64_t ormbr(
@@ -4075,12 +4269,32 @@ int64_t ormbr(
     float const* tau,
     float* C, int64_t ldc );
 
+// unmbr alias to ormbr
+inline int64_t unmbr(
+    lapack::Vect vect, lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k,
+    float const* A, int64_t lda,
+    float const* tau,
+    float* C, int64_t ldc )
+{
+    return ormbr( vect, side, trans, m, n, k, A, lda, tau, C, ldc );
+}
+
 int64_t ormbr(
     lapack::Vect vect, lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k,
     double const* A, int64_t lda,
     double const* tau,
     double* C, int64_t ldc );
 
+// unmbr alias to ormbr
+inline int64_t unmbr(
+    lapack::Vect vect, lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k,
+    double const* A, int64_t lda,
+    double const* tau,
+    double* C, int64_t ldc )
+{
+    return ormbr( vect, side, trans, m, n, k, A, lda, tau, C, ldc );
+}
+
 // -----------------------------------------------------------------------------
 int64_t ormhr(
     lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t ilo, int64_t ihi,
@@ -4088,11 +4302,31 @@ int64_t ormhr(
     float const* tau,
     float* C, int64_t ldc );
 
+// unmhr alias to ormhr
+inline int64_t unmhr(
+    lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t ilo, int64_t ihi,
+    float const* A, int64_t lda,
+    float const* tau,
+    float* C, int64_t ldc )
+{
+    return ormhr( side, trans, m, n, ilo, ihi, A, lda, tau, C, ldc );
+}
+
 int64_t ormhr(
     lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t ilo, int64_t ihi,
     double const* A, int64_t lda,
     double const* tau,
     double* C, int64_t ldc );
+
+// unmhr alias to ormhr
+inline int64_t unmhr(
+    lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t ilo, int64_t ihi,
+    double const* A, int64_t lda,
+    double const* tau,
+    double* C, int64_t ldc )
+{
+    return ormhr( side, trans, m, n, ilo, ihi, A, lda, tau, C, ldc );
+}
 
 // -----------------------------------------------------------------------------
 int64_t ormlq(
@@ -4101,12 +4335,32 @@ int64_t ormlq(
     float const* tau,
     float* C, int64_t ldc );
 
+// unmlq alias to ormlq
+inline int64_t unmlq(
+    lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k,
+    float const* A, int64_t lda,
+    float const* tau,
+    float* C, int64_t ldc )
+{
+    return ormlq( side, trans, m, n, k, A, lda, tau, C, ldc );
+}
+
 int64_t ormlq(
     lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k,
     double const* A, int64_t lda,
     double const* tau,
     double* C, int64_t ldc );
 
+// unmlq alias to ormlq
+inline int64_t unmlq(
+    lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k,
+    double const* A, int64_t lda,
+    double const* tau,
+    double* C, int64_t ldc )
+{
+    return ormlq( side, trans, m, n, k, A, lda, tau, C, ldc );
+}
+
 // -----------------------------------------------------------------------------
 int64_t ormql(
     lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k,
@@ -4114,11 +4368,31 @@ int64_t ormql(
     float const* tau,
     float* C, int64_t ldc );
 
+// unmql alias to ormql
+inline int64_t unmql(
+    lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k,
+    float const* A, int64_t lda,
+    float const* tau,
+    float* C, int64_t ldc )
+{
+    return ormql( side, trans, m, n, k, A, lda, tau, C, ldc );
+}
+
 int64_t ormql(
     lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k,
     double const* A, int64_t lda,
     double const* tau,
     double* C, int64_t ldc );
+
+// unmql alias to ormql
+inline int64_t unmql(
+    lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k,
+    double const* A, int64_t lda,
+    double const* tau,
+    double* C, int64_t ldc )
+{
+    return ormql( side, trans, m, n, k, A, lda, tau, C, ldc );
+}
 
 // -----------------------------------------------------------------------------
 int64_t ormqr(
@@ -4127,12 +4401,32 @@ int64_t ormqr(
     float const* tau,
     float* C, int64_t ldc );
 
+// unmqr alias to ormqr
+inline int64_t unmqr(
+    lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k,
+    float const* A, int64_t lda,
+    float const* tau,
+    float* C, int64_t ldc )
+{
+    return ormqr( side, trans, m, n, k, A, lda, tau, C, ldc );
+}
+
 int64_t ormqr(
     lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k,
     double const* A, int64_t lda,
     double const* tau,
     double* C, int64_t ldc );
 
+// unmqr alias to ormqr
+inline int64_t unmqr(
+    lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k,
+    double const* A, int64_t lda,
+    double const* tau,
+    double* C, int64_t ldc )
+{
+    return ormqr( side, trans, m, n, k, A, lda, tau, C, ldc );
+}
+
 // -----------------------------------------------------------------------------
 int64_t ormrq(
     lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k,
@@ -4140,11 +4434,31 @@ int64_t ormrq(
     float const* tau,
     float* C, int64_t ldc );
 
+// unmrq alias to ormrq
+inline int64_t unmrq(
+    lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k,
+    float const* A, int64_t lda,
+    float const* tau,
+    float* C, int64_t ldc )
+{
+    return ormrq( side, trans, m, n, k, A, lda, tau, C, ldc );
+}
+
 int64_t ormrq(
     lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k,
     double const* A, int64_t lda,
     double const* tau,
     double* C, int64_t ldc );
+
+// unmrq alias to ormrq
+inline int64_t unmrq(
+    lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k,
+    double const* A, int64_t lda,
+    double const* tau,
+    double* C, int64_t ldc )
+{
+    return ormrq( side, trans, m, n, k, A, lda, tau, C, ldc );
+}
 
 // -----------------------------------------------------------------------------
 int64_t ormrz(
@@ -4153,11 +4467,31 @@ int64_t ormrz(
     float const* tau,
     float* C, int64_t ldc );
 
+// unmrz alias to ormrz
+inline int64_t unmrz(
+    lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k, int64_t l,
+    float const* A, int64_t lda,
+    float const* tau,
+    float* C, int64_t ldc )
+{
+    return ormrz( side, trans, m, n, k, l, A, lda, tau, C, ldc );
+}
+
 int64_t ormrz(
     lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k, int64_t l,
     double const* A, int64_t lda,
     double const* tau,
     double* C, int64_t ldc );
+
+// unmrz alias to ormrz
+inline int64_t unmrz(
+    lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k, int64_t l,
+    double const* A, int64_t lda,
+    double const* tau,
+    double* C, int64_t ldc )
+{
+    return ormrz( side, trans, m, n, k, l, A, lda, tau, C, ldc );
+}
 
 // -----------------------------------------------------------------------------
 int64_t ormtr(
@@ -4166,11 +4500,31 @@ int64_t ormtr(
     float const* tau,
     float* C, int64_t ldc );
 
+// unmtr alias to ormtr
+inline int64_t unmtr(
+    lapack::Side side, lapack::Uplo uplo, lapack::Op trans, int64_t m, int64_t n,
+    float const* A, int64_t lda,
+    float const* tau,
+    float* C, int64_t ldc )
+{
+    return ormtr( side, uplo, trans, m, n, A, lda, tau, C, ldc );
+}
+
 int64_t ormtr(
     lapack::Side side, lapack::Uplo uplo, lapack::Op trans, int64_t m, int64_t n,
     double const* A, int64_t lda,
     double const* tau,
     double* C, int64_t ldc );
+
+// unmtr alias to ormtr
+inline int64_t unmtr(
+    lapack::Side side, lapack::Uplo uplo, lapack::Op trans, int64_t m, int64_t n,
+    double const* A, int64_t lda,
+    double const* tau,
+    double* C, int64_t ldc )
+{
+    return ormtr( side, uplo, trans, m, n, A, lda, tau, C, ldc );
+}
 
 // -----------------------------------------------------------------------------
 int64_t pbcon(
@@ -5093,12 +5447,32 @@ int64_t sbev(
     float* W,
     float* Z, int64_t ldz );
 
+// hbev alias to sbev
+inline int64_t hbev(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t kd,
+    float* AB, int64_t ldab,
+    float* W,
+    float* Z, int64_t ldz )
+{
+    return sbev( jobz, uplo, n, kd, AB, ldab, W, Z, ldz );
+}
+
 int64_t sbev(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t kd,
     double* AB, int64_t ldab,
     double* W,
     double* Z, int64_t ldz );
 
+// hbev alias to sbev
+inline int64_t hbev(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t kd,
+    double* AB, int64_t ldab,
+    double* W,
+    double* Z, int64_t ldz )
+{
+    return sbev( jobz, uplo, n, kd, AB, ldab, W, Z, ldz );
+}
+
 // -----------------------------------------------------------------------------
 int64_t sbev_2stage(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t kd,
@@ -5106,11 +5480,31 @@ int64_t sbev_2stage(
     float* W,
     float* Z, int64_t ldz );
 
+// hbev_2stage alias to sbev_2stage
+inline int64_t hbev_2stage(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t kd,
+    float* AB, int64_t ldab,
+    float* W,
+    float* Z, int64_t ldz )
+{
+    return sbev_2stage( jobz, uplo, n, kd, AB, ldab, W, Z, ldz );
+}
+
 int64_t sbev_2stage(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t kd,
     double* AB, int64_t ldab,
     double* W,
     double* Z, int64_t ldz );
+
+// hbev_2stage alias to sbev_2stage
+inline int64_t hbev_2stage(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t kd,
+    double* AB, int64_t ldab,
+    double* W,
+    double* Z, int64_t ldz )
+{
+    return sbev_2stage( jobz, uplo, n, kd, AB, ldab, W, Z, ldz );
+}
 
 // -----------------------------------------------------------------------------
 int64_t sbevd(
@@ -5119,11 +5513,31 @@ int64_t sbevd(
     float* W,
     float* Z, int64_t ldz );
 
+// hbevd alias to sbevd
+inline int64_t hbevd(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t kd,
+    float* AB, int64_t ldab,
+    float* W,
+    float* Z, int64_t ldz )
+{
+    return sbevd( jobz, uplo, n, kd, AB, ldab, W, Z, ldz );
+}
+
 int64_t sbevd(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t kd,
     double* AB, int64_t ldab,
     double* W,
     double* Z, int64_t ldz );
+
+// hbevd alias to sbevd
+inline int64_t hbevd(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t kd,
+    double* AB, int64_t ldab,
+    double* W,
+    double* Z, int64_t ldz )
+{
+    return sbevd( jobz, uplo, n, kd, AB, ldab, W, Z, ldz );
+}
 
 // -----------------------------------------------------------------------------
 int64_t sbevd_2stage(
@@ -5132,11 +5546,31 @@ int64_t sbevd_2stage(
     float* W,
     float* Z, int64_t ldz );
 
+// hbevd_2stage alias to sbevd_2stage
+inline int64_t hbevd_2stage(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t kd,
+    float* AB, int64_t ldab,
+    float* W,
+    float* Z, int64_t ldz )
+{
+    return sbevd_2stage( jobz, uplo, n, kd, AB, ldab, W, Z, ldz );
+}
+
 int64_t sbevd_2stage(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t kd,
     double* AB, int64_t ldab,
     double* W,
     double* Z, int64_t ldz );
+
+// hbevd_2stage alias to sbevd_2stage
+inline int64_t hbevd_2stage(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t kd,
+    double* AB, int64_t ldab,
+    double* W,
+    double* Z, int64_t ldz )
+{
+    return sbevd_2stage( jobz, uplo, n, kd, AB, ldab, W, Z, ldz );
+}
 
 // -----------------------------------------------------------------------------
 int64_t sbevx(
@@ -5148,6 +5582,19 @@ int64_t sbevx(
     float* Z, int64_t ldz,
     int64_t* ifail );
 
+// hbevx alias to sbevx
+inline int64_t hbevx(
+    lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n, int64_t kd,
+    float* AB, int64_t ldab,
+    float* Q, int64_t ldq, float vl, float vu, int64_t il, int64_t iu, float abstol,
+    int64_t* m,
+    float* W,
+    float* Z, int64_t ldz,
+    int64_t* ifail )
+{
+    return sbevx( jobz, range, uplo, n, kd, AB, ldab, Q, ldq, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
+}
+
 int64_t sbevx(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n, int64_t kd,
     double* AB, int64_t ldab,
@@ -5156,6 +5603,19 @@ int64_t sbevx(
     double* W,
     double* Z, int64_t ldz,
     int64_t* ifail );
+
+// hbevx alias to sbevx
+inline int64_t hbevx(
+    lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n, int64_t kd,
+    double* AB, int64_t ldab,
+    double* Q, int64_t ldq, double vl, double vu, int64_t il, int64_t iu, double abstol,
+    int64_t* m,
+    double* W,
+    double* Z, int64_t ldz,
+    int64_t* ifail )
+{
+    return sbevx( jobz, range, uplo, n, kd, AB, ldab, Q, ldq, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
+}
 
 // -----------------------------------------------------------------------------
 int64_t sbevx_2stage(
@@ -5167,6 +5627,19 @@ int64_t sbevx_2stage(
     float* Z, int64_t ldz,
     int64_t* ifail );
 
+// hbevx_2stage alias to sbevx_2stage
+inline int64_t hbevx_2stage(
+    lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n, int64_t kd,
+    float* AB, int64_t ldab,
+    float* Q, int64_t ldq, float vl, float vu, int64_t il, int64_t iu, float abstol,
+    int64_t* m,
+    float* W,
+    float* Z, int64_t ldz,
+    int64_t* ifail )
+{
+    return sbevx_2stage( jobz, range, uplo, n, kd, AB, ldab, Q, ldq, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
+}
+
 int64_t sbevx_2stage(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n, int64_t kd,
     double* AB, int64_t ldab,
@@ -5175,6 +5648,19 @@ int64_t sbevx_2stage(
     double* W,
     double* Z, int64_t ldz,
     int64_t* ifail );
+
+// hbevx_2stage alias to sbevx_2stage
+inline int64_t hbevx_2stage(
+    lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n, int64_t kd,
+    double* AB, int64_t ldab,
+    double* Q, int64_t ldq, double vl, double vu, int64_t il, int64_t iu, double abstol,
+    int64_t* m,
+    double* W,
+    double* Z, int64_t ldz,
+    int64_t* ifail )
+{
+    return sbevx_2stage( jobz, range, uplo, n, kd, AB, ldab, Q, ldq, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
+}
 
 // -----------------------------------------------------------------------------
 int64_t sbgst(
@@ -5183,12 +5669,32 @@ int64_t sbgst(
     float const* BB, int64_t ldbb,
     float* X, int64_t ldx );
 
+// hbgst alias to sbgst
+inline int64_t hbgst(
+    lapack::Vect vect, lapack::Uplo uplo, int64_t n, int64_t ka, int64_t kb,
+    float* AB, int64_t ldab,
+    float const* BB, int64_t ldbb,
+    float* X, int64_t ldx )
+{
+    return sbgst( vect, uplo, n, ka, kb, AB, ldab, BB, ldbb, X, ldx );
+}
+
 int64_t sbgst(
     lapack::Vect vect, lapack::Uplo uplo, int64_t n, int64_t ka, int64_t kb,
     double* AB, int64_t ldab,
     double const* BB, int64_t ldbb,
     double* X, int64_t ldx );
 
+// hbgst alias to sbgst
+inline int64_t hbgst(
+    lapack::Vect vect, lapack::Uplo uplo, int64_t n, int64_t ka, int64_t kb,
+    double* AB, int64_t ldab,
+    double const* BB, int64_t ldbb,
+    double* X, int64_t ldx )
+{
+    return sbgst( vect, uplo, n, ka, kb, AB, ldab, BB, ldbb, X, ldx );
+}
+
 // -----------------------------------------------------------------------------
 int64_t sbgv(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t ka, int64_t kb,
@@ -5197,12 +5703,34 @@ int64_t sbgv(
     float* W,
     float* Z, int64_t ldz );
 
+// hbgv alias to sbgv
+inline int64_t hbgv(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t ka, int64_t kb,
+    float* AB, int64_t ldab,
+    float* BB, int64_t ldbb,
+    float* W,
+    float* Z, int64_t ldz )
+{
+    return sbgv( jobz, uplo, n, ka, kb, AB, ldab, BB, ldbb, W, Z, ldz );
+}
+
 int64_t sbgv(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t ka, int64_t kb,
     double* AB, int64_t ldab,
     double* BB, int64_t ldbb,
     double* W,
     double* Z, int64_t ldz );
+
+// hbgv alias to sbgv
+inline int64_t hbgv(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t ka, int64_t kb,
+    double* AB, int64_t ldab,
+    double* BB, int64_t ldbb,
+    double* W,
+    double* Z, int64_t ldz )
+{
+    return sbgv( jobz, uplo, n, ka, kb, AB, ldab, BB, ldbb, W, Z, ldz );
+}
 
 // -----------------------------------------------------------------------------
 int64_t sbgvd(
@@ -5212,12 +5740,34 @@ int64_t sbgvd(
     float* W,
     float* Z, int64_t ldz );
 
+// hbgvd alias to sbgvd
+inline int64_t hbgvd(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t ka, int64_t kb,
+    float* AB, int64_t ldab,
+    float* BB, int64_t ldbb,
+    float* W,
+    float* Z, int64_t ldz )
+{
+    return sbgvd( jobz, uplo, n, ka, kb, AB, ldab, BB, ldbb, W, Z, ldz );
+}
+
 int64_t sbgvd(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t ka, int64_t kb,
     double* AB, int64_t ldab,
     double* BB, int64_t ldbb,
     double* W,
     double* Z, int64_t ldz );
+
+// hbgvd alias to sbgvd
+inline int64_t hbgvd(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t ka, int64_t kb,
+    double* AB, int64_t ldab,
+    double* BB, int64_t ldbb,
+    double* W,
+    double* Z, int64_t ldz )
+{
+    return sbgvd( jobz, uplo, n, ka, kb, AB, ldab, BB, ldbb, W, Z, ldz );
+}
 
 // -----------------------------------------------------------------------------
 int64_t sbgvx(
@@ -5230,6 +5780,20 @@ int64_t sbgvx(
     float* Z, int64_t ldz,
     int64_t* ifail );
 
+// hbgvx alias to sbgvx
+inline int64_t hbgvx(
+    lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n, int64_t ka, int64_t kb,
+    float* AB, int64_t ldab,
+    float* BB, int64_t ldbb,
+    float* Q, int64_t ldq, float vl, float vu, int64_t il, int64_t iu, float abstol,
+    int64_t* m,
+    float* W,
+    float* Z, int64_t ldz,
+    int64_t* ifail )
+{
+    return sbgvx( jobz, range, uplo, n, ka, kb, AB, ldab, BB, ldbb, Q, ldq, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
+}
+
 int64_t sbgvx(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n, int64_t ka, int64_t kb,
     double* AB, int64_t ldab,
@@ -5239,6 +5803,20 @@ int64_t sbgvx(
     double* W,
     double* Z, int64_t ldz,
     int64_t* ifail );
+
+// hbgvx alias to sbgvx
+inline int64_t hbgvx(
+    lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n, int64_t ka, int64_t kb,
+    double* AB, int64_t ldab,
+    double* BB, int64_t ldbb,
+    double* Q, int64_t ldq, double vl, double vu, int64_t il, int64_t iu, double abstol,
+    int64_t* m,
+    double* W,
+    double* Z, int64_t ldz,
+    int64_t* ifail )
+{
+    return sbgvx( jobz, range, uplo, n, ka, kb, AB, ldab, BB, ldbb, Q, ldq, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
+}
 
 // -----------------------------------------------------------------------------
 int64_t sbtrd(
@@ -5248,12 +5826,34 @@ int64_t sbtrd(
     float* E,
     float* Q, int64_t ldq );
 
+// hbtrd alias to sbtrd
+inline int64_t hbtrd(
+    lapack::Vect vect, lapack::Uplo uplo, int64_t n, int64_t kd,
+    float* AB, int64_t ldab,
+    float* D,
+    float* E,
+    float* Q, int64_t ldq )
+{
+    return sbtrd( vect, uplo, n, kd, AB, ldab, D, E, Q, ldq );
+}
+
 int64_t sbtrd(
     lapack::Vect vect, lapack::Uplo uplo, int64_t n, int64_t kd,
     double* AB, int64_t ldab,
     double* D,
     double* E,
     double* Q, int64_t ldq );
+
+// hbtrd alias to sbtrd
+inline int64_t hbtrd(
+    lapack::Vect vect, lapack::Uplo uplo, int64_t n, int64_t kd,
+    double* AB, int64_t ldab,
+    double* D,
+    double* E,
+    double* Q, int64_t ldq )
+{
+    return sbtrd( vect, uplo, n, kd, AB, ldab, D, E, Q, ldq );
+}
 
 // -----------------------------------------------------------------------------
 void sfrk(
@@ -5273,11 +5873,31 @@ int64_t spcon(
     int64_t const* ipiv, float anorm,
     float* rcond );
 
+// hpcon alias to spcon
+inline int64_t hpcon(
+    lapack::Uplo uplo, int64_t n,
+    float const* AP,
+    int64_t const* ipiv, float anorm,
+    float* rcond )
+{
+    return spcon( uplo, n, AP, ipiv, anorm, rcond );
+}
+
 int64_t spcon(
     lapack::Uplo uplo, int64_t n,
     double const* AP,
     int64_t const* ipiv, double anorm,
     double* rcond );
+
+// hpcon alias to spcon
+inline int64_t hpcon(
+    lapack::Uplo uplo, int64_t n,
+    double const* AP,
+    int64_t const* ipiv, double anorm,
+    double* rcond )
+{
+    return spcon( uplo, n, AP, ipiv, anorm, rcond );
+}
 
 int64_t spcon(
     lapack::Uplo uplo, int64_t n,
@@ -5298,11 +5918,31 @@ int64_t spev(
     float* W,
     float* Z, int64_t ldz );
 
+// hpev alias to spev
+inline int64_t hpev(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    float* AP,
+    float* W,
+    float* Z, int64_t ldz )
+{
+    return spev( jobz, uplo, n, AP, W, Z, ldz );
+}
+
 int64_t spev(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     double* AP,
     double* W,
     double* Z, int64_t ldz );
+
+// hpev alias to spev
+inline int64_t hpev(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    double* AP,
+    double* W,
+    double* Z, int64_t ldz )
+{
+    return spev( jobz, uplo, n, AP, W, Z, ldz );
+}
 
 // -----------------------------------------------------------------------------
 int64_t spevd(
@@ -5311,11 +5951,31 @@ int64_t spevd(
     float* W,
     float* Z, int64_t ldz );
 
+// hpevd alias to spevd
+inline int64_t hpevd(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    float* AP,
+    float* W,
+    float* Z, int64_t ldz )
+{
+    return spevd( jobz, uplo, n, AP, W, Z, ldz );
+}
+
 int64_t spevd(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     double* AP,
     double* W,
     double* Z, int64_t ldz );
+
+// hpevd alias to spevd
+inline int64_t hpevd(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    double* AP,
+    double* W,
+    double* Z, int64_t ldz )
+{
+    return spevd( jobz, uplo, n, AP, W, Z, ldz );
+}
 
 // -----------------------------------------------------------------------------
 int64_t spevx(
@@ -5326,6 +5986,18 @@ int64_t spevx(
     float* Z, int64_t ldz,
     int64_t* ifail );
 
+// hpevx alias to spevx
+inline int64_t hpevx(
+    lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
+    float* AP, float vl, float vu, int64_t il, int64_t iu, float abstol,
+    int64_t* m,
+    float* W,
+    float* Z, int64_t ldz,
+    int64_t* ifail )
+{
+    return spevx( jobz, range, uplo, n, AP, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
+}
+
 int64_t spevx(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     double* AP, double vl, double vu, int64_t il, int64_t iu, double abstol,
@@ -5334,17 +6006,47 @@ int64_t spevx(
     double* Z, int64_t ldz,
     int64_t* ifail );
 
+// hpevx alias to spevx
+inline int64_t hpevx(
+    lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
+    double* AP, double vl, double vu, int64_t il, int64_t iu, double abstol,
+    int64_t* m,
+    double* W,
+    double* Z, int64_t ldz,
+    int64_t* ifail )
+{
+    return spevx( jobz, range, uplo, n, AP, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
+}
+
 // -----------------------------------------------------------------------------
 int64_t spgst(
     int64_t itype, lapack::Uplo uplo, int64_t n,
     float* AP,
     float const* BP );
 
+// hpgst alias to spgst
+inline int64_t hpgst(
+    int64_t itype, lapack::Uplo uplo, int64_t n,
+    float* AP,
+    float const* BP )
+{
+    return spgst( itype, uplo, n, AP, BP );
+}
+
 int64_t spgst(
     int64_t itype, lapack::Uplo uplo, int64_t n,
     double* AP,
     double const* BP );
 
+// hpgst alias to spgst
+inline int64_t hpgst(
+    int64_t itype, lapack::Uplo uplo, int64_t n,
+    double* AP,
+    double const* BP )
+{
+    return spgst( itype, uplo, n, AP, BP );
+}
+
 // -----------------------------------------------------------------------------
 int64_t spgv(
     int64_t itype, lapack::Job jobz, lapack::Uplo uplo, int64_t n,
@@ -5353,12 +6055,34 @@ int64_t spgv(
     float* W,
     float* Z, int64_t ldz );
 
+// hpgv alias to spgv
+inline int64_t hpgv(
+    int64_t itype, lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    float* AP,
+    float* BP,
+    float* W,
+    float* Z, int64_t ldz )
+{
+    return spgv( itype, jobz, uplo, n, AP, BP, W, Z, ldz );
+}
+
 int64_t spgv(
     int64_t itype, lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     double* AP,
     double* BP,
     double* W,
     double* Z, int64_t ldz );
+
+// hpgv alias to spgv
+inline int64_t hpgv(
+    int64_t itype, lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    double* AP,
+    double* BP,
+    double* W,
+    double* Z, int64_t ldz )
+{
+    return spgv( itype, jobz, uplo, n, AP, BP, W, Z, ldz );
+}
 
 // -----------------------------------------------------------------------------
 int64_t spgvd(
@@ -5368,12 +6092,34 @@ int64_t spgvd(
     float* W,
     float* Z, int64_t ldz );
 
+// hpgvd alias to spgvd
+inline int64_t hpgvd(
+    int64_t itype, lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    float* AP,
+    float* BP,
+    float* W,
+    float* Z, int64_t ldz )
+{
+    return spgvd( itype, jobz, uplo, n, AP, BP, W, Z, ldz );
+}
+
 int64_t spgvd(
     int64_t itype, lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     double* AP,
     double* BP,
     double* W,
     double* Z, int64_t ldz );
+
+// hpgvd alias to spgvd
+inline int64_t hpgvd(
+    int64_t itype, lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    double* AP,
+    double* BP,
+    double* W,
+    double* Z, int64_t ldz )
+{
+    return spgvd( itype, jobz, uplo, n, AP, BP, W, Z, ldz );
+}
 
 // -----------------------------------------------------------------------------
 int64_t spgvx(
@@ -5385,6 +6131,19 @@ int64_t spgvx(
     float* Z, int64_t ldz,
     int64_t* ifail );
 
+// hpgvx alias to spgvx
+inline int64_t hpgvx(
+    int64_t itype, lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
+    float* AP,
+    float* BP, float vl, float vu, int64_t il, int64_t iu, float abstol,
+    int64_t* m,
+    float* W,
+    float* Z, int64_t ldz,
+    int64_t* ifail )
+{
+    return spgvx( itype, jobz, range, uplo, n, AP, BP, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
+}
+
 int64_t spgvx(
     int64_t itype, lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     double* AP,
@@ -5393,6 +6152,19 @@ int64_t spgvx(
     double* W,
     double* Z, int64_t ldz,
     int64_t* ifail );
+
+// hpgvx alias to spgvx
+inline int64_t hpgvx(
+    int64_t itype, lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
+    double* AP,
+    double* BP, double vl, double vu, int64_t il, int64_t iu, double abstol,
+    int64_t* m,
+    double* W,
+    double* Z, int64_t ldz,
+    int64_t* ifail )
+{
+    return spgvx( itype, jobz, range, uplo, n, AP, BP, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
+}
 
 // -----------------------------------------------------------------------------
 int64_t sprfs(
@@ -5405,6 +6177,20 @@ int64_t sprfs(
     float* ferr,
     float* berr );
 
+// hprfs alias to sprfs
+inline int64_t hprfs(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    float const* AP,
+    float const* AFP,
+    int64_t const* ipiv,
+    float const* B, int64_t ldb,
+    float* X, int64_t ldx,
+    float* ferr,
+    float* berr )
+{
+    return sprfs( uplo, n, nrhs, AP, AFP, ipiv, B, ldb, X, ldx, ferr, berr );
+}
+
 int64_t sprfs(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double const* AP,
@@ -5414,6 +6200,20 @@ int64_t sprfs(
     double* X, int64_t ldx,
     double* ferr,
     double* berr );
+
+// hprfs alias to sprfs
+inline int64_t hprfs(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    double const* AP,
+    double const* AFP,
+    int64_t const* ipiv,
+    double const* B, int64_t ldb,
+    double* X, int64_t ldx,
+    double* ferr,
+    double* berr )
+{
+    return sprfs( uplo, n, nrhs, AP, AFP, ipiv, B, ldb, X, ldx, ferr, berr );
+}
 
 int64_t sprfs(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
@@ -5442,11 +6242,31 @@ int64_t spsv(
     int64_t* ipiv,
     float* B, int64_t ldb );
 
+// hpsv alias to spsv
+inline int64_t hpsv(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    float* AP,
+    int64_t* ipiv,
+    float* B, int64_t ldb )
+{
+    return spsv( uplo, n, nrhs, AP, ipiv, B, ldb );
+}
+
 int64_t spsv(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double* AP,
     int64_t* ipiv,
     double* B, int64_t ldb );
+
+// hpsv alias to spsv
+inline int64_t hpsv(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    double* AP,
+    int64_t* ipiv,
+    double* B, int64_t ldb )
+{
+    return spsv( uplo, n, nrhs, AP, ipiv, B, ldb );
+}
 
 int64_t spsv(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
@@ -5472,6 +6292,21 @@ int64_t spsvx(
     float* ferr,
     float* berr );
 
+// hpsvx alias to spsvx
+inline int64_t hpsvx(
+    lapack::Factored fact, lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    float const* AP,
+    float* AFP,
+    int64_t* ipiv,
+    float const* B, int64_t ldb,
+    float* X, int64_t ldx,
+    float* rcond,
+    float* ferr,
+    float* berr )
+{
+    return spsvx( fact, uplo, n, nrhs, AP, AFP, ipiv, B, ldb, X, ldx, rcond, ferr, berr );
+}
+
 int64_t spsvx(
     lapack::Factored fact, lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double const* AP,
@@ -5482,6 +6317,21 @@ int64_t spsvx(
     double* rcond,
     double* ferr,
     double* berr );
+
+// hpsvx alias to spsvx
+inline int64_t hpsvx(
+    lapack::Factored fact, lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    double const* AP,
+    double* AFP,
+    int64_t* ipiv,
+    double const* B, int64_t ldb,
+    double* X, int64_t ldx,
+    double* rcond,
+    double* ferr,
+    double* berr )
+{
+    return spsvx( fact, uplo, n, nrhs, AP, AFP, ipiv, B, ldb, X, ldx, rcond, ferr, berr );
+}
 
 int64_t spsvx(
     lapack::Factored fact, lapack::Uplo uplo, int64_t n, int64_t nrhs,
@@ -5513,6 +6363,17 @@ int64_t sptrd(
     float* E,
     float* tau );
 
+// hptrd alias to sptrd
+inline int64_t hptrd(
+    lapack::Uplo uplo, int64_t n,
+    float* AP,
+    float* D,
+    float* E,
+    float* tau )
+{
+    return sptrd( uplo, n, AP, D, E, tau );
+}
+
 int64_t sptrd(
     lapack::Uplo uplo, int64_t n,
     double* AP,
@@ -5520,16 +6381,45 @@ int64_t sptrd(
     double* E,
     double* tau );
 
+// hptrd alias to sptrd
+inline int64_t hptrd(
+    lapack::Uplo uplo, int64_t n,
+    double* AP,
+    double* D,
+    double* E,
+    double* tau )
+{
+    return sptrd( uplo, n, AP, D, E, tau );
+}
+
 // -----------------------------------------------------------------------------
 int64_t sptrf(
     lapack::Uplo uplo, int64_t n,
     float* AP,
     int64_t* ipiv );
 
+// hptrf alias to sptrf
+inline int64_t hptrf(
+    lapack::Uplo uplo, int64_t n,
+    float* AP,
+    int64_t* ipiv )
+{
+    return sptrf( uplo, n, AP, ipiv );
+}
+
 int64_t sptrf(
     lapack::Uplo uplo, int64_t n,
     double* AP,
     int64_t* ipiv );
+
+// hptrf alias to sptrf
+inline int64_t hptrf(
+    lapack::Uplo uplo, int64_t n,
+    double* AP,
+    int64_t* ipiv )
+{
+    return sptrf( uplo, n, AP, ipiv );
+}
 
 int64_t sptrf(
     lapack::Uplo uplo, int64_t n,
@@ -5547,10 +6437,28 @@ int64_t sptri(
     float* AP,
     int64_t const* ipiv );
 
+// hptri alias to sptri
+inline int64_t hptri(
+    lapack::Uplo uplo, int64_t n,
+    float* AP,
+    int64_t const* ipiv )
+{
+    return sptri( uplo, n, AP, ipiv );
+}
+
 int64_t sptri(
     lapack::Uplo uplo, int64_t n,
     double* AP,
     int64_t const* ipiv );
+
+// hptri alias to sptri
+inline int64_t hptri(
+    lapack::Uplo uplo, int64_t n,
+    double* AP,
+    int64_t const* ipiv )
+{
+    return sptri( uplo, n, AP, ipiv );
+}
 
 int64_t sptri(
     lapack::Uplo uplo, int64_t n,
@@ -5569,11 +6477,31 @@ int64_t sptrs(
     int64_t const* ipiv,
     float* B, int64_t ldb );
 
+// hptrs alias to sptrs
+inline int64_t hptrs(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    float const* AP,
+    int64_t const* ipiv,
+    float* B, int64_t ldb )
+{
+    return sptrs( uplo, n, nrhs, AP, ipiv, B, ldb );
+}
+
 int64_t sptrs(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double const* AP,
     int64_t const* ipiv,
     double* B, int64_t ldb );
+
+// hptrs alias to sptrs
+inline int64_t hptrs(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    double const* AP,
+    int64_t const* ipiv,
+    double* B, int64_t ldb )
+{
+    return sptrs( uplo, n, nrhs, AP, ipiv, B, ldb );
+}
 
 int64_t sptrs(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
@@ -5838,11 +6766,31 @@ int64_t sycon(
     int64_t const* ipiv, float anorm,
     float* rcond );
 
+// hecon alias to sycon
+inline int64_t hecon(
+    lapack::Uplo uplo, int64_t n,
+    float const* A, int64_t lda,
+    int64_t const* ipiv, float anorm,
+    float* rcond )
+{
+    return sycon( uplo, n, A, lda, ipiv, anorm, rcond );
+}
+
 int64_t sycon(
     lapack::Uplo uplo, int64_t n,
     double const* A, int64_t lda,
     int64_t const* ipiv, double anorm,
     double* rcond );
+
+// hecon alias to sycon
+inline int64_t hecon(
+    lapack::Uplo uplo, int64_t n,
+    double const* A, int64_t lda,
+    int64_t const* ipiv, double anorm,
+    double* rcond )
+{
+    return sycon( uplo, n, A, lda, ipiv, anorm, rcond );
+}
 
 int64_t sycon(
     lapack::Uplo uplo, int64_t n,
@@ -5864,12 +6812,34 @@ int64_t sycon_3(
     int64_t const* ipiv, float anorm,
     float* rcond );
 
+// hecon_3 alias to sycon_3
+inline int64_t hecon_3(
+    lapack::Uplo uplo, int64_t n,
+    float const* A, int64_t lda,
+    float const* E,
+    int64_t const* ipiv, float anorm,
+    float* rcond )
+{
+    return sycon_3( uplo, n, A, lda, E, ipiv, anorm, rcond );
+}
+
 int64_t sycon_3(
     lapack::Uplo uplo, int64_t n,
     double const* A, int64_t lda,
     double const* E,
     int64_t const* ipiv, double anorm,
     double* rcond );
+
+// hecon_3 alias to sycon_3
+inline int64_t hecon_3(
+    lapack::Uplo uplo, int64_t n,
+    double const* A, int64_t lda,
+    double const* E,
+    int64_t const* ipiv, double anorm,
+    double* rcond )
+{
+    return sycon_3( uplo, n, A, lda, E, ipiv, anorm, rcond );
+}
 
 int64_t sycon_3(
     lapack::Uplo uplo, int64_t n,
@@ -5893,12 +6863,34 @@ int64_t syequb(
     float* scond,
     float* amax );
 
+// heequb alias to syequb
+inline int64_t heequb(
+    lapack::Uplo uplo, int64_t n,
+    float const* A, int64_t lda,
+    float* S,
+    float* scond,
+    float* amax )
+{
+    return syequb( uplo, n, A, lda, S, scond, amax );
+}
+
 int64_t syequb(
     lapack::Uplo uplo, int64_t n,
     double const* A, int64_t lda,
     double* S,
     double* scond,
     double* amax );
+
+// heequb alias to syequb
+inline int64_t heequb(
+    lapack::Uplo uplo, int64_t n,
+    double const* A, int64_t lda,
+    double* S,
+    double* scond,
+    double* amax )
+{
+    return syequb( uplo, n, A, lda, S, scond, amax );
+}
 
 int64_t syequb(
     lapack::Uplo uplo, int64_t n,
@@ -5920,21 +6912,57 @@ int64_t syev(
     float* A, int64_t lda,
     float* W );
 
+// heev alias to syev
+inline int64_t heev(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda,
+    float* W )
+{
+    return syev( jobz, uplo, n, A, lda, W );
+}
+
 int64_t syev(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     double* W );
 
+// heev alias to syev
+inline int64_t heev(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda,
+    double* W )
+{
+    return syev( jobz, uplo, n, A, lda, W );
+}
+
 // -----------------------------------------------------------------------------
 int64_t syev_2stage(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     float* A, int64_t lda,
     float* W );
 
+// heev_2stage alias to syev_2stage
+inline int64_t heev_2stage(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda,
+    float* W )
+{
+    return syev_2stage( jobz, uplo, n, A, lda, W );
+}
+
 int64_t syev_2stage(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     double* W );
+
+// heev_2stage alias to syev_2stage
+inline int64_t heev_2stage(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda,
+    double* W )
+{
+    return syev_2stage( jobz, uplo, n, A, lda, W );
+}
 
 // -----------------------------------------------------------------------------
 int64_t syevd(
@@ -5942,10 +6970,28 @@ int64_t syevd(
     float* A, int64_t lda,
     float* W );
 
+// heevd alias to syevd
+inline int64_t heevd(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda,
+    float* W )
+{
+    return syevd( jobz, uplo, n, A, lda, W );
+}
+
 int64_t syevd(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     double* W );
+
+// heevd alias to syevd
+inline int64_t heevd(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda,
+    double* W )
+{
+    return syevd( jobz, uplo, n, A, lda, W );
+}
 
 // -----------------------------------------------------------------------------
 int64_t syevd_2stage(
@@ -5953,10 +6999,28 @@ int64_t syevd_2stage(
     float* A, int64_t lda,
     float* W );
 
+// heevd_2stage alias to syevd_2stage
+inline int64_t heevd_2stage(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda,
+    float* W )
+{
+    return syevd_2stage( jobz, uplo, n, A, lda, W );
+}
+
 int64_t syevd_2stage(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     double* W );
+
+// heevd_2stage alias to syevd_2stage
+inline int64_t heevd_2stage(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda,
+    double* W )
+{
+    return syevd_2stage( jobz, uplo, n, A, lda, W );
+}
 
 // -----------------------------------------------------------------------------
 int64_t syevr(
@@ -5967,6 +7031,18 @@ int64_t syevr(
     float* Z, int64_t ldz,
     int64_t* isuppz );
 
+// heevr alias to syevr
+inline int64_t heevr(
+    lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda, float vl, float vu, int64_t il, int64_t iu, float abstol,
+    int64_t* m,
+    float* W,
+    float* Z, int64_t ldz,
+    int64_t* isuppz )
+{
+    return syevr( jobz, range, uplo, n, A, lda, vl, vu, il, iu, abstol, m, W, Z, ldz, isuppz );
+}
+
 int64_t syevr(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda, double vl, double vu, int64_t il, int64_t iu, double abstol,
@@ -5975,6 +7051,18 @@ int64_t syevr(
     double* Z, int64_t ldz,
     int64_t* isuppz );
 
+// heevr alias to syevr
+inline int64_t heevr(
+    lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda, double vl, double vu, int64_t il, int64_t iu, double abstol,
+    int64_t* m,
+    double* W,
+    double* Z, int64_t ldz,
+    int64_t* isuppz )
+{
+    return syevr( jobz, range, uplo, n, A, lda, vl, vu, il, iu, abstol, m, W, Z, ldz, isuppz );
+}
+
 // -----------------------------------------------------------------------------
 int64_t syevr_2stage(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
@@ -5984,6 +7072,18 @@ int64_t syevr_2stage(
     float* Z, int64_t ldz,
     int64_t* isuppz );
 
+// heevr_2stage alias to syevr_2stage
+inline int64_t heevr_2stage(
+    lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda, float vl, float vu, int64_t il, int64_t iu, float abstol,
+    int64_t* m,
+    float* W,
+    float* Z, int64_t ldz,
+    int64_t* isuppz )
+{
+    return syevr_2stage( jobz, range, uplo, n, A, lda, vl, vu, il, iu, abstol, m, W, Z, ldz, isuppz );
+}
+
 int64_t syevr_2stage(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda, double vl, double vu, int64_t il, int64_t iu, double abstol,
@@ -5991,6 +7091,18 @@ int64_t syevr_2stage(
     double* W,
     double* Z, int64_t ldz,
     int64_t* isuppz );
+
+// heevr_2stage alias to syevr_2stage
+inline int64_t heevr_2stage(
+    lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda, double vl, double vu, int64_t il, int64_t iu, double abstol,
+    int64_t* m,
+    double* W,
+    double* Z, int64_t ldz,
+    int64_t* isuppz )
+{
+    return syevr_2stage( jobz, range, uplo, n, A, lda, vl, vu, il, iu, abstol, m, W, Z, ldz, isuppz );
+}
 
 // -----------------------------------------------------------------------------
 int64_t syevx(
@@ -6001,6 +7113,18 @@ int64_t syevx(
     float* Z, int64_t ldz,
     int64_t* ifail );
 
+// heevx alias to syevx
+inline int64_t heevx(
+    lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda, float vl, float vu, int64_t il, int64_t iu, float abstol,
+    int64_t* m,
+    float* W,
+    float* Z, int64_t ldz,
+    int64_t* ifail )
+{
+    return syevx( jobz, range, uplo, n, A, lda, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
+}
+
 int64_t syevx(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda, double vl, double vu, int64_t il, int64_t iu, double abstol,
@@ -6008,6 +7132,18 @@ int64_t syevx(
     double* W,
     double* Z, int64_t ldz,
     int64_t* ifail );
+
+// heevx alias to syevx
+inline int64_t heevx(
+    lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda, double vl, double vu, int64_t il, int64_t iu, double abstol,
+    int64_t* m,
+    double* W,
+    double* Z, int64_t ldz,
+    int64_t* ifail )
+{
+    return syevx( jobz, range, uplo, n, A, lda, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
+}
 
 // -----------------------------------------------------------------------------
 int64_t syevx_2stage(
@@ -6018,6 +7154,18 @@ int64_t syevx_2stage(
     float* Z, int64_t ldz,
     int64_t* ifail );
 
+// heevx_2stage alias to syevx_2stage
+inline int64_t heevx_2stage(
+    lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda, float vl, float vu, int64_t il, int64_t iu, float abstol,
+    int64_t* m,
+    float* W,
+    float* Z, int64_t ldz,
+    int64_t* ifail )
+{
+    return syevx_2stage( jobz, range, uplo, n, A, lda, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
+}
+
 int64_t syevx_2stage(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda, double vl, double vu, int64_t il, int64_t iu, double abstol,
@@ -6025,6 +7173,18 @@ int64_t syevx_2stage(
     double* W,
     double* Z, int64_t ldz,
     int64_t* ifail );
+
+// heevx_2stage alias to syevx_2stage
+inline int64_t heevx_2stage(
+    lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda, double vl, double vu, int64_t il, int64_t iu, double abstol,
+    int64_t* m,
+    double* W,
+    double* Z, int64_t ldz,
+    int64_t* ifail )
+{
+    return syevx_2stage( jobz, range, uplo, n, A, lda, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
+}
 
 // -----------------------------------------------------------------------------
 int64_t sygst(
@@ -6032,11 +7192,29 @@ int64_t sygst(
     float* A, int64_t lda,
     float const* B, int64_t ldb );
 
+// hegst alias to sygst
+inline int64_t hegst(
+    int64_t itype, lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda,
+    float const* B, int64_t ldb )
+{
+    return sygst( itype, uplo, n, A, lda, B, ldb );
+}
+
 int64_t sygst(
     int64_t itype, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     double const* B, int64_t ldb );
 
+// hegst alias to sygst
+inline int64_t hegst(
+    int64_t itype, lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda,
+    double const* B, int64_t ldb )
+{
+    return sygst( itype, uplo, n, A, lda, B, ldb );
+}
+
 // -----------------------------------------------------------------------------
 int64_t sygv(
     int64_t itype, lapack::Job jobz, lapack::Uplo uplo, int64_t n,
@@ -6044,11 +7222,31 @@ int64_t sygv(
     float* B, int64_t ldb,
     float* W );
 
+// hegv alias to sygv
+inline int64_t hegv(
+    int64_t itype, lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda,
+    float* B, int64_t ldb,
+    float* W )
+{
+    return sygv( itype, jobz, uplo, n, A, lda, B, ldb, W );
+}
+
 int64_t sygv(
     int64_t itype, lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     double* B, int64_t ldb,
     double* W );
+
+// hegv alias to sygv
+inline int64_t hegv(
+    int64_t itype, lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda,
+    double* B, int64_t ldb,
+    double* W )
+{
+    return sygv( itype, jobz, uplo, n, A, lda, B, ldb, W );
+}
 
 // -----------------------------------------------------------------------------
 int64_t sygv_2stage(
@@ -6057,11 +7255,31 @@ int64_t sygv_2stage(
     float* B, int64_t ldb,
     float* W );
 
+// hegv_2stage alias to sygv_2stage
+inline int64_t hegv_2stage(
+    int64_t itype, lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda,
+    float* B, int64_t ldb,
+    float* W )
+{
+    return sygv_2stage( itype, jobz, uplo, n, A, lda, B, ldb, W );
+}
+
 int64_t sygv_2stage(
     int64_t itype, lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     double* B, int64_t ldb,
     double* W );
+
+// hegv_2stage alias to sygv_2stage
+inline int64_t hegv_2stage(
+    int64_t itype, lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda,
+    double* B, int64_t ldb,
+    double* W )
+{
+    return sygv_2stage( itype, jobz, uplo, n, A, lda, B, ldb, W );
+}
 
 // -----------------------------------------------------------------------------
 int64_t sygvd(
@@ -6070,11 +7288,31 @@ int64_t sygvd(
     float* B, int64_t ldb,
     float* W );
 
+// hegvd alias to sygvd
+inline int64_t hegvd(
+    int64_t itype, lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda,
+    float* B, int64_t ldb,
+    float* W )
+{
+    return sygvd( itype, jobz, uplo, n, A, lda, B, ldb, W );
+}
+
 int64_t sygvd(
     int64_t itype, lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     double* B, int64_t ldb,
     double* W );
+
+// hegvd alias to sygvd
+inline int64_t hegvd(
+    int64_t itype, lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda,
+    double* B, int64_t ldb,
+    double* W )
+{
+    return sygvd( itype, jobz, uplo, n, A, lda, B, ldb, W );
+}
 
 // -----------------------------------------------------------------------------
 int64_t sygvx(
@@ -6086,6 +7324,19 @@ int64_t sygvx(
     float* Z, int64_t ldz,
     int64_t* ifail );
 
+// hegvx alias to sygvx
+inline int64_t hegvx(
+    int64_t itype, lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda,
+    float* B, int64_t ldb, float vl, float vu, int64_t il, int64_t iu, float abstol,
+    int64_t* m,
+    float* W,
+    float* Z, int64_t ldz,
+    int64_t* ifail )
+{
+    return sygvx( itype, jobz, range, uplo, n, A, lda, B, ldb, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
+}
+
 int64_t sygvx(
     int64_t itype, lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
@@ -6095,8 +7346,21 @@ int64_t sygvx(
     double* Z, int64_t ldz,
     int64_t* ifail );
 
+// hegvx alias to sygvx
+inline int64_t hegvx(
+    int64_t itype, lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda,
+    double* B, int64_t ldb, double vl, double vu, int64_t il, int64_t iu, double abstol,
+    int64_t* m,
+    double* W,
+    double* Z, int64_t ldz,
+    int64_t* ifail )
+{
+    return sygvx( itype, jobz, range, uplo, n, A, lda, B, ldb, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
+}
+
 // -----------------------------------------------------------------------------
-}  // namespace lapack
+}  // end namespace lapack
 namespace blas {
 
 void syr(
@@ -6111,7 +7375,7 @@ void syr(
     std::complex<double> const* X, int64_t incx,
     std::complex<double>* A, int64_t lda );
 
-}  // namespace blas
+}  // end namespace blas
 namespace lapack {
 
 // -----------------------------------------------------------------------------
@@ -6125,6 +7389,20 @@ int64_t syrfs(
     float* ferr,
     float* berr );
 
+// herfs alias to syrfs
+inline int64_t herfs(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    float const* A, int64_t lda,
+    float const* AF, int64_t ldaf,
+    int64_t const* ipiv,
+    float const* B, int64_t ldb,
+    float* X, int64_t ldx,
+    float* ferr,
+    float* berr )
+{
+    return syrfs( uplo, n, nrhs, A, lda, AF, ldaf, ipiv, B, ldb, X, ldx, ferr, berr );
+}
+
 int64_t syrfs(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double const* A, int64_t lda,
@@ -6134,6 +7412,20 @@ int64_t syrfs(
     double* X, int64_t ldx,
     double* ferr,
     double* berr );
+
+// herfs alias to syrfs
+inline int64_t herfs(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    double const* A, int64_t lda,
+    double const* AF, int64_t ldaf,
+    int64_t const* ipiv,
+    double const* B, int64_t ldb,
+    double* X, int64_t ldx,
+    double* ferr,
+    double* berr )
+{
+    return syrfs( uplo, n, nrhs, A, lda, AF, ldaf, ipiv, B, ldb, X, ldx, ferr, berr );
+}
 
 int64_t syrfs(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
@@ -6170,6 +7462,24 @@ int64_t syrfsx(
     float* err_bnds_comp, int64_t nparams,
     float* params );
 
+// herfsx alias to syrfsx
+inline int64_t herfsx(
+    lapack::Uplo uplo, lapack::Equed equed, int64_t n, int64_t nrhs,
+    float const* A, int64_t lda,
+    float const* AF, int64_t ldaf,
+    int64_t const* ipiv,
+    float* S,
+    float const* B, int64_t ldb,
+    float* X, int64_t ldx,
+    float* rcond,
+    float* berr, int64_t n_err_bnds,
+    float* err_bnds_norm,
+    float* err_bnds_comp, int64_t nparams,
+    float* params )
+{
+    return syrfsx( uplo, equed, n, nrhs, A, lda, AF, ldaf, ipiv, S, B, ldb, X, ldx, rcond, berr, n_err_bnds, err_bnds_norm, err_bnds_comp, nparams, params );
+}
+
 int64_t syrfsx(
     lapack::Uplo uplo, lapack::Equed equed, int64_t n, int64_t nrhs,
     double const* A, int64_t lda,
@@ -6183,6 +7493,24 @@ int64_t syrfsx(
     double* err_bnds_norm,
     double* err_bnds_comp, int64_t nparams,
     double* params );
+
+// herfsx alias to syrfsx
+inline int64_t herfsx(
+    lapack::Uplo uplo, lapack::Equed equed, int64_t n, int64_t nrhs,
+    double const* A, int64_t lda,
+    double const* AF, int64_t ldaf,
+    int64_t const* ipiv,
+    double* S,
+    double const* B, int64_t ldb,
+    double* X, int64_t ldx,
+    double* rcond,
+    double* berr, int64_t n_err_bnds,
+    double* err_bnds_norm,
+    double* err_bnds_comp, int64_t nparams,
+    double* params )
+{
+    return syrfsx( uplo, equed, n, nrhs, A, lda, AF, ldaf, ipiv, S, B, ldb, X, ldx, rcond, berr, n_err_bnds, err_bnds_norm, err_bnds_comp, nparams, params );
+}
 
 int64_t syrfsx(
     lapack::Uplo uplo, lapack::Equed equed, int64_t n, int64_t nrhs,
@@ -6219,11 +7547,31 @@ int64_t sysv(
     int64_t* ipiv,
     float* B, int64_t ldb );
 
+// hesv alias to sysv
+inline int64_t hesv(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    float* A, int64_t lda,
+    int64_t* ipiv,
+    float* B, int64_t ldb )
+{
+    return sysv( uplo, n, nrhs, A, lda, ipiv, B, ldb );
+}
+
 int64_t sysv(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double* A, int64_t lda,
     int64_t* ipiv,
     double* B, int64_t ldb );
+
+// hesv alias to sysv
+inline int64_t hesv(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    double* A, int64_t lda,
+    int64_t* ipiv,
+    double* B, int64_t ldb )
+{
+    return sysv( uplo, n, nrhs, A, lda, ipiv, B, ldb );
+}
 
 int64_t sysv(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
@@ -6244,11 +7592,31 @@ int64_t sysv_aa(
     int64_t* ipiv,
     float* B, int64_t ldb );
 
+// hesv_aa alias to sysv_aa
+inline int64_t hesv_aa(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    float* A, int64_t lda,
+    int64_t* ipiv,
+    float* B, int64_t ldb )
+{
+    return sysv_aa( uplo, n, nrhs, A, lda, ipiv, B, ldb );
+}
+
 int64_t sysv_aa(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double* A, int64_t lda,
     int64_t* ipiv,
     double* B, int64_t ldb );
+
+// hesv_aa alias to sysv_aa
+inline int64_t hesv_aa(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    double* A, int64_t lda,
+    int64_t* ipiv,
+    double* B, int64_t ldb )
+{
+    return sysv_aa( uplo, n, nrhs, A, lda, ipiv, B, ldb );
+}
 
 int64_t sysv_aa(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
@@ -6270,12 +7638,34 @@ int64_t sysv_rk(
     int64_t* ipiv,
     float* B, int64_t ldb );
 
+// hesv_rk alias to sysv_rk
+inline int64_t hesv_rk(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    float* A, int64_t lda,
+    float* E,
+    int64_t* ipiv,
+    float* B, int64_t ldb )
+{
+    return sysv_rk( uplo, n, nrhs, A, lda, E, ipiv, B, ldb );
+}
+
 int64_t sysv_rk(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double* A, int64_t lda,
     double* E,
     int64_t* ipiv,
     double* B, int64_t ldb );
+
+// hesv_rk alias to sysv_rk
+inline int64_t hesv_rk(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    double* A, int64_t lda,
+    double* E,
+    int64_t* ipiv,
+    double* B, int64_t ldb )
+{
+    return sysv_rk( uplo, n, nrhs, A, lda, E, ipiv, B, ldb );
+}
 
 int64_t sysv_rk(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
@@ -6298,11 +7688,31 @@ int64_t sysv_rook(
     int64_t* ipiv,
     float* B, int64_t ldb );
 
+// hesv_rook alias to sysv_rook
+inline int64_t hesv_rook(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    float* A, int64_t lda,
+    int64_t* ipiv,
+    float* B, int64_t ldb )
+{
+    return sysv_rook( uplo, n, nrhs, A, lda, ipiv, B, ldb );
+}
+
 int64_t sysv_rook(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double* A, int64_t lda,
     int64_t* ipiv,
     double* B, int64_t ldb );
+
+// hesv_rook alias to sysv_rook
+inline int64_t hesv_rook(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    double* A, int64_t lda,
+    int64_t* ipiv,
+    double* B, int64_t ldb )
+{
+    return sysv_rook( uplo, n, nrhs, A, lda, ipiv, B, ldb );
+}
 
 int64_t sysv_rook(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
@@ -6328,6 +7738,21 @@ int64_t sysvx(
     float* ferr,
     float* berr );
 
+// hesvx alias to sysvx
+inline int64_t hesvx(
+    lapack::Factored fact, lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    float const* A, int64_t lda,
+    float* AF, int64_t ldaf,
+    int64_t* ipiv,
+    float const* B, int64_t ldb,
+    float* X, int64_t ldx,
+    float* rcond,
+    float* ferr,
+    float* berr )
+{
+    return sysvx( fact, uplo, n, nrhs, A, lda, AF, ldaf, ipiv, B, ldb, X, ldx, rcond, ferr, berr );
+}
+
 int64_t sysvx(
     lapack::Factored fact, lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double const* A, int64_t lda,
@@ -6338,6 +7763,21 @@ int64_t sysvx(
     double* rcond,
     double* ferr,
     double* berr );
+
+// hesvx alias to sysvx
+inline int64_t hesvx(
+    lapack::Factored fact, lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    double const* A, int64_t lda,
+    double* AF, int64_t ldaf,
+    int64_t* ipiv,
+    double const* B, int64_t ldb,
+    double* X, int64_t ldx,
+    double* rcond,
+    double* ferr,
+    double* berr )
+{
+    return sysvx( fact, uplo, n, nrhs, A, lda, AF, ldaf, ipiv, B, ldb, X, ldx, rcond, ferr, berr );
+}
 
 int64_t sysvx(
     lapack::Factored fact, lapack::Uplo uplo, int64_t n, int64_t nrhs,
@@ -6366,9 +7806,25 @@ void syswapr(
     lapack::Uplo uplo, int64_t n,
     float* A, int64_t lda, int64_t i1, int64_t i2 );
 
+// heswapr alias to syswapr
+inline void heswapr(
+    lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda, int64_t i1, int64_t i2 )
+{
+    return syswapr( uplo, n, A, lda, i1, i2 );
+}
+
 void syswapr(
     lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda, int64_t i1, int64_t i2 );
+
+// heswapr alias to syswapr
+inline void heswapr(
+    lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda, int64_t i1, int64_t i2 )
+{
+    return syswapr( uplo, n, A, lda, i1, i2 );
+}
 
 void syswapr(
     lapack::Uplo uplo, int64_t n,
@@ -6386,12 +7842,34 @@ int64_t sytrd(
     float* E,
     float* tau );
 
+// hetrd alias to sytrd
+inline int64_t hetrd(
+    lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda,
+    float* D,
+    float* E,
+    float* tau )
+{
+    return sytrd( uplo, n, A, lda, D, E, tau );
+}
+
 int64_t sytrd(
     lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     double* D,
     double* E,
     double* tau );
+
+// hetrd alias to sytrd
+inline int64_t hetrd(
+    lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda,
+    double* D,
+    double* E,
+    double* tau )
+{
+    return sytrd( uplo, n, A, lda, D, E, tau );
+}
 
 // -----------------------------------------------------------------------------
 int64_t sytrd_2stage(
@@ -6402,6 +7880,18 @@ int64_t sytrd_2stage(
     float* tau,
     float* hous2, int64_t lhous2 );
 
+// hetrd_2stage alias to sytrd_2stage
+inline int64_t hetrd_2stage(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda,
+    float* D,
+    float* E,
+    float* tau,
+    float* hous2, int64_t lhous2 )
+{
+    return sytrd_2stage( jobz, uplo, n, A, lda, D, E, tau, hous2, lhous2 );
+}
+
 int64_t sytrd_2stage(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
@@ -6410,16 +7900,46 @@ int64_t sytrd_2stage(
     double* tau,
     double* hous2, int64_t lhous2 );
 
+// hetrd_2stage alias to sytrd_2stage
+inline int64_t hetrd_2stage(
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda,
+    double* D,
+    double* E,
+    double* tau,
+    double* hous2, int64_t lhous2 )
+{
+    return sytrd_2stage( jobz, uplo, n, A, lda, D, E, tau, hous2, lhous2 );
+}
+
 // -----------------------------------------------------------------------------
 int64_t sytrf(
     lapack::Uplo uplo, int64_t n,
     float* A, int64_t lda,
     int64_t* ipiv );
 
+// hetrf alias to sytrf
+inline int64_t hetrf(
+    lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda,
+    int64_t* ipiv )
+{
+    return sytrf( uplo, n, A, lda, ipiv );
+}
+
 int64_t sytrf(
     lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     int64_t* ipiv );
+
+// hetrf alias to sytrf
+inline int64_t hetrf(
+    lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda,
+    int64_t* ipiv )
+{
+    return sytrf( uplo, n, A, lda, ipiv );
+}
 
 int64_t sytrf(
     lapack::Uplo uplo, int64_t n,
@@ -6437,10 +7957,28 @@ int64_t sytrf_aa(
     float* A, int64_t lda,
     int64_t* ipiv );
 
+// hetrf_aa alias to sytrf_aa
+inline int64_t hetrf_aa(
+    lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda,
+    int64_t* ipiv )
+{
+    return sytrf_aa( uplo, n, A, lda, ipiv );
+}
+
 int64_t sytrf_aa(
     lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     int64_t* ipiv );
+
+// hetrf_aa alias to sytrf_aa
+inline int64_t hetrf_aa(
+    lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda,
+    int64_t* ipiv )
+{
+    return sytrf_aa( uplo, n, A, lda, ipiv );
+}
 
 int64_t sytrf_aa(
     lapack::Uplo uplo, int64_t n,
@@ -6459,11 +7997,31 @@ int64_t sytrf_rk(
     float* E,
     int64_t* ipiv );
 
+// hetrf_rk alias to sytrf_rk
+inline int64_t hetrf_rk(
+    lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda,
+    float* E,
+    int64_t* ipiv )
+{
+    return sytrf_rk( uplo, n, A, lda, E, ipiv );
+}
+
 int64_t sytrf_rk(
     lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     double* E,
     int64_t* ipiv );
+
+// hetrf_rk alias to sytrf_rk
+inline int64_t hetrf_rk(
+    lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda,
+    double* E,
+    int64_t* ipiv )
+{
+    return sytrf_rk( uplo, n, A, lda, E, ipiv );
+}
 
 int64_t sytrf_rk(
     lapack::Uplo uplo, int64_t n,
@@ -6483,10 +8041,28 @@ int64_t sytrf_rook(
     float* A, int64_t lda,
     int64_t* ipiv );
 
+// hetrf_rook alias to sytrf_rook
+inline int64_t hetrf_rook(
+    lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda,
+    int64_t* ipiv )
+{
+    return sytrf_rook( uplo, n, A, lda, ipiv );
+}
+
 int64_t sytrf_rook(
     lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     int64_t* ipiv );
+
+// hetrf_rook alias to sytrf_rook
+inline int64_t hetrf_rook(
+    lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda,
+    int64_t* ipiv )
+{
+    return sytrf_rook( uplo, n, A, lda, ipiv );
+}
 
 int64_t sytrf_rook(
     lapack::Uplo uplo, int64_t n,
@@ -6504,10 +8080,28 @@ int64_t sytri(
     float* A, int64_t lda,
     int64_t const* ipiv );
 
+// hetri alias to sytri
+inline int64_t hetri(
+    lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda,
+    int64_t const* ipiv )
+{
+    return sytri( uplo, n, A, lda, ipiv );
+}
+
 int64_t sytri(
     lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     int64_t const* ipiv );
+
+// hetri alias to sytri
+inline int64_t hetri(
+    lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda,
+    int64_t const* ipiv )
+{
+    return sytri( uplo, n, A, lda, ipiv );
+}
 
 int64_t sytri(
     lapack::Uplo uplo, int64_t n,
@@ -6525,10 +8119,28 @@ int64_t sytri2(
     float* A, int64_t lda,
     int64_t const* ipiv );
 
+// hetri2 alias to sytri2
+inline int64_t hetri2(
+    lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda,
+    int64_t const* ipiv )
+{
+    return sytri2( uplo, n, A, lda, ipiv );
+}
+
 int64_t sytri2(
     lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     int64_t const* ipiv );
+
+// hetri2 alias to sytri2
+inline int64_t hetri2(
+    lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda,
+    int64_t const* ipiv )
+{
+    return sytri2( uplo, n, A, lda, ipiv );
+}
 
 int64_t sytri2(
     lapack::Uplo uplo, int64_t n,
@@ -6546,10 +8158,28 @@ int64_t sytri2x(
     float* A, int64_t lda,
     int64_t const* ipiv, int64_t nb );
 
+// hetri2x alias to sytri2x
+inline int64_t hetri2x(
+    lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda,
+    int64_t const* ipiv, int64_t nb )
+{
+    return sytri2x( uplo, n, A, lda, ipiv, nb );
+}
+
 int64_t sytri2x(
     lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     int64_t const* ipiv, int64_t nb );
+
+// hetri2x alias to sytri2x
+inline int64_t hetri2x(
+    lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda,
+    int64_t const* ipiv, int64_t nb )
+{
+    return sytri2x( uplo, n, A, lda, ipiv, nb );
+}
 
 int64_t sytri2x(
     lapack::Uplo uplo, int64_t n,
@@ -6568,11 +8198,31 @@ int64_t sytri_3(
     float const* E,
     int64_t const* ipiv );
 
+// hetri_3 alias to sytri_3
+inline int64_t hetri_3(
+    lapack::Uplo uplo, int64_t n,
+    float* A, int64_t lda,
+    float const* E,
+    int64_t const* ipiv )
+{
+    return sytri_3( uplo, n, A, lda, E, ipiv );
+}
+
 int64_t sytri_3(
     lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     double const* E,
     int64_t const* ipiv );
+
+// hetri_3 alias to sytri_3
+inline int64_t hetri_3(
+    lapack::Uplo uplo, int64_t n,
+    double* A, int64_t lda,
+    double const* E,
+    int64_t const* ipiv )
+{
+    return sytri_3( uplo, n, A, lda, E, ipiv );
+}
 
 int64_t sytri_3(
     lapack::Uplo uplo, int64_t n,
@@ -6593,11 +8243,31 @@ int64_t sytrs(
     int64_t const* ipiv,
     float* B, int64_t ldb );
 
+// hetrs alias to sytrs
+inline int64_t hetrs(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    float const* A, int64_t lda,
+    int64_t const* ipiv,
+    float* B, int64_t ldb )
+{
+    return sytrs( uplo, n, nrhs, A, lda, ipiv, B, ldb );
+}
+
 int64_t sytrs(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double const* A, int64_t lda,
     int64_t const* ipiv,
     double* B, int64_t ldb );
+
+// hetrs alias to sytrs
+inline int64_t hetrs(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    double const* A, int64_t lda,
+    int64_t const* ipiv,
+    double* B, int64_t ldb )
+{
+    return sytrs( uplo, n, nrhs, A, lda, ipiv, B, ldb );
+}
 
 int64_t sytrs(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
@@ -6618,11 +8288,31 @@ int64_t sytrs2(
     int64_t const* ipiv,
     float* B, int64_t ldb );
 
+// hetrs2 alias to sytrs2
+inline int64_t hetrs2(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    float* A, int64_t lda,
+    int64_t const* ipiv,
+    float* B, int64_t ldb )
+{
+    return sytrs2( uplo, n, nrhs, A, lda, ipiv, B, ldb );
+}
+
 int64_t sytrs2(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double* A, int64_t lda,
     int64_t const* ipiv,
     double* B, int64_t ldb );
+
+// hetrs2 alias to sytrs2
+inline int64_t hetrs2(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    double* A, int64_t lda,
+    int64_t const* ipiv,
+    double* B, int64_t ldb )
+{
+    return sytrs2( uplo, n, nrhs, A, lda, ipiv, B, ldb );
+}
 
 int64_t sytrs2(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
@@ -6644,12 +8334,34 @@ int64_t sytrs_3(
     int64_t const* ipiv,
     float* B, int64_t ldb );
 
+// hetrs_3 alias to sytrs_3
+inline int64_t hetrs_3(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    float const* A, int64_t lda,
+    float const* E,
+    int64_t const* ipiv,
+    float* B, int64_t ldb )
+{
+    return sytrs_3( uplo, n, nrhs, A, lda, E, ipiv, B, ldb );
+}
+
 int64_t sytrs_3(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double const* A, int64_t lda,
     double const* E,
     int64_t const* ipiv,
     double* B, int64_t ldb );
+
+// hetrs_3 alias to sytrs_3
+inline int64_t hetrs_3(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    double const* A, int64_t lda,
+    double const* E,
+    int64_t const* ipiv,
+    double* B, int64_t ldb )
+{
+    return sytrs_3( uplo, n, nrhs, A, lda, E, ipiv, B, ldb );
+}
 
 int64_t sytrs_3(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
@@ -6672,11 +8384,31 @@ int64_t sytrs_aa(
     int64_t const* ipiv,
     float* B, int64_t ldb, int64_t lwork );
 
+// hetrs_aa alias to sytrs_aa
+inline int64_t hetrs_aa(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    float const* A, int64_t lda,
+    int64_t const* ipiv,
+    float* B, int64_t ldb, int64_t lwork )
+{
+    return sytrs_aa( uplo, n, nrhs, A, lda, ipiv, B, ldb, lwork );
+}
+
 int64_t sytrs_aa(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double const* A, int64_t lda,
     int64_t const* ipiv,
     double* B, int64_t ldb, int64_t lwork );
+
+// hetrs_aa alias to sytrs_aa
+inline int64_t hetrs_aa(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    double const* A, int64_t lda,
+    int64_t const* ipiv,
+    double* B, int64_t ldb, int64_t lwork )
+{
+    return sytrs_aa( uplo, n, nrhs, A, lda, ipiv, B, ldb, lwork );
+}
 
 int64_t sytrs_aa(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
@@ -6697,11 +8429,31 @@ int64_t sytrs_rook(
     int64_t const* ipiv,
     float* B, int64_t ldb );
 
+// hetrs_rook alias to sytrs_rook
+inline int64_t hetrs_rook(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    float const* A, int64_t lda,
+    int64_t const* ipiv,
+    float* B, int64_t ldb )
+{
+    return sytrs_rook( uplo, n, nrhs, A, lda, ipiv, B, ldb );
+}
+
 int64_t sytrs_rook(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double const* A, int64_t lda,
     int64_t const* ipiv,
     double* B, int64_t ldb );
+
+// hetrs_rook alias to sytrs_rook
+inline int64_t hetrs_rook(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    double const* A, int64_t lda,
+    int64_t const* ipiv,
+    double* B, int64_t ldb )
+{
+    return sytrs_rook( uplo, n, nrhs, A, lda, ipiv, B, ldb );
+}
 
 int64_t sytrs_rook(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,

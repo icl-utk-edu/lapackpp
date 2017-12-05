@@ -236,6 +236,14 @@ enum_map = {
     'balance': 'Balance',
 }
 
+alias_map = {
+    'sy': 'he',
+    'sp': 'hp',
+    'sb': 'hb',
+    'or': 'un',
+    'op': 'up',
+}
+
 # 4 space indent
 tab = '    '
 
@@ -590,6 +598,7 @@ def generate_wrapper( func, header=False ):
     proto_args = []
     query_args = []
     call_args  = []
+    alias_args = []
     use_query  = False
     i = 0
     for arg in func.args:
@@ -598,6 +607,7 @@ def generate_wrapper( func, header=False ):
             if (arg.is_array):
                 # input arrays
                 proto_args.append( '\n    ' + arg.dtype + ' const* ' + arg.name )
+                alias_args.append( arg.name )
                 query_args.append( arg.pname )
                 if (arg.dtype in ('int64_t', 'bool')):
                     # integer input arrays: copy in input
@@ -615,6 +625,7 @@ def generate_wrapper( func, header=False ):
                 use_query = True
             else:
                 proto_args.append( arg.dtype + ' ' + arg.name )
+                alias_args.append( arg.name )
                 query_args.append( arg.pname )
                 if (arg.dtype in ('int64_t', 'bool')):
                     # local 32-bit copy of 64-bit int
@@ -655,12 +666,14 @@ def generate_wrapper( func, header=False ):
                     info_return = tab + 'return info_;\n'
                 else:
                     proto_args.append( '\n    ' + arg.dtype + '* ' + arg.name )
+                    alias_args.append( arg.name )
                     local_vars += tab + 'blas_int ' + arg.lname + ' = (blas_int) *' + arg.name + ';\n'
                     cleanup += tab + '*' + arg.name + ' = ' + arg.lname + ';\n'
             else:
                 # output array
                 query_args.append( arg.pname )
                 proto_args.append( '\n    ' + arg.dtype + '* ' + arg.name )
+                alias_args.append( arg.name )
                 if (arg.is_array and (arg.dtype in ('int64_t', 'bool'))):
                     if (arg.intent == 'in,out'):
                         # copy in input, copy out in cleanup
@@ -735,6 +748,18 @@ def generate_wrapper( func, header=False ):
         txt = (func.retval + ' ' + func.name + '(\n'
             +  tab + ', '.join( proto_args )
             +  ' );\n\n')
+        # aliases for real routines (hesv => sysv, etc.)
+        s = re.search( '^[sd](sy|sp|sb|or|op)(\w+)', func.xname )
+        if (s):
+            alias = alias_map[ s.group(1) ] + s.group(2)
+            # todo: he
+            txt += ('// ' + alias + ' alias to ' + func.name + '\n'
+                +   'inline ' + func.retval + ' ' + alias + '(\n'
+                +   tab + ', '.join( proto_args ) + ' )\n'
+                +   '{\n'
+                +   tab + 'return ' + func.name + '( ' + ', '.join( alias_args ) + ' );\n'
+                +   '}\n\n')
+        # end
     else:
         txt = ('// ' + '-'*77 + '\n'
             +  func.retval + ' ' + func.name + '(\n'

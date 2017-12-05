@@ -471,7 +471,9 @@ def parse_lapack( path ):
              re.search( r'^' + arg.name + ' +is a (LOGICAL FUNCTION of (?:one|two|three) (?:REAL|DOUBLE PRECISION|COMPLEX\*16|COMPLEX) arguments?)( array)?', arg.desc ))
         if (s):
             arg.dtype = typemap[ s.group(1).lower() ]
-            arg.array = (s.group(2) == ' array')
+            arg.is_array = (s.group(2) == ' array')
+        else:
+            print( 'ERROR: unknown dtype:\n' + arg.desc )
 
         # normalize names
         # todo: in all desc?
@@ -488,7 +490,7 @@ def parse_lapack( path ):
             arg.desc = re.sub( '\bBALANC\b', 'BALANCE', arg.desc )
 
         # lowercase scalars, work and pivot arrays
-        if (not arg.array or arg.name in
+        if (not arg.is_array or arg.name in
                 ('WORK', 'SWORK', 'RWORK', 'IWORK', 'BWORK',
                 'IPIV', 'JPIV', 'JPVT', 'PIV',
                 'BERR', 'FERR', 'SELECT',
@@ -514,7 +516,7 @@ def parse_lapack( path ):
             arg.dtype = 'blas_int'
 
         # extract array dimensions or scalar lower bounds
-        if (arg.array):
+        if (arg.is_array):
             parse_dim( arg )
         else:
             parse_lbound( arg )
@@ -531,17 +533,17 @@ def parse_lapack( path ):
         # pname = pointer name to pass to Fortran
         arg.lname = arg.name
         arg.pname = arg.name
-        if (arg.intent == 'in' and not arg.array and not re.search('LAPACK_._SELECT', arg.dtype)):
+        if (arg.intent == 'in' and not arg.is_array and not re.search('LAPACK_._SELECT', arg.dtype)):
             # scalars, dimensions, enums
             if (arg.dtype in ('int64_t', 'bool', 'char')):
                 # dimensions, enums
                 arg.lname += '_'
             arg.pname = '&' + arg.lname
-        elif (arg.intent in ('out', 'in,out') and not arg.array and arg.dtype in ('int64_t', 'bool')):
+        elif (arg.intent in ('out', 'in,out') and not arg.is_array and arg.dtype in ('int64_t', 'bool')):
             # output dimensions (nfound, rank, ...)
             arg.lname += '_'
             arg.pname = '&' + arg.lname
-        elif (arg.array and arg.dtype in ('int64_t', 'bool')):
+        elif (arg.is_array and arg.dtype in ('int64_t', 'bool')):
             # integer or bool arrays: ipiv, select, etc.
             arg.lname += '_'
             arg.pname = arg.name + '_ptr'
@@ -560,7 +562,7 @@ def parse_lapack( path ):
                    '\nintent    = ' + arg.intent +
                    '\nis_array  = ' + str(arg.is_array) +
                    '\nuse_query = ' + str(arg.use_query))
-            if (arg.array):
+            if (arg.is_array):
                 print( 'dim       = ' + arg.dim.lower() )
             else:
                 print( 'lbound    = ' + arg.lbound.lower() )
@@ -593,7 +595,7 @@ def generate_wrapper( func, header=False ):
     for arg in func.args:
         call_args.append( arg.pname )
         if (arg.intent == 'in'):
-            if (arg.array):
+            if (arg.is_array):
                 # input arrays
                 proto_args.append( '\n    ' + arg.dtype + ' const* ' + arg.name )
                 query_args.append( arg.pname )
@@ -627,7 +629,7 @@ def generate_wrapper( func, header=False ):
                 # end
             # end
         else:
-            if (arg.array and arg.is_work):
+            if (arg.is_array and arg.is_work):
                 # work, rwork, etc. local variables; not in proto_args
                 query_args.append( 'qry_' + arg.name )
                 query += tab + arg.dtype + ' qry_' + arg.name + '[1];\n'
@@ -640,7 +642,7 @@ def generate_wrapper( func, header=False ):
                 ##alloc_work += (tab + arg.dtype + '* ' + arg.name + '_'
                 ##           +   ' = new ' + arg.dtype + '[ l' + arg.name + ' ];\n')
                 ##free_work  +=  tab + 'delete[] ' + arg.name + '_;\n'
-            elif (not arg.array and arg.dtype in ('int64_t', 'bool')):
+            elif (not arg.is_array and arg.dtype in ('int64_t', 'bool')):
                 # output dimensions (nfound, etc.)
                 query_args.append( arg.pname )
                 if (arg.name == 'info'):
@@ -659,7 +661,7 @@ def generate_wrapper( func, header=False ):
                 # output array
                 query_args.append( arg.pname )
                 proto_args.append( '\n    ' + arg.dtype + '* ' + arg.name )
-                if (arg.array and (arg.dtype in ('int64_t', 'bool'))):
+                if (arg.is_array and (arg.dtype in ('int64_t', 'bool'))):
                     if (arg.intent == 'in,out'):
                         # copy in input, copy out in cleanup
                         local_vars += (tab + '#if 1\n'
@@ -701,7 +703,7 @@ def generate_wrapper( func, header=False ):
         # assume when arg is l*work, last will be *work
         last = None
         for arg in func.args:
-            if (arg.use_query and not arg.array):
+            if (arg.use_query and not arg.is_array):
                 query += tab + 'blas_int ' + arg.name + '_ = real(qry_' + last.name + '[0]);\n'
             last = arg
         # end
@@ -793,7 +795,7 @@ def generate_tester( funcs ):
                 arg.ttype = arg.dtype
                 arg.ttype_ref = arg.ttype
 
-            if (arg.array):
+            if (arg.is_array):
                 pre_arrays = False
 
                 # look for 2-D arrays: (m,n), change to: m * n
@@ -886,12 +888,12 @@ def generate_tester( funcs ):
             elif (arg.is_enum):
                 lapacke_proto.append( 'char ' + arg.name )
             elif (arg.dtype in ('int64_t')):
-                if (arg.array):
+                if (arg.is_array):
                     lapacke_proto.append( 'lapack_int* ' + arg.name )
                 else:
                     lapacke_proto.append( 'lapack_int ' + arg.name )
             else:
-                if (arg.array or ('out' in arg.intent)):
+                if (arg.is_array or ('out' in arg.intent)):
                     lapacke_proto.append( arg.dtype + '* ' + arg.name )
                 else:
                     lapacke_proto.append( arg.dtype + ' ' + arg.name )

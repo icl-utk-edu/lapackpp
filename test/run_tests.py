@@ -40,6 +40,7 @@ categories = [
     group_cat.add_argument( '--sysv',          action='store_true', help='run symmetric indefinite (Bunch-Kaufman) tests' ),
     group_cat.add_argument( '--rook',          action='store_true', help='run symmetric indefinite (rook) tests' ),
     group_cat.add_argument( '--aasen',         action='store_true', help='run symmetric indefinite (Aasen) tests' ),
+    group_cat.add_argument( '--hesv',          action='store_true', help='run hermetian tests (FIXME more informationhere)' ),
     group_cat.add_argument( '--least-squares', action='store_true', help='run least squares tests' ),
     group_cat.add_argument( '--qr',            action='store_true', help='run QR tests' ),
     group_cat.add_argument( '--lq',            action='store_true', help='run LQ tests' ),
@@ -257,6 +258,17 @@ if (opts.sysv):
 #    [ 'sytri_aasen_2stage', dtype + align + n + uplo ],
 #    ]
 
+# hermetian
+if (opts.hesv):
+    cmds += [
+    [ 'hesv',  dtype + align + n + uplo ],
+    [ 'hetrf', dtype + align + n + uplo ],
+    [ 'hetrs', dtype + align + n + uplo ],
+    [ 'hetri', dtype + align + n + uplo ],
+    [ 'hecon', dtype + align + n + uplo ],
+    [ 'herfs', dtype + align + n + uplo ],
+    ]
+
 # least squares
 #if (opts.least_squares):
 #    cmds += [
@@ -268,22 +280,22 @@ if (opts.sysv):
 #    ]
 
 # QR
-#if (opts.qr):
-#    cmds += [
-#    [ 'geqrf', dtype + align + mn ],
+if (opts.qr):
+    cmds += [
+    [ 'geqrf', dtype + align + n + wide + tall ],
 #    [ 'ggqrf', dtype + align + mn ],
 #    [ 'ungqr', dtype + align + mn ],
 #    [ 'unmqr', dtype + align + mn ],
-#    ]
+    ]
 
 # LQ
-#if (opts.lq):
-#    cmds += [
-#    [ 'gelqf', dtype + align + mn ],
+if (opts.lq):
+    cmds += [
+    [ 'gelqf', dtype + align + mn ],
 #    [ 'gglqf', dtype + align + mn ],
 #    [ 'unglq', dtype + align + mn ],
 #    [ 'unmlq', dtype + align + mn ],
-#    ]
+    ]
 
 # QL
 #if (opts.ql):

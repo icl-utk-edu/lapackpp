@@ -25,6 +25,7 @@ enum Section {
     posv,
     sysv,
     sysv2,
+    hesv,
     gels,
     qr,
     syev,
@@ -189,6 +190,32 @@ std::vector< libtest::routines_t > routines = {
     { "",                   nullptr,                 Section::newline },
 
     // -----
+    // hermetian
+    { "hesv",               test_hesv,      Section::hesv },
+  //{ "hpsv",               test_hpsv,      Section::hesv },
+    { "",                   nullptr,        Section::newline },
+
+    { "hetrf",              test_hetrf,     Section::hesv },
+  //{ "hptrf",              test_hptrf,     Section::hesv },
+    { "",                   nullptr,        Section::newline },
+
+    { "hetrs",              test_hetrs,     Section::hesv },
+  //{ "hptrs",              test_hptrs,     Section::hesv },
+    { "",                   nullptr,        Section::newline },
+
+    { "hetri",              test_hetri,     Section::hesv },
+  //{ "hptri",              test_hptri,     Section::hesv },
+    { "",                   nullptr,        Section::newline },
+
+    { "hecon",              test_hecon,     Section::hesv },
+  //{ "hpcon",              test_hpcon,     Section::hesv },
+    { "",                   nullptr,        Section::newline },
+
+    { "herfs",              test_herfs,     Section::hesv },
+  //{ "hprfs",              test_hprfs,     Section::hesv },
+    { "",                   nullptr,        Section::newline },
+
+    // -----
     // least squares
   //{ "gels",               test_gels,      Section::gels },
   //{ "gelsy",              test_gelsy,     Section::gels },
@@ -203,8 +230,8 @@ std::vector< libtest::routines_t > routines = {
 
     // -----
     // QR, LQ, RQ, QL
-  //{ "geqrf",              test_geqrf,     Section::qr },
-  //{ "gelqf",              test_gelqf,     Section::qr },
+    { "geqrf",              test_geqrf,     Section::qr },
+    { "gelqf",              test_gelqf,     Section::qr },
   //{ "geqlf",              test_geqlf,     Section::qr },
   //{ "gerqf",              test_gerqf,     Section::qr },
     { "",                   nullptr,        Section::newline },

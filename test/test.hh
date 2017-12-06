@@ -197,6 +197,22 @@ void test_sytrf_aasen_2stage ( Params& params, bool run );
 void test_sytrs_aasen_2stage ( Params& params, bool run );
 void test_sytri_aasen_2stage ( Params& params, bool run );
 
+// hermetian
+void test_hesv  ( Params& params, bool run );
+void test_hetrf ( Params& params, bool run );
+void test_hetrs ( Params& params, bool run );
+void test_hetri ( Params& params, bool run );
+void test_hecon ( Params& params, bool run );
+void test_herfs ( Params& params, bool run );
+
+// hermetian, packed
+void test_hpsv  ( Params& params, bool run );
+void test_hptrf ( Params& params, bool run );
+void test_hptrs ( Params& params, bool run );
+void test_hptri ( Params& params, bool run );
+void test_hpcon ( Params& params, bool run );
+void test_hprfs ( Params& params, bool run );
+
 // matrix norms
 void test_lange ( Params& params, bool run );
 void test_lanhe ( Params& params, bool run );

@@ -63,10 +63,6 @@ void test_gesvd_work( Params& params, bool run )
     if (jobu  == lapack::Job::OverwriteVec &&
         jobvt == lapack::Job::OverwriteVec)
     {
-        params.time.value() = nan("1234");
-        params.ref_time.value() = nan("1234");
-        params.error.value() = nan("1234");
-        params.okay.value() = -1;
         printf( "skipping because jobu and jobvt cannot both be overwrite.\n" );
         return;
     }

@@ -114,7 +114,7 @@ void test_syr_work( Params& params, bool run )
     time = omp_get_wtime() - time;
 
     params.time.value() = time * 1000;  // msec
-    double gflop = gflop_syr( n, x );
+    double gflop = Gflop< scalar_t >::syr( n );
     params.gflops.value() = gflop / time;
 
     if (verbose >= 2) {

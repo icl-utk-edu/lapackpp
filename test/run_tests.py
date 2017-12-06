@@ -251,12 +251,12 @@ if (opts.sysv):
 # hermetian
 if (opts.hesv):
     cmds += [
-    [ 'hesv',  dtype_complex + align + n + uplo ],
-#    [ 'hetrf', dtype + align + n + uplo ],
-#    [ 'hetrs', dtype + align + n + uplo ],
-#    [ 'hetri', dtype + align + n + uplo ],
-#    [ 'hecon', dtype + align + n + uplo ],
-#    [ 'herfs', dtype + align + n + uplo ],
+    [ 'hesv',  dtype + align + n + uplo ],
+    [ 'hetrf', dtype + align + n + uplo ],
+    [ 'hetrs', dtype + align + n + uplo ],
+    [ 'hetri', dtype + align + n + uplo ],
+    [ 'hecon', dtype + align + n + uplo ],
+    [ 'herfs', dtype + align + n + uplo ],
     ]
 
 # least squares

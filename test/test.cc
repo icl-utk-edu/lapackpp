@@ -191,27 +191,27 @@ std::vector< libtest::routines_t > routines = {
 
     // -----
     // hermetian
-  //{ "hesv",               test_hesv,      Section::hesv },
+    { "hesv",               test_hesv,      Section::hesv },
   //{ "hpsv",               test_hpsv,      Section::hesv },
     { "",                   nullptr,        Section::newline },
 
-  //{ "hetrf",              test_hetrf,     Section::hesv },
+    { "hetrf",              test_hetrf,     Section::hesv },
   //{ "hptrf",              test_hptrf,     Section::hesv },
     { "",                   nullptr,        Section::newline },
 
-  //{ "hetrs",              test_hetrs,     Section::hesv },
+    { "hetrs",              test_hetrs,     Section::hesv },
   //{ "hptrs",              test_hptrs,     Section::hesv },
     { "",                   nullptr,        Section::newline },
 
-  //{ "hetri",              test_hetri,     Section::hesv },
+    { "hetri",              test_hetri,     Section::hesv },
   //{ "hptri",              test_hptri,     Section::hesv },
     { "",                   nullptr,        Section::newline },
 
-  //{ "hecon",              test_hecon,     Section::hesv },
+    { "hecon",              test_hecon,     Section::hesv },
   //{ "hpcon",              test_hpcon,     Section::hesv },
     { "",                   nullptr,        Section::newline },
 
-  //{ "herfs",              test_herfs,     Section::hesv },
+    { "herfs",              test_herfs,     Section::hesv },
   //{ "hprfs",              test_hprfs,     Section::hesv },
     { "",                   nullptr,        Section::newline },
 

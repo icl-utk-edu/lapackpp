@@ -169,9 +169,9 @@ inline const char* job2str( lapack::Job job )
     switch (job) {
         case lapack::Job::NoVec:        return "novec";
         case lapack::Job::Vec:          return "vec";
-        case lapack::Job::AllVec:       return "allvec";
-        case lapack::Job::SomeVec:      return "somevec";
-        case lapack::Job::OverwriteVec: return "overwritevec";
+        case lapack::Job::AllVec:       return "all";
+        case lapack::Job::SomeVec:      return "some";
+        case lapack::Job::OverwriteVec: return "overwrite";
     }
     return "?";
 }

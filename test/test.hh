@@ -44,6 +44,11 @@ public:
     libtest::ParamEnum< lapack::Norm >      norm;
     libtest::ParamEnum< lapack::Direct >    direct;
     libtest::ParamEnum< lapack::StoreV >    storev;
+    libtest::ParamEnum< lapack::Job >       jobz;   // syev
+    libtest::ParamEnum< lapack::Job >       jobvl;  // geev
+    libtest::ParamEnum< lapack::Job >       jobvr;  // geev
+    libtest::ParamEnum< lapack::Job >       jobu;   // gesvd, gesdd
+    libtest::ParamEnum< lapack::Job >       jobvt;  // gesvd
     libtest::ParamEnum< lapack::MatrixType > matrixtype;
 
     libtest::ParamInt3   dim;

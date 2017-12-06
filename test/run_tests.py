@@ -72,6 +72,11 @@ group_opt.add_argument( '--align',  action='store', help='default=%(default)s', 
 group_opt.add_argument( '--direct', action='store', help='default=%(default)s', default='f,b' )
 group_opt.add_argument( '--storev', action='store', help='default=%(default)s', default='c,r' )
 group_opt.add_argument( '--norm',   action='store', help='default=%(default)s', default='max,1,inf,fro' )
+group_opt.add_argument( '--jobz',   action='store', help='default=%(default)s', default='n,v' )
+group_opt.add_argument( '--jobvl',  action='store', help='default=%(default)s', default='n,v' )
+group_opt.add_argument( '--jobvr',  action='store', help='default=%(default)s', default='n,v' )
+group_opt.add_argument( '--jobu',   action='store', help='default=%(default)s', default='n,s,o,a' )
+group_opt.add_argument( '--jobvt',  action='store', help='default=%(default)s', default='n,s,o,a' )
 group_opt.add_argument( '--matrixtype', action='store', help='default=%(default)s', default='g,l,u' )
 
 parser.add_argument( 'tests', nargs=argparse.REMAINDER )
@@ -164,6 +169,11 @@ direct = ' --direct ' + opts.direct if (opts.direct) else ''
 storev = ' --storev ' + opts.storev if (opts.storev) else ''
 norm   = ' --norm '   + opts.norm   if (opts.norm)   else ''
 mtype  = ' --matrixtype ' + opts.matrixtype if (opts.matrixtype) else ''
+jobz   = ' --jobz '   + opts.jobz   if (opts.jobz)   else ''
+jobu   = ' --jobu '   + opts.jobu   if (opts.jobu)   else ''
+jobvt  = ' --jobvt '  + opts.jobvt  if (opts.jobvt)  else ''
+jobvl  = ' --jobvl '  + opts.jobvl  if (opts.jobvl)  else ''
+jobvr  = ' --jobvr '  + opts.jobvr  if (opts.jobvr)  else ''
 
 # ------------------------------------------------------------------------------
 # filters a comma separated list csv based on items in list values.

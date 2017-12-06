@@ -318,11 +318,11 @@ std::vector< libtest::routines_t > routines = {
 
     // -----
     // driver: singular value decomposition
-  //{ "gesvd",              test_gesvd,         Section::svd },
+    { "gesvd",              test_gesvd,         Section::svd },
   //{ "gesvd_2stage",       test_gesvd_2stage,  Section::svd },
     { "",                   nullptr,            Section::newline },
 
-  //{ "gesdd",              test_gesdd,         Section::svd },
+    { "gesdd",              test_gesdd,         Section::svd },
   //{ "gesdd_2stage",       test_gesdd_2stage,  Section::svd },
     { "",                   nullptr,            Section::newline },
 

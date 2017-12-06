@@ -341,18 +341,17 @@ if (opts.sysv):
 #    ]
 
 # svd
-# todo: add jobs
-#if (opts.svd):
-#    cmds += [
-#    [ 'gesvd',         dtype + align + mn ],
-#    [ 'gesdd',         dtype + align + mn ],
+if (opts.svd):
+    cmds += [
+    [ 'gesvd',         dtype + align + mn + jobu + jobvt ],
+    [ 'gesdd',         dtype + align + mn + jobu ],
 #    [ 'gesvdx',        dtype + align + mn ],
 #    [ 'gesvd_2stage',  dtype + align + mn ],
 #    [ 'gesdd_2stage',  dtype + align + mn ],
 #    [ 'gesvdx_2stage', dtype + align + mn ],
 #    [ 'gejsv',         dtype + align + mn ],
 #    [ 'gesvj',         dtype + align + mn ],
-#    ]
+    ]
 
 # auxilary
 if (opts.aux):

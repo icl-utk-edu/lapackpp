@@ -3,6 +3,7 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "check_svd.hh"
 
 #include <vector>
 #include <omp.h>
@@ -42,6 +43,7 @@ template< typename scalar_t >
 void test_gesvd_work( Params& params, bool run )
 {
     using namespace blas;
+    using namespace lapack;
     typedef typename traits< scalar_t >::real_t real_t;
     typedef long long lld;
 
@@ -56,6 +58,9 @@ void test_gesvd_work( Params& params, bool run )
     params.ref_time.value();
     //params.ref_gflops.value();
     //params.gflops.value();
+    params.ortho_U.value();
+    params.ortho_V.value();
+    params.error_sigma.value();
 
     if (! run)
         return;
@@ -104,7 +109,35 @@ void test_gesvd_work( Params& params, bool run )
     //double gflop = lapack::Gflop< scalar_t >::gesvd( jobu, jobvt, m, n );
     //params.gflops.value() = gflop / time;
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    // ---------- check numerical error
+    // errors[0] = || A - U diag(S) VT || / (||A|| max(m,n)),
+    //                                    if jobu  != NoVec and jobvt != NoVec
+    // errors[1] = || I - U^H U || / m,   if jobu  != NoVec
+    // errors[2] = || I - VT VT^H || / n, if jobvt != NoVec
+    // errors[3] = 0 if S has non-negative values in non-increasing order, else 1
+    real_t errors[4] = { (real_t) libtest::no_data_flag,
+                         (real_t) libtest::no_data_flag,
+                         (real_t) libtest::no_data_flag,
+                         (real_t) libtest::no_data_flag };
+    if (params.check.value() == 'y') {
+        // U2 or VT2 points to A if overwriting
+        scalar_t* U2    = &U_tst[0];
+        int64_t   ldu2  = ldu;
+        scalar_t* VT2   = &VT_tst[0];
+        int64_t   ldvt2 = ldvt;
+        if (jobu == lapack::Job::OverwriteVec) {
+            U2   = &A_tst[0];
+            ldu2 = lda;
+        }
+        else if (jobvt == lapack::Job::OverwriteVec) {
+            VT2   = &A_tst[0];
+            ldvt2 = lda;
+        }
+        check_svd( jobu, jobvt, m, n, &A_ref[0], lda,
+                   &S_tst[0], U2, ldu2, VT2, ldvt2, errors );
+    }
+
+    if (params.ref.value() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache.value() );
         time = omp_get_wtime();
@@ -118,17 +151,22 @@ void test_gesvd_work( Params& params, bool run )
         //params.ref_gflops.value() = gflop / time;
 
         // ---------- check error compared to reference
-        real_t error = 0;
         if (info_tst != info_ref) {
-            error = 1;
+            errors[0] = 1;
         }
-        error += abs_error( A_tst, A_ref );
-        error += abs_error( S_tst, S_ref );
-        error += abs_error( U_tst, U_ref );
-        error += abs_error( VT_tst, VT_ref );
-        params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
+        errors[3] += rel_error( S_tst, S_ref );
     }
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+    real_t tol = params.tol.value() * eps;
+    params.error.value()       = errors[0];
+    params.ortho_U.value()     = errors[1];
+    params.ortho_V.value()     = errors[2];
+    params.error_sigma.value() = errors[3];
+    params.okay.value() = (
+        (jobu  == Job::NoVec || jobvt == Job::NoVec || errors[0] < tol) &&
+        (jobu  == Job::NoVec || errors[1] < tol) &&
+        (jobvt == Job::NoVec || errors[2] < tol) &&
+        errors[3] < tol);
 }
 
 // -----------------------------------------------------------------------------

@@ -464,13 +464,12 @@ inline const char* storev2str( lapack::StoreV storev )
     switch (storev) {
         case lapack::StoreV::Columnwise: return "columnwise";
         case lapack::StoreV::Rowwise:    return "rowwise";
-
     }
     return "?";
 }
 
 // -----------------------------------------------------------------------------
-// lascl
+// lascl, laset
 enum class MatrixType {
     General     = 'G',
     Lower       = 'L',
@@ -664,6 +663,34 @@ inline const char* balance2str( lapack::Balance balance )
         case lapack::Balance::Permute: return "permute";
         case lapack::Balance::Scale:   return "scale";
         case lapack::Balance::Both:    return "both";
+    }
+    return "?";
+}
+
+// -----------------------------------------------------------------------------
+// check_ortho (LAPACK testing zunt01)
+enum class RowCol {
+    Col = 'C',
+    Row = 'R',
+};
+
+inline char rowcol2char( lapack::RowCol rowcol )
+{
+    return char( rowcol );
+}
+
+inline lapack::RowCol char2rowcol( char rowcol )
+{
+    rowcol = char( toupper( rowcol ));
+    lapack_throw_if_( rowcol != 'C' && rowcol != 'R' );
+    return lapack::RowCol( rowcol );
+}
+
+inline const char* rowcol2str( lapack::RowCol rowcol )
+{
+    switch (rowcol) {
+        case lapack::RowCol::Col: return "col";
+        case lapack::RowCol::Row: return "row";
     }
     return "?";
 }

@@ -450,15 +450,17 @@ Params::Params():
 
     // ----- output parameters
     // min, max are ignored
-    //          name,                     w, p, type,              default,               min, max, help
-    error     ( "LAPACK++\nerror",       11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
-    ortho     ( "LAPACK++\north. error", 11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "orthogonality error" ),
+    //           name,                    w, p, type,              default,               min, max, help
+    error      ( "error",                11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
+    ortho      ( "orth. error",          11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "orthogonality error" ),
+    ortho_U    ( "U orth.",              11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "U orthogonality error" ),
+    ortho_V    ( "V orth.",              11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "V orthogonality error" ),
+    error_sigma( "Sigma error",          11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "Sigma error" ),
+
     time      ( "LAPACK++\ntime (s)",    11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "time to solution" ),
     gflops    ( "LAPACK++\nGflop/s",     11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "Gflop/s rate" ),
     iters     ( "LAPACK++\niters",        6,    ParamType::Output,                     0,   0,   0, "iterations to solution" ),
 
-    ref_error ( "Ref.\nerror",           11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "reference numerical error" ),
-    ref_ortho ( "Ref.\north. error",     11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "reference orthogonality error" ),
     ref_time  ( "Ref.\ntime (s)",        11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "reference time to solution" ),
     ref_gflops( "Ref.\nGflop/s",         11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "reference Gflop/s rate" ),
     ref_iters ( "Ref.\niters",            6,    ParamType::Output,                     0,   0,   0, "reference iterations to solution" ),

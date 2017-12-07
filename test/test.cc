@@ -169,7 +169,7 @@ std::vector< libtest::routines_t > routines = {
     { "",                   nullptr,        Section::newline },
 
     // -----
-  //{ "sysv_rook",          test_sysv_rook,          Section::sysv2 },
+  //{ "sysv_rook",          test_sysv_rook,          Section::sysv2 },  // requires LAPACK>=3.5
   //{ "sysv_aasen",         test_sysv_aasen,         Section::sysv2 },
   //{ "sysv_aasen_2stage",  test_sysv_aasen_2stage,  Section::sysv2 },
     { "",                   nullptr,                 Section::newline },
@@ -191,27 +191,27 @@ std::vector< libtest::routines_t > routines = {
 
     // -----
     // hermetian
-    { "hesv",               test_hesv,      Section::hesv },
+    { "hesv",               test_hesv,      Section::hesv }, // tested via LAPACKE
   //{ "hpsv",               test_hpsv,      Section::hesv },
     { "",                   nullptr,        Section::newline },
 
-    { "hetrf",              test_hetrf,     Section::hesv },
+    { "hetrf",              test_hetrf,     Section::hesv }, // tested via LAPACKE
   //{ "hptrf",              test_hptrf,     Section::hesv },
     { "",                   nullptr,        Section::newline },
 
-    { "hetrs",              test_hetrs,     Section::hesv },
+    { "hetrs",              test_hetrs,     Section::hesv }, // tested via LAPACKE
   //{ "hptrs",              test_hptrs,     Section::hesv },
     { "",                   nullptr,        Section::newline },
 
-    { "hetri",              test_hetri,     Section::hesv },
+    { "hetri",              test_hetri,     Section::hesv }, // tested via LAPACKE
   //{ "hptri",              test_hptri,     Section::hesv },
     { "",                   nullptr,        Section::newline },
 
-    { "hecon",              test_hecon,     Section::hesv },
+    { "hecon",              test_hecon,     Section::hesv }, // tested via LAPACKE
   //{ "hpcon",              test_hpcon,     Section::hesv },
     { "",                   nullptr,        Section::newline },
 
-    { "herfs",              test_herfs,     Section::hesv },
+    { "herfs",              test_herfs,     Section::hesv }, // tested via LAPACKE
   //{ "hprfs",              test_hprfs,     Section::hesv },
     { "",                   nullptr,        Section::newline },
 
@@ -230,10 +230,10 @@ std::vector< libtest::routines_t > routines = {
 
     // -----
     // QR, LQ, RQ, QL
-    { "geqrf",              test_geqrf,     Section::qr },
-    { "gelqf",              test_gelqf,     Section::qr },
-  //{ "geqlf",              test_geqlf,     Section::qr },
-  //{ "gerqf",              test_gerqf,     Section::qr },
+    { "geqrf",              test_geqrf,     Section::qr }, // tested numerically
+    { "gelqf",              test_gelqf,     Section::qr }, // tested numerically
+    { "geqlf",              test_geqlf,     Section::qr }, // tested numerically
+  //{ "gerqf",              test_gerqf,     Section::qr }, // tested numerically
     { "",                   nullptr,        Section::newline },
 
   //{ "ggqrf",              test_ggqrf,     Section::qr },

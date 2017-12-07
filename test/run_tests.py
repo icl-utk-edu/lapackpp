@@ -303,13 +303,13 @@ if (opts.lq):
     ]
 
 # QL
-#if (opts.ql):
-#    cmds += [
-#    [ 'geqlf', check + dtype + align + mn ],
+if (opts.ql):
+    cmds += [
+    [ 'geqlf', check + dtype + align + mn ],
 #    [ 'ggqlf', check + dtype + align + mn ],
 #    [ 'ungql', check + dtype + align + mn ],
 #    [ 'unmql', check + dtype + align + mn ],
-#    ]
+    ]
 
 # RQ
 #if (opts.rq):

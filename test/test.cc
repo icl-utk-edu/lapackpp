@@ -477,6 +477,7 @@ Params::Params():
     // mark framework parameters as used, so they will be accepted on the command line
     check  .value();
     error_exit.value();
+    ref    .value();
     tol    .value();
     repeat .value();
     verbose.value();

@@ -312,13 +312,13 @@ if (opts.ql):
     ]
 
 # RQ
-#if (opts.rq):
-#    cmds += [
-#    [ 'gerqf', check + dtype + align + mn ],
+if (opts.rq):
+    cmds += [
+    [ 'gerqf', check + dtype + align + mn ],
 #    [ 'ggrqf', check + dtype + align + mn ],
 #    [ 'ungrq', check + dtype + align + mn ],
 #    [ 'unmrq', check + dtype + align + mn ],
-#    ]
+    ]
 
 # symmetric eigenvalues
 # todo: add jobs

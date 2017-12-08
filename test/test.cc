@@ -233,7 +233,7 @@ std::vector< libtest::routines_t > routines = {
     { "geqrf",              test_geqrf,     Section::qr }, // tested numerically
     { "gelqf",              test_gelqf,     Section::qr }, // tested numerically
     { "geqlf",              test_geqlf,     Section::qr }, // tested numerically
-  //{ "gerqf",              test_gerqf,     Section::qr }, // tested numerically
+    { "gerqf",              test_gerqf,     Section::qr }, // tested numerically; R, Q are full sizeof(A), could be smaller
     { "",                   nullptr,        Section::newline },
 
   //{ "ggqrf",              test_ggqrf,     Section::qr },

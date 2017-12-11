@@ -320,7 +320,7 @@ std::vector< libtest::routines_t > routines = {
 
     // -----
     // non-symmetric eigenvalues
-  //{ "geev",               test_geev,      Section::geev },
+    { "geev",               test_geev,      Section::geev },
   //{ "ggev",               test_ggev,      Section::geev },
     { "",                   nullptr,        Section::newline },
 
@@ -452,6 +452,10 @@ Params::Params():
     // min, max are ignored
     //           name,                    w, p, type,              default,               min, max, help
     error      ( "error",                11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
+    error2     ( "error2",               11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
+    error3     ( "error3",               11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
+    error4     ( "error4",               11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
+    error5     ( "error5",               11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
     ortho      ( "orth. error",          11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "orthogonality error" ),
     ortho_U    ( "U orth.",              11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "U orthogonality error" ),
     ortho_V    ( "V orth.",              11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "V orthogonality error" ),

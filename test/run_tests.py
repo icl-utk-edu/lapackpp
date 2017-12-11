@@ -346,17 +346,16 @@ if (opts.rq):
 #    ]
 
 # non-symmetric eigenvalues
-# todo: add jobs
-#if (opts.syev):
-#    cmds += [
-#    [ 'syev',  check + dtype + align + mn ],
-#    [ 'syevx', check + dtype + align + mn ],
-#    [ 'syevd', check + dtype + align + mn ],
-#    [ 'syevr', check + dtype + align + mn ],
-#    [ 'sytrd', check + dtype + align + mn ],
-#    [ 'orgtr', check + dtype + align + mn ],
-#    [ 'ormtr', check + dtype + align + mn ],
-#    ]
+if (opts.geev):
+    cmds += [
+    [ 'geev',  check + dtype + align + mn + jobvl + jobvr ],
+#    [ 'geevx', check + dtype + align + mn + jobvl + jobvr ],
+#    [ 'gehrd', check + dtype + align + mn ],
+#    [ 'orghr', check + dtype + align + mn ],
+#    [ 'unghr', check + dtype + align + mn ],
+#    [ 'ormhr', check + dtype + align + mn + side + trans ],
+#    [ 'unmhr', check + dtype + align + mn + side + trans ],
+    ]
 
 # svd
 if (opts.svd):

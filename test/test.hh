@@ -61,6 +61,10 @@ public:
 
     // ----- output parameters
     libtest::ParamScientific error;
+    libtest::ParamScientific error2;
+    libtest::ParamScientific error3;
+    libtest::ParamScientific error4;
+    libtest::ParamScientific error5;
     libtest::ParamScientific ortho;
     libtest::ParamScientific ortho_U;
     libtest::ParamScientific ortho_V;

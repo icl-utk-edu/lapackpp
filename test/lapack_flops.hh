@@ -394,6 +394,13 @@ public:
 
     static double lansy(double n, lapack::Norm norm)
         { return 1e-9 * (fmuls_lanhe(n, norm) + fadds_lanhe(n, norm)); }
+
+    // ------------------------------------------------------------------
+    // Routines where the complex function name is mapped to real values
+
+    static double ungqr(double m, double n, double k)
+        { return 1e-9 * (6*fmuls_ungqr(m, n, k) + 2*fadds_ungqr(m, n, k)); }
+
 };
 
 //==============================================================================

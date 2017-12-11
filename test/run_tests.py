@@ -289,7 +289,8 @@ if (opts.qr):
     cmds += [
     [ 'geqrf', check + dtype + align + n + wide + tall ],
 #    [ 'ggqrf', check + dtype + align + mn ],
-#    [ 'ungqr', check + dtype + align + mn ],
+# Note: ungqr does not support wide
+    [ 'ungqr', check + dtype + align + n + tall ], 
 #    [ 'unmqr', check + dtype + align + mn ],
     ]
 

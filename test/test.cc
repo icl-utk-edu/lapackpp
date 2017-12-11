@@ -242,7 +242,7 @@ std::vector< libtest::routines_t > routines = {
   //{ "ggrqf",              test_ggrqf,     Section::qr },
     { "",                   nullptr,        Section::newline },
 
-  //{ "ungqr",              test_ungqr,     Section::qr },
+    { "ungqr",              test_ungqr,     Section::qr }, // tested numerically based on lapack; R, Q are full sizes
   //{ "unglq",              test_unglq,     Section::qr },
   //{ "ungql",              test_ungql,     Section::qr },
   //{ "ungrq",              test_ungrq,     Section::qr },

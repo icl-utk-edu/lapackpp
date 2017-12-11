@@ -409,7 +409,7 @@ Params::Params():
     //         name,       w,    type,             def, valid, help
     check     ( "check",   0,    ParamType::Value, 'y', "ny",  "check the results" ),
     error_exit( "error-exit", 0, ParamType::Value, 'n', "ny",  "check error exits" ),
-    ref       ( "ref",     0,    ParamType::Value, 'n', "ny",  "run reference; sometimes check implies ref" ),
+    ref       ( "ref",     0,    ParamType::Value, 'y', "ny",  "run reference; sometimes check implies ref" ),
 
     //          name,      w, p, type,             def, min,  max, help
     tol       ( "tol",     0, 0, ParamType::Value,  50,   1, 1000, "tolerance (e.g., error < tol*epsilon to pass)" ),

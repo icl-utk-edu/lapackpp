@@ -13,8 +13,7 @@ using blas::real;
 int64_t geev(
     lapack::Job jobvl, lapack::Job jobvr, int64_t n,
     float* A, int64_t lda,
-    float* WR,
-    float* WI,
+    std::complex<float>* W,
     float* VL, int64_t ldvl,
     float* VR, int64_t ldvr )
 {
@@ -33,10 +32,14 @@ int64_t geev(
     blas_int ldvr_ = (blas_int) ldvr;
     blas_int info_ = 0;
 
+    // split-complex representation
+    std::vector< float > WR( max( 1, n ) );
+    std::vector< float > WI( max( 1, n ) );
+
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_sgeev( &jobvl_, &jobvr_, &n_, A, &lda_, WR, WI, VL, &ldvl_, VR, &ldvr_, qry_work, &ineg_one, &info_ );
+    LAPACK_sgeev( &jobvl_, &jobvr_, &n_, A, &lda_, &WR[0], &WI[0], VL, &ldvl_, VR, &ldvr_, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -45,9 +48,13 @@ int64_t geev(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_sgeev( &jobvl_, &jobvr_, &n_, A, &lda_, WR, WI, VL, &ldvl_, VR, &ldvr_, &work[0], &lwork_, &info_ );
+    LAPACK_sgeev( &jobvl_, &jobvr_, &n_, A, &lda_, &WR[0], &WI[0], VL, &ldvl_, VR, &ldvr_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
+    }
+    // merge split-complex representation
+    for (int64_t i = 0; i < n; ++i) {
+        W[i] = std::complex<float>( WR[i], WI[i] );
     }
     return info_;
 }
@@ -56,8 +63,7 @@ int64_t geev(
 int64_t geev(
     lapack::Job jobvl, lapack::Job jobvr, int64_t n,
     double* A, int64_t lda,
-    double* WR,
-    double* WI,
+    std::complex<double>* W,
     double* VL, int64_t ldvl,
     double* VR, int64_t ldvr )
 {
@@ -76,10 +82,14 @@ int64_t geev(
     blas_int ldvr_ = (blas_int) ldvr;
     blas_int info_ = 0;
 
+    // split-complex representation
+    std::vector< double > WR( max( 1, n ) );
+    std::vector< double > WI( max( 1, n ) );
+
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dgeev( &jobvl_, &jobvr_, &n_, A, &lda_, WR, WI, VL, &ldvl_, VR, &ldvr_, qry_work, &ineg_one, &info_ );
+    LAPACK_dgeev( &jobvl_, &jobvr_, &n_, A, &lda_, &WR[0], &WI[0], VL, &ldvl_, VR, &ldvr_, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -88,9 +98,13 @@ int64_t geev(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dgeev( &jobvl_, &jobvr_, &n_, A, &lda_, WR, WI, VL, &ldvl_, VR, &ldvr_, &work[0], &lwork_, &info_ );
+    LAPACK_dgeev( &jobvl_, &jobvr_, &n_, A, &lda_, &WR[0], &WI[0], VL, &ldvl_, VR, &ldvr_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
+    }
+    // merge split-complex representation
+    for (int64_t i = 0; i < n; ++i) {
+        W[i] = std::complex<double>( WR[i], WI[i] );
     }
     return info_;
 }

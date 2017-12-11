@@ -715,16 +715,14 @@ int64_t geesx(
 int64_t geev(
     lapack::Job jobvl, lapack::Job jobvr, int64_t n,
     float* A, int64_t lda,
-    float* WR,
-    float* WI,
+    std::complex<float>* W,
     float* VL, int64_t ldvl,
     float* VR, int64_t ldvr );
 
 int64_t geev(
     lapack::Job jobvl, lapack::Job jobvr, int64_t n,
     double* A, int64_t lda,
-    double* WR,
-    double* WI,
+    std::complex<double>* W,
     double* VL, int64_t ldvl,
     double* VR, int64_t ldvr );
 
@@ -746,8 +744,7 @@ int64_t geev(
 int64_t geevx(
     lapack::Balance balance, lapack::Job jobvl, lapack::Job jobvr, lapack::Sense sense, int64_t n,
     float* A, int64_t lda,
-    float* WR,
-    float* WI,
+    std::complex<float>* W,
     float* VL, int64_t ldvl,
     float* VR, int64_t ldvr,
     int64_t* ilo,
@@ -760,8 +757,7 @@ int64_t geevx(
 int64_t geevx(
     lapack::Balance balance, lapack::Job jobvl, lapack::Job jobvr, lapack::Sense sense, int64_t n,
     double* A, int64_t lda,
-    double* WR,
-    double* WI,
+    std::complex<double>* W,
     double* VL, int64_t ldvl,
     double* VR, int64_t ldvr,
     int64_t* ilo,

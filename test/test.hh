@@ -228,6 +228,19 @@ void test_lanhe ( Params& params, bool run );
 void test_lansy ( Params& params, bool run );
 void test_lantr ( Params& params, bool run );
 
+void test_lanhp ( Params& params, bool run );
+void test_lansp ( Params& params, bool run );
+void test_lantp ( Params& params, bool run );
+
+void test_langb ( Params& params, bool run );
+void test_lanhb ( Params& params, bool run );
+void test_lansb ( Params& params, bool run );
+void test_lantb ( Params& params, bool run );
+
+void test_langt ( Params& params, bool run );
+void test_lanht ( Params& params, bool run );
+void test_lanst ( Params& params, bool run );
+
 // least squares
 void test_gels  ( Params& params, bool run );
 void test_gelsy ( Params& params, bool run );

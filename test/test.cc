@@ -384,6 +384,23 @@ std::vector< libtest::routines_t > routines = {
     { "lantr",              test_lantr,     Section::aux_norm },
     { "",                   nullptr,        Section::newline },
 
+    { "",                   nullptr,        Section::aux_norm },
+    { "lanhp",              test_lanhp,     Section::aux_norm },
+    { "lansp",              test_lansp,     Section::aux_norm },
+  //{ "lantp",              test_lantp,     Section::aux_norm },
+    { "",                   nullptr,        Section::newline },
+
+  //{ "langb",              test_langb,     Section::aux_norm },
+    { "lanhb",              test_lanhb,     Section::aux_norm },
+    { "lansb",              test_lansb,     Section::aux_norm },
+  //{ "lantb",              test_lantb,     Section::aux_norm },
+    { "",                   nullptr,        Section::newline },
+
+  //{ "langt",              test_langt,     Section::aux_norm },
+  //{ "lanht",              test_lanht,     Section::aux_norm },
+  //{ "lanst",              test_lanst,     Section::aux_norm },
+    { "",                   nullptr,        Section::newline },
+
     // auxiliary: matrix generation
   //{ "lagge",              test_lagge,     Section::aux_gen },
   //{ "lagsy",              test_lagsy,     Section::aux_gen },

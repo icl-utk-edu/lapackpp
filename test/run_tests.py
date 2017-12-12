@@ -80,6 +80,9 @@ group_opt.add_argument( '--jobvl',  action='store', help='default=%(default)s', 
 group_opt.add_argument( '--jobvr',  action='store', help='default=%(default)s', default='n,v' )
 group_opt.add_argument( '--jobu',   action='store', help='default=%(default)s', default='n,s,o,a' )
 group_opt.add_argument( '--jobvt',  action='store', help='default=%(default)s', default='n,s,o,a' )
+group_opt.add_argument( '--kd',     action='store', help='default=%(default)s', default='20,100' )
+group_opt.add_argument( '--kl',     action='store', help='default=%(default)s', default='20,100' )
+group_opt.add_argument( '--ku',     action='store', help='default=%(default)s', default='20,100' )
 group_opt.add_argument( '--matrixtype', action='store', help='default=%(default)s', default='g,l,u' )
 
 parser.add_argument( 'tests', nargs=argparse.REMAINDER )
@@ -174,12 +177,15 @@ if (opts.ref):
 direct = ' --direct ' + opts.direct if (opts.direct) else ''
 storev = ' --storev ' + opts.storev if (opts.storev) else ''
 norm   = ' --norm '   + opts.norm   if (opts.norm)   else ''
-mtype  = ' --matrixtype ' + opts.matrixtype if (opts.matrixtype) else ''
 jobz   = ' --jobz '   + opts.jobz   if (opts.jobz)   else ''
 jobu   = ' --jobu '   + opts.jobu   if (opts.jobu)   else ''
 jobvt  = ' --jobvt '  + opts.jobvt  if (opts.jobvt)  else ''
 jobvl  = ' --jobvl '  + opts.jobvl  if (opts.jobvl)  else ''
 jobvr  = ' --jobvr '  + opts.jobvr  if (opts.jobvr)  else ''
+kd     = ' --kd '     + opts.kd     if (opts.kd)     else ''
+kl     = ' --kl '     + opts.kl     if (opts.kl)     else ''
+ku     = ' --ku '     + opts.ku     if (opts.ku)     else ''
+mtype  = ' --matrixtype ' + opts.matrixtype if (opts.matrixtype) else ''
 
 # ------------------------------------------------------------------------------
 # filters a comma separated list csv based on items in list values.
@@ -394,6 +400,19 @@ if (opts.aux):
     [ 'lanhe', check + dtype + align + n  + norm + uplo ],
     [ 'lansy', check + dtype + align + n  + norm + uplo ],
     [ 'lantr', check + dtype + align + n  + norm + uplo + diag ],
+
+    [ 'lanhp', check + dtype + n + norm + uplo ],
+    [ 'lansp', check + dtype + n + norm + uplo ],
+#    [ 'lantp', check + dtype + n + norm + uplo + diag ],
+#
+#    [ 'langb', check + dtype + align + n + kl + ku + norm ],
+    [ 'lanhb', check + dtype + align + n + kd + norm + uplo ],
+    [ 'lansb', check + dtype + align + n + kd + norm + uplo ],
+#    [ 'lantb', check + dtype + align + n + kd + norm + uplo + diag ],
+#
+#    [ 'langt', check + dtype + n + norm ],
+#    [ 'lanht', check + dtype + n + norm + uplo ],
+#    [ 'lanst', check + dtype + n + norm + uplo ],
     ]
 
 # additional blas

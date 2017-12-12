@@ -18,6 +18,10 @@ LIBS     ?= -L${LAPACKDIR} -llapacke -llapack -lblas
 # ------------------------------------------------------------------------------
 # LAPACK++ specific flags
 pwd = ${shell pwd}
+libtest_path = ${realpath ${pwd}/../libtest}
+libtest_src  = ${wildcard ${libtest_path}/*.cc} \
+               ${wildcard ${libtest_path}/*.hh}
+libtest_so   = ${libtest_path}/libtest.so
 
 LAPACKPP_FLAGS = -I../libtest \
                  -I../blaspp/include \
@@ -25,7 +29,7 @@ LAPACKPP_FLAGS = -I../libtest \
                  -Iinclude \
                  -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_CPP
 
-LAPACKPP_LIBS  = -L../libtest -Wl,-rpath,${pwd}/../libtest -ltest \
+LAPACKPP_LIBS  = -L../libtest -Wl,-rpath,${libtest_path} -ltest \
                  -Llib -Wl,-rpath,${pwd}/lib -llapackpp
 
 # ------------------------------------------------------------------------------
@@ -69,7 +73,7 @@ src: shared
 
 test: test/test
 
-test/test: ${test_obj} ${liblapackpp_so}
+test/test: ${test_obj} ${liblapackpp_so} ${libtest_so}
 	${CXX} ${LDFLAGS} -o $@ ${test_obj} ${LAPACKPP_LIBS} ${LIBS}
 
 ${liblapackpp_so}: ${obj} | lib
@@ -78,6 +82,9 @@ ${liblapackpp_so}: ${obj} | lib
 ${liblapackpp_a}: ${obj} | lib
 	ar cr $@ ${obj}
 	ranlib $@
+
+${libtest_so}: ${libtest_src}
+	cd ${libtest_path} && ${MAKE}
 
 %.o: %.cc
 	${CXX} ${CXXFLAGS} ${LAPACKPP_FLAGS} -c -o $@ $<

@@ -85,7 +85,7 @@ void test_geqrf_work( Params& params, bool run )
     params.gflops.value() = gflop / time;
 
     if (params.check.value() == 'y') {
-
+        libtest::flush_cache( params.cache.value() );
         // ---------- check error
         // comparing to ref. solution doesn't work
         // Following lapack/TESTING/LIN/zqrt01.f but using smaller Q and R
@@ -148,16 +148,6 @@ void test_geqrf_work( Params& params, bool run )
 
         params.ref_time.value() = time;
         params.ref_gflops.value() = gflop / time;
-
-        // ---------- check error compared to reference
-        real_t error = 0;
-        if (info_tst != info_ref) {
-            error = 1;
-        }
-        error += abs_error( A_tst, A_ref );
-        error += abs_error( tau_tst, tau_ref );
-        params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 

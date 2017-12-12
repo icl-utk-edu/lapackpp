@@ -48,13 +48,21 @@ void test_ungqr_work( Params& params, bool run )
     int64_t align = params.align.value();
 
     // mark non-standard output values
-    // params.ref_time.value();
-    // params.ref_gflops.value();
-    params.gflops.value();
     params.ortho.value();
+    params.time.value();
+    params.gflops.value();
+    params.ref_time.value();
+    params.ref_gflops.value();
+    params.okay.value();
 
     if (! run)
         return;
+
+    // Check for problems in testing
+    if (! ( n <= m && k <= n ) ) {
+        printf( "skipping because ungqr requires n <= m and k <= n\n" );
+        return;
+    }
 
     // ---------- setup
     int64_t lda = roundup( max( 1, m ), align );
@@ -98,8 +106,8 @@ void test_ungqr_work( Params& params, bool run )
         libtest::flush_cache( params.cache.value() );
         // ---------- check error
         // comparing to ref. solution doesn't work
-        // Following lapack/TESTING/LIN/zqrt02
-        // Note (0 ≤ n≤ m).
+        // Following lapack/TESTING/LIN/zqrt02.f
+        // Note (0 <= n <= m)  (0 <= k <= n).
         real_t eps = std::numeric_limits< real_t >::epsilon();
         real_t tol = params.tol.value();
 
@@ -119,7 +127,7 @@ void test_ungqr_work( Params& params, bool run )
             fprintf( stderr, "lapack::ungqr returned error %lld\n", (lld) info_ungqr );
         }
 
-        // Copy R
+        // Copy R(1:n,1:k)
         lapack::laset( lapack::MatrixType::General, n, k, 0.0, 0.0, &R[0], ldr );
         lapack::lacpy( lapack::MatrixType::Upper, n, k, &A_factored[0], lda, &R[0], ldr );
 
@@ -159,15 +167,6 @@ void test_ungqr_work( Params& params, bool run )
 
         params.ref_time.value() = time;
         params.ref_gflops.value() = gflop / time;
-
-        // ---------- check error compared to reference
-        real_t error = 0;
-        if (info_tst != info_ref) {
-            error = 1;
-        }
-        error += abs_error( A_tst, A_ref );
-        params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 

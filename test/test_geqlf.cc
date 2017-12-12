@@ -47,10 +47,11 @@ void test_geqlf_work( Params& params, bool run )
     int64_t align = params.align.value();
 
     // mark non-standard output values
+    params.ortho.value();
+    params.time.value();
+    params.gflops.value();
     params.ref_time.value();
     params.ref_gflops.value();
-    params.gflops.value();
-    params.ortho.value();
 
     if (! run)
         return;
@@ -154,16 +155,6 @@ void test_geqlf_work( Params& params, bool run )
 
         params.ref_time.value() = time;
         params.ref_gflops.value() = gflop / time;
-
-        // ---------- check error compared to reference
-        real_t error = 0;
-        if (info_tst != info_ref) {
-            error = 1;
-        }
-        error += abs_error( A_tst, A_ref );
-        error += abs_error( tau_tst, tau_ref );
-        params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 

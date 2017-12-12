@@ -289,8 +289,7 @@ if (opts.qr):
     cmds += [
     [ 'geqrf', check + dtype + align + n + wide + tall ],
 #    [ 'ggqrf', check + dtype + align + mn ],
-# Note: ungqr does not support wide
-    [ 'ungqr', check + dtype + align + n + tall ], 
+    [ 'ungqr', check + dtype + align + mn ], # n<=m
 #    [ 'unmqr', check + dtype + align + mn ],
     ]
 
@@ -299,7 +298,7 @@ if (opts.lq):
     cmds += [
     [ 'gelqf', check + dtype + align + mn ],
 #    [ 'gglqf', check + dtype + align + mn ],
-#    [ 'unglq', check + dtype + align + mn ],
+    [ 'unglq', check + dtype + align + mn ],  # m<=n, k<=m  TODO Fix the input sizes to match constraints
 #    [ 'unmlq', check + dtype + align + mn ],
     ]
 
@@ -308,7 +307,7 @@ if (opts.ql):
     cmds += [
     [ 'geqlf', check + dtype + align + mn ],
 #    [ 'ggqlf', check + dtype + align + mn ],
-#    [ 'ungql', check + dtype + align + mn ],
+    [ 'ungql', check + dtype + align + mn ],
 #    [ 'unmql', check + dtype + align + mn ],
     ]
 
@@ -317,7 +316,7 @@ if (opts.rq):
     cmds += [
     [ 'gerqf', check + dtype + align + mn ],
 #    [ 'ggrqf', check + dtype + align + mn ],
-#    [ 'ungrq', check + dtype + align + mn ],
+    [ 'ungrq', check + dtype + align + mn ],
 #    [ 'unmrq', check + dtype + align + mn ],
     ]
 

@@ -396,10 +396,19 @@ public:
         { return 1e-9 * (fmuls_lanhe(n, norm) + fadds_lanhe(n, norm)); }
 
     // ------------------------------------------------------------------
-    // Routines where the complex function name is mapped to real values
+    // Make complex function names available for tests
 
     static double ungqr(double m, double n, double k)
         { return 1e-9 * (6*fmuls_ungqr(m, n, k) + 2*fadds_ungqr(m, n, k)); }
+
+    static double unglq(double m, double n, double k)
+        { return 1e-9 * (6*fmuls_unglq(m, n, k) + 2*fadds_unglq(m, n, k)); }
+
+    static double ungql(double m, double n, double k)
+        { return 1e-9 * (6*fmuls_ungql(m, n, k) + 2*fadds_ungql(m, n, k)); }
+
+    static double ungrq(double m, double n, double k)
+        { return 1e-9 * (6*fmuls_ungrq(m, n, k) + 2*fadds_ungrq(m, n, k)); }
 
 };
 

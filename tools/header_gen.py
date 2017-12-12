@@ -9,8 +9,8 @@ import sys
 import re
 import os
 
+lapack = os.environ['LAPACKDIR']
 if (len(sys.argv) == 1):
-    lapack = os.environ['LAPACKDIR']
     funcs = []
     #f = open( lapack + '/LAPACKE/include/lapack.h' )
     f = open( '../include/lapack_fortran.h' )
@@ -113,7 +113,7 @@ for func in funcs:
     else:
         print( 'skipping, file not found:', filename )
         print( '#define LAPACK_' + func + ' LAPACK_GLOBAL(' + func + ',' + func.upper() + ')', file=output )
-        print( retval + ' LAPACK_' + func + '( ... );', file=output )
+        print( 'void LAPACK_' + func + '( ... );', file=output )
     # end
 # end
 

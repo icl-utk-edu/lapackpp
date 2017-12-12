@@ -52,6 +52,9 @@ public:
     libtest::ParamEnum< lapack::MatrixType > matrixtype;
 
     libtest::ParamInt3   dim;
+    libtest::ParamInt    kd;
+    libtest::ParamInt    kl;
+    libtest::ParamInt    ku;
     libtest::ParamInt    nrhs;
     libtest::ParamDouble alpha;
     libtest::ParamDouble beta;

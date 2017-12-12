@@ -442,6 +442,9 @@ Params::Params():
 
     //          name,      w, p, type,            def,   min,     max, help
     dim       ( "dim",     6,    ParamType::List,          0, 1000000, "m x n x k dimensions" ),
+    kd        ( "kd",      6,    ParamType::List, 100,     0, 1000000, "bandwidth" ),
+    kl        ( "kl",      6,    ParamType::List, 100,     0, 1000000, "lower bandwidth" ),
+    ku        ( "ku",      6,    ParamType::List, 100,     0, 1000000, "upper bandwidth" ),
     nrhs      ( "nrhs",    6,    ParamType::List,  10,     0, 1000000, "number of right hand sides" ),
     alpha     ( "alpha",   9, 4, ParamType::List,  pi,  -inf,     inf, "scalar alpha" ),
     beta      ( "beta",    9, 4, ParamType::List,   e,  -inf,     inf, "scalar beta" ),

@@ -3613,6 +3613,90 @@ double lansy(
     std::complex<double> const* A, int64_t lda );
 
 // -----------------------------------------------------------------------------
+float lanhp(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    std::complex<float> const* AP );
+
+double lanhp(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    std::complex<double> const* AP );
+
+// -----------------------------------------------------------------------------
+float lansp(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    float const* AP );
+
+// lanhp alias to lansp
+inline float lanhp(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    float const* AP )
+{
+    return lansp( norm, uplo, n, AP );
+}
+
+double lansp(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    double const* AP );
+
+// lanhp alias to lansp
+inline double lanhp(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    double const* AP )
+{
+    return lansp( norm, uplo, n, AP );
+}
+
+float lansp(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    std::complex<float> const* AP );
+
+double lansp(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    std::complex<double> const* AP );
+
+// -----------------------------------------------------------------------------
+float lanhb(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n, int64_t kd,
+    std::complex<float> const* AB, int64_t ldab );
+
+double lanhb(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n, int64_t kd,
+    std::complex<double> const* AB, int64_t ldab );
+
+// -----------------------------------------------------------------------------
+float lansb(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n, int64_t kd,
+    float const* AB, int64_t ldab );
+
+// lanhb alias to lansb
+inline float lanhb(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n, int64_t kd,
+    float const* AB, int64_t ldab )
+{
+    return lansb( norm, uplo, n, kd, AB, ldab );
+}
+
+double lansb(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n, int64_t kd,
+    double const* AB, int64_t ldab );
+
+// lanhb alias to lansb
+inline double lanhb(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n, int64_t kd,
+    double const* AB, int64_t ldab )
+{
+    return lansb( norm, uplo, n, kd, AB, ldab );
+}
+
+float lansb(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n, int64_t kd,
+    std::complex<float> const* AB, int64_t ldab );
+
+double lansb(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n, int64_t kd,
+    std::complex<double> const* AB, int64_t ldab );
+
+// -----------------------------------------------------------------------------
 float lantr(
     lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t m, int64_t n,
     float const* A, int64_t lda );

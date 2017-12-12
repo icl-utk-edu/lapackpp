@@ -19,12 +19,12 @@ using libtest::ansi_red;
 using libtest::ansi_normal;
 
 // -----------------------------------------------------------------------------
+// each section must have a corresponding entry in section_names
 enum Section {
     newline = 0,  // zero flag forces newline
     gesv,
     posv,
     sysv,
-    sysv2,
     hesv,
     gels,
     qr,
@@ -37,6 +37,7 @@ enum Section {
     aux_householder,
     aux_gen,
     blas_section,
+    num_sections,  // last
 };
 
 const char* section_names[] = {
@@ -44,7 +45,7 @@ const char* section_names[] = {
    "LU",
    "Cholesky",
    "symmetric indefinite",
-   "",
+   "Hermitian indefinite",
    "least squares",
    "QR, LQ, QL, RQ",
    "symmetric eigenvalues",
@@ -493,6 +494,9 @@ Params::Params():
 // -----------------------------------------------------------------------------
 int main( int argc, char** argv )
 {
+    // check that all sections have names
+    assert( sizeof(section_names)/sizeof(*section_names) == Section::num_sections );
+
     // Usage: test routine [params]
     // find routine to test
     if (argc < 2 ||

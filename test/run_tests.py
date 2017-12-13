@@ -353,13 +353,13 @@ if (opts.rq):
 # non-symmetric eigenvalues
 if (opts.geev):
     cmds += [
-    [ 'geev',  check + dtype + align + mn + jobvl + jobvr ],
-#    [ 'geevx', check + dtype + align + mn + jobvl + jobvr ],
-#    [ 'gehrd', check + dtype + align + mn ],
-#    [ 'orghr', check + dtype + align + mn ],
-#    [ 'unghr', check + dtype + align + mn ],
-#    [ 'ormhr', check + dtype + align + mn + side + trans ],
-#    [ 'unmhr', check + dtype + align + mn + side + trans ],
+    [ 'geev',  check + dtype + align + n + jobvl + jobvr ],
+#    [ 'geevx', check + dtype + align + n + jobvl + jobvr ],
+    [ 'gehrd', check + dtype + align + n ],
+#    [ 'orghr', check + dtype + align + n ],
+#    [ 'unghr', check + dtype + align + n ],
+#    [ 'ormhr', check + dtype + align + n + side + trans ],
+#    [ 'unmhr', check + dtype + align + n + side + trans ],
     ]
 
 # svd

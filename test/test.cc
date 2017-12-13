@@ -337,7 +337,7 @@ std::vector< libtest::routines_t > routines = {
   //{ "ggesx",              test_ggesx,     Section::geev },
     { "",                   nullptr,        Section::newline },
 
-  //{ "gehrd",              test_gehrd,     Section::geev },
+    { "gehrd",              test_gehrd,     Section::geev },
   //{ "orghr",              test_orghr,     Section::geev },
   //{ "ormhr",              test_ormhr,     Section::geev },
   //{ "hsein",              test_hsein,     Section::geev },

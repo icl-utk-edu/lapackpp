@@ -47,6 +47,8 @@ void test_pocon_work( Params& params, bool run )
     int64_t align = params.align.value();
     int64_t verbose = params.verbose.value();
 
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+
     // mark non-standard output values
     params.ref_time.value();
     //params.ref_gflops.value();
@@ -68,12 +70,23 @@ void test_pocon_work( Params& params, bool run )
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, A.size(), &A[0] );
 
+    // diagonally dominant -> positive definite
+    for (int64_t i = 0; i < n; ++i) {
+        A[ i + i*lda ] += n;
+    }
+
     anorm = lapack::lanhe( lapack::Norm::One, uplo, n, &A[0], lda );
 
     if (verbose >= 1) {
         printf( "\n"
                 "A n %lld, lda %lld, Anorm %.2e\n",
                 (lld) n, (lld) lda, anorm );
+    }
+
+    // factor A into LL^T
+    int64_t info = lapack::potrf( uplo, n, &A[0], lda );
+    if (info != 0) {
+        fprintf( stderr, "lapack::potrf returned error %lld\n", (lld) info );
     }
 
     // ---------- run test
@@ -109,7 +122,7 @@ void test_pocon_work( Params& params, bool run )
         }
         error += std::abs( rcond_tst - rcond_ref );
         params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
+        params.okay.value() = (error < 3*eps);
     }
 }
 

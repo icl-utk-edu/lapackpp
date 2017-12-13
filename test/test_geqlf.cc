@@ -86,7 +86,6 @@ void test_geqlf_work( Params& params, bool run )
 
     if (params.check.value() == 'y') {
         // ---------- check error
-        libtest::flush_cache( params.cache.value() );
         // comparing to ref. solution doesn't work
         // Following magma/testing/testing_zgeqlf.cpp
         real_t eps = std::numeric_limits< real_t >::epsilon();

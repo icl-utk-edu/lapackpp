@@ -86,7 +86,6 @@ void test_gerqf_work( Params& params, bool run )
 
     if (params.check.value() == 'y') {
         // ---------- check error
-        libtest::flush_cache( params.cache.value() );
         // comparing to ref. solution doesn't work
         // Following lapack/TESTING/LIN/crqt01.f
         real_t eps = std::numeric_limits< real_t >::epsilon();

@@ -90,7 +90,6 @@ void test_gelqf_work( Params& params, bool run )
         // ---------- check error
         // comparing to ref. solution doesn't work
         // Taken from lapack/TESTING/LIN/zlqt01.f but using smaller Q and L
-        libtest::flush_cache( params.cache.value() );
         real_t eps = std::numeric_limits< real_t >::epsilon();
         real_t tol = params.tol.value();
 

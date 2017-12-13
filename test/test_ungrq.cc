@@ -102,7 +102,6 @@ void test_ungrq_work( Params& params, bool run )
     params.gflops.value() = gflop / time;
 
     if (params.check.value() == 'y') {
-        libtest::flush_cache( params.cache.value() );
         // ---------- check error
         // comparing to ref. solution doesn't work
         // Following lapack/TESTING/LIN/zrqt02.f

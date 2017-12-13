@@ -44,7 +44,8 @@ void test_ppcon_work( Params& params, bool run )
     // get & mark input values
     lapack::Uplo uplo = params.uplo.value();
     int64_t n = params.dim.n();
-    int64_t align = params.align.value();
+
+    real_t eps = std::numeric_limits< real_t >::epsilon();
 
     // mark non-standard output values
     params.ref_time.value();
@@ -55,7 +56,7 @@ void test_ppcon_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    real_t anorm;  // todo value
+    real_t anorm;
     real_t rcond_tst;
     real_t rcond_ref;
     size_t size_AP = (size_t) (n*(n+1)/2);
@@ -77,13 +78,14 @@ void test_ppcon_work( Params& params, bool run )
             AP[ i + n*i - 0.5*i*(i+1) ] += n;
         }
     }
+
+    anorm = lapack::lansp( lapack::Norm::One, uplo, n, &AP[0] );
+
     // factor A into LL^T
     int64_t info = lapack::pptrf( uplo, n, &AP[0] );
     if (info != 0) {
         fprintf( stderr, "lapack::pptrf returned error %lld\n", (lld) info );
     }
-
-    // @todo set anorm using lanhp
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
@@ -118,7 +120,7 @@ void test_ppcon_work( Params& params, bool run )
         }
         error += std::abs( rcond_tst - rcond_ref );
         params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
+        params.okay.value() = (error < 3*eps);
     }
 }
 

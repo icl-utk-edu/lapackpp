@@ -44,7 +44,6 @@ void test_pptri_work( Params& params, bool run )
     // get & mark input values
     lapack::Uplo uplo = params.uplo.value();
     int64_t n = params.dim.n();
-    int64_t align = params.align.value();
 
     // mark non-standard output values
     params.ref_time.value();

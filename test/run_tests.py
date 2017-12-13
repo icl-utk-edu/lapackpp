@@ -234,6 +234,14 @@ if (opts.chol):
     [ 'pocon', check + dtype + align + n + uplo ],
     [ 'porfs', check + dtype + align + n + uplo ],
     [ 'poequ', check + dtype + align + n ],  # only diagonal elements (no uplo)
+
+    [ 'ppsv',  check + dtype + align + n + uplo ],
+    [ 'pptrf', check + dtype +         n + uplo ],
+    [ 'pptrs', check + dtype + align + n + uplo ],
+    [ 'pptri', check + dtype +         n + uplo ],
+    [ 'ppcon', check + dtype +         n + uplo ],
+    [ 'pprfs', check + dtype + align + n + uplo ],
+    [ 'ppequ', check + dtype +         n + uplo ],
     ]
 
 # symmetric indefinite, Bunch-Kaufman

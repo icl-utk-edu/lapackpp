@@ -47,6 +47,8 @@ void test_pprfs_work( Params& params, bool run )
     int64_t nrhs = params.nrhs.value();
     int64_t align = params.align.value();
 
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+
     // mark non-standard output values
     params.ref_time.value();
     //params.ref_gflops.value();
@@ -144,7 +146,7 @@ void test_pprfs_work( Params& params, bool run )
         error += abs_error( ferr_tst, ferr_ref );
         error += abs_error( berr_tst, berr_ref );
         params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
+        params.okay.value() = (error < 3*eps);
     }
 }
 

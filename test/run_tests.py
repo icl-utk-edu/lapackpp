@@ -242,6 +242,14 @@ if (opts.chol):
     [ 'ppcon', check + dtype +         n + uplo ],
     [ 'pprfs', check + dtype + align + n + uplo ],
     [ 'ppequ', check + dtype +         n + uplo ],
+
+    [ 'pbsv',  check + dtype + align + n + kd + uplo ],
+    [ 'pbtrf', check + dtype +         n + kd + uplo ],
+    [ 'pbtrs', check + dtype + align + n + kd + uplo ],
+    [ 'pbtri', check + dtype +         n + kd + uplo ],
+    [ 'pbcon', check + dtype +         n + kd + uplo ],
+    [ 'pbrfs', check + dtype + align + n + kd + uplo ],
+    [ 'pbequ', check + dtype +         n + kd + uplo ],
     ]
 
 # symmetric indefinite, Bunch-Kaufman

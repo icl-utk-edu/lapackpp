@@ -28,7 +28,7 @@ enum Section {
     hesv,
     gels,
     qr,
-    syev,
+    heev,
     sygv,
     geev,
     svd,
@@ -249,7 +249,7 @@ std::vector< libtest::routines_t > routines = {
     { "ungrq",              test_ungrq,     Section::qr },
     { "",                   nullptr,        Section::newline },
 
-  //{ "unmqr",              test_unmqr,     Section::qr },
+    { "unmqr",              test_unmqr,     Section::qr },
   //{ "unmlq",              test_unmlq,     Section::qr },
   //{ "unmql",              test_unmql,     Section::qr },
   //{ "unmrq",              test_unmrq,     Section::qr },
@@ -257,39 +257,39 @@ std::vector< libtest::routines_t > routines = {
 
     // -----
     // symmetric/Hermitian eigenvalues
-  //{ "syev",               test_syev,      Section::syev },
-  //{ "spev",               test_spev,      Section::syev },
-  //{ "sbev",               test_sbev,      Section::syev },
+    { "heev",               test_heev,      Section::heev },
+  //{ "hpev",               test_hpev,      Section::heev },
+  //{ "hbev",               test_hbev,      Section::heev },
     { "",                   nullptr,        Section::newline },
 
-  //{ "syevx",              test_syevx,     Section::syev },
-  //{ "spevx",              test_spevx,     Section::syev },
-  //{ "sbevx",              test_sbevx,     Section::syev },
+  //{ "heevx",              test_heevx,     Section::heev },
+  //{ "hpevx",              test_hpevx,     Section::heev },
+  //{ "hbevx",              test_hbevx,     Section::heev },
     { "",                   nullptr,        Section::newline },
 
-  //{ "syevd",              test_syevd,     Section::syev },
-  //{ "spevd",              test_spevd,     Section::syev },
-  //{ "sbevd",              test_sbevd,     Section::syev },
+  //{ "heevd",              test_heevd,     Section::heev },
+  //{ "hpevd",              test_hpevd,     Section::heev },
+  //{ "hbevd",              test_hbevd,     Section::heev },
     { "",                   nullptr,        Section::newline },
 
-  //{ "syevr",              test_syevr,     Section::syev },
-  //{ "spevr",              test_spevr,     Section::syev },
-  //{ "sbevr",              test_sbevr,     Section::syev },
+  //{ "heevr",              test_heevr,     Section::heev },
+  //{ "hpevr",              test_hpevr,     Section::heev },
+  //{ "hbevr",              test_hbevr,     Section::heev },
     { "",                   nullptr,        Section::newline },
 
-  //{ "sytrd",              test_sytrd,     Section::syev },
-  //{ "sptrd",              test_sptrd,     Section::syev },
-  //{ "sbtrd",              test_sbtrd,     Section::syev },
+  //{ "hetrd",              test_hetrd,     Section::heev },
+  //{ "hptrd",              test_hptrd,     Section::heev },
+  //{ "hbtrd",              test_hbtrd,     Section::heev },
     { "",                   nullptr,        Section::newline },
 
-  //{ "orgtr",              test_orgtr,     Section::syev },
-  //{ "opgtr",              test_opgtr,     Section::syev },
-  //{ "obgtr",              test_obgtr,     Section::syev },
+  //{ "ungtr",              test_ungtr,     Section::heev },
+  //{ "upgtr",              test_upgtr,     Section::heev },
+  //{ "obgtr",              test_obgtr,     Section::heev }, // does this exist
     { "",                   nullptr,        Section::newline },
 
-  //{ "ormtr",              test_symtr,     Section::syev },
-  //{ "opmtr",              test_spmtr,     Section::syev },
-  //{ "obmtr",              test_sbmtr,     Section::syev },
+  //{ "unmtr",              test_unmtr,     Section::heev },
+  //{ "upmtr",              test_upmtr,     Section::heev },
+  //{ "obmtr",              test_obmtr,     Section::heev }, // does this exist
     { "",                   nullptr,        Section::newline },
 
     // -----

@@ -5502,11 +5502,31 @@ int64_t pttrs(
     float const* E,
     float* B, int64_t ldb );
 
+// alias with uplo to match complex (it is ignored)
+inline int64_t pttrs(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    float const* D,
+    float const* E,
+    float* B, int64_t ldb )
+{
+    return pttrs( n, nrhs, D, E, B, ldb );
+}
+
 int64_t pttrs(
     int64_t n, int64_t nrhs,
     double const* D,
     double const* E,
     double* B, int64_t ldb );
+
+// alias with uplo to match complex (it is ignored)
+inline int64_t pttrs(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    double const* D,
+    double const* E,
+    double* B, int64_t ldb )
+{
+    return pttrs( n, nrhs, D, E, B, ldb );
+}
 
 int64_t pttrs(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,

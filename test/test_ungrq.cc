@@ -111,7 +111,7 @@ void test_ungrq_work( Params& params, bool run )
 
         int64_t ldq = max( lda, n );
         int64_t ldr = max( lda, n );
-        std::vector< scalar_t > Q( lda * n );
+        std::vector< scalar_t > Q( ldq * n );
         std::vector< scalar_t > R( ldr * m );
 
         // Copy the last k rows of the factorization to the array Q

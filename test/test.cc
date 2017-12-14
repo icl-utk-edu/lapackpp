@@ -105,19 +105,19 @@ std::vector< libtest::routines_t > routines = {
     // Cholesky
     { "posv",               test_posv,      Section::posv },
     { "ppsv",               test_ppsv,      Section::posv },
-  //{ "pbsv",               test_pbsv,      Section::posv },
+    { "pbsv",               test_pbsv,      Section::posv },
   //{ "ptsv",               test_ptsv,      Section::posv },
     { "",                   nullptr,        Section::newline },
 
     { "potrf",              test_potrf,     Section::posv },
     { "pptrf",              test_pptrf,     Section::posv },
-  //{ "pbtrf",              test_pbtrf,     Section::posv },
+    { "pbtrf",              test_pbtrf,     Section::posv },
   //{ "pttrf",              test_pttrf,     Section::posv },
     { "",                   nullptr,        Section::newline },
 
     { "potrs",              test_potrs,     Section::posv },
     { "pptrs",              test_pptrs,     Section::posv },
-  //{ "pbtrs",              test_pbtrs,     Section::posv },
+    { "pbtrs",              test_pbtrs,     Section::posv },
   //{ "pttrs",              test_pttrs,     Section::posv },
     { "",                   nullptr,        Section::newline },
 
@@ -127,19 +127,19 @@ std::vector< libtest::routines_t > routines = {
 
     { "pocon",              test_pocon,     Section::posv },
     { "ppcon",              test_ppcon,     Section::posv },
-  //{ "pbcon",              test_pbcon,     Section::posv },
+    { "pbcon",              test_pbcon,     Section::posv },
   //{ "ptcon",              test_ptcon,     Section::posv },
     { "",                   nullptr,        Section::newline },
 
     { "porfs",              test_porfs,     Section::posv },
     { "pprfs",              test_pprfs,     Section::posv },
-  //{ "pbrfs",              test_pbrfs,     Section::posv },
+    { "pbrfs",              test_pbrfs,     Section::posv },
   //{ "ptrfs",              test_ptrfs,     Section::posv },
     { "",                   nullptr,        Section::newline },
 
     { "poequ",              test_poequ,     Section::posv },
     { "ppequ",              test_ppequ,     Section::posv },
-  //{ "pbequ",              test_pbequ,     Section::posv },
+    { "pbequ",              test_pbequ,     Section::posv },
   //{ "ptequ",              test_ptequ,     Section::posv },
     { "",                   nullptr,        Section::newline },
 

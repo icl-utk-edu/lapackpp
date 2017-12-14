@@ -312,7 +312,7 @@ if (opts.qr):
     [ 'geqrf', check + dtype + align + n + wide + tall ],
 #    [ 'ggqrf', check + dtype + align + mn ],
     [ 'ungqr', check + dtype + align + mn ], # n<=m
-#    [ 'unmqr', check + dtype + align + mn ],
+#    [ 'unmqr', check + dtype + align + mnk + side + trans ],
     ]
 
 # LQ
@@ -344,16 +344,16 @@ if (opts.rq):
 
 # symmetric eigenvalues
 # todo: add jobs
-#if (opts.syev):
-#    cmds += [
-#    [ 'syev',  check + dtype + align + n + uplo ],
-#    [ 'syevx', check + dtype + align + n + uplo ],
-#    [ 'syevd', check + dtype + align + n + uplo ],
-#    [ 'syevr', check + dtype + align + n + uplo ],
-#    [ 'sytrd', check + dtype + align + n + uplo ],
-#    [ 'orgtr', check + dtype + align + n + uplo ],
-#    [ 'ormtr', check + dtype + align + n + uplo ],
-#    ]
+if (opts.syev):
+    cmds += [
+    [ 'heev',  check + dtype + align + n + uplo ],
+#    [ 'heevx',  check + dtype + align + n + uplo ],
+#    [ 'heevd', check + dtype + align + n + uplo ],
+#    [ 'heevr', check + dtype + align + n + uplo ],
+#    [ 'hetrd', check + dtype + align + n + uplo ],
+#    [ 'ungtr', check + dtype + align + n + uplo ],
+#    [ 'unmtr', check + dtype + align + n + uplo ],
+    ]
 
 # generalized symmetric eigenvalues
 # todo: add jobs

@@ -410,6 +410,8 @@ public:
     static double ungrq(double m, double n, double k)
         { return 1e-9 * (6*fmuls_ungrq(m, n, k) + 2*fadds_ungrq(m, n, k)); }
 
+    static double unmqr(lapack::Side side, double m, double n, double k)
+        { return 1e-9 * (6*fmuls_unmqr(side, m, n, k) + 2*fadds_unmqr(side, m, n, k)); }
 };
 
 //==============================================================================

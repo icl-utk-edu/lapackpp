@@ -44,7 +44,7 @@ public:
     libtest::ParamEnum< lapack::Norm >      norm;
     libtest::ParamEnum< lapack::Direct >    direct;
     libtest::ParamEnum< lapack::StoreV >    storev;
-    libtest::ParamEnum< lapack::Job >       jobz;   // syev
+    libtest::ParamEnum< lapack::Job >       jobz;   // heev
     libtest::ParamEnum< lapack::Job >       jobvl;  // geev
     libtest::ParamEnum< lapack::Job >       jobvr;  // geev
     libtest::ParamEnum< lapack::Job >       jobu;   // gesvd, gesdd
@@ -272,27 +272,27 @@ void test_unmql ( Params& params, bool run );
 void test_unmrq ( Params& params, bool run );
 
 // symmetric eigenvalues
-void test_syev  ( Params& params, bool run );
-void test_syevx ( Params& params, bool run );
-void test_syevd ( Params& params, bool run );
-void test_syevr ( Params& params, bool run );
-void test_sytrd ( Params& params, bool run );
-void test_orgtr ( Params& params, bool run );
-void test_ormtr ( Params& params, bool run );
+void test_heev  ( Params& params, bool run );
+void test_heevx  ( Params& params, bool run );
+void test_heevd ( Params& params, bool run );
+void test_heevr ( Params& params, bool run );
+void test_hetrd ( Params& params, bool run );
+void test_ungtr ( Params& params, bool run );
+void test_unmtr ( Params& params, bool run );
 
-void test_spev  ( Params& params, bool run );
-void test_spevx ( Params& params, bool run );
-void test_spevd ( Params& params, bool run );
-void test_spevr ( Params& params, bool run );
-void test_sptrd ( Params& params, bool run );
-void test_opgtr ( Params& params, bool run );
-void test_spmtr ( Params& params, bool run );
+void test_hpev  ( Params& params, bool run );
+void test_hpevx ( Params& params, bool run );
+void test_hpevd ( Params& params, bool run );
+void test_hpevr ( Params& params, bool run );
+void test_hptrd ( Params& params, bool run );
+void test_upgtr ( Params& params, bool run );
+void test_upmtr ( Params& params, bool run );
 
-void test_sbev  ( Params& params, bool run );
-void test_sbevx ( Params& params, bool run );
-void test_sbevd ( Params& params, bool run );
-void test_sbevr ( Params& params, bool run );
-void test_sbtrd ( Params& params, bool run );
+void test_hbev  ( Params& params, bool run );
+void test_hbevx ( Params& params, bool run );
+void test_hbevd ( Params& params, bool run );
+void test_hbevr ( Params& params, bool run );
+void test_hbtrd ( Params& params, bool run );
 void test_obgtr ( Params& params, bool run );
 void test_obmtr ( Params& params, bool run );
 

@@ -175,7 +175,6 @@ void test_pttrf ( Params& params, bool run );
 void test_pttrs ( Params& params, bool run );
 void test_ptcon ( Params& params, bool run );
 void test_ptrfs ( Params& params, bool run );
-void test_ptequ ( Params& params, bool run );
 
 // symmetric indefinite
 void test_sysv  ( Params& params, bool run );

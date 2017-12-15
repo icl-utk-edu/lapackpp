@@ -250,6 +250,12 @@ if (opts.chol):
     [ 'pbcon', check + dtype + align + n + kd + uplo ],
     [ 'pbrfs', check + dtype + align + n + kd + uplo ],
     [ 'pbequ', check + dtype + align + n + kd + uplo ],
+
+    [ 'ptsv',  check + dtype + align + n ],
+    [ 'pttrf', check + dtype + align + n ],
+    [ 'pttrs', check + dtype + align + n ],
+    [ 'ptcon', check + dtype + align + n ],
+    [ 'ptrfs', check + dtype + align + n ],
     ]
 
 # symmetric indefinite, Bunch-Kaufman

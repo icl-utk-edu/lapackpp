@@ -3571,6 +3571,65 @@ double lange(
     std::complex<double> const* A, int64_t lda );
 
 // -----------------------------------------------------------------------------
+float langb(
+    lapack::Norm norm, int64_t n, int64_t kl, int64_t ku,
+    float const* AB, int64_t ldab );
+
+double langb(
+    lapack::Norm norm, int64_t n, int64_t kl, int64_t ku,
+    double const* AB, int64_t ldab );
+
+float langb(
+    lapack::Norm norm, int64_t n, int64_t kl, int64_t ku,
+    std::complex<float> const* AB, int64_t ldab );
+
+double langb(
+    lapack::Norm norm, int64_t n, int64_t kl, int64_t ku,
+    std::complex<double> const* AB, int64_t ldab );
+
+// -----------------------------------------------------------------------------
+float langt(
+    lapack::Norm norm, int64_t n,
+    float const* DL,
+    float const* D,
+    float const* DU );
+
+double langt(
+    lapack::Norm norm, int64_t n,
+    double const* DL,
+    double const* D,
+    double const* DU );
+
+float langt(
+    lapack::Norm norm, int64_t n,
+    std::complex<float> const* DL,
+    std::complex<float> const* D,
+    std::complex<float> const* DU );
+
+double langt(
+    lapack::Norm norm, int64_t n,
+    std::complex<double> const* DL,
+    std::complex<double> const* D,
+    std::complex<double> const* DU );
+
+// -----------------------------------------------------------------------------
+float lanhs(
+    lapack::Norm norm, int64_t n,
+    float const* A, int64_t lda );
+
+double lanhs(
+    lapack::Norm norm, int64_t n,
+    double const* A, int64_t lda );
+
+float lanhs(
+    lapack::Norm norm, int64_t n,
+    std::complex<float> const* A, int64_t lda );
+
+double lanhs(
+    lapack::Norm norm, int64_t n,
+    std::complex<double> const* A, int64_t lda );
+
+// -----------------------------------------------------------------------------
 float lanhe(
     lapack::Norm norm, lapack::Uplo uplo, int64_t n,
     std::complex<float> const* A, int64_t lda );
@@ -3580,11 +3639,41 @@ double lanhe(
     std::complex<double> const* A, int64_t lda );
 
 // -----------------------------------------------------------------------------
+float lanhp(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    std::complex<float> const* AP );
+
+double lanhp(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    std::complex<double> const* AP );
+
+// -----------------------------------------------------------------------------
+float lanhb(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n, int64_t kd,
+    std::complex<float> const* AB, int64_t ldab );
+
+double lanhb(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n, int64_t kd,
+    std::complex<double> const* AB, int64_t ldab );
+
+// -----------------------------------------------------------------------------
+float lanht(
+    lapack::Norm norm, int64_t n,
+    float const* D,
+    std::complex<float> const* E );
+
+double lanht(
+    lapack::Norm norm, int64_t n,
+    double const* D,
+    std::complex<double> const* E );
+
+// -----------------------------------------------------------------------------
 float lansy(
     lapack::Norm norm, lapack::Uplo uplo, int64_t n,
     float const* A, int64_t lda );
 
 // lanhe alias to lansy
+/// @ingroup norm
 inline float lanhe(
     lapack::Norm norm, lapack::Uplo uplo, int64_t n,
     float const* A, int64_t lda )
@@ -3597,6 +3686,7 @@ double lansy(
     double const* A, int64_t lda );
 
 // lanhe alias to lansy
+/// @ingroup norm
 inline double lanhe(
     lapack::Norm norm, lapack::Uplo uplo, int64_t n,
     double const* A, int64_t lda )
@@ -3613,20 +3703,12 @@ double lansy(
     std::complex<double> const* A, int64_t lda );
 
 // -----------------------------------------------------------------------------
-float lanhp(
-    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
-    std::complex<float> const* AP );
-
-double lanhp(
-    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
-    std::complex<double> const* AP );
-
-// -----------------------------------------------------------------------------
 float lansp(
     lapack::Norm norm, lapack::Uplo uplo, int64_t n,
     float const* AP );
 
 // lanhp alias to lansp
+/// @ingroup norm
 inline float lanhp(
     lapack::Norm norm, lapack::Uplo uplo, int64_t n,
     float const* AP )
@@ -3639,6 +3721,7 @@ double lansp(
     double const* AP );
 
 // lanhp alias to lansp
+/// @ingroup norm
 inline double lanhp(
     lapack::Norm norm, lapack::Uplo uplo, int64_t n,
     double const* AP )
@@ -3655,20 +3738,12 @@ double lansp(
     std::complex<double> const* AP );
 
 // -----------------------------------------------------------------------------
-float lanhb(
-    lapack::Norm norm, lapack::Uplo uplo, int64_t n, int64_t kd,
-    std::complex<float> const* AB, int64_t ldab );
-
-double lanhb(
-    lapack::Norm norm, lapack::Uplo uplo, int64_t n, int64_t kd,
-    std::complex<double> const* AB, int64_t ldab );
-
-// -----------------------------------------------------------------------------
 float lansb(
     lapack::Norm norm, lapack::Uplo uplo, int64_t n, int64_t kd,
     float const* AB, int64_t ldab );
 
 // lanhb alias to lansb
+/// @ingroup norm
 inline float lanhb(
     lapack::Norm norm, lapack::Uplo uplo, int64_t n, int64_t kd,
     float const* AB, int64_t ldab )
@@ -3681,6 +3756,7 @@ double lansb(
     double const* AB, int64_t ldab );
 
 // lanhb alias to lansb
+/// @ingroup norm
 inline double lanhb(
     lapack::Norm norm, lapack::Uplo uplo, int64_t n, int64_t kd,
     double const* AB, int64_t ldab )
@@ -3695,6 +3771,37 @@ float lansb(
 double lansb(
     lapack::Norm norm, lapack::Uplo uplo, int64_t n, int64_t kd,
     std::complex<double> const* AB, int64_t ldab );
+
+// -----------------------------------------------------------------------------
+float lanst(
+    lapack::Norm norm, int64_t n,
+    float const* D,
+    float const* E );
+
+// lanht alias to lanst
+/// @ingroup norm
+inline float lanht(
+    lapack::Norm norm, int64_t n,
+    float const* D,
+    float const* E )
+{
+    return lanst( norm, n, D, E );
+}
+
+double lanst(
+    lapack::Norm norm, int64_t n,
+    double const* D,
+    double const* E );
+
+// lanht alias to lanst
+/// @ingroup norm
+inline double lanht(
+    lapack::Norm norm, int64_t n,
+    double const* D,
+    double const* E )
+{
+    return lanst( norm, n, D, E );
+}
 
 // -----------------------------------------------------------------------------
 float lantr(
@@ -3712,6 +3819,40 @@ float lantr(
 double lantr(
     lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t m, int64_t n,
     std::complex<double> const* A, int64_t lda );
+
+// -----------------------------------------------------------------------------
+float lantp(
+    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t n,
+    float const* AP );
+
+double lantp(
+    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t n,
+    double const* AP );
+
+float lantp(
+    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t n,
+    std::complex<float> const* AP );
+
+double lantp(
+    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t n,
+    std::complex<double> const* AP );
+
+// -----------------------------------------------------------------------------
+float lantb(
+    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t n, int64_t k,
+    float const* AB, int64_t ldab );
+
+double lantb(
+    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t n, int64_t k,
+    double const* AB, int64_t ldab );
+
+float lantb(
+    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t n, int64_t k,
+    std::complex<float> const* AB, int64_t ldab );
+
+double lantb(
+    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t n, int64_t k,
+    std::complex<double> const* AB, int64_t ldab );
 
 // -----------------------------------------------------------------------------
 void lapmr(

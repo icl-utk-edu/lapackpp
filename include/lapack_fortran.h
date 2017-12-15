@@ -9535,7 +9535,7 @@ void LAPACK_zlaswp(
 
 /* -------------------------------------------------------------------------- */
 
-/* ----- matrix norm */
+/* ----- general matrix norm */
 #define LAPACK_slange LAPACK_GLOBAL(slange,SLANGE)
 lapack_float_return LAPACK_slange(
     char const* norm,
@@ -9561,6 +9561,134 @@ double LAPACK_zlange(
     lapack_complex_double const* a, lapack_int const* lda,
     double* work );
 
+#define LAPACK_slangb LAPACK_GLOBAL(slangb,SLANGB)
+float LAPACK_slangb(
+    char const* norm, lapack_int const* n,
+    lapack_int const* kl, lapack_int const* ku,
+    float const* AB, lapack_int const* ldab,
+    float* work );
+#define LAPACK_dlangb LAPACK_GLOBAL(dlangb,DLANGB)
+double LAPACK_dlangb(
+    char const* norm, lapack_int const* n,
+    lapack_int const* kl, lapack_int const* ku,
+    double const* AB, lapack_int const* ldab,
+    double* work );
+#define LAPACK_clangb LAPACK_GLOBAL(clangb,CLANGB)
+float LAPACK_clangb(
+    char const* norm, lapack_int const* n,
+    lapack_int const* kl, lapack_int const* ku,
+    lapack_complex_float const* AB, lapack_int const* ldab,
+    float* work );
+#define LAPACK_zlangb LAPACK_GLOBAL(zlangb,ZLANGB)
+double LAPACK_zlangb(
+    char const* norm, lapack_int const* n,
+    lapack_int const* kl, lapack_int const* ku,
+    lapack_complex_double const* AB, lapack_int const* ldab,
+    double* work );
+
+#define LAPACK_slangt LAPACK_GLOBAL(slangt,SLANGT)
+float LAPACK_slangt(
+    char const* norm, lapack_int const* n,
+    float const* DL,
+    float const* D,
+    float const* DU );
+#define LAPACK_dlangt LAPACK_GLOBAL(dlangt,DLANGT)
+double LAPACK_dlangt(
+    char const* norm, lapack_int const* n,
+    double const* DL,
+    double const* D,
+    double const* DU );
+#define LAPACK_clangt LAPACK_GLOBAL(clangt,CLANGT)
+float LAPACK_clangt(
+    char const* norm, lapack_int const* n,
+    lapack_complex_float const* DL,
+    lapack_complex_float const* D,
+    lapack_complex_float const* DU );
+#define LAPACK_zlangt LAPACK_GLOBAL(zlangt,ZLANGT)
+double LAPACK_zlangt(
+    char const* norm, lapack_int const* n,
+    lapack_complex_double const* DL,
+    lapack_complex_double const* D,
+    lapack_complex_double const* DU );
+
+/* ----- Hessenberg matrix norm */
+#define LAPACK_slanhs LAPACK_GLOBAL(slanhs,SLANHS)
+float LAPACK_slanhs(
+    char const* norm,
+    lapack_int const* n,
+    float const* A, lapack_int const* lda,
+    float* work );
+#define LAPACK_dlanhs LAPACK_GLOBAL(dlanhs,DLANHS)
+double LAPACK_dlanhs(
+    char const* norm,
+    lapack_int const* n,
+    double const* A, lapack_int const* lda,
+    double* work );
+#define LAPACK_clanhs LAPACK_GLOBAL(clanhs,CLANHS)
+float LAPACK_clanhs(
+    char const* norm,
+    lapack_int const* n,
+    lapack_complex_float const* A, lapack_int const* lda,
+    float* work );
+#define LAPACK_zlanhs LAPACK_GLOBAL(zlanhs,ZLANHS)
+double LAPACK_zlanhs(
+    char const* norm,
+    lapack_int const* n,
+    lapack_complex_double const* A, lapack_int const* lda,
+    double* work );
+
+/* ----- Hermitian matrix norm */
+#define LAPACK_clanhe LAPACK_GLOBAL(clanhe,CLANHE)
+lapack_float_return LAPACK_clanhe(
+    char const* norm, char const* uplo,
+    lapack_int const* n,
+    lapack_complex_float const* a, lapack_int const* lda,
+    float* work );
+#define LAPACK_zlanhe LAPACK_GLOBAL(zlanhe,ZLANHE)
+double LAPACK_zlanhe(
+    char const* norm, char const* uplo,
+    lapack_int const* n,
+    lapack_complex_double const* a, lapack_int const* lda,
+    double* work );
+
+#define LAPACK_clanhp LAPACK_GLOBAL(clanhp,CLANHP)
+lapack_float_return LAPACK_clanhp(
+    char const* norm, char const* uplo,
+    lapack_int const* n,
+    lapack_complex_float const* AP,
+    float* work );
+#define LAPACK_zlanhp LAPACK_GLOBAL(zlanhp,ZLANHP)
+double LAPACK_zlanhp(
+    char const* norm, char const* uplo,
+    lapack_int const* n,
+    lapack_complex_double const* AP,
+    double* work );
+
+#define LAPACK_clanhb LAPACK_GLOBAL(clanhb,CLANHB)
+lapack_float_return LAPACK_clanhb(
+    char const* norm, char const* uplo,
+    lapack_int const* n, lapack_int const* kd,
+    lapack_complex_float const* AB, lapack_int const* ldab,
+    float* work );
+#define LAPACK_zlanhb LAPACK_GLOBAL(zlanhb,ZLANHB)
+double LAPACK_zlanhb(
+    char const* norm, char const* uplo,
+    lapack_int const* n, lapack_int const* kd,
+    lapack_complex_double const* AB, lapack_int const* ldab,
+    double* work );
+
+#define LAPACK_clanht LAPACK_GLOBAL(clanht,CLANHT)
+float LAPACK_clanht(
+    char const* norm, lapack_int const* n,
+    float const* D,
+    lapack_complex_float const* E );
+#define LAPACK_zlanht LAPACK_GLOBAL(zlanht,ZLANHT)
+double LAPACK_zlanht(
+    char const* norm, lapack_int const* n,
+    double const* D,
+    lapack_complex_double const* E );
+
+/* ----- symmetric matrix norm */
 #define LAPACK_slansy LAPACK_GLOBAL(slansy,SLANSY)
 lapack_float_return LAPACK_slansy(
     char const* norm, char const* uplo,
@@ -9585,49 +9713,31 @@ double LAPACK_zlansy(
     lapack_int const* n,
     lapack_complex_double const* a, lapack_int const* lda,
     double* work );
-#define LAPACK_clanhe LAPACK_GLOBAL(clanhe,CLANHE)
-lapack_float_return LAPACK_clanhe(
-    char const* norm, char const* uplo,
-    lapack_int const* n,
-    lapack_complex_float const* a, lapack_int const* lda,
-    float* work );
-#define LAPACK_zlanhe LAPACK_GLOBAL(zlanhe,ZLANHE)
-double LAPACK_zlanhe(
-    char const* norm, char const* uplo,
-    lapack_int const* n,
-    lapack_complex_double const* a, lapack_int const* lda,
-    double* work );
 
 #define LAPACK_slansp LAPACK_GLOBAL(slansp,SLANSP)
 lapack_float_return LAPACK_slansp(
     char const* norm, char const* uplo,
     lapack_int const* n,
-    float const* AP, float* work );
+    float const* AP,
+    float* work );
 #define LAPACK_dlansp LAPACK_GLOBAL(dlansp,DLANSP)
 double LAPACK_dlansp(
     char const* norm, char const* uplo,
     lapack_int const* n,
-    double const* AP, double* work );
+    double const* AP,
+    double* work );
 #define LAPACK_clansp LAPACK_GLOBAL(clansp,CLANSP)
 lapack_float_return LAPACK_clansp(
     char const* norm, char const* uplo,
     lapack_int const* n,
-    lapack_complex_float const* AP, float* work );
+    lapack_complex_float const* AP,
+    float* work );
 #define LAPACK_zlansp LAPACK_GLOBAL(zlansp,ZLANSP)
 double LAPACK_zlansp(
     char const* norm, char const* uplo,
     lapack_int const* n,
-    lapack_complex_double const* AP, double* work );
-#define LAPACK_clanhp LAPACK_GLOBAL(clanhp,CLANHP)
-lapack_float_return LAPACK_clanhp(
-    char const* norm, char const* uplo,
-    lapack_int const* n,
-    lapack_complex_float const* AP, float* work );
-#define LAPACK_zlanhp LAPACK_GLOBAL(zlanhp,ZLANHP)
-double LAPACK_zlanhp(
-    char const* norm, char const* uplo,
-    lapack_int const* n,
-    lapack_complex_double const* AP, double* work );
+    lapack_complex_double const* AP,
+    double* work );
 
 #define LAPACK_slansb LAPACK_GLOBAL(slansb,SLANSB)
 lapack_float_return LAPACK_slansb(
@@ -9653,19 +9763,19 @@ double LAPACK_zlansb(
     lapack_int const* n, lapack_int const* kd,
     lapack_complex_double const* AB, lapack_int const* ldab,
     double* work );
-#define LAPACK_clanhb LAPACK_GLOBAL(clanhb,CLANHB)
-lapack_float_return LAPACK_clanhb(
-    char const* norm, char const* uplo,
-    lapack_int const* n, lapack_int const* kd,
-    lapack_complex_float const* AB, lapack_int const* ldab,
-    float* work );
-#define LAPACK_zlanhb LAPACK_GLOBAL(zlanhb,ZLANHB)
-double LAPACK_zlanhb(
-    char const* norm, char const* uplo,
-    lapack_int const* n, lapack_int const* kd,
-    lapack_complex_double const* AB, lapack_int const* ldab,
-    double* work );
 
+#define LAPACK_slanst LAPACK_GLOBAL(slanst,SLANST)
+float LAPACK_slanst(
+    char const* norm, lapack_int const* n,
+    float const* D,
+    float const* E );
+#define LAPACK_dlanst LAPACK_GLOBAL(dlanst,DLANST)
+double LAPACK_dlanst(
+    char const* norm, lapack_int const* n,
+    double const* D,
+    double const* E );
+
+/* ----- triangular matrix norm */
 #define LAPACK_slantr LAPACK_GLOBAL(slantr,SLANTR)
 lapack_float_return LAPACK_slantr(
     char const* norm, char const* uplo, char const* diag,
@@ -9693,6 +9803,56 @@ double LAPACK_zlantr(
     lapack_int const* m,
     lapack_int const* n,
     lapack_complex_double const* a, lapack_int const* lda,
+    double* work );
+
+#define LAPACK_slantp LAPACK_GLOBAL(slantp,SLANTP)
+float LAPACK_slantp(
+    char const* norm, char const* uplo, char const* diag,
+    lapack_int const* n,
+    float const* AP,
+    float* work );
+#define LAPACK_dlantp LAPACK_GLOBAL(dlantp,DLANTP)
+double LAPACK_dlantp(
+    char const* norm, char const* uplo, char const* diag,
+    lapack_int const* n,
+    double const* AP,
+    double* work );
+#define LAPACK_clantp LAPACK_GLOBAL(clantp,CLANTP)
+float LAPACK_clantp(
+    char const* norm, char const* uplo, char const* diag,
+    lapack_int const* n,
+    lapack_complex_float const* AP,
+    float* work );
+#define LAPACK_zlantp LAPACK_GLOBAL(zlantp,ZLANTP)
+double LAPACK_zlantp(
+    char const* norm, char const* uplo, char const* diag,
+    lapack_int const* n,
+    lapack_complex_double const* AP,
+    double* work );
+
+#define LAPACK_slantb LAPACK_GLOBAL(slantb,SLANTB)
+float LAPACK_slantb(
+    char const* norm, char const* uplo, char const* diag,
+    lapack_int const* n, lapack_int const* k,
+    float const* AB, lapack_int const* ldab,
+    float* work );
+#define LAPACK_dlantb LAPACK_GLOBAL(dlantb,DLANTB)
+double LAPACK_dlantb(
+    char const* norm, char const* uplo, char const* diag,
+    lapack_int const* n, lapack_int const* k,
+    double const* AB, lapack_int const* ldab,
+    double* work );
+#define LAPACK_clantb LAPACK_GLOBAL(clantb,CLANTB)
+float LAPACK_clantb(
+    char const* norm, char const* uplo, char const* diag,
+    lapack_int const* n, lapack_int const* k,
+    lapack_complex_float const* AB, lapack_int const* ldab,
+    float* work );
+#define LAPACK_zlantb LAPACK_GLOBAL(zlantb,ZLANTB)
+double LAPACK_zlantb(
+    char const* norm, char const* uplo, char const* diag,
+    lapack_int const* n, lapack_int const* k,
+    lapack_complex_double const* AB, lapack_int const* ldab,
     double* work );
 
 /* ----- machine properties */

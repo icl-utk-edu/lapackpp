@@ -49,6 +49,7 @@ public:
     libtest::ParamEnum< lapack::Job >       jobvr;  // geev
     libtest::ParamEnum< lapack::Job >       jobu;   // gesvd, gesdd
     libtest::ParamEnum< lapack::Job >       jobvt;  // gesvd
+    libtest::ParamEnum< lapack::Range >     range;
     libtest::ParamEnum< lapack::MatrixType > matrixtype;
 
     libtest::ParamInt3   dim;
@@ -56,6 +57,10 @@ public:
     libtest::ParamInt    kl;
     libtest::ParamInt    ku;
     libtest::ParamInt    nrhs;
+    libtest::ParamDouble vl;
+    libtest::ParamDouble vu;
+    libtest::ParamInt    il;
+    libtest::ParamInt    iu;
     libtest::ParamDouble alpha;
     libtest::ParamDouble beta;
     libtest::ParamInt    incx;

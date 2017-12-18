@@ -352,10 +352,11 @@ inline const char* range2str( lapack::Range range )
 }
 
 // -----------------------------------------------------------------------------
-// orgbr, ormbr
 enum class Vect {
-    Q           = 'Q',
-    P           = 'P',
+    Q           = 'Q',  // orgbr, ormbr
+    P           = 'P',  // orgbr, ormbr
+    None        = 'N',  // orgbr, ormbr, gbbrd
+    Both        = 'B',  // orgbr, ormbr, gbbrd
 };
 
 inline char vect2char( lapack::Vect vect )
@@ -366,15 +367,17 @@ inline char vect2char( lapack::Vect vect )
 inline lapack::Vect char2vect( char vect )
 {
     vect = char( toupper( vect ));
-    lapack_throw_if_( vect != 'Q' && vect != 'P' );
+    lapack_throw_if_( vect != 'Q' && vect != 'P' && vect != 'N' && vect != 'B' );
     return lapack::Vect( vect );
 }
 
 inline const char* vect2str( lapack::Vect vect )
 {
     switch (vect) {
-        case lapack::Vect::P: return "p";
-        case lapack::Vect::Q: return "q";
+        case lapack::Vect::P:    return "p";
+        case lapack::Vect::Q:    return "q";
+        case lapack::Vect::None: return "n";
+        case lapack::Vect::Both: return "b";
     }
     return "?";
 }

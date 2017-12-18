@@ -465,22 +465,22 @@ int64_t gbtrs(
 
 // -----------------------------------------------------------------------------
 int64_t gebak(
-    lapack::Job job, lapack::Side side, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::Balance balance, lapack::Side side, int64_t n, int64_t ilo, int64_t ihi,
     float const* scale, int64_t m,
     float* V, int64_t ldv );
 
 int64_t gebak(
-    lapack::Job job, lapack::Side side, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::Balance balance, lapack::Side side, int64_t n, int64_t ilo, int64_t ihi,
     double const* scale, int64_t m,
     double* V, int64_t ldv );
 
 int64_t gebak(
-    lapack::Job job, lapack::Side side, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::Balance balance, lapack::Side side, int64_t n, int64_t ilo, int64_t ihi,
     float const* scale, int64_t m,
     std::complex<float>* V, int64_t ldv );
 
 int64_t gebak(
-    lapack::Job job, lapack::Side side, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::Balance balance, lapack::Side side, int64_t n, int64_t ilo, int64_t ihi,
     double const* scale, int64_t m,
     std::complex<double>* V, int64_t ldv );
 

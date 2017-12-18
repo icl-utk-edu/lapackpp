@@ -2898,6 +2898,29 @@ int64_t hesv(
     std::complex<double>* B, int64_t ldb );
 
 // -----------------------------------------------------------------------------
+int64_t hesvx(
+    lapack::Factored fact, lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    std::complex<float> const* A, int64_t lda,
+    std::complex<float>* AF, int64_t ldaf,
+    int64_t* ipiv,
+    std::complex<float> const* B, int64_t ldb,
+    std::complex<float>* X, int64_t ldx,
+    float* rcond,
+    float* ferr,
+    float* berr );
+
+int64_t hesvx(
+    lapack::Factored fact, lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    std::complex<double> const* A, int64_t lda,
+    std::complex<double>* AF, int64_t ldaf,
+    int64_t* ipiv,
+    std::complex<double> const* B, int64_t ldb,
+    std::complex<double>* X, int64_t ldx,
+    double* rcond,
+    double* ferr,
+    double* berr );
+
+// -----------------------------------------------------------------------------
 int64_t hesv_aa(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<float>* A, int64_t lda,

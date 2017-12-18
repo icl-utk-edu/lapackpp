@@ -63,6 +63,14 @@ def equation( line, subexpr=False ):
             space = False
             continue
 
+        # Greek
+        s = re.search( r'^(alpha|beta|lambda|sigma)\b(.*)', line )
+        if (s):
+            eqn += '\\' + s.group(1)
+            line = s.group(2)
+            space = False
+            continue
+
         # open parens
         s = re.search( r'^\((.*)', line )
         if (s):
@@ -91,9 +99,10 @@ def equation( line, subexpr=False ):
     return (eqn, line)
 # end
 
-def process( filename ):
-    f_out = open( 'eqn/' + filename, 'w' )
-    f_in  = open( filename )
+def process( arg ):
+    filename = arg + '.cc'
+    f_out = open( '../eqn/' + filename, 'w' )
+    f_in  = open( '../gen/' + filename )
     for line in f_in:
         s = re.search( r'^///', line )
         if (s):

@@ -247,6 +247,16 @@ alias_map = {
 # 4 space indent
 tab = '    '
 
+# ------------------------------------------------------------------------------
+# list of LAPACK functions that begin with precision [sdcz].
+# excludes i and mixed precision prefixes (dsposv, scsum1, etc.)
+
+(top, script) = os.path.split( sys.argv[0] )
+f = open( os.path.join( top, 'functions.txt' ))
+lapack_functions = []
+for line in f:
+    lapack_functions.append( line.rstrip() )
+lapack_functions_re = re.compile( r'\b[SDCZ](' + '|'.join( lapack_functions ).upper() + r')\b' )
 
 # ------------------------------------------------------------------------------
 # captures information about each function argument
@@ -583,15 +593,22 @@ def parse_lapack( path ):
         # todo: in all desc?
         if (arg.name == 'CWORK'):
             arg.name = 'WORK'
-            arg.desc = re.sub( '\bCWORK\b', 'WORK', arg.desc )
+            arg.desc = re.sub( r'\bCWORK\b', r'WORK', arg.desc )
 
         if (arg.name == 'SELCTG'):
             arg.name = 'SELECT'
-            arg.desc = re.sub( '\bSELCTG\b', 'SELECT', arg.desc )
+            arg.desc = re.sub( r'\bSELCTG\b', r'SELECT', arg.desc )
 
         if (arg.name == 'BALANC'):
             arg.name = 'BALANCE'
-            arg.desc = re.sub( '\bBALANC\b', 'BALANCE', arg.desc )
+            arg.desc = re.sub( r'\bBALANC\b', r'BALANCE', arg.desc )
+
+        if (func.name in enum_override):
+            for (search, replace) in enum_override[ func.name ]:
+                #print( 'search', r'\b' + search + r'\b', 'replace', replace )
+                arg.desc = re.sub( r'\b' + search + r'\b', replace, arg.desc )
+                if (arg.name == search):
+                    arg.name = replace
 
         # lowercase scalars, work and pivot arrays
         if (not arg.is_array or arg.name in
@@ -780,6 +797,26 @@ enums = {
         's': ('SomeVec',      'lapack::Job::SomeVec'     ),
         'o': ('OverwriteVec', 'lapack::Job::OverwriteVec'),
     },
+
+    # syevx, geevx, gesvdx
+    'range': {
+        'a': ('All',   'lapack::Range::All'  ),
+        'v': ('Value', 'lapack::Range::Value'),
+        'i': ('Index', 'lapack::Range::Index'),
+    },
+
+    # gebak, gebal
+    'balance': {
+        'n': ('None',    'lapack::Balance::None'   ),
+        'p': ('Permute', 'lapack::Balance::Permute'),
+        's': ('Scale',   'lapack::Balance::Scale'  ),
+        'b': ('Both',    'lapack::Balance::Both'   ),
+    },
+}
+
+enum_override = {
+    'gebak': (( 'JOB', 'BALANCE' ), ),
+    'gebal': (( 'JOB', 'BALANCE' ), ),
 }
 
 # ------------------------------------------------------------------------------
@@ -833,17 +870,13 @@ def parse_docs( txt, variables, indent=0 ):
     txt = re.sub( r"\b([A-Z]{2,})( *= *)'(\w)'(?:( or )'(\w)')?", sub_enum_short, txt )
 
     # convert function names
-    txt = re.sub( r'((?:computed\s+by|determined\s+by|from)\s+)[SDCZ]([A-Z_]{4,})\b',
-                  lambda match: match.group(1) + '`lapack::' + match.group(2).lower() + '`',
-                  txt )
-    #txt = re.sub( r'(from\s+)[SDCZ]([A-Z]{4,})\b',
-    #              lambda match: match.group(1) + '`lapack::' + match.group(2).lower() + '`',
-    #              txt )
     txt = re.sub( func.xname.upper(), '`'+ func.name + '`', txt )
+    txt = re.sub( lapack_functions_re,
+                  lambda match: '`lapack::' + match.group(1).lower() + '`', txt )
 
     # INFO references
     txt = re.sub( r'On exit, if INFO *= *0,', r'On successful exit,', txt, 0, re.I )
-    txt = re.sub( r'If INFO *= *0', r'If successful', txt, 0, re.I )
+    txt = re.sub( r'(if) INFO *= *0', r'\1 successful', txt, 0, re.I )
     txt = re.sub( r'\bINFO *(=|>|>=) *', r'return value \1 ', txt )
 
     # rename arguments (lowercase, spelling)
@@ -873,7 +906,7 @@ def generate_docs( func, header=False ):
 
     # strip function name and capitalize first word, e.g.,
     # "ZPOTRF computes ..." => "Computes ..."
-    d = re.sub( r'^\s*[A-Z_]+ (\w)', lambda s: s.group(1).upper(), d )
+    d = re.sub( r'^\s*[A-Z0-9_]+ (\w)', lambda s: s.group(1).upper(), d )
     txt += parse_docs( d, variables, indent=0 )
     txt += '''\
 /// Overloaded versions are available for
@@ -900,7 +933,7 @@ def generate_docs( func, header=False ):
             # increase indented lines
             d = re.sub( r'^      ', r'             ', d, 0, re.M )
 
-            txt += parse_docs( d, variables, indent=4 )
+            txt += parse_docs( d, variables, indent=0 )
         else:
             txt += '/// @param[' + arg.intent + '] ' + arg.name + '\n'
 
@@ -937,7 +970,7 @@ def generate_docs( func, header=False ):
             # = 'U': ...    =>    - Upper: ...
             # = 'L': ...    =>    - Lower: ...
             if (arg.is_enum):
-                d = re.sub( r"^ *= *'(\w)'( or '\w')?:",
+                d = re.sub( r"^ *= *'(\w)'( or '\w')?[:,]",
                             lambda match: '- ' + enums[arg.name][match.group(1).lower()][1] + ':',
                             d, 0, re.M )
             # end

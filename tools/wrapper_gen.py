@@ -252,9 +252,10 @@ tab = '    '
 # captures information about each function argument
 class Arg:
     def __init__( self, name, intent ):
-        self.name   = name
-        self.intent = intent
-        self.desc   = ''
+        self.name      = name
+        self.name_orig = name
+        self.intent    = intent
+        self.desc      = ''
 
         self.use_query = False
         self.is_enum   = False
@@ -275,10 +276,13 @@ class Func:
         self.is_func = False  # Fortran function or subroutine (default)
         self.args    = []
         self.retval  = 'void'
+        self.purpose = ''
+        self.details = ''
+        self.group   = 'unknown'
 
         # get base name of function (without precision)
-        s = (re.search( '^(?:ds|zc)(gesv|posv)', xname ) or
-             re.search( '^[sdcz](\w+)', xname ))
+        s = (re.search( r'^(?:ds|zc)(gesv|posv)', xname ) or
+             re.search( r'^[sdcz](\w+)', xname ))
         if (s):
             self.name = s.group(1)
         else:
@@ -299,7 +303,7 @@ def join( a, b ):
 # ------------------------------------------------------------------------------
 # Parses an arg's description for a dimension statement.
 # Tries to find all dimensions that exist.
-# Returns string of all dimensions, seperated by ";".
+# Sets arg.dim to string of all dimensions, seperated by ";".
 def parse_dim( arg ):
     if (debug): print( 'parse_dim' )
     txt = arg.desc
@@ -405,11 +409,26 @@ def parse_lbound( arg ):
 
 # ------------------------------------------------------------------------------
 # state tracks what is looked for next:
-# function, argument, argument's description, beginning with verbatim
-state_func  = 0
-state_arg   = 1
-state_verb  = 2
-state_desc  = 3
+#   function,
+#   purpose,
+#   param, "verbatim", param's description [repeated],
+#   ingroup
+i = 0
+state_func          = i; i += 1
+
+state_purpose       = i; i += 1
+state_purpose_verb  = i; i += 1
+state_purpose_desc  = i; i += 1
+
+state_param         = i; i += 1
+state_param_verb    = i; i += 1
+state_param_desc    = i; i += 1
+
+state_details       = i; i += 1
+state_details_verb  = i; i += 1
+state_details_desc  = i; i += 1
+
+state_done          = i; i += 1
 
 # ------------------------------------------------------------------------------
 # Parses a single LAPACK src file, reading its function arguments.
@@ -422,7 +441,7 @@ def parse_lapack( path ):
     arg    = None
 
     # --------------------
-    # parse Fortran doxygen for arguments
+    # parse Fortran doxygen for purpose and params
     f = open( path )
     for line in f:
         if (state == state_func):
@@ -433,7 +452,8 @@ def parse_lapack( path ):
                 f2 = s.group(2).lower()
                 if (func.xname != f2):
                     print( 'Warning: filename', filename, "doesn't match function", f2 )
-                state = state_arg
+                state = state_purpose
+                continue
             # end
 
             s = re.search( r'^\* +(?:recursive +)?subroutine +(\w+)', line, re.IGNORECASE )  #\( *(.*) *\)', line )
@@ -441,28 +461,102 @@ def parse_lapack( path ):
                 f2 = s.group(1).lower()
                 if (func.xname != f2):
                     print( 'Warning: filename', filename, "doesn't match function", f2 )
-                state = state_arg
+                state = state_purpose
             # end
-        elif (state == state_arg):
+
+        # ----------
+        elif (state == state_purpose):
+            if (re.search( r'^\*> *\\par +Purpose:', line )):
+                state = state_purpose_verb
+
+        elif (state == state_purpose_verb):
+            if (re.search( r'^\*> *\\verbatim', line )):
+                state = state_purpose_desc
+
+        elif (state == state_purpose_desc):
+            if (re.search( r'^\*> *\\endverbatim', line )):
+                state = state_param
+            else:
+                func.purpose += line
+
+        # ----------
+        elif (state == state_param):
             s = re.search( r'^\*> *\\param\[(in|out|in,out|inout)\] +(\w+)', line )
             if (s):
                 intent = s.group(1).lower()
                 var    = s.group(2)
                 arg = Arg( var, intent )
                 func.args.append( arg )
-                state = state_verb
+                state = state_param_verb
+                continue
             # end
-        elif (state == state_verb):
+
+            # get group minus precision (sdcz prefix)
+            s = re.search( r'^\*> *\\ingroup +(?:[sdcz](\w+)|(\w+))', line )
+            if (s):
+                func.group = s.group(1) or s.group(2)
+                state = state_details
+                #print( 'details head (1)' )
+                continue
+
+            # shouldn't happen, but if \\ingroup isn't before Further Details
+            if (re.search( r'^\*> *\\par Further Details', line )):
+                state = state_further_verb
+                #print( 'details head (1)' )
+                continue
+
+            if (re.search( r'^      SUBROUTINE', line )):
+                # finished!
+                #print( 'finished (1)' )
+                break
+
+        elif (state == state_param_verb):
             if (re.search( r'^\*> *\\verbatim', line )):
-                state = state_desc
-        elif (state == state_desc):
+                state = state_param_desc
+
+        elif (state == state_param_desc):
             if (re.search( r'^\*> *\\endverbatim', line )):
-                state = state_arg
+                state = state_param
                 arg = None
             else:
                 arg.desc += line
+
+        # ----------
+        elif (state == state_details):
+            #print( line )
+            if (re.search( r'^\*> *\\par Further Details', line )):
+                state = state_details_verb
+                #print( 'details head (2)' )
+            elif (re.search( r'^      SUBROUTINE', line )):
+                # finished!
+                #print( 'finished (2)' )
+                break
+
+        elif (state == state_details_verb):
+            if (re.search( r'^\*> *\\verbatim', line )):
+                state = state_details_desc
+                #func.details += '### Further Details\n'
+                #print( 'details verb' )
+
+        elif (state == state_details_desc):
+            if (re.search( r'^\*> *\\endverbatim', line )):
+                # finished!
+                #print( 'finished (3)' )
+                break
+            else:
+                func.details += line
         # end
     # end
+
+    # strip comment chars; squeeze space
+    func.purpose = re.sub( r'\*> ?',   r'',    func.purpose )
+    func.purpose = re.sub( r'(\S)  +', r'\1 ', func.purpose )
+
+    # strip comment chars
+    # LAPACK details tend to be indented 2 spaces instead of 1 space
+    func.details = re.sub( r'\*> {0,2}', r'', func.details )
+    # for now, don't squeeze space (destroys examples like in gebrd)
+    #func.details = re.sub( r'(\S)  +', r'\1 ', func.details )
 
     # --------------------
     # parse arguments for properties
@@ -470,13 +564,15 @@ def parse_lapack( path ):
     for arg in func.args:
         if (debug): print( '-'*40 )
 
-        arg.desc = re.sub( r'\*> *', r'', arg.desc )
-        arg.desc = re.sub( r'  +', r' ', arg.desc )
+        # strip comment chars; squeeze space
+        # normally, lapack indents 10 spaces; if more, leave excess
+        arg.desc = re.sub( r'\*> {0,10}', r'',    arg.desc )
+        arg.desc = re.sub( r'(\S)  +',    r'\1 ', arg.desc )
 
         # extract data type and if array
-        s = (re.search( r'^' + arg.name + ' +is +(CHARACTER|INTEGER|REAL|DOUBLE PRECISION|COMPLEX\*16|COMPLEX|LOGICAL)( array)?', arg.desc ) or
-             re.search( r'^\(workspace\) +(CHARACTER|INTEGER|REAL|DOUBLE PRECISION|COMPLEX\*16|COMPLEX|LOGICAL)( array)?', arg.desc ) or
-             re.search( r'^' + arg.name + ' +is a (LOGICAL FUNCTION of (?:one|two|three) (?:REAL|DOUBLE PRECISION|COMPLEX\*16|COMPLEX) arguments?)( array)?', arg.desc ))
+        s = (re.search( r'^ *' + arg.name + ' +is +(CHARACTER|INTEGER|REAL|DOUBLE PRECISION|COMPLEX\*16|COMPLEX|LOGICAL)( array)?', arg.desc ) or
+             re.search( r'^ *\(workspace\) +(CHARACTER|INTEGER|REAL|DOUBLE PRECISION|COMPLEX\*16|COMPLEX|LOGICAL)( array)?', arg.desc ) or
+             re.search( r'^ *' + arg.name + ' +is a (LOGICAL FUNCTION of (?:one|two|three) (?:REAL|DOUBLE PRECISION|COMPLEX\*16|COMPLEX) arguments?)( array)?', arg.desc ))
         if (s):
             arg.dtype = typemap[ s.group(1).lower() ]
             arg.is_array = (s.group(2) == ' array')
@@ -514,9 +610,9 @@ def parse_lapack( path ):
             arg.name = arg.name.lower()
 
         # mark work, lwork, ldwork, etc.
-        if (re.search( '^[crsib]?work$', arg.name )):
+        if (re.search( r'^[crsib]?work$', arg.name )):
             arg.is_work = True
-        elif (re.search( '^(l|ld)[crsib]?work$', arg.name )):
+        elif (re.search( r'^(l|ld)[crsib]?work$', arg.name )):
             arg.is_lwork = True
 
         # iwork, bwork needs blas_int, not int64
@@ -531,7 +627,7 @@ def parse_lapack( path ):
 
         # check for workspace query
         if (arg.is_lwork):
-            s = re.search( 'If ' + arg.name + ' *= *-1.*workspace query', arg.desc, re.DOTALL | re.IGNORECASE )
+            s = re.search( r'If ' + arg.name + ' *= *-1.*workspace query', arg.desc, re.DOTALL | re.IGNORECASE )
             if (s):
                 func.args[i-1].use_query = True  # work
                 arg.use_query = True  # lwork
@@ -541,7 +637,7 @@ def parse_lapack( path ):
         # pname = pointer name to pass to Fortran
         arg.lname = arg.name
         arg.pname = arg.name
-        if (arg.intent == 'in' and not arg.is_array and not re.search('LAPACK_._SELECT', arg.dtype)):
+        if (arg.intent == 'in' and not arg.is_array and not re.search( r'LAPACK_._SELECT', arg.dtype)):
             # scalars, dimensions, enums
             if (arg.dtype in ('int64_t', 'bool', 'char')):
                 # dimensions, enums
@@ -582,6 +678,292 @@ def parse_lapack( path ):
         i += 1
     # end
     return func
+# end
+
+# ------------------------------------------------------------------------------
+enums = {
+    'uplo': {
+        'u': ('Upper', 'lapack::Uplo::Upper'),
+        'l': ('Lower', 'lapack::Uplo::Lower'),
+    },
+    'trans': {
+        'n': ('NoTrans',   'lapack::Op::NoTrans'),
+        't': ('Trans',     'lapack::Op::Trans'),
+        'c': ('ConjTrans', 'lapack::Op::ConjTrans'),
+    },
+    'side': {
+        'l': ('Left',  'lapack::Side::Left'),
+        'r': ('Right', 'lapack::Side::Right'),
+    },
+    'norm': {
+        '1': ('One', 'lapack::Norm::One'),
+        'o': ('One', 'lapack::Norm::One'),
+        'i': ('Inf', 'lapack::Norm::Inf'),
+        'f': ('Fro', 'lapack::Norm::Fro'),
+        'm': ('Max', 'lapack::Norm::Max'),
+    },
+    'diag': {
+        'n': ('NonUnit', 'lapack::Diag::NonUnit'),
+        'u': ('Unit',    'lapack::Diag::Unit'),
+    },
+    'compq': {
+        'n': ('NoVec',      'lapack::CompQ::NoVec'),
+        'i': ('Vec',        'lapack::CompQ::Vec'),
+        'p': ('CompactVec', 'lapack::CompQ::CompactVec'),
+        'v': ('Update',     'lapack::CompQ::Update'),
+    },
+    'vect': {
+        'q': ('Q',    'lapack::Vect::Q'    ),
+        'p': ('P',    'lapack::Vect::P'    ),
+        'n': ('None', 'lapack::Vect::None' ),
+        'b': ('Both', 'lapack::Vect::Both' ),
+    },
+    'equed': {
+        'r': ('Row',  'lapack::Equed::Row'),
+        'c': ('Col',  'lapack::Equed::Col'),
+        'n': ('None', 'lapack::Equed::None'),
+        'b': ('Both', 'lapack::Equed::Both'),
+    },
+    'fact': {
+        'f': ('Factored',    'lapack::Factored::Factored'),
+        'n': ('NotFactored', 'lapack::Factored::NotFactored'),
+        'e': ('Equilibrate', 'lapack::Factored::Equilibrate'),
+    },
+
+    # geev
+    'jobvl': {
+        'n': ('NoVec',        'lapack::Job::NoVec'       ),
+        'v': ('Vec',          'lapack::Job::Vec'         ),
+    },
+    'jobvr': {
+        'n': ('NoVec',        'lapack::Job::NoVec'       ),
+        'v': ('Vec',          'lapack::Job::Vec'         ),
+    },
+
+    # gesvd
+    'jobu': {
+        'n': ('NoVec',        'lapack::Job::NoVec'       ),
+        'a': ('AllVec',       'lapack::Job::AllVec'      ),
+        's': ('SomeVec',      'lapack::Job::SomeVec'     ),
+        'o': ('OverwriteVec', 'lapack::Job::OverwriteVec'),
+    },
+    'jobvt': {
+        'n': ('NoVec',        'lapack::Job::NoVec'       ),
+        'a': ('AllVec',       'lapack::Job::AllVec'      ),
+        's': ('SomeVec',      'lapack::Job::SomeVec'     ),
+        'o': ('OverwriteVec', 'lapack::Job::OverwriteVec'),
+    },
+
+    # bbcsd
+    'jobu1': {
+        'n': ('NoUpdate', 'lapack::JobCS::NoUpdate'),
+        'y': ('Update',   'lapack::JobCS::Update'),
+    },
+    'jobu2': {
+        'n': ('NoUpdate', 'lapack::JobCS::NoUpdate'),
+        'y': ('Update',   'lapack::JobCS::Update'),
+    },
+    'jobv1t': {
+        'n': ('NoUpdate', 'lapack::JobCS::NoUpdate'),
+        'y': ('Update',   'lapack::JobCS::Update'),
+    },
+    'jobv2t': {
+        'n': ('NoUpdate', 'lapack::JobCS::NoUpdate'),
+        'y': ('Update',   'lapack::JobCS::Update'),
+    },
+
+    # gesdd, syev
+    'jobz': {
+        'n': ('NoVec',        'lapack::Job::NoVec'       ),
+        'v': ('Vec',          'lapack::Job::Vec'         ),
+        'a': ('AllVec',       'lapack::Job::AllVec'      ),
+        's': ('SomeVec',      'lapack::Job::SomeVec'     ),
+        'o': ('OverwriteVec', 'lapack::Job::OverwriteVec'),
+    },
+}
+
+# ------------------------------------------------------------------------------
+def sub_enum_short( match ):
+    groups = match.groups()
+    try:
+        #pre  = groups[0]
+        enum = groups[0].lower()
+        mid  = groups[1]
+        val  = groups[2].lower()
+        txt  = enum + mid + enums[enum][val][0]
+        if (len(groups) > 3 and groups[4]):
+            mid2 = groups[3]
+            val2 = groups[4].lower()
+            if (enums[enum][val][0] != enums[enum][val2][0]):
+                txt += mid2 + enums[enum][val2][0]
+        return txt
+    except:
+        print( 'unknown enum', enum, 'groups', groups )
+        return match.group(0) + ' [TODO: unknown enum]'
+# end
+
+# ------------------------------------------------------------------------------
+fortran_operators = {
+    'LT': '<',
+    'GT': '>',
+    'LE': '<=',
+    'GE': '>=',
+    'EQ': '==',
+    'NE': '!=',
+}
+
+# ------------------------------------------------------------------------------
+def parse_docs( txt, variables, indent=0 ):
+    # exponents
+    txt = re.sub( r'\*\*', r'^', txt )
+
+    # Fortran operators:  ".LT."  =>  "<"
+    txt = re.sub( r'\.(LT|LE|GT|GE|EQ|NE)\.',
+                  lambda match: fortran_operators[ match.group(1) ], txt )
+
+    # space around operators
+    txt = re.sub( r'(\S)(<=|>=)(\S)', r'\1 \2 \3', txt )
+    txt = re.sub( r'(\S)(<=|>=)(\S)', r'\1 \2 \3', txt )
+
+    # make indents 4 spaces (lapack usually has 3)
+    txt = re.sub( r'^   +', r'    ', txt, 0, re.M )
+
+    # convert enums, e.g.,
+    # "UPLO = 'U'" => "uplo = Upper"
+    txt = re.sub( r"\b([A-Z]{2,})( *= *)'(\w)'(?:( or )'(\w)')?", sub_enum_short, txt )
+
+    # convert function names
+    txt = re.sub( r'((?:computed\s+by|determined\s+by|from)\s+)[SDCZ]([A-Z_]{4,})\b',
+                  lambda match: match.group(1) + '`lapack::' + match.group(2).lower() + '`',
+                  txt )
+    #txt = re.sub( r'(from\s+)[SDCZ]([A-Z]{4,})\b',
+    #              lambda match: match.group(1) + '`lapack::' + match.group(2).lower() + '`',
+    #              txt )
+    txt = re.sub( func.xname.upper(), '`'+ func.name + '`', txt )
+
+    # INFO references
+    txt = re.sub( r'On exit, if INFO *= *0,', r'On successful exit,', txt, 0, re.I )
+    txt = re.sub( r'If INFO *= *0', r'If successful', txt, 0, re.I )
+    txt = re.sub( r'\bINFO *(=|>|>=) *', r'return value \1 ', txt )
+
+    # rename arguments (lowercase, spelling)
+    for (search, replace) in variables:
+        txt = re.sub( search, replace, txt )
+
+    # hyphenate m-by-n
+    txt = re.sub( r'\b([a-z]) by ([a-z])\b', r'\1-by-\2', txt )
+
+    # prefix lines
+    txt = re.sub( r'^', r'/// ' + ' '*indent, txt, 0, re.M ) + '\n'
+    return txt
+# end
+
+# ------------------------------------------------------------------------------
+def generate_docs( func, header=False ):
+    variables = []
+    for arg in func.args:
+        if (arg.name_orig != arg.name):
+            variables.append( (r'\b' + arg.name_orig + r'\b', arg.name) )
+    #print( 'variables', variables )
+
+    txt = ''
+
+    # --------------------
+    d = func.purpose
+
+    # strip function name and capitalize first word, e.g.,
+    # "ZPOTRF computes ..." => "Computes ..."
+    d = re.sub( r'^\s*[A-Z_]+ (\w)', lambda s: s.group(1).upper(), d )
+    txt += parse_docs( d, variables, indent=0 )
+    txt += '''\
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+'''
+
+    # --------------------
+    i = 0
+    for arg in func.args:
+        if (arg.is_work or arg.is_lwork):
+            continue
+
+        d = arg.desc
+
+        # remove "VAR is INTEGER" line
+        d = re.sub( r'^ *' + arg.name.upper() + ' +is +(CHARACTER|INTEGER|REAL|DOUBLE PRECISION|COMPLEX\*16|COMPLEX|LOGICAL).*\n', r'', d )
+
+        if (arg.name == 'info'):
+            # @retval
+            d = re.sub( r'^ *< *0: *if INFO *= *-i, the i-th argument.*\n', r'', d, 0, re.M | re.I )
+            d = re.sub( r'^ *(=|<|<=|>|>=) ', r'@retval \1 ', d, 0, re.M )
+
+            # increase indented lines
+            d = re.sub( r'^      ', r'             ', d, 0, re.M )
+
+            txt += parse_docs( d, variables, indent=4 )
+        else:
+            txt += '/// @param[' + arg.intent + '] ' + arg.name + '\n'
+
+            if (arg.is_array):
+                s = re.search( r'^ *\( *([^(),]+), *([^(),]+) *\) *$', arg.dim )
+                if (s):
+                    rows = 'ROWS'
+                    ld   = s.group(1)
+                    cols = s.group(2)
+                    dim = ld + '-by-' + cols
+                    if (ld.startswith('ld') and i+1 < len(func.args)):
+                        ld_arg = func.args[i+1]
+                        if (ld_arg.lbound):
+                            s = re.search( r'^ *max\( *1, *(\w+) *\)', ld_arg.lbound )
+                            if (s):
+                                rows = s.group(1)
+                            else:
+                                rows = ld_arg.lbound
+                    # end
+                    dim2 = rows + '-by-' + cols
+                    d = 'The ' + dim2 + ' matrix ' + arg.name + ', stored in an ' \
+                      + dim + ' array.\n' + d
+                    # [dimension ' + arg.dim + ']
+                else:
+                    # try to strip off one set of parens
+                    (dim, rem) = extract_bracketed( arg.dim, '(', ')' )
+                    if (txt and rem == ''):
+                        d = 'The vector ' + arg.name + ' of length ' + dim + '.\n' + d
+                    else:
+                        d = 'The vector ' + arg.name + ' of length ' + arg.dim + '.\n' + d
+            # end
+
+            # convert enum values, e.g.,
+            # = 'U': ...    =>    - Upper: ...
+            # = 'L': ...    =>    - Lower: ...
+            if (arg.is_enum):
+                d = re.sub( r"^ *= *'(\w)'( or '\w')?:",
+                            lambda match: '- ' + enums[arg.name][match.group(1).lower()][1] + ':',
+                            d, 0, re.M )
+            # end
+
+            d = parse_docs( d, variables, indent=4 )
+
+            # add "\n" on blank lines
+            d = re.sub( r'^(/// +)\n///', r'\1\\n\n///', d, 0, re.M )
+            txt += d
+        # end
+        i += 1
+    # end
+
+    # Further Details section
+    d = func.details
+    if (d):
+        txt += '// -----------------------------------------------------------------------------\n'
+        txt += '/// @par Further Details\n'
+        txt += parse_docs( d, variables, indent=4 )
+    # end
+
+    txt += '/// @ingroup ' + func.group + '\n'
+
+    # trim trailing whitespace
+    txt = re.sub( r' +$', r'', txt, 0, re.M )
+    return txt
 # end
 
 # ------------------------------------------------------------------------------
@@ -749,7 +1131,7 @@ def generate_wrapper( func, header=False ):
             +  tab + ', '.join( proto_args )
             +  ' );\n\n')
         # aliases for real routines (hesv => sysv, etc.)
-        s = re.search( '^[sd](sy|sp|sb|or|op)(\w+)', func.xname )
+        s = re.search( r'^[sd](sy|sp|sb|or|op)(\w+)', func.xname )
         if (s):
             alias = alias_map[ s.group(1) ] + s.group(2)
             # todo: he
@@ -761,8 +1143,7 @@ def generate_wrapper( func, header=False ):
                 +   '}\n\n')
         # end
     else:
-        txt = ('// ' + '-'*77 + '\n'
-            +  func.retval + ' ' + func.name + '(\n'
+        txt = (func.retval + ' ' + func.name + '(\n'
             +  tab + ', '.join( proto_args )
             +  ' )\n{\n'
             +  int_checks
@@ -777,7 +1158,7 @@ def generate_wrapper( func, header=False ):
     # end
 
     # trim trailing whitespace
-    txt = re.sub( r' +$', r'', txt, 0, re.MULTILINE )
+    txt = re.sub( r' +$', r'', txt, 0, re.M )
     return txt
 # end
 
@@ -876,7 +1257,7 @@ def generate_tester( funcs ):
                     tst_args.append( arg.name )
                     if (arg.is_enum):
                         # convert enum to char, e.g., uplo2char(uplo)
-                        s = re.search( '^lapack::(\w+)', arg.dtype )
+                        s = re.search( r'^lapack::(\w+)', arg.dtype )
                         assert( s is not None )
                         ref_args.append( s.group(1).lower() + '2char(' + arg.name + ')' )
                     else:
@@ -1038,7 +1419,7 @@ void test_''' + func.name + '''( Params& params, bool run )
     )
 
     # trim trailing whitespace
-    txt = re.sub( r' +$', r'', txt, 0, re.MULTILINE )
+    txt = re.sub( r' +$', r'', txt, 0, re.M )
     return txt
 # end
 
@@ -1085,7 +1466,10 @@ for arg in args.argv:
         print( tester_top, file=tester, end='' )
 
     funcs = []
+    i = 0
     for f in files:
+        i += 1
+        last = (i == len(files))
         print( '    ' + f )
         func = parse_lapack( f )
         funcs.append( func )
@@ -1093,6 +1477,13 @@ for arg in args.argv:
             txt = generate_wrapper( func, header=True )
             print( txt, file=header, end='' )
         if (args.wrapper):
+            txt = '// ' + '-'*77 + '\n'
+            print( txt, file=wrapper, end='' )
+            if (last):
+                txt = generate_docs( func )
+                print( txt, file=wrapper, end='' )
+            else:
+                print( '/// @ingroup ' + func.group + '\n', file=wrapper, end='' )
             txt = generate_wrapper( func )
             print( txt, file=wrapper, end='' )
     # end

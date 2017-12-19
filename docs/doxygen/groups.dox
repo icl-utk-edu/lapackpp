@@ -1,0 +1,100 @@
+/**
+
+    ----------------------------------------------------------------------------
+    @defgroup group_solve Linear solve, AX = B
+    @{
+        @defgroup gesv General matrix: LU
+
+        @defgroup gbsv General matrix: LU: banded
+        @defgroup gtsv General matrix: LU:  tridiagonal
+        @defgroup gels Least squares
+        @defgroup posv Positive definite matrix: Cholesky
+        @defgroup ppsv Positive definite matrix: Cholesky: packed
+        @defgroup pbsv Positive definite matrix: Cholesky: banded
+        @defgroup ptsv Positive definite matrix: Cholesky: tridiagonal
+        @defgroup sysv Symmetric indefinite matrix
+        @defgroup spsv Symmetric indefinite matrix: packed
+        @defgroup hesv Hermitian indefinite matrix
+        @defgroup hpsv Hermitian indefinite matrix: packed
+    @}
+
+    ----------------------------------------------------------------------------
+    @defgroup group_solve_computational Linear solve: computational routines
+    @{
+        @defgroup gesv_computational General matrix: LU
+        @defgroup gbsv_computational General matrix: LU: banded
+        @defgroup gtsv_computational General matrix: LU:  tridiagonal
+        @defgroup posv_computational Positive definite matrix: Cholesky
+        @defgroup ppsv_computational Positive definite matrix: Cholesky: packed
+        @defgroup pfsv Positive definite matrix: Cholesky: RFP
+        @defgroup pbsv_computational Positive definite matrix: Cholesky: banded
+        @defgroup ptsv_computational Positive definite matrix: Cholesky: tridiagonal
+        @defgroup sysv_computational Symmetric indefinite matrix
+        @defgroup spsv_computational Symmetric indefinite matrix: packed
+        @defgroup hesv_computational Hermitian indefinite matrix
+        @defgroup hpsv_computational Hermitian indefinite matrix: packed
+        @defgroup trsv_computational Triangular matrix
+        @defgroup tpsv_computational Triangular matrix: packed
+        @defgroup tfsv_computational Triangular matrix: RFP
+        @defgroup tbsv_computational Triangular matrix: banded
+    @}
+
+    ----------------------------------------------------------------------------
+    @defgroup group_unitary Orthogonal/unitary factorizations (QR, etc.)
+    @{
+        @defgroup geqrf A = QR factorization
+        @defgroup geqpf AP = QR factorization with pivoting
+        @defgroup gelqf A = LQ factorization
+        @defgroup geqlf A = QL factorization
+        @defgroup gerqf A = RQ factorization
+        @defgroup tzrzf A = RZ factorization
+        @defgroup ggqrf Generalized QR factorization
+        @defgroup ggrqf Generalized RQ factorization
+        @defgroup bbcsd Cosine-Sine (CS) decomposition
+    @}
+
+    ----------------------------------------------------------------------------
+    @defgroup group_symmetric_eigen Symmetric/Hermitian eigenvalues
+    @{
+        @defgroup heev Standard, AV = VW
+        @defgroup hpev Standard, AV = VW: packed
+        @defgroup hbev Standard, AV = VW: banded
+        @defgroup htev Standard, AV = VW: tridiagonal
+        @defgroup hygv Generalized, AV = BVW, etc.
+        @defgroup hpgv Generalized, AV = BVW, etc.: packed
+        @defgroup hbgv Generalized, AV = BVW, etc.: banded
+        @defgroup heev_computational Computational routines
+    @}
+
+    ----------------------------------------------------------------------------
+    @defgroup group_nonsymmetric_eigen Non-symmetric eigenvalues
+    @{
+        @defgroup geev Standard, AV = VW
+        @defgroup ggev Generalized, AV = BVW
+        @defgroup gees Schur form, A = ZTZ^H
+        @defgroup gges Generalized Schur form
+        @defgroup geev_computational Computational routines
+    @}
+
+    ----------------------------------------------------------------------------
+    @defgroup group_svd Singular Value Decomposition (SVD)
+    @{
+        @defgroup gesvd Standard, A = USV^H
+        @defgroup bdsvd Standard, A = USV^H, bidiagonal
+        @defgroup ggsvd Generalized
+        @defgroup gesvd_computational Computational routines
+    @}
+
+    ----------------------------------------------------------------------------
+    @defgroup group_aux Auxiliary routines
+    @{
+        @defgroup initialize Initialize, copy, convert matrices
+        @defgroup norm Matrix norms
+        @defgroup unitary_computational Householder reflectors and plane rotations
+        @defgroup auxiliary Other auxiliary routines
+    @}
+
+    ----------------------------------------------------------------------------
+    @defgroup blas_lapack Additional BLAS
+    BLAS-like routines that are not in the reference BLAS standard.
+**/

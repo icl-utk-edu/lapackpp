@@ -53,7 +53,7 @@ endif
 
 # ------------------------------------------------------------------------------
 # rules
-.PHONY: default all shared static include src test clean test_headers
+.PHONY: default all shared static include src test docs clean test_headers
 
 default: shared test
 
@@ -72,6 +72,14 @@ include: test_headers
 src: shared
 
 test: test/test
+
+docs:
+	doxygen docs/doxygen/doxyfile.conf
+	@echo ========================================
+	cat docs/doxygen/errors.txt
+	@echo ========================================
+	@echo "Documentation available in docs/html/index.html"
+	@echo ========================================
 
 test/test: ${test_obj} ${liblapackpp_so} ${libtest_so}
 	${CXX} ${LDFLAGS} -o $@ ${test_obj} ${LAPACKPP_LIBS} ${LIBS}
@@ -104,6 +112,14 @@ test/clean:
 	-${RM} test/test test/*.{o,d} gch/test/*.gch
 
 -include ${dep} ${test_dep}
+
+# ------------------------------------------------------------------------------
+# subdirectory redirects
+src/test_headers: test_headers
+test/test_headers: test_headers
+
+src/docs: docs
+test/docs: docs
 
 # ------------------------------------------------------------------------------
 # precompile headers to verify self-sufficiency

@@ -87,28 +87,32 @@ int64_t heevr_2stage(
 /// to `lapack::hetrd`. Then, whenever possible, `heevr_2stage` calls `lapack::stemr` to compute
 /// eigenspectrum using Relatively Robust Representations. `lapack::stemr`
 /// computes eigenvalues by the dqds algorithm, while orthogonal
-/// eigenvectors are computed from various "good" L D \f$ L^T \f$ representations
+/// eigenvectors are computed from various "good" \f$ L D L^T \f$ representations
 /// (also known as Relatively Robust Representations). Gram-Schmidt
 /// orthogonalization is avoided as far as possible. More specifically,
 /// the various steps of the algorithm are as follows.
 ///
 /// For each unreduced block (submatrix) of T,
-///     (a) Compute \f$ T - \sigma I = L D L^T \f$, so that L and D
-///     define all the wanted eigenvalues to high relative accuracy.
-///     This means that small relative changes in the entries of D and L
-///     cause only small relative changes in the eigenvalues and
-///     eigenvectors. The standard (unfactored) representation of the
-///     tridiagonal matrix T does not have this property in general.
-///     (b) Compute the eigenvalues to suitable accuracy.
-///     If the eigenvectors are desired, the algorithm attains full
-///     accuracy of the computed eigenvalues only right before
-///     the corresponding vectors have to be computed, see steps c) and d).
-///     (c) For each cluster of close eigenvalues, select a new
-///     shift close to the cluster, find a new factorization, and refine
-///     the shifted eigenvalues to suitable accuracy.
-///     (d) For each eigenvalue with a large enough relative separation compute
-///     the corresponding eigenvector by forming a rank revealing twisted
-///     factorization. Go back to (c) for any clusters that remain.
+///
+/// (a) Compute \f$ T - \sigma I = L D L^T \f$, so that L and D
+/// define all the wanted eigenvalues to high relative accuracy.
+/// This means that small relative changes in the entries of D and L
+/// cause only small relative changes in the eigenvalues and
+/// eigenvectors. The standard (unfactored) representation of the
+/// tridiagonal matrix T does not have this property in general.
+///
+/// (b) Compute the eigenvalues to suitable accuracy.
+/// If the eigenvectors are desired, the algorithm attains full
+/// accuracy of the computed eigenvalues only right before
+/// the corresponding vectors have to be computed, see steps c) and d).
+///
+/// (c) For each cluster of close eigenvalues, select a new
+/// shift close to the cluster, find a new factorization, and refine
+/// the shifted eigenvalues to suitable accuracy.
+///
+/// (d) For each eigenvalue with a large enough relative separation compute
+/// the corresponding eigenvector by forming a rank revealing twisted
+/// factorization. Go back to (c) for any clusters that remain.
 ///
 /// The desired accuracy of the output can be specified by the input
 /// parameter abstol.
@@ -125,7 +129,6 @@ int64_t heevr_2stage(
 ///   Computer Science Division Technical Report No. UCB/CSD-97-971,
 ///   UC Berkeley, May 1997.
 ///
-///
 /// Note 1 : `heevr_2stage` calls `lapack::stemr` when the full spectrum is requested
 /// on machines which conform to the ieee-754 floating point standard.
 /// `heevr_2stage` calls `lapack::stebz` and `lapack::stein` on non-IEEE machines and
@@ -138,19 +141,22 @@ int64_t heevr_2stage(
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+/// For real matrices, this is an alias for `lapack::syevr_2stage`.
 ///
 /// @param[in] jobz
 ///     - lapack::Job::NoVec: Compute eigenvalues only;
-///     - lapack::Job::Vec: Compute eigenvalues and eigenvectors.
-///         Not available in this release.
+///     - lapack::Job::Vec:   Compute eigenvalues and eigenvectors.
+///                           Not yet available (as of LAPACK 3.8.0).
 ///
 /// @param[in] range
-///     - lapack::Range::All: all eigenvalues will be found.
-///     - lapack::Range::Value: all eigenvalues in the half-open interval (vl,vu]
-///         will be found.
-///     - lapack::Range::Index: the il-th through iu-th eigenvalues will be found.
+///     - lapack::Range::All:
+///             all eigenvalues will be found.
+///     - lapack::Range::Value:
+///             all eigenvalues in the half-open interval (vl,vu] will be found.
+///     - lapack::Range::Index:
+///             the il-th through iu-th eigenvalues will be found.
 ///     For range = Value or Index and iu - il < n - 1, `lapack::stebz` and
-///     `lapack::stein` are called
+///     `lapack::stein` are called.
 ///
 /// @param[in] uplo
 ///     - lapack::Uplo::Upper: Upper triangle of A is stored;
@@ -161,12 +167,16 @@ int64_t heevr_2stage(
 ///
 /// @param[in,out] A
 ///     The n-by-n matrix A, stored in an lda-by-n array.
-///     On entry, the Hermitian matrix A. If uplo = Upper, the
+///     On entry, the Hermitian matrix A.
+///     - If uplo = Upper, the
 ///     leading n-by-n upper triangular part of A contains the
-///     upper triangular part of the matrix A. If uplo = Lower,
+///     upper triangular part of the matrix A.
+///
+///     - If uplo = Lower,
 ///     the leading n-by-n lower triangular part of A contains
 ///     the lower triangular part of the matrix A.
-///     On exit, the lower triangle (if uplo=Lower) or the upper
+///
+///     - On exit, the lower triangle (if uplo=Lower) or the upper
 ///     triangle (if uplo=Upper) of A, including the diagonal, is
 ///     destroyed.
 ///
@@ -201,10 +211,10 @@ int64_t heevr_2stage(
 ///     when it is determined to lie in an interval [a,b]
 ///     of width less than or equal to
 ///     \n
-///         abstol + EPS * max( |a|,|b| ),
+///         abstol + eps * max( |a|,|b| ),
 ///     \n
-///     where EPS is the machine precision. If abstol is less than
-///     or equal to zero, then EPS*|T| will be used in its place,
+///     where eps is the machine precision. If abstol is less than
+///     or equal to zero, then eps*|T| will be used in its place,
 ///     where |T| is the 1-norm of the tridiagonal matrix obtained
 ///     by reducing A to tridiagonal form.
 ///     \n
@@ -225,7 +235,8 @@ int64_t heevr_2stage(
 ///
 /// @param[out] nfound
 ///     The total number of eigenvalues found. 0 <= nfound <= n.
-///     If range = All, nfound = n, and if range = Index, nfound = iu-il+1.
+///     - If range = All, nfound = n;
+///     - if range = Index, nfound = iu-il+1.
 ///
 /// @param[out] W
 ///     The vector W of length n.
@@ -233,13 +244,14 @@ int64_t heevr_2stage(
 ///     ascending order.
 ///
 /// @param[out] Z
-///     The vector Z of length ldz, max(1,nfound).
-///     If jobz = Vec, then if successful, the first nfound columns of Z
+///     The n-by-nfound matrix Z, stored in an ldz-by-zcol array.
+///     - If jobz = Vec, then if successful, the first nfound columns of Z
 ///     contain the orthonormal eigenvectors of the matrix A
 ///     corresponding to the selected eigenvalues, with the i-th
 ///     column of Z holding the eigenvector associated with W(i).
-///     If jobz = NoVec, then Z is not referenced.
-///     Note: the user must ensure that at least max(1,nfound) columns are
+///     - If jobz = NoVec, then Z is not referenced.
+///     \n
+///     Note: the user must ensure that zcol >= max(1,nfound) columns are
 ///     supplied in the array Z; if range = Value, the exact value of nfound
 ///     is not known in advance and an upper bound must be used.
 ///

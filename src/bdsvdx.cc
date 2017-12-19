@@ -143,7 +143,8 @@ int64_t bdsvdx(
 ///
 /// @param[out] nfound
 ///     The total number of singular values found. 0 <= nfound <= n.
-///     If range = All, nfound = n, and if range = Index, nfound = iu-il+1.
+///     - If range = All, nfound = n;
+///     - if range = Index, nfound = iu-il+1.
 ///
 /// @param[out] S
 ///     The vector S of length n.
@@ -151,11 +152,11 @@ int64_t bdsvdx(
 ///     ascending order.
 ///
 /// @param[out] Z
-///     The (2*n)-by-k matrix Z, stored in an (2*n)-by-k array.
-///     If jobz = Vec, then if successful the first nfound columns of Z
+///     The (2*n)-by-zcol matrix Z, stored in an (2*n)-by-zcol array.
+///     - If jobz = Vec, then if successful the first nfound columns of Z
 ///     contain the singular vectors of the matrix B corresponding to
 ///     the selected singular values, with U in rows 1 to n and V
-///     in rows n+1 to n*2, i.e.
+///     in rows n+1 to 2*n, i.e.
 /**
         \f[
         Z = \left[ \begin{array}{c}
@@ -164,21 +165,22 @@ int64_t bdsvdx(
         \end{array} \right]
         \f]
 */
-///     If jobz = NoVec, then Z is not referenced.
-///     Note: The user must ensure that at least k = nfound+1 columns are
+///     - If jobz = NoVec, then Z is not referenced.
+///     \n
+///     Note: The user must ensure that zcol >= nfound+1 columns are
 ///     supplied in the array Z; if range = Value, the exact value of
 ///     nfound is not known in advance and an upper bound must be used.
 ///
 /// @param[in] ldz
 ///     The leading dimension of the array Z. ldz >= 1, and if
-///     jobz = Vec, ldz >= max(2,n*2).
+///     jobz = Vec, ldz >= max(2,2*n).
 ///
 /// @retval = 0: successful exit
 /// @retval > 0: if return value = i, then i eigenvectors failed to converge
 ///              in `lapack::stevx`. The indices of the eigenvectors
 ///              (as returned by `lapack::stevx`) are stored in the
 ///              array iwork.
-/// @retval > n: if return value = n*2 + 1, an internal error occurred.
+/// @retval > n: if return value = 2*n + 1, an internal error occurred.
 ///
 /// @ingroup bdsvd
 int64_t bdsvdx(

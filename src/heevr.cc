@@ -164,16 +164,15 @@ int64_t heevr(
 /// @param[in,out] A
 ///     The n-by-n matrix A, stored in an lda-by-n array.
 ///     On entry, the Hermitian matrix A.
-///     \n
-///     If uplo = Upper, the
+///     - If uplo = Upper, the
 ///     leading n-by-n upper triangular part of A contains the
 ///     upper triangular part of the matrix A.
-///     \n
-///     If uplo = Lower,
+///
+///     - If uplo = Lower,
 ///     the leading n-by-n lower triangular part of A contains
 ///     the lower triangular part of the matrix A.
-///     \n
-///     On exit, the lower triangle (if uplo=Lower) or the upper
+///
+///     - On exit, the lower triangle (if uplo=Lower) or the upper
 ///     triangle (if uplo=Upper) of A, including the diagonal, is
 ///     destroyed.
 ///
@@ -208,10 +207,10 @@ int64_t heevr(
 ///     when it is determined to lie in an interval [a,b]
 ///     of width less than or equal to
 ///     \n
-///         abstol + EPS * max( |a|,|b| ),
+///         abstol + eps * max( |a|,|b| ),
 ///     \n
-///     where EPS is the machine precision. If abstol is less than
-///     or equal to zero, then EPS*|T| will be used in its place,
+///     where eps is the machine precision. If abstol is less than
+///     or equal to zero, then eps*|T| will be used in its place,
 ///     where |T| is the 1-norm of the tridiagonal matrix obtained
 ///     by reducing A to tridiagonal form.
 ///     \n
@@ -232,7 +231,8 @@ int64_t heevr(
 ///
 /// @param[out] nfound
 ///     The total number of eigenvalues found. 0 <= nfound <= n.
-///     If range = All, nfound = n; and if range = Index, nfound = iu-il+1.
+///     - If range = All, nfound = n;
+///     - if range = Index, nfound = iu-il+1.
 ///
 /// @param[out] W
 ///     The vector W of length n.
@@ -240,15 +240,14 @@ int64_t heevr(
 ///     ascending order.
 ///
 /// @param[out] Z
-///     The vector Z of length ldz, max(1,nfound).
-///     \n
-///     If jobz = Vec, then if successful, the first nfound columns of Z
+///     The n-by-nfound matrix Z, stored in an ldz-by-zcol array.
+///     - If jobz = Vec, then if successful, the first nfound columns of Z
 ///     contain the orthonormal eigenvectors of the matrix A
 ///     corresponding to the selected eigenvalues, with the i-th
 ///     column of Z holding the eigenvector associated with W(i).
+///     - If jobz = NoVec, then Z is not referenced.
 ///     \n
-///     If jobz = NoVec, then Z is not referenced.
-///     Note: the user must ensure that at least max(1,nfound) columns are
+///     Note: the user must ensure that zcol >= max(1,nfound) columns are
 ///     supplied in the array Z; if range = Value, the exact value of nfound
 ///     is not known in advance and an upper bound must be used.
 ///

@@ -130,8 +130,8 @@ int64_t gebak(
 ///
 /// @param[in] ihi
 ///     The integers ilo and ihi determined by `lapack::gebal`.
-///     If n > 0, then 1 <= ilo <= ihi <= n;
-///     if n = 0, then ilo=1 and ihi=0.
+///     - If n > 0, then 1 <= ilo <= ihi <= n;
+///     - if n = 0, then ilo=1 and ihi=0.
 ///
 /// @param[in] scale
 ///     The vector scale of length n.

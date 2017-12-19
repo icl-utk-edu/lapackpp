@@ -123,9 +123,8 @@ int64_t gecon(
 ///     The leading dimension of the array A. lda >= max(1,n).
 ///
 /// @param[in] anorm
-///     If norm = One, the 1-norm of the original matrix A.
-///     \n
-///     If norm = Inf, the infinity-norm of the original matrix A.
+///     - If norm = One, the 1-norm of the original matrix A.
+///     - If norm = Inf, the infinity-norm of the original matrix A.
 ///
 /// @param[out] rcond
 ///     The reciprocal of the condition number of the matrix A,

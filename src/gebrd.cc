@@ -148,16 +148,15 @@ int64_t gebrd(
 ///     The m-by-n matrix A, stored in an lda-by-n array.
 ///     On entry, the m-by-n general matrix to be reduced.
 ///     On exit:
-///     \n
-///     If m >= n, the diagonal and the first superdiagonal are
+///     - If m >= n, the diagonal and the first superdiagonal are
 ///     overwritten with the upper bidiagonal matrix B; the
 ///     elements below the diagonal, with the array tauq, represent
 ///     the unitary matrix Q as a product of elementary
 ///     reflectors, and the elements above the first superdiagonal,
 ///     with the array taup, represent the unitary matrix P as
 ///     a product of elementary reflectors;
-///     \n
-///     If m < n, the diagonal and the first subdiagonal are
+///
+///     - If m < n, the diagonal and the first subdiagonal are
 ///     overwritten with the lower bidiagonal matrix B; the
 ///     elements below the first subdiagonal, with the array tauq,
 ///     represent the unitary matrix Q as a product of

@@ -143,8 +143,8 @@ int64_t gehrd(
 ///     and columns 1:ilo-1 and ihi+1:n. ilo and ihi are normally
 ///     set by a previous call to `lapack::gebal`; otherwise they should be
 ///     set to 1 and n respectively. See Further Details.
-///     if n > 0, 1 <= ilo <= ihi <= n;
-///     if n = 0, ilo = 1 and ihi = 0.
+///     - if n > 0, 1 <= ilo <= ihi <= n;
+///     - if n = 0, ilo = 1 and ihi = 0.
 ///
 /// @param[in,out] A
 ///     The n-by-n matrix A, stored in an lda-by-n array.
@@ -199,9 +199,9 @@ int64_t gehrd(
 /// modified element of the upper Hessenberg matrix H, and vi denotes an
 /// element of the vector defining H(i).
 ///
-///     This file is a slight modification of LAPACK-3.0's `lapack::gehrd`
+/// This file is a slight modification of the LAPACK 3.0 `gehrd`
 /// subroutine incorporating improvements proposed by Quintana-Orti and
-///     Van de Geijn (2006). (See `lapack::lahr2`.)
+/// Van de Geijn (2006). (See `lapack::lahr2`.)
 ///
 /// @ingroup geev_computational
 int64_t gehrd(

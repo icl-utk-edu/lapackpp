@@ -102,18 +102,17 @@ int64_t hesv_rk(
 /// @param[in,out] A
 ///     The n-by-n matrix A, stored in an lda-by-n array.
 ///     On entry, the Hermitian matrix A.
-///     \n
-///     If uplo = Upper: the leading n-by-n upper triangular part
+///     - If uplo = Upper: the leading n-by-n upper triangular part
 ///     of A contains the upper triangular part of the matrix A,
 ///     and the strictly lower triangular part of A is not
 ///     referenced.
-///     \n
-///     If uplo = Lower: the leading n-by-n lower triangular part
+///
+///     - If uplo = Lower: the leading n-by-n lower triangular part
 ///     of A contains the lower triangular part of the matrix A,
 ///     and the strictly upper triangular part of A is not
 ///     referenced.
-///     \n
-///     On successful exit, diagonal of the block diagonal
+///
+///     - On successful exit, diagonal of the block diagonal
 ///     matrix D and factors U or L as computed by `lapack::hetrf_rk`:
 ///     a) ONLY diagonal elements of the Hermitian block diagonal
 ///        matrix D on the diagonal of A, i.e. D(k,k) = A(k,k);
@@ -133,10 +132,8 @@ int64_t hesv_rk(
 ///     routine `lapack::hetrf_rk`, i.e. the superdiagonal (or subdiagonal)
 ///     elements of the Hermitian block diagonal matrix D
 ///     with 1-by-1 or 2-by-2 diagonal blocks, where
-///     \n
-///     If uplo = Upper: E(i) = D(i-1,i), i=2:n, E(1) is set to 0;
-///     \n
-///     If uplo = Lower: E(i) = D(i+1,i), i=1:n-1, E(n) is set to 0.
+///     - If uplo = Upper: E(i) = D(i-1,i), i=2:n, E(1) is set to 0;
+///     - If uplo = Lower: E(i) = D(i+1,i), i=1:n-1, E(n) is set to 0.
 ///     \n
 ///     NOTE: For 1-by-1 diagonal block D(k), where
 ///     1 <= k <= n, the element E(k) is set to 0 in both

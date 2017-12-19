@@ -193,36 +193,34 @@ int64_t gels(
 /// @param[in,out] A
 ///     The m-by-n matrix A, stored in an lda-by-n array.
 ///     On entry, the m-by-n matrix A.
-///     \n
-///     If m >= n, A is overwritten by details of its QR
+///     - If m >= n, A is overwritten by details of its QR
 ///     factorization as returned by `lapack::geqrf`;
-///     \n
-///     If m < n, A is overwritten by details of its LQ
+///
+///     - If m < n, A is overwritten by details of its LQ
 ///     factorization as returned by `lapack::gelqf`.
 ///
 /// @param[in] lda
 ///     The leading dimension of the array A. lda >= max(1,m).
 ///
 /// @param[in,out] B
-///     The max( 1, m, n )-by-nrhs matrix B, stored in an ldb-by-nrhs array.
+///     The max(m,n)-by-nrhs matrix B, stored in an ldb-by-nrhs array.
 ///     On entry, the matrix B of right hand side vectors, stored
 ///     columnwise; B is m-by-nrhs if trans = NoTrans, or n-by-nrhs
 ///     if trans = ConjTrans.
 ///     On successful exit, B is overwritten by the solution
 ///     vectors, stored columnwise:
-///     \n
-///     If trans = NoTrans and m >= n, rows 1 to n of B contain the least
+///     - If trans = NoTrans and m >= n, rows 1 to n of B contain the least
 ///     squares solution vectors; the residual sum of squares for the
 ///     solution in each column is given by the sum of squares of the
 ///     modulus of elements n+1 to m in that column;
-///     \n
-///     If trans = NoTrans and m < n, rows 1 to n of B contain the
+///
+///     - If trans = NoTrans and m < n, rows 1 to n of B contain the
 ///     minimum norm solution vectors;
-///     \n
-///     If trans = ConjTrans and m >= n, rows 1 to m of B contain the
+///
+///     - If trans = ConjTrans and m >= n, rows 1 to m of B contain the
 ///     minimum norm solution vectors;
-///     \n
-///     If trans = ConjTrans and m < n, rows 1 to m of B contain the
+///
+///     - If trans = ConjTrans and m < n, rows 1 to m of B contain the
 ///     least squares solution vectors; the residual sum of squares
 ///     for the solution in each column is given by the sum of
 ///     squares of the modulus of elements m+1 to n in that column.

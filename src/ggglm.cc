@@ -211,7 +211,6 @@ int64_t ggglm(
 ///
 /// @param[out] Y
 ///     The vector Y of length p.
-///     \n
 ///     On exit, X and Y are the solutions of the GLM problem.
 ///
 /// @retval = 0: successful exit.

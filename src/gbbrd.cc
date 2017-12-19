@@ -200,23 +200,23 @@ int64_t gbbrd(
 ///
 /// @param[out] Q
 ///     The m-by-m matrix Q, stored in an ldq-by-m array.
-///     If vect = Q or Both, the m-by-m unitary matrix Q.
-///     If vect = None or P, the array Q is not referenced.
+///     - If vect = Q or Both, the m-by-m unitary matrix Q.
+///     - If vect = None or P, the array Q is not referenced.
 ///
 /// @param[in] ldq
 ///     The leading dimension of the array Q.
-///     If vect = Q or Both, ldq >= max(1,m);
-///     otherwise, ldq >= 1.
+///     - If vect = Q or Both, ldq >= max(1,m);
+///     - otherwise, ldq >= 1.
 ///
 /// @param[out] PT
 ///     The n-by-n matrix PT, stored in an ldpt-by-n array.
-///     If vect = P or Both, the n-by-n unitary matrix \f$ P^H \f$;
-///     If vect = None or Q, the array PT is not referenced.
+///     - If vect = P or Both, the n-by-n unitary matrix \f$ P^H \f$;
+///     - If vect = None or Q, the array PT is not referenced.
 ///
 /// @param[in] ldpt
 ///     The leading dimension of the array PT.
-///     If vect = P or Both, ldpt >= max(1,n);
-///     otherwise, ldpt >= 1.
+///     - If vect = P or Both, ldpt >= max(1,n);
+///     - otherwise, ldpt >= 1.
 ///
 /// @param[in,out] C
 ///     The m-by-ncc matrix C, stored in an ldc-by-ncc array.
@@ -226,8 +226,8 @@ int64_t gbbrd(
 ///
 /// @param[in] ldc
 ///     The leading dimension of the array C.
-///     If ncc > 0, ldc >= max(1,m);
-///     if ncc = 0, ldc >= 1.
+///     - If ncc > 0, ldc >= max(1,m);
+///     - if ncc = 0, ldc >= 1.
 ///
 /// @retval = 0: successful exit.
 ///

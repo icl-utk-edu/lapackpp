@@ -132,6 +132,7 @@ int64_t bdsdc(
 ///     [This option not yet implemented in LAPACK++.]
 ///     If compq = CompactVec, then:
 ///     The vector Q of length ldq.
+//
 //      On successful exit, Q and IQ contain the left
 //      and right singular vectors in a compact form,
 //      requiring O(n log n) space instead of 2*n^2.
@@ -140,12 +141,14 @@ int64_t bdsdc(
 //      words of memory, where SMLSIZ is returned by ILAENV and
 //      is equal to the maximum size of the subproblems at the
 //      bottom of the computation tree (usually about 25).
+//
 ///     For other values of compq, Q is not referenced.
 ///
 /// @param[out] IQ
 ///     [This option not yet implemented in LAPACK++.]
 ///     If compq = CompactVec, then:
 ///     The vector IQ of length ldiq.
+//
 //      On successful exit, Q and IQ contain the left
 //      and right singular vectors in a compact form,
 //      requiring O(n log n) space instead of 2*n^2.
@@ -154,6 +157,7 @@ int64_t bdsdc(
 //      words of memory, where SMLSIZ is returned by ILAENV and
 //      is equal to the maximum size of the subproblems at the
 //      bottom of the computation tree (usually about 25).
+//
 ///     For other values of compq, IQ is not referenced.
 ///
 /// @retval = 0: successful exit.

@@ -92,18 +92,17 @@ int64_t hesv(
 /// @param[in,out] A
 ///     The n-by-n matrix A, stored in an lda-by-n array.
 ///     On entry, the Hermitian matrix A.
-///     \n
-///     If uplo = Upper, the leading
+///     - If uplo = Upper, the leading
 ///     n-by-n upper triangular part of A contains the upper
 ///     triangular part of the matrix A, and the strictly lower
 ///     triangular part of A is not referenced.
-///     \n
-///     If uplo = Lower, the
+///
+///     - If uplo = Lower, the
 ///     leading n-by-n lower triangular part of A contains the lower
 ///     triangular part of the matrix A, and the strictly upper
 ///     triangular part of A is not referenced.
-///     \n
-///     On successful exit, the block diagonal matrix D and the
+///
+///     - On successful exit, the block diagonal matrix D and the
 ///     multipliers used to obtain the factor U or L from the
 ///     factorization \f$ A = U D U^H \f$ or \f$ A = L D L^H \f$ as computed by
 ///     `lapack::hetrf`.
@@ -117,12 +116,11 @@ int64_t hesv(
 ///     determined by `lapack::hetrf`. If ipiv(k) > 0, then rows and columns
 ///     k and ipiv(k) were interchanged, and D(k,k) is a 1-by-1
 ///     diagonal block.
-///     \n
-///     If uplo = Upper and ipiv(k) = ipiv(k-1) < 0,
+///     - If uplo = Upper and ipiv(k) = ipiv(k-1) < 0,
 ///     then rows and columns k-1 and -ipiv(k) were interchanged and
 ///     D(k-1:k,k-1:k) is a 2-by-2 diagonal block.
-///     \n
-///     If uplo = Lower and
+///
+///     - If uplo = Lower and
 ///     ipiv(k) = ipiv(k+1) < 0, then rows and columns k+1 and
 ///     -ipiv(k) were interchanged and D(k:k+1,k:k+1) is a 2-by-2
 ///     diagonal block.

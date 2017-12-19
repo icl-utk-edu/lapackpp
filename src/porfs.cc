@@ -152,13 +152,12 @@ int64_t porfs(
 /// @param[in] A
 ///     The n-by-n matrix A, stored in an lda-by-n array.
 ///     The Hermitian matrix A.
-///     \n
-///     If uplo = Upper, the leading n-by-n
+///     - If uplo = Upper, the leading n-by-n
 ///     upper triangular part of A contains the upper triangular part
 ///     of the matrix A, and the strictly lower triangular part of A
 ///     is not referenced.
-///     \n
-///     If uplo = Lower, the leading n-by-n lower
+///
+///     - If uplo = Lower, the leading n-by-n lower
 ///     triangular part of A contains the lower triangular part of
 ///     the matrix A, and the strictly upper triangular part of A is
 ///     not referenced.

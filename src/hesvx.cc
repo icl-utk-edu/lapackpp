@@ -109,13 +109,12 @@ int64_t hesvx(
 /// @param[in] A
 ///     The n-by-n matrix A, stored in an lda-by-n array.
 ///     The Hermitian matrix A.
-///     \n
-///     If uplo = Upper, the leading n-by-n
+///     - If uplo = Upper, the leading n-by-n
 ///     upper triangular part of A contains the upper triangular part
 ///     of the matrix A, and the strictly lower triangular part of A
 ///     is not referenced.
-///     \n
-///     If uplo = Lower, the leading n-by-n lower
+///
+///     - If uplo = Lower, the leading n-by-n lower
 ///     triangular part of A contains the lower triangular part of
 ///     the matrix A, and the strictly upper triangular part of A is
 ///     not referenced.
@@ -125,13 +124,12 @@ int64_t hesvx(
 ///
 /// @param[in,out] AF
 ///     The n-by-n matrix AF, stored in an ldaf-by-n array.
-///     \n
-///     If fact = Factored, then AF is an input argument and on entry
+///     - If fact = Factored, then AF is an input argument and on entry
 ///     contains the block diagonal matrix D and the multipliers used
 ///     to obtain the factor U or L from the factorization
 ///     \f$ A = U D U^H \f$ or \f$ A = L D L^H \f$ as computed by `lapack::hetrf`.
-///     \n
-///     If fact = NotFactored, then AF is an output argument and on exit
+///
+///     - If fact = NotFactored, then AF is an output argument and on exit
 ///     returns the block diagonal matrix D and the multipliers used
 ///     to obtain the factor U or L from the factorization
 ///     \f$ A = U D U^H \f$ or \f$ A = L D L^H \f$.
@@ -141,22 +139,21 @@ int64_t hesvx(
 ///
 /// @param[in,out] ipiv
 ///     The vector ipiv of length n.
-///     \n
-///     If fact = Factored, then ipiv is an input argument and on entry
+///     - If fact = Factored, then ipiv is an input argument and on entry
 ///     contains details of the interchanges and the block structure
 ///     of D, as determined by `lapack::hetrf`.
 ///     If ipiv(k) > 0, then rows and columns k and ipiv(k) were
 ///     interchanged and D(k,k) is a 1-by-1 diagonal block.
-///     \n
-///     If uplo = Upper and ipiv(k) = ipiv(k-1) < 0, then rows and
+///
+///     - If uplo = Upper and ipiv(k) = ipiv(k-1) < 0, then rows and
 ///     columns k-1 and -ipiv(k) were interchanged and
 ///     D(k-1:k,k-1:k) is a 2-by-2 diagonal block.
-///     \n
-///     If uplo = Lower and ipiv(k) = ipiv(k+1) < 0, then rows and
+///
+///     - If uplo = Lower and ipiv(k) = ipiv(k+1) < 0, then rows and
 ///     columns k+1 and -ipiv(k) were interchanged and
 ///     D(k:k+1,k:k+1) is a 2-by-2 diagonal block.
-///     \n
-///     If fact = NotFactored, then ipiv is an output argument and on exit
+///
+///     - If fact = NotFactored, then ipiv is an output argument and on exit
 ///     contains details of the interchanges and the block structure
 ///     of D, as determined by `lapack::hetrf`.
 ///

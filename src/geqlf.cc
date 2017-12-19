@@ -136,12 +136,14 @@ int64_t geqlf(
 /// @param[in,out] A
 ///     The m-by-n matrix A, stored in an lda-by-n array.
 ///     On entry, the m-by-n matrix A.
-///     On exit,
-///     if m >= n, the lower triangle of the subarray
+///     On exit:
+///     - if m >= n, the lower triangle of the subarray
 ///     A(m-n+1:m,1:n) contains the n-by-n lower triangular matrix L;
-///     if m <= n, the elements on and below the (n-m)-th
+///
+///     - if m <= n, the elements on and below the (n-m)-th
 ///     superdiagonal contain the m-by-n lower trapezoidal matrix L.
-///     The remaining elements, with the array tau, represent the
+///
+///     - The remaining elements, with the array tau, represent the
 ///     unitary matrix Q as a product of elementary reflectors
 ///     (see Further Details).
 ///

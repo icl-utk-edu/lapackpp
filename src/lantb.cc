@@ -123,22 +123,18 @@ float lantb(
 ///     The order of the matrix A. n >= 0. When n = 0, returns zero.
 ///
 /// @param[in] k
-///     If uplo = Upper, the number of super-diagonals of the matrix A;
-///     \n
-///     if uplo = Lower, the number of sub-diagonals of the matrix A
-///     \n
-///     k >= 0.
+///     - If uplo = Upper, the number of super-diagonals of the matrix A;
+///     - if uplo = Lower, the number of sub-diagonals of the matrix A
+///     - k >= 0.
 ///
 /// @param[in] AB
 ///     The n-by-n band matrix AB, stored in an ldab-by-n array.
 ///     The upper or lower triangular band matrix A, stored in the
 ///     first k+1 rows of AB. The j-th column of A is stored
 ///     in the j-th column of the array AB as follows:
-///     \n
-///     if uplo = Upper, AB(k+1+i-j,j) = A(i,j) for max(1,j-k) <= i <= j;
-///     \n
-///     if uplo = Lower, AB(1+i-j,j) = A(i,j) for j <= i <= min(n,j+k).
-///     Note that when diag = Unit, the elements of the array AB
+///     - if uplo = Upper, AB(k+1+i-j,j) = A(i,j) for max(1,j-k) <= i <= j;
+///     - if uplo = Lower, AB(1+i-j,j) = A(i,j) for j <= i <= min(n,j+k).
+///     - Note that when diag = Unit, the elements of the array AB
 ///     corresponding to the diagonal elements of the matrix A are
 ///     not referenced, but are assumed to be one.
 ///

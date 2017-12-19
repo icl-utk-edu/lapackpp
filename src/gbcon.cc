@@ -173,8 +173,8 @@ int64_t gbcon(
 ///     interchanged with row ipiv(i).
 ///
 /// @param[in] anorm
-///     If norm = One, the 1-norm of the original matrix A.
-///     If norm = Inf, the infinity-norm of the original matrix A.
+///     - If norm = One, the 1-norm of the original matrix A.
+///     - If norm = Inf, the infinity-norm of the original matrix A.
 ///
 /// @param[out] rcond
 ///     The reciprocal of the condition number of the matrix A,

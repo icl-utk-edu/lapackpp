@@ -103,18 +103,17 @@ int64_t potrf(
 /// @param[in,out] A
 ///     The n-by-n matrix A, stored in an lda-by-n array.
 ///     On entry, the Hermitian matrix A.
-///     \n
-///     If uplo = Upper, the leading
+///     - If uplo = Upper, the leading
 ///     n-by-n upper triangular part of A contains the upper
 ///     triangular part of the matrix A, and the strictly lower
 ///     triangular part of A is not referenced.
-///     \n
-///     If uplo = Lower, the
+///
+///     - If uplo = Lower, the
 ///     leading n-by-n lower triangular part of A contains the lower
 ///     triangular part of the matrix A, and the strictly upper
 ///     triangular part of A is not referenced.
-///     \n
-///     On successful exit, the factor U or L from the Cholesky
+///
+///     - On successful exit, the factor U or L from the Cholesky
 ///     factorization \f$ A = U^H U \f$ or \f$ A = L L^H \f$.
 ///
 /// @param[in] lda

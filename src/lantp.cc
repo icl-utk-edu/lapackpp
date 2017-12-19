@@ -115,11 +115,9 @@ float lantp(
 ///     The upper or lower triangular matrix A, packed columnwise in
 ///     a linear array. The j-th column of A is stored in the array
 ///     AP as follows:
-///     \n
-///     if uplo = Upper, AP(i + (j-1)*j/2) = A(i,j) for 1 <= i <= j;
-///     \n
-///     if uplo = Lower, AP(i + (j-1)*(2n-j)/2) = A(i,j) for j <= i <= n.
-///     Note that when diag = Unit, the elements of the array AP
+///     - if uplo = Upper, AP(i + (j-1)*j/2) = A(i,j) for 1 <= i <= j;
+///     - if uplo = Lower, AP(i + (j-1)*(2n-j)/2) = A(i,j) for j <= i <= n.
+///     - Note that when diag = Unit, the elements of the array AP
 ///     corresponding to the diagonal elements of the matrix A are
 ///     not referenced, but are assumed to be one.
 ///

@@ -275,16 +275,17 @@ int64_t gbrfsx(
 /// @param[in,out] R
 ///     The vector R of length n.
 ///     The row scale factors for A.
-///     If equed = Row or Both, A is multiplied on the left by diag(R);
+///     - If equed = Row or Both, A is multiplied on the left by diag(R);
 ///     otherwise, R is not accessed.
-///     \n
-///     If fact = Factored, R is an input argument;
+///
+///     - If fact = Factored, R is an input argument;
 ///     otherwise, R is an output argument.
-///     \n
-///     If fact = Factored and
+///
+///     - If fact = Factored and
 ///     equed = Row or Both, each element of R must be positive.
-///     If R is output, each element of R is a power of the radix.
-///     If R is input, each element of R should be a power of the radix
+///
+///     - If R is output, each element of R is a power of the radix.
+///     - If R is input, each element of R should be a power of the radix
 ///     to ensure a reliable solution and error estimates. Scaling by
 ///     powers of the radix does not cause rounding errors unless the
 ///     result underflows or overflows. Rounding errors during scaling
@@ -295,16 +296,17 @@ int64_t gbrfsx(
 /// @param[in,out] C
 ///     The vector C of length n.
 ///     The column scale factors for A.
-///     If equed = Col or Both, A is multiplied on the right by diag(C);
+///     - If equed = Col or Both, A is multiplied on the right by diag(C);
 ///     otherwise, C is not accessed.
-///     \n
-///     If fact = Factored, C is an input argument;
+///
+///     - If fact = Factored, C is an input argument;
 ///     otherwise, C is an output argument.
-///     \n
-///     If fact = Factored and
+///
+///     - If fact = Factored and
 ///     equed = Col or Both, each element of C must be positive.
-///     If C is output, each element of C is a power of the radix.
-///     If C is input, each element of C should be a power of the radix
+///
+///     - If C is output, each element of C is a power of the radix.
+///     - If C is input, each element of C should be a power of the radix
 ///     to ensure a reliable solution and error estimates. Scaling by
 ///     powers of the radix does not cause rounding errors unless the
 ///     result underflows or overflows. Rounding errors during scaling
@@ -365,30 +367,31 @@ int64_t gbrfsx(
 ///     The array is indexed by the type of error information as described
 ///     below. There currently are up to three pieces of information
 ///     returned.
-///     \n
-///     The first index in err_bnds_norm(i,:) corresponds to the ith
+///     - The first index in err_bnds_norm(i,:) corresponds to the i-th
 ///     right-hand side.
-///     \n
-///     The second index in err_bnds_norm(:,err) contains the following
+///
+///     - The second index in err_bnds_norm(:,err) contains the following
 ///     three fields:
-///     - err = 1 "Trust/don't trust" boolean. Trust the answer if the
+///       - err = 1 "Trust/don't trust" boolean. Trust the answer if the
 ///               reciprocal condition number is less than the threshold
 ///               sqrt(n) * dlamch('Epsilon').
-///     - err = 2 "Guaranteed" error bound: The estimated forward error,
+///
+///       - err = 2 "Guaranteed" error bound: The estimated forward error,
 ///               almost certainly within a factor of 10 of the true error
 ///               so long as the next entry is greater than the threshold
 ///               sqrt(n) * dlamch('Epsilon'). This error bound should only
 ///               be trusted if the previous boolean is true.
-///     - err = 3 Reciprocal condition number: Estimated normwise
+///
+///       - err = 3 Reciprocal condition number: Estimated normwise
 ///               reciprocal condition number. Compared with the threshold
 ///               sqrt(n) * dlamch('Epsilon') to determine if the error
 ///               estimate is "guaranteed". These reciprocal condition
 ///               numbers are 1 / (norm(Z^{-1},inf) * norm(Z,inf)) for some
 ///               appropriately scaled matrix Z.
-///         Let \f$ Z = S A \f$, where S scales each row by a power of the
+///               Let \f$ Z = S A \f$, where S scales each row by a power of the
 ///               radix so all absolute row sums of Z are approximately 1.
-///     \n
-///     See Lapack Working Note 165 for further details and extra
+///
+///     - See Lapack Working Note 165 for further details and extra
 ///     cautions.
 ///
 /// @param[out] err_bnds_comp
@@ -397,7 +400,7 @@ int64_t gbrfsx(
 ///     various error bounds and condition numbers corresponding to the
 ///     componentwise relative error, which is defined as follows:
 ///     \n
-///     Componentwise relative error in the ith solution vector:
+///     Componentwise relative error in the i-th solution vector:
 /**
         \verbatim
                   abs(XTRUE(j,i) - X(j,i))
@@ -412,32 +415,31 @@ int64_t gbrfsx(
 ///     componentwise accuracy is not requested (params(3) = 0.0), then
 ///     err_bnds_comp is not accessed. If n_err_bnds < 3, then at most
 ///     the first (:,n_err_bnds) entries are returned.
-///     \n
-///     The first index in err_bnds_comp(i,:) corresponds to the ith
+///     - The first index in err_bnds_comp(i,:) corresponds to the i-th
 ///     right-hand side.
-///     \n
-///     The second index in err_bnds_comp(:,err) contains the following
+///
+///     - The second index in err_bnds_comp(:,err) contains the following
 ///     three fields:
-///     - err = 1 "Trust/don't trust" boolean. Trust the answer if the
-///         reciprocal condition number is less than the threshold
-///         sqrt(n) * dlamch('Epsilon').
-///     - err = 2 "Guaranteed" error bound: The estimated forward error,
-///         almost certainly within a factor of 10 of the true error
-///         so long as the next entry is greater than the threshold
-///         sqrt(n) * dlamch('Epsilon'). This error bound should only
-///         be trusted if the previous boolean is true.
-///     - err = 3 Reciprocal condition number: Estimated componentwise
-///         reciprocal condition number. Compared with the threshold
-///         sqrt(n) * dlamch('Epsilon') to determine if the error
-///         estimate is "guaranteed". These reciprocal condition
-///         numbers are 1 / (norm(Z^{-1},inf) * norm(Z,inf)) for some
-///         appropriately scaled matrix Z.
-///         Let Z = S*(A*diag(x)), where x is the solution for the
-///         current right-hand side and S scales each row of
-///         A*diag(x) by a power of the radix so all absolute row
-///         sums of Z are approximately 1.
-///     \n
-///     See Lapack Working Note 165 for further details and extra
+///       - err = 1 "Trust/don't trust" boolean. Trust the answer if the
+///           reciprocal condition number is less than the threshold
+///           sqrt(n) * dlamch('Epsilon').
+///       - err = 2 "Guaranteed" error bound: The estimated forward error,
+///           almost certainly within a factor of 10 of the true error
+///           so long as the next entry is greater than the threshold
+///           sqrt(n) * dlamch('Epsilon'). This error bound should only
+///           be trusted if the previous boolean is true.
+///       - err = 3 Reciprocal condition number: Estimated componentwise
+///           reciprocal condition number. Compared with the threshold
+///           sqrt(n) * dlamch('Epsilon') to determine if the error
+///           estimate is "guaranteed". These reciprocal condition
+///           numbers are 1 / (norm(Z^{-1},inf) * norm(Z,inf)) for some
+///           appropriately scaled matrix Z.
+///           Let Z = S*(A*diag(x)), where x is the solution for the
+///           current right-hand side and S scales each row of
+///           A*diag(x) by a power of the radix so all absolute row
+///           sums of Z are approximately 1.
+///
+///     - See Lapack Working Note 165 for further details and extra
 ///     cautions.
 ///
 /// @param[in] nparams
@@ -450,33 +452,32 @@ int64_t gbrfsx(
 ///     that entry will be filled with the default value used for that
 ///     parameter. Only positions up to nparams are accessed; defaults
 ///     are used for higher-numbered parameters.
-///     \n
-///     params(LA_LINRX_ITREF_I = 1) : Whether to perform iterative
-///       refinement or not.
-///     Default: 1.0
-///     - 0.0 : No refinement is performed, and no error bounds are
-///             computed.
-///     - 1.0 : Use the double-precision refinement algorithm,
-///             possibly with doubled-single computations if the
-///             compilation environment does not support DOUBLE
-///             PRECISION.
-///     - (other values are reserved for future use)
-///     \n
-///     params(LA_LINRX_ITHRESH_I = 2) : Maximum number of residual
-///       computations allowed for refinement.
-///     Default: 10
-///     Aggressive: Set to 100 to permit convergence using approximate
+///     - params(LA_LINRX_ITREF_I = 1):
+///       Whether to perform iterative refinement or not.
+///       - Default: 1.0
+///       - 0.0 : No refinement is performed, and no error bounds are
+///               computed.
+///       - 1.0 : Use the double-precision refinement algorithm,
+///               possibly with doubled-single computations if the
+///               compilation environment does not support double precision.
+///       - (other values are reserved for future use)
+///
+///     - params(LA_LINRX_ITHRESH_I = 2):
+///       Maximum number of residual computations allowed for refinement.
+///       - Default: 10
+///       - Aggressive: Set to 100 to permit convergence using approximate
 ///                factorizations or factorizations other than LU. If
 ///                the factorization uses a technique other than
 ///                Gaussian elimination, the guarantees in
 ///                err_bnds_norm and err_bnds_comp may no longer be
 ///                trustworthy.
-///     \n
-///     params(LA_LINRX_CWISE_I = 3) : Flag determining if the code
+///
+///     - params(LA_LINRX_CWISE_I = 3):
+///       Flag determining if the code
 ///       will attempt to find a solution with small componentwise
 ///       relative error in the double-precision algorithm. Positive
 ///       is true, 0.0 is false.
-///     Default: 1.0 (attempt componentwise convergence)
+///       - Default: 1.0 (attempt componentwise convergence)
 ///
 /// @retval = 0: Successful exit. The solution to every right-hand side is
 ///     guaranteed.

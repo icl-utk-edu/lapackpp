@@ -136,12 +136,14 @@ int64_t gerqf(
 /// @param[in,out] A
 ///     The m-by-n matrix A, stored in an lda-by-n array.
 ///     On entry, the m-by-n matrix A.
-///     On exit,
-///     if m <= n, the upper triangle of the subarray
+///     On exit:
+///     - if m <= n, the upper triangle of the subarray
 ///     A(1:m,n-m+1:n) contains the m-by-m upper triangular matrix R;
-///     if m >= n, the elements on and above the (m-n)-th subdiagonal
+///
+///     - if m >= n, the elements on and above the (m-n)-th subdiagonal
 ///     contain the m-by-n upper trapezoidal matrix R.
-///     The remaining elements, with the array tau, represent the
+///
+///     - The remaining elements, with the array tau, represent the
 ///     unitary matrix Q as a product of min(m,n) elementary
 ///     reflectors (see Further Details).
 ///

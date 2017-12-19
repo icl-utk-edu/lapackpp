@@ -2,6 +2,7 @@
 #include "lapack_fortran.h"
 
 #if LAPACK_VERSION_MAJOR >= 3 && LAPACK_VERSION_MINOR >= 3  // >= 3.3
+//#if LAPACK_VERSION >= 30300  // >= 3.3
 
 #include <vector>
 
@@ -12,10 +13,11 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup bbcsd
 int64_t bbcsd(
     lapack::JobCS jobu1, lapack::JobCS jobu2, lapack::JobCS jobv1t, lapack::JobCS jobv2t, lapack::Op trans, int64_t m, int64_t p, int64_t q,
-    float* THETA,
-    float* PHI,
+    float* theta,
+    float* phi,
     float* U1, int64_t ldu1,
     float* U2, int64_t ldu2,
     float* V1T, int64_t ldv1t,
@@ -56,7 +58,7 @@ int64_t bbcsd(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_sbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, THETA, PHI, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, qry_work, &ineg_one, &info_ );
+    LAPACK_sbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, theta, phi, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -65,7 +67,7 @@ int64_t bbcsd(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_sbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, THETA, PHI, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, &work[0], &lwork_, &info_ );
+    LAPACK_sbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, theta, phi, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -73,10 +75,11 @@ int64_t bbcsd(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup bbcsd
 int64_t bbcsd(
     lapack::JobCS jobu1, lapack::JobCS jobu2, lapack::JobCS jobv1t, lapack::JobCS jobv2t, lapack::Op trans, int64_t m, int64_t p, int64_t q,
-    double* THETA,
-    double* PHI,
+    double* theta,
+    double* phi,
     double* U1, int64_t ldu1,
     double* U2, int64_t ldu2,
     double* V1T, int64_t ldv1t,
@@ -117,7 +120,7 @@ int64_t bbcsd(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, THETA, PHI, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, qry_work, &ineg_one, &info_ );
+    LAPACK_dbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, theta, phi, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -126,7 +129,7 @@ int64_t bbcsd(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, THETA, PHI, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, &work[0], &lwork_, &info_ );
+    LAPACK_dbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, theta, phi, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -134,10 +137,11 @@ int64_t bbcsd(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup bbcsd
 int64_t bbcsd(
     lapack::JobCS jobu1, lapack::JobCS jobu2, lapack::JobCS jobv1t, lapack::JobCS jobv2t, lapack::Op trans, int64_t m, int64_t p, int64_t q,
-    float* THETA,
-    float* PHI,
+    float* theta,
+    float* phi,
     std::complex<float>* U1, int64_t ldu1,
     std::complex<float>* U2, int64_t ldu2,
     std::complex<float>* V1T, int64_t ldv1t,
@@ -178,7 +182,7 @@ int64_t bbcsd(
     // query for workspace size
     float qry_rwork[1];
     blas_int ineg_one = -1;
-    LAPACK_cbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, THETA, PHI, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, qry_rwork, &ineg_one, &info_ );
+    LAPACK_cbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, theta, phi, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, qry_rwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -187,7 +191,7 @@ int64_t bbcsd(
     // allocate workspace
     std::vector< float > rwork( lrwork_ );
 
-    LAPACK_cbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, THETA, PHI, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, &rwork[0], &lrwork_, &info_ );
+    LAPACK_cbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, theta, phi, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, &rwork[0], &lrwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -195,10 +199,200 @@ int64_t bbcsd(
 }
 
 // -----------------------------------------------------------------------------
+// (C-style comments avoid warnings about multi-line comments due to backslash)
+
+/// Computes the CS decomposition of a unitary matrix in
+/// bidiagonal-block form,
+///
+/** \f[
+        X =
+        \left[ \begin{array}{c|ccc}
+            B_{11}  &  B_{12}  &   0  &  0  \\
+            0       &  0       &  -I  &  0  \\
+            \hline
+            B_{21}  &  B_{22}  &   0  &  0  \\
+            0       &  0       &   0  &  I  \\
+        \end{array} \right]
+        =
+        \left[ \begin{array}{c|c}
+            U_{1}  &         \\
+            \hline
+                   &  U_{2}  \\
+        \end{array} \right]
+        \left[ \begin{array}{c|ccc}
+            C  &  -S  &   0  &  0  \\
+            0  &   0  &  -I  &  0  \\
+            \hline
+            S  &   C  &   0  &  0  \\
+            0  &   0  &   0  &  I  \\
+        \end{array} \right]
+        \left[ \begin{array}{c|c}
+            V_{1}  &         \\
+            \hline
+                   &  V_{2}  \\
+        \end{array} \right]^H
+    \f]
+*/
+///
+/// X is m-by-m, its top-left block is p-by-q, and q must be no larger
+/// than p, m-p, or m-q. (If q is not the smallest index, then X must be
+/// transposed and/or permuted. This can be done in constant time using
+/// the trans and signs options. See `lapack::uncsd` for details.)
+///
+/// The bidiagonal matrices B11, B12, B21, and B22 are represented
+/// implicitly by angles theta(1:q) and phi(1:q-1).
+///
+/// The unitary matrices U1, U2, V1T, and V2T are input/output.
+/// The input matrices are pre- or post-multiplied by the appropriate
+/// singular vector matrices.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] jobu1
+///     - lapack::JobCS::Update:   U1 is updated;
+///     - lapack::JobCS::NoUpdate: U1 is not updated.
+///
+/// @param[in] jobu2
+///     - lapack::JobCS::Update:   U2 is updated;
+///     - lapack::JobCS::NoUpdate: U2 is not updated.
+///
+/// @param[in] jobv1t
+///     - lapack::JobCS::Update:   V1T is updated;
+///     - lapack::JobCS::NoUpdate: V1T is not updated.
+///
+/// @param[in] jobv2t
+///     - lapack::JobCS::Update:   V2T is updated;
+///     - lapack::JobCS::NoUpdate: V2T is not updated.
+///
+/// @param[in] trans
+///     - lapack::Op::Trans:
+///             X, U1, U2, V1T, and V2T are stored in row-major order;
+///     - lapack::Op::NoTrans:
+///             X, U1, U2, V1T, and V2T are stored in column-major order.
+///
+/// @param[in] m
+///     The number of rows and columns in X, the unitary matrix in
+///     bidiagonal-block form.
+///
+/// @param[in] p
+///     The number of rows in the top-left block of X. 0 <= p <= m.
+///
+/// @param[in] q
+///     The number of columns in the top-left block of X.
+///     0 <= q <= min(p, m-p, m-q).
+///
+/// @param[in,out] theta
+///     The vector theta of length q.
+///     On entry, the angles theta(1), ..., theta(q) that, along with
+///     phi(1), ..., phi(q-1), define the matrix in bidiagonal-block
+///     form. On exit, the angles whose cosines and sines define the
+///     diagonal blocks in the CS decomposition.
+///
+/// @param[in,out] phi
+///     The vector phi of length q-1.
+///     The angles phi(1), ..., phi(q-1) that, along with
+///     theta(1), ..., theta(q), define the matrix in bidiagonal-block form.
+///
+/// @param[in,out] U1
+///     The p-by-p matrix U1, stored in an ldu1-by-p array.
+///     On entry, a p-by-p matrix. On exit, U1 is postmultiplied
+///     by the left singular vector matrix common to [ B11 ; 0 ] and
+///     [ B12 0 0 ; 0 -I 0 0 ].
+///
+/// @param[in] ldu1
+///     The leading dimension of the array U1, ldu1 >= max(1,p).
+///
+/// @param[in,out] U2
+///     The (m-p)-by-(m-p) matrix U2, stored in an ldu2-by-(m-p) array.
+///     On entry, an (m-p)-by-(m-p) matrix. On exit, U2 is
+///     postmultiplied by the left singular vector matrix common to
+///     [ B21 ; 0 ] and [ B22 0 0 ; 0 0 I ].
+///
+/// @param[in] ldu2
+///     The leading dimension of the array U2, ldu2 >= max(1,m-p).
+///
+/// @param[in,out] V1T
+///     The q-by-q matrix V1T, stored in an ldv1t-by-q array.
+///     On entry, a q-by-q matrix. On exit, V1T is premultiplied
+///     by the conjugate transpose of the right singular vector
+///     matrix common to [ B11 ; 0 ] and [ B21 ; 0 ].
+///
+/// @param[in] ldv1t
+///     The leading dimension of the array V1T, ldv1t >= max(1,q).
+///
+/// @param[in,out] V2T
+///     The (m-q)-by-(m-q) matrix V2T, stored in an ldv2t-by-(m-q) array.
+///     On entry, an (m-q)-by-(m-q) matrix. On exit, V2T is
+///     premultiplied by the conjugate transpose of the right
+///     singular vector matrix common to [ B12 0 0 ; 0 -I 0 ] and
+///     [ B22 0 0 ; 0 0 I ].
+///
+/// @param[in] ldv2t
+///     The leading dimension of the array V2T, ldv2t >= max(1,m-q).
+///
+/// @param[out] B11D
+///     The vector B11D of length q.
+///     When bbcsd converges, B11D contains the cosines of
+///     theta(1), ..., theta(q). If `bbcsd` fails to converge, then B11D
+///     contains the diagonal of the partially reduced top-left
+///     block.
+///
+/// @param[out] B11E
+///     The vector B11E of length q-1.
+///     When `bbcsd` converges, B11E contains zeros. If `bbcsd` fails
+///     to converge, then B11E contains the superdiagonal of the
+///     partially reduced top-left block.
+///
+/// @param[out] B12D
+///     The vector B12D of length q.
+///     When `bbcsd` converges, B12D contains the negative sines of
+///     theta(1), ..., theta(q). If `bbcsd` fails to converge, then
+///     B12D contains the diagonal of the partially reduced top-right
+///     block.
+///
+/// @param[out] B12E
+///     The vector B12E of length q-1.
+///     When `bbcsd` converges, B12E contains zeros. If `bbcsd` fails
+///     to converge, then B12E contains the subdiagonal of the
+///     partially reduced top-right block.
+///
+/// @param[out] B21D
+///     The vector B21D of length q.
+///     When `bbcsd` converges, B21D contains the negative sines of
+///     theta(1), ..., theta(q). If `bbcsd` fails to converge, then
+///     B21D contains the diagonal of the partially reduced bottom-left
+///     block.
+///
+/// @param[out] B21E
+///     The vector B21E of length q-1.
+///     When `bbcsd` converges, B21E contains zeros. If `bbcsd` fails
+///     to converge, then B21E contains the subdiagonal of the
+///     partially reduced bottom-left block.
+///
+/// @param[out] B22D
+///     The vector B22D of length q.
+///     When `bbcsd` converges, B22D contains the negative sines of
+///     theta(1), ..., theta(q). If `bbcsd` fails to converge, then
+///     B22D contains the diagonal of the partially reduced bottom-right
+///     block.
+///
+/// @param[out] B22E
+///     The vector B22E of length q-1.
+///     When `bbcsd` converges, B22E contains zeros. If `bbcsd` fails
+///     to converge, then B22E contains the subdiagonal of the
+///     partially reduced bottom-right block.
+///
+/// @retval = 0: successful exit.
+/// @retval > 0: did not converge; return value specifies the number
+///              of nonzero entries in phi, and B11D, B11E, etc.,
+///              contain the partially reduced matrix.
+///
+/// @ingroup bbcsd
 int64_t bbcsd(
     lapack::JobCS jobu1, lapack::JobCS jobu2, lapack::JobCS jobv1t, lapack::JobCS jobv2t, lapack::Op trans, int64_t m, int64_t p, int64_t q,
-    double* THETA,
-    double* PHI,
+    double* theta,
+    double* phi,
     std::complex<double>* U1, int64_t ldu1,
     std::complex<double>* U2, int64_t ldu2,
     std::complex<double>* V1T, int64_t ldv1t,
@@ -239,7 +433,7 @@ int64_t bbcsd(
     // query for workspace size
     double qry_rwork[1];
     blas_int ineg_one = -1;
-    LAPACK_zbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, THETA, PHI, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, qry_rwork, &ineg_one, &info_ );
+    LAPACK_zbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, theta, phi, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, qry_rwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -248,7 +442,7 @@ int64_t bbcsd(
     // allocate workspace
     std::vector< double > rwork( lrwork_ );
 
-    LAPACK_zbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, THETA, PHI, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, &rwork[0], &lrwork_, &info_ );
+    LAPACK_zbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, theta, phi, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, &rwork[0], &lrwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

@@ -10,6 +10,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup gbsv_computational
 int64_t gbcon(
     lapack::Norm norm, int64_t n, int64_t kl, int64_t ku,
     float const* AB, int64_t ldab,
@@ -49,6 +50,7 @@ int64_t gbcon(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup gbsv_computational
 int64_t gbcon(
     lapack::Norm norm, int64_t n, int64_t kl, int64_t ku,
     double const* AB, int64_t ldab,
@@ -88,6 +90,7 @@ int64_t gbcon(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup gbsv_computational
 int64_t gbcon(
     lapack::Norm norm, int64_t n, int64_t kl, int64_t ku,
     std::complex<float> const* AB, int64_t ldab,
@@ -127,6 +130,59 @@ int64_t gbcon(
 }
 
 // -----------------------------------------------------------------------------
+/// Estimates the reciprocal of the condition number of a
+/// general band matrix A, in either the 1-norm or the infinity-norm,
+/// using the LU factorization computed by `lapack::gbtrf`.
+///
+/// An estimate is obtained for norm(inv(A)), and the reciprocal of the
+/// condition number is computed as
+///     rcond = 1 / ( norm(A) * norm(inv(A)) ).
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] norm
+///     Whether the 1-norm condition number or the
+///     infinity-norm condition number is required:
+///     - lapack::Norm::One: 1-norm;
+///     - lapack::Norm::Inf: Infinity-norm.
+///
+/// @param[in] n
+///     The order of the matrix A. n >= 0.
+///
+/// @param[in] kl
+///     The number of subdiagonals within the band of A. kl >= 0.
+///
+/// @param[in] ku
+///     The number of superdiagonals within the band of A. ku >= 0.
+///
+/// @param[in] AB
+///     The n-by-n band matrix AB, stored in an ldab-by-n array.
+///     Details of the LU factorization of the band matrix A, as
+///     computed by `lapack::gbtrf`. U is stored as an upper triangular band
+///     matrix with kl+ku superdiagonals in rows 1 to kl+ku+1, and
+///     the multipliers used during the factorization are stored in
+///     rows kl+ku+2 to 2*kl+ku+1.
+///
+/// @param[in] ldab
+///     The leading dimension of the array AB. ldab >= 2*kl+ku+1.
+///
+/// @param[in] ipiv
+///     The vector ipiv of length n.
+///     The pivot indices; for 1 <= i <= n, row i of the matrix was
+///     interchanged with row ipiv(i).
+///
+/// @param[in] anorm
+///     If norm = One, the 1-norm of the original matrix A.
+///     If norm = Inf, the infinity-norm of the original matrix A.
+///
+/// @param[out] rcond
+///     The reciprocal of the condition number of the matrix A,
+///     computed as rcond = 1/(norm(A) * norm(inv(A))).
+///
+/// @retval = 0: successful exit
+///
+/// @ingroup gbsv_computational
 int64_t gbcon(
     lapack::Norm norm, int64_t n, int64_t kl, int64_t ku,
     std::complex<double> const* AB, int64_t ldab,

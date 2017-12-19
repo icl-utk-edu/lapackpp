@@ -12,10 +12,11 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup bdsvd
 int64_t bdsvdx(
     lapack::Uplo uplo, lapack::Job jobz, lapack::Range range, int64_t n,
-    float* D,
-    float* E, float vl, float vu, int64_t il, int64_t iu,
+    float const* D,
+    float const* E, float vl, float vu, int64_t il, int64_t iu,
     int64_t* ns,
     float* S,
     float* Z, int64_t ldz )
@@ -50,10 +51,140 @@ int64_t bdsvdx(
 }
 
 // -----------------------------------------------------------------------------
+/// Computes the singular value decomposition (SVD) of a real
+/// n-by-n (upper or lower) bidiagonal matrix B, \f$ B = U S VT \f$,
+/// where S is a diagonal matrix with non-negative diagonal elements
+/// (the singular values of B), and U and VT are orthogonal matrices
+/// of left and right singular vectors, respectively.
+///
+/// Given an upper bidiagonal B with diagonal \f$ D = [ d_1 d_2 ... d_n ] \f$
+/// and superdiagonal \f$ E = [ e_1 e_2 ... e_{n-1} ] \f$, `bdsvdx` computes the
+/// singular value decompositon of B through the eigenvalues and
+/// eigenvectors of the 2n-by-2n tridiagonal matrix
+/**
+    \f[
+    TGK = \left[ \begin{array}{cccccc}
+        0    &  d_1                              \\
+        d_1  &  0    &  e_1                      \\
+             &  e_1  &  0    &  d_2              \\
+             &       &  d_2  &  .    &  .        \\
+             &       &       &  .    &  .  &  .  \\
+          \end{array} \right]
+    \f]
+*/
+///
+/// If (s,u,v) is a singular triplet of B with ||u|| = ||v|| = 1, then
+/// (+/-s,q), ||q|| = 1, are eigenpairs of TGK, with q = P * (u' +/- v') /
+/// sqrt(2) = ( v_1 u_1 v_2 u_2 ... v_n u_n ) / sqrt(2), and
+/// P = [ e_{n+1} e_{1} e_{n+2} e_{2} ... ].
+///
+/// Given a TGK matrix, one can either a) compute -s,-v and change signs
+/// so that the singular values (and corresponding vectors) are already in
+/// descending order (as in `lapack::gesvd`/`lapack::gesdd`) or b) compute s,v and reorder
+/// the values (and corresponding vectors). `bdsvdx` implements a) by
+/// calling `lapack::stevx` (bisection plus inverse iteration, to be replaced
+/// with a version of the Multiple Relative Robust Representation
+/// algorithm. (See P. Willems and B. Lang, A framework for the MR^3
+/// algorithm: theory and implementation, SIAM J. Sci. Comput.,
+/// 35:740-766, 2013.)
+///
+/// Overloaded versions are available for
+/// `float`, `double`.
+///
+/// @param[in] uplo
+///     - lapack::Uplo::Upper: B is upper bidiagonal;
+///     - lapack::Uplo::Lower: B is lower bidiagonal.
+///
+/// @param[in] jobz
+///     - lapack::Job::NoVec: Compute singular values only;
+///     - lapack::Job::Vec:   Compute singular values and singular vectors.
+///
+/// @param[in] range
+///     - lapack::Range::All:
+///             all singular values will be found.
+///     - lapack::Range::Value:
+///             all singular values in the half-open interval [vl,vu) will be found.
+///     - lapack::Range::Index:
+///             the il-th through iu-th singular values will be found.
+///
+/// @param[in] n
+///     The order of the bidiagonal matrix. n >= 0.
+///
+/// @param[in] D
+///     The vector D of length n.
+///     The n diagonal elements of the bidiagonal matrix B.
+///
+/// @param[in] E
+///     The vector E of length max(1,n-1).
+///     The (n-1) superdiagonal elements of the bidiagonal matrix
+///     B in elements 1 to n-1.
+///
+/// @param[in] vl
+///     If range=Value, the lower bound of the interval to
+///     be searched for singular values. vu > vl.
+///     Not referenced if range = All or Index.
+///
+/// @param[in] vu
+///     If range=Value, the upper bound of the interval to
+///     be searched for singular values. vu > vl.
+///     Not referenced if range = All or Index.
+///
+/// @param[in] il
+///     If range=Index, the index of the
+///     smallest singular value to be returned.
+///     1 <= il <= iu <= min(M,n), if min(M,n) > 0.
+///     Not referenced if range = All or Value.
+///
+/// @param[in] iu
+///     If range=Index, the index of the
+///     largest singular value to be returned.
+///     1 <= il <= iu <= min(M,n), if min(M,n) > 0.
+///     Not referenced if range = All or Value.
+///
+/// @param[out] ns
+///     The total number of singular values found. 0 <= ns <= n.
+///     If range = All, ns = n, and if range = Index, ns = iu-il+1.
+///
+/// @param[out] S
+///     The vector S of length n.
+///     The first ns elements contain the selected singular values in
+///     ascending order.
+///
+/// @param[out] Z
+///     The (2*n)-by-k matrix Z, stored in an (2*n)-by-k array.
+///     If jobz = Vec, then if successful the first ns columns of Z
+///     contain the singular vectors of the matrix B corresponding to
+///     the selected singular values, with U in rows 1 to n and V
+///     in rows n+1 to n*2, i.e.
+/**
+        \f[
+        Z = \left[ \begin{array}{c}
+            U  \\
+            V  \\
+        \end{array} \right]
+        \f]
+*/
+///     If jobz = NoVec, then Z is not referenced.
+///     Note: The user must ensure that at least k = ns+1 columns are
+///     supplied in the array Z; if range = Value, the exact value of
+///     ns is not known in advance and an upper bound must be used.
+///
+/// @param[in] ldz
+///     The leading dimension of the array Z. ldz >= 1, and if
+///     jobz = Vec, ldz >= max(2,n*2).
+///
+/// @retval = 0: successful exit
+/// @retval > 0: if return value = i, then i eigenvectors failed to converge
+///              in `lapack::stevx`. The indices of the eigenvectors
+///              (as returned by `lapack::stevx`) are stored in the
+///              array iwork.
+/// @retval > n: if return value = n*2 + 1, an internal error occurred.
+///
+/// @ingroup bdsvd
 int64_t bdsvdx(
     lapack::Uplo uplo, lapack::Job jobz, lapack::Range range, int64_t n,
-    double* D,
-    double* E, double vl, double vu, int64_t il, int64_t iu,
+    double const* D,
+    double const* E, double vl, double vu, int64_t il, int64_t iu,
     int64_t* ns,
     double* S,
     double* Z, int64_t ldz )

@@ -10,6 +10,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup heev
 int64_t heevd(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     std::complex<float>* A, int64_t lda,
@@ -52,6 +53,62 @@ int64_t heevd(
 }
 
 // -----------------------------------------------------------------------------
+/// Computes all eigenvalues and, optionally, eigenvectors of a
+// Hermitian matrix A. If eigenvectors are desired, it uses a
+/// divide and conquer algorithm.
+///
+/// The divide and conquer algorithm makes very mild assumptions about
+/// floating point arithmetic. It will work on machines with a guard
+/// digit in add/subtract, or on those binary machines without guard
+/// digits which subtract like the Cray X-MP, Cray Y-MP, Cray C-90, or
+/// Cray-2. It could conceivably fail on hexadecimal or decimal machines
+/// without guard digits, but we know of none.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+/// For real matrices, this is an alias for `lapack::syevd`.
+///
+/// @param[in] jobz
+///     - lapack::Job::NoVec: Compute eigenvalues only;
+///     - lapack::Job::Vec:   Compute eigenvalues and eigenvectors.
+///
+/// @param[in] uplo
+///     - lapack::Uplo::Upper: Upper triangle of A is stored;
+///     - lapack::Uplo::Lower: Lower triangle of A is stored.
+///
+/// @param[in] n
+///     The order of the matrix A. n >= 0.
+///
+/// @param[in,out] A
+///     The n-by-n matrix A, stored in an lda-by-n array.
+///     On entry, the Hermitian matrix A. If uplo = Upper, the
+///     leading n-by-n upper triangular part of A contains the
+///     upper triangular part of the matrix A. If uplo = Lower,
+///     the leading n-by-n lower triangular part of A contains
+///     the lower triangular part of the matrix A.
+///     On exit, if jobz = Vec, then if successful, A contains the
+///     orthonormal eigenvectors of the matrix A.
+///     If jobz = NoVec, then on exit the lower triangle (if uplo=Lower)
+///     or the upper triangle (if uplo=Upper) of A, including the
+///     diagonal, is destroyed.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,n).
+///
+/// @param[out] W
+///     The vector W of length n.
+///     If successful, the eigenvalues in ascending order.
+///
+/// @retval = 0: successful exit
+/// @retval > 0: if return value = i and jobz = NoVec, then the algorithm failed
+///              to converge; i off-diagonal elements of an intermediate
+///              tridiagonal form did not converge to zero;
+///              if return value = i and jobz = Vec, then the algorithm failed
+///              to compute an eigenvalue while working on the submatrix
+///              lying in rows and columns info/(n+1) through
+///              mod(info,n+1).
+///
+/// @ingroup heev
 int64_t heevd(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     std::complex<double>* A, int64_t lda,

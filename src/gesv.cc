@@ -10,6 +10,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup gesv
 int64_t gesv(
     int64_t n, int64_t nrhs,
     float* A, int64_t lda,
@@ -47,6 +48,7 @@ int64_t gesv(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup gesv
 int64_t gesv(
     int64_t n, int64_t nrhs,
     double* A, int64_t lda,
@@ -84,6 +86,7 @@ int64_t gesv(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup gesv
 int64_t gesv(
     int64_t n, int64_t nrhs,
     std::complex<float>* A, int64_t lda,
@@ -121,6 +124,56 @@ int64_t gesv(
 }
 
 // -----------------------------------------------------------------------------
+/// Computes the solution to a system of linear equations
+///     \f$ A X = B \f$,
+/// where A is an n-by-n matrix and X and B are n-by-nrhs matrices.
+///
+/// The LU decomposition with partial pivoting and row interchanges is
+/// used to factor A as
+///     \f$ A = P L U \f$,
+/// where P is a permutation matrix, L is unit lower triangular, and U is
+/// upper triangular. The factored form of A is then used to solve the
+/// system of equations \f$ A X = B \f$.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] n
+///     The number of linear equations, i.e., the order of the
+///     matrix A. n >= 0.
+///
+/// @param[in] nrhs
+///     The number of right hand sides, i.e., the number of columns
+///     of the matrix B. nrhs >= 0.
+///
+/// @param[in,out] A
+///     The n-by-n matrix A, stored in an lda-by-n array.
+///     On entry, the n-by-n coefficient matrix A.
+///     On exit, the factors L and U from the factorization
+///     \f$ A = P L U \f$; the unit diagonal elements of L are not stored.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,n).
+///
+/// @param[out] ipiv
+///     The vector ipiv of length n.
+///     The pivot indices that define the permutation matrix P;
+///     row i of the matrix was interchanged with row ipiv(i).
+///
+/// @param[in,out] B
+///     The n-by-nrhs matrix B, stored in an ldb-by-nrhs array.
+///     On entry, the n-by-nrhs matrix of right hand side matrix B.
+///     On successful exit, the n-by-nrhs solution matrix X.
+///
+/// @param[in] ldb
+///     The leading dimension of the array B. ldb >= max(1,n).
+///
+/// @retval = 0: successful exit
+/// @retval > 0: if return value = i, U(i,i) is exactly zero. The factorization
+///              has been completed, but the factor U is exactly
+///              singular, so the solution could not be computed.
+///
+/// @ingroup gesv
 int64_t gesv(
     int64_t n, int64_t nrhs,
     std::complex<double>* A, int64_t lda,

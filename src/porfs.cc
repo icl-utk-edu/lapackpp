@@ -10,6 +10,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup posv_computational
 int64_t porfs(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     float const* A, int64_t lda,
@@ -49,6 +50,7 @@ int64_t porfs(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup posv_computational
 int64_t porfs(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double const* A, int64_t lda,
@@ -88,6 +90,7 @@ int64_t porfs(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup posv_computational
 int64_t porfs(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<float> const* A, int64_t lda,
@@ -127,6 +130,85 @@ int64_t porfs(
 }
 
 // -----------------------------------------------------------------------------
+/// Improves the computed solution to a system of linear
+/// equations when the coefficient matrix is Hermitian positive definite,
+/// and provides error bounds and backward error estimates for the
+/// solution.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] uplo
+///     - lapack::Uplo::Upper: Upper triangle of A is stored;
+///     - lapack::Uplo::Lower: Lower triangle of A is stored.
+///
+/// @param[in] n
+///     The order of the matrix A. n >= 0.
+///
+/// @param[in] nrhs
+///     The number of right hand sides, i.e., the number of columns
+///     of the matrices B and X. nrhs >= 0.
+///
+/// @param[in] A
+///     The n-by-n matrix A, stored in an lda-by-n array.
+///     The Hermitian matrix A.
+///     \n
+///     If uplo = Upper, the leading n-by-n
+///     upper triangular part of A contains the upper triangular part
+///     of the matrix A, and the strictly lower triangular part of A
+///     is not referenced.
+///     \n
+///     If uplo = Lower, the leading n-by-n lower
+///     triangular part of A contains the lower triangular part of
+///     the matrix A, and the strictly upper triangular part of A is
+///     not referenced.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,n).
+///
+/// @param[in] AF
+///     The n-by-n matrix AF, stored in an ldaf-by-n array.
+///     The triangular factor U or L from the Cholesky factorization
+///     \f$ A = U^H U \f$ or \f$ A = L L^H \f$, as computed by `lapack::potrf`.
+///
+/// @param[in] ldaf
+///     The leading dimension of the array AF. ldaf >= max(1,n).
+///
+/// @param[in] B
+///     The n-by-nrhs matrix B, stored in an ldb-by-nrhs array.
+///     The right hand side matrix B.
+///
+/// @param[in] ldb
+///     The leading dimension of the array B. ldb >= max(1,n).
+///
+/// @param[in,out] X
+///     The n-by-nrhs matrix X, stored in an ldx-by-nrhs array.
+///     On entry, the solution matrix X, as computed by `lapack::potrs`.
+///     On exit, the improved solution matrix X.
+///
+/// @param[in] ldx
+///     The leading dimension of the array X. ldx >= max(1,n).
+///
+/// @param[out] ferr
+///     The vector ferr of length nrhs.
+///     The estimated forward error bound for each solution vector
+///     X(j) (the j-th column of the solution matrix X).
+///     If XTRUE is the true solution corresponding to X(j), ferr(j)
+///     is an estimated upper bound for the magnitude of the largest
+///     element in (X(j) - XTRUE) divided by the magnitude of the
+///     largest element in X(j). The estimate is as reliable as
+///     the estimate for RCOND, and is almost always a slight
+///     overestimate of the true error.
+///
+/// @param[out] berr
+///     The vector berr of length nrhs.
+///     The componentwise relative backward error of each solution
+///     vector X(j) (i.e., the smallest relative change in
+///     any element of A or B that makes X(j) an exact solution).
+///
+/// @retval = 0: successful exit
+///
+/// @ingroup posv_computational
 int64_t porfs(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<double> const* A, int64_t lda,

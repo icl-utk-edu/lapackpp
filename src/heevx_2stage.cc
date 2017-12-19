@@ -12,6 +12,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup heev
 int64_t heevx_2stage(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     std::complex<float>* A, int64_t lda, float vl, float vu, int64_t il, int64_t iu, float abstol,
@@ -74,6 +75,159 @@ int64_t heevx_2stage(
 }
 
 // -----------------------------------------------------------------------------
+/// Computes selected eigenvalues and, optionally, eigenvectors
+/// of a Hermitian matrix A using the 2-stage technique for
+/// the reduction to tridiagonal. Eigenvalues and eigenvectors can
+/// be selected by specifying either a range of values or a range of
+/// indices for the desired eigenvalues.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] jobz
+///     - lapack::Job::NoVec: Compute eigenvalues only;
+///     - lapack::Job::Vec: Compute eigenvalues and eigenvectors.
+///         Not available in this release.
+///
+/// @param[in] range
+///     - lapack::Range::All: all eigenvalues will be found.
+///     - lapack::Range::Value: all eigenvalues in the half-open interval (vl,vu]
+///         will be found.
+///     - lapack::Range::Index: the il-th through iu-th eigenvalues will be found.
+///
+/// @param[in] uplo
+///     - lapack::Uplo::Upper: Upper triangle of A is stored;
+///     - lapack::Uplo::Lower: Lower triangle of A is stored.
+///
+/// @param[in] n
+///     The order of the matrix A. n >= 0.
+///
+/// @param[in,out] A
+///     The n-by-n matrix A, stored in an lda-by-n array.
+///     On entry, the Hermitian matrix A. If uplo = Upper, the
+///     leading n-by-n upper triangular part of A contains the
+///     upper triangular part of the matrix A. If uplo = Lower,
+///     the leading n-by-n lower triangular part of A contains
+///     the lower triangular part of the matrix A.
+///     On exit, the lower triangle (if uplo=Lower) or the upper
+///     triangle (if uplo=Upper) of A, including the diagonal, is
+///     destroyed.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,n).
+///
+/// @param[in] vl
+///     If range=Value, the lower bound of the interval to
+///     be searched for eigenvalues. vl < vu.
+///     Not referenced if range = All or Index.
+///
+/// @param[in] vu
+///     If range=Value, the upper bound of the interval to
+///     be searched for eigenvalues. vl < vu.
+///     Not referenced if range = All or Index.
+///
+/// @param[in] il
+///     If range=Index, the index of the
+///     smallest eigenvalue to be returned.
+///     1 <= il <= iu <= n, if n > 0; il = 1 and iu = 0 if n = 0.
+///     Not referenced if range = All or Value.
+///
+/// @param[in] iu
+///     If range=Index, the index of the
+///     largest eigenvalue to be returned.
+///     1 <= il <= iu <= n, if n > 0; il = 1 and iu = 0 if n = 0.
+///     Not referenced if range = All or Value.
+///
+/// @param[in] abstol
+///     The absolute error tolerance for the eigenvalues.
+///     An approximate eigenvalue is accepted as converged
+///     when it is determined to lie in an interval [a,b]
+///     of width less than or equal to
+///     \n
+///         abstol + EPS * max( |a|,|b| ),
+///     \n
+///     where EPS is the machine precision. If abstol is less than
+///     or equal to zero, then EPS*|T| will be used in its place,
+///     where |T| is the 1-norm of the tridiagonal matrix obtained
+///     by reducing A to tridiagonal form.
+///     \n
+///     Eigenvalues will be computed most accurately when abstol is
+///     set to twice the underflow threshold 2*DLAMCH('S'), not zero.
+///     If this routine returns with return value > 0, indicating that some
+///     eigenvectors did not converge, try setting abstol to
+///     2*DLAMCH('S').
+///     \n
+///     See "Computing Small Singular Values of Bidiagonal Matrices
+///     with Guaranteed High Relative Accuracy," by Demmel and
+///     Kahan, LAPACK Working Note #3.
+///
+/// @param[out] m
+///     The total number of eigenvalues found. 0 <= m <= n.
+///     If range = All, m = n, and if range = Index, m = iu-il+1.
+///
+/// @param[out] W
+///     The vector W of length n.
+///     On normal exit, the first m elements contain the selected
+///     eigenvalues in ascending order.
+///
+/// @param[out] Z
+///     The vector Z of length ldz, max(1,m).
+///     If jobz = Vec, then if successful, the first m columns of Z
+///     contain the orthonormal eigenvectors of the matrix A
+///     corresponding to the selected eigenvalues, with the i-th
+///     column of Z holding the eigenvector associated with W(i).
+///     If an eigenvector fails to converge, then that column of Z
+///     contains the latest approximation to the eigenvector, and the
+///     index of the eigenvector is returned in ifail.
+///     If jobz = NoVec, then Z is not referenced.
+///     Note: the user must ensure that at least max(1,m) columns are
+///     supplied in the array Z; if range = Value, the exact value of m
+///     is not known in advance and an upper bound must be used.
+///
+/// @param[in] ldz
+///     The leading dimension of the array Z. ldz >= 1, and if
+///     jobz = Vec, ldz >= max(1,n).
+///
+/// @param[out] ifail
+///     The vector ifail of length n.
+///     If jobz = Vec, then if successful, the first m elements of
+///     ifail are zero. If return value > 0, then ifail contains the
+///     indices of the eigenvectors that failed to converge.
+///     If jobz = NoVec, then ifail is not referenced.
+///
+/// @retval = 0: successful exit
+/// @retval > 0: if return value = i, then i eigenvectors failed to converge.
+///              Their indices are stored in array ifail.
+///
+// -----------------------------------------------------------------------------
+/// @par Further Details
+///
+/// All details about the 2-stage techniques are available in:
+///
+/// Azzam Haidar, Hatem Ltaief, and Jack Dongarra.
+/// Parallel reduction to condensed forms for symmetric eigenvalue problems
+/// using aggregated fine-grained and memory-aware kernels. In Proceedings
+/// of 2011 International Conference for High Performance Computing,
+/// Networking, Storage and Analysis (SC '11), New York, NY, USA,
+/// Article 8, 11 pages.
+/// http://doi.acm.org/10.1145/2063384.2063394
+///
+/// A. Haidar, J. Kurzak, P. Luszczek, 2013.
+/// An improved parallel singular value algorithm and its implementation
+/// for multicore hardware, In Proceedings of 2013 International Conference
+/// for High Performance Computing, Networking, Storage and Analysis (SC '13).
+/// Denver, Colorado, USA, 2013.
+/// Article 90, 12 pages.
+/// http://doi.acm.org/10.1145/2503210.2503292
+///
+/// A. Haidar, R. Solca, S. Tomov, T. Schulthess and J. Dongarra.
+/// A novel hybrid CPU-GPU generalized eigensolver for electronic structure
+/// calculations based on fine-grained memory aware tasks.
+/// International Journal of High Performance Computing Applications.
+/// Volume 28 Issue 2, Pages 196-209, May 2014.
+/// http://hpc.sagepub.com/content/28/2/196
+///
+/// @ingroup heev
 int64_t heevx_2stage(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     std::complex<double>* A, int64_t lda, double vl, double vu, int64_t il, int64_t iu, double abstol,

@@ -12,6 +12,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup heev
 int64_t syev_2stage(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     float* A, int64_t lda,
@@ -48,6 +49,8 @@ int64_t syev_2stage(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup heev
+/// @see lapack::heev_2stage
 int64_t syev_2stage(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,

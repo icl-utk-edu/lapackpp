@@ -10,6 +10,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup geev
 int64_t geev(
     lapack::Job jobvl, lapack::Job jobvr, int64_t n,
     float* A, int64_t lda,
@@ -60,6 +61,7 @@ int64_t geev(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup geev
 int64_t geev(
     lapack::Job jobvl, lapack::Job jobvr, int64_t n,
     double* A, int64_t lda,
@@ -110,6 +112,7 @@ int64_t geev(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup geev
 int64_t geev(
     lapack::Job jobvl, lapack::Job jobvr, int64_t n,
     std::complex<float>* A, int64_t lda,
@@ -154,6 +157,104 @@ int64_t geev(
 }
 
 // -----------------------------------------------------------------------------
+/// Computes for an n-by-n nonsymmetric matrix A, the
+/// eigenvalues and, optionally, the left and/or right eigenvectors.
+///
+/// The right eigenvector v_j of A satisfies
+///     \f$ A v_j = \lambda_j v_j \f$
+/// where \f$ lambda_j \f$ is its eigenvalue.
+/// The left eigenvector u_j of A satisfies
+///     \f$ u_j^H A = \lambda_j u_j^H \f$
+/// where \f$ u_j^H \f$ denotes the conjugate transpose of \f$ u_j \f$.
+///
+/// The computed eigenvectors are normalized to have Euclidean norm
+/// equal to 1 and largest component real.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] jobvl
+///     - lapack::Job::NoVec: left eigenvectors of A are not computed;
+///     - lapack::Job::Vec:   left eigenvectors of are computed.
+///
+/// @param[in] jobvr
+///     - lapack::Job::NoVec: right eigenvectors of A are not computed;
+///     - lapack::Job::Vec:   right eigenvectors of A are computed.
+///
+/// @param[in] n
+///     The order of the matrix A. n >= 0.
+///
+/// @param[in,out] A
+///     The n-by-n matrix A, stored in an lda-by-n array.
+///     On entry, the n-by-n matrix A.
+///     On exit, A has been overwritten.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,n).
+///
+/// @param[out] W
+///     The vector W of length n.
+///     W contains the computed eigenvalues.
+///     [Note: In LAPACK++, W is always complex, whereas with real matrices,
+///     LAPACK uses a split-complex representation (WR,WI) for W.]
+///
+/// @param[out] VL
+///     The n-by-n matrix VL, stored in an ldvl-by-n array.
+///     \n
+///     If jobvl = Vec, the left eigenvectors \f$ u_j \f$ are stored one
+///     after another in the columns of VL, in the same order
+///     as their eigenvalues.
+///     \n
+///     If jobvl = NoVec, VL is not referenced.
+///     \n
+///     For std::complex versions:
+///     \f$ u_j \f$ = VL(:,j), the j-th column of VL.
+///     \n
+///     For real (float, double) versions:
+///     If the j-th eigenvalue is real, then
+///     \f$ u_j \f$ = VL(:,j),
+///     the j-th column of VL.
+///     If the j-th and (j+1)-st eigenvalues form a complex
+///     conjugate pair, then
+///     \f$ u_j     \f$ = VL(:,j) + i*VL(:,j+1) and
+///     \f$ u_{j+1} \f$ = VL(:,j) - i*VL(:,j+1).
+///
+/// @param[in] ldvl
+///     The leading dimension of the array VL. ldvl >= 1;
+///     if jobvl = Vec, ldvl >= n.
+///
+/// @param[out] VR
+///     The n-by-n matrix VR, stored in an ldvr-by-n array.
+///     \n
+///     If jobvr = Vec, the right eigenvectors \f$ v_j \f$ are stored one
+///     after another in the columns of VR, in the same order
+///     as their eigenvalues.
+///     \n
+///     If jobvr = NoVec, VR is not referenced.
+///     \n
+///     For std::complex versions:
+///     \f$ v_j \f$ = VR(:,j), the j-th column of VR.
+///     \n
+///     For real (float, double) versions:
+///     If the j-th eigenvalue is real, then
+///     \f$ v_j \f$ = VR(:,j),
+///     the j-th column of VR.
+///     If the j-th and (j+1)-st eigenvalues form a complex
+///     conjugate pair, then
+///     \f$ v_j     \f$ = VR(:,j) + i*VR(:,j+1) and
+///     \f$ v_{j+1} \f$ = VR(:,j) - i*VR(:,j+1).
+///
+/// @param[in] ldvr
+///     The leading dimension of the array VR. ldvr >= 1;
+///     if jobvr = Vec, ldvr >= n.
+///
+/// @retval = 0: successful exit
+/// @retval > 0: if return value = i, the QR algorithm failed to compute all the
+///              eigenvalues, and no eigenvectors have been computed;
+///              elements i+1:n of W contain eigenvalues which have
+///              converged.
+///
+/// @ingroup geev
 int64_t geev(
     lapack::Job jobvl, lapack::Job jobvr, int64_t n,
     std::complex<double>* A, int64_t lda,

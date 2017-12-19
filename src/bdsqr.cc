@@ -10,6 +10,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup bdsvd
 int64_t bdsqr(
     lapack::Uplo uplo, int64_t n, int64_t ncvt, int64_t nru, int64_t ncc,
     float* D,
@@ -49,6 +50,7 @@ int64_t bdsqr(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup bdsvd
 int64_t bdsqr(
     lapack::Uplo uplo, int64_t n, int64_t ncvt, int64_t nru, int64_t ncc,
     double* D,
@@ -88,6 +90,7 @@ int64_t bdsqr(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup bdsvd
 int64_t bdsqr(
     lapack::Uplo uplo, int64_t n, int64_t ncvt, int64_t nru, int64_t ncc,
     float* D,
@@ -127,6 +130,106 @@ int64_t bdsqr(
 }
 
 // -----------------------------------------------------------------------------
+/// Computes the singular values and, optionally, the right and/or
+/// left singular vectors from the singular value decomposition (SVD) of
+/// a real n-by-n (upper or lower) bidiagonal matrix B using the implicit
+/// zero-shift QR algorithm. The SVD of B has the form
+///
+///     \f$ B = Q S P^H \f$
+///
+/// where S is the diagonal matrix of singular values, Q is an orthogonal
+/// matrix of left singular vectors, and P is an orthogonal matrix of
+/// right singular vectors. If left singular vectors are requested, this
+/// subroutine actually returns \f$ U Q \f$ instead of Q, and, if right singular
+/// vectors are requested, this subroutine returns \f$ P^H V^H \f$ instead of
+/// \f$ P^H \f$, for given input matrices U and VT \f$ = V^H \f$. When U and VT are
+/// the unitary matrices that reduce a general matrix A to bidiagonal
+/// form: \f$ A = U B V^H \f$, as computed by `lapack::gebrd`, then
+///
+///     \f$ A = (U Q) S (P^H V^H) \f$
+///
+/// is the SVD of A. Optionally, the subroutine may also compute \f$ Q^H C \f$
+/// for a given input matrix C.
+///
+/// See "Computing Small Singular Values of Bidiagonal Matrices With
+/// Guaranteed High Relative Accuracy," by J. Demmel and W. Kahan,
+/// LAPACK Working Note #3 (or SIAM J. Sci. Statist. Comput. vol. 11,
+/// no. 5, pp. 873-912, Sept 1990) and
+/// "Accurate singular values and differential qd algorithms," by
+/// B. Parlett and V. Fernando, Technical Report CPAM-554, Mathematics
+/// Department, University of California at Berkeley, July 1992
+/// for a detailed description of the algorithm.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] uplo
+///     - lapack::Uplo::Upper: B is upper bidiagonal;
+///     - lapack::Uplo::Lower: B is lower bidiagonal.
+///
+/// @param[in] n
+///     The order of the matrix B. n >= 0.
+///
+/// @param[in] ncvt
+///     The number of columns of the matrix VT. ncvt >= 0.
+///
+/// @param[in] nru
+///     The number of rows of the matrix U. nru >= 0.
+///
+/// @param[in] ncc
+///     The number of columns of the matrix C. ncc >= 0.
+///
+/// @param[in,out] D
+///     The vector D of length n.
+///     On entry, the n diagonal elements of the bidiagonal matrix B.
+///     On successful exit, the singular values of B in decreasing
+///     order.
+///
+/// @param[in,out] E
+///     The vector E of length n-1.
+///     On entry, the n-1 offdiagonal elements of the bidiagonal
+///     matrix B.
+///     On successful exit, E is destroyed; if return value > 0, D and E
+///     will contain the diagonal and superdiagonal elements of a
+///     bidiagonal matrix orthogonally equivalent to the one given
+///     as input.
+///
+/// @param[in,out] VT
+///     The n-by-ncvt matrix VT, stored in an ldvt-by-ncvt array.
+///     On entry, an n-by-ncvt matrix VT.
+///     On exit, VT is overwritten by \f$ P^H V^H \f$.
+///     Not referenced if ncvt = 0.
+///
+/// @param[in] ldvt
+///     The leading dimension of the array VT.
+///     ldvt >= max(1,n) if ncvt > 0; ldvt >= 1 if ncvt = 0.
+///
+/// @param[in,out] U
+///     The nru-by-n matrix U, stored in an ldu-by-n array.
+///     On entry, an nru-by-n matrix U.
+///     On exit, U is overwritten by \f$ U Q \f$.
+///     Not referenced if nru = 0.
+///
+/// @param[in] ldu
+///     The leading dimension of the array U. ldu >= max(1,nru).
+///
+/// @param[in,out] C
+///     The n-by-ncc matrix C, stored in an ldc-by-ncc array.
+///     On entry, an n-by-ncc matrix C.
+///     On exit, C is overwritten by \f$ Q^H C \f$.
+///     Not referenced if ncc = 0.
+///
+/// @param[in] ldc
+///     The leading dimension of the array C.
+///     ldc >= max(1,n) if ncc > 0; ldc >=1 if ncc = 0.
+///
+/// @retval = 0: successful exit
+/// @retval > 0: the algorithm did not converge; D and E contain the
+///              elements of a bidiagonal matrix which is orthogonally
+///              similar to the input matrix B; if return value = i, i
+///              elements of E have not converged to zero.
+///
+/// @ingroup bdsvd
 int64_t bdsqr(
     lapack::Uplo uplo, int64_t n, int64_t ncvt, int64_t nru, int64_t ncc,
     double* D,

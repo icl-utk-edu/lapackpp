@@ -10,6 +10,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup posv_computational
 int64_t potrs(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     float const* A, int64_t lda,
@@ -37,6 +38,7 @@ int64_t potrs(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup posv_computational
 int64_t potrs(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double const* A, int64_t lda,
@@ -64,6 +66,7 @@ int64_t potrs(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup posv_computational
 int64_t potrs(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<float> const* A, int64_t lda,
@@ -91,6 +94,43 @@ int64_t potrs(
 }
 
 // -----------------------------------------------------------------------------
+/// Solves a system of linear equations \f$ A X = B \f$ with a Hermitian
+/// positive definite matrix A using the Cholesky factorization
+/// \f$ A = U^H U \f$ or \f$ A = L L^H \f$ computed by `lapack::potrf`.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] uplo
+///     - lapack::Uplo::Upper: Upper triangle of A is stored;
+///     - lapack::Uplo::Lower: Lower triangle of A is stored.
+///
+/// @param[in] n
+///     The order of the matrix A. n >= 0.
+///
+/// @param[in] nrhs
+///     The number of right hand sides, i.e., the number of columns
+///     of the matrix B. nrhs >= 0.
+///
+/// @param[in] A
+///     The n-by-n matrix A, stored in an lda-by-n array.
+///     The triangular factor U or L from the Cholesky factorization
+///     \f$ A = U^H U \f$ or \f$ A = L L^H \f$, as computed by `lapack::potrf`.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,n).
+///
+/// @param[in,out] B
+///     The n-by-nrhs matrix B, stored in an ldb-by-nrhs array.
+///     On entry, the right hand side matrix B.
+///     On exit, the solution matrix X.
+///
+/// @param[in] ldb
+///     The leading dimension of the array B. ldb >= max(1,n).
+///
+/// @retval = 0: successful exit
+///
+/// @ingroup posv_computational
 int64_t potrs(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<double> const* A, int64_t lda,

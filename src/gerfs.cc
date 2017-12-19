@@ -10,6 +10,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup gesv_computational
 int64_t gerfs(
     lapack::Op trans, int64_t n, int64_t nrhs,
     float const* A, int64_t lda,
@@ -57,6 +58,7 @@ int64_t gerfs(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup gesv_computational
 int64_t gerfs(
     lapack::Op trans, int64_t n, int64_t nrhs,
     double const* A, int64_t lda,
@@ -104,6 +106,7 @@ int64_t gerfs(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup gesv_computational
 int64_t gerfs(
     lapack::Op trans, int64_t n, int64_t nrhs,
     std::complex<float> const* A, int64_t lda,
@@ -151,6 +154,81 @@ int64_t gerfs(
 }
 
 // -----------------------------------------------------------------------------
+/// Improves the computed solution to a system of linear
+/// equations and provides error bounds and backward error estimates for
+/// the solution.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] trans
+///     The form of the system of equations:
+///     - lapack::Op::NoTrans:   \f$ A   X = B \f$ (No transpose)
+///     - lapack::Op::Trans:     \f$ A^T X = B \f$ (Transpose)
+///     - lapack::Op::ConjTrans: \f$ A^H X = B \f$ (Conjugate transpose)
+///
+/// @param[in] n
+///     The order of the matrix A. n >= 0.
+///
+/// @param[in] nrhs
+///     The number of right hand sides, i.e., the number of columns
+///     of the matrices B and X. nrhs >= 0.
+///
+/// @param[in] A
+///     The n-by-n matrix A, stored in an lda-by-n array.
+///     The original n-by-n matrix A.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,n).
+///
+/// @param[in] AF
+///     The n-by-n matrix AF, stored in an ldaf-by-n array.
+///     The factors L and U from the factorization \f$ A = P L U \f$
+///     as computed by `lapack::getrf`.
+///
+/// @param[in] ldaf
+///     The leading dimension of the array AF. ldaf >= max(1,n).
+///
+/// @param[in] ipiv
+///     The vector ipiv of length n.
+///     The pivot indices from `lapack::getrf`; for 1 <= i <= n, row i of the
+///     matrix was interchanged with row ipiv(i).
+///
+/// @param[in] B
+///     The n-by-nrhs matrix B, stored in an ldb-by-nrhs array.
+///     The right hand side matrix B.
+///
+/// @param[in] ldb
+///     The leading dimension of the array B. ldb >= max(1,n).
+///
+/// @param[in,out] X
+///     The n-by-nrhs matrix X, stored in an ldx-by-nrhs array.
+///     On entry, the solution matrix X, as computed by `lapack::getrs`.
+///     On exit, the improved solution matrix X.
+///
+/// @param[in] ldx
+///     The leading dimension of the array X. ldx >= max(1,n).
+///
+/// @param[out] ferr
+///     The vector ferr of length nrhs.
+///     The estimated forward error bound for each solution vector
+///     X(j) (the j-th column of the solution matrix X).
+///     If XTRUE is the true solution corresponding to X(j), ferr(j)
+///     is an estimated upper bound for the magnitude of the largest
+///     element in (X(j) - XTRUE) divided by the magnitude of the
+///     largest element in X(j). The estimate is as reliable as
+///     the estimate for RCOND, and is almost always a slight
+///     overestimate of the true error.
+///
+/// @param[out] berr
+///     The vector berr of length nrhs.
+///     The componentwise relative backward error of each solution
+///     vector X(j) (i.e., the smallest relative change in
+///     any element of A or B that makes X(j) an exact solution).
+///
+/// @retval = 0: successful exit
+///
+/// @ingroup gesv_computational
 int64_t gerfs(
     lapack::Op trans, int64_t n, int64_t nrhs,
     std::complex<double> const* A, int64_t lda,

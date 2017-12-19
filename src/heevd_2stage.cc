@@ -12,6 +12,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup heev
 int64_t heevd_2stage(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     std::complex<float>* A, int64_t lda,
@@ -54,6 +55,92 @@ int64_t heevd_2stage(
 }
 
 // -----------------------------------------------------------------------------
+/// Computes all eigenvalues and, optionally, eigenvectors of a
+/// Hermitian matrix A using the 2-stage technique for
+/// the reduction to tridiagonal. If eigenvectors are desired, it uses a
+/// divide and conquer algorithm.
+///
+/// The divide and conquer algorithm makes very mild assumptions about
+/// floating point arithmetic. It will work on machines with a guard
+/// digit in add/subtract, or on those binary machines without guard
+/// digits which subtract like the Cray \f$ X- \f$MP, Cray \f$ Y- \f$MP, Cray \f$ C-90 \f$, or
+/// Cray-2. It could conceivably fail on hexadecimal or decimal machines
+/// without guard digits, but we know of none.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+/// For real matrices, this is an alias for `lapack::syevd_2stage`.
+///
+/// @param[in] jobz
+///     - lapack::Job::NoVec: Compute eigenvalues only;
+///     - lapack::Job::Vec:   Compute eigenvalues and eigenvectors.
+///                           Not yet available (as of LAPACK 3.8.0).
+///
+/// @param[in] uplo
+///     - lapack::Uplo::Upper: Upper triangle of A is stored;
+///     - lapack::Uplo::Lower: Lower triangle of A is stored.
+///
+/// @param[in] n
+///     The order of the matrix A. n >= 0.
+///
+/// @param[in,out] A
+///     The n-by-n matrix A, stored in an lda-by-n array.
+///     On entry, the Hermitian matrix A. If uplo = Upper, the
+///     leading n-by-n upper triangular part of A contains the
+///     upper triangular part of the matrix A. If uplo = Lower,
+///     the leading n-by-n lower triangular part of A contains
+///     the lower triangular part of the matrix A.
+///     On exit, if jobz = Vec, then if successful, A contains the
+///     orthonormal eigenvectors of the matrix A.
+///     If jobz = NoVec, then on exit the lower triangle (if uplo=Lower)
+///     or the upper triangle (if uplo=Upper) of A, including the
+///     diagonal, is destroyed.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,n).
+///
+/// @param[out] W
+///     The vector W of length n.
+///     If successful, the eigenvalues in ascending order.
+///
+/// @retval = 0: successful exit
+/// @retval > 0: if return value = i and jobz = NoVec, then the algorithm failed
+///              to converge; i off-diagonal elements of an intermediate
+///              tridiagonal form did not converge to zero;
+///              if return value = i and jobz = Vec, then the algorithm failed
+///              to compute an eigenvalue while working on the submatrix
+///              lying in rows and columns info/(n+1) through
+///              mod(info,n+1).
+///
+// -----------------------------------------------------------------------------
+/// @par Further Details
+///
+/// All details about the 2-stage techniques are available in:
+///
+/// Azzam Haidar, Hatem Ltaief, and Jack Dongarra.
+/// Parallel reduction to condensed forms for symmetric eigenvalue problems
+/// using aggregated fine-grained and memory-aware kernels. In Proceedings
+/// of 2011 International Conference for High Performance Computing,
+/// Networking, Storage and Analysis (SC '11), New York, NY, USA,
+/// Article 8, 11 pages.
+/// http://doi.acm.org/10.1145/2063384.2063394
+///
+/// A. Haidar, J. Kurzak, P. Luszczek, 2013.
+/// An improved parallel singular value algorithm and its implementation
+/// for multicore hardware, In Proceedings of 2013 International Conference
+/// for High Performance Computing, Networking, Storage and Analysis (SC '13).
+/// Denver, Colorado, USA, 2013.
+/// Article 90, 12 pages.
+/// http://doi.acm.org/10.1145/2503210.2503292
+///
+/// A. Haidar, R. Solca, S. Tomov, T. Schulthess and J. Dongarra.
+/// A novel hybrid CPU-GPU generalized eigensolver for electronic structure
+/// calculations based on fine-grained memory aware tasks.
+/// International Journal of High Performance Computing Applications.
+/// Volume 28 Issue 2, Pages 196-209, May 2014.
+/// http://hpc.sagepub.com/content/28/2/196
+///
+/// @ingroup heev
 int64_t heevd_2stage(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     std::complex<double>* A, int64_t lda,

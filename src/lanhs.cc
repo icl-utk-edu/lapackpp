@@ -90,7 +90,7 @@ float lanhs(
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
 ///
 /// @param[in] norm
-///     Specifies the value to be returned:
+///     The value to be returned:
 ///     - lapack::Norm::Max: max norm: max(abs(A(i,j))).
 ///                          Note this is not a consistent matrix norm.
 ///     - lapack::Norm::One: one norm: maximum column sum

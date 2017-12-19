@@ -12,6 +12,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup heev
 int64_t heevr_2stage(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     std::complex<float>* A, int64_t lda, float vl, float vu, int64_t il, int64_t iu, float abstol,
@@ -76,6 +77,218 @@ int64_t heevr_2stage(
 }
 
 // -----------------------------------------------------------------------------
+/// Computes selected eigenvalues and, optionally, eigenvectors
+/// of a Hermitian matrix A using the 2-stage technique for
+/// the reduction to tridiagonal. Eigenvalues and eigenvectors can
+/// be selected by specifying either a range of values or a range of
+/// indices for the desired eigenvalues.
+///
+/// `heevr_2stage` first reduces the matrix A to tridiagonal form T with a call
+/// to `lapack::hetrd`. Then, whenever possible, `heevr_2stage` calls `lapack::stemr` to compute
+/// eigenspectrum using Relatively Robust Representations. `lapack::stemr`
+/// computes eigenvalues by the dqds algorithm, while orthogonal
+/// eigenvectors are computed from various "good" L D \f$ L^T \f$ representations
+/// (also known as Relatively Robust Representations). Gram-Schmidt
+/// orthogonalization is avoided as far as possible. More specifically,
+/// the various steps of the algorithm are as follows.
+///
+/// For each unreduced block (submatrix) of T,
+///     (a) Compute \f$ T - \sigma I = L D L^T \f$, so that L and D
+///     define all the wanted eigenvalues to high relative accuracy.
+///     This means that small relative changes in the entries of D and L
+///     cause only small relative changes in the eigenvalues and
+///     eigenvectors. The standard (unfactored) representation of the
+///     tridiagonal matrix T does not have this property in general.
+///     (b) Compute the eigenvalues to suitable accuracy.
+///     If the eigenvectors are desired, the algorithm attains full
+///     accuracy of the computed eigenvalues only right before
+///     the corresponding vectors have to be computed, see steps c) and d).
+///     (c) For each cluster of close eigenvalues, select a new
+///     shift close to the cluster, find a new factorization, and refine
+///     the shifted eigenvalues to suitable accuracy.
+///     (d) For each eigenvalue with a large enough relative separation compute
+///     the corresponding eigenvector by forming a rank revealing twisted
+///     factorization. Go back to (c) for any clusters that remain.
+///
+/// The desired accuracy of the output can be specified by the input
+/// parameter abstol.
+///
+/// For more details, see `lapack::stemr` documentation and:
+/// - Inderjit S. Dhillon and Beresford n. Parlett: "Multiple representations
+///   to compute orthogonal eigenvectors of symmetric tridiagonal matrices,"
+///   Linear Algebra and its Applications, 387(1), pp. 1-28, August 2004.
+/// - Inderjit Dhillon and Beresford Parlett: "Orthogonal Eigenvectors and
+///   Relative Gaps," SIAM Journal on Matrix Analysis and Applications, Vol. 25,
+///   2004. Also LAPACK Working Note 154.
+/// - Inderjit Dhillon: "A new O(n^2) algorithm for the symmetric
+///   tridiagonal eigenvalue/eigenvector problem",
+///   Computer Science Division Technical Report No. UCB/CSD-97-971,
+///   UC Berkeley, May 1997.
+///
+///
+/// Note 1 : `heevr_2stage` calls `lapack::stemr` when the full spectrum is requested
+/// on machines which conform to the ieee-754 floating point standard.
+/// `heevr_2stage` calls `lapack::stebz` and `lapack::stein` on non-IEEE machines and
+/// when partial spectrum requests are made.
+///
+/// Normal execution of `lapack::stemr` may create NaNs and infinities and
+/// hence may abort due to a floating point exception in environments
+/// which do not handle NaNs and infinities in the IEEE standard default
+/// manner.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] jobz
+///     - lapack::Job::NoVec: Compute eigenvalues only;
+///     - lapack::Job::Vec: Compute eigenvalues and eigenvectors.
+///         Not available in this release.
+///
+/// @param[in] range
+///     - lapack::Range::All: all eigenvalues will be found.
+///     - lapack::Range::Value: all eigenvalues in the half-open interval (vl,vu]
+///         will be found.
+///     - lapack::Range::Index: the il-th through iu-th eigenvalues will be found.
+///     For range = Value or Index and iu - il < n - 1, `lapack::stebz` and
+///     `lapack::stein` are called
+///
+/// @param[in] uplo
+///     - lapack::Uplo::Upper: Upper triangle of A is stored;
+///     - lapack::Uplo::Lower: Lower triangle of A is stored.
+///
+/// @param[in] n
+///     The order of the matrix A. n >= 0.
+///
+/// @param[in,out] A
+///     The n-by-n matrix A, stored in an lda-by-n array.
+///     On entry, the Hermitian matrix A. If uplo = Upper, the
+///     leading n-by-n upper triangular part of A contains the
+///     upper triangular part of the matrix A. If uplo = Lower,
+///     the leading n-by-n lower triangular part of A contains
+///     the lower triangular part of the matrix A.
+///     On exit, the lower triangle (if uplo=Lower) or the upper
+///     triangle (if uplo=Upper) of A, including the diagonal, is
+///     destroyed.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,n).
+///
+/// @param[in] vl
+///     If range=Value, the lower bound of the interval to
+///     be searched for eigenvalues. vl < vu.
+///     Not referenced if range = All or Index.
+///
+/// @param[in] vu
+///     If range=Value, the upper bound of the interval to
+///     be searched for eigenvalues. vl < vu.
+///     Not referenced if range = All or Index.
+///
+/// @param[in] il
+///     If range=Index, the index of the
+///     smallest eigenvalue to be returned.
+///     1 <= il <= iu <= n, if n > 0; il = 1 and iu = 0 if n = 0.
+///     Not referenced if range = All or Value.
+///
+/// @param[in] iu
+///     If range=Index, the index of the
+///     largest eigenvalue to be returned.
+///     1 <= il <= iu <= n, if n > 0; il = 1 and iu = 0 if n = 0.
+///     Not referenced if range = All or Value.
+///
+/// @param[in] abstol
+///     The absolute error tolerance for the eigenvalues.
+///     An approximate eigenvalue is accepted as converged
+///     when it is determined to lie in an interval [a,b]
+///     of width less than or equal to
+///     \n
+///         abstol + EPS * max( |a|,|b| ),
+///     \n
+///     where EPS is the machine precision. If abstol is less than
+///     or equal to zero, then EPS*|T| will be used in its place,
+///     where |T| is the 1-norm of the tridiagonal matrix obtained
+///     by reducing A to tridiagonal form.
+///     \n
+///     See "Computing Small Singular Values of Bidiagonal Matrices
+///     with Guaranteed High Relative Accuracy," by Demmel and
+///     Kahan, LAPACK Working Note #3.
+///     \n
+///     If high relative accuracy is important, set abstol to
+///     DLAMCH( 'Safe minimum' ). Doing so will guarantee that
+///     eigenvalues are computed to high relative accuracy when
+///     possible in future releases. The current code does not
+///     make any guarantees about high relative accuracy, but
+///     future releases will. See J. Barlow and J. Demmel,
+///     "Computing Accurate Eigensystems of Scaled Diagonally
+///     Dominant Matrices", LAPACK Working Note #7, for a discussion
+///     of which matrices define their eigenvalues to high relative
+///     accuracy.
+///
+/// @param[out] m
+///     The total number of eigenvalues found. 0 <= m <= n.
+///     If range = All, m = n, and if range = Index, m = iu-il+1.
+///
+/// @param[out] W
+///     The vector W of length n.
+///     The first m elements contain the selected eigenvalues in
+///     ascending order.
+///
+/// @param[out] Z
+///     The vector Z of length ldz, max(1,m).
+///     If jobz = Vec, then if successful, the first m columns of Z
+///     contain the orthonormal eigenvectors of the matrix A
+///     corresponding to the selected eigenvalues, with the i-th
+///     column of Z holding the eigenvector associated with W(i).
+///     If jobz = NoVec, then Z is not referenced.
+///     Note: the user must ensure that at least max(1,m) columns are
+///     supplied in the array Z; if range = Value, the exact value of m
+///     is not known in advance and an upper bound must be used.
+///
+/// @param[in] ldz
+///     The leading dimension of the array Z. ldz >= 1, and if
+///     jobz = Vec, ldz >= max(1,n).
+///
+/// @param[out] isuppz
+///     The vector isuppz of length  2*max(1,m) .
+///     The support of the eigenvectors in Z, i.e., the indices
+///     indicating the nonzero elements in Z. The i-th eigenvector
+///     is nonzero only in elements isuppz( 2*i-1 ) through
+///     isuppz( 2*i ). This is an output of `lapack::stemr` (tridiagonal
+///     matrix). The support of the eigenvectors of A is typically
+///     1:n because of the unitary transformations applied by `lapack::unmtr`.
+///     Implemented only for range = All or Index and iu - il = n - 1
+///
+/// @retval = 0: successful exit
+/// @retval > 0: Internal error
+///
+// -----------------------------------------------------------------------------
+/// @par Further Details
+///
+/// All details about the 2-stage techniques are available in:
+///
+/// Azzam Haidar, Hatem Ltaief, and Jack Dongarra.
+/// Parallel reduction to condensed forms for symmetric eigenvalue problems
+/// using aggregated fine-grained and memory-aware kernels. In Proceedings
+/// of 2011 International Conference for High Performance Computing,
+/// Networking, Storage and Analysis (SC '11), New York, NY, USA,
+/// Article 8, 11 pages.
+/// http://doi.acm.org/10.1145/2063384.2063394
+///
+/// A. Haidar, J. Kurzak, P. Luszczek, 2013.
+/// An improved parallel singular value algorithm and its implementation
+/// for multicore hardware, In Proceedings of 2013 International Conference
+/// for High Performance Computing, Networking, Storage and Analysis (SC '13).
+/// Denver, Colorado, USA, 2013.
+/// Article 90, 12 pages.
+/// http://doi.acm.org/10.1145/2503210.2503292
+///
+/// A. Haidar, R. Solca, S. Tomov, T. Schulthess and J. Dongarra.
+/// A novel hybrid CPU-GPU generalized eigensolver for electronic structure
+/// calculations based on fine-grained memory aware tasks.
+/// International Journal of High Performance Computing Applications.
+/// Volume 28 Issue 2, Pages 196-209, May 2014.
+/// http://hpc.sagepub.com/content/28/2/196
+///
+/// @ingroup heev
 int64_t heevr_2stage(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     std::complex<double>* A, int64_t lda, double vl, double vu, int64_t il, int64_t iu, double abstol,

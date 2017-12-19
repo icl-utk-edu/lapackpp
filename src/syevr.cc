@@ -10,6 +10,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup heev
 int64_t syevr(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     float* A, int64_t lda, float vl, float vu, int64_t il, int64_t iu, float abstol,
@@ -71,6 +72,8 @@ int64_t syevr(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup heev
+/// @see lapack::heevr
 int64_t syevr(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda, double vl, double vu, int64_t il, int64_t iu, double abstol,

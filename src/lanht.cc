@@ -29,14 +29,14 @@ float lanht(
 // -----------------------------------------------------------------------------
 /// Returns the value of the one norm, Frobenius norm,
 /// infinity norm, or the element of largest absolute value of a
-/// complex Hermitian tridiagonal matrix A.
+/// Hermitian tridiagonal matrix A.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
-/// In real, this is an alias for lanst().
+/// For real matrices, this is an alias for `lapack::lanst`.
 ///
 /// @param[in] norm
-///     Specifies the value to be returned:
+///     The value to be returned:
 ///     - lapack::Norm::Max: max norm: max(abs(A(i,j))).
 ///                          Note this is not a consistent matrix norm.
 ///     - lapack::Norm::One: one norm: maximum column sum
@@ -47,10 +47,12 @@ float lanht(
 ///     The order of the matrix A. n >= 0. When n = 0, returns zero.
 ///
 /// @param[in] D
-///     The length n vector of diagonal elements of A.
+///     The vector D of length n.
+///     The diagonal elements of A.
 ///
 /// @param[in] E
-///     The length (n-1) vector of sub-diagonal or super-diagonal elements of A.
+///     The vector E of length n-1.
+///     The (n-1) sub-diagonal or super-diagonal elements of A.
 ///
 /// @ingroup norm
 double lanht(

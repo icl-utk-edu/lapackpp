@@ -10,6 +10,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup gesv_computational
 int64_t gecon(
     lapack::Norm norm, int64_t n,
     float const* A, int64_t lda, float anorm,
@@ -37,6 +38,7 @@ int64_t gecon(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup gesv_computational
 int64_t gecon(
     lapack::Norm norm, int64_t n,
     double const* A, int64_t lda, double anorm,
@@ -64,6 +66,7 @@ int64_t gecon(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup gesv_computational
 int64_t gecon(
     lapack::Norm norm, int64_t n,
     std::complex<float> const* A, int64_t lda, float anorm,
@@ -91,6 +94,46 @@ int64_t gecon(
 }
 
 // -----------------------------------------------------------------------------
+/// Estimates the reciprocal of the condition number of a general
+/// matrix A, in either the 1-norm or the infinity-norm, using
+/// the LU factorization computed by `lapack::getrf`.
+///
+/// An estimate is obtained for norm(inv(A)), and the reciprocal of the
+/// condition number is computed as
+///     rcond = 1 / ( norm(A) * norm(inv(A)) ).
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] norm
+///     Whether the 1-norm condition number or the
+///     infinity-norm condition number is required:
+///     - lapack::Norm::One: 1-norm;
+///     - lapack::Norm::Inf: Infinity-norm.
+///
+/// @param[in] n
+///     The order of the matrix A. n >= 0.
+///
+/// @param[in] A
+///     The n-by-n matrix A, stored in an lda-by-n array.
+///     The factors L and U from the factorization \f$ A = P L U \f$
+///     as computed by `lapack::getrf`.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,n).
+///
+/// @param[in] anorm
+///     If norm = One, the 1-norm of the original matrix A.
+///     \n
+///     If norm = Inf, the infinity-norm of the original matrix A.
+///
+/// @param[out] rcond
+///     The reciprocal of the condition number of the matrix A,
+///     computed as rcond = 1/(norm(A) * norm(inv(A))).
+///
+/// @retval = 0: successful exit
+///
+/// @ingroup gesv_computational
 int64_t gecon(
     lapack::Norm norm, int64_t n,
     std::complex<double> const* A, int64_t lda, double anorm,

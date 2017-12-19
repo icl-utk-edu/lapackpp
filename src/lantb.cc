@@ -102,7 +102,7 @@ float lantb(
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
 ///
 /// @param[in] norm
-///     Specifies the value to be returned:
+///     The value to be returned:
 ///     - lapack::Norm::Max: max norm: max(abs(A(i,j))).
 ///                          Note this is not a consistent matrix norm.
 ///     - lapack::Norm::One: one norm: maximum column sum
@@ -110,12 +110,12 @@ float lantb(
 ///     - lapack::Norm::Fro: Frobenius norm: square root of sum of squares
 ///
 /// @param[in] uplo
-///     Specifies whether the matrix A is upper or lower triangular.
+///     Whether the matrix A is upper or lower triangular.
 ///     - lapack::Uplo::Upper: Upper triangular
 ///     - lapack::Uplo::Lower: Lower triangular
 ///
 /// @param[in] diag
-///     Specifies whether or not the matrix A is unit triangular.
+///     Whether or not the matrix A is unit triangular.
 ///     - lapack::Diag::NonUnit: Non-unit triangular
 ///     - lapack::Diag::Unit: Unit triangular
 ///
@@ -130,15 +130,15 @@ float lantb(
 ///     k >= 0.
 ///
 /// @param[in] AB
-///     The n-by-n matrix AB, stored in an ldab-by-n array.
+///     The n-by-n band matrix AB, stored in an ldab-by-n array.
 ///     The upper or lower triangular band matrix A, stored in the
 ///     first k+1 rows of AB. The j-th column of A is stored
 ///     in the j-th column of the array AB as follows:
 ///     \n
-///     if uplo = Upper, AB(k+1+i-j,j) = A(i,j) for max(1,j-k)<=i<=j;
+///     if uplo = Upper, AB(k+1+i-j,j) = A(i,j) for max(1,j-k) <= i <= j;
 ///     \n
-///     if uplo = Lower, AB(1+i-j,j) = A(i,j) for j<=i<=min(n,j+k).
-///     Note that when diag = 'U', the elements of the array AB
+///     if uplo = Lower, AB(1+i-j,j) = A(i,j) for j <= i <= min(n,j+k).
+///     Note that when diag = Unit, the elements of the array AB
 ///     corresponding to the diagonal elements of the matrix A are
 ///     not referenced, but are assumed to be one.
 ///

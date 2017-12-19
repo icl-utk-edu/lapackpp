@@ -90,7 +90,7 @@ float lantp(
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
 ///
 /// @param[in] norm
-///     Specifies the value to be returned:
+///     The value to be returned:
 ///     - lapack::Norm::Max: max norm: max(abs(A(i,j))).
 ///                          Note this is not a consistent matrix norm.
 ///     - lapack::Norm::One: one norm: maximum column sum
@@ -98,12 +98,12 @@ float lantp(
 ///     - lapack::Norm::Fro: Frobenius norm: square root of sum of squares
 ///
 /// @param[in] uplo
-///     Specifies whether the matrix A is upper or lower triangular.
+///     Whether the matrix A is upper or lower triangular.
 ///     - lapack::Uplo::Upper: Upper triangular
 ///     - lapack::Uplo::Lower: Lower triangular
 ///
 /// @param[in] diag
-///     Specifies whether or not the matrix A is unit triangular.
+///     Whether or not the matrix A is unit triangular.
 ///     - lapack::Diag::NonUnit: Non-unit triangular
 ///     - lapack::Diag::Unit: Unit triangular
 ///
@@ -111,15 +111,15 @@ float lantp(
 ///     The order of the matrix A. n >= 0. When n = 0, returns zero.
 ///
 /// @param[in] AP
-///     The X-by-Y matrix AP, stored in an (n*(n+1)/2) array.
+///     The n-by-n matrix AP, packed in an (n*(n+1)/2) array.
 ///     The upper or lower triangular matrix A, packed columnwise in
 ///     a linear array. The j-th column of A is stored in the array
 ///     AP as follows:
 ///     \n
-///     if uplo = Upper, AP(i + (j-1)*j/2) = A(i,j) for 1<=i<=j;
+///     if uplo = Upper, AP(i + (j-1)*j/2) = A(i,j) for 1 <= i <= j;
 ///     \n
-///     if uplo = Lower, AP(i + (j-1)*(2n-j)/2) = A(i,j) for j<=i<=n.
-///     Note that when diag = 'U', the elements of the array AP
+///     if uplo = Lower, AP(i + (j-1)*(2n-j)/2) = A(i,j) for j <= i <= n.
+///     Note that when diag = Unit, the elements of the array AP
 ///     corresponding to the diagonal elements of the matrix A are
 ///     not referenced, but are assumed to be one.
 ///

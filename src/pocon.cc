@@ -10,6 +10,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup posv_computational
 int64_t pocon(
     lapack::Uplo uplo, int64_t n,
     float const* A, int64_t lda, float anorm,
@@ -37,6 +38,7 @@ int64_t pocon(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup posv_computational
 int64_t pocon(
     lapack::Uplo uplo, int64_t n,
     double const* A, int64_t lda, double anorm,
@@ -64,6 +66,7 @@ int64_t pocon(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup posv_computational
 int64_t pocon(
     lapack::Uplo uplo, int64_t n,
     std::complex<float> const* A, int64_t lda, float anorm,
@@ -91,6 +94,42 @@ int64_t pocon(
 }
 
 // -----------------------------------------------------------------------------
+/// Estimates the reciprocal of the condition number (in the
+/// 1-norm) of a Hermitian positive definite matrix using the
+/// Cholesky factorization \f$ A = U^H U \f$ or \f$ A = L L^H \f$ computed by `lapack::potrf`.
+///
+/// An estimate is obtained for norm(inv(A)), and the reciprocal of the
+/// condition number is computed as rcond = 1 / (anorm * norm(inv(A))).
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] uplo
+///     - lapack::Uplo::Upper: Upper triangle of A is stored;
+///     - lapack::Uplo::Lower: Lower triangle of A is stored.
+///
+/// @param[in] n
+///     The order of the matrix A. n >= 0.
+///
+/// @param[in] A
+///     The n-by-n matrix A, stored in an lda-by-n array.
+///     The triangular factor U or L from the Cholesky factorization
+///     \f$ A = U^H U \f$ or \f$ A = L L^H \f$, as computed by `lapack::potrf`.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,n).
+///
+/// @param[in] anorm
+///     The 1-norm (or infinity-norm) of the Hermitian matrix A.
+///
+/// @param[out] rcond
+///     The reciprocal of the condition number of the matrix A,
+///     computed as rcond = 1/(anorm * AINVNM), where AINVNM is an
+///     estimate of the 1-norm of inv(A) computed in this routine.
+///
+/// @retval = 0: successful exit
+///
+/// @ingroup posv_computational
 int64_t pocon(
     lapack::Uplo uplo, int64_t n,
     std::complex<double> const* A, int64_t lda, double anorm,

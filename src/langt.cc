@@ -66,13 +66,13 @@ float langt(
 // -----------------------------------------------------------------------------
 /// Returns the value of the one norm, Frobenius norm,
 /// infinity norm, or the element of largest absolute value of a
-/// complex tridiagonal matrix A.
+/// tridiagonal matrix A.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
 ///
 /// @param[in] norm
-///     Specifies the value to be returned:
+///     The value to be returned:
 ///     - lapack::Norm::Max: max norm: max(abs(A(i,j))).
 ///                          Note this is not a consistent matrix norm.
 ///     - lapack::Norm::One: one norm: maximum column sum
@@ -83,13 +83,16 @@ float langt(
 ///     The order of the matrix A. n >= 0. When n = 0, returns zero.
 ///
 /// @param[in] DL
-///     The length (n-1) vector of sub-diagonal elements of A.
+///     The vector DL of length n-1.
+///     The (n-1) sub-diagonal elements of A.
 ///
 /// @param[in] D
-///     The length n vector of diagonal elements of A.
+///     The vector D of length n.
+///     The diagonal elements of A.
 ///
 /// @param[in] DU
-///     The length (n-1) vector of super-diagonal elements of A.
+///     The vector DU of length n-1.
+///     The (n-1) super-diagonal elements of A.
 ///
 /// @ingroup norm
 double langt(

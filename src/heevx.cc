@@ -14,7 +14,7 @@ using blas::real;
 int64_t heevx(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     std::complex<float>* A, int64_t lda, float vl, float vu, int64_t il, int64_t iu, float abstol,
-    int64_t* m,
+    int64_t* nfound,
     float* W,
     std::complex<float>* Z, int64_t ldz,
     int64_t* ifail )
@@ -34,7 +34,7 @@ int64_t heevx(
     blas_int lda_ = (blas_int) lda;
     blas_int il_ = (blas_int) il;
     blas_int iu_ = (blas_int) iu;
-    blas_int m_ = (blas_int) *m;
+    blas_int nfound_ = (blas_int) *nfound;
     blas_int ldz_ = (blas_int) ldz;
     #if 1
         // 32-bit copy
@@ -50,7 +50,7 @@ int64_t heevx(
     float qry_rwork[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_cheevx( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, qry_work, &ineg_one, qry_rwork, qry_iwork, ifail_ptr, &info_ );
+    LAPACK_cheevx( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_, W, Z, &ldz_, qry_work, &ineg_one, qry_rwork, qry_iwork, ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -61,11 +61,11 @@ int64_t heevx(
     std::vector< float > rwork( (7*n) );
     std::vector< blas_int > iwork( (5*n) );
 
-    LAPACK_cheevx( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, &work[0], &lwork_, &rwork[0], &iwork[0], ifail_ptr, &info_ );
+    LAPACK_cheevx( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_, W, Z, &ldz_, &work[0], &lwork_, &rwork[0], &iwork[0], ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
-    *m = m_;
+    *nfound = nfound_;
     #if 1
         std::copy( ifail_.begin(), ifail_.end(), ifail );
     #endif
@@ -157,18 +157,18 @@ int64_t heevx(
 ///     with Guaranteed High Relative Accuracy," by Demmel and
 ///     Kahan, LAPACK Working Note #3.
 ///
-/// @param[out] m
-///     The total number of eigenvalues found. 0 <= m <= n.
-///     If range = All, m = n, and if range = Index, m = iu-il+1.
+/// @param[out] nfound
+///     The total number of eigenvalues found. 0 <= nfound <= n.
+///     If range = All, nfound = n, and if range = Index, nfound = iu-il+1.
 ///
 /// @param[out] W
 ///     The vector W of length n.
-///     On normal exit, the first m elements contain the selected
+///     On normal exit, the first nfound elements contain the selected
 ///     eigenvalues in ascending order.
 ///
 /// @param[out] Z
-///     The vector Z of length ldz, max(1,m).
-///     If jobz = Vec, then if successful, the first m columns of Z
+///     The vector Z of length ldz, max(1,nfound).
+///     If jobz = Vec, then if successful, the first nfound columns of Z
 ///     contain the orthonormal eigenvectors of the matrix A
 ///     corresponding to the selected eigenvalues, with the i-th
 ///     column of Z holding the eigenvector associated with W(i).
@@ -176,8 +176,8 @@ int64_t heevx(
 ///     contains the latest approximation to the eigenvector, and the
 ///     index of the eigenvector is returned in ifail.
 ///     If jobz = NoVec, then Z is not referenced.
-///     Note: the user must ensure that at least max(1,m) columns are
-///     supplied in the array Z; if range = Value, the exact value of m
+///     Note: the user must ensure that at least max(1,nfound) columns are
+///     supplied in the array Z; if range = Value, the exact value of nfound
 ///     is not known in advance and an upper bound must be used.
 ///
 /// @param[in] ldz
@@ -186,7 +186,7 @@ int64_t heevx(
 ///
 /// @param[out] ifail
 ///     The vector ifail of length n.
-///     If jobz = Vec, then if successful, the first m elements of
+///     If jobz = Vec, then if successful, the first nfound elements of
 ///     ifail are zero. If return value > 0, then ifail contains the
 ///     indices of the eigenvectors that failed to converge.
 ///     If jobz = NoVec, then ifail is not referenced.
@@ -199,7 +199,7 @@ int64_t heevx(
 int64_t heevx(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     std::complex<double>* A, int64_t lda, double vl, double vu, int64_t il, int64_t iu, double abstol,
-    int64_t* m,
+    int64_t* nfound,
     double* W,
     std::complex<double>* Z, int64_t ldz,
     int64_t* ifail )
@@ -219,7 +219,7 @@ int64_t heevx(
     blas_int lda_ = (blas_int) lda;
     blas_int il_ = (blas_int) il;
     blas_int iu_ = (blas_int) iu;
-    blas_int m_ = (blas_int) *m;
+    blas_int nfound_ = (blas_int) *nfound;
     blas_int ldz_ = (blas_int) ldz;
     #if 1
         // 32-bit copy
@@ -235,7 +235,7 @@ int64_t heevx(
     double qry_rwork[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_zheevx( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, qry_work, &ineg_one, qry_rwork, qry_iwork, ifail_ptr, &info_ );
+    LAPACK_zheevx( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_, W, Z, &ldz_, qry_work, &ineg_one, qry_rwork, qry_iwork, ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -246,11 +246,11 @@ int64_t heevx(
     std::vector< double > rwork( (7*n) );
     std::vector< blas_int > iwork( (5*n) );
 
-    LAPACK_zheevx( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, &work[0], &lwork_, &rwork[0], &iwork[0], ifail_ptr, &info_ );
+    LAPACK_zheevx( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_, W, Z, &ldz_, &work[0], &lwork_, &rwork[0], &iwork[0], ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
-    *m = m_;
+    *nfound = nfound_;
     #if 1
         std::copy( ifail_.begin(), ifail_.end(), ifail );
     #endif

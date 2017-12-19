@@ -17,7 +17,7 @@ int64_t bdsvdx(
     lapack::Uplo uplo, lapack::Job jobz, lapack::Range range, int64_t n,
     float const* D,
     float const* E, float vl, float vu, int64_t il, int64_t iu,
-    int64_t* ns,
+    int64_t* nfound,
     float* S,
     float* Z, int64_t ldz )
 {
@@ -34,7 +34,7 @@ int64_t bdsvdx(
     blas_int n_ = (blas_int) n;
     blas_int il_ = (blas_int) il;
     blas_int iu_ = (blas_int) iu;
-    blas_int ns_ = (blas_int) *ns;
+    blas_int nfound_ = (blas_int) *nfound;
     blas_int ldz_ = (blas_int) ldz;
     blas_int info_ = 0;
 
@@ -42,11 +42,11 @@ int64_t bdsvdx(
     std::vector< float > work( (14*n) );
     std::vector< blas_int > iwork( (12*n) );
 
-    LAPACK_sbdsvdx( &uplo_, &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &ns_, S, Z, &ldz_, &work[0], &iwork[0], &info_ );
+    LAPACK_sbdsvdx( &uplo_, &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &nfound_, S, Z, &ldz_, &work[0], &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
-    *ns = ns_;
+    *nfound = nfound_;
     return info_;
 }
 
@@ -141,18 +141,18 @@ int64_t bdsvdx(
 ///     1 <= il <= iu <= min(M,n), if min(M,n) > 0.
 ///     Not referenced if range = All or Value.
 ///
-/// @param[out] ns
-///     The total number of singular values found. 0 <= ns <= n.
-///     If range = All, ns = n, and if range = Index, ns = iu-il+1.
+/// @param[out] nfound
+///     The total number of singular values found. 0 <= nfound <= n.
+///     If range = All, nfound = n, and if range = Index, nfound = iu-il+1.
 ///
 /// @param[out] S
 ///     The vector S of length n.
-///     The first ns elements contain the selected singular values in
+///     The first nfound elements contain the selected singular values in
 ///     ascending order.
 ///
 /// @param[out] Z
 ///     The (2*n)-by-k matrix Z, stored in an (2*n)-by-k array.
-///     If jobz = Vec, then if successful the first ns columns of Z
+///     If jobz = Vec, then if successful the first nfound columns of Z
 ///     contain the singular vectors of the matrix B corresponding to
 ///     the selected singular values, with U in rows 1 to n and V
 ///     in rows n+1 to n*2, i.e.
@@ -165,9 +165,9 @@ int64_t bdsvdx(
         \f]
 */
 ///     If jobz = NoVec, then Z is not referenced.
-///     Note: The user must ensure that at least k = ns+1 columns are
+///     Note: The user must ensure that at least k = nfound+1 columns are
 ///     supplied in the array Z; if range = Value, the exact value of
-///     ns is not known in advance and an upper bound must be used.
+///     nfound is not known in advance and an upper bound must be used.
 ///
 /// @param[in] ldz
 ///     The leading dimension of the array Z. ldz >= 1, and if
@@ -185,7 +185,7 @@ int64_t bdsvdx(
     lapack::Uplo uplo, lapack::Job jobz, lapack::Range range, int64_t n,
     double const* D,
     double const* E, double vl, double vu, int64_t il, int64_t iu,
-    int64_t* ns,
+    int64_t* nfound,
     double* S,
     double* Z, int64_t ldz )
 {
@@ -202,7 +202,7 @@ int64_t bdsvdx(
     blas_int n_ = (blas_int) n;
     blas_int il_ = (blas_int) il;
     blas_int iu_ = (blas_int) iu;
-    blas_int ns_ = (blas_int) *ns;
+    blas_int nfound_ = (blas_int) *nfound;
     blas_int ldz_ = (blas_int) ldz;
     blas_int info_ = 0;
 
@@ -210,11 +210,11 @@ int64_t bdsvdx(
     std::vector< double > work( (14*n) );
     std::vector< blas_int > iwork( (12*n) );
 
-    LAPACK_dbdsvdx( &uplo_, &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &ns_, S, Z, &ldz_, &work[0], &iwork[0], &info_ );
+    LAPACK_dbdsvdx( &uplo_, &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &nfound_, S, Z, &ldz_, &work[0], &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
-    *ns = ns_;
+    *nfound = nfound_;
     return info_;
 }
 

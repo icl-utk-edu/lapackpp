@@ -14,7 +14,7 @@ using blas::real;
 int64_t heevr(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     std::complex<float>* A, int64_t lda, float vl, float vu, int64_t il, int64_t iu, float abstol,
-    int64_t* m,
+    int64_t* nfound,
     float* W,
     std::complex<float>* Z, int64_t ldz,
     int64_t* isuppz )
@@ -34,11 +34,11 @@ int64_t heevr(
     blas_int lda_ = (blas_int) lda;
     blas_int il_ = (blas_int) il;
     blas_int iu_ = (blas_int) iu;
-    blas_int m_ = (blas_int) *m;
+    blas_int nfound_ = (blas_int) *nfound;
     blas_int ldz_ = (blas_int) ldz;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > isuppz_( (2*max( 1, n )) );  // was max(1,m), n >= m
+        std::vector< blas_int > isuppz_( (2*max( 1, n )) );  // was max(1,nfound), n >= nfound
         blas_int* isuppz_ptr = &isuppz_[0];
     #else
         blas_int* isuppz_ptr = isuppz;
@@ -50,7 +50,7 @@ int64_t heevr(
     float qry_rwork[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_cheevr( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, isuppz_ptr, qry_work, &ineg_one, qry_rwork, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_cheevr( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_, W, Z, &ldz_, isuppz_ptr, qry_work, &ineg_one, qry_rwork, &ineg_one, qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -63,11 +63,11 @@ int64_t heevr(
     std::vector< float > rwork( lrwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_cheevr( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, isuppz_ptr, &work[0], &lwork_, &rwork[0], &lrwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_cheevr( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_, W, Z, &ldz_, isuppz_ptr, &work[0], &lwork_, &rwork[0], &lrwork_, &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
-    *m = m_;
+    *nfound = nfound_;
     #if 1
         std::copy( isuppz_.begin(), isuppz_.end(), isuppz );
     #endif
@@ -230,26 +230,26 @@ int64_t heevr(
 ///     of which matrices define their eigenvalues to high relative
 ///     accuracy.
 ///
-/// @param[out] m
-///     The total number of eigenvalues found. 0 <= m <= n.
-///     If range = All, m = n; and if range = Index, m = iu-il+1.
+/// @param[out] nfound
+///     The total number of eigenvalues found. 0 <= nfound <= n.
+///     If range = All, nfound = n; and if range = Index, nfound = iu-il+1.
 ///
 /// @param[out] W
 ///     The vector W of length n.
-///     The first m elements contain the selected eigenvalues in
+///     The first nfound elements contain the selected eigenvalues in
 ///     ascending order.
 ///
 /// @param[out] Z
-///     The vector Z of length ldz, max(1,m).
+///     The vector Z of length ldz, max(1,nfound).
 ///     \n
-///     If jobz = Vec, then if successful, the first m columns of Z
+///     If jobz = Vec, then if successful, the first nfound columns of Z
 ///     contain the orthonormal eigenvectors of the matrix A
 ///     corresponding to the selected eigenvalues, with the i-th
 ///     column of Z holding the eigenvector associated with W(i).
 ///     \n
 ///     If jobz = NoVec, then Z is not referenced.
-///     Note: the user must ensure that at least max(1,m) columns are
-///     supplied in the array Z; if range = Value, the exact value of m
+///     Note: the user must ensure that at least max(1,nfound) columns are
+///     supplied in the array Z; if range = Value, the exact value of nfound
 ///     is not known in advance and an upper bound must be used.
 ///
 /// @param[in] ldz
@@ -257,7 +257,7 @@ int64_t heevr(
 ///     jobz = Vec, ldz >= max(1,n).
 ///
 /// @param[out] isuppz
-///     The vector isuppz of length  2*max(1,m) .
+///     The vector isuppz of length  2*max(1,nfound) .
 ///     The support of the eigenvectors in Z, i.e., the indices
 ///     indicating the nonzero elements in Z. The i-th eigenvector
 ///     is nonzero only in elements isuppz( 2*i-1 ) through
@@ -273,7 +273,7 @@ int64_t heevr(
 int64_t heevr(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     std::complex<double>* A, int64_t lda, double vl, double vu, int64_t il, int64_t iu, double abstol,
-    int64_t* m,
+    int64_t* nfound,
     double* W,
     std::complex<double>* Z, int64_t ldz,
     int64_t* isuppz )
@@ -293,11 +293,11 @@ int64_t heevr(
     blas_int lda_ = (blas_int) lda;
     blas_int il_ = (blas_int) il;
     blas_int iu_ = (blas_int) iu;
-    blas_int m_ = (blas_int) *m;
+    blas_int nfound_ = (blas_int) *nfound;
     blas_int ldz_ = (blas_int) ldz;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > isuppz_( (2*max( 1, n )) );  // was max(1,m), n >= m
+        std::vector< blas_int > isuppz_( (2*max( 1, n )) );  // was max(1,nfound), n >= nfound
         blas_int* isuppz_ptr = &isuppz_[0];
     #else
         blas_int* isuppz_ptr = isuppz;
@@ -309,7 +309,7 @@ int64_t heevr(
     double qry_rwork[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_zheevr( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, isuppz_ptr, qry_work, &ineg_one, qry_rwork, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_zheevr( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_, W, Z, &ldz_, isuppz_ptr, qry_work, &ineg_one, qry_rwork, &ineg_one, qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -322,11 +322,11 @@ int64_t heevr(
     std::vector< double > rwork( lrwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_zheevr( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, isuppz_ptr, &work[0], &lwork_, &rwork[0], &lrwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_zheevr( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_, W, Z, &ldz_, isuppz_ptr, &work[0], &lwork_, &rwork[0], &lrwork_, &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
-    *m = m_;
+    *nfound = nfound_;
     #if 1
         std::copy( isuppz_.begin(), isuppz_.end(), isuppz );
     #endif

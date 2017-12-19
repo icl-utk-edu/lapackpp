@@ -10,12 +10,13 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup syev_computational
 int64_t sytrd(
     lapack::Uplo uplo, int64_t n,
     float* A, int64_t lda,
     float* D,
     float* E,
-    float* TAU )
+    float* tau )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -30,7 +31,7 @@ int64_t sytrd(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_ssytrd( &uplo_, &n_, A, &lda_, D, E, TAU, qry_work, &ineg_one, &info_ );
+    LAPACK_ssytrd( &uplo_, &n_, A, &lda_, D, E, tau, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -39,7 +40,7 @@ int64_t sytrd(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_ssytrd( &uplo_, &n_, A, &lda_, D, E, TAU, &work[0], &lwork_, &info_ );
+    LAPACK_ssytrd( &uplo_, &n_, A, &lda_, D, E, tau, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -47,12 +48,14 @@ int64_t sytrd(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup syev_computational
+/// @see lapack::hetrd
 int64_t sytrd(
     lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     double* D,
     double* E,
-    double* TAU )
+    double* tau )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -67,7 +70,7 @@ int64_t sytrd(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dsytrd( &uplo_, &n_, A, &lda_, D, E, TAU, qry_work, &ineg_one, &info_ );
+    LAPACK_dsytrd( &uplo_, &n_, A, &lda_, D, E, tau, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -76,7 +79,7 @@ int64_t sytrd(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dsytrd( &uplo_, &n_, A, &lda_, D, E, TAU, &work[0], &lwork_, &info_ );
+    LAPACK_dsytrd( &uplo_, &n_, A, &lda_, D, E, tau, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

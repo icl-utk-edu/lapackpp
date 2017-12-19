@@ -10,10 +10,11 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup syev_computational
 int64_t ormtr(
     lapack::Side side, lapack::Uplo uplo, lapack::Op trans, int64_t m, int64_t n,
     float const* A, int64_t lda,
-    float const* TAU,
+    float const* tau,
     float* C, int64_t ldc )
 {
     // check for overflow
@@ -35,7 +36,7 @@ int64_t ormtr(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_sormtr( &side_, &uplo_, &trans_, &m_, &n_, A, &lda_, TAU, C, &ldc_, qry_work, &ineg_one, &info_ );
+    LAPACK_sormtr( &side_, &uplo_, &trans_, &m_, &n_, A, &lda_, tau, C, &ldc_, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -44,7 +45,7 @@ int64_t ormtr(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_sormtr( &side_, &uplo_, &trans_, &m_, &n_, A, &lda_, TAU, C, &ldc_, &work[0], &lwork_, &info_ );
+    LAPACK_sormtr( &side_, &uplo_, &trans_, &m_, &n_, A, &lda_, tau, C, &ldc_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -52,10 +53,12 @@ int64_t ormtr(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup syev_computational
+/// @see lapack::unmtr
 int64_t ormtr(
     lapack::Side side, lapack::Uplo uplo, lapack::Op trans, int64_t m, int64_t n,
     double const* A, int64_t lda,
-    double const* TAU,
+    double const* tau,
     double* C, int64_t ldc )
 {
     // check for overflow
@@ -77,7 +80,7 @@ int64_t ormtr(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dormtr( &side_, &uplo_, &trans_, &m_, &n_, A, &lda_, TAU, C, &ldc_, qry_work, &ineg_one, &info_ );
+    LAPACK_dormtr( &side_, &uplo_, &trans_, &m_, &n_, A, &lda_, tau, C, &ldc_, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -86,7 +89,7 @@ int64_t ormtr(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dormtr( &side_, &uplo_, &trans_, &m_, &n_, A, &lda_, TAU, C, &ldc_, &work[0], &lwork_, &info_ );
+    LAPACK_dormtr( &side_, &uplo_, &trans_, &m_, &n_, A, &lda_, tau, C, &ldc_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

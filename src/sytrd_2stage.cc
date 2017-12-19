@@ -12,13 +12,14 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup syev_computational
 int64_t sytrd_2stage(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     float* A, int64_t lda,
     float* D,
     float* E,
-    float* TAU,
-    float* HOUS2, int64_t lhous2 )
+    float* tau,
+    float* hous2, int64_t lhous2 )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -36,7 +37,7 @@ int64_t sytrd_2stage(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_ssytrd_2stage( &jobz_, &uplo_, &n_, A, &lda_, D, E, TAU, HOUS2, &lhous2_, qry_work, &ineg_one, &info_ );
+    LAPACK_ssytrd_2stage( &jobz_, &uplo_, &n_, A, &lda_, D, E, tau, hous2, &lhous2_, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -45,7 +46,7 @@ int64_t sytrd_2stage(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_ssytrd_2stage( &jobz_, &uplo_, &n_, A, &lda_, D, E, TAU, HOUS2, &lhous2_, &work[0], &lwork_, &info_ );
+    LAPACK_ssytrd_2stage( &jobz_, &uplo_, &n_, A, &lda_, D, E, tau, hous2, &lhous2_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -53,13 +54,15 @@ int64_t sytrd_2stage(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup syev_computational
+/// @see lapack::hetrd_2stage
 int64_t sytrd_2stage(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     double* D,
     double* E,
-    double* TAU,
-    double* HOUS2, int64_t lhous2 )
+    double* tau,
+    double* hous2, int64_t lhous2 )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -77,7 +80,7 @@ int64_t sytrd_2stage(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dsytrd_2stage( &jobz_, &uplo_, &n_, A, &lda_, D, E, TAU, HOUS2, &lhous2_, qry_work, &ineg_one, &info_ );
+    LAPACK_dsytrd_2stage( &jobz_, &uplo_, &n_, A, &lda_, D, E, tau, hous2, &lhous2_, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -86,7 +89,7 @@ int64_t sytrd_2stage(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dsytrd_2stage( &jobz_, &uplo_, &n_, A, &lda_, D, E, TAU, HOUS2, &lhous2_, &work[0], &lwork_, &info_ );
+    LAPACK_dsytrd_2stage( &jobz_, &uplo_, &n_, A, &lda_, D, E, tau, hous2, &lhous2_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

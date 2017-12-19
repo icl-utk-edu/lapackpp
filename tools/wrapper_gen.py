@@ -819,13 +819,14 @@ enums = {
 enum_override = {
     'gebak': (( 'JOB', 'BALANCE' ), ),
     'gebal': (( 'JOB', 'BALANCE' ), ),
+    'hetrd_2stage': (( 'VECT', 'JOBZ' ), ),  # todo: just job?
+    'sytrd_2stage': (( 'VECT', 'JOBZ' ), ),  # todo: just job?
 }
 
 # ------------------------------------------------------------------------------
 def sub_enum_short( match ):
     groups = match.groups()
     try:
-        #pre  = groups[0]
         enum = groups[0].lower()
         mid  = groups[1]
         val  = groups[2].lower()

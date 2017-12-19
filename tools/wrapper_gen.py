@@ -763,12 +763,14 @@ enums = {
         'a': ('AllVec',       'lapack::Job::AllVec'      ),
         's': ('SomeVec',      'lapack::Job::SomeVec'     ),
         'o': ('OverwriteVec', 'lapack::Job::OverwriteVec'),
+        'v': ('Vec',          'lapack::Job::Vec'         ),  # gesvdx
     },
     'jobvt': {
         'n': ('NoVec',        'lapack::Job::NoVec'       ),
         'a': ('AllVec',       'lapack::Job::AllVec'      ),
         's': ('SomeVec',      'lapack::Job::SomeVec'     ),
         'o': ('OverwriteVec', 'lapack::Job::OverwriteVec'),
+        'v': ('Vec',          'lapack::Job::Vec'         ),  # gesvdx
     },
 
     # bbcsd

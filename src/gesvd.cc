@@ -10,6 +10,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup gesvd
 int64_t gesvd(
     lapack::Job jobu, lapack::Job jobvt, int64_t m, int64_t n,
     float* A, int64_t lda,
@@ -54,6 +55,7 @@ int64_t gesvd(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup gesvd
 int64_t gesvd(
     lapack::Job jobu, lapack::Job jobvt, int64_t m, int64_t n,
     double* A, int64_t lda,
@@ -98,6 +100,7 @@ int64_t gesvd(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup gesvd
 int64_t gesvd(
     lapack::Job jobu, lapack::Job jobvt, int64_t m, int64_t n,
     std::complex<float>* A, int64_t lda,
@@ -144,6 +147,115 @@ int64_t gesvd(
 }
 
 // -----------------------------------------------------------------------------
+/// Computes the singular value decomposition (SVD) of a
+/// m-by-n matrix A, optionally computing the left and/or right singular
+/// vectors. The SVD is written
+///
+///     \f[ A = U \Sigma V^H \f]
+///
+/// where \f$ \Sigma \f$ is an m-by-n matrix which is zero except for its
+/// min(m,n) diagonal elements, U is an m-by-m unitary matrix, and
+/// V is an n-by-n unitary matrix. The diagonal elements of \f$ \Sigma \f$
+/// are the singular values of A; they are real and non-negative, and
+/// are returned in descending order. The first min(m,n) columns of
+/// U and V are the left and right singular vectors of A.
+///
+/// Note that the routine returns VT \f$ = V^H \f$, not V.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] jobu
+///     Specifies options for computing all or part of the matrix U:
+///     - lapack::Job::AllVec:
+///         all m columns of U are returned in array U:
+///     - lapack::Job::SomeVec:
+///         the first min(m,n) columns of U (the left singular vectors)
+///         are returned in the array U;
+///     - lapack::Job::OverwriteVec:
+///         the first min(m,n) columns of U (the left singular vectors)
+///         are overwritten on the array A;
+///     - lapack::Job::NoVec:
+///         no columns of U (no left singular vectors) are computed.
+///
+/// @param[in] jobvt
+///     Specifies options for computing all or part of the matrix
+///     \f$ V^H \f$:
+///     - lapack::Job::AllVec:
+///         all n rows of \f$ V^H \f$ are returned in the array VT;
+///     - lapack::Job::SomeVec:
+///         the first min(m,n) rows of \f$ V^H \f$ (the right singular vectors)
+///         are returned in the array VT;
+///     - lapack::Job::OverwriteVec:
+///         the first min(m,n) rows of \f$ V^H \f$ (the right singular vectors)
+///         are overwritten on the array A;
+///     - lapack::Job::NoVec:
+///         no rows of \f$ V^H \f$ (no right singular vectors) are computed.
+///     \n
+///     jobvt and jobu cannot both be OverwriteVec.
+///
+/// @param[in] m
+///     The number of rows of the input matrix A. m >= 0.
+///
+/// @param[in] n
+///     The number of columns of the input matrix A. n >= 0.
+///
+/// @param[in,out] A
+///     The m-by-n matrix A, stored in an lda-by-n array.
+///     On entry, the m-by-n matrix A.
+///     On exit:
+///     - If jobu = OverwriteVec,
+///       A is overwritten with the first min(m,n) columns of U
+///       (the left singular vectors, stored columnwise);
+///
+///     - if jobvt = OverwriteVec,
+///       A is overwritten with the first min(m,n) rows of \f$ V^H \f$
+///       (the right singular vectors, stored rowwise);
+///
+///     - if jobu != OverwriteVec and jobvt != OverwriteVec,
+///       the contents of A are destroyed.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,m).
+///
+/// @param[out] S
+///     The vector S of length min(m,n).
+///     The singular values of A, sorted so that S(i) >= S(i+1).
+///
+/// @param[out] U
+///     The m-by-ucol matrix U, stored in an ldu-by-ucol array.
+///     - If jobu = AllVec, ucol = m and U contains the m-by-m unitary matrix U;
+///
+///     - if jobu = SomeVec, ucol = min(m,n) and U contains the first min(m,n)
+///       columns of U (the left singular vectors, stored columnwise);
+///
+///     - if jobu = NoVec or OverwriteVec, U is not referenced.
+///
+/// @param[in] ldu
+///     The leading dimension of the array U. ldu >= 1; if
+///     jobu = SomeVec or AllVec, ldu >= m.
+///
+/// @param[out] VT
+///     The vrow-by-n matrix VT, stored in an ldvt-by-n array.
+///     - If jobvt = AllVec, vrow = n and VT contains the n-by-n unitary matrix
+///       \f$ V^H \f$;
+///
+///     - if jobvt = SomeVec, VT contains the first min(m,n) rows of
+///       \f$ V^H \f$ (the right singular vectors, stored rowwise);
+///
+///     - if jobvt = NoVec or OverwriteVec, VT is not referenced.
+///
+/// @param[in] ldvt
+///     The leading dimension of the array VT. ldvt >= 1;
+///     - if jobvt = AllVec, ldvt >= n;
+///     - if jobvt = SomeVec, ldvt >= min(m,n).
+///
+/// @retval = 0: successful exit.
+/// @retval > 0: `lapack::bdsqr` did not converge; return value specifies how
+///              many superdiagonals of the intermediate bidiagonal form B
+///              did not converge to zero.
+///
+/// @ingroup gesvd
 int64_t gesvd(
     lapack::Job jobu, lapack::Job jobvt, int64_t m, int64_t n,
     std::complex<double>* A, int64_t lda,

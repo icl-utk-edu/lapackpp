@@ -12,10 +12,11 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup gesvd
 int64_t gesvdx(
     lapack::Job jobu, lapack::Job jobvt, lapack::Range range, int64_t m, int64_t n,
     float* A, int64_t lda, float vl, float vu, int64_t il, int64_t iu,
-    int64_t* ns,
+    int64_t* nfound,
     float* S,
     float* U, int64_t ldu,
     float* VT, int64_t ldvt )
@@ -38,7 +39,7 @@ int64_t gesvdx(
     blas_int lda_ = (blas_int) lda;
     blas_int il_ = (blas_int) il;
     blas_int iu_ = (blas_int) iu;
-    blas_int ns_ = (blas_int) *ns;
+    blas_int nfound_ = (blas_int) *nfound;
     blas_int ldu_ = (blas_int) ldu;
     blas_int ldvt_ = (blas_int) ldvt;
     blas_int info_ = 0;
@@ -47,7 +48,7 @@ int64_t gesvdx(
     float qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_sgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &ns_, S, U, &ldu_, VT, &ldvt_, qry_work, &ineg_one, qry_iwork, &info_ );
+    LAPACK_sgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &nfound_, S, U, &ldu_, VT, &ldvt_, qry_work, &ineg_one, qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -57,19 +58,20 @@ int64_t gesvdx(
     std::vector< float > work( lwork_ );
     std::vector< blas_int > iwork( (12*min(m,n)) );
 
-    LAPACK_sgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &ns_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &iwork[0], &info_ );
+    LAPACK_sgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &nfound_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
-    *ns = ns_;
+    *nfound = nfound_;
     return info_;
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup gesvd
 int64_t gesvdx(
     lapack::Job jobu, lapack::Job jobvt, lapack::Range range, int64_t m, int64_t n,
     double* A, int64_t lda, double vl, double vu, int64_t il, int64_t iu,
-    int64_t* ns,
+    int64_t* nfound,
     double* S,
     double* U, int64_t ldu,
     double* VT, int64_t ldvt )
@@ -92,7 +94,7 @@ int64_t gesvdx(
     blas_int lda_ = (blas_int) lda;
     blas_int il_ = (blas_int) il;
     blas_int iu_ = (blas_int) iu;
-    blas_int ns_ = (blas_int) *ns;
+    blas_int nfound_ = (blas_int) *nfound;
     blas_int ldu_ = (blas_int) ldu;
     blas_int ldvt_ = (blas_int) ldvt;
     blas_int info_ = 0;
@@ -101,7 +103,7 @@ int64_t gesvdx(
     double qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_dgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &ns_, S, U, &ldu_, VT, &ldvt_, qry_work, &ineg_one, qry_iwork, &info_ );
+    LAPACK_dgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &nfound_, S, U, &ldu_, VT, &ldvt_, qry_work, &ineg_one, qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -111,19 +113,20 @@ int64_t gesvdx(
     std::vector< double > work( lwork_ );
     std::vector< blas_int > iwork( (12*min(m,n)) );
 
-    LAPACK_dgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &ns_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &iwork[0], &info_ );
+    LAPACK_dgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &nfound_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
-    *ns = ns_;
+    *nfound = nfound_;
     return info_;
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup gesvd
 int64_t gesvdx(
     lapack::Job jobu, lapack::Job jobvt, lapack::Range range, int64_t m, int64_t n,
     std::complex<float>* A, int64_t lda, float vl, float vu, int64_t il, int64_t iu,
-    int64_t* ns,
+    int64_t* nfound,
     float* S,
     std::complex<float>* U, int64_t ldu,
     std::complex<float>* VT, int64_t ldvt )
@@ -146,7 +149,7 @@ int64_t gesvdx(
     blas_int lda_ = (blas_int) lda;
     blas_int il_ = (blas_int) il;
     blas_int iu_ = (blas_int) iu;
-    blas_int ns_ = (blas_int) *ns;
+    blas_int nfound_ = (blas_int) *nfound;
     blas_int ldu_ = (blas_int) ldu;
     blas_int ldvt_ = (blas_int) ldvt;
     blas_int info_ = 0;
@@ -156,7 +159,7 @@ int64_t gesvdx(
     float qry_rwork[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_cgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &ns_, S, U, &ldu_, VT, &ldvt_, qry_work, &ineg_one, qry_rwork, qry_iwork, &info_ );
+    LAPACK_cgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &nfound_, S, U, &ldu_, VT, &ldvt_, qry_work, &ineg_one, qry_rwork, qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -170,19 +173,147 @@ int64_t gesvdx(
     std::vector< float > rwork( (max( 1, lrwork )) );
     std::vector< blas_int > iwork( (12*min(m,n)) );
 
-    LAPACK_cgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &ns_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &rwork[0], &iwork[0], &info_ );
+    LAPACK_cgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &nfound_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &rwork[0], &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
-    *ns = ns_;
+    *nfound = nfound_;
     return info_;
 }
 
 // -----------------------------------------------------------------------------
+/// Computes the singular value decomposition (SVD) of a
+/// m-by-n matrix A, optionally computing the left and/or right singular
+/// vectors. The SVD is written
+///
+///    \f[ A = U \Sigma V^H \f]
+///
+/// where \f$ \Sigma \f$ is an m-by-n matrix which is zero except for its
+/// min(m,n) diagonal elements, U is an m-by-m unitary matrix, and
+/// V is an n-by-n unitary matrix. The diagonal elements of SIGMA
+/// are the singular values of A; they are real and non-negative, and
+/// are returned in descending order. The first min(m,n) columns of
+/// U and V are the left and right singular vectors of A.
+///
+/// `gesvdx` uses an eigenvalue problem for obtaining the SVD, which
+/// allows for the computation of a subset of singular values and
+/// vectors. See `lapack::bdsvdx` for details.
+///
+/// Note that the routine returns VT = \f$ V^H \f$, not V.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] jobu
+///     Specifies options for computing all or part of the matrix U:
+///     - lapack::Job::Vec:
+///         the first min(m,n) columns of U (the left singular
+///         vectors) or as specified by range are returned in the array U;
+///     - lapack::Job::NoVec:
+///         no columns of U (no left singular vectors) are computed.
+///
+/// @param[in] jobvt
+///      Specifies options for computing all or part of the matrix
+///      \f$ V^H \f$:
+///     - lapack::Job::Vec:
+///         the first min(m,n) rows of \f$ V^H \f$ (the right singular
+///         vectors) or as specified by range are returned in the array VT;
+///     - lapack::Job::NoVec:
+///         no rows of \f$ V^H \f$ (no right singular vectors) are computed.
+///
+/// @param[in] range
+///     - lapack::Range::All:
+///         all singular values will be found.
+///     - lapack::Range::Value:
+///         all singular values in the half-open interval (vl,vu] will be found.
+///     - lapack::Range::Index:
+///         the il-th through iu-th singular values will be found.
+///
+/// @param[in] m
+///     The number of rows of the input matrix A. m >= 0.
+///
+/// @param[in] n
+///     The number of columns of the input matrix A. n >= 0.
+///
+/// @param[in,out] A
+///     The m-by-n matrix A, stored in an lda-by-n array.
+///     On entry, the m-by-n matrix A.
+///     On exit, the contents of A are destroyed.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,m).
+///
+/// @param[in] vl
+///     If range=Value, the lower bound of the interval to
+///     be searched for singular values. vu > vl.
+///     Not referenced if range = All or Index.
+///
+/// @param[in] vu
+///     If range=Value, the upper bound of the interval to
+///     be searched for singular values. vu > vl.
+///     Not referenced if range = All or Index.
+///
+/// @param[in] il
+///     If range=Index, the index of the
+///     smallest singular value to be returned.
+///     1 <= il <= iu <= min(m,n), if min(m,n) > 0.
+///     Not referenced if range = All or Value.
+///
+/// @param[in] iu
+///     If range=Index, the index of the
+///     largest singular value to be returned.
+///     1 <= il <= iu <= min(m,n), if min(m,n) > 0.
+///     Not referenced if range = All or Value.
+///
+/// @param[out] nfound
+///     The total number of singular values found,
+///     0 <= nfound <= min(m,n).
+///     - If range = All, nfound = min(m,n);
+///     - if range = Index, nfound = iu-il+1.
+///
+/// @param[out] S
+///     The vector S of length min(m,n).
+///     The singular values of A, sorted so that S(i) >= S(i+1).
+///
+/// @param[out] U
+///     The m-by-nfound matrix U, stored in an ldu-by-ucol array.
+///     - If jobu = Vec, U contains columns of U (the left singular
+///       vectors, stored columnwise) as specified by range;
+///     - if jobu = NoVec, U is not referenced.
+///     \n
+///     Note: The user must ensure that ucol >= nfound; if range = Value,
+///     the exact value of nfound is not known in advance and an upper
+///     bound must be used.
+///
+/// @param[in] ldu
+///     The leading dimension of the array U. ldu >= 1;
+///     if jobu = Vec, ldu >= m.
+///
+/// @param[out] VT
+///     The nfound-by-n matrix VT, stored in an ldvt-by-n array.
+///     - If jobvt = Vec, VT contains the rows of \f$ V^H \f$
+///       (the right singular vectors, stored rowwise) as specified by range;
+///     - if jobvt = NoVec, VT is not referenced.
+///     \n
+///     Note: The user must ensure that ldvt >= nfound; if range = Value,
+///     the exact value of nfound is not known in advance and an upper
+///     bound must be used.
+///
+/// @param[in] ldvt
+///     The leading dimension of the array VT. ldvt >= 1;
+///     if jobvt = Vec, ldvt >= nfound.
+///
+/// @retval = 0: successful exit
+/// @retval > 0 and <= n: if return value = i, then i eigenvectors failed to
+///              converge in `lapack::bdsvdx`/`lapack::stevx`.
+/// @retval > n: if return value = 2*n + 1, an internal error occurred in
+///              `lapack::bdsvdx`
+///
+/// @ingroup gesvd
 int64_t gesvdx(
     lapack::Job jobu, lapack::Job jobvt, lapack::Range range, int64_t m, int64_t n,
     std::complex<double>* A, int64_t lda, double vl, double vu, int64_t il, int64_t iu,
-    int64_t* ns,
+    int64_t* nfound,
     double* S,
     std::complex<double>* U, int64_t ldu,
     std::complex<double>* VT, int64_t ldvt )
@@ -205,7 +336,7 @@ int64_t gesvdx(
     blas_int lda_ = (blas_int) lda;
     blas_int il_ = (blas_int) il;
     blas_int iu_ = (blas_int) iu;
-    blas_int ns_ = (blas_int) *ns;
+    blas_int nfound_ = (blas_int) *nfound;
     blas_int ldu_ = (blas_int) ldu;
     blas_int ldvt_ = (blas_int) ldvt;
     blas_int info_ = 0;
@@ -215,7 +346,7 @@ int64_t gesvdx(
     double qry_rwork[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_zgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &ns_, S, U, &ldu_, VT, &ldvt_, qry_work, &ineg_one, qry_rwork, qry_iwork, &info_ );
+    LAPACK_zgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &nfound_, S, U, &ldu_, VT, &ldvt_, qry_work, &ineg_one, qry_rwork, qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -229,11 +360,11 @@ int64_t gesvdx(
     std::vector< double > rwork( (max( 1, lrwork )) );
     std::vector< blas_int > iwork( (12*min(m,n)) );
 
-    LAPACK_zgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &ns_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &rwork[0], &iwork[0], &info_ );
+    LAPACK_zgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &nfound_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &rwork[0], &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
-    *ns = ns_;
+    *nfound = nfound_;
     return info_;
 }
 

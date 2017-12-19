@@ -10,6 +10,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup ggls
 int64_t gglse(
     int64_t m, int64_t n, int64_t p,
     float* A, int64_t lda,
@@ -53,6 +54,7 @@ int64_t gglse(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup ggls
 int64_t gglse(
     int64_t m, int64_t n, int64_t p,
     double* A, int64_t lda,
@@ -96,6 +98,7 @@ int64_t gglse(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup ggls
 int64_t gglse(
     int64_t m, int64_t n, int64_t p,
     std::complex<float>* A, int64_t lda,
@@ -139,6 +142,84 @@ int64_t gglse(
 }
 
 // -----------------------------------------------------------------------------
+/// Solves the linear equality-constrained least squares (LSE)
+/// problem:
+///
+///     \f[ \min_x || c - A x ||_2 \text{ subject to } B x = d \f]
+///
+/// where A is an m-by-n matrix, B is a p-by-n matrix, c is a given
+/// m-vector, and d is a given p-vector. It is assumed that
+/// p <= n <= m+p, and
+///
+/// rank(B) = p and
+/// rank\f$\left( \left[ \begin{array}{c} A \\ B \end{array} \right] \right) = n. \f$
+///
+/// These conditions ensure that the LSE problem has a unique solution,
+/// which is obtained using a generalized RQ factorization of the
+/// matrices (B, A) given by
+///
+///     \f[ B = \left[ 0 \;\; R \right] Q, \quad A = Z T Q. \f]
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] m
+///     The number of rows of the matrix A. m >= 0.
+///
+/// @param[in] n
+///     The number of columns of the matrices A and B. n >= 0.
+///
+/// @param[in] p
+///     The number of rows of the matrix B. 0 <= p <= n <= m+p.
+///
+/// @param[in,out] A
+///     The m-by-n matrix A, stored in an lda-by-n array.
+///     On entry, the m-by-n matrix A.
+///     On exit, the elements on and above the diagonal of the array
+///     contain the min(m,n)-by-n upper trapezoidal matrix T.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,m).
+///
+/// @param[in,out] B
+///     The p-by-n matrix B, stored in an ldb-by-n array.
+///     On entry, the p-by-n matrix B.
+///     On exit, the upper triangle of the subarray B(1:p,n-p+1:n)
+///     contains the p-by-p upper triangular matrix R.
+///
+/// @param[in] ldb
+///     The leading dimension of the array B. ldb >= max(1,p).
+///
+/// @param[in,out] C
+///     The vector C of length m.
+///     On entry, C contains the right hand side vector for the
+///     least squares part of the LSE problem.
+///     On exit, the residual sum of squares for the solution
+///     is given by the sum of squares of elements n-p+1 to m of
+///     vector C.
+///
+/// @param[in,out] D
+///     The vector D of length p.
+///     On entry, D contains the right hand side vector for the
+///     constrained equation.
+///     On exit, D is destroyed.
+///
+/// @param[out] X
+///     The vector X of length n.
+///     On exit, X is the solution of the LSE problem.
+///
+/// @retval = 0: successful exit.
+/// @retval = 1: the upper triangular factor R associated with B in the
+///     generalized RQ factorization of the pair (B, A) is
+///     singular, so that rank(B) < p; the least squares
+///     solution could not be computed.
+/// @retval = 2: the (n-p) by (n-p) part of the upper trapezoidal factor
+///     T associated with A in the generalized RQ factorization
+///     of the pair (B, A) is singular, so that
+///     rank\f$\left( \left[ \begin{array}{c} A \\ B \end{array} \right] \right) < n \f$;
+///     the least squares solution could not be computed.
+///
+/// @ingroup ggls
 int64_t gglse(
     int64_t m, int64_t n, int64_t p,
     std::complex<double>* A, int64_t lda,

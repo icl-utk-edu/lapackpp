@@ -7,7 +7,6 @@
 
         @defgroup gbsv General matrix: LU: banded
         @defgroup gtsv General matrix: LU:  tridiagonal
-        @defgroup gels Least squares
         @defgroup posv Positive definite matrix: Cholesky
         @defgroup ppsv Positive definite matrix: Cholesky: packed
         @defgroup pbsv Positive definite matrix: Cholesky: banded
@@ -37,6 +36,13 @@
         @defgroup tpsv_computational Triangular matrix: packed
         @defgroup tfsv_computational Triangular matrix: RFP
         @defgroup tbsv_computational Triangular matrix: banded
+    @}
+
+    ----------------------------------------------------------------------------
+    @defgroup group_gels Least squares
+    @{
+        @defgroup gels Standard, AX = B
+        @defgroup ggls Constrained
     @}
 
     ----------------------------------------------------------------------------

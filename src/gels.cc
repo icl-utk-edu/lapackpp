@@ -10,6 +10,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup gels
 int64_t gels(
     lapack::Op trans, int64_t m, int64_t n, int64_t nrhs,
     float* A, int64_t lda,
@@ -31,6 +32,10 @@ int64_t gels(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
+    // for real, map ConjTrans to Trans
+    if (trans_ == 'C')
+        trans_ = 'T';
+
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
@@ -51,6 +56,7 @@ int64_t gels(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup gels
 int64_t gels(
     lapack::Op trans, int64_t m, int64_t n, int64_t nrhs,
     double* A, int64_t lda,
@@ -72,6 +78,10 @@ int64_t gels(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
+    // for real, map ConjTrans to Trans
+    if (trans_ == 'C')
+        trans_ = 'T';
+
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
@@ -92,6 +102,7 @@ int64_t gels(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup gels
 int64_t gels(
     lapack::Op trans, int64_t m, int64_t n, int64_t nrhs,
     std::complex<float>* A, int64_t lda,
@@ -133,6 +144,99 @@ int64_t gels(
 }
 
 // -----------------------------------------------------------------------------
+/// Solves overdetermined or underdetermined complex linear systems
+/// involving an m-by-n matrix A, or its conjugate-transpose, using a QR
+/// or LQ factorization of A. It is assumed that A has full rank.
+///
+/// The following options are provided:
+///
+/// 1. If trans = NoTrans and m >= n: find the least squares solution of
+///     an overdetermined system, i.e., solve the least squares problem
+///     minimize \f$ || B - A X ||_2 \f$.
+///
+/// 2. If trans = NoTrans and m < n: find the minimum norm solution of
+///     an underdetermined system \f$ A X = B \f$.
+///
+/// 3. If trans = ConjTrans and m >= n: find the minimum norm solution of
+///     an underdetermined system \f$ A^H X = B \f$.
+///
+/// 4. If trans = ConjTrans and m < n: find the least squares solution of
+///     an overdetermined system, i.e., solve the least squares problem
+///     minimize \f$ || B - A^H X ||_2 \f$.
+///
+/// Several right hand side vectors b and solution vectors x can be
+/// handled in a single call; they are stored as the columns of the
+/// m-by-nrhs right hand side matrix B and the n-by-nrhs solution
+/// matrix X.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] trans
+///     - lapack::Op::NoTrans:   the linear system involves \f$ A   \f$;
+///     - lapack::Op::ConjTrans: the linear system involves \f$ A^H \f$.
+///     - lapack::Op::Trans:     the linear system involves \f$ A^T \f$.
+///     \n
+///     For real matrices, Trans = ConjTrans.
+///     For complex matrices, Trans is illegal.
+///
+/// @param[in] m
+///     The number of rows of the matrix A. m >= 0.
+///
+/// @param[in] n
+///     The number of columns of the matrix A. n >= 0.
+///
+/// @param[in] nrhs
+///     The number of right hand sides, i.e., the number of
+///     columns of the matrices B and X. nrhs >= 0.
+///
+/// @param[in,out] A
+///     The m-by-n matrix A, stored in an lda-by-n array.
+///     On entry, the m-by-n matrix A.
+///     \n
+///     If m >= n, A is overwritten by details of its QR
+///     factorization as returned by `lapack::geqrf`;
+///     \n
+///     If m < n, A is overwritten by details of its LQ
+///     factorization as returned by `lapack::gelqf`.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,m).
+///
+/// @param[in,out] B
+///     The max( 1, m, n )-by-nrhs matrix B, stored in an ldb-by-nrhs array.
+///     On entry, the matrix B of right hand side vectors, stored
+///     columnwise; B is m-by-nrhs if trans = NoTrans, or n-by-nrhs
+///     if trans = ConjTrans.
+///     On successful exit, B is overwritten by the solution
+///     vectors, stored columnwise:
+///     \n
+///     If trans = NoTrans and m >= n, rows 1 to n of B contain the least
+///     squares solution vectors; the residual sum of squares for the
+///     solution in each column is given by the sum of squares of the
+///     modulus of elements n+1 to m in that column;
+///     \n
+///     If trans = NoTrans and m < n, rows 1 to n of B contain the
+///     minimum norm solution vectors;
+///     \n
+///     If trans = ConjTrans and m >= n, rows 1 to m of B contain the
+///     minimum norm solution vectors;
+///     \n
+///     If trans = ConjTrans and m < n, rows 1 to m of B contain the
+///     least squares solution vectors; the residual sum of squares
+///     for the solution in each column is given by the sum of
+///     squares of the modulus of elements m+1 to n in that column.
+///
+/// @param[in] ldb
+///     The leading dimension of the array B. ldb >= MAX(1,m,n).
+///
+/// @retval = 0: successful exit
+/// @retval > 0: if return value = i, the i-th diagonal element of the
+///     triangular factor of A is zero, so that A does not have
+///     full rank; the least squares solution could not be
+///     computed.
+///
+/// @ingroup gels
 int64_t gels(
     lapack::Op trans, int64_t m, int64_t n, int64_t nrhs,
     std::complex<double>* A, int64_t lda,

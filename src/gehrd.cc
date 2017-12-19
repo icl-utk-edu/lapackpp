@@ -187,13 +187,13 @@ int64_t gehrd(
 ///
 ///     on entry,                        on exit,
 ///
-///     ( a   a   a   a   a   a   a )    ( a   a   h   h   h   h   a )
-///     (     a   a   a   a   a   a )    (     a   h   h   h   h   a )
-///     (     a   a   a   a   a   a )    (     h   h   h   h   h   h )
-///     (     a   a   a   a   a   a )    (     v2  h   h   h   h   h )
-///     (     a   a   a   a   a   a )    (     v2  v3  h   h   h   h )
-///     (     a   a   a   a   a   a )    (     v2  v3  v4  h   h   h )
-///     (                         a )    (                         a )
+///     ( a   a   a   a   a   a   a )    (  a   a   h   h   h   h   a )
+///     (     a   a   a   a   a   a )    (      a   h   h   h   h   a )
+///     (     a   a   a   a   a   a )    (      h   h   h   h   h   h )
+///     (     a   a   a   a   a   a )    (      v2  h   h   h   h   h )
+///     (     a   a   a   a   a   a )    (      v2  v3  h   h   h   h )
+///     (     a   a   a   a   a   a )    (      v2  v3  v4  h   h   h )
+///     (                         a )    (                          a )
 ///
 /// where a denotes an element of the original matrix A, h denotes a
 /// modified element of the upper Hessenberg matrix H, and vi denotes an

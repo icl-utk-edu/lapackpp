@@ -1,6 +1,9 @@
 #include "lapack.hh"
 #include "lapack_fortran.h"
 
+#define LAPACK_VERSION (LAPACK_VERSION_MAJOR*10000 + LAPACK_VERSION_MINOR*100 + LAPACK_VERSION_MICRO)
+#if LAPACK_VERSION >= 30601
+
 #include <vector>
 
 namespace lapack {
@@ -11,7 +14,7 @@ using blas::real;
 
 // -----------------------------------------------------------------------------
 /// @ingroup geev_computational
-int64_t trevc(
+int64_t trevc3(
     lapack::Side side, lapack::HowMany howmany,
     bool* select, int64_t n,
     float const* T, int64_t ldt,
@@ -44,10 +47,19 @@ int64_t trevc(
     blas_int m_ = (blas_int) *m;
     blas_int info_ = 0;
 
-    // allocate workspace
-    std::vector< float > work( (3*n) );
+    // query for workspace size
+    float qry_work[1];
+    blas_int ineg_one = -1;
+    LAPACK_strevc3( &side_, &howmany_, select_ptr, &n_, T, &ldt_, VL, &ldvl_, VR, &ldvr_, &mm_, &m_, qry_work, &ineg_one, &info_ );
+    if (info_ < 0) {
+        throw Error();
+    }
+    blas_int lwork_ = real(qry_work[0]);
 
-    LAPACK_strevc( &side_, &howmany_, select_ptr, &n_, T, &ldt_, VL, &ldvl_, VR, &ldvr_, &mm_, &m_, &work[0], &info_ );
+    // allocate workspace
+    std::vector< float > work( lwork_ );
+
+    LAPACK_strevc3( &side_, &howmany_, select_ptr, &n_, T, &ldt_, VL, &ldvl_, VR, &ldvr_, &mm_, &m_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -60,7 +72,7 @@ int64_t trevc(
 
 // -----------------------------------------------------------------------------
 /// @ingroup geev_computational
-int64_t trevc(
+int64_t trevc3(
     lapack::Side side, lapack::HowMany howmany,
     bool* select, int64_t n,
     double const* T, int64_t ldt,
@@ -93,10 +105,19 @@ int64_t trevc(
     blas_int m_ = (blas_int) *m;
     blas_int info_ = 0;
 
-    // allocate workspace
-    std::vector< double > work( (3*n) );
+    // query for workspace size
+    double qry_work[1];
+    blas_int ineg_one = -1;
+    LAPACK_dtrevc3( &side_, &howmany_, select_ptr, &n_, T, &ldt_, VL, &ldvl_, VR, &ldvr_, &mm_, &m_, qry_work, &ineg_one, &info_ );
+    if (info_ < 0) {
+        throw Error();
+    }
+    blas_int lwork_ = real(qry_work[0]);
 
-    LAPACK_dtrevc( &side_, &howmany_, select_ptr, &n_, T, &ldt_, VL, &ldvl_, VR, &ldvr_, &mm_, &m_, &work[0], &info_ );
+    // allocate workspace
+    std::vector< double > work( lwork_ );
+
+    LAPACK_dtrevc3( &side_, &howmany_, select_ptr, &n_, T, &ldt_, VL, &ldvl_, VR, &ldvr_, &mm_, &m_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -109,7 +130,7 @@ int64_t trevc(
 
 // -----------------------------------------------------------------------------
 /// @ingroup geev_computational
-int64_t trevc(
+int64_t trevc3(
     lapack::Side side, lapack::HowMany howmany,
     bool const* select, int64_t n,
     std::complex<float>* T, int64_t ldt,
@@ -142,11 +163,22 @@ int64_t trevc(
     blas_int m_ = (blas_int) *m;
     blas_int info_ = 0;
 
-    // allocate workspace
-    std::vector< std::complex<float> > work( (2*n) );
-    std::vector< float > rwork( (n) );
+    // query for workspace size
+    std::complex<float> qry_work[1];
+    float qry_rwork[1];
+    blas_int ineg_one = -1;
+    LAPACK_ctrevc3( &side_, &howmany_, select_ptr, &n_, T, &ldt_, VL, &ldvl_, VR, &ldvr_, &mm_, &m_, qry_work, &ineg_one, qry_rwork, &ineg_one, &info_ );
+    if (info_ < 0) {
+        throw Error();
+    }
+    blas_int lwork_ = real(qry_work[0]);
+    blas_int lrwork_ = real(qry_rwork[0]);
 
-    LAPACK_ctrevc( &side_, &howmany_, select_ptr, &n_, T, &ldt_, VL, &ldvl_, VR, &ldvr_, &mm_, &m_, &work[0], &rwork[0], &info_ );
+    // allocate workspace
+    std::vector< std::complex<float> > work( lwork_ );
+    std::vector< float > rwork( lrwork_ );
+
+    LAPACK_ctrevc3( &side_, &howmany_, select_ptr, &n_, T, &ldt_, VL, &ldvl_, VR, &ldvr_, &mm_, &m_, &work[0], &lwork_, &rwork[0], &lrwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -175,6 +207,8 @@ int64_t trevc(
 /// input matrix. If Q is the unitary factor that reduces a matrix A to
 /// Schur form T, then \f$ Q X \f$ and \f$ Q Y \f$ are the matrices of right and left
 /// eigenvectors of A.
+///
+/// This uses a Level 3 BLAS version of the back transformation.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -275,7 +309,7 @@ int64_t trevc(
 /// (x,y) is taken to be |x| + |y|.
 ///
 /// @ingroup geev_computational
-int64_t trevc(
+int64_t trevc3(
     lapack::Side side, lapack::HowMany howmany,
     bool const* select, int64_t n,
     std::complex<double>* T, int64_t ldt,
@@ -308,11 +342,22 @@ int64_t trevc(
     blas_int m_ = (blas_int) *m;
     blas_int info_ = 0;
 
-    // allocate workspace
-    std::vector< std::complex<double> > work( (2*n) );
-    std::vector< double > rwork( (n) );
+    // query for workspace size
+    std::complex<double> qry_work[1];
+    double qry_rwork[1];
+    blas_int ineg_one = -1;
+    LAPACK_ztrevc3( &side_, &howmany_, select_ptr, &n_, T, &ldt_, VL, &ldvl_, VR, &ldvr_, &mm_, &m_, qry_work, &ineg_one, qry_rwork, &ineg_one, &info_ );
+    if (info_ < 0) {
+        throw Error();
+    }
+    blas_int lwork_ = real(qry_work[0]);
+    blas_int lrwork_ = real(qry_rwork[0]);
 
-    LAPACK_ztrevc( &side_, &howmany_, select_ptr, &n_, T, &ldt_, VL, &ldvl_, VR, &ldvr_, &mm_, &m_, &work[0], &rwork[0], &info_ );
+    // allocate workspace
+    std::vector< std::complex<double> > work( lwork_ );
+    std::vector< double > rwork( lrwork_ );
+
+    LAPACK_ztrevc3( &side_, &howmany_, select_ptr, &n_, T, &ldt_, VL, &ldvl_, VR, &ldvr_, &mm_, &m_, &work[0], &lwork_, &rwork[0], &lrwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -321,3 +366,5 @@ int64_t trevc(
 }
 
 }  // namespace lapack
+
+#endif  // LAPACK >= 3.6.1

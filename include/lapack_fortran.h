@@ -5929,6 +5929,53 @@ void LAPACK_ztrevc(
     lapack_complex_double* work, double* rwork,
     lapack_int* info );
 
+#define LAPACK_strevc3 LAPACK_GLOBAL(strevc3,STREVC3)
+void LAPACK_strevc3(
+    char const* side, char const* howmny,
+    lapack_logical* select,
+    lapack_int const* n,
+    float const* T, lapack_int const* ldt,
+    float* VL, lapack_int const* ldvl,
+    float* VR, lapack_int const* ldvr,
+    lapack_int const* mm, lapack_int* m,
+    float* work, lapack_int const* lwork,
+    lapack_int* info );
+#define LAPACK_dtrevc3 LAPACK_GLOBAL(dtrevc3,DTREVC3)
+void LAPACK_dtrevc3(
+    char const* side, char const* howmny,
+    lapack_logical* select,
+    lapack_int const* n,
+    double const* T, lapack_int const* ldt,
+    double* VL, lapack_int const* ldvl,
+    double* VR, lapack_int const* ldvr,
+    lapack_int const* mm, lapack_int* m,
+    double* work, lapack_int const* lwork,
+    lapack_int* info );
+#define LAPACK_ctrevc3 LAPACK_GLOBAL(ctrevc3,CTREVC3)
+void LAPACK_ctrevc3(
+    char const* side, char const* howmny,
+    lapack_logical const* select,
+    lapack_int const* n,
+    lapack_complex_float* T, lapack_int const* ldt,
+    lapack_complex_float* VL, lapack_int const* ldvl,
+    lapack_complex_float* VR, lapack_int const* ldvr,
+    lapack_int const* mm, lapack_int* m,
+    lapack_complex_float* work, lapack_int const* lwork,
+    float* rwork, lapack_int const* lrwork,
+    lapack_int* info );
+#define LAPACK_ztrevc3 LAPACK_GLOBAL(ztrevc3,ZTREVC3)
+void LAPACK_ztrevc3(
+    char const* side, char const* howmny,
+    lapack_logical const* select,
+    lapack_int const* n,
+    lapack_complex_double* T, lapack_int const* ldt,
+    lapack_complex_double* VL, lapack_int const* ldvl,
+    lapack_complex_double* VR, lapack_int const* ldvr,
+    lapack_int const* mm, lapack_int* m,
+    lapack_complex_double* work, lapack_int const* lwork,
+    double* rwork, lapack_int const* lrwork,
+    lapack_int* info );
+
 /* ----- non-symmetric eigenvectors condition number */
 #define LAPACK_strsna LAPACK_GLOBAL(strsna,STRSNA)
 void LAPACK_strsna(

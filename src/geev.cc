@@ -196,8 +196,8 @@ int64_t geev(
 ///     The vector W of length n.
 ///     W contains the computed eigenvalues.
 ///     \n
-///     Note: In LAPACK++, W is always complex, whereas with real matrices,
-///     LAPACK uses a split-complex representation (WR, WI) for W.
+///     Note: In LAPACK++, W is always complex, whereas LAPACK with a
+///     real matrix A uses a split-complex representation (WR, WI) for W.
 ///
 /// @param[out] VL
 ///     The n-by-n matrix VL, stored in an ldvl-by-n array.

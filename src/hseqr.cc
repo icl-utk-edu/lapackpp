@@ -10,11 +10,11 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup geev_computational
 int64_t hseqr(
-    lapack::Job job, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::JobSchur job, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
     float* H, int64_t ldh,
-    float* WR,
-    float* WI,
+    std::complex<float>* W,
     float* Z, int64_t ldz )
 {
     // check for overflow
@@ -25,7 +25,7 @@ int64_t hseqr(
         throw_if_( std::abs(ldh) > std::numeric_limits<blas_int>::max() );
         throw_if_( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
-    char job_ = job2char( job );
+    char job_ = jobschur2char( job );
     char compz_ = compq2char( compz );
     blas_int n_ = (blas_int) n;
     blas_int ilo_ = (blas_int) ilo;
@@ -34,10 +34,14 @@ int64_t hseqr(
     blas_int ldz_ = (blas_int) ldz;
     blas_int info_ = 0;
 
+    // split-complex representation
+    std::vector< float > WR( max( 1, n ) );
+    std::vector< float > WI( max( 1, n ) );
+
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_shseqr( &job_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, WR, WI, Z, &ldz_, qry_work, &ineg_one, &info_ );
+    LAPACK_shseqr( &job_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, &WR[0], &WI[0], Z, &ldz_, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -46,19 +50,23 @@ int64_t hseqr(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_shseqr( &job_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, WR, WI, Z, &ldz_, &work[0], &lwork_, &info_ );
+    LAPACK_shseqr( &job_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, &WR[0], &WI[0], Z, &ldz_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
+    }
+    // merge split-complex representation
+    for (int64_t i = 0; i < n; ++i) {
+        W[i] = std::complex<float>( WR[i], WI[i] );
     }
     return info_;
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup geev_computational
 int64_t hseqr(
-    lapack::Job job, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::JobSchur job, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
     double* H, int64_t ldh,
-    double* WR,
-    double* WI,
+    std::complex<double>* W,
     double* Z, int64_t ldz )
 {
     // check for overflow
@@ -69,7 +77,7 @@ int64_t hseqr(
         throw_if_( std::abs(ldh) > std::numeric_limits<blas_int>::max() );
         throw_if_( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
-    char job_ = job2char( job );
+    char job_ = jobschur2char( job );
     char compz_ = compq2char( compz );
     blas_int n_ = (blas_int) n;
     blas_int ilo_ = (blas_int) ilo;
@@ -78,10 +86,14 @@ int64_t hseqr(
     blas_int ldz_ = (blas_int) ldz;
     blas_int info_ = 0;
 
+    // split-complex representation
+    std::vector< double > WR( max( 1, n ) );
+    std::vector< double > WI( max( 1, n ) );
+
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dhseqr( &job_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, WR, WI, Z, &ldz_, qry_work, &ineg_one, &info_ );
+    LAPACK_dhseqr( &job_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, &WR[0], &WI[0], Z, &ldz_, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -90,16 +102,21 @@ int64_t hseqr(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dhseqr( &job_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, WR, WI, Z, &ldz_, &work[0], &lwork_, &info_ );
+    LAPACK_dhseqr( &job_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, &WR[0], &WI[0], Z, &ldz_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
+    }
+    // merge split-complex representation
+    for (int64_t i = 0; i < n; ++i) {
+        W[i] = std::complex<float>( WR[i], WI[i] );
     }
     return info_;
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup geev_computational
 int64_t hseqr(
-    lapack::Job job, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::JobSchur job, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
     std::complex<float>* H, int64_t ldh,
     std::complex<float>* W,
     std::complex<float>* Z, int64_t ldz )
@@ -112,7 +129,7 @@ int64_t hseqr(
         throw_if_( std::abs(ldh) > std::numeric_limits<blas_int>::max() );
         throw_if_( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
-    char job_ = job2char( job );
+    char job_ = jobschur2char( job );
     char compz_ = compq2char( compz );
     blas_int n_ = (blas_int) n;
     blas_int ilo_ = (blas_int) ilo;
@@ -141,8 +158,134 @@ int64_t hseqr(
 }
 
 // -----------------------------------------------------------------------------
+/// Computes the eigenvalues of a Hessenberg matrix H
+/// and, optionally, the matrices T and Z from the Schur decomposition
+///     \f[ H = Z T Z^H, \f]
+/// where T is an upper triangular matrix (the
+/// Schur form), and Z is the unitary matrix of Schur vectors.
+///
+/// Optionally Z may be postmultiplied into an input unitary
+/// matrix Q so that this routine can give the Schur factorization
+/// of a matrix A which has been reduced to the Hessenberg form H
+/// by the unitary matrix Q: \f$ A = Q H Q^H = (QZ) T (QZ)^H \f$.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] job
+///     - lapack::JobSchur::None:  compute eigenvalues only;
+///     - lapack::JobSchur::Schur: compute eigenvalues and the Schur form T.
+///
+/// @param[in] compz
+///     - lapack::CompQ::NoVec:
+///         no Schur vectors are computed;
+///     - lapack::CompQ::Vec:
+///         Z is initialized to the unit matrix and the matrix Z
+///         of Schur vectors of H is returned;
+///     - lapack::CompQ::Update:
+///         Z must contain an unitary matrix Q on entry, and
+///         the product \f$ Q Z \f$ is returned.
+///
+/// @param[in] n
+///     The order of the matrix H. n >= 0.
+///
+/// @param[in] ilo
+///
+/// @param[in] ihi
+///     It is assumed that H is already upper triangular in rows
+///     and columns 1:ilo-1 and ihi+1:n. ilo and ihi are normally
+///     set by a previous call to `lapack::gebal`, and then passed to `lapack::gehrd`
+///     when the matrix output by `lapack::gebal` is reduced to Hessenberg
+///     form. Otherwise ilo and ihi should be set to 1 and n
+///     respectively.
+///     - If n > 0, then 1 <= ilo <= ihi <= n;
+///     - if n = 0, then ilo = 1 and ihi = 0.
+///
+/// @param[in,out] H
+///     The n-by-n matrix H, stored in an ldh-by-n array.
+///     On entry, the upper Hessenberg matrix H.
+///     On exit, if successful and job = Schur, H contains the upper
+///     triangular matrix T from the Schur decomposition (the
+///     Schur form). If successful and job = None, the contents of
+///     H are unspecified on exit. (The output value of H when
+///     return value > 0 is given under the description of info below.)
+///     \n
+///     Unlike earlier versions of `hseqr`, this subroutine may
+///     explicitly H(i,j) = 0 for i > j and j = 1, 2, ... ilo-1
+///     or j = ihi+1, ihi+2, ... n.
+///
+/// @param[in] ldh
+///     The leading dimension of the array H. ldh >= max(1,n).
+///
+/// @param[out] W
+///     The vector W of length n.
+///     The computed eigenvalues. If job = Schur, the eigenvalues are
+///     stored in the same order as on the diagonal of the Schur
+///     form returned in H, with W(i) = H(i,i).
+///     \n
+///     Note: In LAPACK++, W is always complex, whereas LAPACK with a
+///     real matrix H uses a split-complex representation (WR, WI) for W.
+///
+/// @param[in,out] Z
+///     The n-by-n matrix Z, stored in an ldz-by-n array.
+///     - If compz = NoVec, Z is not referenced.
+///
+///     - If compz = Vec, on entry Z need not be set and on exit,
+///     if successful, Z contains the unitary matrix Z of the Schur
+///     vectors of H.
+///
+///     - If compz = Update, on entry Z must contain an
+///     n-by-n matrix Q, which is assumed to be equal to the unit
+///     matrix except for the submatrix Z(ilo:ihi,ilo:ihi). On exit,
+///     if successful, Z contains \f$ Q Z \f$.
+///     Normally Q is the unitary matrix generated by `lapack::unghr`
+///     after the call to `lapack::gehrd` which formed the Hessenberg matrix H.
+///
+///     - The output value of Z when return value > 0 is given under
+///     the description of info below.
+///
+/// @param[in] ldz
+///     The leading dimension of the array Z. if compz = Vec or
+///     compz = Update, then ldz >= max(1,n). Otherwize, ldz >= 1.
+///
+/// @retval = 0: successful exit
+/// @retval > 0: if return value = i, `hseqr` failed to compute all of
+///     the eigenvalues. Elements 1:ilo-1 and i+1:n of W
+///     contain those eigenvalues which have been
+///     successfully computed. (Failures are rare.)
+///     \n
+///     If return value > 0 and job = None, then on exit, the
+///     remaining unconverged eigenvalues are the eigen-
+///     values of the upper Hessenberg matrix rows and
+///     columns ilo through info of the final, output
+///     value of H.
+///     \n
+///     If return value > 0 and job = Schur, then on exit
+///     \n
+///     (*) (initial value of H)*\f$ U = U \f$ (final value of H)
+///     \n
+///     where U is a unitary matrix. The final
+///     value of H is upper Hessenberg and triangular in
+///     rows and columns info+1 through ihi.
+///     \n
+///     If return value > 0 and compz = Update, then on exit
+///     \n
+///     (final value of Z) = (initial value of Z)*U
+///     \n
+///     where U is the unitary matrix in (*) (regard-
+///     less of the value of JOBSCHUR.)
+///     \n
+///     If return value > 0 and compz = Vec, then on exit
+///     (final value of Z) = U
+///     where U is the unitary matrix in (*) (regard-
+///     less of the value of JOBSCHUR.)
+///     \n
+///     If return value > 0 and compz = NoVec, then Z is not
+///     accessed.
+///
+/// @ingroup geev_computational
 int64_t hseqr(
-    lapack::Job job, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::JobSchur job, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
     std::complex<double>* H, int64_t ldh,
     std::complex<double>* W,
     std::complex<double>* Z, int64_t ldz )
@@ -155,7 +298,7 @@ int64_t hseqr(
         throw_if_( std::abs(ldh) > std::numeric_limits<blas_int>::max() );
         throw_if_( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
-    char job_ = job2char( job );
+    char job_ = jobschur2char( job );
     char compz_ = compq2char( compz );
     blas_int n_ = (blas_int) n;
     blas_int ilo_ = (blas_int) ilo;

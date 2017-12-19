@@ -206,6 +206,34 @@ inline const char* jobcs2str( lapack::JobCS jobcs )
 }
 
 // -----------------------------------------------------------------------------
+// hseqr
+enum class JobSchur {
+    None         = 'E',
+    Schur        = 'S',
+};
+
+inline char jobschur2char( lapack::JobSchur jobschur )
+{
+    return char( jobschur );
+}
+
+inline lapack::JobSchur char2jobschur( char jobschur )
+{
+    jobschur = char( toupper( jobschur ));
+    lapack_throw_if_( jobschur != 'E' && jobschur != 'S' );
+    return lapack::JobSchur( jobschur );
+}
+
+inline const char* jobschur2str( lapack::JobSchur jobschur )
+{
+    switch (jobschur) {
+        case lapack::JobSchur::None:  return "eig-only";
+        case lapack::JobSchur::Schur: return "schur";
+    }
+    return "?";
+}
+
+// -----------------------------------------------------------------------------
 // ggsvd3
 // todo: generic yes/no? would require special function to get lapack char
 enum class JobU {
@@ -384,10 +412,10 @@ inline const char* vect2str( lapack::Vect vect )
 
 // -----------------------------------------------------------------------------
 enum class CompQ {
-    NoVec       = 'N',  // bdsdc, gghd3
-    Vec         = 'I',  // bdsdc, gghd3
+    NoVec       = 'N',  // bdsdc, gghd3, hseqr
+    Vec         = 'I',  // bdsdc, gghd3, hseqr
     CompactVec  = 'P',  // bdsdc
-    Update      = 'V',  // gghd3
+    Update      = 'V',  //        gghd3, hseqr
 };
 
 inline char compq2char( lapack::CompQ compq )

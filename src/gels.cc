@@ -226,7 +226,7 @@ int64_t gels(
 ///     squares of the modulus of elements m+1 to n in that column.
 ///
 /// @param[in] ldb
-///     The leading dimension of the array B. ldb >= MAX(1,m,n).
+///     The leading dimension of the array B. ldb >= max(1,m,n).
 ///
 /// @retval = 0: successful exit
 /// @retval > 0: if return value = i, the i-th diagonal element of the

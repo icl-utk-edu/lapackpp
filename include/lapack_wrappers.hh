@@ -3423,27 +3423,25 @@ int64_t hptrs(
 
 // -----------------------------------------------------------------------------
 int64_t hseqr(
-    lapack::Job job, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::JobSchur job, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
     float* H, int64_t ldh,
-    float* WR,
-    float* WI,
+    std::complex<float>* W,
     float* Z, int64_t ldz );
 
 int64_t hseqr(
-    lapack::Job job, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::JobSchur job, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
     double* H, int64_t ldh,
-    double* WR,
-    double* WI,
+    std::complex<double>* W,
     double* Z, int64_t ldz );
 
 int64_t hseqr(
-    lapack::Job job, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::JobSchur job, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
     std::complex<float>* H, int64_t ldh,
     std::complex<float>* W,
     std::complex<float>* Z, int64_t ldz );
 
 int64_t hseqr(
-    lapack::Job job, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::JobSchur job, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
     std::complex<double>* H, int64_t ldh,
     std::complex<double>* W,
     std::complex<double>* Z, int64_t ldz );
@@ -9219,32 +9217,65 @@ int64_t trevc(
     bool* select, int64_t n,
     float const* T, int64_t ldt,
     float* VL, int64_t ldvl,
-    float* VR, int64_t ldvr, int64_t mm,
-    int64_t* m );
+    float* VR, int64_t ldvr,
+    int64_t mm, int64_t* m );
 
 int64_t trevc(
     lapack::Side side, lapack::HowMany howmny,
     bool* select, int64_t n,
     double const* T, int64_t ldt,
     double* VL, int64_t ldvl,
-    double* VR, int64_t ldvr, int64_t mm,
-    int64_t* m );
+    double* VR, int64_t ldvr,
+    int64_t mm, int64_t* m );
 
 int64_t trevc(
     lapack::Side side, lapack::HowMany howmny,
     bool const* select, int64_t n,
     std::complex<float>* T, int64_t ldt,
     std::complex<float>* VL, int64_t ldvl,
-    std::complex<float>* VR, int64_t ldvr, int64_t mm,
-    int64_t* m );
+    std::complex<float>* VR, int64_t ldvr,
+    int64_t mm, int64_t* m );
 
 int64_t trevc(
     lapack::Side side, lapack::HowMany howmny,
     bool const* select, int64_t n,
     std::complex<double>* T, int64_t ldt,
     std::complex<double>* VL, int64_t ldvl,
-    std::complex<double>* VR, int64_t ldvr, int64_t mm,
-    int64_t* m );
+    std::complex<double>* VR, int64_t ldvr,
+    int64_t mm, int64_t* m );
+
+// -----------------------------------------------------------------------------
+int64_t trevc3(
+    lapack::Side side, lapack::HowMany howmany,
+    bool* select, int64_t n,
+    float const* T, int64_t ldt,
+    float* VL, int64_t ldvl,
+    float* VR, int64_t ldvr,
+    int64_t mm, int64_t* m );
+
+int64_t trevc3(
+    lapack::Side side, lapack::HowMany howmany,
+    bool* select, int64_t n,
+    double const* T, int64_t ldt,
+    double* VL, int64_t ldvl,
+    double* VR, int64_t ldvr,
+    int64_t mm, int64_t* m );
+
+int64_t trevc3(
+    lapack::Side side, lapack::HowMany howmany,
+    bool const* select, int64_t n,
+    std::complex<float>* T, int64_t ldt,
+    std::complex<float>* VL, int64_t ldvl,
+    std::complex<float>* VR, int64_t ldvr,
+    int64_t mm, int64_t* m );
+
+int64_t trevc3(
+    lapack::Side side, lapack::HowMany howmany,
+    bool const* select, int64_t n,
+    std::complex<double>* T, int64_t ldt,
+    std::complex<double>* VL, int64_t ldvl,
+    std::complex<double>* VR, int64_t ldvr,
+    int64_t mm, int64_t* m );
 
 // -----------------------------------------------------------------------------
 int64_t trexc(

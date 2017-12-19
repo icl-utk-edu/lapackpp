@@ -212,6 +212,8 @@ enum_map = {
     'jobvsl' : 'Job',  # gges
     'jobvsr' : 'Job',  # gges
 
+    'jobschur': 'JobSchur', # hseqr
+
     'jobq'   : 'JobQ',   # ggsvd
 
     'jobu1'  : 'JobCS',  # bbcsd
@@ -224,11 +226,11 @@ enum_map = {
     'range'  : 'Range',       # syevx
     'vect'   : 'Vect',        # orgbr, ormbr
     'compq'  : 'CompQ',       # bdsdc, gghrd
-    'compz'  : 'CompQ',       #        gghrd
+    'compz'  : 'CompQ',       #        gghrd, hseqr
     'direct' : 'Direct',      # larfb
     'storev' : 'StoreV',      # larfb
     'type'   : 'MatrixType',  # lascl
-    'howmny' : 'HowMany',     # trevc
+    'howmany': 'HowMany',     # trevc
     'equed'  : 'Equed',       # *svx, *rfsx
     'fact'   : 'Factored',    # *svx
     'sense'  : 'Sense',       # geesx
@@ -709,8 +711,9 @@ enums = {
         'c': ('ConjTrans', 'lapack::Op::ConjTrans'),
     },
     'side': {
-        'l': ('Left',  'lapack::Side::Left'),
+        'l': ('Left',  'lapack::Side::Left' ),
         'r': ('Right', 'lapack::Side::Right'),
+        'b': ('Both',  'lapack::Side::Both' ),  # todo?
     },
     'norm': {
         '1': ('One', 'lapack::Norm::One'),
@@ -724,6 +727,12 @@ enums = {
         'u': ('Unit',    'lapack::Diag::Unit'),
     },
     'compq': {
+        'n': ('NoVec',      'lapack::CompQ::NoVec'),
+        'i': ('Vec',        'lapack::CompQ::Vec'),
+        'p': ('CompactVec', 'lapack::CompQ::CompactVec'),
+        'v': ('Update',     'lapack::CompQ::Update'),
+    },
+    'compz': {
         'n': ('NoVec',      'lapack::CompQ::NoVec'),
         'i': ('Vec',        'lapack::CompQ::Vec'),
         'p': ('CompactVec', 'lapack::CompQ::CompactVec'),
@@ -755,6 +764,12 @@ enums = {
     'jobvr': {
         'n': ('NoVec',        'lapack::Job::NoVec'       ),
         'v': ('Vec',          'lapack::Job::Vec'         ),
+    },
+
+    # hseqr
+    'jobschur': {
+        'e': ('None',         'lapack::JobSchur::None' ),
+        's': ('Schur',        'lapack::JobSchur::Schur'),
     },
 
     # gesvd
@@ -814,6 +829,13 @@ enums = {
         's': ('Scale',   'lapack::Balance::Scale'  ),
         'b': ('Both',    'lapack::Balance::Both'   ),
     },
+
+    # gehrd
+    'howmany': {
+        'a': ('All',           'lapack::HowMany::All'          ),
+        'b': ('Backtransform', 'lapack::HowMany::Backtransform'),
+        's': ('Select',        'lapack::HowMany::Select'       ),
+    },
 }
 
 enum_override = {
@@ -821,6 +843,9 @@ enum_override = {
     'gebal': (( 'JOB', 'BALANCE' ), ),
     'hetrd_2stage': (( 'VECT', 'JOBZ' ), ),  # todo: just job?
     'sytrd_2stage': (( 'VECT', 'JOBZ' ), ),  # todo: just job?
+    'trevc':  (( 'HOWMNY', 'HOWMANY' ), ),
+    'trevc3': (( 'HOWMNY', 'HOWMANY' ), ),
+    'hseqr':  (( 'JOB', 'JOBSCHUR' ), ),
 }
 
 # ------------------------------------------------------------------------------
@@ -973,9 +998,13 @@ def generate_docs( func, header=False ):
             # = 'U': ...    =>    - Upper: ...
             # = 'L': ...    =>    - Lower: ...
             if (arg.is_enum):
-                d = re.sub( r"^ *= *'(\w)'( or '\w')?[:,]",
-                            lambda match: '- ' + enums[arg.name][match.group(1).lower()][1] + ':',
-                            d, 0, re.M )
+                try:
+                    d = re.sub( r"^ *= *'(\w)'( or '\w')?[:,]",
+                                lambda match: '- ' + enums[arg.name][match.group(1).lower()][1] + ':',
+                                d, 0, re.M )
+                except Exception, e:
+                    print( 'enum', arg.name )
+                    raise e
             # end
 
             d = parse_docs( d, variables, indent=4 )

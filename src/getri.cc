@@ -10,6 +10,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup gesv_computational
 int64_t getri(
     int64_t n,
     float* A, int64_t lda,
@@ -52,6 +53,7 @@ int64_t getri(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup gesv_computational
 int64_t getri(
     int64_t n,
     double* A, int64_t lda,
@@ -94,6 +96,7 @@ int64_t getri(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup gesv_computational
 int64_t getri(
     int64_t n,
     std::complex<float>* A, int64_t lda,
@@ -136,6 +139,37 @@ int64_t getri(
 }
 
 // -----------------------------------------------------------------------------
+/// Computes the inverse of a matrix using the LU factorization
+/// computed by `lapack::getrf`.
+///
+/// This method inverts U and then computes \f$ A^{-1} \f$ by solving the system
+/// \f$ A^{-1} L = U^{-1} \f$ for \f$ A^{-1}. \f$
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] n
+///     The order of the matrix A. n >= 0.
+///
+/// @param[in,out] A
+///     The n-by-n matrix A, stored in an lda-by-n array.
+///     On entry, the factors L and U from the factorization
+///     \f$ A = P L U \f$ as computed by `lapack::getrf`.
+///     On successful exit, the inverse of the original matrix A.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,n).
+///
+/// @param[in] ipiv
+///     The vector ipiv of length n.
+///     The pivot indices from `lapack::getrf`; for 1 <= i <= n, row i of the
+///     matrix was interchanged with row ipiv(i).
+///
+/// @retval = 0: successful exit
+/// @retval > 0: if return value = i, U(i,i) is exactly zero; the matrix is
+///     singular and its inverse could not be computed.
+///
+/// @ingroup gesv_computational
 int64_t getri(
     int64_t n,
     std::complex<double>* A, int64_t lda,

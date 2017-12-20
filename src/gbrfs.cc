@@ -241,7 +241,7 @@ int64_t gbrfs(
 ///     is an estimated upper bound for the magnitude of the largest
 ///     element in (X(j) - XTRUE) divided by the magnitude of the
 ///     largest element in X(j). The estimate is as reliable as
-///     the estimate for RCOND, and is almost always a slight
+///     the estimate for rcond, and is almost always a slight
 ///     overestimate of the true error.
 ///
 /// @param[out] berr

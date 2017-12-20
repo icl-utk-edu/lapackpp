@@ -605,6 +605,7 @@ enum class Equed {
     Row         = 'R',
     Col         = 'C',
     Both        = 'B',
+    Yes         = 'Y',  // porfsx
 };
 
 inline char equed2char( lapack::Equed equed )
@@ -616,7 +617,7 @@ inline lapack::Equed char2equed( char equed )
 {
     equed = char( toupper( equed ));
     lapack_throw_if_( equed != 'N' && equed != 'R' && equed != 'C' &&
-                      equed != 'B' );
+                      equed != 'B' && equed != 'Y' );
     return lapack::Equed( equed );
 }
 
@@ -627,6 +628,7 @@ inline const char* equed2str( lapack::Equed equed )
         case lapack::Equed::Row:  return "row";
         case lapack::Equed::Col:  return "col";
         case lapack::Equed::Both: return "both";
+        case lapack::Equed::Yes:  return "yes";
     }
     return "?";
 }

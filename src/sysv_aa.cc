@@ -180,7 +180,7 @@ int64_t sysv_aa(
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
 /// For real matrices, `lapack::hesv_aa` is an alias for this.
-/// For complex Hermitian matrices, @see `lapack::hesv_aa`.
+/// For complex Hermitian matrices, see `lapack::hesv_aa`.
 ///
 /// @param[in] uplo
 ///     - lapack::Uplo::Upper: Upper triangle of A is stored;

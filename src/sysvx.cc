@@ -211,7 +211,7 @@ int64_t sysvx(
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
 /// For real matrices, `lapack::hesvx` is an alias for this.
-/// For complex Hermitian matrices, @see `lapack::hesvx`.
+/// For complex Hermitian matrices, see `lapack::hesvx`.
 ///
 /// @param[in] fact
 ///     Whether or not the factored form of A has been supplied on entry.

@@ -10,10 +10,11 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup gelqf
 int64_t ormlq(
     lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k,
     float const* A, int64_t lda,
-    float const* TAU,
+    float const* tau,
     float* C, int64_t ldc )
 {
     // check for overflow
@@ -36,7 +37,7 @@ int64_t ormlq(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_sormlq( &side_, &trans_, &m_, &n_, &k_, A, &lda_, TAU, C, &ldc_, qry_work, &ineg_one, &info_ );
+    LAPACK_sormlq( &side_, &trans_, &m_, &n_, &k_, A, &lda_, tau, C, &ldc_, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -45,7 +46,7 @@ int64_t ormlq(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_sormlq( &side_, &trans_, &m_, &n_, &k_, A, &lda_, TAU, C, &ldc_, &work[0], &lwork_, &info_ );
+    LAPACK_sormlq( &side_, &trans_, &m_, &n_, &k_, A, &lda_, tau, C, &ldc_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -53,10 +54,12 @@ int64_t ormlq(
 }
 
 // -----------------------------------------------------------------------------
+/// @see lapack::unmlq
+/// @ingroup gelqf
 int64_t ormlq(
     lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k,
     double const* A, int64_t lda,
-    double const* TAU,
+    double const* tau,
     double* C, int64_t ldc )
 {
     // check for overflow
@@ -79,7 +82,7 @@ int64_t ormlq(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dormlq( &side_, &trans_, &m_, &n_, &k_, A, &lda_, TAU, C, &ldc_, qry_work, &ineg_one, &info_ );
+    LAPACK_dormlq( &side_, &trans_, &m_, &n_, &k_, A, &lda_, tau, C, &ldc_, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -88,7 +91,7 @@ int64_t ormlq(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dormlq( &side_, &trans_, &m_, &n_, &k_, A, &lda_, TAU, C, &ldc_, &work[0], &lwork_, &info_ );
+    LAPACK_dormlq( &side_, &trans_, &m_, &n_, &k_, A, &lda_, tau, C, &ldc_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

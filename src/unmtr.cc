@@ -53,20 +53,19 @@ int64_t unmtr(
 }
 
 // -----------------------------------------------------------------------------
-/// Overwrites the general complex m-by-n matrix C with
+/// Multiplies the general m-by-n matrix C by Q as follows:
 ///
 /// - side = left,  trans = NoTrans:   \f$ Q C \f$
 /// - side = right, trans = NoTrans:   \f$ C Q \f$
 /// - side = left,  trans = ConjTrans: \f$ Q^H C \f$
 /// - side = right, trans = ConjTrans: \f$ C Q^H \f$
 ///
-/// where Q is a complex unitary matrix of order nq, with nq = m if
+/// where Q is a unitary matrix of order nq, with nq = m if
 /// side = Left and nq = n if side = Right. Q is defined as the product of
 /// nq-1 elementary reflectors, as returned by `lapack::hetrd`:
 ///
-/// if uplo = Upper, Q = H(nq-1) . . . H(2) H(1);
-///
-/// if uplo = Lower, Q = H(1) H(2) . . . H(nq-1).
+/// - if uplo = Upper, \f$ Q = H(nq-1) \dots H(2) H(1); \f$
+/// - if uplo = Lower, \f$ Q = H(1) H(2) \dots H(nq-1). \f$
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.

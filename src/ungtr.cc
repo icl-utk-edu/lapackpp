@@ -46,13 +46,12 @@ int64_t ungtr(
 }
 
 // -----------------------------------------------------------------------------
-/// Generates a complex unitary matrix Q which is defined as the
+/// Generates an n-by-n unitary matrix Q which is defined as the
 /// product of n-1 elementary reflectors of order n, as returned by
 /// `lapack::hetrd`:
 ///
-/// if uplo = Upper, Q = H(n-1) . . . H(2) H(1),
-///
-/// if uplo = Lower, Q = H(1) H(2) . . . H(n-1).
+/// - if uplo = Upper, \f$ Q = H(n-1) \dots H(2) H(1), \f$
+/// - if uplo = Lower, \f$ Q = H(1) H(2) \dots H(n-1). \f$
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.

@@ -113,28 +113,28 @@ int64_t hetrd(
 /// If uplo = Upper, the matrix Q is represented as a product of elementary
 /// reflectors
 ///
-///     Q = H(n-1) . . . H(2) H(1).
+///     \f[ Q = H(n-1) . . . H(2) H(1). \f]
 ///
 /// Each H(i) has the form
 ///
-///     H(i) = I - tau * v * v^H
+///     \f[ H(i) = I - \tau v v^H \f]
 ///
-/// where tau is a scalar, and v is a vector with
+/// where \f$ \tau \f$ is a scalar, and v is a vector with
 /// v(i+1:n) = 0 and v(i) = 1; v(1:i-1) is stored on exit in
-/// A(1:i-1,i+1), and tau in tau(i).
+/// A(1:i-1,i+1), and \f$ \tau \f$ in tau(i).
 ///
 /// If uplo = Lower, the matrix Q is represented as a product of elementary
 /// reflectors
 ///
-///     Q = H(1) H(2) . . . H(n-1).
+///     \f[ Q = H(1) H(2) . . . H(n-1). \f]
 ///
 /// Each H(i) has the form
 ///
-///     H(i) = I - tau * v * v^H
+///     \f[ H(i) = I - \tau v v^H \f]
 ///
-/// where tau is a scalar, and v is a vector with
+/// where \f$ \tau \f$ is a scalar, and v is a vector with
 /// v(1:i) = 0 and v(i+1) = 1; v(i+2:n) is stored on exit in A(i+2:n,i),
-/// and tau in tau(i).
+/// and \f$ \tau \f$ in tau(i).
 ///
 /// The contents of A on exit are illustrated by the following examples
 /// with n = 5:

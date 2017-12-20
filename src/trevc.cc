@@ -12,7 +12,7 @@ using blas::real;
 // -----------------------------------------------------------------------------
 /// @ingroup geev_computational
 int64_t trevc(
-    lapack::Side side, lapack::HowMany howmany,
+    lapack::Sides side, lapack::HowMany howmany,
     bool* select, int64_t n,
     float const* T, int64_t ldt,
     float* VL, int64_t ldvl,
@@ -27,7 +27,7 @@ int64_t trevc(
         throw_if_( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
         throw_if_( std::abs(mm) > std::numeric_limits<blas_int>::max() );
     }
-    char side_ = side2char( side );
+    char side_ = sides2char( side );
     char howmany_ = howmany2char( howmany );
     #if 1
         // 32-bit copy
@@ -61,7 +61,7 @@ int64_t trevc(
 // -----------------------------------------------------------------------------
 /// @ingroup geev_computational
 int64_t trevc(
-    lapack::Side side, lapack::HowMany howmany,
+    lapack::Sides side, lapack::HowMany howmany,
     bool* select, int64_t n,
     double const* T, int64_t ldt,
     double* VL, int64_t ldvl,
@@ -76,7 +76,7 @@ int64_t trevc(
         throw_if_( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
         throw_if_( std::abs(mm) > std::numeric_limits<blas_int>::max() );
     }
-    char side_ = side2char( side );
+    char side_ = sides2char( side );
     char howmany_ = howmany2char( howmany );
     #if 1
         // 32-bit copy
@@ -110,7 +110,7 @@ int64_t trevc(
 // -----------------------------------------------------------------------------
 /// @ingroup geev_computational
 int64_t trevc(
-    lapack::Side side, lapack::HowMany howmany,
+    lapack::Sides side, lapack::HowMany howmany,
     bool const* select, int64_t n,
     std::complex<float>* T, int64_t ldt,
     std::complex<float>* VL, int64_t ldvl,
@@ -125,7 +125,7 @@ int64_t trevc(
         throw_if_( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
         throw_if_( std::abs(mm) > std::numeric_limits<blas_int>::max() );
     }
-    char side_ = side2char( side );
+    char side_ = sides2char( side );
     char howmany_ = howmany2char( howmany );
     #if 1
         // 32-bit copy
@@ -180,9 +180,9 @@ int64_t trevc(
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
 ///
 /// @param[in] side
-///     - lapack::Side::Right: compute right eigenvectors only;
-///     - lapack::Side::Left:  compute left eigenvectors only;
-///     - lapack::Side::Both:  compute both right and left eigenvectors.
+///     - lapack::Sides::Right: compute right eigenvectors only;
+///     - lapack::Sides::Left:  compute left eigenvectors only;
+///     - lapack::Sides::Both:  compute both right and left eigenvectors.
 ///
 /// @param[in] howmany
 ///     - lapack::HowMany::All:
@@ -276,7 +276,7 @@ int64_t trevc(
 ///
 /// @ingroup geev_computational
 int64_t trevc(
-    lapack::Side side, lapack::HowMany howmany,
+    lapack::Sides side, lapack::HowMany howmany,
     bool const* select, int64_t n,
     std::complex<double>* T, int64_t ldt,
     std::complex<double>* VL, int64_t ldvl,
@@ -291,7 +291,7 @@ int64_t trevc(
         throw_if_( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
         throw_if_( std::abs(mm) > std::numeric_limits<blas_int>::max() );
     }
-    char side_ = side2char( side );
+    char side_ = sides2char( side );
     char howmany_ = howmany2char( howmany );
     #if 1
         // 32-bit copy

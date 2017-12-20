@@ -9213,7 +9213,7 @@ int64_t trcon(
 
 // -----------------------------------------------------------------------------
 int64_t trevc(
-    lapack::Side side, lapack::HowMany howmny,
+    lapack::Sides side, lapack::HowMany howmny,
     bool* select, int64_t n,
     float const* T, int64_t ldt,
     float* VL, int64_t ldvl,
@@ -9221,7 +9221,7 @@ int64_t trevc(
     int64_t mm, int64_t* m );
 
 int64_t trevc(
-    lapack::Side side, lapack::HowMany howmny,
+    lapack::Sides side, lapack::HowMany howmny,
     bool* select, int64_t n,
     double const* T, int64_t ldt,
     double* VL, int64_t ldvl,
@@ -9229,7 +9229,7 @@ int64_t trevc(
     int64_t mm, int64_t* m );
 
 int64_t trevc(
-    lapack::Side side, lapack::HowMany howmny,
+    lapack::Sides side, lapack::HowMany howmny,
     bool const* select, int64_t n,
     std::complex<float>* T, int64_t ldt,
     std::complex<float>* VL, int64_t ldvl,
@@ -9237,7 +9237,7 @@ int64_t trevc(
     int64_t mm, int64_t* m );
 
 int64_t trevc(
-    lapack::Side side, lapack::HowMany howmny,
+    lapack::Sides side, lapack::HowMany howmny,
     bool const* select, int64_t n,
     std::complex<double>* T, int64_t ldt,
     std::complex<double>* VL, int64_t ldvl,
@@ -9246,7 +9246,7 @@ int64_t trevc(
 
 // -----------------------------------------------------------------------------
 int64_t trevc3(
-    lapack::Side side, lapack::HowMany howmany,
+    lapack::Sides side, lapack::HowMany howmany,
     bool* select, int64_t n,
     float const* T, int64_t ldt,
     float* VL, int64_t ldvl,
@@ -9254,7 +9254,7 @@ int64_t trevc3(
     int64_t mm, int64_t* m );
 
 int64_t trevc3(
-    lapack::Side side, lapack::HowMany howmany,
+    lapack::Sides side, lapack::HowMany howmany,
     bool* select, int64_t n,
     double const* T, int64_t ldt,
     double* VL, int64_t ldvl,
@@ -9262,7 +9262,7 @@ int64_t trevc3(
     int64_t mm, int64_t* m );
 
 int64_t trevc3(
-    lapack::Side side, lapack::HowMany howmany,
+    lapack::Sides side, lapack::HowMany howmany,
     bool const* select, int64_t n,
     std::complex<float>* T, int64_t ldt,
     std::complex<float>* VL, int64_t ldvl,
@@ -9270,7 +9270,7 @@ int64_t trevc3(
     int64_t mm, int64_t* m );
 
 int64_t trevc3(
-    lapack::Side side, lapack::HowMany howmany,
+    lapack::Sides side, lapack::HowMany howmany,
     bool const* select, int64_t n,
     std::complex<double>* T, int64_t ldt,
     std::complex<double>* VL, int64_t ldvl,

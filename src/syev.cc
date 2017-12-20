@@ -47,8 +47,8 @@ int64_t syev(
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup heev
 /// @see lapack::heev
+/// @ingroup heev
 int64_t syev(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,

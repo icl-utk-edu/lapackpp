@@ -46,8 +46,8 @@ int64_t orgtr(
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup syev_computational
 /// @see lapack::ungtr
+/// @ingroup syev_computational
 int64_t orgtr(
     lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,

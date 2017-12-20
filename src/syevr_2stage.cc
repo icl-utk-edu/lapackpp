@@ -74,8 +74,8 @@ int64_t syevr_2stage(
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup heev
 /// @see lapack::heevr_2stage
+/// @ingroup heev
 int64_t syevr_2stage(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda, double vl, double vu, int64_t il, int64_t iu, double abstol,

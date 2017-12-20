@@ -53,8 +53,8 @@ int64_t ormtr(
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup syev_computational
 /// @see lapack::unmtr
+/// @ingroup syev_computational
 int64_t ormtr(
     lapack::Side side, lapack::Uplo uplo, lapack::Op trans, int64_t m, int64_t n,
     double const* A, int64_t lda,

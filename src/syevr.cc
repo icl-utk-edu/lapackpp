@@ -72,8 +72,8 @@ int64_t syevr(
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup heev
 /// @see lapack::heevr
+/// @ingroup heev
 int64_t syevr(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda, double vl, double vu, int64_t il, int64_t iu, double abstol,

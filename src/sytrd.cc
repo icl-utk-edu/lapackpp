@@ -48,8 +48,8 @@ int64_t sytrd(
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup syev_computational
 /// @see lapack::hetrd
+/// @ingroup syev_computational
 int64_t sytrd(
     lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,

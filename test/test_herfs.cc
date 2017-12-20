@@ -96,7 +96,7 @@ void test_herfs_work( Params& params, bool run )
     // solve AF
     int64_t info_trs = lapack::hetrs( uplo, n, nrhs, &AF[0], lda, &ipiv_tst[0], &X_tst[0], ldb );
     if (info_trs != 0) {
-        fprintf( stderr, "lapack::hetrf returned error %lld\n", (lld) info_trs );
+        fprintf( stderr, "lapack::hetrs returned error %lld\n", (lld) info_trs );
     }
 
     // Use results from lapackpp for the reference LAPACKE run

@@ -34,7 +34,7 @@ float lanst(
 /// Overloaded versions are available for
 /// `float`, `double`.
 /// For real matrices, `lapack::lanht` is an alias for this.
-/// For complex matrices, @see `lapack::lanht`.
+/// For complex matrices, see `lapack::lanht`.
 ///
 /// @param[in] norm
 ///     The value to be returned:

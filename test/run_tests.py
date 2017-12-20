@@ -366,6 +366,10 @@ if (opts.syev):
 #    [ 'hetrd', check + dtype + align + n + uplo ],
 #    [ 'ungtr', check + dtype + align + n + uplo ],
 #    [ 'unmtr', check + dtype + align + n + uplo ],
+
+    [ 'hpev',  check + dtype + align + n + uplo ],
+
+    [ 'hbev',  check + dtype + align + n + uplo ],
     ]
 
 # generalized symmetric eigenvalues

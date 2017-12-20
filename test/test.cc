@@ -256,11 +256,11 @@ std::vector< libtest::routines_t > routines = {
 
     // -----
     // symmetric/Hermitian eigenvalues
-    { "heev",               test_heev,      Section::heev },
-  //{ "hpev",               test_hpev,      Section::heev },
-  //{ "hbev",               test_hbev,      Section::heev },
+    { "heev",               test_heev,      Section::heev }, // tested via LAPACKE
+    { "hpev",               test_hpev,      Section::heev }, // tested via LAPACKE
+    { "hbev",               test_hbev,      Section::heev }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },
-
+    
   //{ "heevx",              test_heevx,     Section::heev },
   //{ "hpevx",              test_hpevx,     Section::heev },
   //{ "hbevx",              test_hbevx,     Section::heev },

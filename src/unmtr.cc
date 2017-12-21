@@ -53,7 +53,7 @@ int64_t unmtr(
 }
 
 // -----------------------------------------------------------------------------
-/// Multiplies the general m-by-n matrix C by Q as follows:
+/// Multiplies the general m-by-n matrix C by Q from `lapack::hetrd` as follows:
 ///
 /// - side = left,  trans = NoTrans:   \f$ Q C \f$
 /// - side = right, trans = NoTrans:   \f$ C Q \f$

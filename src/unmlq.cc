@@ -54,7 +54,7 @@ int64_t unmlq(
 }
 
 // -----------------------------------------------------------------------------
-/// Multiplies the general m-by-n matrix C by Q as follows:
+/// Multiplies the general m-by-n matrix C by Q from `lapack::gelqf` as follows:
 ///
 /// - side = Left,  trans = NoTrans:   \f$ Q C \f$
 /// - side = Right, trans = NoTrans:   \f$ C Q \f$

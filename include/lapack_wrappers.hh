@@ -5008,6 +5008,55 @@ int64_t pbsv(
     std::complex<double>* B, int64_t ldb );
 
 // -----------------------------------------------------------------------------
+int64_t pbsvx(
+    lapack::Factored fact, lapack::Uplo uplo, int64_t n, int64_t kd, int64_t nrhs,
+    float* AB, int64_t ldab,
+    float* AFB, int64_t ldafb,
+    lapack::Equed* equed,
+    float* S,
+    float* B, int64_t ldb,
+    float* X, int64_t ldx,
+    float* rcond,
+    float* ferr,
+    float* berr );
+
+int64_t pbsvx(
+    lapack::Factored fact, lapack::Uplo uplo, int64_t n, int64_t kd, int64_t nrhs,
+    double* AB, int64_t ldab,
+    double* AFB, int64_t ldafb,
+    lapack::Equed* equed,
+    double* S,
+    double* B, int64_t ldb,
+    double* X, int64_t ldx,
+    double* rcond,
+    double* ferr,
+    double* berr );
+
+int64_t pbsvx(
+    lapack::Factored fact, lapack::Uplo uplo, int64_t n, int64_t kd, int64_t nrhs,
+    std::complex<float>* AB, int64_t ldab,
+    std::complex<float>* AFB, int64_t ldafb,
+    lapack::Equed* equed,
+    float* S,
+    std::complex<float>* B, int64_t ldb,
+    std::complex<float>* X, int64_t ldx,
+    float* rcond,
+    float* ferr,
+    float* berr );
+
+int64_t pbsvx(
+    lapack::Factored fact, lapack::Uplo uplo, int64_t n, int64_t kd, int64_t nrhs,
+    std::complex<double>* AB, int64_t ldab,
+    std::complex<double>* AFB, int64_t ldafb,
+    lapack::Equed* equed,
+    double* S,
+    std::complex<double>* B, int64_t ldb,
+    std::complex<double>* X, int64_t ldx,
+    double* rcond,
+    double* ferr,
+    double* berr );
+
+// -----------------------------------------------------------------------------
 int64_t pbtrf(
     lapack::Uplo uplo, int64_t n, int64_t kd,
     float* AB, int64_t ldab );

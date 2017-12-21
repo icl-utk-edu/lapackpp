@@ -10,6 +10,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup pbsv_computational
 int64_t pbcon(
     lapack::Uplo uplo, int64_t n, int64_t kd,
     float const* AB, int64_t ldab, float anorm,
@@ -39,6 +40,7 @@ int64_t pbcon(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup pbsv_computational
 int64_t pbcon(
     lapack::Uplo uplo, int64_t n, int64_t kd,
     double const* AB, int64_t ldab, double anorm,
@@ -68,6 +70,7 @@ int64_t pbcon(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup pbsv_computational
 int64_t pbcon(
     lapack::Uplo uplo, int64_t n, int64_t kd,
     std::complex<float> const* AB, int64_t ldab, float anorm,
@@ -97,6 +100,52 @@ int64_t pbcon(
 }
 
 // -----------------------------------------------------------------------------
+/// Estimates the reciprocal of the condition number (in the
+/// 1-norm) of a Hermitian positive definite band matrix using
+/// the Cholesky factorization \f$ A = U^H U \f$ or \f$ A = L L^H \f$ computed by
+/// `lapack::pbtrf`.
+///
+/// An estimate is obtained for \f$ || A^{-1} ||, \f$ and the reciprocal of the
+/// condition number is computed as \f$ \text{rcond} = 1 / (||A||_1 \cdot || A^{-1} ||_1). \f$
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] uplo
+///     - lapack::Uplo::Upper: Upper triangular factor stored in AB;
+///     - lapack::Uplo::Lower: Lower triangular factor stored in AB.
+///
+/// @param[in] n
+///     The order of the matrix A. n >= 0.
+///
+/// @param[in] kd
+///     - If uplo = Upper, the number of superdiagonals of the matrix A;
+///     - if uplo = Lower, the number of subdiagonals.
+///     - kd >= 0.
+///
+/// @param[in] AB
+///     The n-by-n band matrix AB, stored in an ldab-by-n array.
+///     The triangular factor U or L from the Cholesky factorization
+///     \f$ A = U^H U \f$ or \f$ A = L L^H \f$ of the band matrix A, stored in the
+///     first kd+1 rows of the array. The j-th column of U or L is
+///     stored in the j-th column of the array AB as follows:
+///     - if uplo = Upper, AB(kd+1+i-j,j) = U(i,j) for max(1,j-kd) <= i <= j;
+///     - if uplo = Lower, AB(1+i-j,j) = L(i,j) for j <= i <= min(n,j+kd).
+///
+/// @param[in] ldab
+///     The leading dimension of the array AB. ldab >= kd+1.
+///
+/// @param[in] anorm
+///     The 1-norm (or infinity-norm) of the Hermitian band matrix A.
+///
+/// @param[out] rcond
+///     The reciprocal of the condition number of the matrix A,
+///     computed as rcond = 1/(anorm * ainv_norm), where ainv_norm is an
+///     estimate of the 1-norm of inv(A) computed in this routine.
+///
+/// @retval = 0: successful exit
+///
+/// @ingroup pbsv_computational
 int64_t pbcon(
     lapack::Uplo uplo, int64_t n, int64_t kd,
     std::complex<double> const* AB, int64_t ldab, double anorm,

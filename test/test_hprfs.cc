@@ -9,33 +9,33 @@
 
 // -----------------------------------------------------------------------------
 // simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_herfs(
-    char uplo, lapack_int n, lapack_int nrhs, float* A, lapack_int lda, float* AF, lapack_int ldaf, lapack_int* ipiv, float* B, lapack_int ldb, float* X, lapack_int ldx, float* ferr, float* berr )
+static lapack_int LAPACKE_hprfs(
+    char uplo, lapack_int n, lapack_int nrhs, float* AP, float* AFP, lapack_int* ipiv, float* B, lapack_int ldb, float* X, lapack_int ldx, float* ferr, float* berr )
 {
-    return LAPACKE_ssyrfs( LAPACK_COL_MAJOR, uplo, n, nrhs, A, lda, AF, ldaf, ipiv, B, ldb, X, ldx, ferr, berr );
+    return LAPACKE_ssprfs( LAPACK_COL_MAJOR, uplo, n, nrhs, AP, AFP, ipiv, B, ldb, X, ldx, ferr, berr );
 }
 
-static lapack_int LAPACKE_herfs(
-    char uplo, lapack_int n, lapack_int nrhs, double* A, lapack_int lda, double* AF, lapack_int ldaf, lapack_int* ipiv, double* B, lapack_int ldb, double* X, lapack_int ldx, double* ferr, double* berr )
+static lapack_int LAPACKE_hprfs(
+    char uplo, lapack_int n, lapack_int nrhs, double* AP, double* AFP, lapack_int* ipiv, double* B, lapack_int ldb, double* X, lapack_int ldx, double* ferr, double* berr )
 {
-    return LAPACKE_dsyrfs( LAPACK_COL_MAJOR, uplo, n, nrhs, A, lda, AF, ldaf, ipiv, B, ldb, X, ldx, ferr, berr );
+    return LAPACKE_dsprfs( LAPACK_COL_MAJOR, uplo, n, nrhs, AP, AFP, ipiv, B, ldb, X, ldx, ferr, berr );
 }
 
-static lapack_int LAPACKE_herfs(
-    char uplo, lapack_int n, lapack_int nrhs, std::complex<float>* A, lapack_int lda, std::complex<float>* AF, lapack_int ldaf, lapack_int* ipiv, std::complex<float>* B, lapack_int ldb, std::complex<float>* X, lapack_int ldx, float* ferr, float* berr )
+static lapack_int LAPACKE_hprfs(
+    char uplo, lapack_int n, lapack_int nrhs, std::complex<float>* AP, std::complex<float>* AFP, lapack_int* ipiv, std::complex<float>* B, lapack_int ldb, std::complex<float>* X, lapack_int ldx, float* ferr, float* berr )
 {
-    return LAPACKE_cherfs( LAPACK_COL_MAJOR, uplo, n, nrhs, A, lda, AF, ldaf, ipiv, B, ldb, X, ldx, ferr, berr );
+    return LAPACKE_chprfs( LAPACK_COL_MAJOR, uplo, n, nrhs, AP, AFP, ipiv, B, ldb, X, ldx, ferr, berr );
 }
 
-static lapack_int LAPACKE_herfs(
-    char uplo, lapack_int n, lapack_int nrhs, std::complex<double>* A, lapack_int lda, std::complex<double>* AF, lapack_int ldaf, lapack_int* ipiv, std::complex<double>* B, lapack_int ldb, std::complex<double>* X, lapack_int ldx, double* ferr, double* berr )
+static lapack_int LAPACKE_hprfs(
+    char uplo, lapack_int n, lapack_int nrhs, std::complex<double>* AP, std::complex<double>* AFP, lapack_int* ipiv, std::complex<double>* B, lapack_int ldb, std::complex<double>* X, lapack_int ldx, double* ferr, double* berr )
 {
-    return LAPACKE_zherfs( LAPACK_COL_MAJOR, uplo, n, nrhs, A, lda, AF, ldaf, ipiv, B, ldb, X, ldx, ferr, berr );
+    return LAPACKE_zhprfs( LAPACK_COL_MAJOR, uplo, n, nrhs, AP, AFP, ipiv, B, ldb, X, ldx, ferr, berr );
 }
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >
-void test_herfs_work( Params& params, bool run )
+void test_hprfs_work( Params& params, bool run )
 {
     using namespace blas;
     typedef typename traits< scalar_t >::real_t real_t;
@@ -56,20 +56,18 @@ void test_herfs_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, n ), align );
-    int64_t ldaf = roundup( max( 1, n ), align );
     int64_t ldb = roundup( max( 1, n ), align );
     int64_t ldx = roundup( max( 1, n ), align );
-    size_t size_A = (size_t) lda * n;
-    size_t size_AF = (size_t) ldaf * n;
+    size_t size_AP = (size_t) (n*(n+1)/2);
+    size_t size_AFP = (size_t) (n*(n+1)/2);
     size_t size_ipiv = (size_t) (n);
     size_t size_B = (size_t) ldb * nrhs;
     size_t size_X = (size_t) ldx * nrhs;
     size_t size_ferr = (size_t) (nrhs);
     size_t size_berr = (size_t) (nrhs);
 
-    std::vector< scalar_t > A( size_A );
-    std::vector< scalar_t > AF( size_AF );
+    std::vector< scalar_t > AP( size_AP );
+    std::vector< scalar_t > AFP( size_AFP );
     std::vector< int64_t > ipiv_tst( size_ipiv );
     std::vector< lapack_int > ipiv_ref( size_ipiv );
     std::vector< scalar_t > B( size_B );
@@ -82,21 +80,21 @@ void test_herfs_work( Params& params, bool run )
 
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A.size(), &A[0] );
-    AF = A;
+    lapack::larnv( idist, iseed, AP.size(), &AP[0] );
+    AFP = AP;
     lapack::larnv( idist, iseed, B.size(), &B[0] );
     X_tst = B;
 
-    // factor AF to initialize ipiv_tst
-    int64_t info_trf = lapack::hetrf( uplo, n, &AF[0], lda, &ipiv_tst[0] );
+    // factor to initialize ipiv_tst
+    int64_t info_trf = lapack::hptrf( uplo, n, &AFP[0], &ipiv_tst[0] );
     if (info_trf != 0) {
-        fprintf( stderr, "lapack::hetrf returned error %lld\n", (lld) info_trf );
+        fprintf( stderr, "lapack::hptrf returned error %lld\n", (lld) info_trf );
     }
 
-    // solve AF
-    int64_t info_trs = lapack::hetrs( uplo, n, nrhs, &AF[0], lda, &ipiv_tst[0], &X_tst[0], ldb );
+    // solve
+    int64_t info_trs = lapack::hptrs( uplo, n, nrhs, &AFP[0], &ipiv_tst[0], &X_tst[0], ldb );
     if (info_trs != 0) {
-        fprintf( stderr, "lapack::hetrs returned error %lld\n", (lld) info_trs );
+        fprintf( stderr, "lapack::hptrs returned error %lld\n", (lld) info_trs );
     }
 
     // Use results from lapackpp for the reference LAPACKE run
@@ -106,25 +104,24 @@ void test_herfs_work( Params& params, bool run )
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
     double time = omp_get_wtime();
-    int64_t info_tst = lapack::herfs( uplo, n, nrhs, &A[0], lda, &AF[0], ldaf, &ipiv_tst[0], &B[0], ldb, &X_tst[0], ldx, &ferr_tst[0], &berr_tst[0] );
+    int64_t info_tst = lapack::hprfs( uplo, n, nrhs, &AP[0], &AFP[0], &ipiv_tst[0], &B[0], ldb, &X_tst[0], ldx, &ferr_tst[0], &berr_tst[0] );
     time = omp_get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::herfs returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::hprfs returned error %lld\n", (lld) info_tst );
     }
 
     params.time.value() = time;
-    // double gflop = lapack::Gflop< scalar_t >::herfs( n, nrhs );
+    // double gflop = lapack::Gflop< scalar_t >::hprfs( n, nrhs );
     // params.gflops.value() = gflop / time;
 
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
-
         // ---------- run reference
         libtest::flush_cache( params.cache.value() );
         time = omp_get_wtime();
-        int64_t info_ref = LAPACKE_herfs( uplo2char(uplo), n, nrhs, &A[0], lda, &AF[0], ldaf, &ipiv_ref[0], &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
+        int64_t info_ref = LAPACKE_hprfs( uplo2char(uplo), n, nrhs, &AP[0], &AFP[0], &ipiv_ref[0], &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
         time = omp_get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_herfs returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_hprfs returned error %lld\n", (lld) info_ref );
         }
 
         params.ref_time.value() = time;
@@ -132,6 +129,7 @@ void test_herfs_work( Params& params, bool run )
 
         // ---------- check error compared to reference
         real_t error = 0;
+        real_t eps = std::numeric_limits< real_t >::epsilon();
         if (info_tst != info_ref) {
             error = 1;
         }
@@ -139,12 +137,12 @@ void test_herfs_work( Params& params, bool run )
         error += abs_error( ferr_tst, ferr_ref );
         error += abs_error( berr_tst, berr_ref );
         params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
+        params.okay.value() = (error < 3*eps);  // expect lapackpp == lapacke
     }
 }
 
 // -----------------------------------------------------------------------------
-void test_herfs( Params& params, bool run )
+void test_hprfs( Params& params, bool run )
 {
     switch (params.datatype.value()) {
         case libtest::DataType::Integer:
@@ -152,19 +150,19 @@ void test_herfs( Params& params, bool run )
             break;
 
         case libtest::DataType::Single:
-            test_herfs_work< float >( params, run );
+            test_hprfs_work< float >( params, run );
             break;
 
         case libtest::DataType::Double:
-            test_herfs_work< double >( params, run );
+            test_hprfs_work< double >( params, run );
             break;
 
         case libtest::DataType::SingleComplex:
-            test_herfs_work< std::complex<float> >( params, run );
+            test_hprfs_work< std::complex<float> >( params, run );
             break;
 
         case libtest::DataType::DoubleComplex:
-            test_herfs_work< std::complex<double> >( params, run );
+            test_hprfs_work< std::complex<double> >( params, run );
             break;
     }
 }

@@ -300,6 +300,13 @@ if (opts.hesv):
     [ 'hetri', check + dtype + align + n + uplo ],
     [ 'hecon', check + dtype + align + n + uplo ],
     [ 'herfs', check + dtype + align + n + uplo ],
+
+    [ 'hpsv',  check + dtype + align + n + uplo ],
+    [ 'hptrf', check + dtype + n + uplo ],
+    [ 'hptrs', check + dtype + align + n + uplo ],
+    [ 'hptri', check + dtype + n + uplo ],
+    [ 'hpcon', check + dtype + n + uplo ],
+    [ 'hprfs', check + dtype + align + n + uplo ],
     ]
 
 # least squares

@@ -192,27 +192,27 @@ std::vector< libtest::routines_t > routines = {
     // -----
     // hermetian
     { "hesv",               test_hesv,      Section::hesv }, // tested via LAPACKE
-  //{ "hpsv",               test_hpsv,      Section::hesv },
+    { "hpsv",               test_hpsv,      Section::hesv }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },
 
     { "hetrf",              test_hetrf,     Section::hesv }, // tested via LAPACKE
-  //{ "hptrf",              test_hptrf,     Section::hesv },
+    { "hptrf",              test_hptrf,     Section::hesv }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },
 
     { "hetrs",              test_hetrs,     Section::hesv }, // tested via LAPACKE
-  //{ "hptrs",              test_hptrs,     Section::hesv },
+    { "hptrs",              test_hptrs,     Section::hesv }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },
 
     { "hetri",              test_hetri,     Section::hesv }, // tested via LAPACKE
-  //{ "hptri",              test_hptri,     Section::hesv },
+    { "hptri",              test_hptri,     Section::hesv }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },
 
     { "hecon",              test_hecon,     Section::hesv }, // tested via LAPACKE
-  //{ "hpcon",              test_hpcon,     Section::hesv },
+    { "hpcon",              test_hpcon,     Section::hesv }, // tested via LAPACKE, error < 3*eps
     { "",                   nullptr,        Section::newline },
 
     { "herfs",              test_herfs,     Section::hesv }, // tested via LAPACKE
-  //{ "hprfs",              test_hprfs,     Section::hesv },
+    { "hprfs",              test_hprfs,     Section::hesv }, // tested via LAPACKE, error < 3*eps
     { "",                   nullptr,        Section::newline },
 
     // -----

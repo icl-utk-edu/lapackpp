@@ -3172,17 +3172,6 @@ int64_t hetri2(
     int64_t const* ipiv );
 
 // -----------------------------------------------------------------------------
-int64_t hetri2x(
-    lapack::Uplo uplo, int64_t n,
-    std::complex<float>* A, int64_t lda,
-    int64_t const* ipiv, int64_t nb );
-
-int64_t hetri2x(
-    lapack::Uplo uplo, int64_t n,
-    std::complex<double>* A, int64_t lda,
-    int64_t const* ipiv, int64_t nb );
-
-// -----------------------------------------------------------------------------
 int64_t hetri_3(
     lapack::Uplo uplo, int64_t n,
     std::complex<float>* A, int64_t lda,
@@ -8706,45 +8695,6 @@ int64_t sytri2(
     lapack::Uplo uplo, int64_t n,
     std::complex<double>* A, int64_t lda,
     int64_t const* ipiv );
-
-// -----------------------------------------------------------------------------
-int64_t sytri2x(
-    lapack::Uplo uplo, int64_t n,
-    float* A, int64_t lda,
-    int64_t const* ipiv, int64_t nb );
-
-// hetri2x alias to sytri2x
-inline int64_t hetri2x(
-    lapack::Uplo uplo, int64_t n,
-    float* A, int64_t lda,
-    int64_t const* ipiv, int64_t nb )
-{
-    return sytri2x( uplo, n, A, lda, ipiv, nb );
-}
-
-int64_t sytri2x(
-    lapack::Uplo uplo, int64_t n,
-    double* A, int64_t lda,
-    int64_t const* ipiv, int64_t nb );
-
-// hetri2x alias to sytri2x
-inline int64_t hetri2x(
-    lapack::Uplo uplo, int64_t n,
-    double* A, int64_t lda,
-    int64_t const* ipiv, int64_t nb )
-{
-    return sytri2x( uplo, n, A, lda, ipiv, nb );
-}
-
-int64_t sytri2x(
-    lapack::Uplo uplo, int64_t n,
-    std::complex<float>* A, int64_t lda,
-    int64_t const* ipiv, int64_t nb );
-
-int64_t sytri2x(
-    lapack::Uplo uplo, int64_t n,
-    std::complex<double>* A, int64_t lda,
-    int64_t const* ipiv, int64_t nb );
 
 // -----------------------------------------------------------------------------
 int64_t sytri_3(

@@ -222,7 +222,7 @@ int64_t porfsx(
 ///
 /// @param[in,out] S
 ///     The vector S of length n.
-///     The row scale factors for A.
+///     The scale factors for A.
 ///     - If equed = Yes, A is multiplied on the left and right by diag(S).
 ///     Each element of S must be positive.
 ///     Each element of S should be a power of the radix
@@ -395,29 +395,29 @@ int64_t porfsx(
 ///       - 0.0 is false
 ///       - Default: 1.0 (attempt componentwise convergence)
 ///
-/// @retval = 0: Successful exit. The solution to every right-hand side is
-/// guaranteed.
-/// @retval > 0 and <= n: if return value = i, U(i,i) is exactly zero.
-///     The factorization
-/// has been completed, but the factor U is exactly singular, so
-/// the solution and error bounds could not be computed. rcond = 0
-/// is returned.
-/// @retval > n: if return value = j-n, the solution corresponding to the j-th
-///     right-hand side is
+/// @retval = 0: Successful exit.
+///     The solution to every right-hand side is guaranteed.
+/// @retval > 0 and <= n: if return value = i,
+///     U(i,i) is exactly zero. The factorization
+///     has been completed, but the factor U is exactly singular, so
+///     the solution and error bounds could not be computed. rcond = 0
+///     is returned.
+/// @retval > n: if return value = n+j,
+///     the solution corresponding to the j-th right-hand side is
 ///     not guaranteed. The solutions corresponding to other right-hand
 ///     sides k with k > j may not be guaranteed as well, but
-/// only the first such right-hand side is reported. If a small
-/// componentwise error is not requested (params(3) = 0.0) then
+///     only the first such right-hand side is reported. If a small
+///     componentwise error is not requested (params(3) = 0.0) then
 ///     the j-th right-hand side is the first with a normwise error
 ///     bound that is not guaranteed (the smallest j such
 ///     that err_bnds_norm(j,1) = 0.0). By default (params(3) = 1.0)
 ///     the j-th right-hand side is the first with either a normwise or
-/// componentwise error bound that is not guaranteed (the smallest
+///     componentwise error bound that is not guaranteed (the smallest
 ///     j such that either err_bnds_norm(j,1) = 0.0 or
 ///     err_bnds_comp(j,1) = 0.0). See the definition of
-/// err_bnds_norm(:,1) and err_bnds_comp(:,1). To get information
-/// about all of the right-hand sides check err_bnds_norm or
-/// err_bnds_comp.
+///     err_bnds_norm(:,1) and err_bnds_comp(:,1). To get information
+///     about all of the right-hand sides check err_bnds_norm or
+///     err_bnds_comp.
 ///
 /// @ingroup posv_computational
 int64_t porfsx(

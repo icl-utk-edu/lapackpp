@@ -10,9 +10,10 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup unitary_computational
 void larfx(
     lapack::Side side, int64_t m, int64_t n,
-    float const* V, float tau,
+    float const* v, float tau,
     float* C, int64_t ldc )
 {
     // check for overflow
@@ -32,13 +33,14 @@ void larfx(
     // allocate workspace
     std::vector< float > work( lwork );
 
-    LAPACK_slarfx( &side_, &m_, &n_, V, &tau, C, &ldc_, &work[0] );
+    LAPACK_slarfx( &side_, &m_, &n_, v, &tau, C, &ldc_, &work[0] );
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup unitary_computational
 void larfx(
     lapack::Side side, int64_t m, int64_t n,
-    double const* V, double tau,
+    double const* v, double tau,
     double* C, int64_t ldc )
 {
     // check for overflow
@@ -58,13 +60,14 @@ void larfx(
     // allocate workspace
     std::vector< double > work( lwork );
 
-    LAPACK_dlarfx( &side_, &m_, &n_, V, &tau, C, &ldc_, &work[0] );
+    LAPACK_dlarfx( &side_, &m_, &n_, v, &tau, C, &ldc_, &work[0] );
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup unitary_computational
 void larfx(
     lapack::Side side, int64_t m, int64_t n,
-    std::complex<float> const* V, std::complex<float> tau,
+    std::complex<float> const* v, std::complex<float> tau,
     std::complex<float>* C, int64_t ldc )
 {
     // check for overflow
@@ -84,13 +87,55 @@ void larfx(
     // allocate workspace
     std::vector< std::complex<float> > work( lwork );
 
-    LAPACK_clarfx( &side_, &m_, &n_, V, &tau, C, &ldc_, &work[0] );
+    LAPACK_clarfx( &side_, &m_, &n_, v, &tau, C, &ldc_, &work[0] );
 }
 
 // -----------------------------------------------------------------------------
+/// Applies a elementary reflector H to a m-by-n
+/// matrix C, from either the left or the right. H is represented in the
+/// form
+///
+///     \f[ H = I - \tau v v^H \f]
+///
+/// where \f$ \tau \f$ is a scalar and v is a vector.
+///
+/// If \f$ \tau = 0, \f$ then H is taken to be the unit matrix
+///
+/// This version uses inline code if H has order < 11.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] side
+///     - lapack::Side::Left:  form \f$ H C \f$
+///     - lapack::Side::Right: form \f$ C H \f$
+///
+/// @param[in] m
+///     The number of rows of the matrix C.
+///
+/// @param[in] n
+///     The number of columns of the matrix C.
+///
+/// @param[in] v
+///     - If side = Left,  the vector v of length m;
+///     - if side = right, the vector v of length n.
+///
+/// @param[in] tau
+///     The value tau in the representation of H.
+///
+/// @param[in,out] C
+///     The m-by-n matrix C, stored in an ldc-by-n array.
+///     On entry, the m-by-n matrix C.
+///     On exit, C is overwritten by the matrix \f$ H C \f$ if side = Left,
+///     or \f$ C H \f$ if side = Right.
+///
+/// @param[in] ldc
+///     The leading dimension of the array C. ldc >= max(1,m).
+///
+/// @ingroup unitary_computational
 void larfx(
     lapack::Side side, int64_t m, int64_t n,
-    std::complex<double> const* V, std::complex<double> tau,
+    std::complex<double> const* v, std::complex<double> tau,
     std::complex<double>* C, int64_t ldc )
 {
     // check for overflow
@@ -110,7 +155,7 @@ void larfx(
     // allocate workspace
     std::vector< std::complex<double> > work( lwork );
 
-    LAPACK_zlarfx( &side_, &m_, &n_, V, &tau, C, &ldc_, &work[0] );
+    LAPACK_zlarfx( &side_, &m_, &n_, v, &tau, C, &ldc_, &work[0] );
 }
 
 }  // namespace lapack

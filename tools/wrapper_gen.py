@@ -837,6 +837,16 @@ enums = {
         'b': ('Backtransform', 'lapack::HowMany::Backtransform'),
         's': ('Select',        'lapack::HowMany::Select'       ),
     },
+
+    # larfb
+    'direct': {
+        'f': ('Forward',  'lapack::Direct::Forward' ),
+        'b': ('Backward', 'lapack::Direct::Backward'),
+    },
+    'storev': {
+        'c': ('Columnwise', 'lapack::StoreV::Columnwise'),
+        'r': ('Rowwise',    'lapack::StoreV::Rowwise'   ),
+    },
 }
 
 enum_override = {

@@ -230,7 +230,7 @@ int64_t gbrfsx(
 ///         Column equilibration, i.e., A has been postmultiplied by diag(C).
 ///     - lapack::Equed::Both:
 ///         Both row and column equilibration, i.e.,
-///         A has been replaced by diag(R) * A * diag(C).
+///         A has been replaced by \f$ \text{diag}(R) \; A \; \text{diag}(C). \f$
 ///         The right hand side B has been changed accordingly.
 ///
 /// @param[in] n
@@ -429,9 +429,9 @@ int64_t gbrfsx(
 ///           estimate is "guaranteed". These reciprocal condition
 ///         numbers are \f$ 1 / (|| Z^{-1} ||_{inf} \cdot || Z ||_{inf}) \f$ for some
 ///           appropriately scaled matrix Z.
-///         Let \f$ Z = S A \text{ diag}(x), \f$ where x is the solution for the
+///         Let \f$ Z = S A \; \text{diag}(x), \f$ where x is the solution for the
 ///           current right-hand side and S scales each row of
-///         \f$ A \text{ diag}(x) \f$ by a power of the radix so all absolute row
+///         \f$ A \; \text{diag}(x) \f$ by a power of the radix so all absolute row
 ///           sums of Z are approximately 1.
 ///
 ///     - See Lapack Working Note 165 for further details and extra

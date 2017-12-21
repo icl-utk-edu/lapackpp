@@ -244,7 +244,7 @@ int64_t ppsvx(
 ///     The n-by-nrhs matrix B, stored in an ldb-by-nrhs array.
 ///     On entry, the n-by-nrhs right hand side matrix B.
 ///     On exit, if equed = None, B is not modified; if equed = Yes,
-///     B is overwritten by \f$ \text{diag}(S) B. \f$
+///     B is overwritten by \f$ \text{diag}(S) \; B. \f$
 ///
 /// @param[in] ldb
 ///     The leading dimension of the array B. ldb >= max(1,n).

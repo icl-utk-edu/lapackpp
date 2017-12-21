@@ -12,6 +12,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup sysv_computational
 void syswapr(
     lapack::Uplo uplo, int64_t n,
     float* A, int64_t lda, int64_t i1, int64_t i2 )
@@ -33,6 +34,7 @@ void syswapr(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup sysv_computational
 void syswapr(
     lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda, int64_t i1, int64_t i2 )
@@ -54,6 +56,7 @@ void syswapr(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup sysv_computational
 void syswapr(
     lapack::Uplo uplo, int64_t n,
     std::complex<float>* A, int64_t lda, int64_t i1, int64_t i2 )
@@ -75,6 +78,37 @@ void syswapr(
 }
 
 // -----------------------------------------------------------------------------
+/// Applies an elementary permutation on the rows and the columns of
+/// a symmetric matrix.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+/// For real matrices, `lapack::heswapr` is an alias for this.
+/// For complex Hermitian matrices, see `lapack::heswapr`.
+///
+/// @param[in] uplo
+///     Whether the details of the factorization are stored
+///     as an upper or lower triangular matrix.
+///     - lapack::Uplo::Upper: Upper triangular, form is \f$ A = U D U^T; \f$
+///     - lapack::Uplo::Lower: Lower triangular, form is \f$ A = L D L^T. \f$
+///
+/// @param[in] n
+///     The order of the matrix A. n >= 0.
+///
+/// @param[in,out] A
+///     The n-by-n matrix A, stored in an lda-by-n array.
+///     TODO (the LAPACK documentation seems wrong).
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,n).
+///
+/// @param[in] i1
+///     Index of the first row to swap
+///
+/// @param[in] i2
+///     Index of the second row to swap
+///
+/// @ingroup sysv_computational
 void syswapr(
     lapack::Uplo uplo, int64_t n,
     std::complex<double>* A, int64_t lda, int64_t i1, int64_t i2 )

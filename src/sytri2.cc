@@ -12,6 +12,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup sysv_computational
 int64_t sytri2(
     lapack::Uplo uplo, int64_t n,
     float* A, int64_t lda,
@@ -54,6 +55,7 @@ int64_t sytri2(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup sysv_computational
 int64_t sytri2(
     lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
@@ -138,6 +140,53 @@ int64_t sytri2(
 }
 
 // -----------------------------------------------------------------------------
+/// Computes the inverse of a symmetric indefinite matrix
+/// A using the factorization \f$ A = U D U^T \f$ or \f$ A = L D L^T \f$ computed by
+/// `lapack::sytrf`. `sytri2` sets the leading dimension of the workspace
+/// before calling `sytri2x` that actually computes the inverse.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+/// For real matrices, `lapack::hetri2` is an alias for this.
+/// For complex Hermitian matrices, see `lapack::hetri2`.
+///
+/// @see sytri
+///
+/// @param[in] uplo
+///     Whether the details of the factorization are stored
+///     as an upper or lower triangular matrix.
+///     - lapack::Uplo::Upper: Upper triangular, form is \f$ A = U D U^T; \f$
+///     - lapack::Uplo::Lower: Lower triangular, form is \f$ A = L D L^T. \f$
+///
+/// @param[in] n
+///     The order of the matrix A. n >= 0.
+///
+/// @param[in,out] A
+///     The n-by-n matrix A, stored in an lda-by-n array.
+///     On entry, the block diagonal matrix D and the multipliers
+///     used to obtain the factor U or L as computed by `lapack::sytrf`.
+///     On successful exit, the (symmetric) inverse of the original
+///     matrix.
+///     - If uplo = Upper, the upper triangular part of the
+///     inverse is formed and the part of A below the diagonal is not
+///     referenced;
+///     - if uplo = Lower the lower triangular part of the
+///     inverse is formed and the part of A above the diagonal is
+///     not referenced.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,n).
+///
+/// @param[in] ipiv
+///     The vector ipiv of length n.
+///     Details of the interchanges and the block structure of D
+///     as determined by `lapack::sytrf`.
+///
+/// @retval = 0: successful exit
+/// @retval > 0: if return value = i, D(i,i) = 0; the matrix is singular and its
+///     inverse could not be computed.
+///
+/// @ingroup sysv_computational
 int64_t sytri2(
     lapack::Uplo uplo, int64_t n,
     std::complex<double>* A, int64_t lda,

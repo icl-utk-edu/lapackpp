@@ -10,6 +10,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup sysv_computational
 int64_t sytrs(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     float const* A, int64_t lda,
@@ -45,6 +46,7 @@ int64_t sytrs(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup sysv_computational
 int64_t sytrs(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double const* A, int64_t lda,
@@ -80,6 +82,7 @@ int64_t sytrs(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup sysv_computational
 int64_t sytrs(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<float> const* A, int64_t lda,
@@ -115,6 +118,54 @@ int64_t sytrs(
 }
 
 // -----------------------------------------------------------------------------
+/// Solves a system of linear equations \f$ A X = B \f$ with a
+/// symmetric matrix A using the factorization \f$ A = U D U^T \f$ or
+/// \f$ A = L D L^T \f$ computed by `lapack::sytrf`.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+/// For real matrices, `lapack::hetrs` is an alias for this.
+/// For complex Hermitian matrices, see `lapack::hetrs`.
+///
+/// @see sytrs2
+///
+/// @param[in] uplo
+///     Whether the details of the factorization are stored
+///     as an upper or lower triangular matrix.
+///     - lapack::Uplo::Upper: Upper triangular, form is \f$ A = U D U^T; \f$
+///     - lapack::Uplo::Lower: Lower triangular, form is \f$ A = L D L^T. \f$
+///
+/// @param[in] n
+///     The order of the matrix A. n >= 0.
+///
+/// @param[in] nrhs
+///     The number of right hand sides, i.e., the number of columns
+///     of the matrix B. nrhs >= 0.
+///
+/// @param[in] A
+///     The n-by-n matrix A, stored in an lda-by-n array.
+///     The block diagonal matrix D and the multipliers used to
+///     obtain the factor U or L as computed by `lapack::sytrf`.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,n).
+///
+/// @param[in] ipiv
+///     The vector ipiv of length n.
+///     Details of the interchanges and the block structure of D
+///     as determined by `lapack::sytrf`.
+///
+/// @param[in,out] B
+///     The n-by-nrhs matrix B, stored in an ldb-by-nrhs array.
+///     On entry, the right hand side matrix B.
+///     On exit, the solution matrix X.
+///
+/// @param[in] ldb
+///     The leading dimension of the array B. ldb >= max(1,n).
+///
+/// @retval = 0: successful exit
+///
+/// @ingroup sysv_computational
 int64_t sytrs(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<double> const* A, int64_t lda,

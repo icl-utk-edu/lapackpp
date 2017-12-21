@@ -12,6 +12,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup hesv_computational
 void heswapr(
     lapack::Uplo uplo, int64_t n,
     std::complex<float>* A, int64_t lda, int64_t i1, int64_t i2 )
@@ -33,6 +34,37 @@ void heswapr(
 }
 
 // -----------------------------------------------------------------------------
+/// Applies an elementary permutation on the rows and the columns of
+/// a Hermitian matrix.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+/// For real matrices, this in an alias for `lapack::syswapr`.
+/// For complex symmetric matrices, see `lapack::syswapr`.
+///
+/// @param[in] uplo
+///     Whether the details of the factorization are stored
+///     as an upper or lower triangular matrix.
+///     - lapack::Uplo::Upper: Upper triangular, form is \f$ A = U D U^T; \f$
+///     - lapack::Uplo::Lower: Lower triangular, form is \f$ A = L D L^T. \f$
+///
+/// @param[in] n
+///     The order of the matrix A. n >= 0.
+///
+/// @param[in,out] A
+///     The n-by-n matrix A, stored in an lda-by-n array.
+///     TODO (the LAPACK documentation seems wrong).
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,n).
+///
+/// @param[in] i1
+///     Index of the first row to swap
+///
+/// @param[in] i2
+///     Index of the second row to swap
+///
+/// @ingroup hesv_computational
 void heswapr(
     lapack::Uplo uplo, int64_t n,
     std::complex<double>* A, int64_t lda, int64_t i1, int64_t i2 )

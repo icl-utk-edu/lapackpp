@@ -10,6 +10,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup hesv_computational
 int64_t hecon(
     lapack::Uplo uplo, int64_t n,
     std::complex<float> const* A, int64_t lda,
@@ -44,6 +45,51 @@ int64_t hecon(
 }
 
 // -----------------------------------------------------------------------------
+/// Estimates the reciprocal of the condition number (in the
+/// 1-norm) of a Hermitian matrix A using the factorization
+/// \f$ A = U D U^H \f$ or \f$ A = L D L^H \f$ computed by `lapack::hetrf`.
+///
+/// An estimate is obtained for \f$ || A^{-1} ||_1, \f$ and the reciprocal of the
+/// condition number is computed as \f$ \text{rcond} = 1 / (||A||_1 \cdot || A^{-1} ||_1). \f$
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+/// For real matrices, this in an alias for `lapack::sycon`.
+/// For complex symmetric matrices, see `lapack::sycon`.
+///
+/// @param[in] uplo
+///     Whether the details of the factorization are stored
+///     as an upper or lower triangular matrix.
+///     - lapack::Uplo::Upper: Upper triangular, form is \f$ A = U D U^H; \f$
+///     - lapack::Uplo::Lower: Lower triangular, form is \f$ A = L D L^H. \f$
+///
+/// @param[in] n
+///     The order of the matrix A. n >= 0.
+///
+/// @param[in] A
+///     The n-by-n matrix A, stored in an lda-by-n array.
+///     The block diagonal matrix D and the multipliers used to
+///     obtain the factor U or L as computed by `lapack::hetrf`.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,n).
+///
+/// @param[in] ipiv
+///     The vector ipiv of length n.
+///     Details of the interchanges and the block structure of D
+///     as determined by `lapack::hetrf`.
+///
+/// @param[in] anorm
+///     The 1-norm of the original matrix A.
+///
+/// @param[out] rcond
+///     The reciprocal of the condition number of the matrix A,
+///     computed as rcond = 1/(anorm * ainv_norm), where ainv_norm is an
+///     estimate of the 1-norm of \f$ A^{-1} \f$ computed in this routine.
+///
+/// @retval = 0: successful exit
+///
+/// @ingroup hesv_computational
 int64_t hecon(
     lapack::Uplo uplo, int64_t n,
     std::complex<double> const* A, int64_t lda,

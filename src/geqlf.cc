@@ -124,6 +124,8 @@ int64_t geqlf(
 /// Computes a QL factorization of an m-by-n matrix A:
 /// \f$ A = Q L \f$.
 ///
+/// This is the blocked Level 3 BLAS version of the algorithm.
+///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
 ///

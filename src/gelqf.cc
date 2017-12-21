@@ -124,6 +124,8 @@ int64_t gelqf(
 /// Computes an LQ factorization of an m-by-n matrix A:
 /// \f$ A = L Q \f$.
 ///
+/// This is the blocked Level 3 BLAS version of the algorithm.
+///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
 ///

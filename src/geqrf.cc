@@ -124,6 +124,8 @@ int64_t geqrf(
 /// Computes a QR factorization of an m-by-n matrix A:
 /// \f$ A = Q R \f$.
 ///
+/// This is the blocked Level 3 BLAS version of the algorithm.
+///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
 ///

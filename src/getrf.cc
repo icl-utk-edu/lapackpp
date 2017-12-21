@@ -139,7 +139,7 @@ int64_t getrf(
 ///     The m-by-n matrix A, stored in an lda-by-n array.
 ///     On entry, the m-by-n matrix to be factored.
 ///     On exit, the factors L and U from the factorization
-///     \f$ A = P L U \f$; the unit diagonal elements of L are not stored.
+///     \f$ A = P L U; \f$ the unit diagonal elements of L are not stored.
 ///
 /// @param[in] lda
 ///     The leading dimension of the array A. lda >= max(1,m).

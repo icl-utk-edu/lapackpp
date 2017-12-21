@@ -83,8 +83,8 @@ int64_t potrf(
 /// positive definite matrix A.
 ///
 /// The factorization has the form
-///     \f$ A = U^H U \f$, if uplo = Upper, or
-///     \f$ A = L L^H \f$, if uplo = Lower,
+///     \f$ A = U^H U, \f$ if uplo = Upper, or
+///     \f$ A = L L^H, \f$ if uplo = Lower,
 /// where \f$ U \f$ is an upper triangular matrix
 /// and   \f$ L \f$ is a  lower triangular matrix.
 ///
@@ -114,7 +114,7 @@ int64_t potrf(
 ///     triangular part of A is not referenced.
 ///
 ///     - On successful exit, the factor U or L from the Cholesky
-///     factorization \f$ A = U^H U \f$ or \f$ A = L L^H \f$.
+///     factorization \f$ A = U^H U \f$ or \f$ A = L L^H. \f$
 ///
 /// @param[in] lda
 ///     The leading dimension of the array A. lda >= max(1,n).

@@ -158,15 +158,15 @@ int64_t geqrf(
 ///
 /// The matrix Q is represented as a product of elementary reflectors
 ///
-///     Q = H(1) H(2) . . . H(k), where k = min(m,n).
+///     \f[ Q = H(1) H(2) \dots H(k) \text{ where } k = \min(m,n). \f]
 ///
 /// Each H(i) has the form
 ///
-///     H(i) = I - tau * v * v^H
+///     \f[ H(i) = I - \tau v v^H \f]
 ///
-/// where tau is a scalar, and v is a vector with
+/// where \f$ \tau \f$ is a scalar, and v is a vector with
 /// v(1:i-1) = 0 and v(i) = 1; v(i+1:m) is stored on exit in A(i+1:m,i),
-/// and tau in tau(i).
+/// and \f$ \tau \f$ in tau(i).
 ///
 /// @ingroup geqrf
 int64_t geqrf(

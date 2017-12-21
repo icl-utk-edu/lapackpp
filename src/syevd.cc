@@ -50,8 +50,8 @@ int64_t syevd(
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup heev
 /// @see lapack::heevd
+/// @ingroup heev
 int64_t syevd(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,

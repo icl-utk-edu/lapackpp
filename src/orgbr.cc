@@ -10,10 +10,11 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup gesvd_computational
 int64_t orgbr(
     lapack::Vect vect, int64_t m, int64_t n, int64_t k,
     float* A, int64_t lda,
-    float const* TAU )
+    float const* tau )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -32,7 +33,7 @@ int64_t orgbr(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_sorgbr( &vect_, &m_, &n_, &k_, A, &lda_, TAU, qry_work, &ineg_one, &info_ );
+    LAPACK_sorgbr( &vect_, &m_, &n_, &k_, A, &lda_, tau, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -41,7 +42,7 @@ int64_t orgbr(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_sorgbr( &vect_, &m_, &n_, &k_, A, &lda_, TAU, &work[0], &lwork_, &info_ );
+    LAPACK_sorgbr( &vect_, &m_, &n_, &k_, A, &lda_, tau, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -49,10 +50,12 @@ int64_t orgbr(
 }
 
 // -----------------------------------------------------------------------------
+/// @see lapack::ungbr
+/// @ingroup gesvd_computational
 int64_t orgbr(
     lapack::Vect vect, int64_t m, int64_t n, int64_t k,
     double* A, int64_t lda,
-    double const* TAU )
+    double const* tau )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -71,7 +74,7 @@ int64_t orgbr(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dorgbr( &vect_, &m_, &n_, &k_, A, &lda_, TAU, qry_work, &ineg_one, &info_ );
+    LAPACK_dorgbr( &vect_, &m_, &n_, &k_, A, &lda_, tau, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -80,7 +83,7 @@ int64_t orgbr(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dorgbr( &vect_, &m_, &n_, &k_, A, &lda_, TAU, &work[0], &lwork_, &info_ );
+    LAPACK_dorgbr( &vect_, &m_, &n_, &k_, A, &lda_, tau, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

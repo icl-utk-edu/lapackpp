@@ -745,10 +745,11 @@ enums = {
         'b': ('Both', 'lapack::Vect::Both' ),
     },
     'equed': {
-        'r': ('Row',  'lapack::Equed::Row'),
-        'c': ('Col',  'lapack::Equed::Col'),
+        'r': ('Row',  'lapack::Equed::Row' ),
+        'c': ('Col',  'lapack::Equed::Col' ),
         'n': ('None', 'lapack::Equed::None'),
         'b': ('Both', 'lapack::Equed::Both'),
+        'y': ('Yes',  'lapack::Equed::Yes' ),  # porfsx
     },
     'fact': {
         'f': ('Factored',    'lapack::Factored::Factored'),
@@ -870,11 +871,22 @@ def sub_enum_short( match ):
 # ------------------------------------------------------------------------------
 fortran_operators = {
     'LT': '<',
+    'lt': '<',
+
     'GT': '>',
+    'gt': '>',
+
     'LE': '<=',
+    'le': '<=',
+
     'GE': '>=',
+    'ge': '>=',
+
     'EQ': '==',
+    'eq': '==',
+
     'NE': '!=',
+    'ne': '!=',
 }
 
 # ------------------------------------------------------------------------------
@@ -884,7 +896,7 @@ def parse_docs( txt, variables, indent=0 ):
 
     # Fortran operators:  ".LT."  =>  "<"
     txt = re.sub( r'\.(LT|LE|GT|GE|EQ|NE)\.',
-                  lambda match: fortran_operators[ match.group(1) ], txt )
+                  lambda match: fortran_operators[ match.group(1) ], txt, 0, re.I )
 
     # space around operators
     txt = re.sub( r'(\S)(<=|>=)(\S)', r'\1 \2 \3', txt )
@@ -895,7 +907,7 @@ def parse_docs( txt, variables, indent=0 ):
 
     # convert enums, e.g.,
     # "UPLO = 'U'" => "uplo = Upper"
-    txt = re.sub( r"\b([A-Z]{2,})( *= *)'(\w)'(?:( or )'(\w)')?", sub_enum_short, txt )
+    txt = re.sub( r"\b([A-Z]{2,})(\s*(?:=|!=)\s*)'(\w)'(?:(\s+or\s+)'(\w)')?", sub_enum_short, txt )
 
     # convert function names
     txt = re.sub( func.xname.upper(), '`'+ func.name + '`', txt )

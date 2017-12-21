@@ -157,15 +157,15 @@ int64_t gelqf(
 ///
 /// The matrix Q is represented as a product of elementary reflectors
 ///
-///     Q = H(k)^H . . . H(2)^H H(1)^H, where k = min(m,n).
+///     \f[ Q = H(k)^H \dots H(2)^H H(1)^H, \text{ where } k = \min(m,n). \f]
 ///
 /// Each H(i) has the form
 ///
-///     H(i) = I - tau * v * v^H
+///     \f[ H(i) = I - \tau v v^H \f]
 ///
-/// where tau is a scalar, and v is a vector with
-/// v(1:i-1) = 0 and v(i) = 1; conjg(v(i+1:n)) is stored on exit in
-/// A(i,i+1:n), and tau in tau(i).
+/// where \f$ \tau \f$ is a scalar, and v is a vector with
+/// v(1:i-1) = 0 and v(i) = 1; conj(v(i+1:n)) is stored on exit in
+/// A(i,i+1:n), and \f$ \tau \f$ in tau(i).
 ///
 /// @ingroup gelqf
 int64_t gelqf(

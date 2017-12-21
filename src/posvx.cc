@@ -10,13 +10,14 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
-/// @ingroup sysv
-int64_t sysvx(
+/// @ingroup posv
+int64_t posvx(
     lapack::Factored fact, lapack::Uplo uplo, int64_t n, int64_t nrhs,
-    float const* A, int64_t lda,
+    float* A, int64_t lda,
     float* AF, int64_t ldaf,
-    int64_t* ipiv,
-    float const* B, int64_t ldb,
+    lapack::Equed* equed,
+    float* S,
+    float* B, int64_t ldb,
     float* X, int64_t ldx,
     float* rcond,
     float* ferr,
@@ -33,53 +34,38 @@ int64_t sysvx(
     }
     char fact_ = factored2char( fact );
     char uplo_ = uplo2char( uplo );
+    char equed_ = equed2char( *equed );
     blas_int n_ = (blas_int) n;
     blas_int nrhs_ = (blas_int) nrhs;
     blas_int lda_ = (blas_int) lda;
     blas_int ldaf_ = (blas_int) ldaf;
-    #if 1
-        // 32-bit copy
-        std::vector< blas_int > ipiv_( &ipiv[0], &ipiv[(n)] );
-        blas_int* ipiv_ptr = &ipiv_[0];
-    #else
-        blas_int* ipiv_ptr = ipiv;
-    #endif
     blas_int ldb_ = (blas_int) ldb;
     blas_int ldx_ = (blas_int) ldx;
     blas_int info_ = 0;
 
-    // query for workspace size
-    float qry_work[1];
-    blas_int qry_iwork[1];
-    blas_int ineg_one = -1;
-    LAPACK_ssysvx( &fact_, &uplo_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, ipiv_ptr, B, &ldb_, X, &ldx_, rcond, ferr, berr, qry_work, &ineg_one, qry_iwork, &info_ );
-    if (info_ < 0) {
-        throw Error();
-    }
-    blas_int lwork_ = real(qry_work[0]);
-
     // allocate workspace
-    std::vector< float > work( lwork_ );
+    std::vector< float > work( (3*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_ssysvx( &fact_, &uplo_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, ipiv_ptr, B, &ldb_, X, &ldx_, rcond, ferr, berr, &work[0], &lwork_, &iwork[0], &info_ );
+    LAPACK_sposvx( &fact_, &uplo_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, &equed_,
+                   S, B, &ldb_, X, &ldx_, rcond, ferr, berr,
+                   &work[0], &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
-        std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
-    #endif
+    *equed = char2equed( equed_ );
     return info_;
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup sysv
-int64_t sysvx(
+/// @ingroup posv
+int64_t posvx(
     lapack::Factored fact, lapack::Uplo uplo, int64_t n, int64_t nrhs,
-    double const* A, int64_t lda,
+    double* A, int64_t lda,
     double* AF, int64_t ldaf,
-    int64_t* ipiv,
-    double const* B, int64_t ldb,
+    lapack::Equed* equed,
+    double* S,
+    double* B, int64_t ldb,
     double* X, int64_t ldx,
     double* rcond,
     double* ferr,
@@ -96,53 +82,38 @@ int64_t sysvx(
     }
     char fact_ = factored2char( fact );
     char uplo_ = uplo2char( uplo );
+    char equed_ = equed2char( *equed );
     blas_int n_ = (blas_int) n;
     blas_int nrhs_ = (blas_int) nrhs;
     blas_int lda_ = (blas_int) lda;
     blas_int ldaf_ = (blas_int) ldaf;
-    #if 1
-        // 32-bit copy
-        std::vector< blas_int > ipiv_( &ipiv[0], &ipiv[(n)] );
-        blas_int* ipiv_ptr = &ipiv_[0];
-    #else
-        blas_int* ipiv_ptr = ipiv;
-    #endif
     blas_int ldb_ = (blas_int) ldb;
     blas_int ldx_ = (blas_int) ldx;
     blas_int info_ = 0;
 
-    // query for workspace size
-    double qry_work[1];
-    blas_int qry_iwork[1];
-    blas_int ineg_one = -1;
-    LAPACK_dsysvx( &fact_, &uplo_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, ipiv_ptr, B, &ldb_, X, &ldx_, rcond, ferr, berr, qry_work, &ineg_one, qry_iwork, &info_ );
-    if (info_ < 0) {
-        throw Error();
-    }
-    blas_int lwork_ = real(qry_work[0]);
-
     // allocate workspace
-    std::vector< double > work( lwork_ );
+    std::vector< double > work( (3*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_dsysvx( &fact_, &uplo_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, ipiv_ptr, B, &ldb_, X, &ldx_, rcond, ferr, berr, &work[0], &lwork_, &iwork[0], &info_ );
+    LAPACK_dposvx( &fact_, &uplo_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, &equed_,
+                   S, B, &ldb_, X, &ldx_, rcond, ferr, berr,
+                   &work[0], &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
-        std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
-    #endif
+    *equed = char2equed( equed_ );
     return info_;
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup sysv
-int64_t sysvx(
+/// @ingroup posv
+int64_t posvx(
     lapack::Factored fact, lapack::Uplo uplo, int64_t n, int64_t nrhs,
-    std::complex<float> const* A, int64_t lda,
+    std::complex<float>* A, int64_t lda,
     std::complex<float>* AF, int64_t ldaf,
-    int64_t* ipiv,
-    std::complex<float> const* B, int64_t ldb,
+    lapack::Equed* equed,
+    float* S,
+    std::complex<float>* B, int64_t ldb,
     std::complex<float>* X, int64_t ldx,
     float* rcond,
     float* ferr,
@@ -159,67 +130,60 @@ int64_t sysvx(
     }
     char fact_ = factored2char( fact );
     char uplo_ = uplo2char( uplo );
+    char equed_ = equed2char( *equed );
     blas_int n_ = (blas_int) n;
     blas_int nrhs_ = (blas_int) nrhs;
     blas_int lda_ = (blas_int) lda;
     blas_int ldaf_ = (blas_int) ldaf;
-    #if 1
-        // 32-bit copy
-        std::vector< blas_int > ipiv_( &ipiv[0], &ipiv[(n)] );
-        blas_int* ipiv_ptr = &ipiv_[0];
-    #else
-        blas_int* ipiv_ptr = ipiv;
-    #endif
     blas_int ldb_ = (blas_int) ldb;
     blas_int ldx_ = (blas_int) ldx;
     blas_int info_ = 0;
 
-    // query for workspace size
-    std::complex<float> qry_work[1];
-    float qry_rwork[1];
-    blas_int ineg_one = -1;
-    LAPACK_csysvx( &fact_, &uplo_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, ipiv_ptr, B, &ldb_, X, &ldx_, rcond, ferr, berr, qry_work, &ineg_one, qry_rwork, &info_ );
-    if (info_ < 0) {
-        throw Error();
-    }
-    blas_int lwork_ = real(qry_work[0]);
-
     // allocate workspace
-    std::vector< std::complex<float> > work( lwork_ );
+    std::vector< std::complex<float> > work( (2*n) );
     std::vector< float > rwork( (n) );
 
-    LAPACK_csysvx( &fact_, &uplo_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, ipiv_ptr, B, &ldb_, X, &ldx_, rcond, ferr, berr, &work[0], &lwork_, &rwork[0], &info_ );
+    LAPACK_cposvx( &fact_, &uplo_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, &equed_,
+                   S, B, &ldb_, X, &ldx_, rcond, ferr, berr,
+                   &work[0], &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
-        std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
-    #endif
+    *equed = char2equed( equed_ );
     return info_;
 }
 
 // -----------------------------------------------------------------------------
-/// Uses the diagonal pivoting factorization to compute the
-/// solution to a system of linear equations
-///     \f$ A X = B \f$,
-/// where A is an n-by-n symmetric matrix and X and B are n-by-nrhs
-/// matrices.
+/// Uses the Cholesky factorization
+///     \f$ A = U^H U \f$ or
+///     \f$ A = L L^H \f$ to
+/// compute the solution to a system of linear equations
+///     \f$ A X = B, \f$
+/// where A is an n-by-n Hermitian positive definite matrix and X and B
+/// are n-by-nrhs matrices.
 ///
 /// Error bounds on the solution and a condition estimate are also
 /// provided.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
-/// For real matrices, `lapack::hesvx` is an alias for this.
-/// For complex Hermitian matrices, see `lapack::hesvx`.
 ///
 /// @param[in] fact
-///     Whether or not the factored form of A has been supplied on entry.
+///     Whether or not the factored form of the matrix A is
+///     supplied on entry, and if not, whether the matrix A should be
+///     equilibrated before it is factored.
 ///     - lapack::Factored::Factored:
-///             On entry, AF and ipiv contain the factored form of A.
-///             A, AF and ipiv will not be modified.
+///         On entry, AF contains the factored form of A.
+///         If equed = Yes, the matrix A has been equilibrated
+///         with scaling factors given by S.
+///         A and AF will not be modified.
+///
 ///     - lapack::Factored::NotFactored:
-///             The matrix A will be copied to AF and factored.
+///         The matrix A will be copied to AF and factored.
+///
+///     - lapack::Factored::Equilibrate:
+///         The matrix A will be equilibrated if necessary, then
+///         copied to AF and factored.
 ///
 /// @param[in] uplo
 ///     - lapack::Uplo::Upper: Upper triangle of A is stored;
@@ -233,18 +197,26 @@ int64_t sysvx(
 ///     The number of right hand sides, i.e., the number of columns
 ///     of the matrices B and X. nrhs >= 0.
 ///
-/// @param[in] A
+/// @param[in,out] A
 ///     The n-by-n matrix A, stored in an lda-by-n array.
-///     The symmetric matrix A.
-///     - If uplo = Upper, the leading n-by-n
-///     upper triangular part of A contains the upper triangular part
-///     of the matrix A, and the strictly lower triangular part of A
-///     is not referenced.
+///     On entry, the Hermitian matrix A, except if fact = Factored and
+///     equed = Yes, then A must contain the equilibrated matrix
+///     \f$ \text{diag}(S) \; A \; \text{diag}(S). \f$
+///     - If uplo = Upper, the leading
+///     n-by-n upper triangular part of A contains the upper
+///     triangular part of the matrix A, and the strictly lower
+///     triangular part of A is not referenced.
 ///
-///     - If uplo = Lower, the leading n-by-n lower
-///     triangular part of A contains the lower triangular part of
-///     the matrix A, and the strictly upper triangular part of A is
-///     not referenced.
+///     - If uplo = Lower, the
+///     leading n-by-n lower triangular part of A contains the lower
+///     triangular part of the matrix A, and the strictly upper
+///     triangular part of A is not referenced.
+///
+///     - A is not modified if fact = Factored or NotFactored,
+///     or if fact = Equilibrate and equed = None on exit.
+///
+///     - On exit, if fact = Equilibrate and equed = Yes, A is overwritten by
+///     \f$ \text{diag}(S) \; A \; \text{diag}(S). \f$
 ///
 /// @param[in] lda
 ///     The leading dimension of the array A. lda >= max(1,n).
@@ -252,57 +224,71 @@ int64_t sysvx(
 /// @param[in,out] AF
 ///     The n-by-n matrix AF, stored in an ldaf-by-n array.
 ///     - If fact = Factored, then AF is an input argument and on entry
-///     contains the block diagonal matrix D and the multipliers used
-///     to obtain the factor U or L from the factorization
-///     \f$ A = U D U^T \f$ or \f$ A = L D L^T \f$ as computed by `lapack::sytrf`.
+///     contains the triangular factor U or L from the Cholesky
+///     factorization \f$ A = U^H U \f$ or \f$ A = L L^H, \f$ in the same storage
+///     format as A.
+///
+///     - If equed != None, then AF is the factored form
+///     of the equilibrated matrix \f$ \text{diag}(S) \; A \; \text{diag}(S). \f$
 ///
 ///     - If fact = NotFactored, then AF is an output argument and on exit
-///     returns the block diagonal matrix D and the multipliers used
-///     to obtain the factor U or L from the factorization
-///     \f$ A = U D U^T \f$ or \f$ A = L D L^T \f$.
+///     returns the triangular factor U or L from the Cholesky
+///     factorization \f$ A = U^H U \f$ or \f$ A = L L^H \f$ of the original
+///     matrix A.
+///
+///     - If fact = Equilibrate, then AF is an output argument and on exit
+///     returns the triangular factor U or L from the Cholesky
+///     factorization \f$ A = U^H U \f$ or \f$ A = L L^H \f$ of the equilibrated
+///     matrix A (see the description of A for the form of the
+///     equilibrated matrix).
 ///
 /// @param[in] ldaf
 ///     The leading dimension of the array AF. ldaf >= max(1,n).
 ///
-/// @param[in,out] ipiv
-///     The vector ipiv of length n.
-///     - If fact = Factored, then ipiv is an input argument and on entry
-///     contains details of the interchanges and the block structure
-///     of D, as determined by `lapack::sytrf`.
-///     If ipiv(k) > 0, then rows and columns k and ipiv(k) were
-///     interchanged and D(k,k) is a 1-by-1 diagonal block.
+/// @param[in,out] equed
+///     The form of equilibration that was done:
+///     - lapack::Equed::None:
+///         No equilibration (always true if fact = NotFactored).
+///     - lapack::Equed::Yes:
+///         Equilibration was done, i.e.,
+///         A has been replaced by \f$ \text{diag}(S) \; A \; \text{diag}(S). \f$
 ///
-///     - If uplo = Upper and ipiv(k) = ipiv(k-1) < 0, then rows and
-///     columns k-1 and -ipiv(k) were interchanged and
-///     D(k-1:k,k-1:k) is a 2-by-2 diagonal block.
+///     - equed is an input argument if fact = Factored; otherwise, it is an
+///     output argument.
 ///
-///     - If uplo = Lower and ipiv(k) = ipiv(k+1) < 0, then rows and
-///     columns k+1 and -ipiv(k) were interchanged and
-///     D(k:k+1,k:k+1) is a 2-by-2 diagonal block.
+/// @param[in,out] S
+///     The vector S of length n.
+///     The scale factors for A.
+///     - If fact = Factored, S is an input argument;
+///     - otherwise, S is an output argument.
+///     - If fact = Factored and equed = Yes, each element of S must be positive.
+///     - If equed = None, S is not accessed.
 ///
-///     - If fact = NotFactored, then ipiv is an output argument and on exit
-///     contains details of the interchanges and the block structure
-///     of D, as determined by `lapack::sytrf`.
-///
-/// @param[in] B
+/// @param[in,out] B
 ///     The n-by-nrhs matrix B, stored in an ldb-by-nrhs array.
-///     The n-by-nrhs right hand side matrix B.
+///     On entry, the n-by-nrhs righthand side matrix B.
+///     On exit, if equed = None, B is not modified; if equed = Yes,
+///     B is overwritten by \f$ \text{diag}(S) B. \f$
 ///
 /// @param[in] ldb
 ///     The leading dimension of the array B. ldb >= max(1,n).
 ///
 /// @param[out] X
 ///     The n-by-nrhs matrix X, stored in an ldx-by-nrhs array.
-///     If successful or return value = n+1, the n-by-nrhs solution matrix X.
+///     If successful or return value = n+1, the n-by-nrhs solution matrix X to
+///     the original system of equations. Note that if equed = Yes,
+///     A and B are modified on exit, and the solution to the
+///     equilibrated system is \f$ \text{diag}(S)^{-1} X. \f$
 ///
 /// @param[in] ldx
 ///     The leading dimension of the array X. ldx >= max(1,n).
 ///
 /// @param[out] rcond
 ///     The estimate of the reciprocal condition number of the matrix
-///     A. If rcond is less than the machine precision (in
-///     particular, if rcond = 0), the matrix is singular to working
-///     precision. This condition is indicated by a return value > 0.
+///     A after equilibration (if done). If rcond is less than the
+///     machine precision (in particular, if rcond = 0), the matrix
+///     is singular to working precision. This condition is
+///     indicated by a return code of return value > 0.
 ///
 /// @param[out] ferr
 ///     The vector ferr of length nrhs.
@@ -322,25 +308,27 @@ int64_t sysvx(
 ///     any element of A or B that makes X(j) an exact solution).
 ///
 /// @retval = 0: successful exit
-/// @retval > 0 and <= n: if return value = i, D(i,i) is exactly zero. The factorization
-///                has been completed but the factor D is exactly
-///                singular, so the solution and error bounds could
-///                not be computed. rcond = 0 is returned.
-/// @retval = n+1: D is nonsingular, but rcond is less than machine
-///                precision, meaning that the matrix is singular
-///                to working precision. Nevertheless, the
-///                solution and error bounds are computed because
-///                there are a number of situations where the
-///                computed solution can be more accurate than the
-///                value of rcond would suggest.
+/// @retval > 0 and <= n: if return value = i,
+///     the leading minor of order i of A is
+///     not positive definite, so the factorization
+///     could not be completed, and the solution has not
+///     been computed. rcond = 0 is returned.
+/// @retval = n+1: U is nonsingular, but rcond is less than machine
+///     precision, meaning that the matrix is singular
+///     to working precision. Nevertheless, the
+///     solution and error bounds are computed because
+///     there are a number of situations where the
+///     computed solution can be more accurate than the
+///     value of rcond would suggest.
 ///
-/// @ingroup sysv
-int64_t sysvx(
+/// @ingroup posv
+int64_t posvx(
     lapack::Factored fact, lapack::Uplo uplo, int64_t n, int64_t nrhs,
-    std::complex<double> const* A, int64_t lda,
+    std::complex<double>* A, int64_t lda,
     std::complex<double>* AF, int64_t ldaf,
-    int64_t* ipiv,
-    std::complex<double> const* B, int64_t ldb,
+    lapack::Equed* equed,
+    double* S,
+    std::complex<double>* B, int64_t ldb,
     std::complex<double>* X, int64_t ldx,
     double* rcond,
     double* ferr,
@@ -357,42 +345,26 @@ int64_t sysvx(
     }
     char fact_ = factored2char( fact );
     char uplo_ = uplo2char( uplo );
+    char equed_ = equed2char( *equed );
     blas_int n_ = (blas_int) n;
     blas_int nrhs_ = (blas_int) nrhs;
     blas_int lda_ = (blas_int) lda;
     blas_int ldaf_ = (blas_int) ldaf;
-    #if 1
-        // 32-bit copy
-        std::vector< blas_int > ipiv_( &ipiv[0], &ipiv[(n)] );
-        blas_int* ipiv_ptr = &ipiv_[0];
-    #else
-        blas_int* ipiv_ptr = ipiv;
-    #endif
     blas_int ldb_ = (blas_int) ldb;
     blas_int ldx_ = (blas_int) ldx;
     blas_int info_ = 0;
 
-    // query for workspace size
-    std::complex<double> qry_work[1];
-    double qry_rwork[1];
-    blas_int ineg_one = -1;
-    LAPACK_zsysvx( &fact_, &uplo_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, ipiv_ptr, B, &ldb_, X, &ldx_, rcond, ferr, berr, qry_work, &ineg_one, qry_rwork, &info_ );
-    if (info_ < 0) {
-        throw Error();
-    }
-    blas_int lwork_ = real(qry_work[0]);
-
     // allocate workspace
-    std::vector< std::complex<double> > work( lwork_ );
+    std::vector< std::complex<double> > work( (2*n) );
     std::vector< double > rwork( (n) );
 
-    LAPACK_zsysvx( &fact_, &uplo_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, ipiv_ptr, B, &ldb_, X, &ldx_, rcond, ferr, berr, &work[0], &lwork_, &rwork[0], &info_ );
+    LAPACK_zposvx( &fact_, &uplo_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, &equed_,
+                   S, B, &ldb_, X, &ldx_, rcond, ferr, berr,
+                   &work[0], &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
-        std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
-    #endif
+    *equed = char2equed( equed_ );
     return info_;
 }
 

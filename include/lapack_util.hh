@@ -103,6 +103,36 @@ typedef blas::Diag Diag;
 typedef blas::Side Side;
 
 // -----------------------------------------------------------------------------
+// like blas::side, but adds Both for trevc
+enum class Sides : char {
+    Left  = 'L',
+    Right = 'R',
+    Both  = 'B',
+};
+
+inline char sides2char( Sides sides )
+{
+    return char(sides);
+}
+
+inline const char* sides2str( Sides sides )
+{
+    switch (sides) {
+        case Sides::Left:  return "left";
+        case Sides::Right: return "right";
+        case Sides::Both:  return "both";
+    }
+    return "?";
+}
+
+inline Sides char2sides( char sides )
+{
+    sides = (char) toupper( sides );
+    assert( sides == 'L' || sides == 'R' || sides == 'B' );
+    return Sides( sides );
+}
+
+// -----------------------------------------------------------------------------
 enum class Norm {
     One = '1',  // or 'O'
     Two = '2',
@@ -539,7 +569,6 @@ inline const char* matrixtype2str( lapack::MatrixType type )
 }
 
 // -----------------------------------------------------------------------------
-// todo: trevc needs BothSides
 // trevc
 enum class HowMany {
     All           = 'A',
@@ -576,6 +605,7 @@ enum class Equed {
     Row         = 'R',
     Col         = 'C',
     Both        = 'B',
+    Yes         = 'Y',  // porfsx
 };
 
 inline char equed2char( lapack::Equed equed )
@@ -587,7 +617,7 @@ inline lapack::Equed char2equed( char equed )
 {
     equed = char( toupper( equed ));
     lapack_throw_if_( equed != 'N' && equed != 'R' && equed != 'C' &&
-                      equed != 'B' );
+                      equed != 'B' && equed != 'Y' );
     return lapack::Equed( equed );
 }
 
@@ -598,6 +628,7 @@ inline const char* equed2str( lapack::Equed equed )
         case lapack::Equed::Row:  return "row";
         case lapack::Equed::Col:  return "col";
         case lapack::Equed::Both: return "both";
+        case lapack::Equed::Yes:  return "yes";
     }
     return "?";
 }

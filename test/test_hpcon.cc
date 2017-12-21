@@ -55,7 +55,7 @@ void test_hpcon_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    real_t anorm; 
+    real_t anorm;
     real_t rcond_tst;
     real_t rcond_ref;
     size_t size_AP = (size_t) (n*(n+1)/2);

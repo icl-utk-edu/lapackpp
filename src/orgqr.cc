@@ -10,10 +10,11 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup geqrf
 int64_t orgqr(
     int64_t m, int64_t n, int64_t k,
     float* A, int64_t lda,
-    float const* TAU )
+    float const* tau )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -31,7 +32,7 @@ int64_t orgqr(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_sorgqr( &m_, &n_, &k_, A, &lda_, TAU, qry_work, &ineg_one, &info_ );
+    LAPACK_sorgqr( &m_, &n_, &k_, A, &lda_, tau, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -40,7 +41,7 @@ int64_t orgqr(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_sorgqr( &m_, &n_, &k_, A, &lda_, TAU, &work[0], &lwork_, &info_ );
+    LAPACK_sorgqr( &m_, &n_, &k_, A, &lda_, tau, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -48,10 +49,12 @@ int64_t orgqr(
 }
 
 // -----------------------------------------------------------------------------
+/// @see lapack::ungqr
+/// @ingroup geqrf
 int64_t orgqr(
     int64_t m, int64_t n, int64_t k,
     double* A, int64_t lda,
-    double const* TAU )
+    double const* tau )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -69,7 +72,7 @@ int64_t orgqr(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dorgqr( &m_, &n_, &k_, A, &lda_, TAU, qry_work, &ineg_one, &info_ );
+    LAPACK_dorgqr( &m_, &n_, &k_, A, &lda_, tau, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -78,7 +81,7 @@ int64_t orgqr(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dorgqr( &m_, &n_, &k_, A, &lda_, TAU, &work[0], &lwork_, &info_ );
+    LAPACK_dorgqr( &m_, &n_, &k_, A, &lda_, tau, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

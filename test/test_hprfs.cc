@@ -91,7 +91,7 @@ void test_hprfs_work( Params& params, bool run )
         fprintf( stderr, "lapack::hptrf returned error %lld\n", (lld) info_trf );
     }
 
-    // solve 
+    // solve
     int64_t info_trs = lapack::hptrs( uplo, n, nrhs, &AFP[0], &ipiv_tst[0], &X_tst[0], ldb );
     if (info_trs != 0) {
         fprintf( stderr, "lapack::hptrs returned error %lld\n", (lld) info_trs );

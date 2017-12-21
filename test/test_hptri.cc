@@ -67,7 +67,7 @@ void test_hptri_work( Params& params, bool run )
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, AP_tst.size(), &AP_tst[0] );
 
-    // initialize ipiv_tst and ipiv_ref 
+    // initialize ipiv_tst and ipiv_ref
     int64_t info_trf = lapack::hptrf( uplo, n, &AP_tst[0], &ipiv_tst[0] );
     if (info_trf != 0) {
         fprintf( stderr, "lapack::hptrf returned error %lld\n", (lld) info_trf );

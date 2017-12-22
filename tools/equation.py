@@ -5,7 +5,7 @@
 #     /// solve A * X = B^H for matrices A, X, B.
 # becomes
 #     /// solve \f$ A X = B^H \f$ for matrices A, X, B.
-# However, patterns are heuristic and incomplete, so make mistakes occur.
+# However, patterns are heuristic and incomplete, so mistakes occur.
 # Use with caution.
 
 from __future__ import print_function
@@ -13,14 +13,21 @@ from __future__ import print_function
 import sys
 import re
 
+debug = False
+
 def equation( line, subexpr=False ):
+    if (debug):
+        print( 'equation:', line, 'subexpr', subexpr )
+
     if (subexpr):
         eqn = ''
     else:
         eqn = r'\f$ '
-    pending = ''
     space = True
     while (line):
+        if (debug):
+            print( 'eqn: <' + eqn + '> line: <' + line + '>' )
+
         # space
         s = re.search( r'^( +)(.*)', line )
         if (s):
@@ -63,12 +70,55 @@ def equation( line, subexpr=False ):
             space = False
             continue
 
-        # Greek
-        s = re.search( r'^(alpha|beta|lambda|sigma)\b(.*)', line )
+        # Greek, functions
+        s = re.search( r'^(alpha|beta|lambda|Lambda|sigma|Sigma|tau|sqrt|min|max)\b(.*)', line )
         if (s):
             eqn += '\\' + s.group(1)
             line = s.group(2)
             space = False
+            continue
+
+        # capitalized Greek, functions
+        s = re.search( r'^(MIN|MAX)\b(.*)', line )
+        if (s):
+            eqn += '\\' + s.group(1).lower()
+            line = s.group(2)
+            space = False
+            continue
+
+        # norm
+        s = re.search( r'^norm\((.*)', line )
+        if (s):
+            (expr, line) = equation( s.group(1), True )
+            eqn += r'|| ' + expr + ' ||'
+            continue
+
+        # abs
+        s = re.search( r'^abs\((.*)', line )
+        if (s):
+            (expr, line) = equation( s.group(1), True )
+            eqn += r'| ' + expr + ' |'
+            continue
+
+        # inverse
+        s = re.search( r'^inv\((.*)', line )
+        if (s):
+            (expr, line) = equation( s.group(1), True )
+            if (re.search( '^\w+$', expr )):
+                # safe to skip parens
+                eqn += expr + '^{-1}'
+            else:
+                eqn += '(' + expr + ')^{-1}'
+            space = True
+            continue
+
+        # non-Latex functions
+        s = re.search( r'^(diag)\((.*)', line )
+        if (s):
+            (expr, line) = equation( s.group(2), True )
+            if (not space): eqn += ' '
+            eqn += r'\; \text{' + s.group(1) + '}(' + expr + ') \; '
+            space = True
             continue
 
         # open parens
@@ -84,9 +134,32 @@ def equation( line, subexpr=False ):
             continue
 
         # close parens
-        s = re.search( r'^\)', line )
+        if (subexpr):
+            s = re.search( r'^\)(.*)', line )
+            if (s):
+                # finished subexpression; don't include ) in eqn
+                line = s.group(1)
+                if (debug):
+                    print( 'finish subexpr:', eqn, '\nline:', line )
+                break
+
+        # ellipsis
+        s = re.search( r'^\. ?\. ?\.(.*)', line )
         if (s):
-            break  # finished subexpression; don't include ) in eqn
+            if (not space):
+                eqn += ' '
+            eqn += r'\dots '
+            space = True
+            line = s.group(1)
+            continue
+
+        # punctuation
+        s = re.search( r'^([.,;:])(.*)', line )
+        if (s):
+            eqn += s.group(1)
+            line = s.group(2)
+            space = False
+            continue
 
         # otherwise done
         break
@@ -111,7 +184,7 @@ def process( arg ):
             ##    print( line, file=f_out )
             line2 = ''
             while (line):
-                s = re.search( r'^(.*?)\b((?:[A-Z]|VT) *(?:=|\^|\+|\-|\*|\/).*)', line )
+                s = re.search( r'^(.*?)\b((?:(?:[A-Z]|VT) *(?:=|\^|\+|\-|\*|\/)|norm\(|inv\(|diag\(|sqrt\(|alpha|beta|lambda|sigma|tau).*)', line )
                 if (s):
                     line2 += s.group(1)
                     (eqn, line) = equation( s.group(2) )
@@ -131,5 +204,9 @@ def process( arg ):
 # end
 
 for arg in sys.argv[1:]:
-    print( arg )
-    process( arg )
+    if (arg == '-d'):
+        debug = True
+    else:
+        print( arg )
+        process( arg )
+# end

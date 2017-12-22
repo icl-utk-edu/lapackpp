@@ -988,6 +988,10 @@ def generate_docs( func, header=False ):
         # remove "VAR is INTEGER" line
         d = re.sub( r'^ *' + arg.name.upper() + ' +is +(CHARACTER|INTEGER|REAL|DOUBLE PRECISION|COMPLEX\*16|COMPLEX|LOGICAL).*\n', r'', d )
 
+        # change "Specifies the ..." => "The ..."
+        d = re.sub( r'^ *' + 'Specifies (\w)',
+                    lambda match: match.group(1).upper(), d )
+
         if (arg.name == 'info'):
             # @retval
             d = re.sub( r'^ *< *0: *if INFO *= *-i, the i-th argument.*\n', r'', d, 0, re.M | re.I )

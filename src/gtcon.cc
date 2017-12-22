@@ -10,6 +10,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup gtsv_computational
 int64_t gtcon(
     lapack::Norm norm, int64_t n,
     float const* DL,
@@ -46,6 +47,7 @@ int64_t gtcon(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup gtsv_computational
 int64_t gtcon(
     lapack::Norm norm, int64_t n,
     double const* DL,
@@ -82,6 +84,7 @@ int64_t gtcon(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup gtsv_computational
 int64_t gtcon(
     lapack::Norm norm, int64_t n,
     std::complex<float> const* DL,
@@ -117,6 +120,62 @@ int64_t gtcon(
 }
 
 // -----------------------------------------------------------------------------
+/// Estimates the reciprocal of the condition number of a complex
+/// tridiagonal matrix A using the LU factorization as computed by
+/// `lapack::gttrf`.
+///
+/// An estimate is obtained for \f$ || A^{-1} ||, \f$ and the reciprocal of the
+/// condition number is computed as  \f$ \text{rcond} = 1 / (|| A || \cdot || A^{-1} ||). \f$
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] norm
+///     Specifies whether the 1-norm condition number or the
+///     infinity-norm condition number is required:
+///     - lapack::Norm::One: 1-norm;
+///     - lapack::Norm::Inf: Infinity-norm.
+///
+/// @param[in] n
+///     The order of the matrix A. n >= 0.
+///
+/// @param[in] DL
+///     The vector DL of length n-1.
+///     The (n-1) multipliers that define the matrix L from the
+///     LU factorization of A as computed by `lapack::gttrf`.
+///
+/// @param[in] D
+///     The vector D of length n.
+///     The n diagonal elements of the upper triangular matrix U from
+///     the LU factorization of A.
+///
+/// @param[in] DU
+///     The vector DU of length n-1.
+///     The (n-1) elements of the first superdiagonal of U.
+///
+/// @param[in] DU2
+///     The vector DU2 of length n-2.
+///     The (n-2) elements of the second superdiagonal of U.
+///
+/// @param[in] ipiv
+///     The vector ipiv of length n.
+///     The pivot indices; for 1 <= i <= n, row i of the matrix was
+///     interchanged with row ipiv(i). ipiv(i) will always be either
+///     i or i+1; ipiv(i) = i indicates a row interchange was not
+///     required.
+///
+/// @param[in] anorm
+///     - If norm = One, the 1-norm of the original matrix A.
+///     - If norm = Inf, the infinity-norm of the original matrix A.
+///
+/// @param[out] rcond
+///     The reciprocal of the condition number of the matrix A,
+///     computed as rcond = 1/(anorm * ainv_norm), where ainv_norm is an
+///     estimate of the 1-norm or infinity-norm of \f$ A^{-1} \f$ computed in this routine.
+///
+/// @retval = 0: successful exit
+///
+/// @ingroup gtsv_computational
 int64_t gtcon(
     lapack::Norm norm, int64_t n,
     std::complex<double> const* DL,

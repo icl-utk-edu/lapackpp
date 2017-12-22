@@ -4,9 +4,8 @@
     @defgroup group_solve Linear solve, AX = B
     @{
         @defgroup gesv General matrix: LU
-
         @defgroup gbsv General matrix: LU: banded
-        @defgroup gtsv General matrix: LU:  tridiagonal
+        @defgroup gtsv General matrix: LU: tridiagonal
         @defgroup posv Positive definite matrix: Cholesky
         @defgroup ppsv Positive definite matrix: Cholesky: packed
         @defgroup pbsv Positive definite matrix: Cholesky: banded
@@ -22,10 +21,10 @@
     @{
         @defgroup gesv_computational General matrix: LU
         @defgroup gbsv_computational General matrix: LU: banded
-        @defgroup gtsv_computational General matrix: LU:  tridiagonal
+        @defgroup gtsv_computational General matrix: LU: tridiagonal
         @defgroup posv_computational Positive definite matrix: Cholesky
         @defgroup ppsv_computational Positive definite matrix: Cholesky: packed
-        @defgroup pfsv Positive definite matrix: Cholesky: RFP
+        @defgroup pfsv_computational Positive definite matrix: Cholesky: RFP
         @defgroup pbsv_computational Positive definite matrix: Cholesky: banded
         @defgroup ptsv_computational Positive definite matrix: Cholesky: tridiagonal
         @defgroup sysv_computational Symmetric indefinite matrix

@@ -11277,6 +11277,24 @@ void LAPACK_zsysv_rook(
     lapack_complex_double* b, lapack_int const* ldb,
     lapack_complex_double* work, lapack_int const* lwork,
     lapack_int* info );
+#define LAPACK_chesv_rook LAPACK_GLOBAL(chesv_rook,CHESV_ROOK)
+void LAPACK_chesv_rook(
+    char const* uplo,
+    lapack_int const* n, lapack_int const* nrhs,
+    lapack_complex_float* A, lapack_int const* lda,
+    lapack_int* ipiv,
+    lapack_complex_float* B, lapack_int const* ldb,
+    lapack_complex_float* work, lapack_int const* lwork,
+    lapack_int* info );
+#define LAPACK_zhesv_rook LAPACK_GLOBAL(zhesv_rook,ZHESV_ROOK)
+void LAPACK_zhesv_rook(
+    char const* uplo,
+    lapack_int const* n, lapack_int const* nrhs,
+    lapack_complex_double* A, lapack_int const* lda,
+    lapack_int* ipiv,
+    lapack_complex_double* B, lapack_int const* ldb,
+    lapack_complex_double* work, lapack_int const* lwork,
+    lapack_int* info );
 
 /* ----- symmetric indefinite factorization, rook pivoting */
 #define LAPACK_ssytrf_rook LAPACK_GLOBAL(ssytrf_rook,SSYTRF_ROOK)

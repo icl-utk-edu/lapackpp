@@ -1,7 +1,7 @@
 #include "lapack.hh"
 #include "lapack_fortran.h"
 
-#if LAPACK_VERSION_MAJOR >= 3 && LAPACK_VERSION_MINOR >= 7  // >= 3.7
+#if LAPACK_VERSION_MAJOR >= 3 && LAPACK_VERSION_MINOR >= 5  // >= 3.5
 
 #include <vector>
 
@@ -12,11 +12,11 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
-int64_t hetrs_3(
+/// @ingroup hesv
+int64_t hesv_rook(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
-    std::complex<float> const* A, int64_t lda,
-    std::complex<float> const* E,
-    int64_t const* ipiv,
+    std::complex<float>* A, int64_t lda,
+    int64_t* ipiv,
     std::complex<float>* B, int64_t ldb )
 {
     // check for overflow
@@ -32,27 +32,44 @@ int64_t hetrs_3(
     blas_int lda_ = (blas_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( &ipiv[0], &ipiv[(n)] );
-        blas_int const* ipiv_ptr = &ipiv_[0];
+        std::vector< blas_int > ipiv_( (n) );
+        blas_int* ipiv_ptr = &ipiv_[0];
     #else
-        blas_int const* ipiv_ptr = ipiv_;
+        blas_int* ipiv_ptr = ipiv;
     #endif
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_chetrs_3( &uplo_, &n_, &nrhs_, A, &lda_, E, ipiv_ptr, B, &ldb_, &info_ );
+    // query for workspace size
+    std::complex<float> qry_work[1];
+    blas_int ineg_one = -1;
+    LAPACK_chesv_rook( &uplo_, &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
+    blas_int lwork_ = real(qry_work[0]);
+
+    // allocate workspace
+    std::vector< std::complex<float> > work( lwork_ );
+
+    LAPACK_chesv_rook( &uplo_, &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &work[0], &lwork_, &info_ );
+    if (info_ < 0) {
+        throw Error();
+    }
+    #if 1
+        std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
+    #endif
     return info_;
 }
 
 // -----------------------------------------------------------------------------
-int64_t hetrs_3(
+/// @deprecated Replaced by `lapack::hesv_rk`.
+/// @since LAPACK 3.5.0.
+/// @ingroup hesv
+int64_t hesv_rook(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
-    std::complex<double> const* A, int64_t lda,
-    std::complex<double> const* E,
-    int64_t const* ipiv,
+    std::complex<double>* A, int64_t lda,
+    int64_t* ipiv,
     std::complex<double>* B, int64_t ldb )
 {
     // check for overflow
@@ -68,21 +85,36 @@ int64_t hetrs_3(
     blas_int lda_ = (blas_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( &ipiv[0], &ipiv[(n)] );
-        blas_int const* ipiv_ptr = &ipiv_[0];
+        std::vector< blas_int > ipiv_( (n) );
+        blas_int* ipiv_ptr = &ipiv_[0];
     #else
-        blas_int const* ipiv_ptr = ipiv_;
+        blas_int* ipiv_ptr = ipiv;
     #endif
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_zhetrs_3( &uplo_, &n_, &nrhs_, A, &lda_, E, ipiv_ptr, B, &ldb_, &info_ );
+    // query for workspace size
+    std::complex<double> qry_work[1];
+    blas_int ineg_one = -1;
+    LAPACK_zhesv_rook( &uplo_, &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
+    blas_int lwork_ = real(qry_work[0]);
+
+    // allocate workspace
+    std::vector< std::complex<double> > work( lwork_ );
+
+    LAPACK_zhesv_rook( &uplo_, &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &work[0], &lwork_, &info_ );
+    if (info_ < 0) {
+        throw Error();
+    }
+    #if 1
+        std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
+    #endif
     return info_;
 }
 
 }  // namespace lapack
 
-#endif  // LAPACK >= 3.7
+#endif  // LAPACK >= 3.5

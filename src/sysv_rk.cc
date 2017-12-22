@@ -12,6 +12,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup sysv
 int64_t sysv_rk(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     float* A, int64_t lda,
@@ -63,6 +64,7 @@ int64_t sysv_rk(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup sysv
 int64_t sysv_rk(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double* A, int64_t lda,
@@ -114,6 +116,7 @@ int64_t sysv_rk(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup sysv
 int64_t sysv_rk(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<float>* A, int64_t lda,
@@ -165,6 +168,118 @@ int64_t sysv_rk(
 }
 
 // -----------------------------------------------------------------------------
+/// Computes the solution to a system of linear equations
+///     \f$ A X = B, \f$
+/// where A is an n-by-n symmetric matrix and X and B are n-by-nrhs matrices.
+///
+/// The bounded Bunch-Kaufman (rook) diagonal pivoting method is used
+/// to factor A as
+///     \f$ A = P U D U^T P^T, \f$ if uplo = Upper, or
+///     \f$ A = P L D L^T P^T, \f$ if uplo = Lower,
+/// where U (or L) is unit upper (or lower) triangular matrix,
+/// \f$ U^T \f$ (or \f$ L^T \f$) is the transpose of U (or L), P is a permutation
+/// matrix, \f$ P^T \f$ is the transpose of P, and D is symmetric and block
+/// diagonal with 1-by-1 and 2-by-2 diagonal blocks.
+///
+/// `lapack::sytrf_rk` is called to compute the factorization of a
+/// symmetric matrix. The factored form of A is then used to solve
+/// the system of equations \f$ A X = B \f$ by calling `lapack::sytrs_rk`.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+/// For real matrices, `lapack::hesv_rk` is an alias for this.
+/// For complex Hermitian matrices, see `lapack::hesv_rk`.
+///
+/// @param[in] uplo
+///     Whether the upper or lower triangular part of the
+///     symmetric matrix A is stored:
+///     - lapack::Uplo::Upper: Upper triangle of A is stored;
+///     - lapack::Uplo::Lower: Lower triangle of A is stored.
+///
+/// @param[in] n
+///     The number of linear equations, i.e., the order of the
+///     matrix A. n >= 0.
+///
+/// @param[in] nrhs
+///     The number of right hand sides, i.e., the number of columns
+///     of the matrix B. nrhs >= 0.
+///
+/// @param[in,out] A
+///     The n-by-n matrix A, stored in an lda-by-n array.
+///     - On entry, the symmetric matrix A.
+///       - If uplo = Upper: the leading n-by-n upper triangular part
+///       of A contains the upper triangular part of the matrix A,
+///       and the strictly lower triangular part of A is not
+///       referenced.
+///
+///       - If uplo = Lower: the leading n-by-n lower triangular part
+///       of A contains the lower triangular part of the matrix A,
+///       and the strictly upper triangular part of A is not
+///       referenced.
+///
+///     - On successful exit, diagonal of the block diagonal
+///     matrix D and factors U or L as computed by `lapack::sytrf_rk`:
+///       - ONLY diagonal elements of the symmetric block diagonal
+///         matrix D on the diagonal of A, i.e. D(k,k) = A(k,k);
+///         (superdiagonal (or subdiagonal) elements of D
+///         are stored on exit in array E), and
+///       - If uplo = Upper: factor U in the superdiagonal part of A.
+///       - If uplo = Lower: factor L in the subdiagonal part of A.
+///
+///     - For more info see the description of `lapack::sytrf_rk`.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,n).
+///
+/// @param[out] E
+///     The vector E of length n.
+///     On exit, contains the output computed by the factorization
+///     routine `lapack::sytrf_rk`, i.e. the superdiagonal (or subdiagonal)
+///     elements of the symmetric block diagonal matrix D
+///     with 1-by-1 or 2-by-2 diagonal blocks, where
+///     - If uplo = Upper: E(i) = D(i-1,i), i=2:n, E(1) is set to 0;
+///     - If uplo = Lower: E(i) = D(i+1,i), i=1:n-1, E(n) is set to 0.
+///
+///     - Note: For 1-by-1 diagonal block D(k), where
+///     1 <= k <= n, the element E(k) is set to 0 in both
+///     uplo = Upper or uplo = Lower cases.
+///
+///     - For more info see the description of `lapack::sytrf_rk`.
+///
+/// @param[out] ipiv
+///     The vector ipiv of length n.
+///     Details of the interchanges and the block structure of D,
+///     as determined by `lapack::sytrf_rk`.
+///     For more info see the description of `lapack::sytrf_rk`.
+///
+/// @param[in,out] B
+///     The n-by-nrhs matrix B, stored in an ldb-by-nrhs array.
+///     On entry, the n-by-nrhs right hand side matrix B.
+///     On successful exit, the n-by-nrhs solution matrix X.
+///
+/// @param[in] ldb
+///     The leading dimension of the array B. ldb >= max(1,n).
+///
+/// @retval = 0: successful exit
+/// @retval > 0: If return value = k, the matrix A is singular, because:
+///     If uplo = Upper: column k in the upper
+///     triangular part of A contains all zeros.
+///     If uplo = Lower: column k in the lower
+///     triangular part of A contains all zeros.
+///
+///     Therefore D(k,k) is exactly zero, and superdiagonal
+///     elements of column k of U (or subdiagonal elements of
+///     column k of L ) are all zeros. The factorization has
+///     been completed, but the block diagonal matrix D is
+///     exactly singular, and division by zero will occur if
+///     it is used to solve a system of equations.
+///
+///     NOTE: info only stores the first occurrence of
+///     a singularity, any subsequent occurrence of singularity
+///     is not stored in info even though the factorization
+///     always completes.
+///
+/// @ingroup sysv
 int64_t sysv_rk(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<double>* A, int64_t lda,

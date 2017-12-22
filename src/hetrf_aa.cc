@@ -12,7 +12,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
-/// @ingroup hesv_computational
+/// @ingroup hesv_aa_computational
 int64_t hetrf_aa(
     lapack::Uplo uplo, int64_t n,
     std::complex<float>* A, int64_t lda,
@@ -106,7 +106,7 @@ int64_t hetrf_aa(
 ///
 /// @retval = 0: successful exit
 ///
-/// @ingroup hesv_computational
+/// @ingroup hesv_aa_computational
 int64_t hetrf_aa(
     lapack::Uplo uplo, int64_t n,
     std::complex<double>* A, int64_t lda,

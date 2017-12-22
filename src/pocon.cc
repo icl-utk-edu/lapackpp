@@ -124,7 +124,7 @@ int64_t pocon(
 ///
 /// @param[out] rcond
 ///     The reciprocal of the condition number of the matrix A,
-///     computed as rcond = 1/(anorm * AINVNM), where AINVNM is an
+///     computed as rcond = 1/(anorm * ainv_norm), where ainv_norm is an
 ///     estimate of the 1-norm of inv(A) computed in this routine.
 ///
 /// @retval = 0: successful exit

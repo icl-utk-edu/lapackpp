@@ -12,6 +12,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup sysv
 int64_t sysv_rook(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     float* A, int64_t lda,
@@ -62,6 +63,7 @@ int64_t sysv_rook(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup sysv
 int64_t sysv_rook(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double* A, int64_t lda,
@@ -112,6 +114,7 @@ int64_t sysv_rook(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup sysv
 int64_t sysv_rook(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<float>* A, int64_t lda,
@@ -162,6 +165,9 @@ int64_t sysv_rook(
 }
 
 // -----------------------------------------------------------------------------
+/// @deprecated Replaced by `lapack::sysv_rk`.
+/// @since LAPACK 3.5.0.
+/// @ingroup sysv
 int64_t sysv_rook(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<double>* A, int64_t lda,

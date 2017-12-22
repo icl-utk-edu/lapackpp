@@ -12,6 +12,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup hesv_rk_computational
 int64_t hetrf_rook(
     lapack::Uplo uplo, int64_t n,
     std::complex<float>* A, int64_t lda,
@@ -57,6 +58,9 @@ int64_t hetrf_rook(
 }
 
 // -----------------------------------------------------------------------------
+/// @deprecated Replaced by `lapack::hetrf_rk`.
+/// @since LAPACK 3.5.0.
+/// @ingroup hesv_rk_computational
 int64_t hetrf_rook(
     lapack::Uplo uplo, int64_t n,
     std::complex<double>* A, int64_t lda,

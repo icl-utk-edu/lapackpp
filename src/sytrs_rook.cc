@@ -12,6 +12,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup sysv_rk_computational
 int64_t sytrs_rook(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     float const* A, int64_t lda,
@@ -47,6 +48,7 @@ int64_t sytrs_rook(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup sysv_rk_computational
 int64_t sytrs_rook(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double const* A, int64_t lda,
@@ -82,6 +84,7 @@ int64_t sytrs_rook(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup sysv_rk_computational
 int64_t sytrs_rook(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<float> const* A, int64_t lda,
@@ -117,6 +120,9 @@ int64_t sytrs_rook(
 }
 
 // -----------------------------------------------------------------------------
+/// @deprecated Replaced by `lapack::sytrs_rk`.
+/// @since LAPACK 3.5.0.
+/// @ingroup sysv_rk_computational
 int64_t sytrs_rook(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<double> const* A, int64_t lda,

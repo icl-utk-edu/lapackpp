@@ -2738,14 +2738,15 @@ int64_t hecon(
     double* rcond );
 
 // -----------------------------------------------------------------------------
-int64_t hecon_3(
+// hecon_rk wraps hecon_3
+int64_t hecon_rk(
     lapack::Uplo uplo, int64_t n,
     std::complex<float> const* A, int64_t lda,
     std::complex<float> const* E,
     int64_t const* ipiv, float anorm,
     float* rcond );
 
-int64_t hecon_3(
+int64_t hecon_rk(
     lapack::Uplo uplo, int64_t n,
     std::complex<double> const* A, int64_t lda,
     std::complex<double> const* E,
@@ -3063,6 +3064,19 @@ int64_t hesv_rk(
     std::complex<double>* B, int64_t ldb );
 
 // -----------------------------------------------------------------------------
+int64_t hesv_rook(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    std::complex<float>* A, int64_t lda,
+    int64_t* ipiv,
+    std::complex<float>* B, int64_t ldb );
+
+int64_t hesv_rook(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    std::complex<double>* A, int64_t lda,
+    int64_t* ipiv,
+    std::complex<double>* B, int64_t ldb );
+
+// -----------------------------------------------------------------------------
 void heswapr(
     lapack::Uplo uplo, int64_t n,
     std::complex<float>* A, int64_t lda, int64_t i1, int64_t i2 );
@@ -3172,13 +3186,14 @@ int64_t hetri2(
     int64_t const* ipiv );
 
 // -----------------------------------------------------------------------------
-int64_t hetri_3(
+// hetri_rk wraps hetri_3
+int64_t hetri_rk(
     lapack::Uplo uplo, int64_t n,
     std::complex<float>* A, int64_t lda,
     std::complex<float> const* E,
     int64_t const* ipiv );
 
-int64_t hetri_3(
+int64_t hetri_rk(
     lapack::Uplo uplo, int64_t n,
     std::complex<double>* A, int64_t lda,
     std::complex<double> const* E,
@@ -3211,14 +3226,15 @@ int64_t hetrs2(
     std::complex<double>* B, int64_t ldb );
 
 // -----------------------------------------------------------------------------
-int64_t hetrs_3(
+// hetrs_rk wraps hetrs_3
+int64_t hetrs_rk(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<float> const* A, int64_t lda,
     std::complex<float> const* E,
     int64_t const* ipiv,
     std::complex<float>* B, int64_t ldb );
 
-int64_t hetrs_3(
+int64_t hetrs_rk(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<double> const* A, int64_t lda,
     std::complex<double> const* E,
@@ -7364,50 +7380,51 @@ int64_t sycon(
     double* rcond );
 
 // -----------------------------------------------------------------------------
-int64_t sycon_3(
+// sycon_rk wraps sycon_3
+int64_t sycon_rk(
     lapack::Uplo uplo, int64_t n,
     float const* A, int64_t lda,
     float const* E,
     int64_t const* ipiv, float anorm,
     float* rcond );
 
-// hecon_3 alias to sycon_3
-inline int64_t hecon_3(
+// hecon_rk alias to sycon_rk
+inline int64_t hecon_rk(
     lapack::Uplo uplo, int64_t n,
     float const* A, int64_t lda,
     float const* E,
     int64_t const* ipiv, float anorm,
     float* rcond )
 {
-    return sycon_3( uplo, n, A, lda, E, ipiv, anorm, rcond );
+    return sycon_rk( uplo, n, A, lda, E, ipiv, anorm, rcond );
 }
 
-int64_t sycon_3(
+int64_t sycon_rk(
     lapack::Uplo uplo, int64_t n,
     double const* A, int64_t lda,
     double const* E,
     int64_t const* ipiv, double anorm,
     double* rcond );
 
-// hecon_3 alias to sycon_3
-inline int64_t hecon_3(
+// hecon_rk alias to sycon_rk
+inline int64_t hecon_rk(
     lapack::Uplo uplo, int64_t n,
     double const* A, int64_t lda,
     double const* E,
     int64_t const* ipiv, double anorm,
     double* rcond )
 {
-    return sycon_3( uplo, n, A, lda, E, ipiv, anorm, rcond );
+    return sycon_rk( uplo, n, A, lda, E, ipiv, anorm, rcond );
 }
 
-int64_t sycon_3(
+int64_t sycon_rk(
     lapack::Uplo uplo, int64_t n,
     std::complex<float> const* A, int64_t lda,
     std::complex<float> const* E,
     int64_t const* ipiv, float anorm,
     float* rcond );
 
-int64_t sycon_3(
+int64_t sycon_rk(
     lapack::Uplo uplo, int64_t n,
     std::complex<double> const* A, int64_t lda,
     std::complex<double> const* E,
@@ -8712,45 +8729,46 @@ int64_t sytri2(
     int64_t const* ipiv );
 
 // -----------------------------------------------------------------------------
-int64_t sytri_3(
+// sytri_rk wraps sytri_3
+int64_t sytri_rk(
     lapack::Uplo uplo, int64_t n,
     float* A, int64_t lda,
     float const* E,
     int64_t const* ipiv );
 
-// hetri_3 alias to sytri_3
-inline int64_t hetri_3(
+// hetri_rk alias to sytri_rk
+inline int64_t hetri_rk(
     lapack::Uplo uplo, int64_t n,
     float* A, int64_t lda,
     float const* E,
     int64_t const* ipiv )
 {
-    return sytri_3( uplo, n, A, lda, E, ipiv );
+    return sytri_rk( uplo, n, A, lda, E, ipiv );
 }
 
-int64_t sytri_3(
+int64_t sytri_rk(
     lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     double const* E,
     int64_t const* ipiv );
 
-// hetri_3 alias to sytri_3
-inline int64_t hetri_3(
+// hetri_rk alias to sytri_rk
+inline int64_t hetri_rk(
     lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     double const* E,
     int64_t const* ipiv )
 {
-    return sytri_3( uplo, n, A, lda, E, ipiv );
+    return sytri_rk( uplo, n, A, lda, E, ipiv );
 }
 
-int64_t sytri_3(
+int64_t sytri_rk(
     lapack::Uplo uplo, int64_t n,
     std::complex<float>* A, int64_t lda,
     std::complex<float> const* E,
     int64_t const* ipiv );
 
-int64_t sytri_3(
+int64_t sytri_rk(
     lapack::Uplo uplo, int64_t n,
     std::complex<double>* A, int64_t lda,
     std::complex<double> const* E,
@@ -8847,50 +8865,51 @@ int64_t sytrs2(
     std::complex<double>* B, int64_t ldb );
 
 // -----------------------------------------------------------------------------
-int64_t sytrs_3(
+// sytrs_rk wraps sytrs_3
+int64_t sytrs_rk(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     float const* A, int64_t lda,
     float const* E,
     int64_t const* ipiv,
     float* B, int64_t ldb );
 
-// hetrs_3 alias to sytrs_3
-inline int64_t hetrs_3(
+// hetrs_rk alias to sytrs_rk
+inline int64_t hetrs_rk(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     float const* A, int64_t lda,
     float const* E,
     int64_t const* ipiv,
     float* B, int64_t ldb )
 {
-    return sytrs_3( uplo, n, nrhs, A, lda, E, ipiv, B, ldb );
+    return sytrs_rk( uplo, n, nrhs, A, lda, E, ipiv, B, ldb );
 }
 
-int64_t sytrs_3(
+int64_t sytrs_rk(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double const* A, int64_t lda,
     double const* E,
     int64_t const* ipiv,
     double* B, int64_t ldb );
 
-// hetrs_3 alias to sytrs_3
-inline int64_t hetrs_3(
+// hetrs_rk alias to sytrs_rk
+inline int64_t hetrs_rk(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double const* A, int64_t lda,
     double const* E,
     int64_t const* ipiv,
     double* B, int64_t ldb )
 {
-    return sytrs_3( uplo, n, nrhs, A, lda, E, ipiv, B, ldb );
+    return sytrs_rk( uplo, n, nrhs, A, lda, E, ipiv, B, ldb );
 }
 
-int64_t sytrs_3(
+int64_t sytrs_rk(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<float> const* A, int64_t lda,
     std::complex<float> const* E,
     int64_t const* ipiv,
     std::complex<float>* B, int64_t ldb );
 
-int64_t sytrs_3(
+int64_t sytrs_rk(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<double> const* A, int64_t lda,
     std::complex<double> const* E,

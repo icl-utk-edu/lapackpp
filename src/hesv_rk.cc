@@ -65,14 +65,13 @@ int64_t hesv_rk(
 
 // -----------------------------------------------------------------------------
 /// Computes the solution to a system of linear equations
-///     \f$ A X = B \f$,
-/// where A is an n-by-n Hermitian matrix and X and B are n-by-nrhs
-/// matrices.
+///     \f$ A X = B, \f$
+/// where A is an n-by-n Hermitian matrix and X and B are n-by-nrhs matrices.
 ///
 /// The bounded Bunch-Kaufman (rook) diagonal pivoting method is used
 /// to factor A as
-///     \f$ A = P U D U^H P^T \f$, if uplo = Upper, or
-///     \f$ A = P L D L^H P^T \f$, if uplo = Lower,
+///     \f$ A = P U D U^H P^T, \f$ if uplo = Upper, or
+///     \f$ A = P L D L^H P^T, \f$ if uplo = Lower,
 /// where U (or L) is unit upper (or lower) triangular matrix,
 /// \f$ U^H \f$ (or \f$ L^H \f$) is the conjugate of U (or L), P is a permutation
 /// matrix, \f$ P^T \f$ is the transpose of P, and D is Hermitian and block
@@ -80,10 +79,12 @@ int64_t hesv_rk(
 ///
 /// `lapack::hetrf_rk` is called to compute the factorization of a
 /// Hermitian matrix. The factored form of A is then used to solve
-/// the system of equations \f$ A X = B \f$ by calling `lapack::hetrs_3`.
+/// the system of equations \f$ A X = B \f$ by calling `lapack::hetrs_rk`.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+/// For real matrices, this is an alias for `lapack::sysv_rk`.
+/// For complex symmetric matrices, see `lapack::sysv_rk`.
 ///
 /// @param[in] uplo
 ///     Whether the upper or lower triangular part of the
@@ -101,27 +102,27 @@ int64_t hesv_rk(
 ///
 /// @param[in,out] A
 ///     The n-by-n matrix A, stored in an lda-by-n array.
-///     On entry, the Hermitian matrix A.
-///     - If uplo = Upper: the leading n-by-n upper triangular part
-///     of A contains the upper triangular part of the matrix A,
-///     and the strictly lower triangular part of A is not
-///     referenced.
+///     - On entry, the Hermitian matrix A.
+///       - If uplo = Upper: the leading n-by-n upper triangular part
+///       of A contains the upper triangular part of the matrix A,
+///       and the strictly lower triangular part of A is not
+///       referenced.
 ///
-///     - If uplo = Lower: the leading n-by-n lower triangular part
-///     of A contains the lower triangular part of the matrix A,
-///     and the strictly upper triangular part of A is not
-///     referenced.
+///       - If uplo = Lower: the leading n-by-n lower triangular part
+///       of A contains the lower triangular part of the matrix A,
+///       and the strictly upper triangular part of A is not
+///       referenced.
 ///
 ///     - On successful exit, diagonal of the block diagonal
 ///     matrix D and factors U or L as computed by `lapack::hetrf_rk`:
-///     a) ONLY diagonal elements of the Hermitian block diagonal
-///        matrix D on the diagonal of A, i.e. D(k,k) = A(k,k);
-///        (superdiagonal (or subdiagonal) elements of D
-///        are stored on exit in array E), and
-///     b) If uplo = Upper: factor U in the superdiagonal part of A.
-///        If uplo = Lower: factor L in the subdiagonal part of A.
-///     \n
-///     For more info see the description of `lapack::hetrf_rk`.
+///       - ONLY diagonal elements of the Hermitian block diagonal
+///         matrix D on the diagonal of A, i.e. D(k,k) = A(k,k);
+///         (superdiagonal (or subdiagonal) elements of D
+///         are stored on exit in array E), and
+///       - If uplo = Upper: factor U in the superdiagonal part of A.
+///       - If uplo = Lower: factor L in the subdiagonal part of A.
+///
+///     - For more info see the description of `lapack::hetrf_rk`.
 ///
 /// @param[in] lda
 ///     The leading dimension of the array A. lda >= max(1,n).
@@ -134,19 +135,18 @@ int64_t hesv_rk(
 ///     with 1-by-1 or 2-by-2 diagonal blocks, where
 ///     - If uplo = Upper: E(i) = D(i-1,i), i=2:n, E(1) is set to 0;
 ///     - If uplo = Lower: E(i) = D(i+1,i), i=1:n-1, E(n) is set to 0.
-///     \n
-///     NOTE: For 1-by-1 diagonal block D(k), where
+///
+///     - Note: For 1-by-1 diagonal block D(k), where
 ///     1 <= k <= n, the element E(k) is set to 0 in both
 ///     uplo = Upper or uplo = Lower cases.
-///     \n
-///     For more info see the description of `lapack::hetrf_rk` routine.
+///
+///     - For more info see the description of `lapack::hetrf_rk`.
 ///
 /// @param[out] ipiv
 ///     The vector ipiv of length n.
 ///     Details of the interchanges and the block structure of D,
 ///     as determined by `lapack::hetrf_rk`.
-///     \n
-///     For more info see the description of `lapack::hetrf_rk` routine.
+///     For more info see the description of `lapack::hetrf_rk`.
 ///
 /// @param[in,out] B
 ///     The n-by-nrhs matrix B, stored in an ldb-by-nrhs array.
@@ -158,24 +158,22 @@ int64_t hesv_rk(
 ///
 /// @retval = 0: successful exit
 /// @retval > 0: If return value = k, the matrix A is singular, because:
-///              \n
-///              If uplo = Upper: column k in the upper
-///              triangular part of A contains all zeros.
-///              \n
-///              If uplo = Lower: column k in the lower
-///              triangular part of A contains all zeros.
-///              \n
-///              Therefore D(k,k) is exactly zero, and superdiagonal
-///              elements of column k of U (or subdiagonal elements of
-///              column k of L ) are all zeros. The factorization has
-///              been completed, but the block diagonal matrix D is
-///              exactly singular, and division by zero will occur if
-///              it is used to solve a system of equations.
+///     If uplo = Upper: column k in the upper
+///     triangular part of A contains all zeros.
+///     If uplo = Lower: column k in the lower
+///     triangular part of A contains all zeros.
 ///
-///              NOTE: returns only the first occurrence of
-///              a singularity, any subsequent occurrence of singularity
-///             is not returned even though the factorization
-///             always completes.
+///     Therefore D(k,k) is exactly zero, and superdiagonal
+///     elements of column k of U (or subdiagonal elements of
+///     column k of L ) are all zeros. The factorization has
+///     been completed, but the block diagonal matrix D is
+///     exactly singular, and division by zero will occur if
+///     it is used to solve a system of equations.
+///
+///     NOTE: info only stores the first occurrence of
+///     a singularity, any subsequent occurrence of singularity
+///     is not stored in info even though the factorization
+///     always completes.
 ///
 /// @ingroup hesv
 int64_t hesv_rk(

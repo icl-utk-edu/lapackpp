@@ -6,14 +6,14 @@
         @defgroup gesv General matrix: LU
         @defgroup gbsv General matrix: LU: banded
         @defgroup gtsv General matrix: LU: tridiagonal
-        @defgroup posv Positive definite matrix: Cholesky
-        @defgroup ppsv Positive definite matrix: Cholesky: packed
-        @defgroup pbsv Positive definite matrix: Cholesky: banded
-        @defgroup ptsv Positive definite matrix: Cholesky: tridiagonal
-        @defgroup sysv Symmetric indefinite matrix
-        @defgroup spsv Symmetric indefinite matrix: packed
-        @defgroup hesv Hermitian indefinite matrix
-        @defgroup hpsv Hermitian indefinite matrix: packed
+        @defgroup posv Positive definite: Cholesky
+        @defgroup ppsv Positive definite: Cholesky: packed
+        @defgroup pbsv Positive definite: Cholesky: banded
+        @defgroup ptsv Positive definite: Cholesky: tridiagonal
+        @defgroup sysv Symmetric indefinite
+        @defgroup spsv Symmetric indefinite: packed
+        @defgroup hesv Hermitian indefinite
+        @defgroup hpsv Hermitian indefinite: packed
     @}
 
     ----------------------------------------------------------------------------
@@ -22,19 +22,23 @@
         @defgroup gesv_computational General matrix: LU
         @defgroup gbsv_computational General matrix: LU: banded
         @defgroup gtsv_computational General matrix: LU: tridiagonal
-        @defgroup posv_computational Positive definite matrix: Cholesky
-        @defgroup ppsv_computational Positive definite matrix: Cholesky: packed
-        @defgroup pfsv_computational Positive definite matrix: Cholesky: RFP
-        @defgroup pbsv_computational Positive definite matrix: Cholesky: banded
-        @defgroup ptsv_computational Positive definite matrix: Cholesky: tridiagonal
-        @defgroup sysv_computational Symmetric indefinite matrix
-        @defgroup spsv_computational Symmetric indefinite matrix: packed
-        @defgroup hesv_computational Hermitian indefinite matrix
-        @defgroup hpsv_computational Hermitian indefinite matrix: packed
-        @defgroup trsv_computational Triangular matrix
-        @defgroup tpsv_computational Triangular matrix: packed
-        @defgroup tfsv_computational Triangular matrix: RFP
-        @defgroup tbsv_computational Triangular matrix: banded
+        @defgroup posv_computational Positive definite: Cholesky
+        @defgroup ppsv_computational Positive definite: Cholesky: packed
+        @defgroup pfsv_computational Positive definite: Cholesky: RFP
+        @defgroup pbsv_computational Positive definite: Cholesky: banded
+        @defgroup ptsv_computational Positive definite: Cholesky: tridiagonal
+        @defgroup sysv_computational Symmetric indefinite: Bunch-Kaufman
+        @defgroup spsv_computational Symmetric indefinite: Bunch-Kaufman: packed
+        @defgroup sysv_rk_computational Symmetric indefinite: Rook
+        @defgroup sysv_aa_computational Symmetric indefinite: Aasen's
+        @defgroup hesv_computational Hermitian indefinite: Bunch-Kaufman
+        @defgroup hpsv_computational Hermitian indefinite: Bunch-Kaufman: packed
+        @defgroup hesv_rk_computational Hermitian indefinite: Rook
+        @defgroup hesv_aa_computational Hermitian indefinite: Aasen's
+        @defgroup trsv_computational Triangular
+        @defgroup tpsv_computational Triangular: packed
+        @defgroup tfsv_computational Triangular: RFP
+        @defgroup tbsv_computational Triangular: banded
     @}
 
     ----------------------------------------------------------------------------

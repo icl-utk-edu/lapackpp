@@ -12,7 +12,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
-/// @ingroup sysv_computational
+/// @ingroup sysv_aa_computational
 int64_t sytrs_aa(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     float const* A, int64_t lda,
@@ -52,7 +52,7 @@ int64_t sytrs_aa(
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup sysv_computational
+/// @ingroup sysv_aa_computational
 int64_t sytrs_aa(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double const* A, int64_t lda,
@@ -92,7 +92,7 @@ int64_t sytrs_aa(
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup sysv_computational
+/// @ingroup sysv_aa_computational
 int64_t sytrs_aa(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<float> const* A, int64_t lda,
@@ -175,7 +175,7 @@ int64_t sytrs_aa(
 ///
 /// @retval = 0: successful exit
 ///
-/// @ingroup sysv_computational
+/// @ingroup sysv_aa_computational
 int64_t sytrs_aa(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<double> const* A, int64_t lda,

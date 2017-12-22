@@ -267,6 +267,13 @@ if (opts.sysv):
     [ 'sytri', check + dtype + align + n + uplo ],
     [ 'sycon', check + dtype + align + n + uplo ],
     [ 'syrfs', check + dtype + align + n + uplo ],
+#
+    [ 'spsv',  check + dtype + align + n + uplo ],
+    [ 'sptrf',  check + dtype + n + uplo ],
+    [ 'sptrs',  check + dtype + align + n + uplo ],
+    [ 'sptri',  check + dtype + n + uplo ],
+    [ 'spcon',  check + dtype + align + n  + uplo ],
+    [ 'sprfs',  check + dtype + align + n  + uplo ],
     ]
 
 # symmetric indefinite, rook
@@ -366,6 +373,10 @@ if (opts.syev):
 #    [ 'hetrd', check + dtype + align + n + uplo ],
 #    [ 'ungtr', check + dtype + align + n + uplo ],
 #    [ 'unmtr', check + dtype + align + n + uplo ],
+
+    [ 'hpev',  check + dtype + align + n + uplo ],
+
+    [ 'hbev',  check + dtype + align + n + uplo ],
     ]
 
 # generalized symmetric eigenvalues

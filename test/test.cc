@@ -144,28 +144,28 @@ std::vector< libtest::routines_t > routines = {
 
     // -----
     // symmetric indefinite
-    { "sysv",               test_sysv,      Section::sysv },
-  //{ "spsv",               test_spsv,      Section::sysv },
+    { "sysv",               test_sysv,      Section::sysv }, // tested via LAPACKE
+    { "spsv",               test_spsv,      Section::sysv }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },
 
-    { "sytrf",              test_sytrf,     Section::sysv },
-  //{ "sptrf",              test_sptrf,     Section::sysv },
+    { "sytrf",              test_sytrf,     Section::sysv }, // tested via LAPACKE
+    { "sptrf",              test_sptrf,     Section::sysv }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },
 
-    { "sytrs",              test_sytrs,     Section::sysv },
-  //{ "sptrs",              test_sptrs,     Section::sysv },
+    { "sytrs",              test_sytrs,     Section::sysv }, // tested via LAPACKE
+    { "sptrs",              test_sptrs,     Section::sysv }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },
 
-    { "sytri",              test_sytri,     Section::sysv },
-  //{ "sptri",              test_sptri,     Section::sysv },
+    { "sytri",              test_sytri,     Section::sysv }, // tested via LAPACKE
+    { "sptri",              test_sptri,     Section::sysv }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },
 
-    { "sycon",              test_sycon,     Section::sysv },
-  //{ "spcon",              test_spcon,     Section::sysv },
+    { "sycon",              test_sycon,     Section::sysv }, // tested via LAPACKE
+    { "spcon",              test_spcon,     Section::sysv }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },
 
-    { "syrfs",              test_syrfs,     Section::sysv },
-  //{ "sprfs",              test_sprfs,     Section::sysv },
+    { "syrfs",              test_syrfs,     Section::sysv }, // tested via LAPACKE
+    { "sprfs",              test_sprfs,     Section::sysv }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },
 
     // -----
@@ -256,9 +256,9 @@ std::vector< libtest::routines_t > routines = {
 
     // -----
     // symmetric/Hermitian eigenvalues
-    { "heev",               test_heev,      Section::heev },
-  //{ "hpev",               test_hpev,      Section::heev },
-  //{ "hbev",               test_hbev,      Section::heev },
+    { "heev",               test_heev,      Section::heev }, // tested via LAPACKE
+    { "hpev",               test_hpev,      Section::heev }, // tested via LAPACKE
+    { "hbev",               test_hbev,      Section::heev }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },
 
   //{ "heevx",              test_heevx,     Section::heev },

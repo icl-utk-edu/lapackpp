@@ -101,6 +101,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument( '-H', '--header',  help='generate header   in ../gen/lapack_wrappers.hh to go in ../include', action='store_true' )
 parser.add_argument( '-w', '--wrapper', help='generate wrappers in ../gen/foo.cc             to go in ../src',     action='store_true' )
 parser.add_argument( '-t', '--tester',  help='generate testers  in ../gen/test_foo.cc        to go in ../test',    action='store_true' )
+parser.add_argument( '-d', '--debug',   help='debug mode', action='store_true' )
 parser.add_argument( 'argv', nargs=argparse.REMAINDER )
 args = parser.parse_args()
 
@@ -108,12 +109,10 @@ args = parser.parse_args()
 if (not (args.header or args.tester or args.wrapper)):
     args.wrapper = True
 
+debug = args.debug
 
 # ------------------------------------------------------------------------------
 # configuration
-
-debug = 0
-#debug = 1
 
 # --------------------
 header_top = '''\
@@ -500,6 +499,7 @@ def parse_lapack( path ):
                 arg = Arg( var, intent )
                 func.args.append( arg )
                 state = state_param_verb
+                if (debug): print( 'param:', intent, var )
                 continue
             # end
 
@@ -574,7 +574,7 @@ def parse_lapack( path ):
     # parse arguments for properties
     i = 0
     for arg in func.args:
-        if (debug): print( '-'*40 )
+        if (debug): print( '-'*40 + '\narg:', arg.name )
 
         # strip comment chars; squeeze space
         # normally, lapack indents 10 spaces; if more, leave excess
@@ -684,6 +684,8 @@ def parse_lapack( path ):
                    '\ndtype     = ' + arg.dtype +
                    '\nintent    = ' + arg.intent +
                    '\nis_array  = ' + str(arg.is_array) +
+                   '\nis_work   = ' + str(arg.is_work) +
+                   '\nis_lwork  = ' + str(arg.is_lwork) +
                    '\nuse_query = ' + str(arg.use_query))
             if (arg.is_array):
                 print( 'dim       = ' + arg.dim.lower() )
@@ -1092,6 +1094,9 @@ def generate_wrapper( func, header=False ):
                 # lwork, lrwork, etc. local variables; not in proto_args
                 query_args.append( '&ineg_one' )
                 use_query = True
+            elif (arg.is_lwork):
+                # lwork, etc. local variables; not in proto_args
+                local_vars += tab + 'blas_int ' + arg.lname + ' = (blas_int) ' + arg.lbound + ';\n'
             else:
                 proto_args.append( arg.dtype + ' ' + arg.name )
                 alias_args.append( arg.name )

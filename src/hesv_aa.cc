@@ -72,11 +72,13 @@ int64_t hesv_aa(
 ///     \f$ A = U T U^H \f$, if uplo = Upper, or
 ///     \f$ A = L T L^H \f$, if uplo = Lower,
 /// where U (or L) is a product of permutation and unit upper (lower)
-/// triangular matrices, and T is Hermitian and tridiagonal. The factored form
+/// triangular matrices, and T is Hermitian tridiagonal. The factored form
 /// of A is then used to solve the system of equations \f$ A X = B \f$.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+/// For real matrices, this is an alias for `lapack::sysv_aa`.
+/// For complex symmetric matrices, see `lapack::sysv_aa`.
 ///
 /// @param[in] uplo
 ///     - lapack::Uplo::Upper: Upper triangle of A is stored;

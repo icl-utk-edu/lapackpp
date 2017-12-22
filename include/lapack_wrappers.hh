@@ -3230,13 +3230,13 @@ int64_t hetrs_aa(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<float> const* A, int64_t lda,
     int64_t const* ipiv,
-    std::complex<float>* B, int64_t ldb, int64_t lwork );
+    std::complex<float>* B, int64_t ldb );
 
 int64_t hetrs_aa(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<double> const* A, int64_t lda,
     int64_t const* ipiv,
-    std::complex<double>* B, int64_t ldb, int64_t lwork );
+    std::complex<double>* B, int64_t ldb );
 
 // -----------------------------------------------------------------------------
 int64_t hetrs_rook(
@@ -8887,45 +8887,45 @@ int64_t sytrs_aa(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     float const* A, int64_t lda,
     int64_t const* ipiv,
-    float* B, int64_t ldb, int64_t lwork );
+    float* B, int64_t ldb );
 
 // hetrs_aa alias to sytrs_aa
 inline int64_t hetrs_aa(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     float const* A, int64_t lda,
     int64_t const* ipiv,
-    float* B, int64_t ldb, int64_t lwork )
+    float* B, int64_t ldb )
 {
-    return sytrs_aa( uplo, n, nrhs, A, lda, ipiv, B, ldb, lwork );
+    return sytrs_aa( uplo, n, nrhs, A, lda, ipiv, B, ldb );
 }
 
 int64_t sytrs_aa(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double const* A, int64_t lda,
     int64_t const* ipiv,
-    double* B, int64_t ldb, int64_t lwork );
+    double* B, int64_t ldb );
 
 // hetrs_aa alias to sytrs_aa
 inline int64_t hetrs_aa(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     double const* A, int64_t lda,
     int64_t const* ipiv,
-    double* B, int64_t ldb, int64_t lwork )
+    double* B, int64_t ldb )
 {
-    return sytrs_aa( uplo, n, nrhs, A, lda, ipiv, B, ldb, lwork );
+    return sytrs_aa( uplo, n, nrhs, A, lda, ipiv, B, ldb );
 }
 
 int64_t sytrs_aa(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<float> const* A, int64_t lda,
     int64_t const* ipiv,
-    std::complex<float>* B, int64_t ldb, int64_t lwork );
+    std::complex<float>* B, int64_t ldb );
 
 int64_t sytrs_aa(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<double> const* A, int64_t lda,
     int64_t const* ipiv,
-    std::complex<double>* B, int64_t ldb, int64_t lwork );
+    std::complex<double>* B, int64_t ldb );
 
 // -----------------------------------------------------------------------------
 int64_t sytrs_rook(

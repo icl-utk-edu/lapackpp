@@ -10,9 +10,10 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup auxiliary
 void lassq(
     int64_t n,
-    float const* X, int64_t incx,
+    float const* x, int64_t incx,
     float* scale,
     float* sumsq )
 {
@@ -24,13 +25,14 @@ void lassq(
     blas_int n_ = (blas_int) n;
     blas_int incx_ = (blas_int) incx;
 
-    LAPACK_slassq( &n_, X, &incx_, scale, sumsq );
+    LAPACK_slassq( &n_, x, &incx_, scale, sumsq );
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup auxiliary
 void lassq(
     int64_t n,
-    double const* X, int64_t incx,
+    double const* x, int64_t incx,
     double* scale,
     double* sumsq )
 {
@@ -42,13 +44,14 @@ void lassq(
     blas_int n_ = (blas_int) n;
     blas_int incx_ = (blas_int) incx;
 
-    LAPACK_dlassq( &n_, X, &incx_, scale, sumsq );
+    LAPACK_dlassq( &n_, x, &incx_, scale, sumsq );
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup auxiliary
 void lassq(
     int64_t n,
-    std::complex<float> const* X, int64_t incx,
+    std::complex<float> const* x, int64_t incx,
     float* scale,
     float* sumsq )
 {
@@ -60,13 +63,54 @@ void lassq(
     blas_int n_ = (blas_int) n;
     blas_int incx_ = (blas_int) incx;
 
-    LAPACK_classq( &n_, X, &incx_, scale, sumsq );
+    LAPACK_classq( &n_, x, &incx_, scale, sumsq );
 }
 
 // -----------------------------------------------------------------------------
+/// Returns the values scl and ssq such that
+///
+///     \f[ scl^2 ssq = x_1^2 + \dots + x_n^2 + scale^2 sumsq, \f]
+///
+/// where \f$ x_i = | x( 1 + ( i - 1 )*incx ) |, 1 \le i \le n. \f$
+/// The value of sumsq is
+/// assumed to be at least unity and the value of ssq will then satisfy
+///
+///     1.0 <= ssq <= ( sumsq + 2*n ).
+///
+/// scale is assumed to be non-negative and scl returns the value
+///
+///     \f[ scl = \max( scale, |real( x_i )|, |imag( x_i )| ), \f]
+///
+/// scale and sumsq must be supplied in scale and sumsq respectively.
+/// scale and sumsq are overwritten by scl and ssq respectively.
+///
+/// The routine makes only one pass through the vector x.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] n
+///     The number of elements to be used from the vector x.
+///
+/// @param[in] x
+///     The vector x of length 1+(n-1)*incx.
+///
+/// @param[in] incx
+///     The increment between successive values of the vector x.
+///     incx > 0.
+///
+/// @param[in,out] scale
+///     On entry, the value scale in the equation above.
+///     On exit, scale is overwritten with the value scl.
+///
+/// @param[in,out] sumsq
+///     On entry, the value sumsq in the equation above.
+///     On exit, sumsq is overwritten with the value ssq.
+///
+/// @ingroup auxiliary
 void lassq(
     int64_t n,
-    std::complex<double> const* X, int64_t incx,
+    std::complex<double> const* x, int64_t incx,
     double* scale,
     double* sumsq )
 {
@@ -78,7 +122,7 @@ void lassq(
     blas_int n_ = (blas_int) n;
     blas_int incx_ = (blas_int) incx;
 
-    LAPACK_zlassq( &n_, X, &incx_, scale, sumsq );
+    LAPACK_zlassq( &n_, x, &incx_, scale, sumsq );
 }
 
 }  // namespace lapack

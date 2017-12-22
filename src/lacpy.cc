@@ -10,6 +10,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup initialize
 void lacpy(
     lapack::MatrixType matrixtype, int64_t m, int64_t n,
     float const* A, int64_t lda,
@@ -32,6 +33,7 @@ void lacpy(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup initialize
 void lacpy(
     lapack::MatrixType matrixtype, int64_t m, int64_t n,
     double const* A, int64_t lda,
@@ -54,6 +56,7 @@ void lacpy(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup initialize
 void lacpy(
     lapack::MatrixType matrixtype, int64_t m, int64_t n,
     std::complex<float> const* A, int64_t lda,
@@ -76,6 +79,41 @@ void lacpy(
 }
 
 // -----------------------------------------------------------------------------
+/// Copies all or part of a two-dimensional matrix A to another
+/// matrix B.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] matrixtype
+///     Specifies the part of the matrix A to be copied to B.
+///     - lapack::MatrixType::Upper: Upper triangular part
+///     - lapack::MatrixType::Lower: Lower triangular part
+///     - lapack::MatrixType::General: All of the matrix A
+///
+/// @param[in] m
+///     The number of rows of the matrix A. m >= 0.
+///
+/// @param[in] n
+///     The number of columns of the matrix A. n >= 0.
+///
+/// @param[in] A
+///     The m-by-n matrix A, stored in an lda-by-n array.
+///     The m-by-n matrix A.
+///     - If matrixtype = Upper, only the upper trapezium is accessed;
+///     - if matrixtype = Lower, only the lower trapezium is accessed.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,m).
+///
+/// @param[out] B
+///     The m-by-n matrix B, stored in an ldb-by-n array.
+///     On exit, \f$ B = A \f$ in the locations specified by matrixtype.
+///
+/// @param[in] ldb
+///     The leading dimension of the array B. ldb >= max(1,m).
+///
+/// @ingroup initialize
 void lacpy(
     lapack::MatrixType matrixtype, int64_t m, int64_t n,
     std::complex<double> const* A, int64_t lda,

@@ -10,6 +10,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup gesv_computational
 void laswp(
     int64_t n,
     float* A, int64_t lda, int64_t k1, int64_t k2,
@@ -40,6 +41,7 @@ void laswp(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup gesv_computational
 void laswp(
     int64_t n,
     double* A, int64_t lda, int64_t k1, int64_t k2,
@@ -70,6 +72,7 @@ void laswp(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup gesv_computational
 void laswp(
     int64_t n,
     std::complex<float>* A, int64_t lda, int64_t k1, int64_t k2,
@@ -100,6 +103,45 @@ void laswp(
 }
 
 // -----------------------------------------------------------------------------
+/// Performs a series of row interchanges on the matrix A.
+/// One row interchange is initiated for each of rows k1 through k2 of A.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] n
+///     The number of columns of the matrix A.
+///
+/// @param[in,out] A
+///     The m-by-n matrix A, stored in an lda-by-n array.
+///     On entry, the matrix of column dimension n to which the row
+///     interchanges will be applied.
+///     On exit, the permuted matrix.
+///     Note that the number of rows, m, is implicit in ipiv; m <= lda.
+///
+/// @param[in] lda
+///     The leading dimension of the array A.
+///
+/// @param[in] k1
+///     The first element of ipiv for which a row interchange will
+///     be done.
+///
+/// @param[in] k2
+///     (k2-k1+1) is the number of elements of ipiv for which a row
+///     interchange will be done.
+///
+/// @param[in] ipiv
+///     The vector ipiv of length k1+(k2-k1)*abs(incx).
+///     The vector of pivot indices. Only the elements in positions
+///     k1 through k1+(k2-k1)*abs(incx) of ipiv are accessed.
+///     ipiv(k1+(\f$ K- \f$k1)*abs(incx)) = L implies rows K and L are to be
+///     interchanged.
+///
+/// @param[in] incx
+///     The increment between successive values of ipiv. If incx
+///     is negative, the pivots are applied in reverse order.
+///
+/// @ingroup gesv_computational
 void laswp(
     int64_t n,
     std::complex<double>* A, int64_t lda, int64_t k1, int64_t k2,

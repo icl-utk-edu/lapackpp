@@ -10,6 +10,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup posv_computational
 int64_t lauum(
     lapack::Uplo uplo, int64_t n,
     float* A, int64_t lda )
@@ -32,6 +33,7 @@ int64_t lauum(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup posv_computational
 int64_t lauum(
     lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda )
@@ -54,6 +56,7 @@ int64_t lauum(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup posv_computational
 int64_t lauum(
     lapack::Uplo uplo, int64_t n,
     std::complex<float>* A, int64_t lda )
@@ -76,6 +79,45 @@ int64_t lauum(
 }
 
 // -----------------------------------------------------------------------------
+/// Computes the product \f$ U U^H \f$ or \f$ L^H L, \f$ where the triangular
+/// factor U or L is stored in the upper or lower triangular part of
+/// the array A.
+///
+/// If uplo = Upper then the upper triangle of the result is stored,
+/// overwriting the factor U in A.
+///
+/// If uplo = Lower then the lower triangle of the result is stored,
+/// overwriting the factor L in A.
+///
+/// This is the blocked form of the algorithm, calling Level 3 BLAS.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @param[in] uplo
+///     Whether the triangular factor stored in the array A
+///     is upper or lower triangular:
+///     - lapack::Uplo::Upper: Upper triangular
+///     - lapack::Uplo::Lower: Lower triangular
+///
+/// @param[in] n
+///     The order of the triangular factor U or L. n >= 0.
+///
+/// @param[in,out] A
+///     The n-by-n matrix A, stored in an lda-by-n array.
+///     On entry, the triangular factor U or L.
+///     On exit,
+///     - if uplo = Upper, the upper triangle of A is
+///     overwritten with the upper triangle of the product \f$ U U^H \f$;
+///     - if uplo = Lower, the lower triangle of A is overwritten with
+///     the lower triangle of the product \f$ L^H L \f$.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,n).
+///
+/// @retval = 0: successful exit
+///
+/// @ingroup posv_computational
 int64_t lauum(
     lapack::Uplo uplo, int64_t n,
     std::complex<double>* A, int64_t lda )

@@ -10,9 +10,10 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup auxiliary
 void lacgv(
     int64_t n,
-    std::complex<float>* X, int64_t incx )
+    std::complex<float>* x, int64_t incx )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -22,13 +23,32 @@ void lacgv(
     blas_int n_ = (blas_int) n;
     blas_int incx_ = (blas_int) incx;
 
-    LAPACK_clacgv( &n_, X, &incx_ );
+    LAPACK_clacgv( &n_, x, &incx_ );
 }
 
 // -----------------------------------------------------------------------------
+/// Conjugates a complex vector of length n.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+/// Real precisions are dummy inline functions that do nothing,
+/// to facilitate templating.
+///
+/// @param[in] n
+///     The length of the vector x. n >= 0.
+///
+/// @param[in,out] x
+///     The vector x of length n, stored in an array of length 1+(n-1)*abs(incx).
+///     On entry, the vector of length n to be conjugated.
+///     On exit, x is overwritten with conj(x).
+///
+/// @param[in] incx
+///     The spacing between successive elements of x.
+///
+/// @ingroup auxiliary
 void lacgv(
     int64_t n,
-    std::complex<double>* X, int64_t incx )
+    std::complex<double>* x, int64_t incx )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -38,7 +58,7 @@ void lacgv(
     blas_int n_ = (blas_int) n;
     blas_int incx_ = (blas_int) incx;
 
-    LAPACK_zlacgv( &n_, X, &incx_ );
+    LAPACK_zlacgv( &n_, x, &incx_ );
 }
 
 }  // namespace lapack

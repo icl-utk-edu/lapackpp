@@ -3550,6 +3550,17 @@ int64_t hseqr(
     std::complex<double>* Z, int64_t ldz );
 
 // -----------------------------------------------------------------------------
+// real types have no-op dummy inline functions, to facilitate templating
+inline void lacgv(
+    int64_t n,
+    float* X, int64_t incx )
+{}
+
+inline void lacgv(
+    int64_t n,
+    double* X, int64_t incx )
+{}
+
 void lacgv(
     int64_t n,
     std::complex<float>* X, int64_t incx );
@@ -4215,19 +4226,23 @@ int64_t lascl(
 
 // -----------------------------------------------------------------------------
 void laset(
-    lapack::MatrixType matrixtype, int64_t m, int64_t n, float alpha, float beta,
+    lapack::MatrixType matrixtype, int64_t m, int64_t n,
+    float offdiag, float diag,
     float* A, int64_t lda );
 
 void laset(
-    lapack::MatrixType matrixtype, int64_t m, int64_t n, double alpha, double beta,
+    lapack::MatrixType matrixtype, int64_t m, int64_t n,
+    double offdiag, double diag,
     double* A, int64_t lda );
 
 void laset(
-    lapack::MatrixType matrixtype, int64_t m, int64_t n, std::complex<float> alpha, std::complex<float> beta,
+    lapack::MatrixType matrixtype, int64_t m, int64_t n,
+    std::complex<float> offdiag, std::complex<float> diag,
     std::complex<float>* A, int64_t lda );
 
 void laset(
-    lapack::MatrixType matrixtype, int64_t m, int64_t n, std::complex<double> alpha, std::complex<double> beta,
+    lapack::MatrixType matrixtype, int64_t m, int64_t n,
+    std::complex<double> offdiag, std::complex<double> diag,
     std::complex<double>* A, int64_t lda );
 
 // -----------------------------------------------------------------------------

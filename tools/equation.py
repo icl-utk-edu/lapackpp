@@ -115,6 +115,7 @@ def process( arg ):
                 if (s):
                     line2 += s.group(1)
                     (eqn, line) = equation( s.group(2) )
+                    eqn = re.sub( r'(\\f\$)([.,;:])', r'\2\1', eqn )
                     line2 += eqn
                 else:
                     break

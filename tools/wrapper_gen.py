@@ -849,6 +849,17 @@ enums = {
         'c': ('Columnwise', 'lapack::StoreV::Columnwise'),
         'r': ('Rowwise',    'lapack::StoreV::Rowwise'   ),
     },
+
+    # lascl, laset
+    'type': {
+        'g': ('General',    'lapack::MatrixType::General'   ),
+        'l': ('Lower',      'lapack::MatrixType::Lower'     ),
+        'u': ('Upper',      'lapack::MatrixType::Upper'     ),
+        'h': ('Hessenberg', 'lapack::MatrixType::Hessenberg'),
+        'b': ('LowerBand',  'lapack::MatrixType::LowerBand' ),
+        'q': ('UpperBand',  'lapack::MatrixType::UpperBand' ),
+        'z': ('Band',       'lapack::MatrixType::Band'      ),
+    },
 }
 
 enum_override = {

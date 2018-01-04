@@ -36,6 +36,7 @@ group_size.add_argument(       '--dim',    action='store',      help='explicitly
 group_cat = parser.add_argument_group( 'category (default is all)' )
 categories = [
     group_cat.add_argument( '--lu',            action='store_true', help='run LU tests' ),
+    group_cat.add_argument( '--gb',            action='store_true', help='run GB tests' ),
     group_cat.add_argument( '--chol',          action='store_true', help='run Cholesky tests' ),
     group_cat.add_argument( '--sysv',          action='store_true', help='run symmetric indefinite (Bunch-Kaufman) tests' ),
     group_cat.add_argument( '--rook',          action='store_true', help='run symmetric indefinite (rook) tests' ),
@@ -222,6 +223,17 @@ if (opts.lu):
     [ 'gecon', check + dtype + align + n ],
     [ 'gerfs', check + dtype + align + n + trans ],
     [ 'geequ', check + dtype + align + n ],
+    ]
+
+# General Banded 
+if (opts.gb):
+    cmds += [
+    [ 'gbsv',  check + dtype + align + n + kl + ku ],
+    [ 'gbtrf', check + dtype + align + n + kl + ku ],
+    [ 'gbtrs', check + dtype + align + n + kl + ku + trans ],
+    [ 'gbcon', check + dtype + align + n + kl + ku ],
+    [ 'gbrfs', check + dtype + align + n + kl + ku + trans ],
+    [ 'gbequ', check + dtype + align + n + kl + ku ],
     ]
 
 # Cholesky

@@ -76,7 +76,7 @@ void test_gbcon_work( Params& params, bool run )
 
     int64_t info = lapack::gbtrf( n, n, kl, ku, &AB[0], ldab, &ipiv_tst[0] );
     if (info != 0) {
-        fprintf( stderr, "lapack::gbtrf returned error &lld\n", (lld) info );
+        fprintf( stderr, "lapack::gbtrf returned error %lld\n", (lld) info );
     }
     
     std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );

@@ -65,7 +65,7 @@ std::vector< libtest::routines_t > routines = {
     // LU
     { "gesv",               test_gesv,      Section::gesv },
     { "gbsv",               test_gbsv,      Section::gesv },
-  //{ "gtsv",               test_gtsv,      Section::gesv },
+    { "gtsv",               test_gtsv,      Section::gesv },
     { "",                   nullptr,        Section::newline },
 
   //{ "gesvx",              test_gesvx,     Section::gesv },
@@ -75,12 +75,12 @@ std::vector< libtest::routines_t > routines = {
 
     { "getrf",              test_getrf,     Section::gesv },
     { "gbtrf",              test_gbtrf,     Section::gesv },
-  //{ "gttrf",              test_gttrf,     Section::gesv },
+    { "gttrf",              test_gttrf,     Section::gesv },
     { "",                   nullptr,        Section::newline },
 
     { "getrs",              test_getrs,     Section::gesv },
     { "gbtrs",              test_gbtrs,     Section::gesv },
-  //{ "gttrs",              test_gttrs,     Section::gesv },
+    { "gttrs",              test_gttrs,     Section::gesv },
     { "",                   nullptr,        Section::newline },
 
     { "getri",              test_getri,     Section::gesv },    // lawn 41 test
@@ -88,17 +88,16 @@ std::vector< libtest::routines_t > routines = {
 
     { "gecon",              test_gecon,     Section::gesv },
     { "gbcon",              test_gbcon,     Section::gesv },
-  //{ "gtcon",              test_gtcon,     Section::gesv },
+    { "gtcon",              test_gtcon,     Section::gesv },
     { "",                   nullptr,        Section::newline },
 
     { "gerfs",              test_gerfs,     Section::gesv },
     { "gbrfs",              test_gbrfs,     Section::gesv },
-  //{ "gtrfs",              test_gtrfs,     Section::gesv },
+    { "gtrfs",              test_gtrfs,     Section::gesv },
     { "",                   nullptr,        Section::newline },
 
     { "geequ",              test_geequ,     Section::gesv },
     { "gbequ",              test_gbequ,     Section::gesv },
-  //{ "gtequ",              test_gtequ,     Section::gesv },
     { "",                   nullptr,        Section::newline },
 
     // -----

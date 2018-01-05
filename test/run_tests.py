@@ -37,6 +37,7 @@ group_cat = parser.add_argument_group( 'category (default is all)' )
 categories = [
     group_cat.add_argument( '--lu',            action='store_true', help='run LU tests' ),
     group_cat.add_argument( '--gb',            action='store_true', help='run GB tests' ),
+    group_cat.add_argument( '--gt',            action='store_true', help='run GT tests' ),
     group_cat.add_argument( '--chol',          action='store_true', help='run Cholesky tests' ),
     group_cat.add_argument( '--sysv',          action='store_true', help='run symmetric indefinite (Bunch-Kaufman) tests' ),
     group_cat.add_argument( '--rook',          action='store_true', help='run symmetric indefinite (rook) tests' ),
@@ -234,6 +235,16 @@ if (opts.gb):
     [ 'gbcon', check + dtype + align + n + kl + ku ],
     [ 'gbrfs', check + dtype + align + n + kl + ku + trans ],
     [ 'gbequ', check + dtype + align + n + kl + ku ],
+    ]
+
+# General Tri-Diagonal 
+if (opts.gt):
+    cmds += [
+    [ 'gtsv',  check + dtype + align + n ],
+    [ 'gttrf', check + dtype + align + n ],
+    [ 'gttrs', check + dtype + align + n + trans ],
+    [ 'gtcon', check + dtype + align + n ],
+    [ 'gtrfs', check + dtype + align + n + trans ],
     ]
 
 # Cholesky

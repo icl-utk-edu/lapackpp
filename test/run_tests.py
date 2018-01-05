@@ -258,7 +258,6 @@ if (opts.chol):
     [ 'pbsv',  check + dtype + align + n + kd + uplo ],
     [ 'pbtrf', check + dtype + align + n + kd + uplo ],
     [ 'pbtrs', check + dtype + align + n + kd + uplo ],
-    [ 'pbtri', check + dtype + align + n + kd + uplo ],
     [ 'pbcon', check + dtype + align + n + kd + uplo ],
     [ 'pbrfs', check + dtype + align + n + kd + uplo ],
     [ 'pbequ', check + dtype + align + n + kd + uplo ],

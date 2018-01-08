@@ -241,9 +241,9 @@ if (opts.gb):
 if (opts.gt):
     cmds += [
     [ 'gtsv',  check + dtype + align + n ],
-    [ 'gttrf', check + dtype + align + n ],
+    [ 'gttrf', check + dtype +         n ],
     [ 'gttrs', check + dtype + align + n + trans ],
-    [ 'gtcon', check + dtype + align + n ],
+    [ 'gtcon', check + dtype +         n ],
     [ 'gtrfs', check + dtype + align + n + trans ],
     ]
 

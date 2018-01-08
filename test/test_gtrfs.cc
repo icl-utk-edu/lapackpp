@@ -102,7 +102,7 @@ void test_gtrfs_work( Params& params, bool run )
     X_ref = X_tst;
 
     // condition to be diagonally dominate
-    for( int64_t i = 0; i < size_D; ++i) {
+    for (int64_t i = 0; i < n; ++i) {
         D[i] += 4;
     }
 

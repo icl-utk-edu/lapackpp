@@ -43,7 +43,6 @@ void test_gttrf_work( Params& params, bool run )
 
     // get & mark input values
     int64_t n = params.dim.n();
-    int64_t align = params.align.value();
 
     // mark non-standard output values
     params.ref_time.value();

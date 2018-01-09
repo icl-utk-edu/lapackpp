@@ -94,10 +94,9 @@ void test_sytri_work( Params& params, bool run )
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, A_tst.size(), &A_tst[0] );
-    // todo: initialize ipiv_tst and ipiv_ref
     A_ref = A_tst;
 
-    // ---------- factor before test
+    // ---------- factor before test to initialize ipiv
     int64_t info = lapack::sytrf( uplo, n, &A_tst[0], lda, &ipiv_tst[0] );
     if (info != 0) {
         fprintf( stderr, "lapack::sytrf returned error %lld\n", (lld) info );

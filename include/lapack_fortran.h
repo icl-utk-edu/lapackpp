@@ -4851,7 +4851,7 @@ void LAPACK_dbdsdc(
 void LAPACK_sbdsvdx(
     char const* uplo, char const* jobz, char const* range,
     lapack_int const* n,
-    float* d, float* e,
+    float const* d, float const* e,
     float const* vl, float const* vu,
     lapack_int const* il, lapack_int const* iu,
     lapack_int* nfound,
@@ -4863,7 +4863,7 @@ void LAPACK_sbdsvdx(
 void LAPACK_dbdsvdx(
     char const* uplo, char const* jobz, char const* range,
     lapack_int const* n,
-    double* d, double* e,
+    double const* d, double const* e,
     double const* vl, double const* vu,
     lapack_int const* il, lapack_int const* iu,
     lapack_int* nfound,

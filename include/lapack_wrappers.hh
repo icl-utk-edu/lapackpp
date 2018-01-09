@@ -129,17 +129,17 @@ int64_t bdsqr(
 // -----------------------------------------------------------------------------
 int64_t bdsvdx(
     lapack::Uplo uplo, lapack::Job jobz, lapack::Range range, int64_t n,
-    float* D,
-    float* E, float vl, float vu, int64_t il, int64_t iu,
-    int64_t* ns,
+    float const* D,
+    float const* E, float vl, float vu, int64_t il, int64_t iu,
+    int64_t* nfound,
     float* S,
     float* Z, int64_t ldz );
 
 int64_t bdsvdx(
     lapack::Uplo uplo, lapack::Job jobz, lapack::Range range, int64_t n,
-    double* D,
-    double* E, double vl, double vu, int64_t il, int64_t iu,
-    int64_t* ns,
+    double const* D,
+    double const* E, double vl, double vu, int64_t il, int64_t iu,
+    int64_t* nfound,
     double* S,
     double* Z, int64_t ldz );
 
@@ -2201,7 +2201,7 @@ int64_t ggrqf(
 
 // -----------------------------------------------------------------------------
 int64_t ggsvd3(
-    lapack::Job jobu, lapack::Job jobv, lapack::JobQ jobq, int64_t m, int64_t n, int64_t p,
+    lapack::JobU jobu, lapack::JobV jobv, lapack::JobQ jobq, int64_t m, int64_t n, int64_t p,
     int64_t* k,
     int64_t* l,
     float* A, int64_t lda,
@@ -2213,7 +2213,7 @@ int64_t ggsvd3(
     float* Q, int64_t ldq );
 
 int64_t ggsvd3(
-    lapack::Job jobu, lapack::Job jobv, lapack::JobQ jobq, int64_t m, int64_t n, int64_t p,
+    lapack::JobU jobu, lapack::JobV jobv, lapack::JobQ jobq, int64_t m, int64_t n, int64_t p,
     int64_t* k,
     int64_t* l,
     double* A, int64_t lda,
@@ -2225,7 +2225,7 @@ int64_t ggsvd3(
     double* Q, int64_t ldq );
 
 int64_t ggsvd3(
-    lapack::Job jobu, lapack::Job jobv, lapack::JobQ jobq, int64_t m, int64_t n, int64_t p,
+    lapack::JobU jobu, lapack::JobV jobv, lapack::JobQ jobq, int64_t m, int64_t n, int64_t p,
     int64_t* k,
     int64_t* l,
     std::complex<float>* A, int64_t lda,
@@ -2237,7 +2237,7 @@ int64_t ggsvd3(
     std::complex<float>* Q, int64_t ldq );
 
 int64_t ggsvd3(
-    lapack::Job jobu, lapack::Job jobv, lapack::JobQ jobq, int64_t m, int64_t n, int64_t p,
+    lapack::JobU jobu, lapack::JobV jobv, lapack::JobQ jobq, int64_t m, int64_t n, int64_t p,
     int64_t* k,
     int64_t* l,
     std::complex<double>* A, int64_t lda,

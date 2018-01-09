@@ -1,3 +1,4 @@
+#include "lapack_fortran.h"
 #include "test.hh"
 #include "lapack.hh"
 #include "lapack_flops.hh"

@@ -42,7 +42,7 @@ int64_t sytrs_aa(
     blas_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (max(1,lwork)) );
+    std::vector< float > work( (max(1,lwork_)) );
 
     LAPACK_ssytrs_aa( &uplo_, &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
@@ -82,7 +82,7 @@ int64_t sytrs_aa(
     blas_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (max(1,lwork)) );
+    std::vector< double > work( (max(1,lwork_)) );
 
     LAPACK_dsytrs_aa( &uplo_, &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
@@ -122,7 +122,7 @@ int64_t sytrs_aa(
     blas_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<float> > work( (max(1,lwork)) );
+    std::vector< std::complex<float> > work( (max(1,lwork_)) );
 
     LAPACK_csytrs_aa( &uplo_, &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
@@ -205,7 +205,7 @@ int64_t sytrs_aa(
     blas_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (max(1,lwork)) );
+    std::vector< std::complex<double> > work( (max(1,lwork_)) );
 
     LAPACK_zsytrs_aa( &uplo_, &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {

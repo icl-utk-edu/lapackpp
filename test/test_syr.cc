@@ -4,6 +4,7 @@
 
 #include <omp.h>
 
+#include "lapack_fortran.h"
 #include "test.hh"
 #include "cblas.hh"
 #include "lapack.hh"

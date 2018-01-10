@@ -401,7 +401,7 @@ if (opts.syev):
     [ 'hpevd',  check + dtype + align + n + uplo + jobz ],
 #    [ 'hpevr', check + dtype + align + n + uplo + jobz ],
     [ 'hptrd', check + dtype + n + uplo ],
-#    [ 'upgtr', check + dtype + align + n + uplo ],
+    [ 'upgtr', check + dtype + align + n + uplo ],
 #    [ 'upmtr', check + dtype + align + n + uplo ],
 
     [ 'hbev',  check + dtype + align + n + uplo + jobz ],

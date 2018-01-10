@@ -280,9 +280,9 @@ std::vector< libtest::routines_t > routines = {
   //{ "hbtrd",              test_hbtrd,     Section::heev },
     { "",                   nullptr,        Section::newline },
 
-    { "ungtr",              test_ungtr,     Section::heev },
-  //{ "upgtr",              test_upgtr,     Section::heev },
-  //{ "obgtr",              test_obgtr,     Section::heev }, // does this exist
+    { "ungtr",              test_ungtr,     Section::heev }, // tested via LAPACKE using gcc/MKL
+    { "upgtr",              test_upgtr,     Section::heev }, // tested via LAPACKE using gcc/MKL
+  //{ "obgtr",              test_obgtr,     Section::heev }, // TODO does this exist
     { "",                   nullptr,        Section::newline },
 
   //{ "unmtr",              test_unmtr,     Section::heev },

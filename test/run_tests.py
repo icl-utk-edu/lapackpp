@@ -390,7 +390,7 @@ if (opts.syev):
     cmds += [
     [ 'heev',  check + dtype + align + n + uplo ],
 #    [ 'heevx',  check + dtype + align + n + uplo ],
-#    [ 'heevd', check + dtype + align + n + uplo ],
+    [ 'heevd', check + dtype + align + n + uplo ],
 #    [ 'heevr', check + dtype + align + n + uplo ],
 #    [ 'hetrd', check + dtype + align + n + uplo ],
 #    [ 'ungtr', check + dtype + align + n + uplo ],

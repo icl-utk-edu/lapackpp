@@ -265,7 +265,7 @@ std::vector< libtest::routines_t > routines = {
   //{ "hbevx",              test_hbevx,     Section::heev },
     { "",                   nullptr,        Section::newline },
 
-  //{ "heevd",              test_heevd,     Section::heev },
+    { "heevd",              test_heevd,     Section::heev },
   //{ "hpevd",              test_hpevd,     Section::heev },
   //{ "hbevd",              test_hbevd,     Section::heev },
     { "",                   nullptr,        Section::newline },

@@ -352,9 +352,9 @@ if (opts.least_squares):
 if (opts.qr):
     cmds += [
     [ 'geqrf', check + dtype + align + n + wide + tall ],
-#    [ 'ggqrf', check + dtype + align + mn ],
+    [ 'ggqrf', check + dtype + align + mnk ],
     [ 'ungqr', check + dtype + align + mn ], # n<=m
-#    [ 'unmqr', check + dtype + align + mnk + side + trans ],
+#    [ 'unmqr', check + dtype + align + mnk + side + trans_nc ],
     ]
 
 # LQ
@@ -379,8 +379,8 @@ if (opts.ql):
 if (opts.rq):
     cmds += [
     [ 'gerqf', check + dtype + align + mn ],
-#    [ 'ggrqf', check + dtype + align + mn ],
-    [ 'ungrq', check + dtype + align + mn ],
+    [ 'ggrqf', check + dtype + align + mnk ],
+    [ 'ungrq', check + dtype + align + mnk ],
 #    [ 'unmrq', check + dtype + align + mn ],
     ]
 

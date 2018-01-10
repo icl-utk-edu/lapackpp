@@ -235,16 +235,16 @@ std::vector< libtest::routines_t > routines = {
     { "gerqf",              test_gerqf,     Section::qr }, // tested numerically; R, Q are full sizeof(A), could be smaller
     { "",                   nullptr,        Section::newline },
 
-  //{ "ggqrf",              test_ggqrf,     Section::qr },
+    { "ggqrf",              test_ggqrf,     Section::qr }, // tested via LAPACKE using gcc/MKL, TODO for now use p=param.k
   //{ "gglqf",              test_gglqf,     Section::qr },
   //{ "ggqlf",              test_ggqlf,     Section::qr },
-  //{ "ggrqf",              test_ggrqf,     Section::qr },
+    { "ggrqf",              test_ggrqf,     Section::qr }, // tested via LAPACKE using gcc/MKL, TODO for now use p=param.k
     { "",                   nullptr,        Section::newline },
 
     { "ungqr",              test_ungqr,     Section::qr }, // tested numerically based on lapack; R, Q full sizes
     { "unglq",              test_unglq,     Section::qr }, // tested numerically based on lapack; R, Q full; m<=n, k<=m
     { "ungql",              test_ungql,     Section::qr }, // tested numerically based on lapack; R, Q full sizes
-    { "ungrq",              test_ungrq,     Section::qr },
+    { "ungrq",              test_ungrq,     Section::qr }, // tested numerically based on lapack; R, Q full sizes
     { "",                   nullptr,        Section::newline },
 
   //{ "unmqr",              test_unmqr,     Section::qr },

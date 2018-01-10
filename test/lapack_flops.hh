@@ -412,6 +412,9 @@ public:
 
     static double unmqr(lapack::Side side, double m, double n, double k)
         { return 1e-9 * (6*fmuls_unmqr(side, m, n, k) + 2*fadds_unmqr(side, m, n, k)); }
+
+    static double hetrd(double n)
+        { return 1e-9 * (6*fmuls_hetrd(n) + 2*fadds_hetrd(n)); }
 };
 
 //==============================================================================

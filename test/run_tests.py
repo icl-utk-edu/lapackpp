@@ -392,15 +392,15 @@ if (opts.syev):
 #    [ 'heevx',  check + dtype + align + n + uplo ],
     [ 'heevd', check + dtype + align + n + uplo + jobz ],
 #    [ 'heevr', check + dtype + align + n + uplo + jobz ],
-#    [ 'hetrd', check + dtype + align + n + uplo + jobz ],
-#    [ 'ungtr', check + dtype + align + n + uplo ],
+    [ 'hetrd', check + dtype + align + n + uplo ],
+    [ 'ungtr', check + dtype + align + n + uplo ],
 #    [ 'unmtr', check + dtype + align + n + uplo ],
 
     [ 'hpev',  check + dtype + align + n + uplo + jobz ],
 #    [ 'hpevx',  check + dtype + align + n + uplo + jobz ],
     [ 'hpevd',  check + dtype + align + n + uplo + jobz ],
 #    [ 'hpevr', check + dtype + align + n + uplo + jobz ],
-#    [ 'hptrd', check + dtype + align + n + uplo + jobz ],
+    [ 'hptrd', check + dtype + n + uplo ],
 #    [ 'upgtr', check + dtype + align + n + uplo ],
 #    [ 'upmtr', check + dtype + align + n + uplo ],
 
@@ -408,7 +408,7 @@ if (opts.syev):
 #    [ 'hbevx',  check + dtype + align + n + uplo + jobz ],
     [ 'hbevd',  check + dtype + align + n + uplo + jobz ],
 #    [ 'hbevr', check + dtype + align + n + uplo + jobz ],
-#    [ 'hbtrd', check + dtype + align + n + uplo + jobz ],
+#    [ 'hbtrd', check + dtype + align + n + uplo ],
 #    [ 'obgtr', check + dtype + align + n + uplo ],
 #    [ 'obmtr', check + dtype + align + n + uplo ],
     ]

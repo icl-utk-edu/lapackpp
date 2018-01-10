@@ -265,9 +265,9 @@ std::vector< libtest::routines_t > routines = {
   //{ "hbevx",              test_hbevx,     Section::heev },
     { "",                   nullptr,        Section::newline },
 
-    { "heevd",              test_heevd,     Section::heev },
-    { "hpevd",              test_hpevd,     Section::heev },
-    { "hbevd",              test_hbevd,     Section::heev },
+    { "heevd",              test_heevd,     Section::heev }, // tested via LAPACKE using gcc/MKL
+    { "hpevd",              test_hpevd,     Section::heev }, // tested via LAPACKE using gcc/MKL
+    { "hbevd",              test_hbevd,     Section::heev }, // tested via LAPACKE using gcc/MKL
     { "",                   nullptr,        Section::newline },
 
   //{ "heevr",              test_heevr,     Section::heev },
@@ -275,12 +275,12 @@ std::vector< libtest::routines_t > routines = {
   //{ "hbevr",              test_hbevr,     Section::heev },
     { "",                   nullptr,        Section::newline },
 
-  //{ "hetrd",              test_hetrd,     Section::heev },
-  //{ "hptrd",              test_hptrd,     Section::heev },
+    { "hetrd",              test_hetrd,     Section::heev }, // tested via LAPACKE using gcc/MKL
+    { "hptrd",              test_hptrd,     Section::heev }, // tested via LAPACKE using gcc/MKL
   //{ "hbtrd",              test_hbtrd,     Section::heev },
     { "",                   nullptr,        Section::newline },
 
-  //{ "ungtr",              test_ungtr,     Section::heev },
+    { "ungtr",              test_ungtr,     Section::heev },
   //{ "upgtr",              test_upgtr,     Section::heev },
   //{ "obgtr",              test_obgtr,     Section::heev }, // does this exist
     { "",                   nullptr,        Section::newline },

@@ -339,14 +339,14 @@ if (opts.hesv):
     ]
 
 # least squares
-#if (opts.least_squares):
-#    cmds += [
-#    [ 'gels',   check + dtype + align + mn ],
-#    [ 'gelsy',  check + dtype + align + mn ],
+if (opts.least_squares):
+    cmds += [
+    [ 'gels',   check + dtype + align + mn + trans ],
+    [ 'gelsy',  check + dtype + align + mn ],
 #    [ 'gelsd',  check + dtype + align + mn ],
-#    [ 'gelss',  check + dtype + align + mn ],
-#    [ 'getsls', check + dtype + align + mn ],
-#    ]
+    [ 'gelss',  check + dtype + align + mn ],
+    [ 'getsls', check + dtype + align + mn + trans ],
+    ]
 
 # QR
 if (opts.qr):

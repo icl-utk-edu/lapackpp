@@ -216,11 +216,11 @@ std::vector< libtest::routines_t > routines = {
 
     // -----
     // least squares
-  //{ "gels",               test_gels,      Section::gels },
-  //{ "gelsy",              test_gelsy,     Section::gels },
+    { "gels",               test_gels,      Section::gels }, // tested via LAPACKE using gcc/MKL
+    { "gelsy",              test_gelsy,     Section::gels }, // tested via LAPACKE using gcc/MKL FIXME jpvt[i]=i rcond=0
   //{ "gelsd",              test_gelsd,     Section::gels },
-  //{ "gelss",              test_gelss,     Section::gels },
-  //{ "getsls",             test_getsls,    Section::gels },
+    { "gelss",              test_gelss,     Section::gels }, // tested via LAPACKE using gcc/MKL FIXME rcond=n
+    { "getsls",             test_getsls,    Section::gels }, // tested via LAPACKE using gcc/MKL
     { "",                   nullptr,        Section::newline },
 
   //{ "gglse",              test_gglse,     Section::gels },

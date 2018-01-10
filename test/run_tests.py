@@ -388,17 +388,29 @@ if (opts.rq):
 # todo: add jobs
 if (opts.syev):
     cmds += [
-    [ 'heev',  check + dtype + align + n + uplo ],
+    [ 'heev',  check + dtype + align + n + uplo + jobz ],
 #    [ 'heevx',  check + dtype + align + n + uplo ],
-    [ 'heevd', check + dtype + align + n + uplo ],
-#    [ 'heevr', check + dtype + align + n + uplo ],
-#    [ 'hetrd', check + dtype + align + n + uplo ],
+    [ 'heevd', check + dtype + align + n + uplo + jobz ],
+#    [ 'heevr', check + dtype + align + n + uplo + jobz ],
+#    [ 'hetrd', check + dtype + align + n + uplo + jobz ],
 #    [ 'ungtr', check + dtype + align + n + uplo ],
 #    [ 'unmtr', check + dtype + align + n + uplo ],
 
-    [ 'hpev',  check + dtype + align + n + uplo ],
+    [ 'hpev',  check + dtype + align + n + uplo + jobz ],
+#    [ 'hpevx',  check + dtype + align + n + uplo + jobz ],
+    [ 'hpevd',  check + dtype + align + n + uplo + jobz ],
+#    [ 'hpevr', check + dtype + align + n + uplo + jobz ],
+#    [ 'hptrd', check + dtype + align + n + uplo + jobz ],
+#    [ 'upgtr', check + dtype + align + n + uplo ],
+#    [ 'upmtr', check + dtype + align + n + uplo ],
 
-    [ 'hbev',  check + dtype + align + n + uplo ],
+    [ 'hbev',  check + dtype + align + n + uplo + jobz ],
+#    [ 'hbevx',  check + dtype + align + n + uplo + jobz ],
+    [ 'hbevd',  check + dtype + align + n + uplo + jobz ],
+#    [ 'hbevr', check + dtype + align + n + uplo + jobz ],
+#    [ 'hbtrd', check + dtype + align + n + uplo + jobz ],
+#    [ 'obgtr', check + dtype + align + n + uplo ],
+#    [ 'obmtr', check + dtype + align + n + uplo ],
     ]
 
 # generalized symmetric eigenvalues

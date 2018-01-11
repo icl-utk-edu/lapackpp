@@ -37,16 +37,18 @@ LAPACK++ is part of the project
 as part of its [Exascale Computing Initiative](https://exascaleproject.org)
 (ECP).
 
-Closely related to LAPACK++ is the
-[BLAS++ project](https://bitbucket.org/icl/blaspp), which aims at providing
-a C++ API for the Basic Linear Algebra Subprograms (BLAS).
+Closely related to LAPACK++ are the
+[BLAS++](https://bitbucket.org/icl/blaspp) and
+[BBLAS++](https://bitbucket.org/icl/bblaspp) projects,
+which aim at providing C++ APIs for the standard BLAS and the batch BLAS, respectively.
 
 * * *
 
 Resources
 =========
 
-* Visit the [BLAS++ repository](https://bitbucket.org/icl/blaspp) for more information about the C++ API for BLAS.
+* Visit the [BLAS++ repository](https://bitbucket.org/icl/blaspp) for more information about the C++ API for the standard BLAS.
+* Visit the [BBLAS++ repository](https://bitbucket.org/icl/bblaspp) for more information about the C++ API for the batch BLAS.
 * Visit the [ECP website](https://exascaleproject.org) to find out more about the DOE Exascale Computing Initiative.
 * Visit the [SLATE website](http://icl.utk.edu/slate/) for more information about the SLATE project.
 * Visit the [SLATE Working Notes](http://www.icl.utk.edu/publications/series/swans) to find out more about ongoing SLATE developments.

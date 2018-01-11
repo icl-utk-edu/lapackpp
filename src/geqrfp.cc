@@ -1,7 +1,7 @@
 #include "lapack.hh"
 #include "lapack_fortran.h"
 
-#if LAPACK_VERSION_MAJOR >= 3 && LAPACK_VERSION_MINOR >= 3  // >= v3.3
+#if LAPACK_VERSION_MAJOR >= 3 && LAPACK_VERSION_MINOR >= 2 && LAPACK_VERSION_MICRO >= 2  // >= v3.2.2
 
 #include <vector>
 
@@ -19,9 +19,9 @@ int64_t geqrfp(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
     }
     blas_int m_ = (blas_int) m;
     blas_int n_ = (blas_int) n;
@@ -55,9 +55,9 @@ int64_t geqrfp(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
     }
     blas_int m_ = (blas_int) m;
     blas_int n_ = (blas_int) n;
@@ -91,9 +91,9 @@ int64_t geqrfp(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
     }
     blas_int m_ = (blas_int) m;
     blas_int n_ = (blas_int) n;
@@ -127,9 +127,9 @@ int64_t geqrfp(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
     }
     blas_int m_ = (blas_int) m;
     blas_int n_ = (blas_int) n;
@@ -157,4 +157,4 @@ int64_t geqrfp(
 
 }  // namespace lapack
 
-#endif  // LAPACK >= v3.3
+#endif  // LAPACK >= v3.2.2

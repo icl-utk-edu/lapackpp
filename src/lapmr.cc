@@ -19,10 +19,10 @@ void lapmr(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(forwrd) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(forwrd) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
     }
     blas_int forwrd_ = (blas_int) forwrd;
     blas_int m_ = (blas_int) m;
@@ -50,10 +50,10 @@ void lapmr(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(forwrd) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(forwrd) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
     }
     blas_int forwrd_ = (blas_int) forwrd;
     blas_int m_ = (blas_int) m;
@@ -81,10 +81,10 @@ void lapmr(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(forwrd) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(forwrd) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
     }
     blas_int forwrd_ = (blas_int) forwrd;
     blas_int m_ = (blas_int) m;
@@ -112,10 +112,10 @@ void lapmr(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(forwrd) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(forwrd) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
     }
     blas_int forwrd_ = (blas_int) forwrd;
     blas_int m_ = (blas_int) m;

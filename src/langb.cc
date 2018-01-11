@@ -17,10 +17,10 @@ float langb(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(kl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ku) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(kl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ku) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
     }
     char norm_ = norm2char( norm );
     blas_int n_ = (blas_int) n;
@@ -45,10 +45,10 @@ double langb(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(kl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ku) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(kl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ku) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
     }
     char norm_ = norm2char( norm );
     blas_int n_ = (blas_int) n;
@@ -73,10 +73,10 @@ float langb(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(kl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ku) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(kl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ku) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
     }
     char norm_ = norm2char( norm );
     blas_int n_ = (blas_int) n;
@@ -135,10 +135,10 @@ double langb(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(kl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ku) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(kl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ku) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
     }
     char norm_ = norm2char( norm );
     blas_int n_ = (blas_int) n;

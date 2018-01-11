@@ -22,9 +22,9 @@ int64_t bdsdc(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldu) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldvt) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldu) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldvt) > std::numeric_limits<blas_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
     char compq_ = compq2char( compq );
@@ -176,9 +176,9 @@ int64_t bdsdc(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldu) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldvt) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldu) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldvt) > std::numeric_limits<blas_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
     char compq_ = compq2char( compq );

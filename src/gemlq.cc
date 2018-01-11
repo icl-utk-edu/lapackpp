@@ -20,12 +20,12 @@ int64_t gemlq(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(k) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(tsize) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldc) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(k) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(tsize) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldc) > std::numeric_limits<blas_int>::max() );
     }
     char side_ = side2char( side );
     char trans_ = op2char( trans );
@@ -65,12 +65,12 @@ int64_t gemlq(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(k) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(tsize) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldc) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(k) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(tsize) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldc) > std::numeric_limits<blas_int>::max() );
     }
     char side_ = side2char( side );
     char trans_ = op2char( trans );
@@ -110,12 +110,12 @@ int64_t gemlq(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(k) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(tsize) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldc) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(k) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(tsize) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldc) > std::numeric_limits<blas_int>::max() );
     }
     char side_ = side2char( side );
     char trans_ = op2char( trans );
@@ -155,12 +155,12 @@ int64_t gemlq(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(k) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(tsize) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldc) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(k) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(tsize) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldc) > std::numeric_limits<blas_int>::max() );
     }
     char side_ = side2char( side );
     char trans_ = op2char( trans );

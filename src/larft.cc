@@ -19,10 +19,10 @@ void larft(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(k) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(k) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
     }
     char direct_ = direct2char( direct );
     char storev_ = storev2char( storev );
@@ -44,10 +44,10 @@ void larft(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(k) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(k) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
     }
     char direct_ = direct2char( direct );
     char storev_ = storev2char( storev );
@@ -69,10 +69,10 @@ void larft(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(k) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(k) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
     }
     char direct_ = direct2char( direct );
     char storev_ = storev2char( storev );
@@ -185,10 +185,10 @@ void larft(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(k) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(k) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
     }
     char direct_ = direct2char( direct );
     char storev_ = storev2char( storev );

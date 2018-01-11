@@ -19,11 +19,11 @@ int64_t hseqr(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldh) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldh) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
     char job_ = jobschur2char( job );
     char compz_ = compq2char( compz );
@@ -71,11 +71,11 @@ int64_t hseqr(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldh) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldh) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
     char job_ = jobschur2char( job );
     char compz_ = compq2char( compz );
@@ -123,11 +123,11 @@ int64_t hseqr(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldh) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldh) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
     char job_ = jobschur2char( job );
     char compz_ = compq2char( compz );
@@ -292,11 +292,11 @@ int64_t hseqr(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldh) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldh) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
     char job_ = jobschur2char( job );
     char compz_ = compq2char( compz );

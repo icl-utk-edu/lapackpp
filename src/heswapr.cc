@@ -1,7 +1,7 @@
 #include "lapack.hh"
 #include "lapack_fortran.h"
 
-#if LAPACK_VERSION_MAJOR >= 3 && LAPACK_VERSION_MINOR >= 3  // >= 3.3
+#if LAPACK_VERSION_MAJOR >= 3 && LAPACK_VERSION_MINOR >= 3 && LAPACK_VERSION_MICRO >= 1  // >= 3.3.1
 
 #include <vector>
 
@@ -19,10 +19,10 @@ void heswapr(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(i1) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(i2) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(i1) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(i2) > std::numeric_limits<blas_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
     blas_int n_ = (blas_int) n;
@@ -71,10 +71,10 @@ void heswapr(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(i1) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(i2) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(i1) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(i2) > std::numeric_limits<blas_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
     blas_int n_ = (blas_int) n;
@@ -87,4 +87,4 @@ void heswapr(
 
 }  // namespace lapack
 
-#endif  // LAPACK >= 3.3.0
+#endif  // LAPACK >= 3.3.1

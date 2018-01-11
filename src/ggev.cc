@@ -22,11 +22,11 @@ int64_t ggev(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
     }
     char jobvl_ = job2char( jobvl );
     char jobvr_ = job2char( jobvr );
@@ -69,11 +69,11 @@ int64_t ggev(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
     }
     char jobvl_ = job2char( jobvl );
     char jobvr_ = job2char( jobvr );
@@ -115,11 +115,11 @@ int64_t ggev(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
     }
     char jobvl_ = job2char( jobvl );
     char jobvr_ = job2char( jobvr );
@@ -163,11 +163,11 @@ int64_t ggev(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
     }
     char jobvl_ = job2char( jobvl );
     char jobvr_ = job2char( jobvr );

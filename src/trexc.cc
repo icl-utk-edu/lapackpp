@@ -19,9 +19,9 @@ int64_t trexc(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
     }
     char compq_ = compq2char( compq );
     blas_int n_ = (blas_int) n;
@@ -53,9 +53,9 @@ int64_t trexc(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
     }
     char compq_ = compq2char( compq );
     blas_int n_ = (blas_int) n;
@@ -85,11 +85,11 @@ int64_t trexc(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ifst) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ilst) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ifst) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ilst) > std::numeric_limits<blas_int>::max() );
     }
     char compq_ = compq2char( compq );
     blas_int n_ = (blas_int) n;
@@ -114,11 +114,11 @@ int64_t trexc(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ifst) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ilst) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ifst) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ilst) > std::numeric_limits<blas_int>::max() );
     }
     char compq_ = compq2char( compq );
     blas_int n_ = (blas_int) n;

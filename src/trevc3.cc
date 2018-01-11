@@ -23,11 +23,11 @@ int64_t trevc3(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(mm) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(mm) > std::numeric_limits<blas_int>::max() );
     }
     char side_ = sides2char( side );
     char howmany_ = howmany2char( howmany );
@@ -81,11 +81,11 @@ int64_t trevc3(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(mm) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(mm) > std::numeric_limits<blas_int>::max() );
     }
     char side_ = sides2char( side );
     char howmany_ = howmany2char( howmany );
@@ -139,11 +139,11 @@ int64_t trevc3(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(mm) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(mm) > std::numeric_limits<blas_int>::max() );
     }
     char side_ = sides2char( side );
     char howmany_ = howmany2char( howmany );
@@ -318,11 +318,11 @@ int64_t trevc3(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(mm) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(mm) > std::numeric_limits<blas_int>::max() );
     }
     char side_ = sides2char( side );
     char howmany_ = howmany2char( howmany );

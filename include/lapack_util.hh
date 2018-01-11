@@ -45,7 +45,7 @@ namespace internal {
 
 // -----------------------------------------------------------------------------
 // internal helper function; throws Error if cond is true
-// called by lapack_throw_if_ macro
+// called by blas_error_if macro
 inline void throw_if( bool cond, const char* condstr, const char* func )
 {
     if (cond) {
@@ -56,7 +56,11 @@ inline void throw_if( bool cond, const char* condstr, const char* func )
 // -----------------------------------------------------------------------------
 // internal helper function; throws Error if cond is true
 // uses printf-style format for error message
-// called by lapack_throw_if_msg_ macro
+// called by lapack_error_if_msg macro
+// condstr is ignored, but differentiates this from other version.
+inline void throw_if( bool cond, const char* condstr, const char* func, const char* format, ... )
+    __attribute__((format( printf, 4, 5 )));
+
 inline void throw_if( bool cond, const char* condstr, const char* func, const char* format, ... )
 {
     if (cond) {
@@ -68,19 +72,64 @@ inline void throw_if( bool cond, const char* condstr, const char* func, const ch
     }
 }
 
+// -----------------------------------------------------------------------------
+// internal helper function; aborts if cond is true
+// uses printf-style format for error message
+// called by lapack_error_if_msg macro
+inline void abort_if( bool cond, const char* func,  const char* format, ... )
+    __attribute__((format( printf, 3, 4 )));
+
+inline void abort_if( bool cond, const char* func,  const char* format, ... )
+{
+    if (cond) {
+        char buf[80];
+        va_list va;
+        va_start( va, format );
+        vsnprintf( buf, sizeof(buf), format, va );
+
+        fprintf( stderr, "Error: %s, in function %s\n", buf, func );
+        abort();
+    }
+}
+
 } // namespace internal
 
-// =============================================================================
-// internal macro to get string #cond; throws Error if cond is true
-// ex: lapack_throw_if_( a < b );
-#define lapack_throw_if_( cond ) \
-    internal::throw_if( cond, #cond, __func__ )
+// -----------------------------------------------------------------------------
+// internal macros to handle error checks
+#if defined(LAPACK_ERROR_NDEBUG) || (defined(LAPACK_ERROR_ASSERT) && defined(NDEBUG))
 
-// internal macro takes cond and printf-style format for error message.
-// throws Error if cond is true.
-// ex: lapack_throw_if_msg_( a < b, "a %d < b %d", a, b );
-#define lapack_throw_if_msg_( cond, ... ) \
-    internal::throw_if( cond, #cond, __func__, __VA_ARGS__ )
+    // lapackpp does no error checking;
+    // lower level LAPACK may still handle errors via xerbla
+    #define lapack_error_if( cond ) \
+        ((void)0)
+
+    #define lapack_error_if_msg( cond, ... ) \
+        ((void)0)
+
+#elif defined(LAPACK_ERROR_ASSERT)
+
+    // lapackpp aborts on error
+    #define lapack_error_if( cond ) \
+        lapack::internal::abort_if( cond, __func__, "%s", #cond )
+
+    #define lapack_error_if_msg( cond, ... ) \
+        lapack::internal::abort_if( cond, __func__, __VA_ARGS__ )
+
+#else
+
+    // lapackpp throws errors (default)
+    // internal macro to get string #cond; throws Error if cond is true
+    // ex: lapack_error_if( a < b );
+    #define lapack_error_if( cond ) \
+        lapack::internal::throw_if( cond, #cond, __func__ )
+
+    // internal macro takes cond and printf-style format for error message.
+    // throws Error if cond is true.
+    // ex: lapack_error_if_msg( a < b, "a %d < b %d", a, b );
+    #define lapack_error_if_msg( cond, ... ) \
+        lapack::internal::throw_if( cond, #cond, __func__, __VA_ARGS__ )
+
+#endif
 
 // =============================================================================
 // Callback logical functions of one, two, or three arguments are used
@@ -157,8 +206,8 @@ inline lapack::Norm char2norm( char norm )
         norm = '1';
     else if (norm == 'E')
         norm = 'F';
-    lapack_throw_if_( norm != '1' && norm != '2' && norm != 'I' &&
-                      norm != 'F' && norm != 'M' );
+    lapack_error_if( norm != '1' && norm != '2' && norm != 'I' &&
+                     norm != 'F' && norm != 'M' );
     return lapack::Norm( norm );
 }
 
@@ -193,8 +242,8 @@ inline char job2char( lapack::Job job )
 inline lapack::Job char2job( char job )
 {
     job = char( toupper( job ));
-    lapack_throw_if_( job != 'N' && job != 'V' && job != 'A' && job != 'S' &&
-                      job != 'O' );
+    lapack_error_if( job != 'N' && job != 'V' && job != 'A' && job != 'S' &&
+                     job != 'O' );
     return lapack::Job( job );
 }
 
@@ -226,7 +275,7 @@ inline char jobcs2char( lapack::JobCS jobcs )
 inline lapack::JobCS char2jobcs( char jobcs )
 {
     jobcs = char( toupper( jobcs ));
-    lapack_throw_if_( jobcs != 'Y' && jobcs != 'N' );
+    lapack_error_if( jobcs != 'Y' && jobcs != 'N' );
     return lapack::JobCS( jobcs );
 }
 
@@ -254,7 +303,7 @@ inline char jobschur2char( lapack::JobSchur jobschur )
 inline lapack::JobSchur char2jobschur( char jobschur )
 {
     jobschur = char( toupper( jobschur ));
-    lapack_throw_if_( jobschur != 'E' && jobschur != 'S' );
+    lapack_error_if( jobschur != 'E' && jobschur != 'S' );
     return lapack::JobSchur( jobschur );
 }
 
@@ -283,7 +332,7 @@ inline char jobu2char( lapack::JobU jobu )
 inline lapack::JobU char2jobu( char jobu )
 {
     jobu = char( toupper( jobu ));
-    lapack_throw_if_( jobu != 'U' && jobu != 'N' );
+    lapack_error_if( jobu != 'U' && jobu != 'N' );
     return lapack::JobU( jobu );
 }
 
@@ -312,7 +361,7 @@ inline char jobv2char( lapack::JobV jobv )
 inline lapack::JobV char2jobv( char jobv )
 {
     jobv = char( toupper( jobv ));
-    lapack_throw_if_( jobv != 'V' && jobv != 'N' );
+    lapack_error_if( jobv != 'V' && jobv != 'N' );
     return lapack::JobV( jobv );
 }
 
@@ -341,7 +390,7 @@ inline char jobq2char( lapack::JobQ jobq )
 inline lapack::JobQ char2jobq( char jobq )
 {
     jobq = char( toupper( jobq ));
-    lapack_throw_if_( jobq != 'Q' && jobq != 'N' );
+    lapack_error_if( jobq != 'Q' && jobq != 'N' );
     return lapack::JobQ( jobq );
 }
 
@@ -370,7 +419,7 @@ inline char sort2char( lapack::Sort sort )
 inline lapack::Sort char2sort( char sort )
 {
     sort = char( toupper( sort ));
-    lapack_throw_if_( sort != 'N' && sort != 'S' );
+    lapack_error_if( sort != 'N' && sort != 'S' );
     return lapack::Sort( sort );
 }
 
@@ -399,7 +448,7 @@ inline char range2char( lapack::Range range )
 inline lapack::Range char2range( char range )
 {
     range = char( toupper( range ));
-    lapack_throw_if_( range != 'A' && range != 'V' && range != 'I' );
+    lapack_error_if( range != 'A' && range != 'V' && range != 'I' );
     return lapack::Range( range );
 }
 
@@ -429,7 +478,7 @@ inline char vect2char( lapack::Vect vect )
 inline lapack::Vect char2vect( char vect )
 {
     vect = char( toupper( vect ));
-    lapack_throw_if_( vect != 'Q' && vect != 'P' && vect != 'N' && vect != 'B' );
+    lapack_error_if( vect != 'Q' && vect != 'P' && vect != 'N' && vect != 'B' );
     return lapack::Vect( vect );
 }
 
@@ -460,7 +509,7 @@ inline char compq2char( lapack::CompQ compq )
 inline lapack::CompQ char2compq( char compq )
 {
     compq = char( toupper( compq ));
-    lapack_throw_if_( compq != 'N' && compq != 'I' && compq != 'P' &&
+    lapack_error_if( compq != 'N' && compq != 'I' && compq != 'P' &&
                       compq != 'V' );
     return lapack::CompQ( compq );
 }
@@ -492,7 +541,7 @@ inline char direct2char( lapack::Direct direct )
 inline lapack::Direct char2direct( char direct )
 {
     direct = char( toupper( direct ));
-    lapack_throw_if_( direct != 'F' && direct != 'B' );
+    lapack_error_if( direct != 'F' && direct != 'B' );
     return lapack::Direct( direct );
 }
 
@@ -520,7 +569,7 @@ inline char storev2char( lapack::StoreV storev )
 inline lapack::StoreV char2storev( char storev )
 {
     storev = char( toupper( storev ));
-    lapack_throw_if_( storev != 'C' && storev != 'R' );
+    lapack_error_if( storev != 'C' && storev != 'R' );
     return lapack::StoreV( storev );
 }
 
@@ -553,8 +602,8 @@ inline char matrixtype2char( lapack::MatrixType type )
 inline lapack::MatrixType char2matrixtype( char type )
 {
     type = char( toupper( type ));
-    lapack_throw_if_( type != 'G' && type != 'L' && type != 'U' &&
-                      type != 'H' && type != 'B' && type != 'Q' && type != 'Z' );
+    lapack_error_if( type != 'G' && type != 'L' && type != 'U' &&
+                     type != 'H' && type != 'B' && type != 'Q' && type != 'Z' );
     return lapack::MatrixType( type );
 }
 
@@ -588,7 +637,7 @@ inline char howmany2char( lapack::HowMany howmany )
 inline lapack::HowMany char2howmany( char howmany )
 {
     howmany = char( toupper( howmany ));
-    lapack_throw_if_( howmany != 'A' && howmany != 'B' && howmany != 'S' );
+    lapack_error_if( howmany != 'A' && howmany != 'B' && howmany != 'S' );
     return lapack::HowMany( howmany );
 }
 
@@ -620,8 +669,8 @@ inline char equed2char( lapack::Equed equed )
 inline lapack::Equed char2equed( char equed )
 {
     equed = char( toupper( equed ));
-    lapack_throw_if_( equed != 'N' && equed != 'R' && equed != 'C' &&
-                      equed != 'B' && equed != 'Y' );
+    lapack_error_if( equed != 'N' && equed != 'R' && equed != 'C' &&
+                     equed != 'B' && equed != 'Y' );
     return lapack::Equed( equed );
 }
 
@@ -654,7 +703,7 @@ inline char factored2char( lapack::Factored factored )
 inline lapack::Factored char2factored( char factored )
 {
     factored = char( toupper( factored ));
-    lapack_throw_if_( factored != 'F' && factored != 'N' && factored != 'E' );
+    lapack_error_if( factored != 'F' && factored != 'N' && factored != 'E' );
     return lapack::Factored( factored );
 }
 
@@ -685,8 +734,8 @@ inline char sense2char( lapack::Sense sense )
 inline lapack::Sense char2sense( char sense )
 {
     sense = char( toupper( sense ));
-    lapack_throw_if_( sense != 'N' && sense != 'E' && sense != 'V' &&
-                      sense != 'B' );
+    lapack_error_if( sense != 'N' && sense != 'E' && sense != 'V' &&
+                     sense != 'B' );
     return lapack::Sense( sense );
 }
 
@@ -717,8 +766,8 @@ inline char balance2char( lapack::Balance balance )
 inline lapack::Balance char2balance( char balance )
 {
     balance = char( toupper( balance ));
-    lapack_throw_if_( balance != 'N' && balance != 'P' && balance != 'S' &&
-                      balance != 'B' );
+    lapack_error_if( balance != 'N' && balance != 'P' && balance != 'S' &&
+                     balance != 'B' );
     return lapack::Balance( balance );
 }
 
@@ -748,7 +797,7 @@ inline char rowcol2char( lapack::RowCol rowcol )
 inline lapack::RowCol char2rowcol( char rowcol )
 {
     rowcol = char( toupper( rowcol ));
-    lapack_throw_if_( rowcol != 'C' && rowcol != 'R' );
+    lapack_error_if( rowcol != 'C' && rowcol != 'R' );
     return lapack::RowCol( rowcol );
 }
 

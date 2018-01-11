@@ -20,19 +20,19 @@ void syr(
     std::complex<float>       *A, int64_t lda )
 {
     // check arguments
-    throw_if_( layout != Layout::ColMajor &&
+    lapack_error_if( layout != Layout::ColMajor &&
                layout != Layout::RowMajor );
-    throw_if_( uplo != Uplo::Lower &&
+    lapack_error_if( uplo != Uplo::Lower &&
                uplo != Uplo::Upper );
-    throw_if_( n < 0 );
-    throw_if_( lda < n );
-    throw_if_( incx == 0 );
+    lapack_error_if( n < 0 );
+    lapack_error_if( lda < n );
+    lapack_error_if( incx == 0 );
 
     // check for overflow in native BLAS integer type, if smaller than int64_t
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( n              > std::numeric_limits<blas_int>::max() );
-        throw_if_( lda            > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(incx) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( n              > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( lda            > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(incx) > std::numeric_limits<blas_int>::max() );
     }
 
     blas_int n_    = (blas_int) n;
@@ -59,19 +59,19 @@ void syr(
     std::complex<double>       *A, int64_t lda )
 {
     // check arguments
-    throw_if_( layout != Layout::ColMajor &&
+    lapack_error_if( layout != Layout::ColMajor &&
                layout != Layout::RowMajor );
-    throw_if_( uplo != Uplo::Lower &&
+    lapack_error_if( uplo != Uplo::Lower &&
                uplo != Uplo::Upper );
-    throw_if_( n < 0 );
-    throw_if_( lda < n );
-    throw_if_( incx == 0 );
+    lapack_error_if( n < 0 );
+    lapack_error_if( lda < n );
+    lapack_error_if( incx == 0 );
 
     // check for overflow in native BLAS integer type, if smaller than int64_t
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( n              > std::numeric_limits<blas_int>::max() );
-        throw_if_( lda            > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(incx) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( n              > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( lda            > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(incx) > std::numeric_limits<blas_int>::max() );
     }
 
     blas_int n_    = (blas_int) n;

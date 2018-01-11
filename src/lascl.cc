@@ -17,11 +17,11 @@ int64_t lascl(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(kl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ku) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(kl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ku) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
     }
     char type_ = matrixtype2char( type );
     blas_int kl_ = (blas_int) kl;
@@ -46,11 +46,11 @@ int64_t lascl(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(kl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ku) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(kl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ku) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
     }
     char type_ = matrixtype2char( type );
     blas_int kl_ = (blas_int) kl;
@@ -75,11 +75,11 @@ int64_t lascl(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(kl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ku) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(kl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ku) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
     }
     char type_ = matrixtype2char( type );
     blas_int kl_ = (blas_int) kl;
@@ -177,11 +177,11 @@ int64_t lascl(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(kl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ku) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(kl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ku) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
     }
     char type_ = matrixtype2char( type );
     blas_int kl_ = (blas_int) kl;

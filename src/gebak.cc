@@ -18,11 +18,11 @@ int64_t gebak(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
     }
     char balance_ = balance2char( balance );
     char side_ = side2char( side );
@@ -49,11 +49,11 @@ int64_t gebak(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
     }
     char balance_ = balance2char( balance );
     char side_ = side2char( side );
@@ -80,11 +80,11 @@ int64_t gebak(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
     }
     char balance_ = balance2char( balance );
     char side_ = side2char( side );
@@ -160,11 +160,11 @@ int64_t gebak(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
     }
     char balance_ = balance2char( balance );
     char side_ = side2char( side );

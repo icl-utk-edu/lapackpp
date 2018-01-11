@@ -21,7 +21,7 @@ int64_t gttrf(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
     }
     blas_int n_ = (blas_int) n;
     #if 1
@@ -55,7 +55,7 @@ int64_t gttrf(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
     }
     blas_int n_ = (blas_int) n;
     #if 1
@@ -89,7 +89,7 @@ int64_t gttrf(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
     }
     blas_int n_ = (blas_int) n;
     #if 1
@@ -177,7 +177,7 @@ int64_t gttrf(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
     }
     blas_int n_ = (blas_int) n;
     #if 1

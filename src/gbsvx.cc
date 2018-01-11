@@ -27,14 +27,14 @@ int64_t gbsvx(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(kl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ku) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldafb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(kl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ku) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldafb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
     }
     char fact_ = factored2char( fact );
     char trans_ = op2char( trans );
@@ -91,14 +91,14 @@ int64_t gbsvx(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(kl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ku) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldafb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(kl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ku) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldafb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
     }
     char fact_ = factored2char( fact );
     char trans_ = op2char( trans );
@@ -155,14 +155,14 @@ int64_t gbsvx(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(kl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ku) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldafb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(kl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ku) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldafb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
     }
     char fact_ = factored2char( fact );
     char trans_ = op2char( trans );
@@ -433,14 +433,14 @@ int64_t gbsvx(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(kl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ku) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldafb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(kl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ku) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldafb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
     }
     char fact_ = factored2char( fact );
     char trans_ = op2char( trans );

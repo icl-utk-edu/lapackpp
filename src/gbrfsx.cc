@@ -1,7 +1,7 @@
 #include "lapack.hh"
 #include "lapack_fortran.h"
 
-#if LAPACK_VERSION_MAJOR >= 3 && LAPACK_VERSION_MINOR >= 2  // >= v3.2
+#ifdef HAVE_XBLAS
 
 #include <vector>
 
@@ -30,16 +30,16 @@ int64_t gbrfsx(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(kl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ku) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldafb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n_err_bnds) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(nparams) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(kl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ku) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldafb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n_err_bnds) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(nparams) > std::numeric_limits<blas_int>::max() );
     }
     char trans_ = op2char( trans );
     char equed_ = equed2char( equed );
@@ -92,16 +92,16 @@ int64_t gbrfsx(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(kl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ku) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldafb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n_err_bnds) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(nparams) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(kl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ku) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldafb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n_err_bnds) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(nparams) > std::numeric_limits<blas_int>::max() );
     }
     char trans_ = op2char( trans );
     char equed_ = equed2char( equed );
@@ -154,16 +154,16 @@ int64_t gbrfsx(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(kl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ku) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldafb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n_err_bnds) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(nparams) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(kl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ku) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldafb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n_err_bnds) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(nparams) > std::numeric_limits<blas_int>::max() );
     }
     char trans_ = op2char( trans );
     char equed_ = equed2char( equed );
@@ -517,16 +517,16 @@ int64_t gbrfsx(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(kl) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ku) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldafb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n_err_bnds) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(nparams) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(kl) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ku) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldafb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n_err_bnds) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(nparams) > std::numeric_limits<blas_int>::max() );
     }
     char trans_ = op2char( trans );
     char equed_ = equed2char( equed );
@@ -562,4 +562,4 @@ int64_t gbrfsx(
 
 }  // namespace lapack
 
-#endif  // LAPACK >= v3.2
+#endif  // HAVE_XBLAS

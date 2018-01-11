@@ -1,7 +1,7 @@
 #include "lapack.hh"
 #include "lapack_fortran.h"
 
-#if LAPACK_VERSION_MAJOR >= 3 && LAPACK_VERSION_MINOR >= 3  // >= v3.3
+#ifdef HAVE_XBLAS
 
 #include <vector>
 
@@ -29,14 +29,14 @@ int64_t syrfsx(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldaf) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n_err_bnds) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(nparams) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldaf) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n_err_bnds) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(nparams) > std::numeric_limits<blas_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
     char equed_ = equed2char( equed );
@@ -86,14 +86,14 @@ int64_t syrfsx(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldaf) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n_err_bnds) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(nparams) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldaf) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n_err_bnds) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(nparams) > std::numeric_limits<blas_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
     char equed_ = equed2char( equed );
@@ -143,14 +143,14 @@ int64_t syrfsx(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldaf) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n_err_bnds) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(nparams) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldaf) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n_err_bnds) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(nparams) > std::numeric_limits<blas_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
     char equed_ = equed2char( equed );
@@ -472,14 +472,14 @@ int64_t syrfsx(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldaf) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(n_err_bnds) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(nparams) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldaf) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n_err_bnds) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(nparams) > std::numeric_limits<blas_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
     char equed_ = equed2char( equed );
@@ -513,4 +513,4 @@ int64_t syrfsx(
 
 }  // namespace lapack
 
-#endif  // LAPACK >= v3.3
+#endif  // HAVE_XBLAS

@@ -19,13 +19,13 @@ int64_t gghrd(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
     char compq_ = compq2char( compq );
     char compz_ = compq2char( compz );
@@ -55,13 +55,13 @@ int64_t gghrd(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
     char compq_ = compq2char( compq );
     char compz_ = compq2char( compz );
@@ -91,13 +91,13 @@ int64_t gghrd(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
     char compq_ = compq2char( compq );
     char compz_ = compq2char( compz );
@@ -127,13 +127,13 @@ int64_t gghrd(
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
-        throw_if_( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
-        throw_if_( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
     char compq_ = compq2char( compq );
     char compz_ = compq2char( compz );

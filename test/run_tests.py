@@ -341,11 +341,11 @@ if (opts.hesv):
 # least squares
 if (opts.least_squares):
     cmds += [
-    [ 'gels',   check + dtype + align + mn + trans ],
+    [ 'gels',   check + dtype + align + mn + trans_nc ],
     [ 'gelsy',  check + dtype + align + mn ],
 #    [ 'gelsd',  check + dtype + align + mn ],
     [ 'gelss',  check + dtype + align + mn ],
-    [ 'getsls', check + dtype + align + mn + trans ],
+    [ 'getsls', check + dtype + align + mn + trans_nc ],
     ]
 
 # QR
@@ -394,7 +394,7 @@ if (opts.syev):
 #    [ 'heevr', check + dtype + align + n + uplo + jobz ],
     [ 'hetrd', check + dtype + align + n + uplo ],
     [ 'ungtr', check + dtype + align + n + uplo ],
-    [ 'unmtr', check + dtype + align + n + uplo + side + trans ],
+    [ 'unmtr', check + dtype + align + n + uplo + side + trans_nc ],
 
     [ 'hpev',  check + dtype + align + n + uplo + jobz ],
 #    [ 'hpevx',  check + dtype + align + n + uplo + jobz ],

@@ -26,14 +26,12 @@ static lapack_int LAPACKE_unmtr(
 static lapack_int LAPACKE_unmtr(
     char side, char uplo, char trans, lapack_int m, lapack_int n, std::complex<float>* A, lapack_int lda, std::complex<float>* tau, std::complex<float>* C, lapack_int ldc )
 {
-    if (trans == 'T') trans = 'C';
     return LAPACKE_cunmtr( LAPACK_COL_MAJOR, side, uplo, trans, m, n, A, lda, tau, C, ldc );
 }
 
 static lapack_int LAPACKE_unmtr(
     char side, char uplo, char trans, lapack_int m, lapack_int n, std::complex<double>* A, lapack_int lda, std::complex<double>* tau, std::complex<double>* C, lapack_int ldc )
 {
-    if (trans == 'T') trans = 'C';
     return LAPACKE_zunmtr( LAPACK_COL_MAJOR, side, uplo, trans, m, n, A, lda, tau, C, ldc );
 }
 

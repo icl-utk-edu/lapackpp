@@ -26,14 +26,12 @@ static lapack_int LAPACKE_gels(
 static lapack_int LAPACKE_gels(
     char trans, lapack_int m, lapack_int n, lapack_int nrhs, std::complex<float>* A, lapack_int lda, std::complex<float>* B, lapack_int ldb )
 {
-    if ( trans == 'T' ) trans = 'C';
     return LAPACKE_cgels( LAPACK_COL_MAJOR, trans, m, n, nrhs, A, lda, B, ldb );
 }
 
 static lapack_int LAPACKE_gels(
     char trans, lapack_int m, lapack_int n, lapack_int nrhs, std::complex<double>* A, lapack_int lda, std::complex<double>* B, lapack_int ldb )
 {
-    if ( trans == 'T' ) trans = 'C';
     return LAPACKE_zgels( LAPACK_COL_MAJOR, trans, m, n, nrhs, A, lda, B, ldb );
 }
 

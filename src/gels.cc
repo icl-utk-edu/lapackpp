@@ -124,10 +124,6 @@ int64_t gels(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    // for complex, map Trans to ConjTrans
-    if (trans_ == 'T')
-        trans_ = 'C';
-
     // query for workspace size
     std::complex<float> qry_work[1];
     blas_int ineg_one = -1;
@@ -259,10 +255,6 @@ int64_t gels(
     blas_int lda_ = (blas_int) lda;
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
-
-    // for complex, map Trans to ConjTrans
-    if (trans_ == 'T')
-        trans_ = 'C';
 
     // query for workspace size
     std::complex<double> qry_work[1];

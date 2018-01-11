@@ -4,7 +4,6 @@
 
 #include <omp.h>
 
-#include "lapack_fortran.h"
 #include "test.hh"
 #include "cblas.hh"
 #include "lapack.hh"
@@ -12,7 +11,35 @@
 #include "print_matrix.hh"
 #include "check_gemm2.hh"  // uses lapack++ instead of Fortran lapack
 
-#include "syr.hh"
+#include "syr.hh"  // from blaspp
+
+#include "lapack_mangling.h"
+
+extern "C" {
+
+/* ----- symmetric rank-1 update */
+// give Fortran prototypes if not given via lapacke.h
+#ifndef LAPACK_csyr
+#define LAPACK_csyr LAPACK_GLOBAL(csyr,CSYR)
+void LAPACK_csyr(
+    char const* uplo,
+    lapack_int const* n,
+    lapack_complex_float const* alpha,
+    lapack_complex_float const* x, lapack_int const* incx,
+    lapack_complex_float* a, lapack_int const* lda );
+#endif
+
+#ifndef LAPACK_zsyr
+#define LAPACK_zsyr LAPACK_GLOBAL(zsyr,ZSYR)
+void LAPACK_zsyr(
+    char const* uplo,
+    lapack_int const* n,
+    lapack_complex_double const* alpha,
+    lapack_complex_double const* x, lapack_int const* incx,
+    lapack_complex_double* a, lapack_int const* lda );
+#endif
+
+}  // extern "C"
 
 // -----------------------------------------------------------------------------
 inline void

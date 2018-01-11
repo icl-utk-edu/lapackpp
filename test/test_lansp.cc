@@ -7,29 +7,43 @@
 #include <vector>
 #include <omp.h>
 
+#include "lapack_mangling.h"
+
 extern "C" {
 
 /* ----- matrix norm - symmetric packed */
-#define LAPACK_slansp FORTRAN_NAME(slansp,SLANSP)
+// give Fortran prototypes if not given via lapacke.h
+#ifndef LAPACK_slansp
+#define LAPACK_slansp LAPACK_GLOBAL(slansp,SLANSP)
 blas_float_return LAPACK_slansp(
     char const* norm, char const* uplo,
     lapack_int const* n,
     float const* AP, float* work );
-#define LAPACK_dlansp FORTRAN_NAME(dlansp,DLANSP)
+#endif
+
+#ifndef LAPACK_dlansp
+#define LAPACK_dlansp LAPACK_GLOBAL(dlansp,DLANSP)
 double LAPACK_dlansp(
     char const* norm, char const* uplo,
     lapack_int const* n,
     double const* AP, double* work );
-#define LAPACK_clansp FORTRAN_NAME(clansp,CLANSP)
+#endif
+
+#ifndef LAPACK_clansp
+#define LAPACK_clansp LAPACK_GLOBAL(clansp,CLANSP)
 blas_float_return LAPACK_clansp(
     char const* norm, char const* uplo,
     lapack_int const* n,
     lapack_complex_float const* AP, float* work );
-#define LAPACK_zlansp FORTRAN_NAME(zlansp,ZLANSP)
+#endif
+
+#ifndef LAPACK_zlansp
+#define LAPACK_zlansp LAPACK_GLOBAL(zlansp,ZLANSP)
 double LAPACK_zlansp(
     char const* norm, char const* uplo,
     lapack_int const* n,
     lapack_complex_double const* AP, double* work );
+#endif
 
 }  // extern "C"
 

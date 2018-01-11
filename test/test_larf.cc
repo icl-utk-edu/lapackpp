@@ -1,4 +1,3 @@
-#include "lapack_fortran.h"
 #include "test.hh"
 #include "lapack.hh"
 #include "lapack_flops.hh"
@@ -8,9 +7,13 @@
 #include <vector>
 #include <omp.h>
 
+#include "lapack_mangling.h"
+
 extern "C" {
 
 /* ----- apply Householder reflector */
+// give Fortran prototypes if not given via lapacke.h
+#ifndef LAPACK_slarf
 #define LAPACK_slarf LAPACK_GLOBAL(slarf,SLARF)
 void LAPACK_slarf(
     char const* side,
@@ -19,6 +22,9 @@ void LAPACK_slarf(
     float const* tau,
     float* c, lapack_int const* ldc,
     float* work );
+#endif
+
+#ifndef LAPACK_dlarf
 #define LAPACK_dlarf LAPACK_GLOBAL(dlarf,DLARF)
 void LAPACK_dlarf(
     char const* side,
@@ -27,6 +33,9 @@ void LAPACK_dlarf(
     double const* tau,
     double* c, lapack_int const* ldc,
     double* work );
+#endif
+
+#ifndef LAPACK_clarf
 #define LAPACK_clarf LAPACK_GLOBAL(clarf,CLARF)
 void LAPACK_clarf(
     char const* side,
@@ -35,6 +44,9 @@ void LAPACK_clarf(
     lapack_complex_float const* tau,
     lapack_complex_float* c, lapack_int const* ldc,
     lapack_complex_float* work );
+#endif
+
+#ifndef LAPACK_zlarf
 #define LAPACK_zlarf LAPACK_GLOBAL(zlarf,ZLARF)
 void LAPACK_zlarf(
     char const* side,
@@ -43,6 +55,7 @@ void LAPACK_zlarf(
     lapack_complex_double const* tau,
     lapack_complex_double* c, lapack_int const* ldc,
     lapack_complex_double* work );
+#endif
 
 }  // extern "C"
 

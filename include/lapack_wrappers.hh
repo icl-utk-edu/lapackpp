@@ -9918,6 +9918,18 @@ int64_t upgtr(
     std::complex<double> const* tau,
     std::complex<double>* Q, int64_t ldq );
 
+// -----------------------------------------------------------------------------
+int64_t upmtr(
+    lapack::Side side, lapack::Uplo uplo, lapack::Op trans, int64_t m, int64_t n,
+    std::complex<float> const* AP,
+    std::complex<float> const* tau,
+    std::complex<float>* C, int64_t ldc );
+
+int64_t upmtr(
+    lapack::Side side, lapack::Uplo uplo, lapack::Op trans, int64_t m, int64_t n,
+    std::complex<double> const* AP,
+    std::complex<double> const* tau,
+    std::complex<double>* C, int64_t ldc );
 
 }  // namespace lapack
 

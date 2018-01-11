@@ -394,7 +394,7 @@ if (opts.syev):
 #    [ 'heevr', check + dtype + align + n + uplo + jobz ],
     [ 'hetrd', check + dtype + align + n + uplo ],
     [ 'ungtr', check + dtype + align + n + uplo ],
-#    [ 'unmtr', check + dtype + align + n + uplo ],
+    [ 'unmtr', check + dtype + align + n + uplo + side + trans ],
 
     [ 'hpev',  check + dtype + align + n + uplo + jobz ],
 #    [ 'hpevx',  check + dtype + align + n + uplo + jobz ],

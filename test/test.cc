@@ -285,7 +285,7 @@ std::vector< libtest::routines_t > routines = {
   //{ "obgtr",              test_obgtr,     Section::heev }, // TODO does this exist
     { "",                   nullptr,        Section::newline },
 
-  //{ "unmtr",              test_unmtr,     Section::heev },
+    { "unmtr",              test_unmtr,     Section::heev },
   //{ "upmtr",              test_upmtr,     Section::heev },
   //{ "obmtr",              test_obmtr,     Section::heev }, // does this exist
     { "",                   nullptr,        Section::newline },

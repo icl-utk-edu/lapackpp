@@ -5,7 +5,6 @@
 #include "error.hh"
 
 #include <vector>
-#include <omp.h>
 
 // -----------------------------------------------------------------------------
 // simple overloaded wrappers around LAPACKE
@@ -37,6 +36,7 @@ static double LAPACKE_lanhe(
 template< typename scalar_t >
 void test_lanhe_work( Params& params, bool run )
 {
+    using namespace libtest;
     using namespace blas;
     typedef typename traits< scalar_t >::real_t real_t;
     typedef long long lld;
@@ -67,9 +67,9 @@ void test_lanhe_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
-    double time = omp_get_wtime();
+    double time = get_wtime();
     real_t norm_tst = lapack::lanhe( norm, uplo, n, &A[0], lda );
-    time = omp_get_wtime() - time;
+    time = get_wtime() - time;
 
     params.time.value() = time;
     //double gflop = lapack::Gflop< scalar_t >::lanhe( norm, n );
@@ -78,9 +78,9 @@ void test_lanhe_work( Params& params, bool run )
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache.value() );
-        time = omp_get_wtime();
+        time = get_wtime();
         real_t norm_ref = LAPACKE_lanhe( norm2char(norm), uplo2char(uplo), n, &A[0], lda );
-        time = omp_get_wtime() - time;
+        time = get_wtime() - time;
 
         params.ref_time.value() = time;
         //params.ref_gflops.value() = gflop / time;

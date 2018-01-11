@@ -5,7 +5,6 @@
 #include "error.hh"
 
 #include <vector>
-#include <omp.h>
 
 // -----------------------------------------------------------------------------
 // simple overloaded wrappers around LAPACKE
@@ -37,6 +36,7 @@ static lapack_int LAPACKE_pbequ(
 template< typename scalar_t >
 void test_pbequ_work( Params& params, bool run )
 {
+    using namespace libtest;
     using namespace blas;
     typedef typename traits< scalar_t >::real_t real_t;
     typedef long long lld;
@@ -86,9 +86,9 @@ void test_pbequ_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
-    double time = omp_get_wtime();
+    double time = get_wtime();
     int64_t info_tst = lapack::pbequ( uplo, n, kd, &AB[0], ldab, &S_tst[0], &scond_tst, &amax_tst );
-    time = omp_get_wtime() - time;
+    time = get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::pbequ returned error %lld\n", (lld) info_tst );
     }
@@ -100,9 +100,9 @@ void test_pbequ_work( Params& params, bool run )
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache.value() );
-        time = omp_get_wtime();
+        time = get_wtime();
         int64_t info_ref = LAPACKE_pbequ( uplo2char(uplo), n, kd, &AB[0], ldab, &S_ref[0], &scond_ref, &amax_ref );
-        time = omp_get_wtime() - time;
+        time = get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_pbequ returned error %lld\n", (lld) info_ref );
         }

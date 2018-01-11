@@ -5,7 +5,6 @@
 #include "error.hh"
 
 #include <vector>
-#include <omp.h>
 
 // -----------------------------------------------------------------------------
 // simple overloaded wrappers around LAPACKE
@@ -37,6 +36,7 @@ static lapack_int LAPACKE_larfb(
 template< typename scalar_t >
 void test_larfb_work( Params& params, bool run )
 {
+    using namespace libtest;
     using namespace blas;
     typedef typename traits< scalar_t >::real_t real_t;
     typedef long long lld;
@@ -111,9 +111,9 @@ void test_larfb_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
-    double time = omp_get_wtime();
+    double time = get_wtime();
     lapack::larfb( side, trans, direct, storev, m, n, k, &V[0], ldv, &T[0], ldt, &C_tst[0], ldc );
-    time = omp_get_wtime() - time;
+    time = get_wtime() - time;
 
     params.time.value() = time;
     //double gflop = lapack::Gflop< scalar_t >::larfb( side, trans, direct, storev, m, n, k );
@@ -122,9 +122,9 @@ void test_larfb_work( Params& params, bool run )
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache.value() );
-        time = omp_get_wtime();
+        time = get_wtime();
         int64_t info_ref = LAPACKE_larfb( side2char(side), op2char(trans), direct2char(direct), storev2char(storev), m, n, k, &V[0], ldv, &T[0], ldt, &C_ref[0], ldc );
-        time = omp_get_wtime() - time;
+        time = get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_larfb returned error %lld\n", (lld) info_ref );
         }

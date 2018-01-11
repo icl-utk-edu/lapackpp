@@ -5,7 +5,6 @@
 #include "error.hh"
 
 #include <vector>
-#include <omp.h>
 
 // -----------------------------------------------------------------------------
 // simple overloaded wrappers around LAPACKE
@@ -37,6 +36,7 @@ static lapack_int LAPACKE_hptrd(
 template< typename scalar_t >
 void test_hptrd_work( Params& params, bool run )
 {
+    using namespace libtest;
     using namespace blas;
     typedef typename traits< scalar_t >::real_t real_t;
     typedef long long lld;
@@ -75,9 +75,9 @@ void test_hptrd_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
-    double time = omp_get_wtime();
+    double time = get_wtime();
     int64_t info_tst = lapack::hptrd( uplo, n, &AP_tst[0], &D_tst[0], &E_tst[0], &tau_tst[0] );
-    time = omp_get_wtime() - time;
+    time = get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::hptrd returned error %lld\n", (lld) info_tst );
     }
@@ -89,9 +89,9 @@ void test_hptrd_work( Params& params, bool run )
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache.value() );
-        time = omp_get_wtime();
+        time = get_wtime();
         int64_t info_ref = LAPACKE_hptrd( uplo2char(uplo), n, &AP_ref[0], &D_ref[0], &E_ref[0], &tau_ref[0] );
-        time = omp_get_wtime() - time;
+        time = get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_hptrd returned error %lld\n", (lld) info_ref );
         }

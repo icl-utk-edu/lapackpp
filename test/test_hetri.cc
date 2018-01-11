@@ -5,7 +5,6 @@
 #include "error.hh"
 
 #include <vector>
-#include <omp.h>
 
 // -----------------------------------------------------------------------------
 // simple overloaded wrappers around LAPACKE
@@ -62,6 +61,7 @@ static lapack_int LAPACKE_hetrf(
 template< typename scalar_t >
 void test_hetri_work( Params& params, bool run )
 {
+    using namespace libtest;
     using namespace blas;
     typedef typename traits< scalar_t >::real_t real_t;
     typedef long long lld;
@@ -103,9 +103,9 @@ void test_hetri_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
-    double time = omp_get_wtime();
+    double time = get_wtime();
     int64_t info_tst = lapack::hetri( uplo, n, &A_tst[0], lda, &ipiv_tst[0] );
-    time = omp_get_wtime() - time;
+    time = get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::hetri returned error %lld\n", (lld) info_tst );
     }
@@ -123,9 +123,9 @@ void test_hetri_work( Params& params, bool run )
         }
 
         // ---------- run reference
-        time = omp_get_wtime();
+        time = get_wtime();
         int64_t info_ref = LAPACKE_hetri( uplo2char(uplo), n, &A_ref[0], lda, &ipiv_ref[0] );
-        time = omp_get_wtime() - time;
+        time = get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_hetri returned error %lld\n", (lld) info_ref );
         }

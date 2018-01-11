@@ -5,7 +5,6 @@
 #include "error.hh"
 
 #include <vector>
-#include <omp.h>
 
 // -----------------------------------------------------------------------------
 // simple overloaded wrappers around LAPACKE
@@ -37,6 +36,7 @@ static lapack_int LAPACKE_laset(
 template< typename scalar_t >
 void test_laset_work( Params& params, bool run )
 {
+    using namespace libtest;
     using namespace blas;
     typedef typename traits< scalar_t >::real_t real_t;
     typedef long long lld;
@@ -71,9 +71,9 @@ void test_laset_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
-    double time = omp_get_wtime();
+    double time = get_wtime();
     lapack::laset( matrixtype, m, n, alpha, beta, &A_tst[0], lda );
-    time = omp_get_wtime() - time;
+    time = get_wtime() - time;
 
     params.time.value() = time;
     //double gflop = lapack::Gflop< scalar_t >::laset( m, n, alpha, beta );
@@ -82,9 +82,9 @@ void test_laset_work( Params& params, bool run )
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache.value() );
-        time = omp_get_wtime();
+        time = get_wtime();
         int64_t info_ref = LAPACKE_laset( matrixtype2char(matrixtype), m, n, alpha, beta, &A_ref[0], lda );
-        time = omp_get_wtime() - time;
+        time = get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_laset returned error %lld\n", (lld) info_ref );
         }

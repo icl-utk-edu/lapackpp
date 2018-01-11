@@ -2,7 +2,6 @@
 // except it uses LAPACK++ instead of calling Fortran LAPACK,
 // and tests syr< complex >.
 
-#include <omp.h>
 
 #include "test.hh"
 #include "cblas.hh"
@@ -74,6 +73,7 @@ cblas_syr(
 template< typename TA, typename TX >
 void test_syr_work( Params& params, bool run )
 {
+    using namespace libtest;
     using namespace blas;
     typedef typename traits2< TA, TX >::scalar_t scalar_t;
     typedef typename traits< scalar_t >::real_t real_t;
@@ -137,9 +137,9 @@ void test_syr_work( Params& params, bool run )
 
     // run test
     libtest::flush_cache( params.cache.value() );
-    double time = omp_get_wtime();
+    double time = get_wtime();
     blas::syr( layout, uplo, n, alpha, x, incx, A, lda );
-    time = omp_get_wtime() - time;
+    time = get_wtime() - time;
 
     params.time.value() = time * 1000;  // msec
     double gflop = Gflop< scalar_t >::syr( n );
@@ -152,10 +152,10 @@ void test_syr_work( Params& params, bool run )
     if (params.check.value() == 'y') {
         // run reference
         libtest::flush_cache( params.cache.value() );
-        time = omp_get_wtime();
+        time = get_wtime();
         cblas_syr( cblas_layout_const(layout), cblas_uplo_const(uplo),
                    n, alpha, x, incx, Aref, lda );
-        time = omp_get_wtime() - time;
+        time = get_wtime() - time;
 
         params.ref_time.value() = time * 1000;  // msec
         params.ref_gflops.value() = gflop / time;

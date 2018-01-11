@@ -5,7 +5,6 @@
 #include "error.hh"
 
 #include <vector>
-#include <omp.h>
 
 // -----------------------------------------------------------------------------
 // simple overloaded wrappers around LAPACKE
@@ -37,6 +36,7 @@ static lapack_int LAPACKE_potrs(
 template< typename scalar_t >
 void test_potrs_work( Params& params, bool run )
 {
+    using namespace libtest;
     using namespace blas;
     typedef typename traits< scalar_t >::real_t real_t;
     typedef long long lld;
@@ -105,9 +105,9 @@ void test_potrs_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
-    double time = omp_get_wtime();
+    double time = get_wtime();
     int64_t info_tst = lapack::potrs( uplo, n, nrhs, &A[0], lda, &B_tst[0], ldb );
-    time = omp_get_wtime() - time;
+    time = get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::potrs returned error %lld\n", (lld) info_tst );
     }
@@ -123,9 +123,9 @@ void test_potrs_work( Params& params, bool run )
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache.value() );
-        time = omp_get_wtime();
+        time = get_wtime();
         int64_t info_ref = LAPACKE_potrs( uplo2char(uplo), n, nrhs, &A[0], lda, &B_ref[0], ldb );
-        time = omp_get_wtime() - time;
+        time = get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_potrs returned error %lld\n", (lld) info_ref );
         }

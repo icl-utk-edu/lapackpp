@@ -6,7 +6,6 @@
 #include "check_svd.hh"
 
 #include <vector>
-#include <omp.h>
 
 // -----------------------------------------------------------------------------
 // simple overloaded wrappers around LAPACKE
@@ -38,6 +37,7 @@ static lapack_int LAPACKE_gesdd(
 template< typename scalar_t >
 void test_gesdd_work( Params& params, bool run )
 {
+    using namespace libtest;
     using namespace blas;
     using namespace lapack;
     typedef typename traits< scalar_t >::real_t real_t;
@@ -86,9 +86,9 @@ void test_gesdd_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
-    double time = omp_get_wtime();
+    double time = get_wtime();
     int64_t info_tst = lapack::gesdd( jobu, m, n, &A_tst[0], lda, &S_tst[0], &U_tst[0], ldu, &VT_tst[0], ldvt );
-    time = omp_get_wtime() - time;
+    time = get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::gesdd returned error %lld\n", (lld) info_tst );
     }
@@ -130,9 +130,9 @@ void test_gesdd_work( Params& params, bool run )
     if (params.ref.value() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache.value() );
-        time = omp_get_wtime();
+        time = get_wtime();
         int64_t info_ref = LAPACKE_gesdd( job2char(jobu), m, n, &A_ref[0], lda, &S_ref[0], &U_ref[0], ldu, &VT_ref[0], ldvt );
-        time = omp_get_wtime() - time;
+        time = get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gesdd returned error %lld\n", (lld) info_ref );
         }

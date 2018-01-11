@@ -20,17 +20,21 @@ public:
         std::exception()
     {}
 
+    /// Constructs BLAS error with message
+    Error( std::string const& msg ):
+        std::exception(),
+        msg_( msg )
+    {}
+
     /// Constructs LAPACK error with message: "func: msg"
     Error( const char* msg, const char* func ):
         std::exception(),
-        msg_( std::string(func) + ": " + msg )
+        msg_( std::string(msg) + ", in function " + func )
     {}
 
     /// Returns LAPACK error message
-    virtual const char* what()
-{
-    return msg_.c_str();
-}
+    virtual const char* what() const noexcept override
+        { return msg_.c_str(); }
 
 private:
     std::string msg_;

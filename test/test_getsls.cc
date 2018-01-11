@@ -7,6 +7,8 @@
 #include <vector>
 #include <omp.h>
 
+#if LAPACK_VERSION_MAJOR >= 3 && LAPACK_VERSION_MINOR >= 7  // >= 3.7
+
 // -----------------------------------------------------------------------------
 // simple overloaded wrappers around LAPACKE
 static lapack_int LAPACKE_getsls(
@@ -141,3 +143,14 @@ void test_getsls( Params& params, bool run )
             break;
     }
 }
+
+#else
+
+// -----------------------------------------------------------------------------
+void test_getsls( Params& params, bool run )
+{
+    fprintf( stderr, "getsls requires LAPACK >= 3.7\n\n" );
+    exit(0);
+}
+
+#endif

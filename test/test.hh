@@ -36,6 +36,7 @@ public:
     libtest::ParamEnum< libtest::DataType > datatype;
     libtest::ParamEnum< blas::Layout >      layout;
     libtest::ParamEnum< lapack::Side >      side;
+    libtest::ParamInt                       itype;
     libtest::ParamEnum< lapack::Uplo >      uplo;
     libtest::ParamEnum< lapack::Op >        trans;
     libtest::ParamEnum< lapack::Op >        transA;
@@ -301,7 +302,7 @@ void test_obgtr ( Params& params, bool run );
 void test_obmtr ( Params& params, bool run );
 
 // generalized symmetric eigenvalues
-void test_sygv  ( Params& params, bool run );
+void test_hegv  ( Params& params, bool run );
 void test_sygvx ( Params& params, bool run );
 void test_sygvd ( Params& params, bool run );
 void test_sygvr ( Params& params, bool run );

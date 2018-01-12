@@ -71,6 +71,7 @@ group_opt.add_argument( '--side',   action='store', help='default=%(default)s', 
 group_opt.add_argument( '--incx',   action='store', help='default=%(default)s', default='1,2,-1,-2' )
 group_opt.add_argument( '--incy',   action='store', help='default=%(default)s', default='1,2,-1,-2' )
 group_opt.add_argument( '--align',  action='store', help='default=%(default)s', default='32' )
+group_opt.add_argument( '--itype',  action='store', help='default=%(default)s', default='1,2,3' )
 group_opt.add_argument( '--check',  action='store', help='default=y', default='' )  # default in test.cc
 group_opt.add_argument( '--ref',    action='store', help='default=y', default='' )  # default in test.cc
 # LAPACK only
@@ -172,6 +173,7 @@ side   = ' --side '   + opts.side   if (opts.side)   else ''
 incx   = ' --incx '   + opts.incx   if (opts.incx)   else ''
 incy   = ' --incy '   + opts.incy   if (opts.incy)   else ''
 align  = ' --align '  + opts.align  if (opts.align)  else ''
+itype  = ' --itype '  + opts.itype  if (opts.itype)  else ''
 check  = ' --check '  + opts.check  if (opts.check)  else ''
 if (opts.ref):
     check += ' --ref ' + opts.ref
@@ -416,13 +418,13 @@ if (opts.syev):
 # generalized symmetric eigenvalues
 # todo: add jobs
 #if (opts.sygv):
-#    cmds += [
-#    [ 'sygv',  check + dtype + align + n + uplo ],
+    cmds += [
+    [ 'hegv',  check + dtype + align + n + itype + jobz + uplo ],
 #    [ 'sygvx', check + dtype + align + n + uplo ],
 #    [ 'sygvd', check + dtype + align + n + uplo ],
 #    [ 'sygvr', check + dtype + align + n + uplo ],
 #    [ 'sygst', check + dtype + align + n + uplo ],
-#    ]
+    ]
 
 # non-symmetric eigenvalues
 if (opts.geev):

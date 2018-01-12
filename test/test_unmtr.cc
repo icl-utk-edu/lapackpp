@@ -60,14 +60,14 @@ void test_unmtr_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t lda = roundup( max( max( 1, m ), n ), align );
+    int64_t r = (side == lapack::Side::Left) ? m : n;
+    int64_t lda = roundup( max( 1, r ), align );
     int64_t ldc = roundup( max( 1, m ), align );
-    int64_t r = ( side==lapack::Side::Left ) ? m : n;
     size_t size_A = (size_t) ( max( 1, lda*r ) );
     size_t size_tau = (size_t) ( max( 1, r-1 ) );
     size_t size_C = (size_t) max( 1, ldc * n );
-    size_t size_D = (size_t) (n);
-    size_t size_E = (size_t) (n-1);
+    size_t size_D = (size_t) (r);
+    size_t size_E = (size_t) (r-1);
 
     std::vector< scalar_t > A( size_A );
     std::vector< scalar_t > tau( size_tau );
@@ -76,7 +76,6 @@ void test_unmtr_work( Params& params, bool run )
     std::vector< real_t > D( size_D );
     std::vector< real_t > E( size_E );
 
-
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, A.size(), &A[0] );
@@ -84,7 +83,7 @@ void test_unmtr_work( Params& params, bool run )
     lapack::larnv( idist, iseed, C_tst.size(), &C_tst[0] );
     C_ref = C_tst;
 
-    int64_t info = lapack::hetrd( uplo, n, &A[0], lda, &D[0], &E[0], &tau[0] );
+    int64_t info = lapack::hetrd( uplo, r, &A[0], lda, &D[0], &E[0], &tau[0] );
     if (info != 0) {
         fprintf( stderr, "lapack::hetrd returned error %lld\n", (lld) info );
     }

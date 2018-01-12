@@ -5,40 +5,40 @@
 #include "error.hh"
 
 #include <vector>
+#include <omp.h>
 
 // -----------------------------------------------------------------------------
 // simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_unmtr(
-    char side, char uplo, char trans, lapack_int m, lapack_int n, float* A, lapack_int lda, float* tau, float* C, lapack_int ldc )
+static lapack_int LAPACKE_upmtr(
+    char side, char uplo, char trans, lapack_int m, lapack_int n, float* AP, float* tau, float* C, lapack_int ldc )
 {
     if (trans == 'C') trans = 'T';
-    return LAPACKE_sormtr( LAPACK_COL_MAJOR, side, uplo, trans, m, n, A, lda, tau, C, ldc );
+    return LAPACKE_sopmtr( LAPACK_COL_MAJOR, side, uplo, trans, m, n, AP, tau, C, ldc );
 }
 
-static lapack_int LAPACKE_unmtr(
-    char side, char uplo, char trans, lapack_int m, lapack_int n, double* A, lapack_int lda, double* tau, double* C, lapack_int ldc )
+static lapack_int LAPACKE_upmtr(
+    char side, char uplo, char trans, lapack_int m, lapack_int n, double* AP, double* tau, double* C, lapack_int ldc )
 {
     if (trans == 'C') trans = 'T';
-    return LAPACKE_dormtr( LAPACK_COL_MAJOR, side, uplo, trans, m, n, A, lda, tau, C, ldc );
+    return LAPACKE_dopmtr( LAPACK_COL_MAJOR, side, uplo, trans, m, n, AP, tau, C, ldc );
 }
 
-static lapack_int LAPACKE_unmtr(
-    char side, char uplo, char trans, lapack_int m, lapack_int n, std::complex<float>* A, lapack_int lda, std::complex<float>* tau, std::complex<float>* C, lapack_int ldc )
+static lapack_int LAPACKE_upmtr(
+    char side, char uplo, char trans, lapack_int m, lapack_int n, std::complex<float>* AP, std::complex<float>* tau, std::complex<float>* C, lapack_int ldc )
 {
-    return LAPACKE_cunmtr( LAPACK_COL_MAJOR, side, uplo, trans, m, n, A, lda, tau, C, ldc );
+    return LAPACKE_cupmtr( LAPACK_COL_MAJOR, side, uplo, trans, m, n, AP, tau, C, ldc );
 }
 
-static lapack_int LAPACKE_unmtr(
-    char side, char uplo, char trans, lapack_int m, lapack_int n, std::complex<double>* A, lapack_int lda, std::complex<double>* tau, std::complex<double>* C, lapack_int ldc )
+static lapack_int LAPACKE_upmtr(
+    char side, char uplo, char trans, lapack_int m, lapack_int n, std::complex<double>* AP, std::complex<double>* tau, std::complex<double>* C, lapack_int ldc )
 {
-    return LAPACKE_zunmtr( LAPACK_COL_MAJOR, side, uplo, trans, m, n, A, lda, tau, C, ldc );
+    return LAPACKE_zupmtr( LAPACK_COL_MAJOR, side, uplo, trans, m, n, AP, tau, C, ldc );
 }
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >
-void test_unmtr_work( Params& params, bool run )
+void test_upmtr_work( Params& params, bool run )
 {
-    using namespace libtest;
     using namespace blas;
     typedef typename traits< scalar_t >::real_t real_t;
     typedef long long lld;
@@ -60,16 +60,15 @@ void test_unmtr_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t r = ( side==lapack::Side::Left ? m : n );
-    int64_t lda = roundup( max( 1, r ), align );
     int64_t ldc = roundup( max( 1, m ), align );
-    size_t size_A = (size_t) max( 1, lda*r );
+    int64_t r = ( side==lapack::Side::Left ) ? m : n;
+    size_t size_AP = (size_t) (r*(r+1)/2);
     size_t size_tau = (size_t) max( 1, r-1 );
-    size_t size_C = (size_t) max( 1, ldc*n );
+    size_t size_C = (size_t) ldc * n;
     size_t size_D = (size_t) (r);
     size_t size_E = (size_t) (r-1);
 
-    std::vector< scalar_t > A( size_A );
+    std::vector< scalar_t > AP( size_AP );
     std::vector< scalar_t > tau( size_tau );
     std::vector< scalar_t > C_tst( size_C );
     std::vector< scalar_t > C_ref( size_C );
@@ -78,37 +77,37 @@ void test_unmtr_work( Params& params, bool run )
 
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A.size(), &A[0] );
+    lapack::larnv( idist, iseed, AP.size(), &AP[0] );
     lapack::larnv( idist, iseed, tau.size(), &tau[0] );
     lapack::larnv( idist, iseed, C_tst.size(), &C_tst[0] );
     C_ref = C_tst;
 
-    int64_t info = lapack::hetrd( uplo, r, &A[0], lda, &D[0], &E[0], &tau[0] );
+    int64_t info = lapack::hptrd( uplo, r, &AP[0], &D[0], &E[0], &tau[0] );
     if (info != 0) {
-        fprintf( stderr, "lapack::hetrd returned error %lld\n", (lld) info );
+        fprintf( stderr, "lapack::hptrd returned error %lld\n", (lld) info );
     }
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
-    double time = get_wtime();
-    int64_t info_tst = lapack::unmtr( side, uplo, trans, m, n, &A[0], lda, &tau[0], &C_tst[0], ldc );
-    time = get_wtime() - time;
+    double time = omp_get_wtime();
+    int64_t info_tst = lapack::upmtr( side, uplo, trans, m, n, &AP[0], &tau[0], &C_tst[0], ldc );
+    time = omp_get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::unmtr returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::upmtr returned error %lld\n", (lld) info_tst );
     }
 
     params.time.value() = time;
-    // double gflop = lapack::Gflop< scalar_t >::unmtr( side, trans, m, n );
+    // double gflop = lapack::Gflop< scalar_t >::upmtr( side, trans, m, n );
     // params.gflops.value() = gflop / time;
 
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache.value() );
-        time = get_wtime();
-        int64_t info_ref = LAPACKE_unmtr( side2char(side), uplo2char(uplo), op2char(trans), m, n, &A[0], lda, &tau[0], &C_ref[0], ldc );
-        time = get_wtime() - time;
+        time = omp_get_wtime();
+        int64_t info_ref = LAPACKE_upmtr( side2char(side), uplo2char(uplo), op2char(trans), m, n, &AP[0], &tau[0], &C_ref[0], ldc );
+        time = omp_get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_unmtr returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_upmtr returned error %lld\n", (lld) info_ref );
         }
 
         params.ref_time.value() = time;
@@ -126,7 +125,7 @@ void test_unmtr_work( Params& params, bool run )
 }
 
 // -----------------------------------------------------------------------------
-void test_unmtr( Params& params, bool run )
+void test_upmtr( Params& params, bool run )
 {
     switch (params.datatype.value()) {
         case libtest::DataType::Integer:
@@ -134,19 +133,19 @@ void test_unmtr( Params& params, bool run )
             break;
 
         case libtest::DataType::Single:
-            test_unmtr_work< float >( params, run );
+            test_upmtr_work< float >( params, run );
             break;
 
         case libtest::DataType::Double:
-            test_unmtr_work< double >( params, run );
+            test_upmtr_work< double >( params, run );
             break;
 
         case libtest::DataType::SingleComplex:
-            test_unmtr_work< std::complex<float> >( params, run );
+            test_upmtr_work< std::complex<float> >( params, run );
             break;
 
         case libtest::DataType::DoubleComplex:
-            test_unmtr_work< std::complex<double> >( params, run );
+            test_upmtr_work< std::complex<double> >( params, run );
             break;
     }
 }

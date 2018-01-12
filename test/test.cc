@@ -285,7 +285,7 @@ std::vector< libtest::routines_t > routines = {
     { "",                   nullptr,        Section::newline },
 
     { "unmtr",              test_unmtr,     Section::heev }, // tested via LAPACKE using gcc/MKL
-  //{ "upmtr",              test_upmtr,     Section::heev },
+    { "upmtr",              test_upmtr,     Section::heev },
   //{ "obmtr",              test_obmtr,     Section::heev }, // does this exist
     { "",                   nullptr,        Section::newline },
 

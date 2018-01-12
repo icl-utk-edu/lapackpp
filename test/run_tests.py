@@ -394,7 +394,7 @@ if (opts.syev):
 #    [ 'heevr', check + dtype + align + n + uplo + jobz ],
     [ 'hetrd', check + dtype + align + n + uplo ],
     [ 'ungtr', check + dtype + align + n + uplo ],
-    [ 'unmtr', check + dtype + align + n + uplo + side + trans_nc ],
+    [ 'unmtr', check + dtype + align + mn + uplo + side + trans_nc ],
 
     [ 'hpev',  check + dtype + align + n + uplo + jobz ],
 #    [ 'hpevx',  check + dtype + align + n + uplo + jobz ],
@@ -402,7 +402,7 @@ if (opts.syev):
 #    [ 'hpevr', check + dtype + align + n + uplo + jobz ],
     [ 'hptrd', check + dtype + n + uplo ],
     [ 'upgtr', check + dtype + align + n + uplo ],
-#    [ 'upmtr', check + dtype + align + n + uplo ],
+    [ 'upmtr', check + dtype + align + mn + side + uplo + trans_nc ],
 
     [ 'hbev',  check + dtype + align + n + uplo + jobz ],
 #    [ 'hbevx',  check + dtype + align + n + uplo + jobz ],

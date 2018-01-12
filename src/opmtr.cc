@@ -30,6 +30,10 @@ int64_t opmtr(
     blas_int ldc_ = (blas_int) ldc;
     blas_int info_ = 0;
 
+    // for real, map ConjTrans to Trans
+    if (trans_ == 'C')
+        trans_ = 'T';
+
     // from docs
     int64_t lwork = (side == Side::Left ? n : m);
 
@@ -63,6 +67,10 @@ int64_t opmtr(
     blas_int n_ = (blas_int) n;
     blas_int ldc_ = (blas_int) ldc;
     blas_int info_ = 0;
+
+    // for real, map ConjTrans to Trans
+    if (trans_ == 'C')
+        trans_ = 'T';
 
     // from docs
     int64_t lwork = (side == Side::Left ? n : m);

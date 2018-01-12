@@ -60,12 +60,12 @@ void test_unmtr_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t r = ( side==lapack::Side::Left ? m : n );
+    int64_t r = (side == lapack::Side::Left) ? m : n;
     int64_t lda = roundup( max( 1, r ), align );
     int64_t ldc = roundup( max( 1, m ), align );
-    size_t size_A = (size_t) max( 1, lda*r );
-    size_t size_tau = (size_t) max( 1, r-1 );
-    size_t size_C = (size_t) max( 1, ldc*n );
+    size_t size_A = (size_t) ( max( 1, lda*r ) );
+    size_t size_tau = (size_t) ( max( 1, r-1 ) );
+    size_t size_C = (size_t) max( 1, ldc * n );
     size_t size_D = (size_t) (r);
     size_t size_E = (size_t) (r-1);
 

@@ -424,6 +424,10 @@ if (opts.syev):
 #    [ 'sygvd', check + dtype + align + n + uplo ],
 #    [ 'sygvr', check + dtype + align + n + uplo ],
 #    [ 'sygst', check + dtype + align + n + uplo ],
+
+    [ 'hpgv',  check + dtype + align + n + itype + jobz + uplo ],
+
+    [ 'hbgv',  check + dtype + align + n + jobz + uplo + kd ],
     ]
 
 # non-symmetric eigenvalues

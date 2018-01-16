@@ -308,13 +308,13 @@ void test_sygvd ( Params& params, bool run );
 void test_sygvr ( Params& params, bool run );
 void test_sygst ( Params& params, bool run );
 
-void test_spgv  ( Params& params, bool run );
+void test_hpgv  ( Params& params, bool run );
 void test_spgvx ( Params& params, bool run );
 void test_spgvd ( Params& params, bool run );
 void test_spgvr ( Params& params, bool run );
 void test_spgst ( Params& params, bool run );
 
-void test_sbgv  ( Params& params, bool run );
+void test_hbgv  ( Params& params, bool run );
 void test_sbgvx ( Params& params, bool run );
 void test_sbgvd ( Params& params, bool run );
 void test_sbgvr ( Params& params, bool run );

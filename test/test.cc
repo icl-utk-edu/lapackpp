@@ -292,8 +292,8 @@ std::vector< libtest::routines_t > routines = {
     // -----
     // generalized symmetric eigenvalues
     { "hegv",               test_hegv,      Section::sygv },
-  //{ "spgv",               test_spgv,      Section::sygv },
-  //{ "sbgv",               test_sbgv,      Section::sygv },
+    { "hpgv",               test_hpgv,      Section::sygv },
+    { "hbgv",               test_hbgv,      Section::sygv },
     { "",                   nullptr,        Section::newline },
 
   //{ "sygvx",              test_sygvx,     Section::sygv },

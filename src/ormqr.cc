@@ -34,6 +34,10 @@ int64_t ormqr(
     blas_int ldc_ = (blas_int) ldc;
     blas_int info_ = 0;
 
+    // for real, map ConjTrans to Trans
+    if (trans_ == 'C')
+        trans_ = 'T';
+
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
@@ -78,6 +82,10 @@ int64_t ormqr(
     blas_int lda_ = (blas_int) lda;
     blas_int ldc_ = (blas_int) ldc;
     blas_int info_ = 0;
+
+    // for real, map ConjTrans to Trans
+    if (trans_ == 'C')
+        trans_ = 'T';
 
     // query for workspace size
     double qry_work[1];

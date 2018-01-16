@@ -303,22 +303,22 @@ void test_obmtr ( Params& params, bool run );
 
 // generalized symmetric eigenvalues
 void test_hegv  ( Params& params, bool run );
-void test_sygvx ( Params& params, bool run );
-void test_sygvd ( Params& params, bool run );
-void test_sygvr ( Params& params, bool run );
-void test_sygst ( Params& params, bool run );
+void test_hegvx ( Params& params, bool run );
+void test_hegvd ( Params& params, bool run );
+void test_hegvr ( Params& params, bool run );
+void test_hegst ( Params& params, bool run );
 
 void test_hpgv  ( Params& params, bool run );
-void test_spgvx ( Params& params, bool run );
-void test_spgvd ( Params& params, bool run );
-void test_spgvr ( Params& params, bool run );
-void test_spgst ( Params& params, bool run );
+void test_hpgvx ( Params& params, bool run );
+void test_hpgvd ( Params& params, bool run );
+void test_hpgvr ( Params& params, bool run );
+void test_hpgst ( Params& params, bool run );
 
 void test_hbgv  ( Params& params, bool run );
-void test_sbgvx ( Params& params, bool run );
-void test_sbgvd ( Params& params, bool run );
-void test_sbgvr ( Params& params, bool run );
-void test_sbgst ( Params& params, bool run );
+void test_hbgvx ( Params& params, bool run );
+void test_hbgvd ( Params& params, bool run );
+void test_hbgvr ( Params& params, bool run );
+void test_hbgst ( Params& params, bool run );
 
 // nonsymmetric eigenvalues
 void test_geev  ( Params& params, bool run );

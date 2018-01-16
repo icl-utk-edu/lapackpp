@@ -291,9 +291,9 @@ std::vector< libtest::routines_t > routines = {
 
     // -----
     // generalized symmetric eigenvalues
-    { "hegv",               test_hegv,      Section::sygv },
-    { "hpgv",               test_hpgv,      Section::sygv },
-    { "hbgv",               test_hbgv,      Section::sygv },
+    { "hegv",               test_hegv,      Section::sygv }, // tested via LAPACKE using gcc/MKL
+    { "hpgv",               test_hpgv,      Section::sygv }, // tested via LAPACKE using gcc/MKL
+    { "hbgv",               test_hbgv,      Section::sygv }, // tested via LAPACKE using gcc/MKL
     { "",                   nullptr,        Section::newline },
 
   //{ "sygvx",              test_sygvx,     Section::sygv },
@@ -301,19 +301,19 @@ std::vector< libtest::routines_t > routines = {
   //{ "sbgvx",              test_sbgvx,     Section::sygv },
     { "",                   nullptr,        Section::newline },
 
-  //{ "sygvd",              test_sygvd,     Section::sygv },
-  //{ "spgvd",              test_spgvd,     Section::sygv },
-  //{ "sbgvd",              test_sbgvd,     Section::sygv },
+    { "hegvd",              test_hegvd,     Section::sygv }, // tested via LAPACKE using gcc/MKL
+    { "hpgvd",              test_hpgvd,     Section::sygv }, // tested via LAPACKE using gcc/MKL
+  //{ "hbgvd",              test_hbgvd,     Section::sygv }, // TODO FIXME Segfaults.. is the src correct?
     { "",                   nullptr,        Section::newline },
 
-  //{ "sygvr",              test_sygvr,     Section::sygv },
+  //{ "hegvr",              test_hegvr,     Section::sygv }, // TODO FIXME This test does not generate
   //{ "spgvr",              test_spgvr,     Section::sygv },
   //{ "sbgvr",              test_sbgvr,     Section::sygv },
     { "",                   nullptr,        Section::newline },
 
-  //{ "sygst",              test_sygst,     Section::sygv },
-  //{ "spgst",              test_spgst,     Section::sygv },
-  //{ "sbgst",              test_sbgst,     Section::sygv },
+    { "hegst",              test_hegst,     Section::sygv },
+    { "hpgst",              test_hpgst,     Section::sygv },
+  //{ "hbgst",              test_hbgst,     Section::sygv },
     { "",                   nullptr,        Section::newline },
 
     // -----

@@ -420,14 +420,22 @@ if (opts.syev):
 #if (opts.sygv):
     cmds += [
     [ 'hegv',  check + dtype + align + n + itype + jobz + uplo ],
-#    [ 'sygvx', check + dtype + align + n + uplo ],
-#    [ 'sygvd', check + dtype + align + n + uplo ],
-#    [ 'sygvr', check + dtype + align + n + uplo ],
-#    [ 'sygst', check + dtype + align + n + uplo ],
+#    [ 'hegvx', check + dtype + align + n + uplo ],
+    [ 'hegvd', check + dtype + align + n + itype + jobz + uplo ],
+#    [ 'hegvr', check + dtype + align + n + uplo ],
+    [ 'hegst', check + dtype + align + n + itype + uplo ],
 
     [ 'hpgv',  check + dtype + align + n + itype + jobz + uplo ],
+#    [ 'hpgvx', check + dtype + align + n + uplo ],
+    [ 'hpgvd', check + dtype + align + n + itype + jobz + uplo ],
+#    [ 'hpgvr', check + dtype + align + n + uplo ],
+    [ 'hpgst', check + dtype + n + itype + uplo ],
 
     [ 'hbgv',  check + dtype + align + n + jobz + uplo + kd ],
+#    [ 'hbgvx', check + dtype + align + n + uplo ],
+    [ 'hbgvd',  check + dtype + align + n + jobz + uplo + kd ],
+#    [ 'hbgvr', check + dtype + align + n + uplo ],
+#    [ 'hbgst', check + dtype + align + n + vect + uplo + kd ],
     ]
 
 # non-symmetric eigenvalues

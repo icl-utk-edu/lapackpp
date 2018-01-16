@@ -326,8 +326,8 @@ void test_geevx ( Params& params, bool run );
 void test_gees  ( Params& params, bool run );
 void test_geesx ( Params& params, bool run );
 void test_gehrd ( Params& params, bool run );
-void test_orghr ( Params& params, bool run );
-void test_ormhr ( Params& params, bool run );
+void test_unghr ( Params& params, bool run );
+void test_unmhr ( Params& params, bool run );
 void test_hsein ( Params& params, bool run );
 void test_trevc ( Params& params, bool run );
 

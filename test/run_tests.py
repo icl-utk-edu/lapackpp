@@ -83,6 +83,7 @@ group_opt.add_argument( '--jobvl',  action='store', help='default=%(default)s', 
 group_opt.add_argument( '--jobvr',  action='store', help='default=%(default)s', default='n,v' )
 group_opt.add_argument( '--jobu',   action='store', help='default=%(default)s', default='n,s,o,a' )
 group_opt.add_argument( '--jobvt',  action='store', help='default=%(default)s', default='n,s,o,a' )
+group_opt.add_argument( '--vect',   action='store', help='default=%(default)s', default='n,v' )
 group_opt.add_argument( '--kd',     action='store', help='default=%(default)s', default='20,100' )
 group_opt.add_argument( '--kl',     action='store', help='default=%(default)s', default='20,100' )
 group_opt.add_argument( '--ku',     action='store', help='default=%(default)s', default='20,100' )
@@ -186,6 +187,7 @@ jobu   = ' --jobu '   + opts.jobu   if (opts.jobu)   else ''
 jobvt  = ' --jobvt '  + opts.jobvt  if (opts.jobvt)  else ''
 jobvl  = ' --jobvl '  + opts.jobvl  if (opts.jobvl)  else ''
 jobvr  = ' --jobvr '  + opts.jobvr  if (opts.jobvr)  else ''
+vect   = ' --vect '   + opts.vect   if (opts.vect)   else ''
 kd     = ' --kd '     + opts.kd     if (opts.kd)     else ''
 kl     = ' --kl '     + opts.kl     if (opts.kl)     else ''
 ku     = ' --ku '     + opts.ku     if (opts.ku)     else ''
@@ -435,7 +437,7 @@ if (opts.syev):
 #    [ 'hbgvx', check + dtype + align + n + uplo ],
     [ 'hbgvd',  check + dtype + align + n + jobz + uplo + kd ],
 #    [ 'hbgvr', check + dtype + align + n + uplo ],
-#    [ 'hbgst', check + dtype + align + n + vect + uplo + kd ],
+    [ 'hbgst', check + dtype + align + n + vect + uplo + kd ],
     ]
 
 # non-symmetric eigenvalues
@@ -444,10 +446,8 @@ if (opts.geev):
     [ 'geev',  check + dtype + align + n + jobvl + jobvr ],
 #    [ 'geevx', check + dtype + align + n + jobvl + jobvr ],
     [ 'gehrd', check + dtype + align + n ],
-#    [ 'orghr', check + dtype + align + n ],
-#    [ 'unghr', check + dtype + align + n ],
-#    [ 'ormhr', check + dtype + align + n + side + trans ],
-#    [ 'unmhr', check + dtype + align + n + side + trans ],
+    [ 'unghr', check + dtype + align + n ],
+    [ 'unmhr', check + dtype + align + n + side + trans_nc ],
     ]
 
 # svd

@@ -306,37 +306,37 @@ std::vector< libtest::routines_t > routines = {
   //{ "hbgvd",              test_hbgvd,     Section::sygv }, // TODO FIXME Segfaults.. is the src correct?
     { "",                   nullptr,        Section::newline },
 
-  //{ "hegvr",              test_hegvr,     Section::sygv }, // TODO FIXME This test does not generate
+  //{ "hegvr",              test_hegvr,     Section::sygv }, // TODO FIXME This test does not generate automagically
   //{ "spgvr",              test_spgvr,     Section::sygv },
   //{ "sbgvr",              test_sbgvr,     Section::sygv },
     { "",                   nullptr,        Section::newline },
 
-    { "hegst",              test_hegst,     Section::sygv },
-    { "hpgst",              test_hpgst,     Section::sygv },
-  //{ "hbgst",              test_hbgst,     Section::sygv },
+    { "hegst",              test_hegst,     Section::sygv }, // tested via LAPACKE using gcc/MKL
+    { "hpgst",              test_hpgst,     Section::sygv }, // tested via LAPACKE using gcc/MKL
+  //{ "hbgst",              test_hbgst,     Section::sygv }, // TODO FIXME This test requires non-working --vect flag
     { "",                   nullptr,        Section::newline },
 
     // -----
     // non-symmetric eigenvalues
     { "geev",               test_geev,      Section::geev },
-  //{ "ggev",               test_ggev,      Section::geev },
+  //{ "ggev",               test_ggev,      Section::geev }, // TODO FIXME Requires VL and VR arrays
     { "",                   nullptr,        Section::newline },
 
-  //{ "geevx",              test_geevx,     Section::geev },
+  //{ "geevx",              test_geevx,     Section::geev }, // TODO FIXME Requires --vect flag
   //{ "ggevx",              test_ggevx,     Section::geev },
     { "",                   nullptr,        Section::newline },
 
-  //{ "gees",               test_gees,      Section::geev },
-  //{ "gges",               test_gges,      Section::geev },
+  //{ "gees",               test_gees,      Section::geev }, 
+  //{ "gges",               test_gges,      Section::geev }, // TODO needs SELCTG  (external sort procedure) LOGICAL FUNCTION
     { "",                   nullptr,        Section::newline },
 
-  //{ "geesx",              test_geesx,     Section::geev },
+  //{ "geesx",              test_geesx,     Section::geev }, 
   //{ "ggesx",              test_ggesx,     Section::geev },
     { "",                   nullptr,        Section::newline },
 
-    { "gehrd",              test_gehrd,     Section::geev },
-  //{ "orghr",              test_orghr,     Section::geev },
-  //{ "ormhr",              test_ormhr,     Section::geev },
+    { "gehrd",              test_gehrd,     Section::geev }, // TODO Fixed ilo=1, ihi=n, should these vary?
+    { "unghr",              test_unghr,     Section::geev }, // TODO Fixed ilo=1, ihi=n, should these vary?
+    { "unmhr",              test_unmhr,     Section::geev },
   //{ "hsein",              test_hsein,     Section::geev },
   //{ "trevc",              test_trevc,     Section::geev },
     { "",                   nullptr,        Section::newline },

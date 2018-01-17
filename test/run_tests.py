@@ -303,13 +303,13 @@ if (opts.sysv):
     ]
 
 # symmetric indefinite, rook
-#if (opts.rook):
-#    cmds += [
-#    [ 'sysv_rook',  check + dtype + align + n + uplo ],
-#    [ 'sytrf_rook', check + dtype + align + n + uplo ],
-#    [ 'sytrs_rook', check + dtype + align + n + uplo ],
+if (opts.rook):
+    cmds += [
+    [ 'sysv_rook',  check + dtype + align + n + uplo ],
+    [ 'sytrf_rook', check + dtype + align + n + uplo ],
+    [ 'sytrs_rook', check + dtype + align + n + uplo ],
 #    [ 'sytri_rook', check + dtype + align + n + uplo ],
-#    ]
+    ]
 
 # symmetric indefinite, Aasen
 #if (opts.aasen):
@@ -448,6 +448,7 @@ if (opts.geev):
     [ 'gehrd', check + dtype + align + n ],
     [ 'unghr', check + dtype + align + n ],
     [ 'unmhr', check + dtype + align + n + side + trans_nc ],
+#    [ 'trevc', check + dtype + align + n + side + howmany + select ],
     ]
 
 # svd

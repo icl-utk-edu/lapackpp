@@ -24,6 +24,7 @@ enum Section {
     gesv,
     posv,
     sysv,
+    sysv2,
     hesv,
     gels,
     qr,
@@ -44,6 +45,7 @@ const char* section_names[] = {
    "LU",
    "Cholesky",
    "symmetric indefinite",
+   "symmetric indefinite 2",
    "Hermitian indefinite",
    "least squares",
    "QR, LQ, QL, RQ",
@@ -166,18 +168,18 @@ std::vector< libtest::routines_t > routines = {
     { "sprfs",              test_sprfs,     Section::sysv }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },
 
-    // -----
-  //{ "sysv_rook",          test_sysv_rook,          Section::sysv2 },  // requires LAPACK>=3.5
-  //{ "sysv_aasen",         test_sysv_aasen,         Section::sysv2 },
-  //{ "sysv_aasen_2stage",  test_sysv_aasen_2stage,  Section::sysv2 },
+    // -----   requires LAPACK>=3.5
+    { "sysv_rook",          test_sysv_rook,          Section::sysv2 }, // tested via LAPACKE using gcc/MKL
+  //{ "sysv_aasen",         test_sysv_aasen,         Section::sysv2 }, // TODO does not automagically generate
+  //{ "sysv_aasen_2stage",  test_sysv_aasen_2stage,  Section::sysv2 }, // TODO does not automagically generate
     { "",                   nullptr,                 Section::newline },
 
-  //{ "sytrf_rook",         test_sytrf_rook,         Section::sysv2 },
+    { "sytrf_rook",         test_sytrf_rook,         Section::sysv2 }, // tested via LAPACKE using gcc/MKL
   //{ "sytrf_aasen",        test_sytrf_aasen,        Section::sysv2 },
   //{ "sytrf_aasen_2stage", test_sytrf_aasen_2stage, Section::sysv2 },
     { "",                   nullptr,                 Section::newline },
 
-  //{ "sytrs_rook",         test_sytrs_rook,         Section::sysv2 },
+    { "sytrs_rook",         test_sytrs_rook,         Section::sysv2 }, // tested via LAPACKE using gcc/MKL
   //{ "sytrs_aasen",        test_sytrs_aasen,        Section::sysv2 },
   //{ "sytrs_aasen_2stage", test_sytrs_aasen_2stage, Section::sysv2 },
     { "",                   nullptr,                 Section::newline },
@@ -338,7 +340,7 @@ std::vector< libtest::routines_t > routines = {
     { "unghr",              test_unghr,     Section::geev }, // TODO Fixed ilo=1, ihi=n, should these vary?
     { "unmhr",              test_unmhr,     Section::geev },
   //{ "hsein",              test_hsein,     Section::geev },
-  //{ "trevc",              test_trevc,     Section::geev },
+  //{ "trevc",              test_trevc,     Section::geev }, // TODO --howmany --select
     { "",                   nullptr,        Section::newline },
 
     // -----
@@ -351,11 +353,11 @@ std::vector< libtest::routines_t > routines = {
   //{ "gesdd_2stage",       test_gesdd_2stage,  Section::svd },
     { "",                   nullptr,            Section::newline },
 
-  //{ "gesvdx",             test_gesvdx,        Section::svd },
+  //{ "gesvdx",             test_gesvdx,        Section::svd }, // TODO vl vu
   //{ "gesvdx_2stage",      test_gesvdx_2stage, Section::svd },
     { "",                   nullptr,            Section::newline },
 
-  //{ "gejsv",              test_gejsv,     Section::svd },
+  //{ "gejsv",              test_gejsv,     Section::svd }, // TODO does not generate automagically (keyerror: jobr)
   //{ "gesvj",              test_gesvj,     Section::svd },
     { "",                   nullptr,        Section::newline },
 

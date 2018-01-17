@@ -3280,7 +3280,7 @@ void hfrk(
 
 // -----------------------------------------------------------------------------
 int64_t hgeqz(
-    lapack::Job job, lapack::CompQ compq, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::JobSchur job, lapack::CompQ compq, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
     float* H, int64_t ldh,
     float* T, int64_t ldt,
     float* alphar,
@@ -3290,7 +3290,7 @@ int64_t hgeqz(
     float* Z, int64_t ldz );
 
 int64_t hgeqz(
-    lapack::Job job, lapack::CompQ compq, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::JobSchur job, lapack::CompQ compq, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
     double* H, int64_t ldh,
     double* T, int64_t ldt,
     double* alphar,
@@ -3300,7 +3300,7 @@ int64_t hgeqz(
     double* Z, int64_t ldz );
 
 int64_t hgeqz(
-    lapack::Job job, lapack::CompQ compq, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::JobSchur job, lapack::CompQ compq, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
     std::complex<float>* H, int64_t ldh,
     std::complex<float>* T, int64_t ldt,
     std::complex<float>* alpha,
@@ -3309,7 +3309,7 @@ int64_t hgeqz(
     std::complex<float>* Z, int64_t ldz );
 
 int64_t hgeqz(
-    lapack::Job job, lapack::CompQ compq, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::JobSchur job, lapack::CompQ compq, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
     std::complex<double>* H, int64_t ldh,
     std::complex<double>* T, int64_t ldt,
     std::complex<double>* alpha,

@@ -291,7 +291,7 @@ inline const char* jobcs2str( lapack::JobCS jobcs )
 // -----------------------------------------------------------------------------
 // hseqr
 enum class JobSchur {
-    None         = 'E',
+    EigOnly      = 'E',
     Schur        = 'S',
 };
 
@@ -310,8 +310,8 @@ inline lapack::JobSchur char2jobschur( char jobschur )
 inline const char* jobschur2str( lapack::JobSchur jobschur )
 {
     switch (jobschur) {
-        case lapack::JobSchur::None:  return "eig-only";
-        case lapack::JobSchur::Schur: return "schur";
+        case lapack::JobSchur::EigOnly: return "eig-only";
+        case lapack::JobSchur::Schur:   return "schur";
     }
     return "?";
 }

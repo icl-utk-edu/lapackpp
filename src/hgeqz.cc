@@ -11,7 +11,7 @@ using blas::real;
 
 // -----------------------------------------------------------------------------
 int64_t hgeqz(
-    lapack::Job job, lapack::CompQ compq, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::JobSchur job, lapack::CompQ compq, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
     float* H, int64_t ldh,
     float* T, int64_t ldt,
     float* ALPHAR,
@@ -30,7 +30,7 @@ int64_t hgeqz(
         lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
-    char job_ = job2char( job );
+    char job_ = jobschur2char( job );
     char compq_ = compq2char( compq );
     char compz_ = compq2char( compz );
     blas_int n_ = (blas_int) n;
@@ -63,7 +63,7 @@ int64_t hgeqz(
 
 // -----------------------------------------------------------------------------
 int64_t hgeqz(
-    lapack::Job job, lapack::CompQ compq, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::JobSchur job, lapack::CompQ compq, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
     double* H, int64_t ldh,
     double* T, int64_t ldt,
     double* ALPHAR,
@@ -82,7 +82,7 @@ int64_t hgeqz(
         lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
-    char job_ = job2char( job );
+    char job_ = jobschur2char( job );
     char compq_ = compq2char( compq );
     char compz_ = compq2char( compz );
     blas_int n_ = (blas_int) n;
@@ -115,7 +115,7 @@ int64_t hgeqz(
 
 // -----------------------------------------------------------------------------
 int64_t hgeqz(
-    lapack::Job job, lapack::CompQ compq, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::JobSchur job, lapack::CompQ compq, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
     std::complex<float>* H, int64_t ldh,
     std::complex<float>* T, int64_t ldt,
     std::complex<float>* ALPHA,
@@ -133,7 +133,7 @@ int64_t hgeqz(
         lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
-    char job_ = job2char( job );
+    char job_ = jobschur2char( job );
     char compq_ = compq2char( compq );
     char compz_ = compq2char( compz );
     blas_int n_ = (blas_int) n;
@@ -168,7 +168,7 @@ int64_t hgeqz(
 
 // -----------------------------------------------------------------------------
 int64_t hgeqz(
-    lapack::Job job, lapack::CompQ compq, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::JobSchur job, lapack::CompQ compq, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
     std::complex<double>* H, int64_t ldh,
     std::complex<double>* T, int64_t ldt,
     std::complex<double>* ALPHA,
@@ -186,7 +186,7 @@ int64_t hgeqz(
         lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
-    char job_ = job2char( job );
+    char job_ = jobschur2char( job );
     char compq_ = compq2char( compq );
     char compz_ = compq2char( compz );
     blas_int n_ = (blas_int) n;

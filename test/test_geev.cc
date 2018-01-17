@@ -4,6 +4,8 @@
 #include "print_matrix.hh"
 #include "error.hh"
 #include "check_geev.hh"
+#include "matrix_opts.hh"
+#include "matrix_generator.hh"
 
 #include <vector>
 #include <algorithm>
@@ -108,9 +110,21 @@ void test_geev_work( Params& params, bool run )
     std::vector< scalar_t > VR_tst( size_VR );
     std::vector< scalar_t > VR_ref( size_VR );
 
-    int64_t idist = 1;
+    matrix_opts opts;
+    opts.matrix = "randn";
+    opts.cond = 10;
+
+    Vector<real_t> sigma;
+    //lapack_generate_matrix( opts, n, n, &sigma, &A_tst, lda );
+    Matrix<real_t> A( n, n );
+    lapack_generate_matrix( opts, sigma, A );
+
+    //int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A_tst.size(), &A_tst[0] );
+    //lapack::larnv( idist, iseed, A_tst.size(), &A_tst[0] );
+
+    std::copy( std::begin(iseed), std::end(iseed), std::begin(opts.iseed) );
+    std::copy( A(0, 0), A(n, 0), A_tst.begin() );
     A_ref = A_tst;
 
     if (verbose >= 1) {

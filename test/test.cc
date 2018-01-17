@@ -497,7 +497,10 @@ Params::Params():
 
     // default -1 means "no check"
     //          name,     w, type,              def, min, max, help
-    okay      ( "status", 6, ParamType::Output,  -1,   0,   0, "success indicator" )
+    okay      ( "status", 6, ParamType::Output,  -1,   0,   0, "success indicator" ),
+
+    test_matrix_cond ("Condition Number", 11, 4, ParamType::Value, 100, 1.0, 10000, "matrix condition number" ),
+    test_matrix_condD ("Condition Number", 11, 4, ParamType::Value, 100, 1.0, 10000, "matrix condition number" )
 {
     // mark standard set of output fields as used
     okay  .value();

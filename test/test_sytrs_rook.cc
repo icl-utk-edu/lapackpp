@@ -7,6 +7,8 @@
 #include <vector>
 #include <omp.h>
 
+#if LAPACK_VERSION_MAJOR >= 3 && LAPACK_VERSION_MINOR >= 5  // >= 3.5
+
 // -----------------------------------------------------------------------------
 // simple overloaded wrappers around LAPACKE
 static lapack_int LAPACKE_sytrs_rook(
@@ -143,3 +145,14 @@ void test_sytrs_rook( Params& params, bool run )
             break;
     }
 }
+
+#else
+
+// -----------------------------------------------------------------------------
+void test_sytrs_rook( Params& params, bool run )
+{
+    fprintf( stderr, "sytrs_rook requires LAPACK >= 3.5\n\n" );
+    exit(0);
+}
+
+#endif  // LAPACK >= 3.5

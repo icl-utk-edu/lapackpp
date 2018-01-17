@@ -347,9 +347,12 @@ if (opts.least_squares):
     cmds += [
     [ 'gels',   check + dtype + align + mn + trans_nc ],
     [ 'gelsy',  check + dtype + align + mn ],
-#    [ 'gelsd',  check + dtype + align + mn ],
+    [ 'gelsd',  check + dtype + align + mn ],
     [ 'gelss',  check + dtype + align + mn ],
     [ 'getsls', check + dtype + align + mn + trans_nc ],
+
+    [ 'gglse', check + dtype + align + mnk ],
+    [ 'ggglm', check + dtype + align + mnk ],
     ]
 
 # QR

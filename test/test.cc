@@ -69,7 +69,7 @@ std::vector< libtest::routines_t > routines = {
     { "gtsv",               test_gtsv,      Section::gesv },
     { "",                   nullptr,        Section::newline },
 
-  //{ "gesvx",              test_gesvx,     Section::gesv },
+  //{ "gesvx",              test_gesvx,     Section::gesv }, // FIXME Need to set up a large number of args
   //{ "gbsvx",              test_gbsvx,     Section::gesv },
   //{ "gtsvx",              test_gtsvx,     Section::gesv },
     { "",                   nullptr,        Section::newline },
@@ -175,7 +175,7 @@ std::vector< libtest::routines_t > routines = {
     { "",                   nullptr,                 Section::newline },
 
     { "sytrf_rook",         test_sytrf_rook,         Section::sysv2 }, // tested via LAPACKE using gcc/MKL
-  //{ "sytrf_aasen",        test_sytrf_aasen,        Section::sysv2 },
+  //{ "sytrf_aasen",        test_sytrf_aasen,        Section::sysv2 }, // TODO not in src
   //{ "sytrf_aasen_2stage", test_sytrf_aasen_2stage, Section::sysv2 },
     { "",                   nullptr,                 Section::newline },
 
@@ -184,7 +184,7 @@ std::vector< libtest::routines_t > routines = {
   //{ "sytrs_aasen_2stage", test_sytrs_aasen_2stage, Section::sysv2 },
     { "",                   nullptr,                 Section::newline },
 
-  //{ "sytri_rook",         test_sytri_rook,         Section::sysv2 },
+  //{ "sytri_rook",         test_sytri_rook,         Section::sysv2 }, // FIXME sytri_rk exists (6 args).  test has 5 args.
   //{ "sytri_aasen",        test_sytri_aasen,        Section::sysv2 },
   //{ "sytri_aasen_2stage", test_sytri_aasen_2stage, Section::sysv2 },
     { "",                   nullptr,                 Section::newline },
@@ -219,13 +219,13 @@ std::vector< libtest::routines_t > routines = {
     // least squares
     { "gels",               test_gels,      Section::gels }, // tested via LAPACKE using gcc/MKL
     { "gelsy",              test_gelsy,     Section::gels }, // tested via LAPACKE using gcc/MKL FIXME jpvt[i]=i rcond=0
-  //{ "gelsd",              test_gelsd,     Section::gels },
+    { "gelsd",              test_gelsd,     Section::gels }, // TODO: Segfaults for some Z sizes. src/gelsd.cc:275 lrwork_ too small?
     { "gelss",              test_gelss,     Section::gels }, // tested via LAPACKE using gcc/MKL FIXME rcond=n
     { "getsls",             test_getsls,    Section::gels }, // tested via LAPACKE using gcc/MKL
     { "",                   nullptr,        Section::newline },
 
-  //{ "gglse",              test_gglse,     Section::gels },
-  //{ "ggglm",              test_ggglm,     Section::gels },
+    { "gglse",              test_gglse,     Section::gels },
+    { "ggglm",              test_ggglm,     Section::gels },
     { "",                   nullptr,        Section::newline },
 
     // -----

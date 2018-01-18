@@ -200,10 +200,10 @@ void test_sytrs_rook         ( Params& params, bool run );
 void test_sytri_rook         ( Params& params, bool run );
 
 // symmetric indefinite, Aasen's
-void test_sysv_aasen         ( Params& params, bool run );
-void test_sytrf_aasen        ( Params& params, bool run );
-void test_sytrs_aasen        ( Params& params, bool run );
-void test_sytri_aasen        ( Params& params, bool run );
+void test_sysv_aa            ( Params& params, bool run );
+void test_sytrf_aa           ( Params& params, bool run );
+void test_sytrs_aa           ( Params& params, bool run );
+void test_sytri_aa           ( Params& params, bool run );
 
 // symmetric indefinite, Aasen's 2-stage
 void test_sysv_aasen_2stage  ( Params& params, bool run );
@@ -319,6 +319,9 @@ void test_hbgvx ( Params& params, bool run );
 void test_hbgvd ( Params& params, bool run );
 void test_hbgvr ( Params& params, bool run );
 void test_hbgst ( Params& params, bool run );
+
+// Implements the QZ method for finding the generalized eigenvalues of the matrix pair (H,T).
+void test_hgeqz ( Params& params, bool run );
 
 // nonsymmetric eigenvalues
 void test_geev  ( Params& params, bool run );

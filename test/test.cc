@@ -69,7 +69,7 @@ std::vector< libtest::routines_t > routines = {
     { "gtsv",               test_gtsv,      Section::gesv },
     { "",                   nullptr,        Section::newline },
 
-  //{ "gesvx",              test_gesvx,     Section::gesv }, // FIXME Need to set up a large number of args
+  //{ "gesvx",              test_gesvx,     Section::gesv }, // TODO Need to set up args fact equed
   //{ "gbsvx",              test_gbsvx,     Section::gesv },
   //{ "gtsvx",              test_gtsvx,     Section::gesv },
     { "",                   nullptr,        Section::newline },
@@ -170,23 +170,23 @@ std::vector< libtest::routines_t > routines = {
 
     // -----   requires LAPACK>=3.5
     { "sysv_rook",          test_sysv_rook,          Section::sysv2 }, // tested via LAPACKE using gcc/MKL
-  //{ "sysv_aasen",         test_sysv_aasen,         Section::sysv2 }, // TODO does not automagically generate
+    { "sysv_aa",            test_sysv_aa,            Section::sysv2 }, // tested via LAPACKE using gcc/MKL
   //{ "sysv_aasen_2stage",  test_sysv_aasen_2stage,  Section::sysv2 }, // TODO does not automagically generate
     { "",                   nullptr,                 Section::newline },
 
     { "sytrf_rook",         test_sytrf_rook,         Section::sysv2 }, // tested via LAPACKE using gcc/MKL
-  //{ "sytrf_aasen",        test_sytrf_aasen,        Section::sysv2 }, // TODO not in src
-  //{ "sytrf_aasen_2stage", test_sytrf_aasen_2stage, Section::sysv2 },
+  //{ "sytrf_aa",           test_sytrf_aa,           Section::sysv2 }, // TODO fails for all precisions, LAPACKE wrapper broken?
+  //{ "sytrf_aasen_2stage", test_sytrf_aasen_2stage, Section::sysv2 }, // TODO No automagic generation.  No src
     { "",                   nullptr,                 Section::newline },
 
     { "sytrs_rook",         test_sytrs_rook,         Section::sysv2 }, // tested via LAPACKE using gcc/MKL
-  //{ "sytrs_aasen",        test_sytrs_aasen,        Section::sysv2 },
-  //{ "sytrs_aasen_2stage", test_sytrs_aasen_2stage, Section::sysv2 },
+    { "sytrs_aa",           test_sytrs_aa,           Section::sysv2 }, // tested via LAPACKE using gcc/MKL
+  //{ "sytrs_aasen_2stage", test_sytrs_aasen_2stage, Section::sysv2 },// TODO No automagic generation.  No src
     { "",                   nullptr,                 Section::newline },
 
-  //{ "sytri_rook",         test_sytri_rook,         Section::sysv2 }, // FIXME sytri_rk exists (6 args).  test has 5 args.
-  //{ "sytri_aasen",        test_sytri_aasen,        Section::sysv2 },
-  //{ "sytri_aasen_2stage", test_sytri_aasen_2stage, Section::sysv2 },
+  //{ "sytri_rook",         test_sytri_rook,         Section::sysv2 }, // TODO sytri_rk exists (6 args).  test has 5 args.
+  //{ "sytri_aa",           test_sytri_aa,           Section::sysv2 }, // TODO No automagic generation.  No src
+  //{ "sytri_aasen_2stage", test_sytri_aasen_2stage, Section::sysv2 }, // TODO No automagic generation.  No src
     { "",                   nullptr,                 Section::newline },
 
     // -----
@@ -218,14 +218,14 @@ std::vector< libtest::routines_t > routines = {
     // -----
     // least squares
     { "gels",               test_gels,      Section::gels }, // tested via LAPACKE using gcc/MKL
-    { "gelsy",              test_gelsy,     Section::gels }, // tested via LAPACKE using gcc/MKL FIXME jpvt[i]=i rcond=0
+    { "gelsy",              test_gelsy,     Section::gels }, // tested via LAPACKE using gcc/MKL TODO jpvt[i]=i rcond=0
     { "gelsd",              test_gelsd,     Section::gels }, // TODO: Segfaults for some Z sizes. src/gelsd.cc:275 lrwork_ too small?
-    { "gelss",              test_gelss,     Section::gels }, // tested via LAPACKE using gcc/MKL FIXME rcond=n
+    { "gelss",              test_gelss,     Section::gels }, // tested via LAPACKE using gcc/MKL TODO rcond=n
     { "getsls",             test_getsls,    Section::gels }, // tested via LAPACKE using gcc/MKL
     { "",                   nullptr,        Section::newline },
 
-    { "gglse",              test_gglse,     Section::gels },
-    { "ggglm",              test_ggglm,     Section::gels },
+    { "gglse",              test_gglse,     Section::gels }, // tested via LAPACKE using gcc/MKL
+    { "ggglm",              test_ggglm,     Section::gels }, // tested via LAPACKE using gcc/MKL
     { "",                   nullptr,        Section::newline },
 
     // -----
@@ -237,8 +237,8 @@ std::vector< libtest::routines_t > routines = {
     { "",                   nullptr,        Section::newline },
 
     { "ggqrf",              test_ggqrf,     Section::qr }, // tested via LAPACKE using gcc/MKL, TODO for now use p=param.k
-  //{ "gglqf",              test_gglqf,     Section::qr },
-  //{ "ggqlf",              test_ggqlf,     Section::qr },
+  //{ "gglqf",              test_gglqf,     Section::qr }, // TODO No automagic generation.  No src
+  //{ "ggqlf",              test_ggqlf,     Section::qr }, // TODO No automagic generation.  No src
     { "ggrqf",              test_ggrqf,     Section::qr }, // tested via LAPACKE using gcc/MKL, TODO for now use p=param.k
     { "",                   nullptr,        Section::newline },
 
@@ -248,7 +248,7 @@ std::vector< libtest::routines_t > routines = {
     { "ungrq",              test_ungrq,     Section::qr }, // tested numerically based on lapack; R, Q full sizes
     { "",                   nullptr,        Section::newline },
 
-  //{ "unmqr",              test_unmqr,     Section::qr },
+  //{ "unmqr",              test_unmqr,     Section::qr }, // TODO segfaults
   //{ "unmlq",              test_unmlq,     Section::qr },
   //{ "unmql",              test_unmql,     Section::qr },
   //{ "unmrq",              test_unmrq,     Section::qr },
@@ -261,7 +261,7 @@ std::vector< libtest::routines_t > routines = {
     { "hbev",               test_hbev,      Section::heev }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },
 
-  //{ "heevx",              test_heevx,     Section::heev },
+  //{ "heevx",              test_heevx,     Section::heev }, // TODO need to setup vl etc
   //{ "hpevx",              test_hpevx,     Section::heev },
   //{ "hbevx",              test_hbevx,     Section::heev },
     { "",                   nullptr,        Section::newline },
@@ -271,7 +271,7 @@ std::vector< libtest::routines_t > routines = {
     { "hbevd",              test_hbevd,     Section::heev }, // tested via LAPACKE using gcc/MKL
     { "",                   nullptr,        Section::newline },
 
-  //{ "heevr",              test_heevr,     Section::heev },
+  //{ "heevr",              test_heevr,     Section::heev }, // TODO need to setup vl vu
   //{ "hpevr",              test_hpevr,     Section::heev },
   //{ "hbevr",              test_hbevr,     Section::heev },
     { "",                   nullptr,        Section::newline },
@@ -298,37 +298,39 @@ std::vector< libtest::routines_t > routines = {
     { "hbgv",               test_hbgv,      Section::sygv }, // tested via LAPACKE using gcc/MKL
     { "",                   nullptr,        Section::newline },
 
-  //{ "sygvx",              test_sygvx,     Section::sygv },
+  //{ "sygvx",              test_sygvx,     Section::sygv }, // TODO need vl vu
   //{ "spgvx",              test_spgvx,     Section::sygv },
   //{ "sbgvx",              test_sbgvx,     Section::sygv },
     { "",                   nullptr,        Section::newline },
 
     { "hegvd",              test_hegvd,     Section::sygv }, // tested via LAPACKE using gcc/MKL
     { "hpgvd",              test_hpgvd,     Section::sygv }, // tested via LAPACKE using gcc/MKL
-  //{ "hbgvd",              test_hbgvd,     Section::sygv }, // TODO FIXME Segfaults.. is the src correct?
+  //{ "hbgvd",              test_hbgvd,     Section::sygv }, // TODO Segfaults.. is the src correct?
     { "",                   nullptr,        Section::newline },
 
-  //{ "hegvr",              test_hegvr,     Section::sygv }, // TODO FIXME This test does not generate automagically
+  //{ "hegvr",              test_hegvr,     Section::sygv }, // TODO This test does not generate automagically
   //{ "spgvr",              test_spgvr,     Section::sygv },
   //{ "sbgvr",              test_sbgvr,     Section::sygv },
     { "",                   nullptr,        Section::newline },
 
     { "hegst",              test_hegst,     Section::sygv }, // tested via LAPACKE using gcc/MKL
     { "hpgst",              test_hpgst,     Section::sygv }, // tested via LAPACKE using gcc/MKL
-  //{ "hbgst",              test_hbgst,     Section::sygv }, // TODO FIXME This test requires non-working --vect flag
+  //{ "hbgst",              test_hbgst,     Section::sygv }, // TODO This test requires non-working --vect flag
+
+  //{ "hgeqz",              test_hgeqz,     Section::sygv }, // TODO Needs params job compq compz...
     { "",                   nullptr,        Section::newline },
 
     // -----
     // non-symmetric eigenvalues
     { "geev",               test_geev,      Section::geev },
-  //{ "ggev",               test_ggev,      Section::geev }, // TODO FIXME Requires VL and VR arrays
+  //{ "ggev",               test_ggev,      Section::geev }, // TODO Requires VL and VR arrays
     { "",                   nullptr,        Section::newline },
 
-  //{ "geevx",              test_geevx,     Section::geev }, // TODO FIXME Requires --vect flag
+  //{ "geevx",              test_geevx,     Section::geev }, // TODO Requires --balanc -- sense 
   //{ "ggevx",              test_ggevx,     Section::geev },
     { "",                   nullptr,        Section::newline },
 
-  //{ "gees",               test_gees,      Section::geev }, 
+  //{ "gees",               test_gees,      Section::geev }, // TODO needs --sort --select
   //{ "gges",               test_gges,      Section::geev }, // TODO needs SELCTG  (external sort procedure) LOGICAL FUNCTION
     { "",                   nullptr,        Section::newline },
 
@@ -339,26 +341,26 @@ std::vector< libtest::routines_t > routines = {
     { "gehrd",              test_gehrd,     Section::geev }, // TODO Fixed ilo=1, ihi=n, should these vary?
     { "unghr",              test_unghr,     Section::geev }, // TODO Fixed ilo=1, ihi=n, should these vary?
     { "unmhr",              test_unmhr,     Section::geev },
-  //{ "hsein",              test_hsein,     Section::geev },
+  //{ "hsein",              test_hsein,     Section::geev }, // TODO error in automagic generation KeyError eigsrc
   //{ "trevc",              test_trevc,     Section::geev }, // TODO --howmany --select
     { "",                   nullptr,        Section::newline },
 
     // -----
     // driver: singular value decomposition
     { "gesvd",              test_gesvd,         Section::svd },
-  //{ "gesvd_2stage",       test_gesvd_2stage,  Section::svd },
+  //{ "gesvd_2stage",       test_gesvd_2stage,  Section::svd }, // TODO does not automagically generate
     { "",                   nullptr,            Section::newline },
 
     { "gesdd",              test_gesdd,         Section::svd },
-  //{ "gesdd_2stage",       test_gesdd_2stage,  Section::svd },
+  //{ "gesdd_2stage",       test_gesdd_2stage,  Section::svd }, // TODO does not automagically generate
     { "",                   nullptr,            Section::newline },
 
   //{ "gesvdx",             test_gesvdx,        Section::svd }, // TODO vl vu
-  //{ "gesvdx_2stage",      test_gesvdx_2stage, Section::svd },
+  //{ "gesvdx_2stage",      test_gesvdx_2stage, Section::svd }, // TODO does not automagically generate
     { "",                   nullptr,            Section::newline },
 
-  //{ "gejsv",              test_gejsv,     Section::svd }, // TODO does not generate automagically (keyerror: jobr)
-  //{ "gesvj",              test_gesvj,     Section::svd },
+  //{ "gejsv",              test_gejsv,     Section::svd }, // TODO error during automagic generation keyerror: jobr)
+  //{ "gesvj",              test_gesvj,     Section::svd }, // TODO need to set the mv parameter
     { "",                   nullptr,        Section::newline },
 
     // -----

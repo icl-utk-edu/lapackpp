@@ -312,17 +312,17 @@ if (opts.rook):
     ]
 
 # symmetric indefinite, Aasen
-#if (opts.aasen):
-#    cmds += [
-#    [ 'sysv_aasen',  check + dtype + align + n + uplo ],
-#    [ 'sytrf_aasen', check + dtype + align + n + uplo ],
-#    [ 'sytrs_aasen', check + dtype + align + n + uplo ],
-#    [ 'sytri_aasen', check + dtype + align + n + uplo ],
+if (opts.aasen):
+    cmds += [
+    [ 'sysv_aa',  check + dtype + align + n + uplo ],
+    [ 'sytrf_aa', check + dtype + align + n + uplo ],
+    [ 'sytrs_aa', check + dtype + align + n + uplo ],
+#    [ 'sytri_aa', check + dtype + align + n + uplo ],
 #    [ 'sysv_aasen_2stage',  check + dtype + align + n + uplo ],
 #    [ 'sytrf_aasen_2stage', check + dtype + align + n + uplo ],
 #    [ 'sytrs_aasen_2stage', check + dtype + align + n + uplo ],
 #    [ 'sytri_aasen_2stage', check + dtype + align + n + uplo ],
-#    ]
+    ]
 
 # Hermitian indefinite
 if (opts.hesv):
@@ -361,7 +361,7 @@ if (opts.qr):
     [ 'geqrf', check + dtype + align + n + wide + tall ],
     [ 'ggqrf', check + dtype + align + mnk ],
     [ 'ungqr', check + dtype + align + mn ], # n<=m
-#    [ 'unmqr', check + dtype + align + mnk + side + trans_nc ],
+    [ 'unmqr', check + dtype + align + mnk + side + trans_nc ],
     ]
 
 # LQ
@@ -464,7 +464,7 @@ if (opts.svd):
 #    [ 'gesdd_2stage',  check + dtype + align + mn ],
 #    [ 'gesvdx_2stage', check + dtype + align + mn ],
 #    [ 'gejsv',         check + dtype + align + mn ],
-#    [ 'gesvj',         check + dtype + align + mn ],
+#    [ 'gesvj',         check + dtype + align + mn + joba + jobu + jobv ],
     ]
 
 # auxilary

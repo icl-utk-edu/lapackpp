@@ -24,9 +24,10 @@ public:
     matrix_opts( matrix_opts_t flag=MatrixOptsDefault );
 
     // parse command line
-    void parse_opts( int argc, char** argv );
+    //void parse_opts( int argc, char** argv );
 
     // set range, vl, vu, il, iu for eigen/singular value problems (gesvdx, syevdx, ...)
+    /*
     void get_range( int64_t n, lapack::Range* range,
                     double* vl, double* vu,
                     int64_t* il, int64_t* iu );
@@ -80,6 +81,8 @@ public:
     bool magma;
     bool lapack;
     bool warmup;
+    */
+    int64_t verbose;
 
     // lapack options
     lapack::Uplo    uplo;
@@ -103,20 +106,8 @@ public:
     std::string matrix;
     double      cond;
     double      condD;
-    int64_t iseed[4];
+    int64_t     iseed[4];
 
-    // queue for default device
-    //magma_queue_t   queue;
-    //magma_queue_t   queues2[3];  // 2 queues + 1 extra NULL entry to catch errors
-
-    #ifdef HAVE_CUBLAS
-    // handle for directly calling cublas
-    cublasHandle_t  handle;
-    #endif
-
-    // misc
-    int flock_op;   // shared or exclusive lock
-    int flock_fd;   // lock file
 };
 
 #endif  // #ifndef MATRIX_OPTS_HH

@@ -184,9 +184,14 @@ std::vector< libtest::routines_t > routines = {
   //{ "sytrs_aasen_2stage", test_sytrs_aasen_2stage, Section::sysv2 },// TODO No automagic generation.  No src
     { "",                   nullptr,                 Section::newline },
 
-  //{ "sytri_rook",         test_sytri_rook,         Section::sysv2 }, // TODO sytri_rk exists (6 args).  test has 5 args.
   //{ "sytri_aa",           test_sytri_aa,           Section::sysv2 }, // TODO No automagic generation.  No src
   //{ "sytri_aasen_2stage", test_sytri_aasen_2stage, Section::sysv2 }, // TODO No automagic generation.  No src
+    { "",                   nullptr,                 Section::newline },
+
+    { "sysv_rk",            test_sysv_rk,            Section::sysv2 }, // tested via LAPACKE using gcc/MKL
+    { "sytrf_rk",           test_sytrf_rk,           Section::sysv2 }, // tested via LAPACKE using gcc/MKL
+  //{ "sytrs_rk",           test_sytrs_rk,           Section::sysv2 }, // TODO the LAPACKE wrapper seems to be missing
+  //{ "sytri_rk",           test_sytri_rk,           Section::sysv2 }, 
     { "",                   nullptr,                 Section::newline },
 
     // -----

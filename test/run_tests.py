@@ -322,6 +322,10 @@ if (opts.aasen):
 #    [ 'sytrf_aasen_2stage', check + dtype + align + n + uplo ],
 #    [ 'sytrs_aasen_2stage', check + dtype + align + n + uplo ],
 #    [ 'sytri_aasen_2stage', check + dtype + align + n + uplo ],
+    [ 'sysv_rk',  check + dtype + align + n + uplo ],
+    [ 'sytrf_rk', check + dtype + align + n + uplo ],
+#    [ 'sytrs_rk', check + dtype + align + n + uplo ],
+#    [ 'sytri_rk', check + dtype + align + n + uplo ],
     ]
 
 # Hermitian indefinite

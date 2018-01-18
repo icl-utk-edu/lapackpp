@@ -211,6 +211,12 @@ void test_sytrf_aasen_2stage ( Params& params, bool run );
 void test_sytrs_aasen_2stage ( Params& params, bool run );
 void test_sytri_aasen_2stage ( Params& params, bool run );
 
+// symmetric indefinite, rook pivoting, >= lapack 3.7
+void test_sysv_rk            ( Params& params, bool run );
+void test_sytrf_rk           ( Params& params, bool run );
+void test_sytrs_rk           ( Params& params, bool run );
+void test_sytri_rk           ( Params& params, bool run );
+
 // hermetian
 void test_hesv  ( Params& params, bool run );
 void test_hetrf ( Params& params, bool run );

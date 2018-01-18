@@ -88,6 +88,11 @@ public:
     libtest::ParamInt        ref_iters;
 
     libtest::ParamOkay       okay;
+
+    std::string              test_matrix_name;  // name of matrix type, e.g. "rand" or "svd_logrand"
+    libtest::ParamDouble     test_matrix_cond;  // condition number of matrix A, if applicable
+    libtest::ParamDouble     test_matrix_condD; // condition number of matrix D, if applicable
+    int64_t                  iseed[4];          // random seed
 };
 
 

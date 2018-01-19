@@ -7,6 +7,8 @@
 #include <vector>
 #include <omp.h>
 
+#if LAPACK_VERSION_MAJOR >= 3 && LAPACK_VERSION_MINOR >= 7  // >= 3.7
+
 // -----------------------------------------------------------------------------
 // simple overloaded wrappers around LAPACKE
 static lapack_int LAPACKE_sytrf_rk(
@@ -136,3 +138,14 @@ void test_sytrf_rk( Params& params, bool run )
             break;
     }
 }
+
+#else
+
+// -----------------------------------------------------------------------------
+void test_sytrf_rk( Params& params, bool run )
+{
+    fprintf( stderr, "sysv_trf requires LAPACK >= 3.7\n\n" );
+    exit(0);
+}
+
+#endif  // LAPACK >= 3.7

@@ -1533,7 +1533,8 @@ int64_t gesvx(
     float* X, int64_t ldx,
     float* rcond,
     float* ferr,
-    float* berr );
+    float* berr,
+    float* rpivotgrowth );
 
 int64_t gesvx(
     lapack::Factored fact, lapack::Op trans, int64_t n, int64_t nrhs,
@@ -1547,7 +1548,8 @@ int64_t gesvx(
     double* X, int64_t ldx,
     double* rcond,
     double* ferr,
-    double* berr );
+    double* berr,
+    float* rpivotgrowth );
 
 int64_t gesvx(
     lapack::Factored fact, lapack::Op trans, int64_t n, int64_t nrhs,
@@ -1561,7 +1563,8 @@ int64_t gesvx(
     std::complex<float>* X, int64_t ldx,
     float* rcond,
     float* ferr,
-    float* berr );
+    float* berr,
+    float* rpivotgrowth );
 
 int64_t gesvx(
     lapack::Factored fact, lapack::Op trans, int64_t n, int64_t nrhs,
@@ -1575,7 +1578,8 @@ int64_t gesvx(
     std::complex<double>* X, int64_t ldx,
     double* rcond,
     double* ferr,
-    double* berr );
+    double* berr,
+    float* rpivotgrowth );
 
 // -----------------------------------------------------------------------------
 int64_t gesvd(

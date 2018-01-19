@@ -23,7 +23,8 @@ int64_t gesvx(
     float* X, int64_t ldx,
     float* rcond,
     float* ferr,
-    float* berr )
+    float* berr,
+    float* rpivotgrowth )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -63,6 +64,7 @@ int64_t gesvx(
         throw Error();
     }
     *equed = char2equed( equed_ );
+    *rpivotgrowth = work[0];
     #if 1
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
     #endif
@@ -83,7 +85,8 @@ int64_t gesvx(
     double* X, int64_t ldx,
     double* rcond,
     double* ferr,
-    double* berr )
+    double* berr,
+    float* rpivotgrowth )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -123,6 +126,7 @@ int64_t gesvx(
         throw Error();
     }
     *equed = char2equed( equed_ );
+    *rpivotgrowth = work[0];
     #if 1
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
     #endif
@@ -143,7 +147,8 @@ int64_t gesvx(
     std::complex<float>* X, int64_t ldx,
     float* rcond,
     float* ferr,
-    float* berr )
+    float* berr,
+    float* rpivotgrowth )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -183,6 +188,7 @@ int64_t gesvx(
         throw Error();
     }
     *equed = char2equed( equed_ );
+    *rpivotgrowth = rwork[0];
     #if 1
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
     #endif
@@ -374,6 +380,17 @@ int64_t gesvx(
 ///     vector X(j) (i.e., the smallest relative change in
 ///     any element of A or B that makes X(j) an exact solution).
 ///
+/// @param[out] rpivotgrowth
+///     The reciprocal pivot growth
+///     factor norm(A)/norm(U). The "max absolute element" norm is
+///     used. If pivot growth is much less than 1, then the stability
+///     of the LU factorization of the (equilibrated) matrix A
+///     could be poor. This also means that the solution X, condition
+///     estimator rcond, and forward error bound ferr could be
+///     unreliable. If factorization fails with 0 < info <= n, then
+///     rpivotgrowth contains the reciprocal pivot growth factor for the
+///     leading info columns of A.
+///
 /// @retval = 0: successful exit
 /// @retval > 0 and <= n: if return value = i,
 ///     then U(i,i) is exactly zero. The factorization has
@@ -401,7 +418,8 @@ int64_t gesvx(
     std::complex<double>* X, int64_t ldx,
     double* rcond,
     double* ferr,
-    double* berr )
+    double* berr,
+    float* rpivotgrowth )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -441,6 +459,7 @@ int64_t gesvx(
         throw Error();
     }
     *equed = char2equed( equed_ );
+    *rpivotgrowth = rwork[0];
     #if 1
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
     #endif

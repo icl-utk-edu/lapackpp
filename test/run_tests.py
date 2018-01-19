@@ -87,6 +87,10 @@ group_opt.add_argument( '--vect',   action='store', help='default=%(default)s', 
 group_opt.add_argument( '--kd',     action='store', help='default=%(default)s', default='20,100' )
 group_opt.add_argument( '--kl',     action='store', help='default=%(default)s', default='20,100' )
 group_opt.add_argument( '--ku',     action='store', help='default=%(default)s', default='20,100' )
+group_opt.add_argument( '--vl',     action='store', help='default=%(default)s', default='-inf,0' )
+group_opt.add_argument( '--vu',     action='store', help='default=%(default)s', default='inf' )
+group_opt.add_argument( '--il',     action='store', help='default=%(default)s', default='10' )
+group_opt.add_argument( '--iu',     action='store', help='default=%(default)s', default='-1,100' )
 group_opt.add_argument( '--matrixtype', action='store', help='default=%(default)s', default='g,l,u' )
 
 parser.add_argument( 'tests', nargs=argparse.REMAINDER )
@@ -191,6 +195,10 @@ vect   = ' --vect '   + opts.vect   if (opts.vect)   else ''
 kd     = ' --kd '     + opts.kd     if (opts.kd)     else ''
 kl     = ' --kl '     + opts.kl     if (opts.kl)     else ''
 ku     = ' --ku '     + opts.ku     if (opts.ku)     else ''
+vl     = ' --vl '     + opts.vl     if (opts.vl)     else ''
+vu     = ' --vu '     + opts.vu     if (opts.vu)     else ''
+il     = ' --il '     + opts.il     if (opts.il)     else ''
+iu     = ' --iu '     + opts.iu     if (opts.iu)     else ''
 mtype  = ' --matrixtype ' + opts.matrixtype if (opts.matrixtype) else ''
 
 # ------------------------------------------------------------------------------
@@ -400,7 +408,8 @@ if (opts.rq):
 if (opts.syev):
     cmds += [
     [ 'heev',  check + dtype + align + n + uplo + jobz ],
-#    [ 'heevx',  check + dtype + align + n + uplo ],
+    [ 'heevx',  check + dtype + align + n + uplo + vl + vu ],
+    [ 'heevx',  check + dtype + align + n + uplo + il + iu ],
     [ 'heevd', check + dtype + align + n + uplo + jobz ],
 #    [ 'heevr', check + dtype + align + n + uplo + jobz ],
     [ 'hetrd', check + dtype + align + n + uplo ],

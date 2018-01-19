@@ -21,6 +21,16 @@ public:
 
     Params();
 
+    void get_range(
+        int64_t n, lapack::Range* range,
+        double* vl, double* vu,
+        int64_t* il, int64_t* iu );
+
+    void get_range(
+        int64_t n, lapack::Range* range,
+        float* vl, float* vu,
+        int64_t* il, int64_t* iu );
+
     // Field members are explicitly public.
     // Order here determines output order.
     // ----- test framework parameters
@@ -61,7 +71,10 @@ public:
     libtest::ParamDouble vl;
     libtest::ParamDouble vu;
     libtest::ParamInt    il;
+    libtest::ParamInt    il_out;
     libtest::ParamInt    iu;
+    libtest::ParamInt    iu_out;
+    libtest::ParamDouble fraction;
     libtest::ParamDouble alpha;
     libtest::ParamDouble beta;
     libtest::ParamInt    incx;

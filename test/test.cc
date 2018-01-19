@@ -460,7 +460,10 @@ Params::Params():
     jobvr     ( "jobvr",   5,    ParamType::List, lapack::Job::NoVec, lapack::char2job, lapack::job2char, lapack::job2str, "right eigenvectors: n=no vectors, v=vectors" ),
     jobu      ( "jobu",    9,    ParamType::List, lapack::Job::NoVec, lapack::char2job, lapack::job2char, lapack::job2str, "left singular vectors (U): n=no vectors, s=some vectors, o=overwrite, a=all vectors" ),
     jobvt     ( "jobvt",   9,    ParamType::List, lapack::Job::NoVec, lapack::char2job, lapack::job2char, lapack::job2str, "right singular vectors (V^T): n=no vectors, s=some vectors, o=overwrite, a=all vectors" ),
-    range     ( "range",   9,    ParamType::List, lapack::Range::All, lapack::char2range, lapack::range2char, lapack::range2str, "find: a=all eigen/singular values, v=values in (vl, vu], i=il-th through iu-th values" ),
+
+    // range is set by vl, vu, il, iu, fraction
+    range     ( "range",   9,    ParamType::Output, lapack::Range::All, lapack::char2range, lapack::range2char, lapack::range2str, "range of eigen/singular values to find; set (vl, vu), (il, iu), or fraction" ),
+
     matrixtype( "matrixtype", 10, ParamType::List, lapack::MatrixType::General,
                 lapack::char2matrixtype, lapack::matrixtype2char, lapack::matrixtype2str,
                 "matrix type: g=general, l=lower, u=upper, h=Hessenberg, z=band-general, b=band-lower, q=band-upper" ),
@@ -471,10 +474,16 @@ Params::Params():
     kl        ( "kl",      6,    ParamType::List, 100,     0, 1000000, "lower bandwidth" ),
     ku        ( "ku",      6,    ParamType::List, 100,     0, 1000000, "upper bandwidth" ),
     nrhs      ( "nrhs",    6,    ParamType::List,  10,     0, 1000000, "number of right hand sides" ),
-    vl        ( "vl",      6, 4, ParamType::List,  10,     0, 1000000, "lower bound of eigen/singular values to find; default 10.0" ),
-    vu        ( "vu",      6, 4, ParamType::List, 100,     0, 1000000, "upper bound of eigen/singular values to find; default 100.0" ),
-    il        ( "il",      6,    ParamType::List,  10,     0, 1000000, "1-based index of smallest eigen/singular value to find; default 10" ),
-    iu        ( "iu",      6,    ParamType::List, 100,     0, 1000000, "1-based index of largest  eigen/singular value to find; default 100" ),
+    vl        ( "vl",      7, 2, ParamType::List, -inf, -inf,     inf, "lower bound of eigen/singular values to find" ),
+    vu        ( "vu",      7, 2, ParamType::List,  inf, -inf,     inf, "upper bound of eigen/singular values to find" ),
+
+    // input il, iu, or fraction; output {il, iu}_out adjusted for matrix size
+    il        ( "il",      0,    ParamType::List,   1,     1, 1000000, "1-based index of smallest eigen/singular value to find" ),
+    il_out    ( "il",      6,    ParamType::Output, 1,     1, 1000000, "1-based index of smallest eigen/singular value to find (actual value used)" ),
+    iu        ( "iu",      0,    ParamType::List,  -1,    -1, 1000000, "1-based index of largest  eigen/singular value to find; -1 is all" ),
+    iu_out    ( "iu",      6,    ParamType::Output,-1,    -1, 1000000, "1-based index of largest  eigen/singular value to find (actual value used)" ),
+    fraction  ( "fraction",0, 0, ParamType::List,   1,     0,       1, "fraction of eigen/singular values to find; sets il = 1; iu = fraction*n" ),
+
     alpha     ( "alpha",   9, 4, ParamType::List,  pi,  -inf,     inf, "scalar alpha" ),
     beta      ( "beta",    9, 4, ParamType::List,   e,  -inf,     inf, "scalar beta" ),
     incx      ( "incx",    6,    ParamType::List,   1, -1000,    1000, "stride of x vector" ),
@@ -521,6 +530,60 @@ Params::Params():
     cache  .value();
 
     // routine's parameters are marked by the test routine; see main
+}
+
+// -----------------------------------------------------------------------------
+// determines the range, il, iu, vl, vu values.
+void Params::get_range(
+    int64_t n, lapack::Range* range,
+    double* vl, double* vu,
+    int64_t* il, int64_t* iu )
+{
+    typedef long long lld;
+
+    // default assume All
+    *vl = this->vl.value();
+    *vu = this->vu.value();
+    *il = std::min( this->il.value(), n );
+    *iu = std::min( this->iu.value(), n );
+    if (*iu == -1)
+        *iu = n;
+    double fraction = this->fraction.value();
+
+    // set range based on fraction, il/iu, vl/vu values
+    if (fraction != 1) {
+        *range = lapack::Range::Index;
+        *il = 1;
+        *iu = int64_t( fraction * n );
+        //printf( "fraction %.2f => index range (%lld, %lld)\n", fraction, *il, *iu );
+    }
+    else if (*il != 1 || *iu != n) {
+        *range = lapack::Range::Index;
+        //printf( "index range (%lld, %lld)\n", *il, *iu );
+    }
+    else if (*vl != -inf || *vu != inf) {
+        *range = lapack::Range::Value;
+        //printf( "value range (%.2e, %.2e)\n", *vl, *vu );
+    }
+    else {
+        *range = lapack::Range::All;
+    }
+
+    this->range.value()  = *range;
+    this->il_out.value() = *il;
+    this->iu_out.value() = *iu;
+}
+
+// -----------------------------------------------------------------------------
+void Params::get_range(
+    int64_t n, lapack::Range* range,
+    float* vl, float* vu,
+    int64_t* il, int64_t* iu )
+{
+    double dvl, dvu;
+    this->get_range( n, range, &dvl, &dvu, il, iu );
+    *vl = float(dvl);
+    *vu = float(dvu);
 }
 
 // -----------------------------------------------------------------------------

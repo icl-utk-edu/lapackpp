@@ -158,9 +158,9 @@ typedef blas::Side Side;
 // -----------------------------------------------------------------------------
 // like blas::side, but adds Both for trevc
 enum class Sides : char {
-    Left  = 'L',
-    Right = 'R',
-    Both  = 'B',
+    Left  = 'L',  L = 'L',
+    Right = 'R',  R = 'R',
+    Both  = 'B',  B = 'B',
 };
 
 inline char sides2char( Sides sides )

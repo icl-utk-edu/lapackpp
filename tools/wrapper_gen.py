@@ -96,6 +96,7 @@ import os
 import argparse
 
 from text_balanced import extract_bracketed
+from first_version import first_version
 
 parser = argparse.ArgumentParser()
 parser.add_argument( '-H', '--header',  help='generate header   in ../gen/lapack_wrappers.hh to go in ../include', action='store_true' )
@@ -133,10 +134,13 @@ header_bottom = '''\
 '''
 
 # --------------------
-wrapper_top = '''\
+wrapper_top1 = '''\
 #include "lapack.hh"
 #include "lapack_fortran.h"
 
+'''
+
+wrapper_top2 = '''\
 #include <vector>
 
 namespace lapack {
@@ -160,7 +164,6 @@ tester_top = '''\
 #include "error.hh"
 
 #include <vector>
-#include <omp.h>
 
 '''
 
@@ -977,6 +980,10 @@ def generate_docs( func, header=False ):
 ///
 '''
 
+    version = first_version[ func.name ]
+    v = version[0]*10000 + version[1]*100 + version[2]
+    txt += '/// @since LAPACK %d.%d.%d\n///\n' % (version)
+
     # --------------------
     i = 0
     for arg in func.args:
@@ -1118,7 +1125,7 @@ def generate_wrapper( func, header=False ):
                 query_args.append( arg.pname )
                 if (arg.dtype in ('int64_t', 'bool')):
                     # local 32-bit copy of 64-bit int
-                    int_checks += tab*2 + 'throw_if_( std::abs(' + arg.name + ') > std::numeric_limits<blas_int>::max() );\n'
+                    int_checks += tab*2 + 'lapack_error_if( std::abs(' + arg.name + ') > std::numeric_limits<blas_int>::max() );\n'
                     local_vars += tab + 'blas_int ' + arg.lname + ' = (blas_int) ' + arg.name + ';\n'
                 else:
                     s = re.search( r'^lapack::(\w+)', arg.dtype )
@@ -1455,11 +1462,33 @@ void test_''' + func.name + '''( Params& params, bool run )
 }
 ''')
 
-    txt = (lapacke
+    version = first_version[ func.name ]
+    v = version[0]*10000 + version[1]*100 + version[2]
+    if (v > 30201):
+        requires_if = '#if LAPACK_VERSION >= %d%02d%02d  // >= %d.%d.%d\n\n' % (version + version)
+        requires_else = ('''
+#else
+
+// -----------------------------------------------------------------------------
+void test_''' + func.name + '''( Params& params, bool run )
+{
+    fprintf( stderr, "''' + func.name + ''' requires LAPACK >= %d.%d.%d\\n\\n" );
+    exit(0);
+}
+
+#endif  // LAPACK >= %d.%d.%d''' % (version + version))
+    else:
+        requires_if   = ''
+        requires_else = ''
+    # end
+
+    txt = (requires_if
+        +  lapacke
         +  '// -----------------------------------------------------------------------------\n'
         +  'template< typename scalar_t >\n'
         +  'void test_' + func.name + '_work( Params& params, bool run )\n'
         +  '{\n'
+        +  tab + 'using namespace libtest;\n'
         +  tab + 'using namespace blas;\n'
         +  tab + 'typedef typename traits< scalar_t >::real_t real_t;\n'
         +  tab + 'typedef long long lld;\n'
@@ -1488,9 +1517,9 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  '\n'
         +  tab + '// ---------- run test\n'
         +  tab + 'libtest::flush_cache( params.cache.value() );\n'
-        +  tab + 'double time = omp_get_wtime();\n'
+        +  tab + 'double time = get_wtime();\n'
         +  tab + 'int64_t info_tst = lapack::' + func.name + '( ' + tst_args + ' );\n'
-        +  tab + 'time = omp_get_wtime() - time;\n'
+        +  tab + 'time = get_wtime() - time;\n'
         +  tab + 'if (info_tst != 0) {\n'
         +  tab + '    fprintf( stderr, "lapack::' + func.name + ' returned error %lld\\n", (lld) info_tst );\n'
         +  tab + '}\n'
@@ -1502,9 +1531,9 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  tab + "if (params.ref.value() == 'y' || params.check.value() == 'y') {\n"
         +  tab*2 + '// ---------- run reference\n'
         +  tab*2 + 'libtest::flush_cache( params.cache.value() );\n'
-        +  tab*2 + 'time = omp_get_wtime();\n'
+        +  tab*2 + 'time = get_wtime();\n'
         +  tab*2 + 'int64_t info_ref = LAPACKE_'  + func.name + '( ' + ref_args + ' );\n'
-        +  tab*2 + 'time = omp_get_wtime() - time;\n'
+        +  tab*2 + 'time = get_wtime() - time;\n'
         +  tab*2 + 'if (info_ref != 0) {\n'
         +  tab*2 + '    fprintf( stderr, "LAPACKE_' + func.name + ' returned error %lld\\n", (lld) info_ref );\n'
         +  tab*2 + '}\n'
@@ -1523,6 +1552,7 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  tab + '}\n'
         +  '}\n'
         +  dispatch
+        +  requires_else
     )
 
     # trim trailing whitespace
@@ -1564,13 +1594,15 @@ for arg in args.argv:
         wrapper_file = '../gen/' + arg + '.cc'
         print( 'generating', wrapper_file )
         wrapper = open( wrapper_file, 'w' )
-        print( wrapper_top, file=wrapper, end='' )
 
     if (args.tester):
         tester_file = '../gen/test_' + arg + '.cc'
         print( 'generating', tester_file )
         tester = open( tester_file, 'w' )
         print( tester_top, file=tester, end='' )
+
+    requires_if  = ''
+    requires_end = ''
 
     funcs = []
     i = 0
@@ -1580,6 +1612,21 @@ for arg in args.argv:
         print( '    ' + f )
         func = parse_lapack( f )
         funcs.append( func )
+
+        if (i == 1):
+            version = first_version[ func.name ]
+            v = version[0]*10000 + version[1]*100 + version[2]
+            if (v > 30201):
+                requires_if  = '#if LAPACK_VERSION >= %d%02d%02d  // >= %d.%d.%d\n\n' % (version + version)
+                requires_end = '\n#endif  // LAPACK >= %d.%d.%d\n' % (version)
+            # end
+            if (args.wrapper):
+                print( wrapper_top1, file=wrapper, end='' )
+                print( requires_if,  file=wrapper, end='' )
+                print( wrapper_top2, file=wrapper, end='' )
+            # end
+        # end
+
         if (args.header):
             txt = generate_wrapper( func, header=True )
             print( txt, file=header, end='' )
@@ -1602,6 +1649,7 @@ for arg in args.argv:
 
     if (args.wrapper):
         print( wrapper_bottom, file=wrapper, end='' )
+        print( requires_end,   file=wrapper, end='' )
         wrapper.close()
 
     if (args.tester):

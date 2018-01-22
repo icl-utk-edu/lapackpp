@@ -122,7 +122,10 @@ void test_heevx_work( Params& params, bool run )
         error += std::abs( nfound_tst - nfound_ref );
         error += abs_error( W_tst, W_ref );
         error += abs_error( Z_tst, Z_ref );
-        error += abs_error( ifail_tst, ifail_ref );
+        // for ifail, just compare the first nfound values
+        for ( size_t i = 0; i < (size_t)nfound_tst; i++ )
+            error += std::abs( ifail_tst[i] - ifail_ref[i] );
+
         params.error.value() = error;
         params.okay.value() = (error == 0);  // expect lapackpp == lapacke
     }

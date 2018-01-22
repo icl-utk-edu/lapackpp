@@ -266,9 +266,9 @@ std::vector< libtest::routines_t > routines = {
     { "hbev",               test_hbev,      Section::heev }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },
 
-    { "heevx",              test_heevx,     Section::heev },
-  //{ "hpevx",              test_hpevx,     Section::heev },
-  //{ "hbevx",              test_hbevx,     Section::heev },
+    { "heevx",              test_heevx,     Section::heev }, // tested via LAPACKE 
+    { "hpevx",              test_hpevx,     Section::heev }, // tested via LAPACKE 
+    { "hbevx",              test_hbevx,     Section::heev }, // tested via LAPACKE 
     { "",                   nullptr,        Section::newline },
 
     { "heevd",              test_heevd,     Section::heev }, // tested via LAPACKE using gcc/MKL

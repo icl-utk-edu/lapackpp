@@ -65,6 +65,8 @@ group_opt.add_argument( '--layout', action='store', help='default=%(default)s', 
 group_opt.add_argument( '--transA', action='store', help='default=%(default)s', default='n,t,c' )
 group_opt.add_argument( '--transB', action='store', help='default=%(default)s', default='n,t,c' )
 group_opt.add_argument( '--trans',  action='store', help='default=%(default)s', default='n,t,c' )
+group_opt.add_argument( '--fact',   action='store', help='default=%(default)s', default='f,n,e' )
+group_opt.add_argument( '--equed',  action='store', help='default=%(default)s', default='n,r,c,b' )
 group_opt.add_argument( '--uplo',   action='store', help='default=%(default)s', default='l,u' )
 group_opt.add_argument( '--diag',   action='store', help='default=%(default)s', default='n,u' )
 group_opt.add_argument( '--side',   action='store', help='default=%(default)s', default='l,r' )
@@ -172,6 +174,8 @@ layout = ' --layout ' + opts.layout if (opts.layout) else ''
 transA = ' --transA ' + opts.transA if (opts.transA) else ''
 transB = ' --transB ' + opts.transB if (opts.transB) else ''
 trans  = ' --trans '  + opts.trans  if (opts.trans)  else ''
+fact   = ' --fact '   + opts.fact   if (opts.fact)  else ''
+equed  = ' --equed '  + opts.equed  if (opts.equed)  else ''
 uplo   = ' --uplo '   + opts.uplo   if (opts.uplo)   else ''
 diag   = ' --diag '   + opts.diag   if (opts.diag)   else ''
 side   = ' --side '   + opts.side   if (opts.side)   else ''
@@ -408,8 +412,8 @@ if (opts.rq):
 if (opts.syev):
     cmds += [
     [ 'heev',  check + dtype + align + n + uplo + jobz ],
-    [ 'heevx',  check + dtype + align + n + uplo + vl + vu ],
-    [ 'heevx',  check + dtype + align + n + uplo + il + iu ],
+    [ 'heevx',  check + dtype + align + n + jobz + uplo + vl + vu ],
+    [ 'heevx',  check + dtype + align + n + jobz + uplo + il + iu ],
     [ 'heevd', check + dtype + align + n + uplo + jobz ],
 #    [ 'heevr', check + dtype + align + n + uplo + jobz ],
     [ 'hetrd', check + dtype + align + n + uplo ],
@@ -417,7 +421,8 @@ if (opts.syev):
     [ 'unmtr', check + dtype + align + mn + uplo + side + trans_nc ],
 
     [ 'hpev',  check + dtype + align + n + uplo + jobz ],
-#    [ 'hpevx',  check + dtype + align + n + uplo + jobz ],
+    [ 'hpevx',  check + dtype + align + n + jobz + uplo + vl + vu ],
+    [ 'hpevx',  check + dtype + align + n + jobz + uplo + il + iu ],
     [ 'hpevd',  check + dtype + align + n + uplo + jobz ],
 #    [ 'hpevr', check + dtype + align + n + uplo + jobz ],
     [ 'hptrd', check + dtype + n + uplo ],
@@ -425,7 +430,8 @@ if (opts.syev):
     [ 'upmtr', check + dtype + align + mn + side + uplo + trans_nc ],
 
     [ 'hbev',  check + dtype + align + n + uplo + jobz ],
-#    [ 'hbevx',  check + dtype + align + n + uplo + jobz ],
+    [ 'hbevx',  check + dtype + align + n + jobz + uplo + vl + vu ],
+    [ 'hbevx',  check + dtype + align + n + jobz + uplo + il + iu ],
     [ 'hbevd',  check + dtype + align + n + uplo + jobz ],
 #    [ 'hbevr', check + dtype + align + n + uplo + jobz ],
 #    [ 'hbtrd', check + dtype + align + n + uplo ],
@@ -478,6 +484,8 @@ if (opts.svd):
 #    [ 'gesvdx_2stage', check + dtype + align + mn ],
 #    [ 'gejsv',         check + dtype + align + mn ],
 #    [ 'gesvj',         check + dtype + align + mn + joba + jobu + jobv ],
+
+#    [ 'gesvx',         check + dtype + align + n + fact + trans + equed ],
     ]
 
 # auxilary

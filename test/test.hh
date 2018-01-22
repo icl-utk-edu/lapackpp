@@ -74,6 +74,7 @@ public:
     libtest::ParamInt    il_out;
     libtest::ParamInt    iu;
     libtest::ParamInt    iu_out;
+    libtest::ParamDouble fraction_start;
     libtest::ParamDouble fraction;
     libtest::ParamDouble alpha;
     libtest::ParamDouble beta;

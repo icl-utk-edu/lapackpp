@@ -462,7 +462,7 @@ Params::Params():
     jobvt     ( "jobvt",   9,    ParamType::List, lapack::Job::NoVec, lapack::char2job, lapack::job2char, lapack::job2str, "right singular vectors (V^T): n=no vectors, s=some vectors, o=overwrite, a=all vectors" ),
 
     // range is set by vl, vu, il, iu, fraction
-    range     ( "range",   9,    ParamType::Output, lapack::Range::All, lapack::char2range, lapack::range2char, lapack::range2str, "range of eigen/singular values to find; set (vl, vu), (il, iu), or fraction" ),
+    range     ( "range",   9,    ParamType::Output, lapack::Range::All, lapack::char2range, lapack::range2char, lapack::range2str, "range of eigen/singular values to find; set (vl, vu), (il, iu), or (fraction_start, fraction)" ),
 
     matrixtype( "matrixtype", 10, ParamType::List, lapack::MatrixType::General,
                 lapack::char2matrixtype, lapack::matrixtype2char, lapack::matrixtype2str,
@@ -477,12 +477,14 @@ Params::Params():
     vl        ( "vl",      7, 2, ParamType::List, -inf, -inf,     inf, "lower bound of eigen/singular values to find" ),
     vu        ( "vu",      7, 2, ParamType::List,  inf, -inf,     inf, "upper bound of eigen/singular values to find" ),
 
-    // input il, iu, or fraction; output {il, iu}_out adjusted for matrix size
+    // input il, iu, or fraction; output {il, iu}_out adjusted for matrix size or set by fraction
     il        ( "il",      0,    ParamType::List,   1,     1, 1000000, "1-based index of smallest eigen/singular value to find" ),
     il_out    ( "il",      6,    ParamType::Output, 1,     1, 1000000, "1-based index of smallest eigen/singular value to find (actual value used)" ),
     iu        ( "iu",      0,    ParamType::List,  -1,    -1, 1000000, "1-based index of largest  eigen/singular value to find; -1 is all" ),
     iu_out    ( "iu",      6,    ParamType::Output,-1,    -1, 1000000, "1-based index of largest  eigen/singular value to find (actual value used)" ),
-    fraction  ( "fraction",0, 0, ParamType::List,   1,     0,       1, "fraction of eigen/singular values to find; sets il = 1; iu = fraction*n" ),
+    fraction_start( "fraction_start",
+                           0, 0, ParamType::List,   0,     0,       1, "index of smallest eigen/singular value to find, as fraction of n; sets il = 1 + fraction_start*n" ),
+    fraction  ( "fraction",0, 0, ParamType::List,   1,     0,       1, "fraction of eigen/singular values to find; sets iu = il - 1 + fraction*n" ),
 
     alpha     ( "alpha",   9, 4, ParamType::List,  pi,  -inf,     inf, "scalar alpha" ),
     beta      ( "beta",    9, 4, ParamType::List,   e,  -inf,     inf, "scalar beta" ),
@@ -548,22 +550,22 @@ void Params::get_range(
     *iu = std::min( this->iu.value(), n );
     if (*iu == -1)
         *iu = n;
+    double fraction_start = this->fraction_start.value();
     double fraction = this->fraction.value();
+    if (fraction_start + fraction > 1)
+        throw lapack::Error( "Error: fraction_start + fraction > 1" );
 
     // set range based on fraction, il/iu, vl/vu values
     if (fraction != 1) {
         *range = lapack::Range::Index;
-        *il = 1;
-        *iu = int64_t( fraction * n );
-        //printf( "fraction %.2f => index range (%lld, %lld)\n", fraction, *il, *iu );
+        *il = std::min( 1 + int64_t( fraction_start * n ), n );
+        *iu = std::min( (*il) - 1 + int64_t( fraction * n ), n );
     }
     else if (*il != 1 || *iu != n) {
         *range = lapack::Range::Index;
-        //printf( "index range (%lld, %lld)\n", *il, *iu );
     }
     else if (*vl != -inf || *vu != inf) {
         *range = lapack::Range::Value;
-        //printf( "value range (%.2e, %.2e)\n", *vl, *vu );
     }
     else {
         *range = lapack::Range::All;

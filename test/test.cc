@@ -69,7 +69,7 @@ std::vector< libtest::routines_t > routines = {
     { "gtsv",               test_gtsv,      Section::gesv },
     { "",                   nullptr,        Section::newline },
 
-  //{ "gesvx",              test_gesvx,     Section::gesv }, // TODO Need to set up args fact equed
+  //{ "gesvx",              test_gesvx,     Section::gesv }, // TODO Set up fact equed, (work array)=(LAPACKE rpivot)
   //{ "gbsvx",              test_gbsvx,     Section::gesv },
   //{ "gtsvx",              test_gtsvx,     Section::gesv },
     { "",                   nullptr,        Section::newline },
@@ -175,7 +175,7 @@ std::vector< libtest::routines_t > routines = {
     { "",                   nullptr,                 Section::newline },
 
     { "sytrf_rook",         test_sytrf_rook,         Section::sysv2 }, // tested via LAPACKE using gcc/MKL
-  //{ "sytrf_aa",           test_sytrf_aa,           Section::sysv2 }, // TODO fails for all precisions, LAPACKE wrapper broken?
+    { "sytrf_aa",           test_sytrf_aa,           Section::sysv2 }, // TODO LAPACKE wrapper broken. Kludge-call to LAPACK. Passes.
   //{ "sytrf_aasen_2stage", test_sytrf_aasen_2stage, Section::sysv2 }, // TODO No automagic generation.  No src
     { "",                   nullptr,                 Section::newline },
 
@@ -339,7 +339,7 @@ std::vector< libtest::routines_t > routines = {
   //{ "gges",               test_gges,      Section::geev }, // TODO needs SELCTG  (external sort procedure) LOGICAL FUNCTION
     { "",                   nullptr,        Section::newline },
 
-  //{ "geesx",              test_geesx,     Section::geev }, 
+  //{ "geesx",              test_geesx,     Section::geev }, // TODO needs sort select2
   //{ "ggesx",              test_ggesx,     Section::geev },
     { "",                   nullptr,        Section::newline },
 

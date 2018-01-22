@@ -1,4 +1,3 @@
-#include "lapack_fortran.h" //  TODO Remove this when LAPACKE applies the bugfix 
 #include "test.hh"
 #include "lapack.hh"
 #include "lapack_flops.hh"
@@ -9,6 +8,80 @@
 #include <omp.h>
 
 #if LAPACK_VERSION_MAJOR >= 3 && LAPACK_VERSION_MINOR >= 7  // >= 3.7
+
+// TODO Remove Fortran prototypes when LAPACKE applies the bugfix
+#include "lapack_mangling.h"
+
+extern "C" {
+
+/* ----- symmetric indefinite factorization, Aasen's */
+#ifndef LAPACK_ssytrf_aa
+#define LAPACK_ssytrf_aa LAPACK_GLOBAL(ssytrf_aa,SSYTRF_AA)
+void LAPACK_ssytrf_aa(
+    char const* uplo,
+    lapack_int const* n,
+    float* a, lapack_int const* lda,
+    lapack_int* ipiv,
+    float* work, lapack_int const* lwork,
+    lapack_int* info );
+#endif
+
+#ifndef LAPACK_dsytrf_aa
+#define LAPACK_dsytrf_aa LAPACK_GLOBAL(dsytrf_aa,DSYTRF_AA)
+void LAPACK_dsytrf_aa(
+    char const* uplo,
+    lapack_int const* n,
+    double* a, lapack_int const* lda,
+    lapack_int* ipiv,
+    double* work, lapack_int const* lwork,
+    lapack_int* info );
+#endif
+
+#ifndef LAPACK_csytrf_aa
+#define LAPACK_csytrf_aa LAPACK_GLOBAL(csytrf_aa,CSYTRF_AA)
+void LAPACK_csytrf_aa(
+    char const* uplo,
+    lapack_int const* n,
+    lapack_complex_float* a, lapack_int const* lda,
+    lapack_int* ipiv,
+    lapack_complex_float* work, lapack_int const* lwork,
+    lapack_int* info );
+#endif
+
+#ifndef LAPACK_zsytrf_aa
+#define LAPACK_zsytrf_aa LAPACK_GLOBAL(zsytrf_aa,ZSYTRF_AA)
+void LAPACK_zsytrf_aa(
+    char const* uplo,
+    lapack_int const* n,
+    lapack_complex_double* a, lapack_int const* lda,
+    lapack_int* ipiv,
+    lapack_complex_double* work, lapack_int const* lwork,
+    lapack_int* info );
+#endif
+
+#ifndef LAPACK_chetrf_aa
+#define LAPACK_chetrf_aa LAPACK_GLOBAL(chetrf_aa,CHETRF_AA)
+void LAPACK_chetrf_aa(
+    char const* uplo,
+    lapack_int const* n,
+    lapack_complex_float* a, lapack_int const* lda,
+    lapack_int* ipiv,
+    lapack_complex_float* work, lapack_int const* lwork,
+    lapack_int* info );
+#endif
+
+#ifndef LAPACK_zhetrf_aa
+#define LAPACK_zhetrf_aa LAPACK_GLOBAL(zhetrf_aa,ZHETRF_AA)
+void LAPACK_zhetrf_aa(
+    char const* uplo,
+    lapack_int const* n,
+    lapack_complex_double* a, lapack_int const* lda,
+    lapack_int* ipiv,
+    lapack_complex_double* work, lapack_int const* lwork,
+    lapack_int* info );
+#endif
+
+}  // extern "C"
 
 // -----------------------------------------------------------------------------
 // simple overloaded wrappers around LAPACKE

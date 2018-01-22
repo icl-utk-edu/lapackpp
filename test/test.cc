@@ -499,8 +499,9 @@ Params::Params():
     //          name,     w, type,              def, min, max, help
     okay      ( "status", 6, ParamType::Output,  -1,   0,   0, "success indicator" ),
 
-    test_matrix_cond ("Condition Number", 11, 4, ParamType::Value, 100, 1.0, 10000, "matrix condition number" ),
-    test_matrix_condD ("Condition Number", 11, 4, ParamType::Value, 100, 1.0, 10000, "matrix condition number" )
+    test_matrix_name  ("test-matrix-name",  16, ParamType::Value, "rand", "", "test matrix type" ),
+    test_matrix_cond  ("test-matrix-cond",  16, 4, ParamType::Value, 0.0, 1.0, inf, "matrix A condition number" ),
+    test_matrix_condD ("test-matrix-condD", 16, 4, ParamType::Value, 0.0, 1.0, inf, "matrix D condition number" )
 {
     // mark standard set of output fields as used
     okay  .value();

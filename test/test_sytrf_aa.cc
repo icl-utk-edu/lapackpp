@@ -6,7 +6,7 @@
 
 #include <vector>
 
-#if LAPACK_VERSION_MAJOR >= 3 && LAPACK_VERSION_MINOR >= 7  // >= 3.7
+#if LAPACK_VERSION >= 30700  // >= 3.7
 
 // TODO Remove Fortran prototypes when LAPACKE applies the bugfix
 #include "lapack_mangling.h"

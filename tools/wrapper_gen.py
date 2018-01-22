@@ -1476,7 +1476,8 @@ void test_''' + func.name + '''( Params& params, bool run )
     exit(0);
 }
 
-#endif  // LAPACK >= %d.%d.%d''' % (version + version))
+#endif  // LAPACK >= %d.%d.%d
+''' % (version + version))
     else:
         requires_if   = ''
         requires_else = ''

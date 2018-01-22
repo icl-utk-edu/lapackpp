@@ -1,7 +1,7 @@
 #include "lapack.hh"
 #include "lapack_fortran.h"
 
-#if LAPACK_VERSION_MAJOR >= 3 && LAPACK_VERSION_MINOR >= 4  // >= 3.4
+#if LAPACK_VERSION >= 30400  // >= 3.4
 
 #include <vector>
 

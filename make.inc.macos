@@ -15,10 +15,10 @@ CXXFLAGS  = -fPIC -fopenmp -MMD -std=c++11 -pedantic \
             -Wall -Wmissing-declarations \
             -Wno-unused-local-typedefs
 
-# Accelerate missing *gbrfsx, looks like LAPACK 3.1
+# Accelerate is LAPACK 3.2.1, minus XBLAS (*gbrfsx, etc.)
 CXXFLAGS += -I${CBLASDIR} \
             -I${LAPACKDIR}/LAPACKE/include \
-            -DLAPACK_VERSION_MAJOR=3 -DLAPACK_VERSION_MINOR=1 -DLAPACK_VERSION_MICRO=0 \
+            -DLAPACK_VERSION=30201 \
             -DHAVE_MACOS_ACCELERATE \
             -DBLAS_COMPLEX_RETURN_ARGUMENT
 

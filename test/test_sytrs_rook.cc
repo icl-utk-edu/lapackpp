@@ -6,7 +6,7 @@
 
 #include <vector>
 
-#if LAPACK_VERSION_MAJOR >= 3 && LAPACK_VERSION_MINOR >= 5  // >= 3.5
+#if LAPACK_VERSION >= 30500  // >= 3.5
 
 // -----------------------------------------------------------------------------
 // simple overloaded wrappers around LAPACKE

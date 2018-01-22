@@ -1,7 +1,8 @@
 #include "lapack.hh"
 #include "lapack_fortran.h"
 
-#if LAPACK_VERSION_MAJOR >= 3 && LAPACK_VERSION_MINOR >= 6 && LAPACK_VERSION_MICRO >=1  // >= 3.6.1
+#if LAPACK_VERSION >= 30601  // >= 3.6.1
+#ifndef HAVE_MKL  // MKL 2018 lacks trevc3
 
 #include <vector>
 
@@ -366,4 +367,5 @@ int64_t trevc3(
 
 }  // namespace lapack
 
+#endif  // not HAVE_MKL
 #endif  // LAPACK >= 3.6.1

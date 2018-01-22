@@ -276,14 +276,14 @@ std::vector< libtest::routines_t > routines = {
     { "hbevd",              test_hbevd,     Section::heev }, // tested via LAPACKE using gcc/MKL
     { "",                   nullptr,        Section::newline },
 
-    { "heevr",              test_heevr,     Section::heev }, // TODO need to setup vl vu
-  //{ "hpevr",              test_hpevr,     Section::heev },
-  //{ "hbevr",              test_hbevr,     Section::heev },
+    { "heevr",              test_heevr,     Section::heev }, // tested via LAPACKE using gcc/MKL
+  //{ "hpevr",              test_hpevr,     Section::heev }, // TODO No automagic generation.  No src
+  //{ "hbevr",              test_hbevr,     Section::heev }, // TODO No automagic generation.  No src
     { "",                   nullptr,        Section::newline },
 
     { "hetrd",              test_hetrd,     Section::heev }, // tested via LAPACKE using gcc/MKL
     { "hptrd",              test_hptrd,     Section::heev }, // tested via LAPACKE using gcc/MKL
-  //{ "hbtrd",              test_hbtrd,     Section::heev },
+  //{ "hbtrd",              test_hbtrd,     Section::heev }, // Need to add to test.cc params a new vect option v,n,u for forming Q
     { "",                   nullptr,        Section::newline },
 
     { "ungtr",              test_ungtr,     Section::heev }, // tested via LAPACKE using gcc/MKL
@@ -303,7 +303,7 @@ std::vector< libtest::routines_t > routines = {
     { "hbgv",               test_hbgv,      Section::sygv }, // tested via LAPACKE using gcc/MKL
     { "",                   nullptr,        Section::newline },
 
-  //{ "sygvx",              test_sygvx,     Section::sygv }, // TODO need vl vu
+    { "hegvx",              test_hegvx,     Section::sygv }, // TODO Working on this
   //{ "spgvx",              test_spgvx,     Section::sygv },
   //{ "sbgvx",              test_sbgvx,     Section::sygv },
     { "",                   nullptr,        Section::newline },

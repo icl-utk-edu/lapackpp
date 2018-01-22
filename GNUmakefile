@@ -1,14 +1,12 @@
 include make.inc
 
 # defaults if not defined in make.inc
-CXX      ?= g++
-
 LDFLAGS  ?= -fPIC -fopenmp
 CXXFLAGS ?= -fPIC -fopenmp -MMD -std=c++11 -pedantic \
             -Wall -Wmissing-declarations \
             -Wno-unused-local-typedefs \
             -I${LAPACKDIR}/LAPACKE/include \
-            -DLAPACK_VERSION_MAJOR=3 -DLAPACK_VERSION_MINOR=8 -DLAPACK_VERSION_MICRO=0 \
+            -DLAPACK_VERSION=30800 \
             -DLAPACK_MATGEN
 #CXXFLAGS += -Werror
 #CXXFLAGS += -Wconversion
@@ -42,6 +40,10 @@ test_src = ${wildcard test/*.cc}
 test_obj = ${addsuffix .o, ${basename ${test_src}}}
 test_dep = ${addsuffix .d, ${basename ${test_src}}}
 
+tools_src = ${wildcard tools/*.cc}
+tools_obj = ${addsuffix .o, ${basename ${tools_src}}}
+tools_dep = ${addsuffix .d, ${basename ${tools_src}}}
+
 liblapackpp_so = lib/liblapackpp.so
 liblapackpp_a  = lib/liblapackpp.a
 
@@ -73,6 +75,8 @@ src: shared
 
 test: test/test
 
+tools: tools/lapack_version
+
 docs:
 	doxygen docs/doxygen/doxyfile.conf
 	@echo ========================================
@@ -83,6 +87,9 @@ docs:
 
 test/test: ${test_obj} ${liblapackpp_so} ${libtest_so}
 	${CXX} ${LDFLAGS} -o $@ ${test_obj} ${LAPACKPP_LIBS} ${LIBS}
+
+tools/lapack_version: tools/lapack_version.o
+	${CXX} ${LDFLAGS} -o $@ $^ ${LIBS}
 
 ${liblapackpp_so}: ${obj} | lib
 	${CXX} ${LDFLAGS} -shared -o $@ ${obj} ${LIBS}
@@ -100,7 +107,7 @@ ${libtest_so}: ${libtest_src}
 %.i: %.cc
 	${CXX} ${CXXFLAGS} ${LAPACKPP_FLAGS} -E -o $@ $<
 
-clean: include/clean src/clean test/clean
+clean: include/clean src/clean test/clean tools/clean
 
 include/clean:
 	-${RM} gch/include/*.gch
@@ -110,6 +117,9 @@ src/clean:
 
 test/clean:
 	-${RM} test/test test/*.{o,d} gch/test/*.gch
+
+tools/clean:
+	-${RM} tools/lapack_version tools/*.{o,d}
 
 -include ${dep} ${test_dep}
 

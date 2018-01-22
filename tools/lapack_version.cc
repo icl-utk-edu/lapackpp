@@ -1,13 +1,18 @@
 #include <stdio.h>
 
-#ifdef __cplusplus
+#include "lapack_config.h"
+#include "lapack_mangling.h"
+
+#ifndef LAPACK_ilaver
+#define LAPACK_ilaver LAPACK_GLOBAL(ilaver,ILAVER)
 extern "C"
+void LAPACK_ilaver( lapack_int* major, lapack_int* minor, lapack_int* patch );
 #endif
-void ilaver_( int* major, int* minor, int* patch );
 
 int main( int argc, char** argv )
 {
-    int major, minor, patch;
-    ilaver_( &major, &minor, &patch );
+    lapack_int major, minor, patch;
+    LAPACK_ilaver( &major, &minor, &patch );
     printf( "LAPACK_VERSION=%d%02d%02d\n", major, minor, patch );
+    return 0;
 }

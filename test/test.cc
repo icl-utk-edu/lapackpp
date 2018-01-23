@@ -392,10 +392,10 @@ std::vector< libtest::routines_t > routines = {
     { "langb",              test_langb,     Section::aux_norm }, // Tested using direct LAPACK call to xlantp (not in LAPACKE)
     { "lanhb",              test_lanhb,     Section::aux_norm },
     { "lansb",              test_lansb,     Section::aux_norm },
-  //{ "lantb",              test_lantb,     Section::aux_norm },
+    { "lantb",              test_lantb,     Section::aux_norm },
     { "",                   nullptr,        Section::newline },
 
-  //{ "langt",              test_langt,     Section::aux_norm },
+    { "langt",              test_langt,     Section::aux_norm },
   //{ "lanht",              test_lanht,     Section::aux_norm },
   //{ "lanst",              test_lanst,     Section::aux_norm },
     { "",                   nullptr,        Section::newline },

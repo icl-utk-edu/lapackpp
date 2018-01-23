@@ -389,7 +389,7 @@ std::vector< libtest::routines_t > routines = {
     { "lantp",              test_lantp,     Section::aux_norm }, // Tested using direct LAPACK call to xlantp (not in LAPACKE)
     { "",                   nullptr,        Section::newline },
 
-  //{ "langb",              test_langb,     Section::aux_norm }, // TODO langb is missing in LAPACKE!!
+    { "langb",              test_langb,     Section::aux_norm }, // Tested using direct LAPACK call to xlantp (not in LAPACKE)
     { "lanhb",              test_lanhb,     Section::aux_norm },
     { "lansb",              test_lansb,     Section::aux_norm },
   //{ "lantb",              test_lantb,     Section::aux_norm },

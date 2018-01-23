@@ -535,8 +535,8 @@ if (opts.aux):
     [ 'lanhp', check + dtype + n + norm + uplo ],
     [ 'lansp', check + dtype + n + norm + uplo ],
     [ 'lantp', check + dtype + n + norm + uplo + diag ],
-#
-#    [ 'langb', check + dtype + align + n + kl + ku + norm ],
+
+    [ 'langb', check + dtype + align + n + kl + ku + norm ],
     [ 'lanhb', check + dtype + align + n + kd + norm + uplo ],
     [ 'lansb', check + dtype + align + n + kd + norm + uplo ],
 #    [ 'lantb', check + dtype + align + n + kd + norm + uplo + diag ],

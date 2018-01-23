@@ -313,9 +313,9 @@ std::vector< libtest::routines_t > routines = {
   //{ "hbgvd",              test_hbgvd,     Section::sygv }, // TODO Segfaults.. is the src correct?
     { "",                   nullptr,        Section::newline },
 
-  //{ "hegvr",              test_hegvr,     Section::sygv }, // TODO This test does not generate automagically
-  //{ "spgvr",              test_spgvr,     Section::sygv },
-  //{ "sbgvr",              test_sbgvr,     Section::sygv },
+  //{ "hegvr",              test_hegvr,     Section::sygv }, // TODO No automagic generation.  No src
+  //{ "spgvr",              test_spgvr,     Section::sygv }, // TODO No automagic generation.  No src
+  //{ "sbgvr",              test_sbgvr,     Section::sygv }, // TODO No automagic generation.  No src
     { "",                   nullptr,        Section::newline },
 
     { "hegst",              test_hegst,     Section::sygv }, // tested via LAPACKE using gcc/MKL
@@ -328,7 +328,7 @@ std::vector< libtest::routines_t > routines = {
     // -----
     // non-symmetric eigenvalues
     { "geev",               test_geev,      Section::geev },
-  //{ "ggev",               test_ggev,      Section::geev }, // TODO Requires VL and VR arrays
+    { "ggev",               test_ggev,      Section::geev }, // NOTE: No doxygen in src/ggev.cc
     { "",                   nullptr,        Section::newline },
 
   //{ "geevx",              test_geevx,     Section::geev }, // TODO Requires --balanc -- sense 

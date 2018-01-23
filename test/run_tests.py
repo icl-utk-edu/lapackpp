@@ -472,6 +472,7 @@ if (opts.syev):
 if (opts.geev):
     cmds += [
     [ 'geev',  check + dtype + align + n + jobvl + jobvr ],
+    [ 'ggev',  check + dtype + align + n + jobvl + jobvr ],
 #    [ 'geevx', check + dtype + align + n + jobvl + jobvr ],
     [ 'gehrd', check + dtype + align + n ],
     [ 'unghr', check + dtype + align + n ],

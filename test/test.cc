@@ -353,12 +353,12 @@ std::vector< libtest::routines_t > routines = {
   //{ "gesdd_2stage",       test_gesdd_2stage,  Section::svd }, // TODO No src
     { "",                   nullptr,            Section::newline },
 
-    { "gesvdx",             test_gesvdx,        Section::svd }, // WORKING ON THIS
-  //{ "gesvdx_2stage",      test_gesvdx_2stage, Section::svd }, // TODO does not automagically generate
+    { "gesvdx",             test_gesvdx,        Section::svd }, // tested via LAPACKE using gcc/MKL
+  //{ "gesvdx_2stage",      test_gesvdx_2stage, Section::svd }, // TODO No src
     { "",                   nullptr,            Section::newline },
 
-  //{ "gejsv",              test_gejsv,     Section::svd }, // TODO error during automagic generation keyerror: jobr)
-  //{ "gesvj",              test_gesvj,     Section::svd }, // TODO need to set the mv parameter
+  //{ "gejsv",              test_gejsv,     Section::svd }, // TODO No src
+  //{ "gesvj",              test_gesvj,     Section::svd }, // TODO No src
     { "",                   nullptr,        Section::newline },
 
     // -----
@@ -386,10 +386,10 @@ std::vector< libtest::routines_t > routines = {
     { "",                   nullptr,        Section::aux_norm },
     { "lanhp",              test_lanhp,     Section::aux_norm },
     { "lansp",              test_lansp,     Section::aux_norm },
-  //{ "lantp",              test_lantp,     Section::aux_norm },
+    { "lantp",              test_lantp,     Section::aux_norm }, // Tested using direct LAPACK call to xlantp (not in LAPACKE)
     { "",                   nullptr,        Section::newline },
 
-  //{ "langb",              test_langb,     Section::aux_norm },
+  //{ "langb",              test_langb,     Section::aux_norm }, // TODO langb is missing in LAPACKE!!
     { "lanhb",              test_lanhb,     Section::aux_norm },
     { "lansb",              test_lansb,     Section::aux_norm },
   //{ "lantb",              test_lantb,     Section::aux_norm },

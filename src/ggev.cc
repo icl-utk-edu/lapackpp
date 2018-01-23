@@ -14,8 +14,7 @@ int64_t ggev(
     lapack::Job jobvl, lapack::Job jobvr, int64_t n,
     float* A, int64_t lda,
     float* B, int64_t ldb,
-    float* ALPHAR,
-    float* ALPHAI,
+    std::complex<float>* ALPHA,
     float* BETA,
     float* VL, int64_t ldvl,
     float* VR, int64_t ldvr )
@@ -37,10 +36,14 @@ int64_t ggev(
     blas_int ldvr_ = (blas_int) ldvr;
     blas_int info_ = 0;
 
+    // split-complex representation
+    std::vector< float > ALPHAR( max( 1, n ) );
+    std::vector< float > ALPHAI( max( 1, n ) );
+
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_sggev( &jobvl_, &jobvr_, &n_, A, &lda_, B, &ldb_, ALPHAR, ALPHAI, BETA, VL, &ldvl_, VR, &ldvr_, qry_work, &ineg_one, &info_ );
+    LAPACK_sggev( &jobvl_, &jobvr_, &n_, A, &lda_, B, &ldb_, &ALPHAR[0], &ALPHAI[0], BETA, VL, &ldvl_, VR, &ldvr_, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -49,9 +52,13 @@ int64_t ggev(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_sggev( &jobvl_, &jobvr_, &n_, A, &lda_, B, &ldb_, ALPHAR, ALPHAI, BETA, VL, &ldvl_, VR, &ldvr_, &work[0], &lwork_, &info_ );
+    LAPACK_sggev( &jobvl_, &jobvr_, &n_, A, &lda_, B, &ldb_, &ALPHAR[0], &ALPHAI[0], BETA, VL, &ldvl_, VR, &ldvr_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
+    }
+    // merge split-complex representation
+    for (int64_t i = 0; i < n; ++i) {
+        ALPHA[i] = std::complex<float>( ALPHAR[i], ALPHAI[i] );
     }
     return info_;
 }
@@ -61,8 +68,7 @@ int64_t ggev(
     lapack::Job jobvl, lapack::Job jobvr, int64_t n,
     double* A, int64_t lda,
     double* B, int64_t ldb,
-    double* ALPHAR,
-    double* ALPHAI,
+    std::complex<double>* ALPHA,
     double* BETA,
     double* VL, int64_t ldvl,
     double* VR, int64_t ldvr )
@@ -84,10 +90,14 @@ int64_t ggev(
     blas_int ldvr_ = (blas_int) ldvr;
     blas_int info_ = 0;
 
+    // split-complex representation
+    std::vector< double > ALPHAR( max( 1, n ) );
+    std::vector< double > ALPHAI( max( 1, n ) );
+
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dggev( &jobvl_, &jobvr_, &n_, A, &lda_, B, &ldb_, ALPHAR, ALPHAI, BETA, VL, &ldvl_, VR, &ldvr_, qry_work, &ineg_one, &info_ );
+    LAPACK_dggev( &jobvl_, &jobvr_, &n_, A, &lda_, B, &ldb_, &ALPHAR[0], &ALPHAI[0], BETA, VL, &ldvl_, VR, &ldvr_, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -96,9 +106,13 @@ int64_t ggev(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dggev( &jobvl_, &jobvr_, &n_, A, &lda_, B, &ldb_, ALPHAR, ALPHAI, BETA, VL, &ldvl_, VR, &ldvr_, &work[0], &lwork_, &info_ );
+    LAPACK_dggev( &jobvl_, &jobvr_, &n_, A, &lda_, B, &ldb_, &ALPHAR[0], &ALPHAI[0], BETA, VL, &ldvl_, VR, &ldvr_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
+    }
+    // merge split-complex representation
+    for (int64_t i = 0; i < n; ++i) {
+        ALPHA[i] = std::complex<double>( ALPHAR[i], ALPHAI[i] );
     }
     return info_;
 }

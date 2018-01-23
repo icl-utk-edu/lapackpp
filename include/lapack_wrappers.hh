@@ -1977,8 +1977,7 @@ int64_t ggev(
     lapack::Job jobvl, lapack::Job jobvr, int64_t n,
     float* A, int64_t lda,
     float* B, int64_t ldb,
-    float* alphar,
-    float* alphai,
+    std::complex<float>* alpha,
     float* beta,
     float* VL, int64_t ldvl,
     float* VR, int64_t ldvr );
@@ -1987,8 +1986,7 @@ int64_t ggev(
     lapack::Job jobvl, lapack::Job jobvr, int64_t n,
     double* A, int64_t lda,
     double* B, int64_t ldb,
-    double* alphar,
-    double* alphai,
+    std::complex<double>* alpha,
     double* beta,
     double* VL, int64_t ldvl,
     double* VR, int64_t ldvr );

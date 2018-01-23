@@ -303,9 +303,9 @@ std::vector< libtest::routines_t > routines = {
     { "hbgv",               test_hbgv,      Section::sygv }, // tested via LAPACKE using gcc/MKL
     { "",                   nullptr,        Section::newline },
 
-    { "hegvx",              test_hegvx,     Section::sygv }, // TODO Working on this
-  //{ "spgvx",              test_spgvx,     Section::sygv },
-  //{ "sbgvx",              test_sbgvx,     Section::sygv },
+    { "hegvx",              test_hegvx,     Section::sygv }, // tested via LAPACKE using gcc/MKL
+    { "hpgvx",              test_hpgvx,     Section::sygv }, // tested via LAPACKE using gcc/MKL
+    { "hbgvx",              test_hbgvx,     Section::sygv }, // tested via LAPACKE using gcc/MKL
     { "",                   nullptr,        Section::newline },
 
     { "hegvd",              test_hegvd,     Section::sygv }, // tested via LAPACKE using gcc/MKL

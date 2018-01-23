@@ -454,13 +454,15 @@ if (opts.syev):
     [ 'hegst', check + dtype + align + n + itype + uplo ],
 
     [ 'hpgv',  check + dtype + align + n + itype + jobz + uplo ],
-#    [ 'hpgvx', check + dtype + align + n + uplo ],
+    [ 'hpgvx', check + dtype + align + n + itype + jobz + uplo + vl + vu ],
+    [ 'hpgvx', check + dtype + align + n + itype + jobz + uplo + il + iu ],
     [ 'hpgvd', check + dtype + align + n + itype + jobz + uplo ],
 #    [ 'hpgvr', check + dtype + align + n + uplo ],
     [ 'hpgst', check + dtype + n + itype + uplo ],
 
     [ 'hbgv',  check + dtype + align + n + jobz + uplo + kd ],
-#    [ 'hbgvx', check + dtype + align + n + uplo ],
+    [ 'hbgvx', check + dtype + align + n + jobz + uplo + kd + vl + vu ],
+    [ 'hbgvx', check + dtype + align + n + jobz + uplo + kd + il + iu ],
     [ 'hbgvd',  check + dtype + align + n + jobz + uplo + kd ],
 #    [ 'hbgvr', check + dtype + align + n + uplo ],
     [ 'hbgst', check + dtype + align + n + vect + uplo + kd ],

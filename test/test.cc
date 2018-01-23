@@ -277,8 +277,6 @@ std::vector< libtest::routines_t > routines = {
     { "",                   nullptr,        Section::newline },
 
     { "heevr",              test_heevr,     Section::heev }, // tested via LAPACKE using gcc/MKL
-  //{ "hpevr",              test_hpevr,     Section::heev }, // TODO No automagic generation.  No src
-  //{ "hbevr",              test_hbevr,     Section::heev }, // TODO No automagic generation.  No src
     { "",                   nullptr,        Section::newline },
 
     { "hetrd",              test_hetrd,     Section::heev }, // tested via LAPACKE using gcc/MKL
@@ -313,11 +311,6 @@ std::vector< libtest::routines_t > routines = {
   //{ "hbgvd",              test_hbgvd,     Section::sygv }, // TODO Segfaults.. is the src correct?
     { "",                   nullptr,        Section::newline },
 
-  //{ "hegvr",              test_hegvr,     Section::sygv }, // TODO No automagic generation.  No src
-  //{ "spgvr",              test_spgvr,     Section::sygv }, // TODO No automagic generation.  No src
-  //{ "sbgvr",              test_sbgvr,     Section::sygv }, // TODO No automagic generation.  No src
-    { "",                   nullptr,        Section::newline },
-
     { "hegst",              test_hegst,     Section::sygv }, // tested via LAPACKE using gcc/MKL
     { "hpgst",              test_hpgst,     Section::sygv }, // tested via LAPACKE using gcc/MKL
   //{ "hbgst",              test_hbgst,     Section::sygv }, // TODO This test requires non-working --vect flag
@@ -328,39 +321,39 @@ std::vector< libtest::routines_t > routines = {
     // -----
     // non-symmetric eigenvalues
     { "geev",               test_geev,      Section::geev },
-    { "ggev",               test_ggev,      Section::geev }, // NOTE: No doxygen in src/ggev.cc
+    { "ggev",               test_ggev,      Section::geev }, // tested via LAPACKE using gcc/MKL. NOTE: No doxygen in src/ggev.cc
     { "",                   nullptr,        Section::newline },
 
-  //{ "geevx",              test_geevx,     Section::geev }, // TODO Requires --balanc -- sense 
-  //{ "ggevx",              test_ggevx,     Section::geev },
+  //{ "geevx",              test_geevx,     Section::geev }, // TODO No src
+  //{ "ggevx",              test_ggevx,     Section::geev }, // TODO No src
     { "",                   nullptr,        Section::newline },
 
-  //{ "gees",               test_gees,      Section::geev }, // TODO needs --sort --select
-  //{ "gges",               test_gges,      Section::geev }, // TODO needs SELCTG  (external sort procedure) LOGICAL FUNCTION
+  //{ "gees",               test_gees,      Section::geev }, // TODO needs --sort --select, external SELECT logical function
+  //{ "gges",               test_gges,      Section::geev }, // TODO needs SELCTG (external sort procedure) LOGICAL FUNCTION
     { "",                   nullptr,        Section::newline },
 
-  //{ "geesx",              test_geesx,     Section::geev }, // TODO needs sort select2
-  //{ "ggesx",              test_ggesx,     Section::geev },
+  //{ "geesx",              test_geesx,     Section::geev }, // TODO needs external select function
+  //{ "ggesx",              test_ggesx,     Section::geev }, // TODO needs external select function
     { "",                   nullptr,        Section::newline },
 
     { "gehrd",              test_gehrd,     Section::geev }, // TODO Fixed ilo=1, ihi=n, should these vary?
     { "unghr",              test_unghr,     Section::geev }, // TODO Fixed ilo=1, ihi=n, should these vary?
     { "unmhr",              test_unmhr,     Section::geev },
   //{ "hsein",              test_hsein,     Section::geev }, // TODO error in automagic generation KeyError eigsrc
-  //{ "trevc",              test_trevc,     Section::geev }, // TODO --howmany --select
+  //{ "trevc",              test_trevc,     Section::geev }, // TODO --howmany, need to setup a bool select array
     { "",                   nullptr,        Section::newline },
 
     // -----
     // driver: singular value decomposition
     { "gesvd",              test_gesvd,         Section::svd },
-  //{ "gesvd_2stage",       test_gesvd_2stage,  Section::svd }, // TODO does not automagically generate
+  //{ "gesvd_2stage",       test_gesvd_2stage,  Section::svd }, // TODO No src
     { "",                   nullptr,            Section::newline },
 
     { "gesdd",              test_gesdd,         Section::svd },
-  //{ "gesdd_2stage",       test_gesdd_2stage,  Section::svd }, // TODO does not automagically generate
+  //{ "gesdd_2stage",       test_gesdd_2stage,  Section::svd }, // TODO No src
     { "",                   nullptr,            Section::newline },
 
-  //{ "gesvdx",             test_gesvdx,        Section::svd }, // TODO vl vu
+    { "gesvdx",             test_gesvdx,        Section::svd }, // WORKING ON THIS
   //{ "gesvdx_2stage",      test_gesvdx_2stage, Section::svd }, // TODO does not automagically generate
     { "",                   nullptr,            Section::newline },
 

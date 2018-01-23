@@ -83,8 +83,13 @@ group_opt.add_argument( '--norm',   action='store', help='default=%(default)s', 
 group_opt.add_argument( '--jobz',   action='store', help='default=%(default)s', default='n,v' )
 group_opt.add_argument( '--jobvl',  action='store', help='default=%(default)s', default='n,v' )
 group_opt.add_argument( '--jobvr',  action='store', help='default=%(default)s', default='n,v' )
+group_opt.add_argument( '--jobvs',  action='store', help='default=%(default)s', default='n,v' )
 group_opt.add_argument( '--jobu',   action='store', help='default=%(default)s', default='n,s,o,a' )
 group_opt.add_argument( '--jobvt',  action='store', help='default=%(default)s', default='n,s,o,a' )
+group_opt.add_argument( '--balanc', action='store', help='default=%(default)s', default='n,p,s,b' )
+group_opt.add_argument( '--sort',   action='store', help='default=%(default)s', default='n,s' )
+group_opt.add_argument( '--select', action='store', help='default=%(default)s', default='n,s' )
+group_opt.add_argument( '--sense',  action='store', help='default=%(default)s', default='n,e,v,b' )
 group_opt.add_argument( '--vect',   action='store', help='default=%(default)s', default='n,v' )
 group_opt.add_argument( '--kd',     action='store', help='default=%(default)s', default='20,100' )
 group_opt.add_argument( '--kl',     action='store', help='default=%(default)s', default='20,100' )
@@ -195,6 +200,10 @@ jobu   = ' --jobu '   + opts.jobu   if (opts.jobu)   else ''
 jobvt  = ' --jobvt '  + opts.jobvt  if (opts.jobvt)  else ''
 jobvl  = ' --jobvl '  + opts.jobvl  if (opts.jobvl)  else ''
 jobvr  = ' --jobvr '  + opts.jobvr  if (opts.jobvr)  else ''
+jobvs  = ' --jobvs '  + opts.jobvs  if (opts.jobvs)  else ''
+balanc = ' --balanc ' + opts.balanc if (opts.balanc)   else ''
+sort   = ' --sort '   + opts.sort   if (opts.sort)   else ''
+sense  = ' --sense '  + opts.sense  if (opts.sense)   else ''
 vect   = ' --vect '   + opts.vect   if (opts.vect)   else ''
 kd     = ' --kd '     + opts.kd     if (opts.kd)     else ''
 kl     = ' --kl '     + opts.kl     if (opts.kl)     else ''
@@ -473,11 +482,12 @@ if (opts.geev):
     cmds += [
     [ 'geev',  check + dtype + align + n + jobvl + jobvr ],
     [ 'ggev',  check + dtype + align + n + jobvl + jobvr ],
-#    [ 'geevx', check + dtype + align + n + jobvl + jobvr ],
+#    [ 'geevx', check + dtype + align + n + balanc + jobvl + jobvr + sense ],
     [ 'gehrd', check + dtype + align + n ],
     [ 'unghr', check + dtype + align + n ],
     [ 'unmhr', check + dtype + align + n + side + trans_nc ],
 #    [ 'trevc', check + dtype + align + n + side + howmany + select ],
+#    [ 'geesx', check + dtype + align + n + jobvs + sort + select + sense ],
     ]
 
 # svd
@@ -485,7 +495,8 @@ if (opts.svd):
     cmds += [
     [ 'gesvd',         check + dtype + align + mn + jobu + jobvt ],
     [ 'gesdd',         check + dtype + align + mn + jobu ],
-#    [ 'gesvdx',        check + dtype + align + mn ],
+    [ 'gesvdx',        check + dtype + align + mn + jobz + jobvr + vl + vu ],
+    [ 'gesvdx',        check + dtype + align + mn + jobz + jobvr + il + iu ],
 #    [ 'gesvd_2stage',  check + dtype + align + mn ],
 #    [ 'gesdd_2stage',  check + dtype + align + mn ],
 #    [ 'gesvdx_2stage', check + dtype + align + mn ],

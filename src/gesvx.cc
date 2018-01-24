@@ -86,7 +86,7 @@ int64_t gesvx(
     double* rcond,
     double* ferr,
     double* berr,
-    float* rpivotgrowth )
+    double* rpivotgrowth )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -419,7 +419,7 @@ int64_t gesvx(
     double* rcond,
     double* ferr,
     double* berr,
-    float* rpivotgrowth )
+    double* rpivotgrowth )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {

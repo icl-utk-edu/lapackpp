@@ -49,7 +49,7 @@ double LAPACK_zlangt(
 }  // extern "C"
 
 // -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
+// simple overloaded wrappers around LAPACK (not in LAPACKE)
 static lapack_int LAPACKE_langt(
     char norm, lapack_int n, float* DL, float* D, float* DU )
 {

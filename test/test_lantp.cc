@@ -9,6 +9,7 @@
 #include "lapack_mangling.h"
 extern "C" {
 // give Fortran prototypes if not given via lapacke.h
+
 #ifndef LAPACK_slantp
 #define LAPACK_slantp LAPACK_GLOBAL(slantp,SLANTP)
 blas_float_return LAPACK_slantp(

@@ -69,7 +69,7 @@ std::vector< libtest::routines_t > routines = {
     { "gtsv",               test_gtsv,      Section::gesv },
     { "",                   nullptr,        Section::newline },
 
-  //{ "gesvx",              test_gesvx,     Section::gesv }, // TODO Set up fact equed, (work array)=(LAPACKE rpivot)
+    { "gesvx",              test_gesvx,     Section::gesv }, // TODO Set up fact equed, (work array)=(LAPACKE rpivot)
   //{ "gbsvx",              test_gbsvx,     Section::gesv },
   //{ "gtsvx",              test_gtsvx,     Section::gesv },
     { "",                   nullptr,        Section::newline },
@@ -170,28 +170,24 @@ std::vector< libtest::routines_t > routines = {
 
     // -----   requires LAPACK>=3.5
     { "sysv_rook",          test_sysv_rook,          Section::sysv2 }, // tested via LAPACKE using gcc/MKL
+    { "sysv_rk",            test_sysv_rk,            Section::sysv2 }, // tested via LAPACKE using gcc/MKL
     { "sysv_aa",            test_sysv_aa,            Section::sysv2 }, // tested via LAPACKE using gcc/MKL
-  //{ "sysv_aasen_2stage",  test_sysv_aasen_2stage,  Section::sysv2 }, // TODO does not automagically generate
+  //{ "sysv_aa_2stage",     test_sysv_aa_2stage,     Section::sysv2 }, // TODO No automagic generation.  No src. New call.
     { "",                   nullptr,                 Section::newline },
 
     { "sytrf_rook",         test_sytrf_rook,         Section::sysv2 }, // tested via LAPACKE using gcc/MKL
-    { "sytrf_aa",           test_sytrf_aa,           Section::sysv2 }, // TODO LAPACKE wrapper broken. Kludge-call to LAPACK. Passes.
-  //{ "sytrf_aasen_2stage", test_sytrf_aasen_2stage, Section::sysv2 }, // TODO No automagic generation.  No src
+    { "sytrf_rk",           test_sytrf_rk,           Section::sysv2 }, // tested via LAPACKE using gcc/MKL
+    { "sytrf_aa",           test_sytrf_aa,           Section::sysv2 }, // TODO LAPACKE wrapper broken/bugreport. Call LAPACK. Passes.
+  //{ "sytrf_aa_2stage",    test_sytrf_aa_2stage,    Section::sysv2 }, // TODO No automagic generation.  No src. New call.
     { "",                   nullptr,                 Section::newline },
 
     { "sytrs_rook",         test_sytrs_rook,         Section::sysv2 }, // tested via LAPACKE using gcc/MKL
-    { "sytrs_aa",           test_sytrs_aa,           Section::sysv2 }, // tested via LAPACKE using gcc/MKL
-  //{ "sytrs_aasen_2stage", test_sytrs_aasen_2stage, Section::sysv2 },// TODO No automagic generation.  No src
-    { "",                   nullptr,                 Section::newline },
-
-  //{ "sytri_aa",           test_sytri_aa,           Section::sysv2 }, // TODO No automagic generation.  No src
-  //{ "sytri_aasen_2stage", test_sytri_aasen_2stage, Section::sysv2 }, // TODO No automagic generation.  No src
-    { "",                   nullptr,                 Section::newline },
-
-    { "sysv_rk",            test_sysv_rk,            Section::sysv2 }, // tested via LAPACKE using gcc/MKL
-    { "sytrf_rk",           test_sytrf_rk,           Section::sysv2 }, // tested via LAPACKE using gcc/MKL
   //{ "sytrs_rk",           test_sytrs_rk,           Section::sysv2 }, // TODO the LAPACKE wrapper seems to be missing
-  //{ "sytri_rk",           test_sytri_rk,           Section::sysv2 }, 
+    { "sytrs_aa",           test_sytrs_aa,           Section::sysv2 }, // tested via LAPACKE using gcc/MKL
+  //{ "sytrs_aa_2stage",    test_sytrs_aa_2stage,    Section::sysv2 }, // TODO No automagic generation.  No src. New call.
+    { "",                   nullptr,                 Section::newline },
+
+  //{ "sytri_rook",         test_sytri_rook,         Section::sysv2 }, // TODO lapack_fortran.h header missing
     { "",                   nullptr,                 Section::newline },
 
     // -----
@@ -392,12 +388,11 @@ std::vector< libtest::routines_t > routines = {
     { "langb",              test_langb,     Section::aux_norm }, // Tested using direct LAPACK call to xlantp (not in LAPACKE)
     { "lanhb",              test_lanhb,     Section::aux_norm },
     { "lansb",              test_lansb,     Section::aux_norm },
-    { "lantb",              test_lantb,     Section::aux_norm },
+    { "lantb",              test_lantb,     Section::aux_norm }, // Tested using direct LAPACK call to xlantp (not in LAPACKE)
     { "",                   nullptr,        Section::newline },
 
-    { "langt",              test_langt,     Section::aux_norm },
-  //{ "lanht",              test_lanht,     Section::aux_norm },
-  //{ "lanst",              test_lanst,     Section::aux_norm },
+    { "langt",              test_langt,     Section::aux_norm }, // Tested using direct LAPACK call to xlantp (not in LAPACKE)
+    { "lanht",              test_lanht,     Section::aux_norm }, // Tested using direct LAPACK call to xlantp (not in LAPACKE)
     { "",                   nullptr,        Section::newline },
 
     // auxiliary: matrix generation
@@ -460,6 +455,9 @@ Params::Params():
     matrixtype( "matrixtype", 10, ParamType::List, lapack::MatrixType::General,
                 lapack::char2matrixtype, lapack::matrixtype2char, lapack::matrixtype2str,
                 "matrix type: g=general, l=lower, u=upper, h=Hessenberg, z=band-general, b=band-lower, q=band-upper" ),
+    factored  ( "factored",    11,    ParamType::List, lapack::Factored::NotFactored, lapack::char2factored, lapack::factored2char, lapack::factored2str, "f=Factored, n=NotFactored, e=Equilibrate" ),
+    equed  ( "equed",    9,    ParamType::List, lapack::Equed::None, lapack::char2equed, lapack::equed2char, lapack::equed2str, "n=None, r=Row, c=Col, b=Both, y=Yes" ),
+
 
     //          name,      w, p, type,            def,   min,     max, help
     dim       ( "dim",     6,    ParamType::List,          0, 1000000, "m x n x k dimensions" ),

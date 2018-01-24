@@ -65,7 +65,7 @@ group_opt.add_argument( '--layout', action='store', help='default=%(default)s', 
 group_opt.add_argument( '--transA', action='store', help='default=%(default)s', default='n,t,c' )
 group_opt.add_argument( '--transB', action='store', help='default=%(default)s', default='n,t,c' )
 group_opt.add_argument( '--trans',  action='store', help='default=%(default)s', default='n,t,c' )
-group_opt.add_argument( '--fact',   action='store', help='default=%(default)s', default='f,n,e' )
+group_opt.add_argument( '--factored', action='store', help='default=%(default)s', default='f,n,e' )
 group_opt.add_argument( '--equed',  action='store', help='default=%(default)s', default='n,r,c,b' )
 group_opt.add_argument( '--uplo',   action='store', help='default=%(default)s', default='l,u' )
 group_opt.add_argument( '--diag',   action='store', help='default=%(default)s', default='n,u' )
@@ -179,7 +179,7 @@ layout = ' --layout ' + opts.layout if (opts.layout) else ''
 transA = ' --transA ' + opts.transA if (opts.transA) else ''
 transB = ' --transB ' + opts.transB if (opts.transB) else ''
 trans  = ' --trans '  + opts.trans  if (opts.trans)  else ''
-fact   = ' --fact '   + opts.fact   if (opts.fact)  else ''
+factored = ' --factored ' + opts.factored if (opts.factored)  else ''
 equed  = ' --equed '  + opts.equed  if (opts.equed)  else ''
 uplo   = ' --uplo '   + opts.uplo   if (opts.uplo)   else ''
 diag   = ' --diag '   + opts.diag   if (opts.diag)   else ''
@@ -503,7 +503,7 @@ if (opts.svd):
 #    [ 'gejsv',         check + dtype + align + mn ],
 #    [ 'gesvj',         check + dtype + align + mn + joba + jobu + jobv ],
 
-#    [ 'gesvx',         check + dtype + align + n + fact + trans + equed ],
+    [ 'gesvx',         check + dtype + align + n + factored + trans + equed ],
     ]
 
 # auxilary
@@ -542,8 +542,7 @@ if (opts.aux):
     [ 'lantb', check + dtype + align + n + kd + norm + uplo + diag ],
 
     [ 'langt', check + dtype + n + norm ],
-#    [ 'lanht', check + dtype + n + norm + uplo ],
-#    [ 'lanst', check + dtype + n + norm + uplo ],
+    [ 'lanht', check + dtype + n + norm ],
     ]
 
 # additional blas

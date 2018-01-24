@@ -62,6 +62,8 @@ public:
     libtest::ParamEnum< lapack::Job >       jobvt;  // gesvd
     libtest::ParamEnum< lapack::Range >     range;
     libtest::ParamEnum< lapack::MatrixType > matrixtype;
+    libtest::ParamEnum< lapack::Factored >  factored;
+    libtest::ParamEnum< lapack::Equed >     equed;
 
     libtest::ParamInt3   dim;
     libtest::ParamInt    kd;

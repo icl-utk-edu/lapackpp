@@ -3,9 +3,11 @@
 
 #include "libtest.hh"
 #include "lapack_util.hh"
+#include "matrix_opts.hh"
+#include "matrix_generator.hh"
 
 #ifdef HAVE_MKL
-    #include <mkl_lapacke.h>
+    #include <mkl.h>
 #else
     #include <lapacke.h>
 #endif
@@ -30,6 +32,9 @@ public:
         int64_t n, lapack::Range* range,
         float* vl, float* vu,
         int64_t* il, int64_t* iu );
+
+    // test matrix options for use in matrix generator
+    matrix_opts matrix;
 
     // Field members are explicitly public.
     // Order here determines output order.
@@ -102,11 +107,6 @@ public:
     libtest::ParamInt        ref_iters;
 
     libtest::ParamOkay       okay;
-
-    libtest::ParamString     test_matrix_name;  // name of matrix type, e.g. "rand" or "svd_logrand"
-    libtest::ParamDouble     test_matrix_cond;  // condition number of matrix A, if applicable
-    libtest::ParamDouble     test_matrix_condD; // condition number of matrix D, if applicable
-    int64_t                  iseed[4];          // random seed
 };
 
 

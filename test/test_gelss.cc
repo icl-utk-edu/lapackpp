@@ -51,6 +51,9 @@ void test_gelss_work( Params& params, bool run )
     params.ref_time.value();
     // params.ref_gflops.value();
     // params.gflops.value();
+    params.matrix.name.value();
+    params.matrix.cond.value();
+    params.matrix.condD.value();
 
     if (! run)
         return;
@@ -72,9 +75,9 @@ void test_gelss_work( Params& params, bool run )
     std::vector< real_t > S_tst( size_S );
     std::vector< real_t > S_ref( size_S );
 
+    lapack_generate_matrix( params.matrix, m, n, nullptr, &A_tst[0], lda );
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A_tst.size(), &A_tst[0] );
     lapack::larnv( idist, iseed, B_tst.size(), &B_tst[0] );
 
     A_ref = A_tst;

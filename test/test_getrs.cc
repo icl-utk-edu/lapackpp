@@ -52,6 +52,9 @@ void test_getrs_work( Params& params, bool run )
     params.ref_time.value();
     params.ref_gflops.value();
     params.gflops.value();
+    params.matrix.name.value();
+    params.matrix.cond.value();
+    params.matrix.condD.value();
 
     if (! run)
         return;
@@ -69,9 +72,9 @@ void test_getrs_work( Params& params, bool run )
     std::vector< scalar_t > B_tst( size_B );
     std::vector< scalar_t > B_ref( size_B );
 
+    lapack_generate_matrix( params.matrix, n, n, nullptr, &A[0], lda );
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A.size(), &A[0] );
     lapack::larnv( idist, iseed, B_tst.size(), &B_tst[0] );
     B_ref = B_tst;
 

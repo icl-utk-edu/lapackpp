@@ -50,6 +50,9 @@ void test_geequ_work( Params& params, bool run )
     params.ref_time.value();
     //params.ref_gflops.value();
     //params.gflops.value();
+    params.matrix.name.value();
+    params.matrix.cond.value();
+    params.matrix.condD.value();
 
     if (! run)
         return;
@@ -72,9 +75,7 @@ void test_geequ_work( Params& params, bool run )
     std::vector< real_t > C_tst( size_C );
     std::vector< real_t > C_ref( size_C );
 
-    int64_t idist = 1;
-    int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A.size(), &A[0] );
+    lapack_generate_matrix( params.matrix, m, n, nullptr, &A[0], lda );
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );

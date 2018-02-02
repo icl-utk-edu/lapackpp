@@ -4,7 +4,6 @@
 #include <string.h>
 #include <unistd.h>
 
-
 #include "test.hh"
 
 // -----------------------------------------------------------------------------
@@ -418,6 +417,7 @@ std::vector< libtest::routines_t > routines = {
 
 Params::Params():
     ParamsBase(),
+    matrix(),
 
     // w = width
     // p = precision
@@ -508,11 +508,7 @@ Params::Params():
 
     // default -1 means "no check"
     //          name,     w, type,              def, min, max, help
-    okay      ( "status", 6, ParamType::Output,  -1,   0,   0, "success indicator" ),
-
-    test_matrix_name  ("test-matrix-name",  16, ParamType::Value, "rand", "", "test matrix type" ),
-    test_matrix_cond  ("test-matrix-cond",  16, 4, ParamType::Value, 0.0, 1.0, inf, "matrix A condition number" ),
-    test_matrix_condD ("test-matrix-condD", 16, 4, ParamType::Value, 0.0, 1.0, inf, "matrix D condition number" )
+    okay      ( "status", 6, ParamType::Output,  -1,   0,   0, "success indicator" )
 {
     // mark standard set of output fields as used
     okay  .value();
@@ -628,12 +624,19 @@ int main( int argc, char** argv )
     int status = 0;
     int repeat = params.repeat.value();
     libtest::DataType last = params.datatype.value();
+    std::string mat_name = params.matrix.name.value();
     params.header();
+    printf( "Test Matrix: %s\n", mat_name.c_str() );
+
     do {
         if (params.datatype.value() != last) {
             last = params.datatype.value();
             printf( "\n" );
         }
+	if (params.matrix.name.value() != mat_name) {
+            mat_name = params.matrix.name.value();
+            printf( "Test Matrix: %s\n", mat_name.c_str() );
+	}
         for (int iter = 0; iter < repeat; ++iter) {
             try {
                 test_routine( params, true );

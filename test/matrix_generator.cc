@@ -557,12 +557,12 @@ void lapack_generate_matrix(
     const scalar_t c_one  = blas::traits<scalar_t>::make( 1, 0 );
 
     // locals
-    std::string name = opts.matrix;
-    real_t cond = opts.cond;
+    std::string name = opts.name.value();
+    real_t cond = opts.cond.value();
     if (cond == 0) {
         cond = 1 / sqrt( eps );
     }
-    real_t condD = opts.condD;
+    real_t condD = opts.condD.value();
     real_t sigma_max = 1;
     int64_t minmn = min( A.m, A.n );
 
@@ -571,47 +571,47 @@ void lapack_generate_matrix(
     lapack::laset( lapack::MatrixType::General, sigma.n, 1, nan, nan, sigma(0), sigma.n );
 
     // ----- decode matrix type
-    MatrixType type = MatrixType::identity;
-    if      (name == "zero")          { type = MatrixType::zero;      }
-    else if (name == "identity")      { type = MatrixType::identity;  }
-    else if (name == "jordan")        { type = MatrixType::jordan;    }
-    else if (begins( name, "randn" )) { type = MatrixType::randn;     }
-    else if (begins( name, "randu" )) { type = MatrixType::randu;     }
-    else if (begins( name, "rand"  )) { type = MatrixType::rand;      }
-    else if (begins( name, "diag"  )) { type = MatrixType::diag;      }
-    else if (begins( name, "svd"   )) { type = MatrixType::svd;       }
+    TestMatrixType type = TestMatrixType::identity;
+    if      (name == "zero")          { type = TestMatrixType::zero;      }
+    else if (name == "identity")      { type = TestMatrixType::identity;  }
+    else if (name == "jordan")        { type = TestMatrixType::jordan;    }
+    else if (begins( name, "randn" )) { type = TestMatrixType::randn;     }
+    else if (begins( name, "randu" )) { type = TestMatrixType::randu;     }
+    else if (begins( name, "rand"  )) { type = TestMatrixType::rand;      }
+    else if (begins( name, "diag"  )) { type = TestMatrixType::diag;      }
+    else if (begins( name, "svd"   )) { type = TestMatrixType::svd;       }
     else if (begins( name, "poev"  ) ||
-             begins( name, "spd"   )) { type = MatrixType::poev;      }
+             begins( name, "spd"   )) { type = TestMatrixType::poev;      }
     else if (begins( name, "heev"  ) ||
-             begins( name, "syev"  )) { type = MatrixType::heev;      }
-    else if (begins( name, "geevx" )) { type = MatrixType::geevx;     }
-    else if (begins( name, "geev"  )) { type = MatrixType::geev;      }
+             begins( name, "syev"  )) { type = TestMatrixType::heev;      }
+    else if (begins( name, "geevx" )) { type = TestMatrixType::geevx;     }
+    else if (begins( name, "geev"  )) { type = TestMatrixType::geev;      }
     else {
         fprintf( stderr, "Unrecognized matrix '%s'\n", name.c_str() );
         throw std::exception();
     }
 
     if (A.m != A.n &&
-        (type == MatrixType::jordan ||
-         type == MatrixType::poev   ||
-         type == MatrixType::heev   ||
-         type == MatrixType::geev   ||
-         type == MatrixType::geevx))
+        (type == TestMatrixType::jordan ||
+         type == TestMatrixType::poev   ||
+         type == TestMatrixType::heev   ||
+         type == TestMatrixType::geev   ||
+         type == TestMatrixType::geevx))
     {
         fprintf( stderr, "Eigenvalue matrix requires m == n.\n" );
         throw std::exception();
     }
 
-    if (opts.cond != 0 &&
-        (type == MatrixType::zero      ||
-         type == MatrixType::identity  ||
-         type == MatrixType::jordan    ||
-         type == MatrixType::randn     ||
-         type == MatrixType::randu     ||
-         type == MatrixType::rand))
+    if (opts.cond.value() != 0 &&
+        (type == TestMatrixType::zero      ||
+         type == TestMatrixType::identity  ||
+         type == TestMatrixType::jordan    ||
+         type == TestMatrixType::randn     ||
+         type == TestMatrixType::randu     ||
+         type == TestMatrixType::rand))
     {
         fprintf( stderr, "%sWarning: --matrix %s ignores --cond %.2e.%s\n",
-                 ansi_red, name.c_str(), opts.cond, ansi_normal );
+                 ansi_red, name.c_str(), opts.cond.value(), ansi_normal );
     }
 
     // ----- decode distribution
@@ -630,16 +630,16 @@ void lapack_generate_matrix(
     else if (contains( name, "_rcluster"  )) { dist = Dist::rcluster;  } // after rcluster2
     else if (contains( name, "_specified" )) { dist = Dist::specified; }
 
-    if (opts.cond != 0 &&
+    if (opts.cond.value() != 0 &&
         (dist == Dist::randn ||
          dist == Dist::randu ||
          dist == Dist::rand))
     {
         fprintf( stderr, "%sWarning: --matrix '%s' ignores --cond %.2e; use a different distribution.%s\n",
-                 ansi_red, name.c_str(), opts.cond, ansi_normal );
+                 ansi_red, name.c_str(), opts.cond.value(), ansi_normal );
     }
 
-    if (type == MatrixType::poev &&
+    if (type == TestMatrixType::poev &&
         (dist == Dist::randu ||
          dist == Dist::randn))
     {
@@ -656,27 +656,28 @@ void lapack_generate_matrix(
 
     // ----- generate matrix
     switch (type) {
-        case MatrixType::zero:
+        case TestMatrixType::zero:
             lapack::laset( lapack::MatrixType::General, A.m, A.n, c_zero, c_zero, A(0,0), A.ld );
             lapack::laset( lapack::MatrixType::General, sigma.n, 1, d_zero, d_zero, sigma(0), sigma.n );
             break;
 
-        case MatrixType::identity:
+        case TestMatrixType::identity:
             lapack::laset( lapack::MatrixType::General, A.m, A.n, c_zero, c_one, A(0,0), A.ld );
             lapack::laset( lapack::MatrixType::General, sigma.n, 1, d_one, d_one, sigma(0), sigma.n );
             break;
 
-        case MatrixType::jordan: {
+        case TestMatrixType::jordan: {
             int64_t n1 = A.n - 1;
             lapack::laset( lapack::MatrixType::Upper, A.n, A.n, c_zero, c_one, A(0,0), A.ld );  // ones on diagonal
             lapack::laset( lapack::MatrixType::Lower, n1,  n1,  c_zero, c_one, A(1,0), A.ld );  // ones on sub-diagonal
             break;
         }
 
-        case MatrixType::rand:
-        case MatrixType::randu:
-        case MatrixType::randn: {
-            int64_t idist = (int64_t) type;
+        case TestMatrixType::rand:
+        case TestMatrixType::randu:
+        case TestMatrixType::randn: {
+            //int64_t idist = (int64_t) type;
+            int64_t idist = 1;
             int64_t sizeA = A.ld * A.n;
             lapack::larnv( idist, opts.iseed, sizeA, A(0,0) );
             if (sigma_max != 1) {
@@ -686,27 +687,27 @@ void lapack_generate_matrix(
             break;
         }
 
-        case MatrixType::diag:
+        case TestMatrixType::diag:
             lapack_generate_sigma( opts, dist, false, cond, sigma_max, sigma, A );
             break;
 
-        case MatrixType::svd:
+        case TestMatrixType::svd:
             lapack_generate_svd( opts, dist, cond, condD, sigma_max, sigma, A );
             break;
 
-        case MatrixType::poev:
+        case TestMatrixType::poev:
             lapack_generate_heev( opts, dist, false, cond, condD, sigma_max, sigma, A );
             break;
 
-        case MatrixType::heev:
+        case TestMatrixType::heev:
             lapack_generate_heev( opts, dist, true, cond, condD, sigma_max, sigma, A );
             break;
 
-        case MatrixType::geev:
+        case TestMatrixType::geev:
             lapack_generate_geev( opts, dist, cond, condD, sigma_max, sigma, A );
             break;
 
-        case MatrixType::geevx:
+        case TestMatrixType::geevx:
             lapack_generate_geevx( opts, dist, cond, condD, sigma_max, sigma, A );
             break;
     }

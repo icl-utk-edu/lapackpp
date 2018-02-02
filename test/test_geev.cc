@@ -4,8 +4,6 @@
 #include "print_matrix.hh"
 #include "error.hh"
 #include "check_geev.hh"
-#include "matrix_opts.hh"
-#include "matrix_generator.hh"
 
 #include <vector>
 #include <algorithm>
@@ -82,9 +80,9 @@ void test_geev_work( Params& params, bool run )
     params.ref_time.value();
     //params.ref_gflops.value();
     //params.gflops.value();
-    params.test_matrix_name.value();
-    params.test_matrix_cond.value();
-    params.test_matrix_condD.value();
+    params.matrix.name.value();
+    params.matrix.cond.value();
+    params.matrix.condD.value();
 
     params.error .name( "A' Vl-Vl W'\nerror" );
     params.error2.name( "Vl(j) norm\nerror" );
@@ -114,16 +112,8 @@ void test_geev_work( Params& params, bool run )
     std::vector< scalar_t > VR_ref( size_VR );
 
     // Generate test matrix
-    Vector<real_t> sigma;
-    matrix_opts opts;
-    opts.matrix = params.test_matrix_name.value();
-    opts.cond = params.test_matrix_cond.value();
-    opts.condD = params.test_matrix_condD.value();
+    lapack_generate_matrix( params.matrix, n, n, nullptr, &A_tst[0], lda );
 
-    Matrix<scalar_t> A( &A_tst[0], n, n, lda );
-    lapack_generate_matrix( opts, sigma, A );
-
-    std::copy( A(0, 0), A(n, 0), A_tst.begin() );
     A_ref = A_tst;
 
     if (verbose >= 1) {
@@ -138,7 +128,9 @@ void test_geev_work( Params& params, bool run )
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
     double time = get_wtime();
+    //printf (" test start\n");
     int64_t info_tst = lapack::geev( jobvl, jobvr, n, &A_tst[0], lda, &W_tst[0], &VL_tst[0], ldvl, &VR_tst[0], ldvr );
+    //printf (" test done\n");
     time = get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::geev returned error %lld\n", (lld) info_tst );
@@ -190,7 +182,9 @@ void test_geev_work( Params& params, bool run )
         // ---------- run reference
         libtest::flush_cache( params.cache.value() );
         time = get_wtime();
+    //printf (" ref start\n");
         int64_t info_ref = LAPACKE_geev( job2char(jobvl), job2char(jobvr), n, &A_ref[0], lda, &W_ref[0], &VL_ref[0], ldvl, &VR_ref[0], ldvr );
+    //printf (" ref done\n");
         time = get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_geev returned error %lld\n", (lld) info_ref );

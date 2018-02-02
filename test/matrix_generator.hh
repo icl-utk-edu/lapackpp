@@ -1,4 +1,3 @@
-
 #ifndef MATRIX_GENERATOR_HPP
 #define MATRIX_GENERATOR_HPP
 
@@ -20,7 +19,7 @@ const int64_t idist_rand  = 1;
 const int64_t idist_randu = 2;
 const int64_t idist_randn = 3;
 
-enum class MatrixType {
+enum class TestMatrixType {
     rand      = 1,  // maps to larnv idist
     randu     = 2,  // maps to larnv idist
     randn     = 3,  // maps to larnv idist
@@ -34,7 +33,6 @@ enum class MatrixType {
     geev,
     geevx,
 };
-
 enum class Dist {
     rand      = 1,  // maps to larnv idist
     randu     = 2,  // maps to larnv idist

@@ -52,6 +52,9 @@ void test_geqlf_work( Params& params, bool run )
     params.gflops.value();
     params.ref_time.value();
     params.ref_gflops.value();
+    params.matrix.name.value();
+    params.matrix.cond.value();
+    params.matrix.condD.value();
 
     if (! run)
         return;
@@ -66,9 +69,7 @@ void test_geqlf_work( Params& params, bool run )
     std::vector< scalar_t > tau_tst( size_tau );
     std::vector< scalar_t > tau_ref( size_tau );
 
-    int64_t idist = 1;
-    int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A_tst.size(), &A_tst[0] );
+    lapack_generate_matrix( params.matrix, m, n, nullptr, &A_tst[0], lda );
     A_ref = A_tst;
 
     // ---------- run test

@@ -53,6 +53,7 @@ void test_gesvd_work( Params& params, bool run )
     int64_t m = params.dim.m();
     int64_t n = params.dim.n();
     int64_t align = params.align.value();
+    int64_t verbose = params.verbose.value();
 
     // mark non-standard output values
     params.ref_time.value();
@@ -61,6 +62,9 @@ void test_gesvd_work( Params& params, bool run )
     params.ortho_U.value();
     params.ortho_V.value();
     params.error_sigma.value();
+    params.matrix.name.value();
+    params.matrix.cond.value();
+    params.matrix.condD.value();
 
     if (! run)
         return;
@@ -91,10 +95,14 @@ void test_gesvd_work( Params& params, bool run )
     std::vector< scalar_t > VT_tst( size_VT );
     std::vector< scalar_t > VT_ref( size_VT );
 
-    int64_t idist = 1;
-    int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A_tst.size(), &A_tst[0] );
+    lapack_generate_matrix( params.matrix, m, n, nullptr, &A_tst[0], lda );
     A_ref = A_tst;
+
+    if (verbose >= 2) {
+        printf( "A = " ); print_matrix( m, n, &A_tst[0], lda );
+        printf( "S = " ); print_vector( n, &S_tst[0], 1 );
+    }
+
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );

@@ -1549,7 +1549,7 @@ int64_t gesvx(
     double* rcond,
     double* ferr,
     double* berr,
-    float* rpivotgrowth );
+    double* rpivotgrowth );
 
 int64_t gesvx(
     lapack::Factored fact, lapack::Op trans, int64_t n, int64_t nrhs,
@@ -1579,7 +1579,7 @@ int64_t gesvx(
     double* rcond,
     double* ferr,
     double* berr,
-    float* rpivotgrowth );
+    double* rpivotgrowth );
 
 // -----------------------------------------------------------------------------
 int64_t gesvd(

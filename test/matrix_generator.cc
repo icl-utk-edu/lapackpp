@@ -357,7 +357,8 @@ void lapack_generate_heev(
     // query for workspace
     lapack::unmqr( lapack::Side::Left, lapack::Op::NoTrans, n, n, n,
                    U(0,0), U.ld, tau(0), A(0,0), A.ld );
-    lapack::unmqr( lapack::Side::Right, lapack::Op::Trans, n, n, n,
+
+    lapack::unmqr( lapack::Side::Right, lapack::Op::ConjTrans, n, n, n,
                    U(0,0), U.ld, tau(0), A(0,0), A.ld );
     assert( info == 0 );
 
@@ -380,7 +381,7 @@ void lapack_generate_heev(
     assert( info == 0 );
 
     // A = A*U^H
-    lapack::unmqr( lapack::Side::Right, lapack::Op::Trans, n, n, n,
+    lapack::unmqr( lapack::Side::Right, lapack::Op::ConjTrans, n, n, n,
                    U(0,0), U.ld, tau(0), A(0,0), A.ld );
     assert( info == 0 );
 

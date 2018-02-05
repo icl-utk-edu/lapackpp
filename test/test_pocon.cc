@@ -53,9 +53,14 @@ void test_pocon_work( Params& params, bool run )
     params.ref_time.value();
     //params.ref_gflops.value();
     //params.gflops.value();
+    params.matrix.name.value();
+    params.matrix.cond.value();
+    params.matrix.condD.value();
 
-    if (! run)
+    if (! run) {
+	params.matrix.name.set_type( "poev" );
         return;
+    }
 
     // ---------- setup
     int64_t lda = roundup( max( 1, n ), align );
@@ -66,14 +71,7 @@ void test_pocon_work( Params& params, bool run )
 
     std::vector< scalar_t > A( size_A );
 
-    int64_t idist = 1;
-    int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A.size(), &A[0] );
-
-    // diagonally dominant -> positive definite
-    for (int64_t i = 0; i < n; ++i) {
-        A[ i + i*lda ] += n;
-    }
+    lapack_generate_matrix( params.matrix, n, n, nullptr, &A[0], lda );
 
     anorm = lapack::lanhe( lapack::Norm::One, uplo, n, &A[0], lda );
 

@@ -48,17 +48,6 @@ Documentation
 * [LAPACK++ Doxygen HTML](https://icl.bitbucket.io/lapackpp/doxygen/html/)
 * [SLATE Working Note 2: C++ API for BLAS and LAPACK](http://www.icl.utk.edu/publications/swan-002).
 
-
-* * *
-
-Resources
-=========
-
-* Visit the [BLAS++ repository](https://bitbucket.org/icl/blaspp) for more information about the C++ API for the standard BLAS.
-* Visit the [ECP website](https://exascaleproject.org) to find out more about the DOE Exascale Computing Initiative.
-* Visit the [SLATE website](http://icl.utk.edu/slate/) for more information about the SLATE project.
-* Visit the [SLATE Working Notes](http://www.icl.utk.edu/publications/series/swans) to find out more about ongoing SLATE developments.
-
 * * *
 
 Getting Help
@@ -69,6 +58,16 @@ Join the *SLATE User* Google group by going to
 https://groups.google.com/a/icl.utk.edu/forum/#!forum/slate-user
 and clicking `Apply to join group`.
 Upon acceptance, email your questions and comments to *slate-user@icl.utk.edu*.
+
+* * *
+
+Resources
+=========
+
+* Visit the [BLAS++ repository](https://bitbucket.org/icl/blaspp) for more information about the C++ API for the standard BLAS.
+* Visit the [ECP website](https://exascaleproject.org) to find out more about the DOE Exascale Computing Initiative.
+* Visit the [SLATE website](http://icl.utk.edu/slate/) for more information about the SLATE project.
+* Visit the [SLATE Working Notes](http://www.icl.utk.edu/publications/series/swans) to find out more about ongoing SLATE developments.
 
 * * *
 

@@ -46,7 +46,7 @@ Documentation
 =============
 
 * [LAPACK++ Doxygen](https://icl.bitbucket.io/lapackpp/doxygen/html/)
-* [SLATE Working Note 2: C++ API for BLAS and LAPACK](http://www.icl.utk.edu/publications/swan-002).
+* [SLATE Working Note 2: C++ API for BLAS and LAPACK](http://www.icl.utk.edu/publications/swan-002)
 
 * * *
 

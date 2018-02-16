@@ -42,6 +42,8 @@ Closely related to LAPACK++ are the
 [BBLAS++](https://bitbucket.org/icl/bblaspp) projects,
 which aim at providing C++ APIs for the standard BLAS and the batch BLAS, respectively.
 
+* * *
+
 Documentation
 =============
 

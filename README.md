@@ -42,6 +42,13 @@ Closely related to LAPACK++ are the
 [BBLAS++](https://bitbucket.org/icl/bblaspp) projects,
 which aim at providing C++ APIs for the standard BLAS and the batch BLAS, respectively.
 
+Documentation
+=============
+
+* [LAPACK++ Doxygen HTML](https://icl.bitbucket.io/lapackpp/doxygen/html/)
+* [SLATE Working Note 2: C++ API for BLAS and LAPACK](http://www.icl.utk.edu/publications/swan-002).
+
+
 * * *
 
 Resources

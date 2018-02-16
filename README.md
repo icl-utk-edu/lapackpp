@@ -36,11 +36,9 @@ LAPACK++ is part of the project
 (SLATE), which is funded by the [Department of Energy](https://energy.gov)
 as part of its [Exascale Computing Initiative](https://exascaleproject.org)
 (ECP).
-
-Closely related to LAPACK++ are the
-[BLAS++](https://bitbucket.org/icl/blaspp) and
-[BBLAS++](https://bitbucket.org/icl/bblaspp) projects,
-which aim at providing C++ APIs for the standard BLAS and the batch BLAS, respectively.
+Closely related to LAPACK++ is the
+[BLAS++](https://bitbucket.org/icl/blaspp) project,
+which provides a C++ API for BLAS and Batch BLAS.
 
 * * *
 

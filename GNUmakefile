@@ -47,10 +47,14 @@ tools_dep = ${addsuffix .d, ${basename ${tools_src}}}
 liblapackpp_so = lib/liblapackpp.so
 liblapackpp_a  = lib/liblapackpp.a
 
-# ------------------------------------------------------------------------------
-# MacOS likes shared library's path to be set; see make.inc.macos
-ifneq (${INSTALL_NAME},)
-    ${liblapackpp_so}: LDFLAGS += ${INSTALL_NAME} @rpath/${notdir ${liblapackpp_so}}
+# --------------------
+# MacOS (darwin) needs shared library's path set
+# $OSTYPE may not be exported from the shell, so echo it
+ostype = ${shell echo $${OSTYPE}}
+ifneq ($(findstring darwin, ${ostype}),)
+   install_name = -install_name @rpath/$(notdir $@)
+else
+   install_name =
 endif
 
 # ------------------------------------------------------------------------------
@@ -92,7 +96,7 @@ tools/lapack_version: tools/lapack_version.o
 	${CXX} ${LDFLAGS} -o $@ $^ ${LIBS}
 
 ${liblapackpp_so}: ${obj} | lib
-	${CXX} ${LDFLAGS} -shared -o $@ ${obj} ${LIBS}
+	${CXX} ${LDFLAGS} -shared ${install_name} -o $@ ${obj} ${LIBS}
 
 ${liblapackpp_a}: ${obj} | lib
 	ar cr $@ ${obj}

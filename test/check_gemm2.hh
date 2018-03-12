@@ -18,18 +18,18 @@ void check_gemm(
     int64_t m, int64_t n, int64_t k,
     T alpha,
     T beta,
-    typename blas::traits<T>::real_t Anorm,
-    typename blas::traits<T>::real_t Bnorm,
-    typename blas::traits<T>::real_t Cnorm,
+    blas::real_type<T> Anorm,
+    blas::real_type<T> Bnorm,
+    blas::real_type<T> Cnorm,
     T const* Cref, int64_t ldcref,
     T* C, int64_t ldc,
-    typename blas::traits<T>::real_t error[1],
+    blas::real_type<T> error[1],
     int64_t* okay )
 {
     #define    C(i_, j_)    C[ (i_) + (j_)*ldc ]
     #define Cref(i_, j_) Cref[ (i_) + (j_)*ldcref ]
 
-    typedef typename blas::traits<T>::real_t real_t;
+    using real_t = blas::real_type<T>;
 
     assert( m >= 0 );
     assert( n >= 0 );
@@ -71,18 +71,18 @@ void check_herk(
     int64_t n, int64_t k,
     TA alpha,
     TB beta,
-    typename blas::traits<T>::real_t Anorm,
-    typename blas::traits<T>::real_t Bnorm,
-    typename blas::traits<T>::real_t Cnorm,
+    blas::real_type<T> Anorm,
+    blas::real_type<T> Bnorm,
+    blas::real_type<T> Cnorm,
     T const* Cref, int64_t ldcref,
     T* C, int64_t ldc,
-    typename blas::traits<T>::real_t error[1],
+    blas::real_type<T> error[1],
     int64_t* okay )
 {
     #define    C(i_, j_)    C[ (i_) + (j_)*ldc ]
     #define Cref(i_, j_) Cref[ (i_) + (j_)*ldcref ]
 
-    typedef typename blas::traits<T>::real_t real_t;
+    using real_t = blas::real_type<T>;
 
     assert( n >= 0 );
     assert( k >= 0 );

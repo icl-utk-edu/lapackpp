@@ -37,8 +37,9 @@ static lapack_int LAPACKE_hpevx(
 template< typename scalar_t >
 void test_hpevx_work( Params& params, bool run )
 {
+    using libtest::get_wtime;
     using namespace blas;
-    typedef typename traits< scalar_t >::real_t real_t;
+    using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
     // get & mark input values
@@ -88,9 +89,9 @@ void test_hpevx_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
-    double time = omp_get_wtime();
+    double time = get_wtime();
     int64_t info_tst = lapack::hpevx( jobz, range, uplo, n, &AP_tst[0], vl, vu, il, iu, abstol, &m_tst, &W_tst[0], &Z_tst[0], ldz, &ifail_tst[0] );
-    time = omp_get_wtime() - time;
+    time = get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::hpevx returned error %lld\n", (lld) info_tst );
     }
@@ -102,9 +103,9 @@ void test_hpevx_work( Params& params, bool run )
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache.value() );
-        time = omp_get_wtime();
+        time = get_wtime();
         int64_t info_ref = LAPACKE_hpevx( job2char(jobz), range2char(range), uplo2char(uplo), n, &AP_ref[0], vl, vu, il, iu, abstol, &m_ref, &W_ref[0], &Z_ref[0], ldz, &ifail_ref[0] );
-        time = omp_get_wtime() - time;
+        time = get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_hpevx returned error %lld\n", (lld) info_ref );
         }

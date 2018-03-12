@@ -207,13 +207,12 @@ template< typename scalar_t >
 void check_geev(
     blas::Op trans, int64_t n,
     scalar_t const* A, int64_t lda,
-    typename blas::traits< scalar_t >::complex_t const* W,
+    blas::complex_type< scalar_t > const* W,
     scalar_t const* V, int64_t ldv,
     int64_t verbose,
-    typename blas::traits< scalar_t >::real_t results[2] )
+    blas::real_type< scalar_t > results[2] )
 {
-    using namespace blas;
-    typedef typename blas::traits< scalar_t >::real_t real_t;
+    using real_t = blas::real_type< scalar_t >;
 
     // work = op(A) V - work = op(A) V - (V W)
     std::vector< scalar_t > work( n * n );

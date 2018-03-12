@@ -99,7 +99,7 @@ void test_larf_work( Params& params, bool run )
 {
     using namespace libtest;
     using namespace blas;
-    typedef typename traits< scalar_t >::real_t real_t;
+    using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
     // get & mark input values

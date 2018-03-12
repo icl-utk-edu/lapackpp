@@ -11,14 +11,14 @@
 // || I - U U^H || / n  if rowcol == Row (rows are orthogonal; m <= n)
 // Similar to LAPACK testing zunt01
 template< typename scalar_t >
-typename blas::traits< scalar_t >::real_t check_orthogonality(
+blas::real_type< scalar_t > check_orthogonality(
     lapack::RowCol rowcol,
     int64_t m, int64_t n,
     scalar_t const* U, int64_t ldu )
 {
     using namespace blas;
     using namespace lapack;
-    typedef typename blas::traits< scalar_t >::real_t real_t;
+    using real_t = blas::real_type< scalar_t >;
 
     int64_t minmn = min( m, n );
     int64_t ldr = minmn;

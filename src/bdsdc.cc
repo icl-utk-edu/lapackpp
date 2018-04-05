@@ -12,7 +12,7 @@ using blas::real;
 // -----------------------------------------------------------------------------
 /// @ingroup bdsvd
 int64_t bdsdc(
-    lapack::Uplo uplo, lapack::CompQ compq, int64_t n,
+    lapack::Uplo uplo, lapack::Job compq, int64_t n,
     float* D,
     float* E,
     float* U, int64_t ldu,
@@ -27,7 +27,7 @@ int64_t bdsdc(
         lapack_error_if( std::abs(ldvt) > std::numeric_limits<blas_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    char compq_ = compq2char( compq );
+    char compq_ = job_comp2char( compq );
     blas_int n_ = (blas_int) n;
     blas_int ldu_ = (blas_int) ldu;
     blas_int ldvt_ = (blas_int) ldvt;
@@ -40,10 +40,12 @@ int64_t bdsdc(
     // formulas from docs
     int64_t lwork = 0;
     switch (compq) {
-        case CompQ::NoVec:      lwork = 4*n; break;
-        case CompQ::Vec:        lwork = 6*n; break;
-        case CompQ::CompactVec: lwork = 3*n*n + 4*n; break;
-        case CompQ::Update:     assert( false ); break;
+        case Job::NoVec:      lwork = 4*n; break;
+        case Job::Vec:        lwork = 6*n; break;
+        case Job::CompactVec: lwork = 3*n*n + 4*n; break;
+        default:
+            assert( false );
+            break;
     }
 
     // allocate workspace
@@ -86,11 +88,11 @@ int64_t bdsdc(
 ///
 /// @param[in] compq
 ///     Whether singular vectors are to be computed:
-///     - lapack::CompQ::NoVec: Compute singular values only;
-///     - lapack::CompQ::CompactVec: Compute singular values and compute singular
+///     - lapack::Job::NoVec: Compute singular values only;
+///     - lapack::Job::CompactVec: Compute singular values and compute singular
 ///             vectors in compact form
 ///             [this option not yet implemented in LAPACK++.];
-///     - lapack::CompQ::Vec: Compute singular values and singular vectors.
+///     - lapack::Job::Vec: Compute singular values and singular vectors.
 ///
 /// @param[in] n
 ///     The order of the matrix B. n >= 0.
@@ -166,7 +168,7 @@ int64_t bdsdc(
 ///
 /// @ingroup bdsvd
 int64_t bdsdc(
-    lapack::Uplo uplo, lapack::CompQ compq, int64_t n,
+    lapack::Uplo uplo, lapack::Job compq, int64_t n,
     double* D,
     double* E,
     double* U, int64_t ldu,
@@ -181,7 +183,7 @@ int64_t bdsdc(
         lapack_error_if( std::abs(ldvt) > std::numeric_limits<blas_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    char compq_ = compq2char( compq );
+    char compq_ = job_comp2char( compq );
     blas_int n_ = (blas_int) n;
     blas_int ldu_ = (blas_int) ldu;
     blas_int ldvt_ = (blas_int) ldvt;
@@ -194,10 +196,12 @@ int64_t bdsdc(
     // formulas from docs
     int64_t lwork = 0;
     switch (compq) {
-        case CompQ::NoVec:      lwork = 4*n; break;
-        case CompQ::Vec:        lwork = 6*n; break;
-        case CompQ::CompactVec: lwork = 3*n*n + 4*n; break;
-        case CompQ::Update:     assert( false ); break;
+        case Job::NoVec:      lwork = 4*n; break;
+        case Job::Vec:        lwork = 6*n; break;
+        case Job::CompactVec: lwork = 3*n*n + 4*n; break;
+        default:
+            assert( false );
+            break;
     }
 
     // allocate workspace

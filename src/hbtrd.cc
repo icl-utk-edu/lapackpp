@@ -11,7 +11,7 @@ using blas::real;
 
 // -----------------------------------------------------------------------------
 int64_t hbtrd(
-    lapack::Vect vect, lapack::Uplo uplo, int64_t n, int64_t kd,
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t kd,
     std::complex<float>* AB, int64_t ldab,
     float* D,
     float* E,
@@ -24,7 +24,7 @@ int64_t hbtrd(
         lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
     }
-    char vect_ = vect2char( vect );
+    char jobz_ = job2char( jobz );
     char uplo_ = uplo2char( uplo );
     blas_int n_ = (blas_int) n;
     blas_int kd_ = (blas_int) kd;
@@ -35,7 +35,7 @@ int64_t hbtrd(
     // allocate workspace
     std::vector< std::complex<float> > work( (n) );
 
-    LAPACK_chbtrd( &vect_, &uplo_, &n_, &kd_, AB, &ldab_, D, E, Q, &ldq_, &work[0], &info_ );
+    LAPACK_chbtrd( &jobz_, &uplo_, &n_, &kd_, AB, &ldab_, D, E, Q, &ldq_, &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -44,7 +44,7 @@ int64_t hbtrd(
 
 // -----------------------------------------------------------------------------
 int64_t hbtrd(
-    lapack::Vect vect, lapack::Uplo uplo, int64_t n, int64_t kd,
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t kd,
     std::complex<double>* AB, int64_t ldab,
     double* D,
     double* E,
@@ -57,7 +57,7 @@ int64_t hbtrd(
         lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
     }
-    char vect_ = vect2char( vect );
+    char jobz_ = job2char( jobz );
     char uplo_ = uplo2char( uplo );
     blas_int n_ = (blas_int) n;
     blas_int kd_ = (blas_int) kd;
@@ -68,7 +68,7 @@ int64_t hbtrd(
     // allocate workspace
     std::vector< std::complex<double> > work( (n) );
 
-    LAPACK_zhbtrd( &vect_, &uplo_, &n_, &kd_, AB, &ldab_, D, E, Q, &ldq_, &work[0], &info_ );
+    LAPACK_zhbtrd( &jobz_, &uplo_, &n_, &kd_, AB, &ldab_, D, E, Q, &ldq_, &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

@@ -12,7 +12,7 @@ using blas::real;
 // -----------------------------------------------------------------------------
 /// @ingroup geev_computational
 int64_t hseqr(
-    lapack::JobSchur job, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::JobSchur jobschur, lapack::Job compz, int64_t n, int64_t ilo, int64_t ihi,
     float* H, int64_t ldh,
     std::complex<float>* W,
     float* Z, int64_t ldz )
@@ -25,8 +25,8 @@ int64_t hseqr(
         lapack_error_if( std::abs(ldh) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
-    char job_ = jobschur2char( job );
-    char compz_ = compq2char( compz );
+    char jobschur_ = jobschur2char( jobschur );
+    char compz_ = job_comp2char( compz );
     blas_int n_ = (blas_int) n;
     blas_int ilo_ = (blas_int) ilo;
     blas_int ihi_ = (blas_int) ihi;
@@ -41,7 +41,7 @@ int64_t hseqr(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_shseqr( &job_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, &WR[0], &WI[0], Z, &ldz_, qry_work, &ineg_one, &info_ );
+    LAPACK_shseqr( &jobschur_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, &WR[0], &WI[0], Z, &ldz_, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -50,7 +50,7 @@ int64_t hseqr(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_shseqr( &job_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, &WR[0], &WI[0], Z, &ldz_, &work[0], &lwork_, &info_ );
+    LAPACK_shseqr( &jobschur_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, &WR[0], &WI[0], Z, &ldz_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -64,7 +64,7 @@ int64_t hseqr(
 // -----------------------------------------------------------------------------
 /// @ingroup geev_computational
 int64_t hseqr(
-    lapack::JobSchur job, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::JobSchur jobschur, lapack::Job compz, int64_t n, int64_t ilo, int64_t ihi,
     double* H, int64_t ldh,
     std::complex<double>* W,
     double* Z, int64_t ldz )
@@ -77,8 +77,8 @@ int64_t hseqr(
         lapack_error_if( std::abs(ldh) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
-    char job_ = jobschur2char( job );
-    char compz_ = compq2char( compz );
+    char jobschur_ = jobschur2char( jobschur );
+    char compz_ = job_comp2char( compz );
     blas_int n_ = (blas_int) n;
     blas_int ilo_ = (blas_int) ilo;
     blas_int ihi_ = (blas_int) ihi;
@@ -93,7 +93,7 @@ int64_t hseqr(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dhseqr( &job_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, &WR[0], &WI[0], Z, &ldz_, qry_work, &ineg_one, &info_ );
+    LAPACK_dhseqr( &jobschur_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, &WR[0], &WI[0], Z, &ldz_, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -102,7 +102,7 @@ int64_t hseqr(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dhseqr( &job_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, &WR[0], &WI[0], Z, &ldz_, &work[0], &lwork_, &info_ );
+    LAPACK_dhseqr( &jobschur_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, &WR[0], &WI[0], Z, &ldz_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -116,7 +116,7 @@ int64_t hseqr(
 // -----------------------------------------------------------------------------
 /// @ingroup geev_computational
 int64_t hseqr(
-    lapack::JobSchur job, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::JobSchur jobschur, lapack::Job compz, int64_t n, int64_t ilo, int64_t ihi,
     std::complex<float>* H, int64_t ldh,
     std::complex<float>* W,
     std::complex<float>* Z, int64_t ldz )
@@ -129,8 +129,8 @@ int64_t hseqr(
         lapack_error_if( std::abs(ldh) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
-    char job_ = jobschur2char( job );
-    char compz_ = compq2char( compz );
+    char jobschur_ = jobschur2char( jobschur );
+    char compz_ = job_comp2char( compz );
     blas_int n_ = (blas_int) n;
     blas_int ilo_ = (blas_int) ilo;
     blas_int ihi_ = (blas_int) ihi;
@@ -141,7 +141,7 @@ int64_t hseqr(
     // query for workspace size
     std::complex<float> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_chseqr( &job_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, W, Z, &ldz_, qry_work, &ineg_one, &info_ );
+    LAPACK_chseqr( &jobschur_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, W, Z, &ldz_, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -150,7 +150,7 @@ int64_t hseqr(
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
 
-    LAPACK_chseqr( &job_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, W, Z, &ldz_, &work[0], &lwork_, &info_ );
+    LAPACK_chseqr( &jobschur_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, W, Z, &ldz_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -172,7 +172,7 @@ int64_t hseqr(
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
 ///
-/// @param[in] job
+/// @param[in] jobschur
 ///     - lapack::JobSchur::None:  compute eigenvalues only;
 ///     - lapack::JobSchur::Schur: compute eigenvalues and the Schur form T.
 ///
@@ -285,7 +285,7 @@ int64_t hseqr(
 ///
 /// @ingroup geev_computational
 int64_t hseqr(
-    lapack::JobSchur job, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::JobSchur jobschur, lapack::Job compz, int64_t n, int64_t ilo, int64_t ihi,
     std::complex<double>* H, int64_t ldh,
     std::complex<double>* W,
     std::complex<double>* Z, int64_t ldz )
@@ -298,8 +298,8 @@ int64_t hseqr(
         lapack_error_if( std::abs(ldh) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
-    char job_ = jobschur2char( job );
-    char compz_ = compq2char( compz );
+    char jobschur_ = jobschur2char( jobschur );
+    char compz_ = job_comp2char( compz );
     blas_int n_ = (blas_int) n;
     blas_int ilo_ = (blas_int) ilo;
     blas_int ihi_ = (blas_int) ihi;
@@ -310,7 +310,7 @@ int64_t hseqr(
     // query for workspace size
     std::complex<double> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_zhseqr( &job_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, W, Z, &ldz_, qry_work, &ineg_one, &info_ );
+    LAPACK_zhseqr( &jobschur_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, W, Z, &ldz_, qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -319,7 +319,7 @@ int64_t hseqr(
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );
 
-    LAPACK_zhseqr( &job_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, W, Z, &ldz_, &work[0], &lwork_, &info_ );
+    LAPACK_zhseqr( &jobschur_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, W, Z, &ldz_, &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

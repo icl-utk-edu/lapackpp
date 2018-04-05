@@ -11,7 +11,7 @@ using blas::real;
 
 // -----------------------------------------------------------------------------
 int64_t sbgst(
-    lapack::Vect vect, lapack::Uplo uplo, int64_t n, int64_t ka, int64_t kb,
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t ka, int64_t kb,
     float* AB, int64_t ldab,
     float const* BB, int64_t ldbb,
     float* X, int64_t ldx )
@@ -25,7 +25,7 @@ int64_t sbgst(
         lapack_error_if( std::abs(ldbb) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
     }
-    char vect_ = vect2char( vect );
+    char jobz_ = job2char( jobz );
     char uplo_ = uplo2char( uplo );
     blas_int n_ = (blas_int) n;
     blas_int ka_ = (blas_int) ka;
@@ -38,7 +38,7 @@ int64_t sbgst(
     // allocate workspace
     std::vector< float > work( (2*n) );
 
-    LAPACK_ssbgst( &vect_, &uplo_, &n_, &ka_, &kb_, AB, &ldab_, BB, &ldbb_, X, &ldx_, &work[0], &info_ );
+    LAPACK_ssbgst( &jobz_, &uplo_, &n_, &ka_, &kb_, AB, &ldab_, BB, &ldbb_, X, &ldx_, &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -47,7 +47,7 @@ int64_t sbgst(
 
 // -----------------------------------------------------------------------------
 int64_t sbgst(
-    lapack::Vect vect, lapack::Uplo uplo, int64_t n, int64_t ka, int64_t kb,
+    lapack::Job jobz, lapack::Uplo uplo, int64_t n, int64_t ka, int64_t kb,
     double* AB, int64_t ldab,
     double const* BB, int64_t ldbb,
     double* X, int64_t ldx )
@@ -61,7 +61,7 @@ int64_t sbgst(
         lapack_error_if( std::abs(ldbb) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
     }
-    char vect_ = vect2char( vect );
+    char jobz_ = job2char( jobz );
     char uplo_ = uplo2char( uplo );
     blas_int n_ = (blas_int) n;
     blas_int ka_ = (blas_int) ka;
@@ -74,7 +74,7 @@ int64_t sbgst(
     // allocate workspace
     std::vector< double > work( (2*n) );
 
-    LAPACK_dsbgst( &vect_, &uplo_, &n_, &ka_, &kb_, AB, &ldab_, BB, &ldbb_, X, &ldx_, &work[0], &info_ );
+    LAPACK_dsbgst( &jobz_, &uplo_, &n_, &ka_, &kb_, AB, &ldab_, BB, &ldbb_, X, &ldx_, &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

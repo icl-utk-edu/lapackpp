@@ -14,7 +14,7 @@ using blas::real;
 // -----------------------------------------------------------------------------
 /// @ingroup bbcsd
 int64_t bbcsd(
-    lapack::JobCS jobu1, lapack::JobCS jobu2, lapack::JobCS jobv1t, lapack::JobCS jobv2t, lapack::Op trans, int64_t m, int64_t p, int64_t q,
+    lapack::Job jobu1, lapack::Job jobu2, lapack::Job jobv1t, lapack::Job jobv2t, lapack::Op trans, int64_t m, int64_t p, int64_t q,
     float* theta,
     float* phi,
     float* U1, int64_t ldu1,
@@ -40,10 +40,10 @@ int64_t bbcsd(
         lapack_error_if( std::abs(ldv1t) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldv2t) > std::numeric_limits<blas_int>::max() );
     }
-    char jobu1_ = jobcs2char( jobu1 );
-    char jobu2_ = jobcs2char( jobu2 );
-    char jobv1t_ = jobcs2char( jobv1t );
-    char jobv2t_ = jobcs2char( jobv2t );
+    char jobu1_ = job_csd2char( jobu1 );
+    char jobu2_ = job_csd2char( jobu2 );
+    char jobv1t_ = job_csd2char( jobv1t );
+    char jobv2t_ = job_csd2char( jobv2t );
     char trans_ = op2char( trans );
     blas_int m_ = (blas_int) m;
     blas_int p_ = (blas_int) p;
@@ -76,7 +76,7 @@ int64_t bbcsd(
 // -----------------------------------------------------------------------------
 /// @ingroup bbcsd
 int64_t bbcsd(
-    lapack::JobCS jobu1, lapack::JobCS jobu2, lapack::JobCS jobv1t, lapack::JobCS jobv2t, lapack::Op trans, int64_t m, int64_t p, int64_t q,
+    lapack::Job jobu1, lapack::Job jobu2, lapack::Job jobv1t, lapack::Job jobv2t, lapack::Op trans, int64_t m, int64_t p, int64_t q,
     double* theta,
     double* phi,
     double* U1, int64_t ldu1,
@@ -102,10 +102,10 @@ int64_t bbcsd(
         lapack_error_if( std::abs(ldv1t) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldv2t) > std::numeric_limits<blas_int>::max() );
     }
-    char jobu1_ = jobcs2char( jobu1 );
-    char jobu2_ = jobcs2char( jobu2 );
-    char jobv1t_ = jobcs2char( jobv1t );
-    char jobv2t_ = jobcs2char( jobv2t );
+    char jobu1_ = job_csd2char( jobu1 );
+    char jobu2_ = job_csd2char( jobu2 );
+    char jobv1t_ = job_csd2char( jobv1t );
+    char jobv2t_ = job_csd2char( jobv2t );
     char trans_ = op2char( trans );
     blas_int m_ = (blas_int) m;
     blas_int p_ = (blas_int) p;
@@ -138,7 +138,7 @@ int64_t bbcsd(
 // -----------------------------------------------------------------------------
 /// @ingroup bbcsd
 int64_t bbcsd(
-    lapack::JobCS jobu1, lapack::JobCS jobu2, lapack::JobCS jobv1t, lapack::JobCS jobv2t, lapack::Op trans, int64_t m, int64_t p, int64_t q,
+    lapack::Job jobu1, lapack::Job jobu2, lapack::Job jobv1t, lapack::Job jobv2t, lapack::Op trans, int64_t m, int64_t p, int64_t q,
     float* theta,
     float* phi,
     std::complex<float>* U1, int64_t ldu1,
@@ -164,10 +164,10 @@ int64_t bbcsd(
         lapack_error_if( std::abs(ldv1t) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldv2t) > std::numeric_limits<blas_int>::max() );
     }
-    char jobu1_ = jobcs2char( jobu1 );
-    char jobu2_ = jobcs2char( jobu2 );
-    char jobv1t_ = jobcs2char( jobv1t );
-    char jobv2t_ = jobcs2char( jobv2t );
+    char jobu1_ = job_csd2char( jobu1 );
+    char jobu2_ = job_csd2char( jobu2 );
+    char jobv1t_ = job_csd2char( jobv1t );
+    char jobv2t_ = job_csd2char( jobv2t );
     char trans_ = op2char( trans );
     blas_int m_ = (blas_int) m;
     blas_int p_ = (blas_int) p;
@@ -249,20 +249,20 @@ int64_t bbcsd(
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
 ///
 /// @param[in] jobu1
-///     - lapack::JobCS::Update:   U1 is updated;
-///     - lapack::JobCS::NoUpdate: U1 is not updated.
+///     - lapack::Job::UpdateVec: U1 is updated;
+///     - lapack::Job::NoVec:     U1 is not updated.
 ///
 /// @param[in] jobu2
-///     - lapack::JobCS::Update:   U2 is updated;
-///     - lapack::JobCS::NoUpdate: U2 is not updated.
+///     - lapack::Job::UpdateVec: U2 is updated;
+///     - lapack::Job::NoVec:     U2 is not updated.
 ///
 /// @param[in] jobv1t
-///     - lapack::JobCS::Update:   V1T is updated;
-///     - lapack::JobCS::NoUpdate: V1T is not updated.
+///     - lapack::Job::UpdateVec: V1T is updated;
+///     - lapack::Job::NoVec:     V1T is not updated.
 ///
 /// @param[in] jobv2t
-///     - lapack::JobCS::Update:   V2T is updated;
-///     - lapack::JobCS::NoUpdate: V2T is not updated.
+///     - lapack::Job::UpdateVec: V2T is updated;
+///     - lapack::Job::NoVec:     V2T is not updated.
 ///
 /// @param[in] trans
 ///     - lapack::Op::Trans:
@@ -389,7 +389,7 @@ int64_t bbcsd(
 ///
 /// @ingroup bbcsd
 int64_t bbcsd(
-    lapack::JobCS jobu1, lapack::JobCS jobu2, lapack::JobCS jobv1t, lapack::JobCS jobv2t, lapack::Op trans, int64_t m, int64_t p, int64_t q,
+    lapack::Job jobu1, lapack::Job jobu2, lapack::Job jobv1t, lapack::Job jobv2t, lapack::Op trans, int64_t m, int64_t p, int64_t q,
     double* theta,
     double* phi,
     std::complex<double>* U1, int64_t ldu1,
@@ -415,10 +415,10 @@ int64_t bbcsd(
         lapack_error_if( std::abs(ldv1t) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldv2t) > std::numeric_limits<blas_int>::max() );
     }
-    char jobu1_ = jobcs2char( jobu1 );
-    char jobu2_ = jobcs2char( jobu2 );
-    char jobv1t_ = jobcs2char( jobv1t );
-    char jobv2t_ = jobcs2char( jobv2t );
+    char jobu1_ = job_csd2char( jobu1 );
+    char jobu2_ = job_csd2char( jobu2 );
+    char jobv1t_ = job_csd2char( jobv1t );
+    char jobv2t_ = job_csd2char( jobv2t );
     char trans_ = op2char( trans );
     blas_int m_ = (blas_int) m;
     blas_int p_ = (blas_int) p;

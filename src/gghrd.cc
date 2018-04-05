@@ -11,7 +11,7 @@ using blas::real;
 
 // -----------------------------------------------------------------------------
 int64_t gghrd(
-    lapack::CompQ compq, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::Job compq, lapack::Job compz, int64_t n, int64_t ilo, int64_t ihi,
     float* A, int64_t lda,
     float* B, int64_t ldb,
     float* Q, int64_t ldq,
@@ -27,8 +27,8 @@ int64_t gghrd(
         lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
-    char compq_ = compq2char( compq );
-    char compz_ = compq2char( compz );
+    char compq_ = job_comp2char( compq );
+    char compz_ = job_comp2char( compz );
     blas_int n_ = (blas_int) n;
     blas_int ilo_ = (blas_int) ilo;
     blas_int ihi_ = (blas_int) ihi;
@@ -47,7 +47,7 @@ int64_t gghrd(
 
 // -----------------------------------------------------------------------------
 int64_t gghrd(
-    lapack::CompQ compq, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::Job compq, lapack::Job compz, int64_t n, int64_t ilo, int64_t ihi,
     double* A, int64_t lda,
     double* B, int64_t ldb,
     double* Q, int64_t ldq,
@@ -63,8 +63,8 @@ int64_t gghrd(
         lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
-    char compq_ = compq2char( compq );
-    char compz_ = compq2char( compz );
+    char compq_ = job_comp2char( compq );
+    char compz_ = job_comp2char( compz );
     blas_int n_ = (blas_int) n;
     blas_int ilo_ = (blas_int) ilo;
     blas_int ihi_ = (blas_int) ihi;
@@ -83,7 +83,7 @@ int64_t gghrd(
 
 // -----------------------------------------------------------------------------
 int64_t gghrd(
-    lapack::CompQ compq, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::Job compq, lapack::Job compz, int64_t n, int64_t ilo, int64_t ihi,
     std::complex<float>* A, int64_t lda,
     std::complex<float>* B, int64_t ldb,
     std::complex<float>* Q, int64_t ldq,
@@ -99,8 +99,8 @@ int64_t gghrd(
         lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
-    char compq_ = compq2char( compq );
-    char compz_ = compq2char( compz );
+    char compq_ = job_comp2char( compq );
+    char compz_ = job_comp2char( compz );
     blas_int n_ = (blas_int) n;
     blas_int ilo_ = (blas_int) ilo;
     blas_int ihi_ = (blas_int) ihi;
@@ -119,7 +119,7 @@ int64_t gghrd(
 
 // -----------------------------------------------------------------------------
 int64_t gghrd(
-    lapack::CompQ compq, lapack::CompQ compz, int64_t n, int64_t ilo, int64_t ihi,
+    lapack::Job compq, lapack::Job compz, int64_t n, int64_t ilo, int64_t ihi,
     std::complex<double>* A, int64_t lda,
     std::complex<double>* B, int64_t ldb,
     std::complex<double>* Q, int64_t ldq,
@@ -135,8 +135,8 @@ int64_t gghrd(
         lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
-    char compq_ = compq2char( compq );
-    char compz_ = compq2char( compz );
+    char compq_ = job_comp2char( compq );
+    char compz_ = job_comp2char( compz );
     blas_int n_ = (blas_int) n;
     blas_int ilo_ = (blas_int) ilo;
     blas_int ihi_ = (blas_int) ihi;

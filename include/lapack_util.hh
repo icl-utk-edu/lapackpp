@@ -224,14 +224,21 @@ inline const char* norm2str( lapack::Norm norm )
 }
 
 // -----------------------------------------------------------------------------
-// make EigJob, SVDJob?
+// Job for computing eigenvectors and singular vectors
+// # needs custom map
 enum class Job {
-    NoVec        = 'N',  // syev, geev, gesvd, gesdd
-    Vec          = 'V',  // syev, geev
+    NoVec        = 'N',
+    Vec          = 'V',  // geev, syev, ...
+    UpdateVec    = 'U',  // gghrd#, hbtrd, hgeqz#, hseqr#, ... (many compq or compz)
 
-    AllVec       = 'A',  // gesvd, gesdd
-    SomeVec      = 'S',  // gesvd, gesdd
+    AllVec       = 'A',  // gesvd, gesdd, gejsv#
+    SomeVec      = 'S',  // gesvd, gesdd, gejsv#, gesvj#
     OverwriteVec = 'O',  // gesvd, gesdd
+
+    CompactVec   = 'P',  // bdsdc
+    SomeVecTol   = 'C',  // gesvj
+    VecJacobi    = 'J',  // gejsv
+    Workspace    = 'W',  // gejsv
 };
 
 inline char job2char( lapack::Job job )
@@ -239,11 +246,93 @@ inline char job2char( lapack::Job job )
     return char( job );
 }
 
+// custom maps
+// bbcsd, orcsd2by1
+inline char job_csd2char( lapack::Job job )
+{
+    switch (job) {
+        case lapack::Job::Vec:          return 'Y';  // orcsd
+        case lapack::Job::UpdateVec:    return 'Y';  // bbcsd
+        default: return char( job );
+    }
+}
+
+// bdsdc, gghrd, hgeqz, hseqr, pteqr, stedc, steqr, tgsja, trexc, trsen
+inline char job_comp2char( lapack::Job job )
+{
+    switch (job) {
+        case lapack::Job::Vec:          return 'I';
+        case lapack::Job::UpdateVec:    return 'V';
+        default: return char( job );
+    }
+}
+
+// tgsja
+inline char job_compu2char( lapack::Job job )
+{
+    switch (job) {
+        case lapack::Job::Vec:          return 'I';
+        case lapack::Job::UpdateVec:    return 'U';
+        default: return char( job );
+    }
+}
+
+// tgsja
+inline char job_compq2char( lapack::Job job )
+{
+    switch (job) {
+        case lapack::Job::Vec:          return 'I';
+        case lapack::Job::UpdateVec:    return 'Q';
+        default: return char( job );
+    }
+}
+
+// ggsvd3, ggsvp3
+inline char jobu2char( lapack::Job job )
+{
+    switch (job) {
+        case lapack::Job::Vec:          return 'U';
+        default: return char( job );
+    }
+}
+
+// ggsvd3, ggsvp3
+inline char jobq2char( lapack::Job job )
+{
+    switch (job) {
+        case lapack::Job::Vec:          return 'Q';
+        default: return char( job );
+    }
+}
+
+// gejsva
+inline char jobu_gejsv2char( lapack::Job job )
+{
+    switch (job) {
+        case lapack::Job::SomeVec:      return 'U';
+        case lapack::Job::AllVec:       return 'F';
+        default: return char( job );
+    }
+}
+
+// gesvj
+inline char job_gesvj2char( lapack::Job job )
+{
+    switch (job) {
+        case lapack::Job::SomeVec:      return 'U';  // jobu
+        case lapack::Job::SomeVecTol:   return 'C';  // jobu
+        case lapack::Job::UpdateVec:    return 'U';  // jobv
+        default: return char( job );
+    }
+}
+
 inline lapack::Job char2job( char job )
 {
     job = char( toupper( job ));
-    lapack_error_if( job != 'N' && job != 'V' && job != 'A' && job != 'S' &&
-                     job != 'O' );
+    lapack_error_if( job != 'N' && job != 'V' && job != 'U' &&
+                     job != 'A' && job != 'S' && job != 'O' &&
+                     job != 'P' && job != 'C' && job != 'J' &&
+                     job != 'W' );
     return lapack::Job( job );
 }
 
@@ -252,38 +341,16 @@ inline const char* job2str( lapack::Job job )
     switch (job) {
         case lapack::Job::NoVec:        return "novec";
         case lapack::Job::Vec:          return "vec";
+        case lapack::Job::UpdateVec:    return "update";
+
         case lapack::Job::AllVec:       return "all";
         case lapack::Job::SomeVec:      return "some";
         case lapack::Job::OverwriteVec: return "overwrite";
-    }
-    return "?";
-}
 
-// -----------------------------------------------------------------------------
-// bbcsd
-// todo: just generic yes/no?
-enum class JobCS {
-    Update      = 'Y',
-    NoUpdate    = 'N',  // or any other
-};
-
-inline char jobcs2char( lapack::JobCS jobcs )
-{
-    return char( jobcs );
-}
-
-inline lapack::JobCS char2jobcs( char jobcs )
-{
-    jobcs = char( toupper( jobcs ));
-    lapack_error_if( jobcs != 'Y' && jobcs != 'N' );
-    return lapack::JobCS( jobcs );
-}
-
-inline const char* jobcs2str( lapack::JobCS jobcs )
-{
-    switch (jobcs) {
-        case lapack::JobCS::Update:   return "yes";
-        case lapack::JobCS::NoUpdate: return "no";
+        case lapack::Job::CompactVec:   return "compact";
+        case lapack::Job::SomeVecTol:   return "sometol";
+        case lapack::Job::VecJacobi:    return "jacobi";
+        case lapack::Job::Workspace:    return "work";
     }
     return "?";
 }
@@ -291,7 +358,7 @@ inline const char* jobcs2str( lapack::JobCS jobcs )
 // -----------------------------------------------------------------------------
 // hseqr
 enum class JobSchur {
-    EigOnly      = 'E',
+    Eigenvalues  = 'E',
     Schur        = 'S',
 };
 
@@ -310,95 +377,8 @@ inline lapack::JobSchur char2jobschur( char jobschur )
 inline const char* jobschur2str( lapack::JobSchur jobschur )
 {
     switch (jobschur) {
-        case lapack::JobSchur::EigOnly: return "eig-only";
-        case lapack::JobSchur::Schur:   return "schur";
-    }
-    return "?";
-}
-
-// -----------------------------------------------------------------------------
-// ggsvd3
-// todo: generic yes/no? would require special function to get lapack char
-enum class JobU {
-    Vec         = 'U',
-    NoVec       = 'N',
-};
-
-inline char jobu2char( lapack::JobU jobu )
-{
-    return char( jobu );
-}
-
-inline lapack::JobU char2jobu( char jobu )
-{
-    jobu = char( toupper( jobu ));
-    lapack_error_if( jobu != 'U' && jobu != 'N' );
-    return lapack::JobU( jobu );
-}
-
-inline const char* jobu2str( lapack::JobU jobu )
-{
-    switch (jobu) {
-        case lapack::JobU::Vec:   return "u-vec";
-        case lapack::JobU::NoVec: return "novec";
-    }
-    return "?";
-}
-
-// -----------------------------------------------------------------------------
-// ggsvd3
-// todo: generic yes/no?
-enum class JobV {
-    Vec         = 'V',
-    NoVec       = 'N',
-};
-
-inline char jobv2char( lapack::JobV jobv )
-{
-    return char( jobv );
-}
-
-inline lapack::JobV char2jobv( char jobv )
-{
-    jobv = char( toupper( jobv ));
-    lapack_error_if( jobv != 'V' && jobv != 'N' );
-    return lapack::JobV( jobv );
-}
-
-inline const char* jobv2str( lapack::JobV jobv )
-{
-    switch (jobv) {
-        case lapack::JobV::Vec:   return "v-vec";
-        case lapack::JobV::NoVec: return "novec";
-    }
-    return "?";
-}
-
-// -----------------------------------------------------------------------------
-// ggsvd3
-// todo: generic yes/no?
-enum class JobQ {
-    Vec         = 'Q',
-    NoVec       = 'N',
-};
-
-inline char jobq2char( lapack::JobQ jobq )
-{
-    return char( jobq );
-}
-
-inline lapack::JobQ char2jobq( char jobq )
-{
-    jobq = char( toupper( jobq ));
-    lapack_error_if( jobq != 'Q' && jobq != 'N' );
-    return lapack::JobQ( jobq );
-}
-
-inline const char* jobq2str( lapack::JobQ jobq )
-{
-    switch (jobq) {
-        case lapack::JobQ::Vec:   return "q-vec";
-        case lapack::JobQ::NoVec: return "novec";
+        case lapack::JobSchur::Eigenvalues: return "eigval";
+        case lapack::JobSchur::Schur:       return "schur";
     }
     return "?";
 }
@@ -487,41 +467,8 @@ inline const char* vect2str( lapack::Vect vect )
     switch (vect) {
         case lapack::Vect::P:    return "p";
         case lapack::Vect::Q:    return "q";
-        case lapack::Vect::None: return "n";
-        case lapack::Vect::Both: return "b";
-    }
-    return "?";
-}
-
-// -----------------------------------------------------------------------------
-enum class CompQ {
-    NoVec       = 'N',  // bdsdc, gghd3, hseqr
-    Vec         = 'I',  // bdsdc, gghd3, hseqr
-    CompactVec  = 'P',  // bdsdc
-    Update      = 'V',  //        gghd3, hseqr
-};
-
-inline char compq2char( lapack::CompQ compq )
-{
-    return char( compq );
-}
-
-inline lapack::CompQ char2compq( char compq )
-{
-    compq = char( toupper( compq ));
-    lapack_error_if( compq != 'N' && compq != 'I' && compq != 'P' &&
-                      compq != 'V' );
-    return lapack::CompQ( compq );
-}
-
-inline const char* compq2str( lapack::CompQ compq )
-{
-    switch (compq) {
-        case lapack::CompQ::NoVec:      return "novec";
-        case lapack::CompQ::Vec:        return "i-vec";
-        case lapack::CompQ::CompactVec: return "p-compactvec";
-        case lapack::CompQ::Update:     return "vec";
-
+        case lapack::Vect::None: return "none";
+        case lapack::Vect::Both: return "both";
     }
     return "?";
 }
@@ -718,7 +665,7 @@ inline const char* factored2str( lapack::Factored factored )
 }
 
 // -----------------------------------------------------------------------------
-// geesx
+// geesx, trsen
 enum class Sense {
     None        = 'N',
     Eigenvalues = 'E',
@@ -743,7 +690,7 @@ inline const char* sense2str( lapack::Sense sense )
 {
     switch (sense) {
         case lapack::Sense::None:        return "none";
-        case lapack::Sense::Eigenvalues: return "eigenvalues";
+        case lapack::Sense::Eigenvalues: return "eigval";
         case lapack::Sense::Subspace:    return "subspace";
         case lapack::Sense::Both:        return "both";
     }
@@ -751,6 +698,38 @@ inline const char* sense2str( lapack::Sense sense )
 }
 
 // -----------------------------------------------------------------------------
+// disna
+enum class JobCond {
+    EigenVec         = 'E',
+    LeftSingularVec  = 'L',
+    RightSingularVec = 'R',
+};
+
+inline char jobcond2char( lapack::JobCond jobcond )
+{
+    return char( jobcond );
+}
+
+inline lapack::JobCond char2jobcond( char jobcond )
+{
+    jobcond = char( toupper( jobcond ));
+    lapack_error_if( jobcond != 'N' && jobcond != 'E' && jobcond != 'V' &&
+                     jobcond != 'B' );
+    return lapack::JobCond( jobcond );
+}
+
+inline const char* jobcond2str( lapack::JobCond jobcond )
+{
+    switch (jobcond) {
+        case lapack::JobCond::EigenVec:         return "eigvec";
+        case lapack::JobCond::LeftSingularVec:  return "left";
+        case lapack::JobCond::RightSingularVec: return "right";
+    }
+    return "?";
+}
+
+// -----------------------------------------------------------------------------
+// {ge,gg}{bak,bal}
 enum class Balance {
     None        = 'N',
     Permute     = 'P',
@@ -778,6 +757,34 @@ inline const char* balance2str( lapack::Balance balance )
         case lapack::Balance::Permute: return "permute";
         case lapack::Balance::Scale:   return "scale";
         case lapack::Balance::Both:    return "both";
+    }
+    return "?";
+}
+
+// -----------------------------------------------------------------------------
+// stebz, larrd, stein docs
+enum class Order {
+    Block       = 'B',
+    Entire      = 'E',
+};
+
+inline char order2char( lapack::Order order )
+{
+    return char( order );
+}
+
+inline lapack::Order char2order( char order )
+{
+    order = char( toupper( order ));
+    lapack_error_if( order != 'B' && order != 'E' );
+    return lapack::Order( order );
+}
+
+inline const char* order2str( lapack::Order order )
+{
+    switch (order) {
+        case lapack::Order::Block:  return "block";
+        case lapack::Order::Entire: return "entire";
     }
     return "?";
 }

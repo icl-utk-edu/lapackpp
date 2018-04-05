@@ -11,7 +11,7 @@ using blas::real;
 
 // -----------------------------------------------------------------------------
 int64_t steqr(
-    lapack::CompQ compz, int64_t n,
+    lapack::Job compz, int64_t n,
     float* D,
     float* E,
     float* Z, int64_t ldz )
@@ -21,7 +21,7 @@ int64_t steqr(
         lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
-    char compz_ = compq2char( compz );
+    char compz_ = job_comp2char( compz );
     blas_int n_ = (blas_int) n;
     blas_int ldz_ = (blas_int) ldz;
     blas_int info_ = 0;
@@ -38,7 +38,7 @@ int64_t steqr(
 
 // -----------------------------------------------------------------------------
 int64_t steqr(
-    lapack::CompQ compz, int64_t n,
+    lapack::Job compz, int64_t n,
     double* D,
     double* E,
     double* Z, int64_t ldz )
@@ -48,7 +48,7 @@ int64_t steqr(
         lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
-    char compz_ = compq2char( compz );
+    char compz_ = job_comp2char( compz );
     blas_int n_ = (blas_int) n;
     blas_int ldz_ = (blas_int) ldz;
     blas_int info_ = 0;
@@ -65,7 +65,7 @@ int64_t steqr(
 
 // -----------------------------------------------------------------------------
 int64_t steqr(
-    lapack::CompQ compz, int64_t n,
+    lapack::Job compz, int64_t n,
     float* D,
     float* E,
     std::complex<float>* Z, int64_t ldz )
@@ -75,7 +75,7 @@ int64_t steqr(
         lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
-    char compz_ = compq2char( compz );
+    char compz_ = job_comp2char( compz );
     blas_int n_ = (blas_int) n;
     blas_int ldz_ = (blas_int) ldz;
     blas_int info_ = 0;
@@ -92,7 +92,7 @@ int64_t steqr(
 
 // -----------------------------------------------------------------------------
 int64_t steqr(
-    lapack::CompQ compz, int64_t n,
+    lapack::Job compz, int64_t n,
     double* D,
     double* E,
     std::complex<double>* Z, int64_t ldz )
@@ -102,7 +102,7 @@ int64_t steqr(
         lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
     }
-    char compz_ = compq2char( compz );
+    char compz_ = job_comp2char( compz );
     blas_int n_ = (blas_int) n;
     blas_int ldz_ = (blas_int) ldz;
     blas_int info_ = 0;

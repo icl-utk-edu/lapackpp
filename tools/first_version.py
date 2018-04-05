@@ -94,6 +94,9 @@ first_version = {
     'laesy':    (1, 0, 0),
     'laev2':    (1, 0, 0),
     'laexc':    (1, 0, 0),
+    'lagge':    (1, 0, 0),  # matgen
+    'laghe':    (1, 0, 0),  # matgen
+    'lagsy':    (1, 0, 0),  # matgen
     'lagtf':    (1, 0, 0),
     'lagtm':    (1, 0, 0),
     'lagts':    (1, 0, 0),

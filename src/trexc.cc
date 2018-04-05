@@ -11,7 +11,7 @@ using blas::real;
 
 // -----------------------------------------------------------------------------
 int64_t trexc(
-    lapack::CompQ compq, int64_t n,
+    lapack::Job compq, int64_t n,
     float* T, int64_t ldt,
     float* Q, int64_t ldq,
     int64_t* ifst,
@@ -23,7 +23,7 @@ int64_t trexc(
         lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
     }
-    char compq_ = compq2char( compq );
+    char compq_ = job_comp2char( compq );
     blas_int n_ = (blas_int) n;
     blas_int ldt_ = (blas_int) ldt;
     blas_int ldq_ = (blas_int) ldq;
@@ -45,7 +45,7 @@ int64_t trexc(
 
 // -----------------------------------------------------------------------------
 int64_t trexc(
-    lapack::CompQ compq, int64_t n,
+    lapack::Job compq, int64_t n,
     double* T, int64_t ldt,
     double* Q, int64_t ldq,
     int64_t* ifst,
@@ -57,7 +57,7 @@ int64_t trexc(
         lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
     }
-    char compq_ = compq2char( compq );
+    char compq_ = job_comp2char( compq );
     blas_int n_ = (blas_int) n;
     blas_int ldt_ = (blas_int) ldt;
     blas_int ldq_ = (blas_int) ldq;
@@ -79,7 +79,7 @@ int64_t trexc(
 
 // -----------------------------------------------------------------------------
 int64_t trexc(
-    lapack::CompQ compq, int64_t n,
+    lapack::Job compq, int64_t n,
     std::complex<float>* T, int64_t ldt,
     std::complex<float>* Q, int64_t ldq, int64_t ifst, int64_t ilst )
 {
@@ -91,7 +91,7 @@ int64_t trexc(
         lapack_error_if( std::abs(ifst) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ilst) > std::numeric_limits<blas_int>::max() );
     }
-    char compq_ = compq2char( compq );
+    char compq_ = job_comp2char( compq );
     blas_int n_ = (blas_int) n;
     blas_int ldt_ = (blas_int) ldt;
     blas_int ldq_ = (blas_int) ldq;
@@ -108,7 +108,7 @@ int64_t trexc(
 
 // -----------------------------------------------------------------------------
 int64_t trexc(
-    lapack::CompQ compq, int64_t n,
+    lapack::Job compq, int64_t n,
     std::complex<double>* T, int64_t ldt,
     std::complex<double>* Q, int64_t ldq, int64_t ifst, int64_t ilst )
 {
@@ -120,7 +120,7 @@ int64_t trexc(
         lapack_error_if( std::abs(ifst) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ilst) > std::numeric_limits<blas_int>::max() );
     }
-    char compq_ = compq2char( compq );
+    char compq_ = job_comp2char( compq );
     blas_int n_ = (blas_int) n;
     blas_int ldt_ = (blas_int) ldt;
     blas_int ldq_ = (blas_int) ldq;

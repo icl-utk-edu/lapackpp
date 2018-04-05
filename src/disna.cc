@@ -11,7 +11,7 @@ using blas::real;
 
 // -----------------------------------------------------------------------------
 int64_t disna(
-    lapack::Job job, int64_t m, int64_t n,
+    lapack::JobCond jobcond, int64_t m, int64_t n,
     float const* D,
     float* SEP )
 {
@@ -20,12 +20,12 @@ int64_t disna(
         lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
     }
-    char job_ = job2char( job );
+    char jobcond_ = jobcond2char( jobcond );
     blas_int m_ = (blas_int) m;
     blas_int n_ = (blas_int) n;
     blas_int info_ = 0;
 
-    LAPACK_sdisna( &job_, &m_, &n_, D, SEP, &info_ );
+    LAPACK_sdisna( &jobcond_, &m_, &n_, D, SEP, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -34,7 +34,7 @@ int64_t disna(
 
 // -----------------------------------------------------------------------------
 int64_t disna(
-    lapack::Job job, int64_t m, int64_t n,
+    lapack::JobCond jobcond, int64_t m, int64_t n,
     double const* D,
     double* SEP )
 {
@@ -43,12 +43,12 @@ int64_t disna(
         lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
     }
-    char job_ = job2char( job );
+    char jobcond_ = jobcond2char( jobcond );
     blas_int m_ = (blas_int) m;
     blas_int n_ = (blas_int) n;
     blas_int info_ = 0;
 
-    LAPACK_ddisna( &job_, &m_, &n_, D, SEP, &info_ );
+    LAPACK_ddisna( &jobcond_, &m_, &n_, D, SEP, &info_ );
     if (info_ < 0) {
         throw Error();
     }

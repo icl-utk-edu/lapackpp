@@ -170,6 +170,10 @@ tester_top = '''\
 tester_bottom = ''
 
 # --------------------
+# 4 space indent
+tab = '    '
+
+# ------------------------------------------------------------------------------
 typemap = {
     'character'        : 'char',
     'integer'          : 'int64_t',
@@ -192,54 +196,381 @@ typemap = {
     'logical function of two complex*16 arguments' : 'lapack_z_select2',
 }
 
+# ------------------------------------------------------------------------------
+# enum mappings
+# each tuple is (enum, enum2char, map), where
+# enum2char is function to convert enum to LAPACK char,
+# map goes from LAPACK char to enum values
+
+# --------------------
+# see blas_util.hh
+uplo = ('lapack::Uplo', 'uplo2char', {
+    'u': 'Upper',
+    'l': 'Lower',
+    'g': 'General',
+})
+
+diag = ('lapack::Diag', 'diag2char', {
+    'n': 'NonUnit',
+    'u': 'Unit',
+})
+
+op = ('lapack::Op', 'op2char', {
+    'n': 'NoTrans',
+    't': 'Trans',
+    'c': 'ConjTrans',
+})
+
+side = ('lapack::Side', 'side2char', {
+    'l': 'Left',
+    'r': 'Right',
+})
+
+# --------------------
+# see lapack_util.hh
+sides = ('lapack::Sides', 'sides2char', {
+    'l': 'Left',
+    'r': 'Right',
+    'b': 'Both',
+})
+
+norm = ('lapack::Norm', 'norm2char', {
+    '1': 'One',
+    'o': 'One',
+    'i': 'Inf',
+    'f': 'Fro',
+    'm': 'Max',
+})
+
+job = ('lapack::Job', 'job2char', {
+    'n': 'NoVec',
+    'v': 'Vec',
+    'u': 'UpdateVec',
+
+    'a': 'AllVec',
+    's': 'SomeVec',
+    'o': 'OverwriteVec',
+
+    'p': 'CompactVec',
+    'c': 'SomeVecTol',
+    'j': 'AllVecJacobi',
+    'w': 'Workspace',
+})
+
+# ----- custom job maps
+#job_bdsdc = ('lapack::Job', 'job_bdsdc2char', {
+#    'n': 'NoVec',
+#    'i': 'Vec',
+#    'p': 'CompactVec',
+#})
+
+job_csd = ('lapack::Job', 'job_csd2char', {
+    'n': 'NoVec',
+    'y': 'UpdateVec',
+})
+
+# hseqr, tgsja, trsen, gghd3, etc.
+job_comp = ('lapack::Job', 'job_comp2char', {
+    'n': 'NoVec',
+    'i': 'Vec',
+    'v': 'UpdateVec',
+    'p': 'CompactVec',  # bdsdc
+})
+
+# tgsja
+job_compu = ('lapack::Job', 'job_compu2char', {
+    'n': 'NoVec',
+    'i': 'Vec',
+    'u': 'UpdateVec',
+})
+
+# tgsja
+job_compq = ('lapack::Job', 'job_compq2char', {
+    'n': 'NoVec',
+    'i': 'Vec',
+    'q': 'UpdateVec',
+})
+
+# ggsvd, ggsvp3
+jobu = ('lapack::Job', 'jobu2char', {
+    'n': 'NoVec',
+    'u': 'Vec',
+})
+
+# ggsvd, ggsvp3
+jobq = ('lapack::Job', 'jobq2char', {
+    'n': 'NoVec',
+    'q': 'Vec',
+})
+
+jobu_gejsv = ('lapack::Job', 'job_gejsv2char', {
+    'n': 'NoVec',
+    'u': 'SomeVec',
+    'f': 'AllVec',
+    'w': 'Work',
+})
+
+job_gesvj = ('lapack::Job', 'job_gesvj2char', {
+    'n': 'NoVec',
+    'u': 'SomeVec',     # jobu
+    'c': 'SomeVecTol',  # jobu
+    'v': 'Vec',         # jobv
+    'a': 'UpdateVec',   # jobv
+})
+# -----
+
+# hseqr
+jobschur = ('lapack::JobSchur', 'jobschur2char', {
+    'e': 'Eigenvalues',
+    's': 'Schur',
+})
+
+# gees
+sort = ('lapack::Sort', 'sort2char', {
+    'n': 'NotSorted',
+    's': 'Sorted',
+})
+
+# syevx, geevx, gesvdx
+range_enum = ('lapack::Range', 'range2char', {
+    'a': 'All',
+    'v': 'Value',
+    'i': 'Index',
+})
+
+# ormbr, orgbr
+vect = ('lapack::Vect', 'vect2char', {
+    'q': 'Q',
+    'p': 'P',
+    'n': 'None',
+    'b': 'Both',
+})
+
+# larfb
+direct = ('lapack::Direct', 'direct2char', {
+    'f': 'Forward',
+    'b': 'Backward',
+})
+
+# larfb
+storev = ('lapack::StoreV', 'storev2char', {
+    'c': 'Columnwise',
+    'r': 'Rowwise',
+})
+
+# lascl, laset
+matrixtype = ('lapack::MatrixType', 'matrixtype2char', {
+    'g': 'General',
+    'l': 'Lower',
+    'u': 'Upper',
+    'h': 'Hessenberg',
+    'b': 'LowerBand',
+    'q': 'UpperBand',
+    'z': 'Band',
+})
+
+# trevc
+howmany = ('lapack::HowMany', 'howmany2char', {
+    'a': 'All',
+    'b': 'Backtransform',
+    's': 'Select',
+})
+
+# *svx, *rfsx
+equed = ('lapack::Equed', 'equed2char', {
+    'n': 'None',
+    'r': 'Row',
+    'c': 'Col',
+    'b': 'Both',
+    'y': 'Yes',  # porfsx
+})
+
+# *svx, *rfsx
+factored = ('lapack::Factored', 'factored2char', {
+    'f': 'Factored',
+    'n': 'NotFactored',
+    'e': 'Equilibrate',
+})
+
+# trsen, geesx
+sense = ('lapack::Sense', 'sense2char', {
+    'n': 'None',
+    'e': 'Eigenvalues',
+    'v': 'Subspace',
+    'b': 'Both',
+})
+
+# disna
+jobcond = ('lapack::JobCond', 'jobcond2char', {
+    'e': 'EigenVec',
+    'l': 'LeftSingularVec',
+    'r': 'RightSingularVec',
+})
+
+# gebak, gebal
+balance = ('lapack::Balance', 'balance2char', {
+    'n': 'None',
+    'p': 'Permute',
+    's': 'Scale',
+    'b': 'Both',
+})
+
+# stebz, larrd
+order = ('lapack::Order', 'order2char', {
+    'b': 'Block',
+    'e': 'Entire',
+})
+
+# rowcol
+rowcol = ('lapack::RowCol', 'rowcol2char', {
+    'c': 'Col',
+    'r': 'Row',
+})
+
+# --------------------
+# maps argument names to enum tuples
 enum_map = {
-    'uplo'   : 'Uplo',
-    'trans'  : 'Op',
-    'transA' : 'Op',
-    'transB' : 'Op',
-    'transr' : 'Op',  # RFP
-    'diag'   : 'Diag',
-    'side'   : 'Side',
+    # blas
+    'uplo':         uplo,
+    'diag':         diag,
+    'trans':        op,
+    'transr':       op,         # hfrk
+    'side':         side,
 
-    'job'    : 'Job',
-    'joba'   : 'Job',  # gesvj -- not compatibile with gesvd!
-    'jobv'   : 'Job',  # gesvj -- not compatibile with gesvd!
+    # lapack
+    'sides':        sides,      # trevc
+    'norm':         norm,
 
-    'jobu'   : 'Job',  # gesvd, gesdd; ggsvd has incompatible jobu and jobv
-    'jobvt'  : 'Job',  # gesvd, gesdd
-    'jobz'   : 'Job',  # syev
-    'jobvl'  : 'Job',  # geev
-    'jobvr'  : 'Job',  # geev
-    'jobvs'  : 'Job',  # gees
-    'jobvsl' : 'Job',  # gges
-    'jobvsr' : 'Job',  # gges
+    # ----- jobs
+    'compq':        job_comp,   # bdsdc, gghrd, hgeqz, trexc, trsen
+    'compz':        job_comp,   # gghrd, hgeqz, hseqr, pteqr, stedc, steqr
 
-    'jobschur': 'JobSchur', # hseqr
+    'jobq':         jobq,       # ggsvd3, ggsvp3
+    'jobq_tgsja':   job_compq,  # tgsja
 
-    'jobq'   : 'JobQ',   # ggsvd
+    'jobu':         job,        # gesvd, gesvdx
+    'jobu_gejsv':   jobu_gejsv, # gejsv
+    'jobu_gesvj':   job_gesvj,  # gesvj
+    'jobu_ggsvd':   jobu,       # ggsvd3, ggsvp3
+    'jobu_tgsja':   job_compu,  # tgsja
 
-    'jobu1'  : 'JobCS',  # bbcsd
-    'jobu2'  : 'JobCS',  # bbcsd
-    'jobv1t' : 'JobCS',  # bbcsd
-    'jobv2t' : 'JobCS',  # bbcsd
+    'jobu1':        job_csd,    # bbcsd, orcsd2by1
+    'jobu2':        job_csd,    # bbcsd, orcsd2by1
+    'jobv1t':       job_csd,    # bbcsd, orcsd2by1
+    'jobv2t':       job_csd,    # bbcsd, orcsd2by1
 
-    'norm'   : 'Norm',
-    'sort'   : 'Sort',        # gees
-    'range'  : 'Range',       # syevx
-    'vect'   : 'Vect',        # orgbr, ormbr
-    'compq'  : 'CompQ',       # bdsdc, gghrd
-    'compz'  : 'CompQ',       #        gghrd, hseqr
-    'direct' : 'Direct',      # larfb
-    'storev' : 'StoreV',      # larfb
-    'type'   : 'MatrixType',  # lascl
-    'howmany': 'HowMany',     # trevc
-    'equed'  : 'Equed',       # *svx, *rfsx
-    'fact'   : 'Factored',    # *svx
-    'sense'  : 'Sense',       # geesx
-    'balanc' : 'Balance',     # geevx
-    'balance': 'Balance',
+    'jobv':         job,        # gejsv, ggsvd3, ggsvp3
+    'jobv_gesvj':   job_gesvj,  # gesvj
+    'jobv_tgsja':   job_comp,   # tgsja
+
+    'jobvl':        job,        # geev, ggev[3]
+    'jobvr':        job,        # geev, ggev[3]
+    'jobvs':        job,        # gees[x]
+    'jobvsl':       job,        # gges[3x]
+    'jobvsr':       job,        # gges[3x]
+    'jobvt':        job,        # gesvd, gesvdx
+    'jobz':         job,        # bdsvdx, gesdd, {hb,he,hp,st}{ev,gv}*, stegr, stemr, [hbgst, hbtrd, hetrd_2stage: was vect]
+
+    'jobschur':     jobschur,   # hseqr
+    'sort':         sort,       # gees
+    'range':        range_enum, # syevx, geevx, gesvdx
+    'vect':         vect,       # ormbr, orgbr
+    'direct':       direct,     # larfb
+    'storev':       storev,     # larfb
+    'matrixtype':   matrixtype, # lascl, laset
+    'howmany':      howmany,    # gehrd
+    'equed':        equed,      # *svx, *rfsx
+    'fact':         factored,   # *svx, *rfsx
+    'sense':        sense,      # trsen, geesx
+    'jobcond':      jobcond,    # disna
+    'balance':      balance,    # {ge,gg}{bak,bal}
+    'order':        order,      # stebz, larrd
 }
 
+# ------------------------------------------------------------------------------
+# maps function to list of (search, replace) pairs
+arg_rename = {
+    # function         search    replace
+    'gebak':        (( 'JOB',    'BALANCE'      ), ),
+    'ggbak':        (( 'JOB',    'BALANCE'      ), ),
+    'gebal':        (( 'JOB',    'BALANCE'      ), ),
+    'ggbal':        (( 'JOB',    'BALANCE'      ), ),
+
+    'disna':        (( 'JOB',    'JOBCOND'      ), ),
+
+    'hetrd_2stage': (( 'VECT',   'JOBZ'         ), ),
+    'sytrd_2stage': (( 'VECT',   'JOBZ'         ), ),
+    'hbgst':        (( 'VECT',   'JOBZ'         ), ),
+    'sbgst':        (( 'VECT',   'JOBZ'         ), ),
+    'hbtrd':        (( 'VECT',   'JOBZ'         ), ),
+    'sbtrd':        (( 'VECT',   'JOBZ'         ), ),
+
+    'tgsja':        (( 'JOBU',   'JOBU_TGSJA'   ),
+                     ( 'JOBV',   'JOBV_TGSJA'   ),
+                     ( 'JOBQ',   'JOBQ_TGSJA'   ), ),
+
+    'gejsv':        (( 'JOBU',   'JOBU_GEJSV'   ),
+                     ( 'JOBV',   'JOBV_GEJSV'   ), ),
+
+    'gesvj':        (( 'JOBU',   'JOBU_GESVJ'   ),
+                     ( 'JOBV',   'JOBV_GESVJ'   ),
+                     ( 'JOBA',   'UPLO'         ), ),
+
+    'ggsvd':        (( 'JOBU',   'JOBU_GGSVD'   ), ),
+    'ggsvd3':       (( 'JOBU',   'JOBU_GGSVD'   ), ),
+    'ggsvp':        (( 'JOBU',   'JOBU_GGSVD'   ), ),
+    'ggsvp3':       (( 'JOBU',   'JOBU_GGSVD'   ), ),
+
+    'trevc':        (( 'HOWMNY', 'HOWMANY'      ),
+                     ( 'SIDE',   'SIDES'        ), ),
+
+    'trevc3':       (( 'HOWMNY', 'HOWMANY'      ),
+                     ( 'SIDE',   'SIDES'        ), ),
+
+    'hseqr':        (( 'JOB',    'JOBSCHUR'     ), ),
+    'hgeqz':        (( 'JOB',    'JOBSCHUR'     ), ),
+
+    'trsen':        (( 'JOB',    'SENSE'        ), ),  # match geesx
+
+    'bdsvdx':       (( 'NS',     'NFOUND'       ), ),
+    'gesvdx':       (( 'NS',     'NFOUND'       ), ),
+    'heevr':        (( 'M',      'NFOUND'       ), ),
+    'syevr':        (( 'M',      'NFOUND'       ), ),
+    'heevr_2stage': (( 'M',      'NFOUND'       ), ),
+    'syevr_2stage': (( 'M',      'NFOUND'       ), ),
+    'heevx':        (( 'M',      'NFOUND'       ), ),
+    'syevx':        (( 'M',      'NFOUND'       ), ),
+    'heevx_2stage': (( 'M',      'NFOUND'       ), ),
+    'syevx_2stage': (( 'M',      'NFOUND'       ), ),
+
+    'lanhb':        (( 'K',      'KD'           ), ),
+    'lansb':        (( 'K',      'KD'           ), ),
+
+    'lascl':        (( 'TYPE',   'MATRIXTYPE'   ), ),
+}
+
+# ------------------------------------------------------------------------------
+# replacements applied as last step
+# these reverse some temporary changes done by arg_rename
+post_rename = {
+    # function         replace       search
+    'tgsja':        (( 'jobu_tgsja', 'jobu' ),
+                     ( 'jobv_tgsja', 'jobv' ),
+                     ( 'jobq_tgsja', 'jobq' ), ),
+
+    'gejsv':        (( 'jobu_gejsv', 'jobu' ),
+                     ( 'jobv_gejsv', 'jobv' ), ),
+
+    'gesvj':        (( 'jobu_gesvj', 'jobu' ),
+                     ( 'jobv_gesvj', 'jobv' ), ),
+
+    'ggsvd':        (( 'jobu_ggsvd', 'jobu' ), ),
+    'ggsvd3':       (( 'jobu_ggsvd', 'jobu' ), ),
+    'ggsvp':        (( 'jobu_ggsvd', 'jobu' ), ),
+    'ggsvp3':       (( 'jobu_ggsvd', 'jobu' ), ),
+}
+
+# ------------------------------------------------------------------------------
 alias_map = {
     'sy': 'he',
     'sp': 'hp',
@@ -248,8 +579,26 @@ alias_map = {
     'op': 'up',
 }
 
-# 4 space indent
-tab = '    '
+# ------------------------------------------------------------------------------
+fortran_operators = {
+    'LT': '<',
+    'lt': '<',
+
+    'GT': '>',
+    'gt': '>',
+
+    'LE': '<=',
+    'le': '<=',
+
+    'GE': '>=',
+    'ge': '>=',
+
+    'EQ': '==',
+    'eq': '==',
+
+    'NE': '!=',
+    'ne': '!=',
+}
 
 # ------------------------------------------------------------------------------
 # list of LAPACK functions that begin with precision [sdcz].
@@ -573,6 +922,10 @@ def parse_lapack( path ):
     # for now, don't squeeze space (destroys examples like in gebrd)
     #func.details = re.sub( r'(\S)  +', r'\1 ', func.details )
 
+    if (func.name in arg_rename):
+        for (search, replace) in arg_rename[ func.name ]:
+            func.purpose = re.sub( r'\b' + search + r'\b', replace, func.purpose )
+
     # --------------------
     # parse arguments for properties
     i = 0
@@ -608,12 +961,13 @@ def parse_lapack( path ):
             arg.name = 'BALANCE'
             arg.desc = re.sub( r'\bBALANC\b', r'BALANCE', arg.desc )
 
-        if (func.name in enum_override):
-            for (search, replace) in enum_override[ func.name ]:
-                #print( 'search', r'\b' + search + r'\b', 'replace', replace )
+        if (func.name in arg_rename):
+            for (search, replace) in arg_rename[ func.name ]:
                 arg.desc = re.sub( r'\b' + search + r'\b', replace, arg.desc )
+                #print( 'func', func.name, 'arg', arg.name, 'search', search, 'replace', replace, '\n<<<\n', arg.desc, '\n>>>\n' )
                 if (arg.name == search):
                     arg.name = replace
+                    arg.name_orig = replace
 
         # lowercase scalars, work and pivot arrays
         if (not arg.is_array or arg.name in
@@ -680,7 +1034,11 @@ def parse_lapack( path ):
         # map char to enum (after doing lname)
         if (arg.dtype == 'char'):
             arg.is_enum = True
-            arg.dtype = 'lapack::' + enum_map[ arg.name ]
+            try:
+                arg.dtype = enum_map[ arg.name ][0]
+            except Exception, e:
+                arg.dtype = 'UNKNOWN'
+                print( 'ERROR: unknown enum', arg.name )
 
         if (debug):
             print(   'arg       = ' + arg.name +
@@ -705,215 +1063,52 @@ def parse_lapack( path ):
 # end
 
 # ------------------------------------------------------------------------------
-enums = {
-    'uplo': {
-        'u': ('Upper', 'lapack::Uplo::Upper'),
-        'l': ('Lower', 'lapack::Uplo::Lower'),
-    },
-    'trans': {
-        'n': ('NoTrans',   'lapack::Op::NoTrans'),
-        't': ('Trans',     'lapack::Op::Trans'),
-        'c': ('ConjTrans', 'lapack::Op::ConjTrans'),
-    },
-    'side': {
-        'l': ('Left',  'lapack::Side::Left' ),
-        'r': ('Right', 'lapack::Side::Right'),
-        'b': ('Both',  'lapack::Side::Both' ),  # todo?
-    },
-    'norm': {
-        '1': ('One', 'lapack::Norm::One'),
-        'o': ('One', 'lapack::Norm::One'),
-        'i': ('Inf', 'lapack::Norm::Inf'),
-        'f': ('Fro', 'lapack::Norm::Fro'),
-        'm': ('Max', 'lapack::Norm::Max'),
-    },
-    'diag': {
-        'n': ('NonUnit', 'lapack::Diag::NonUnit'),
-        'u': ('Unit',    'lapack::Diag::Unit'),
-    },
-    'compq': {
-        'n': ('NoVec',      'lapack::CompQ::NoVec'),
-        'i': ('Vec',        'lapack::CompQ::Vec'),
-        'p': ('CompactVec', 'lapack::CompQ::CompactVec'),
-        'v': ('Update',     'lapack::CompQ::Update'),
-    },
-    'compz': {
-        'n': ('NoVec',      'lapack::CompQ::NoVec'),
-        'i': ('Vec',        'lapack::CompQ::Vec'),
-        'p': ('CompactVec', 'lapack::CompQ::CompactVec'),
-        'v': ('Update',     'lapack::CompQ::Update'),
-    },
-    'vect': {
-        'q': ('Q',    'lapack::Vect::Q'    ),
-        'p': ('P',    'lapack::Vect::P'    ),
-        'n': ('None', 'lapack::Vect::None' ),
-        'b': ('Both', 'lapack::Vect::Both' ),
-    },
-    'equed': {
-        'r': ('Row',  'lapack::Equed::Row' ),
-        'c': ('Col',  'lapack::Equed::Col' ),
-        'n': ('None', 'lapack::Equed::None'),
-        'b': ('Both', 'lapack::Equed::Both'),
-        'y': ('Yes',  'lapack::Equed::Yes' ),  # porfsx
-    },
-    'fact': {
-        'f': ('Factored',    'lapack::Factored::Factored'),
-        'n': ('NotFactored', 'lapack::Factored::NotFactored'),
-        'e': ('Equilibrate', 'lapack::Factored::Equilibrate'),
-    },
-
-    # geev
-    'jobvl': {
-        'n': ('NoVec',        'lapack::Job::NoVec'       ),
-        'v': ('Vec',          'lapack::Job::Vec'         ),
-    },
-    'jobvr': {
-        'n': ('NoVec',        'lapack::Job::NoVec'       ),
-        'v': ('Vec',          'lapack::Job::Vec'         ),
-    },
-
-    # hseqr
-    'jobschur': {
-        'e': ('None',         'lapack::JobSchur::None' ),
-        's': ('Schur',        'lapack::JobSchur::Schur'),
-    },
-
-    # gesvd
-    'jobu': {
-        'n': ('NoVec',        'lapack::Job::NoVec'       ),
-        'a': ('AllVec',       'lapack::Job::AllVec'      ),
-        's': ('SomeVec',      'lapack::Job::SomeVec'     ),
-        'o': ('OverwriteVec', 'lapack::Job::OverwriteVec'),
-        'v': ('Vec',          'lapack::Job::Vec'         ),  # gesvdx
-    },
-    'jobvt': {
-        'n': ('NoVec',        'lapack::Job::NoVec'       ),
-        'a': ('AllVec',       'lapack::Job::AllVec'      ),
-        's': ('SomeVec',      'lapack::Job::SomeVec'     ),
-        'o': ('OverwriteVec', 'lapack::Job::OverwriteVec'),
-        'v': ('Vec',          'lapack::Job::Vec'         ),  # gesvdx
-    },
-
-    # bbcsd
-    'jobu1': {
-        'n': ('NoUpdate', 'lapack::JobCS::NoUpdate'),
-        'y': ('Update',   'lapack::JobCS::Update'),
-    },
-    'jobu2': {
-        'n': ('NoUpdate', 'lapack::JobCS::NoUpdate'),
-        'y': ('Update',   'lapack::JobCS::Update'),
-    },
-    'jobv1t': {
-        'n': ('NoUpdate', 'lapack::JobCS::NoUpdate'),
-        'y': ('Update',   'lapack::JobCS::Update'),
-    },
-    'jobv2t': {
-        'n': ('NoUpdate', 'lapack::JobCS::NoUpdate'),
-        'y': ('Update',   'lapack::JobCS::Update'),
-    },
-
-    # gesdd, syev
-    'jobz': {
-        'n': ('NoVec',        'lapack::Job::NoVec'       ),
-        'v': ('Vec',          'lapack::Job::Vec'         ),
-        'a': ('AllVec',       'lapack::Job::AllVec'      ),
-        's': ('SomeVec',      'lapack::Job::SomeVec'     ),
-        'o': ('OverwriteVec', 'lapack::Job::OverwriteVec'),
-    },
-
-    # syevx, geevx, gesvdx
-    'range': {
-        'a': ('All',   'lapack::Range::All'  ),
-        'v': ('Value', 'lapack::Range::Value'),
-        'i': ('Index', 'lapack::Range::Index'),
-    },
-
-    # gebak, gebal
-    'balance': {
-        'n': ('None',    'lapack::Balance::None'   ),
-        'p': ('Permute', 'lapack::Balance::Permute'),
-        's': ('Scale',   'lapack::Balance::Scale'  ),
-        'b': ('Both',    'lapack::Balance::Both'   ),
-    },
-
-    # gehrd
-    'howmany': {
-        'a': ('All',           'lapack::HowMany::All'          ),
-        'b': ('Backtransform', 'lapack::HowMany::Backtransform'),
-        's': ('Select',        'lapack::HowMany::Select'       ),
-    },
-
-    # larfb
-    'direct': {
-        'f': ('Forward',  'lapack::Direct::Forward' ),
-        'b': ('Backward', 'lapack::Direct::Backward'),
-    },
-    'storev': {
-        'c': ('Columnwise', 'lapack::StoreV::Columnwise'),
-        'r': ('Rowwise',    'lapack::StoreV::Rowwise'   ),
-    },
-
-    # lascl, laset
-    'type': {
-        'g': ('General',    'lapack::MatrixType::General'   ),
-        'l': ('Lower',      'lapack::MatrixType::Lower'     ),
-        'u': ('Upper',      'lapack::MatrixType::Upper'     ),
-        'h': ('Hessenberg', 'lapack::MatrixType::Hessenberg'),
-        'b': ('LowerBand',  'lapack::MatrixType::LowerBand' ),
-        'q': ('UpperBand',  'lapack::MatrixType::UpperBand' ),
-        'z': ('Band',       'lapack::MatrixType::Band'      ),
-    },
-}
-
-enum_override = {
-    'gebak': (( 'JOB', 'BALANCE' ), ),
-    'gebal': (( 'JOB', 'BALANCE' ), ),
-    'hetrd_2stage': (( 'VECT', 'JOBZ' ), ),  # todo: just job?
-    'sytrd_2stage': (( 'VECT', 'JOBZ' ), ),  # todo: just job?
-    'trevc':  (( 'HOWMNY', 'HOWMANY' ), ),
-    'trevc3': (( 'HOWMNY', 'HOWMANY' ), ),
-    'hseqr':  (( 'JOB', 'JOBSCHUR' ), ),
-}
-
-# ------------------------------------------------------------------------------
+# regexp match:
+# \b([A-Z0-9]{2,})  (\s*(?:=|!=)\s*)  '(\w)'  (?:(\s+or\s+)  '(\w)')?
+#   enum            oper = or !=       val       conjunction  val2     <= groups
+#
+# converts: UPLO = 'U' or 'u'
+# to        uplo = Upper
 def sub_enum_short( match ):
-    groups = match.groups()
     try:
-        enum = groups[0].lower()
-        mid  = groups[1]
-        val  = groups[2].lower()
-        txt  = enum + mid + enums[enum][val][0]
-        if (len(groups) > 3 and groups[4]):
-            mid2 = groups[3]
-            val2 = groups[4].lower()
-            if (enums[enum][val][0] != enums[enum][val2][0]):
-                txt += mid2 + enums[enum][val2][0]
+        (enum, oper, val, conj, val2) = match.groups()
+        enum = enum.lower()
+        val  = val.lower()
+        char2enum = enum_map[ enum ][2]
+        txt = enum + oper + char2enum[ val ]
+        if (val2):
+            val2 = val2.lower()
+            if (char2enum[ val ] != char2enum[ val2 ]):
+                txt += conj + char2enum[ val2 ]
         return txt
-    except:
-        print( 'unknown enum', enum, 'groups', groups )
+    except Exception, e:
+        print( 'ERROR: unknown enum value, groups: ' + str(match.groups()) + '; exception: ' + str(e) )
         return match.group(0) + ' [TODO: unknown enum]'
 # end
 
 # ------------------------------------------------------------------------------
-fortran_operators = {
-    'LT': '<',
-    'lt': '<',
-
-    'GT': '>',
-    'gt': '>',
-
-    'LE': '<=',
-    'le': '<=',
-
-    'GE': '>=',
-    'ge': '>=',
-
-    'EQ': '==',
-    'eq': '==',
-
-    'NE': '!=',
-    'ne': '!=',
-}
+# regexp match:
+# ^ *= *'(\w)' (?:(\s+or\s+)  '(\w)')?[:,]
+#        val      conjunction  val2         <= groups
+#
+# converts:  = 'U' or 'u':
+# to:        - lapack::Uplo::Upper:
+def sub_enum_list( arg, match ):
+    try:
+        (val, conj, val2) = match.groups()
+        val = val.lower()
+        enum_class = enum_map[ arg.name ][0]
+        char2enum  = enum_map[ arg.name ][2]
+        txt = '- ' + enum_class + '::' + char2enum[ val ]
+        if (val2):
+            val2 = val2.lower()
+            if (char2enum[ val ] != char2enum[ val2 ]):
+                txt += conj + char2enum[ val2 ]
+        return txt + ':'
+    except Exception, e:
+        print( 'ERROR: unknown enum value, arg: ' + arg.name + ', groups: ' + str(match.groups()) + '; exception: ' + str(e) )
+        return match.group(0) + ' [TODO: unknown enum]'
+# end
 
 # ------------------------------------------------------------------------------
 def parse_docs( txt, variables, indent=0 ):
@@ -933,7 +1128,8 @@ def parse_docs( txt, variables, indent=0 ):
 
     # convert enums, e.g.,
     # "UPLO = 'U'" => "uplo = Upper"
-    txt = re.sub( r"\b([A-Z]{2,})(\s*(?:=|!=)\s*)'(\w)'(?:(\s+or\s+)'(\w)')?", sub_enum_short, txt )
+    txt = re.sub( r"\b([A-Z0-9_]{2,})(\s*(?:=|!=)\s*)'(\w)'(?:(\s+or\s+)'(\w)')?",
+                  sub_enum_short, txt )
 
     # convert function names
     txt = re.sub( func.xname.upper(), '`'+ func.name + '`', txt )
@@ -982,7 +1178,8 @@ def generate_docs( func, header=False ):
 
     version = first_version[ func.name ]
     v = version[0]*10000 + version[1]*100 + version[2]
-    txt += '/// @since LAPACK %d.%d.%d\n///\n' % (version)
+    if (v > 30201):
+        txt += '/// @since LAPACK %d.%d.%d\n///\n' % (version)
 
     # --------------------
     i = 0
@@ -1044,13 +1241,9 @@ def generate_docs( func, header=False ):
             # = 'U': ...    =>    - Upper: ...
             # = 'L': ...    =>    - Lower: ...
             if (arg.is_enum):
-                try:
-                    d = re.sub( r"^ *= *'(\w)'( or '\w')?[:,]",
-                                lambda match: '- ' + enums[arg.name][match.group(1).lower()][1] + ':',
-                                d, 0, re.M )
-                except Exception, e:
-                    print( 'enum', arg.name )
-                    raise e
+                d = re.sub( r"^ *= *'(\w)'(?:(\s+or\s+)'(\w)')?[:,]",
+                            lambda match: sub_enum_list( arg, match ),
+                            d, 0, re.M )
             # end
 
             d = parse_docs( d, variables, indent=4 )
@@ -1072,8 +1265,14 @@ def generate_docs( func, header=False ):
 
     txt += '/// @ingroup ' + func.group + '\n'
 
+    # post renaming
+    if (func.name in post_rename):
+        for (search, replace) in post_rename[ func.name ]:
+            txt = re.sub( search, replace, txt )
+
     # trim trailing whitespace
     txt = re.sub( r' +$', r'', txt, 0, re.M )
+
     return txt
 # end
 
@@ -1127,12 +1326,9 @@ def generate_wrapper( func, header=False ):
                     # local 32-bit copy of 64-bit int
                     int_checks += tab*2 + 'lapack_error_if( std::abs(' + arg.name + ') > std::numeric_limits<blas_int>::max() );\n'
                     local_vars += tab + 'blas_int ' + arg.lname + ' = (blas_int) ' + arg.name + ';\n'
-                else:
-                    s = re.search( r'^lapack::(\w+)', arg.dtype )
-                    if (s):
-                        # local char copy of enum
-                        enum = s.group(1).lower()
-                        local_vars += tab + 'char ' + arg.lname + ' = ' + enum + '2char( ' + arg.name + ' );\n'
+                elif (arg.is_enum):
+                    enum2char = enum_map[ arg.name ][1]
+                    local_vars += tab + 'char ' + arg.lname + ' = ' + enum2char + '( ' + arg.name + ' );\n'
                 # end
             # end
         else:
@@ -1271,8 +1467,14 @@ def generate_wrapper( func, header=False ):
             +  '}\n\n')
     # end
 
+    # post renaming
+    if (func.name in post_rename):
+        for (search, replace) in post_rename[ func.name ]:
+            txt = re.sub( search, replace, txt )
+
     # trim trailing whitespace
     txt = re.sub( r' +$', r'', txt, 0, re.M )
+
     return txt
 # end
 
@@ -1371,9 +1573,8 @@ def generate_tester( funcs ):
                     tst_args.append( arg.name )
                     if (arg.is_enum):
                         # convert enum to char, e.g., uplo2char(uplo)
-                        s = re.search( r'^lapack::(\w+)', arg.dtype )
-                        assert( s is not None )
-                        ref_args.append( s.group(1).lower() + '2char(' + arg.name + ')' )
+                        enum2char = enum_map[ arg.name ][1]
+                        ref_args.append( s.group(1).lower() + enum2char + '(' + arg.name + ')' )
                     else:
                         ref_args.append( arg.name )
                 else:
@@ -1556,8 +1757,14 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  requires_else
     )
 
+    # post renaming
+    if (func.name in post_rename):
+        for (search, replace) in post_rename[ func.name ]:
+            txt = re.sub( search, replace, txt )
+
     # trim trailing whitespace
     txt = re.sub( r' +$', r'', txt, 0, re.M )
+
     return txt
 # end
 

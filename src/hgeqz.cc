@@ -14,8 +14,7 @@ int64_t hgeqz(
     lapack::JobSchur jobschur, lapack::Job compq, lapack::Job compz, int64_t n, int64_t ilo, int64_t ihi,
     float* H, int64_t ldh,
     float* T, int64_t ldt,
-    float* alphar,
-    float* alphai,
+    std::complex<float>* alpha,
     float* beta,
     float* Q, int64_t ldq,
     float* Z, int64_t ldz )
@@ -42,10 +41,23 @@ int64_t hgeqz(
     blas_int ldz_ = (blas_int) ldz;
     blas_int info_ = 0;
 
+    // split-complex representation
+    std::vector< float > alphar( max( 1, n ) );
+    std::vector< float > alphai( max( 1, n ) );
+
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_shgeqz( &jobschur_, &compq_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, T, &ldt_, alphar, alphai, beta, Q, &ldq_, Z, &ldz_, qry_work, &ineg_one, &info_ );
+    LAPACK_shgeqz(
+        &jobschur_, &compq_, &compz_, &n_, &ilo_, &ihi_,
+        H, &ldh_,
+        T, &ldt_,
+        &alphar[0],
+        &alphai[0],
+        beta,
+        Q, &ldq_,
+        Z, &ldz_,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -54,9 +66,22 @@ int64_t hgeqz(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_shgeqz( &jobschur_, &compq_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, T, &ldt_, alphar, alphai, beta, Q, &ldq_, Z, &ldz_, &work[0], &lwork_, &info_ );
+    LAPACK_shgeqz(
+        &jobschur_, &compq_, &compz_, &n_, &ilo_, &ihi_,
+        H, &ldh_,
+        T, &ldt_,
+        &alphar[0],
+        &alphai[0],
+        beta,
+        Q, &ldq_,
+        Z, &ldz_,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
+    }
+    // merge split-complex representation
+    for (int64_t i = 0; i < n; ++i) {
+        alpha[i] = std::complex<float>( alphar[i], alphai[i] );
     }
     return info_;
 }
@@ -66,8 +91,7 @@ int64_t hgeqz(
     lapack::JobSchur jobschur, lapack::Job compq, lapack::Job compz, int64_t n, int64_t ilo, int64_t ihi,
     double* H, int64_t ldh,
     double* T, int64_t ldt,
-    double* alphar,
-    double* alphai,
+    std::complex<double>* alpha,
     double* beta,
     double* Q, int64_t ldq,
     double* Z, int64_t ldz )
@@ -94,10 +118,23 @@ int64_t hgeqz(
     blas_int ldz_ = (blas_int) ldz;
     blas_int info_ = 0;
 
+    // split-complex representation
+    std::vector< double > alphar( max( 1, n ) );
+    std::vector< double > alphai( max( 1, n ) );
+
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dhgeqz( &jobschur_, &compq_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, T, &ldt_, alphar, alphai, beta, Q, &ldq_, Z, &ldz_, qry_work, &ineg_one, &info_ );
+    LAPACK_dhgeqz(
+        &jobschur_, &compq_, &compz_, &n_, &ilo_, &ihi_,
+        H, &ldh_,
+        T, &ldt_,
+        &alphar[0],
+        &alphai[0],
+        beta,
+        Q, &ldq_,
+        Z, &ldz_,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -106,9 +143,22 @@ int64_t hgeqz(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dhgeqz( &jobschur_, &compq_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, T, &ldt_, alphar, alphai, beta, Q, &ldq_, Z, &ldz_, &work[0], &lwork_, &info_ );
+    LAPACK_dhgeqz(
+        &jobschur_, &compq_, &compz_, &n_, &ilo_, &ihi_,
+        H, &ldh_,
+        T, &ldt_,
+        &alphar[0],
+        &alphai[0],
+        beta,
+        Q, &ldq_,
+        Z, &ldz_,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
+    }
+    // merge split-complex representation
+    for (int64_t i = 0; i < n; ++i) {
+        alpha[i] = std::complex<double>( alphar[i], alphai[i] );
     }
     return info_;
 }
@@ -149,7 +199,16 @@ int64_t hgeqz(
     std::complex<float> qry_work[1];
     float qry_rwork[1];
     blas_int ineg_one = -1;
-    LAPACK_chgeqz( &jobschur_, &compq_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, T, &ldt_, alpha, beta, Q, &ldq_, Z, &ldz_, qry_work, &ineg_one, qry_rwork, &info_ );
+    LAPACK_chgeqz(
+        &jobschur_, &compq_, &compz_, &n_, &ilo_, &ihi_,
+        (lapack_complex_float*) H, &ldh_,
+        (lapack_complex_float*) T, &ldt_,
+        (lapack_complex_float*) alpha,
+        (lapack_complex_float*) beta,
+        (lapack_complex_float*) Q, &ldq_,
+        (lapack_complex_float*) Z, &ldz_,
+        (lapack_complex_float*) qry_work, &ineg_one,
+        qry_rwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -159,7 +218,16 @@ int64_t hgeqz(
     std::vector< std::complex<float> > work( lwork_ );
     std::vector< float > rwork( (n) );
 
-    LAPACK_chgeqz( &jobschur_, &compq_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, T, &ldt_, alpha, beta, Q, &ldq_, Z, &ldz_, &work[0], &lwork_, &rwork[0], &info_ );
+    LAPACK_chgeqz(
+        &jobschur_, &compq_, &compz_, &n_, &ilo_, &ihi_,
+        (lapack_complex_float*) H, &ldh_,
+        (lapack_complex_float*) T, &ldt_,
+        (lapack_complex_float*) alpha,
+        (lapack_complex_float*) beta,
+        (lapack_complex_float*) Q, &ldq_,
+        (lapack_complex_float*) Z, &ldz_,
+        (lapack_complex_float*) &work[0], &lwork_,
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -202,7 +270,16 @@ int64_t hgeqz(
     std::complex<double> qry_work[1];
     double qry_rwork[1];
     blas_int ineg_one = -1;
-    LAPACK_zhgeqz( &jobschur_, &compq_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, T, &ldt_, alpha, beta, Q, &ldq_, Z, &ldz_, qry_work, &ineg_one, qry_rwork, &info_ );
+    LAPACK_zhgeqz(
+        &jobschur_, &compq_, &compz_, &n_, &ilo_, &ihi_,
+        (lapack_complex_double*) H, &ldh_,
+        (lapack_complex_double*) T, &ldt_,
+        (lapack_complex_double*) alpha,
+        (lapack_complex_double*) beta,
+        (lapack_complex_double*) Q, &ldq_,
+        (lapack_complex_double*) Z, &ldz_,
+        (lapack_complex_double*) qry_work, &ineg_one,
+        qry_rwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -212,7 +289,16 @@ int64_t hgeqz(
     std::vector< std::complex<double> > work( lwork_ );
     std::vector< double > rwork( (n) );
 
-    LAPACK_zhgeqz( &jobschur_, &compq_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, T, &ldt_, alpha, beta, Q, &ldq_, Z, &ldz_, &work[0], &lwork_, &rwork[0], &info_ );
+    LAPACK_zhgeqz(
+        &jobschur_, &compq_, &compz_, &n_, &ilo_, &ihi_,
+        (lapack_complex_double*) H, &ldh_,
+        (lapack_complex_double*) T, &ldt_,
+        (lapack_complex_double*) alpha,
+        (lapack_complex_double*) beta,
+        (lapack_complex_double*) Q, &ldq_,
+        (lapack_complex_double*) Z, &ldz_,
+        (lapack_complex_double*) &work[0], &lwork_,
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

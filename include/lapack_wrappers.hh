@@ -703,16 +703,14 @@ int64_t gees(
     lapack::Job jobvs, lapack::Sort sort, lapack_s_select2 select, int64_t n,
     float* A, int64_t lda,
     int64_t* sdim,
-    float* WR,
-    float* WI,
+    std::complex<float>* W,
     float* VS, int64_t ldvs );
 
 int64_t gees(
     lapack::Job jobvs, lapack::Sort sort, lapack_d_select2 select, int64_t n,
     double* A, int64_t lda,
     int64_t* sdim,
-    double* WR,
-    double* WI,
+    std::complex<double>* W,
     double* VS, int64_t ldvs );
 
 int64_t gees(
@@ -734,8 +732,7 @@ int64_t geesx(
     lapack::Job jobvs, lapack::Sort sort, lapack_s_select2 select, lapack::Sense sense, int64_t n,
     float* A, int64_t lda,
     int64_t* sdim,
-    float* WR,
-    float* WI,
+    std::complex<float>* W,
     float* VS, int64_t ldvs,
     float* rconde,
     float* rcondv );
@@ -744,8 +741,7 @@ int64_t geesx(
     lapack::Job jobvs, lapack::Sort sort, lapack_d_select2 select, lapack::Sense sense, int64_t n,
     double* A, int64_t lda,
     int64_t* sdim,
-    double* WR,
-    double* WI,
+    std::complex<double>* W,
     double* VS, int64_t ldvs,
     double* rconde,
     double* rcondv );
@@ -1841,8 +1837,7 @@ int64_t gges(
     float* A, int64_t lda,
     float* B, int64_t ldb,
     int64_t* sdim,
-    float* alphar,
-    float* alphai,
+    std::complex<float>* alpha,
     float* beta,
     float* VSL, int64_t ldvsl,
     float* VSR, int64_t ldvsr );
@@ -1852,8 +1847,7 @@ int64_t gges(
     double* A, int64_t lda,
     double* B, int64_t ldb,
     int64_t* sdim,
-    double* alphar,
-    double* alphai,
+    std::complex<double>* alpha,
     double* beta,
     double* VSL, int64_t ldvsl,
     double* VSR, int64_t ldvsr );
@@ -1884,8 +1878,7 @@ int64_t gges3(
     float* A, int64_t lda,
     float* B, int64_t ldb,
     int64_t* sdim,
-    float* alphar,
-    float* alphai,
+    std::complex<float>* alpha,
     float* beta,
     float* VSL, int64_t ldvsl,
     float* VSR, int64_t ldvsr );
@@ -1895,8 +1888,7 @@ int64_t gges3(
     double* A, int64_t lda,
     double* B, int64_t ldb,
     int64_t* sdim,
-    double* alphar,
-    double* alphai,
+    std::complex<double>* alpha,
     double* beta,
     double* VSL, int64_t ldvsl,
     double* VSR, int64_t ldvsr );
@@ -1927,8 +1919,7 @@ int64_t ggesx(
     float* A, int64_t lda,
     float* B, int64_t ldb,
     int64_t* sdim,
-    float* alphar,
-    float* alphai,
+    std::complex<float>* alpha,
     float* beta,
     float* VSL, int64_t ldvsl,
     float* VSR, int64_t ldvsr,
@@ -1940,8 +1931,7 @@ int64_t ggesx(
     double* A, int64_t lda,
     double* B, int64_t ldb,
     int64_t* sdim,
-    double* alphar,
-    double* alphai,
+    std::complex<double>* alpha,
     double* beta,
     double* VSL, int64_t ldvsl,
     double* VSR, int64_t ldvsr,
@@ -2014,8 +2004,7 @@ int64_t ggev3(
     lapack::Job jobvl, lapack::Job jobvr, int64_t n,
     float* A, int64_t lda,
     float* B, int64_t ldb,
-    float* alphar,
-    float* alphai,
+    std::complex<float>* alpha,
     float* beta,
     float* VL, int64_t ldvl,
     float* VR, int64_t ldvr );
@@ -2024,8 +2013,7 @@ int64_t ggev3(
     lapack::Job jobvl, lapack::Job jobvr, int64_t n,
     double* A, int64_t lda,
     double* B, int64_t ldb,
-    double* alphar,
-    double* alphai,
+    std::complex<double>* alpha,
     double* beta,
     double* VL, int64_t ldvl,
     double* VR, int64_t ldvr );
@@ -3285,8 +3273,7 @@ int64_t hgeqz(
     lapack::JobSchur jobschur, lapack::Job compq, lapack::Job compz, int64_t n, int64_t ilo, int64_t ihi,
     float* H, int64_t ldh,
     float* T, int64_t ldt,
-    float* alphar,
-    float* alphai,
+    std::complex<float>* alpha,
     float* beta,
     float* Q, int64_t ldq,
     float* Z, int64_t ldz );
@@ -3295,8 +3282,7 @@ int64_t hgeqz(
     lapack::JobSchur jobschur, lapack::Job compq, lapack::Job compz, int64_t n, int64_t ilo, int64_t ihi,
     double* H, int64_t ldh,
     double* T, int64_t ldt,
-    double* alphar,
-    double* alphai,
+    std::complex<double>* alpha,
     double* beta,
     double* Q, int64_t ldq,
     double* Z, int64_t ldz );
@@ -9588,8 +9574,7 @@ int64_t trsen(
     bool const* select, int64_t n,
     float* T, int64_t ldt,
     float* Q, int64_t ldq,
-    float* WR,
-    float* WI,
+    std::complex<float>* W,
     int64_t* m,
     float* s,
     float* sep );
@@ -9599,8 +9584,7 @@ int64_t trsen(
     bool const* select, int64_t n,
     double* T, int64_t ldt,
     double* Q, int64_t ldq,
-    double* WR,
-    double* WI,
+    std::complex<double>* W,
     int64_t* m,
     double* s,
     double* sep );

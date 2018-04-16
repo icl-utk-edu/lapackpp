@@ -34,24 +34,22 @@
 #ifndef LAPACK_CONFIG_H
 #define LAPACK_CONFIG_H
 
-#ifdef __cplusplus
-#if defined(LAPACK_COMPLEX_CPP)
-#include <complex>
+#if defined(__cplusplus) && defined(LAPACK_COMPLEX_CPP)
+    #include <complex>
 #endif
-#endif /* __cplusplus */
 
 #include <stdlib.h>
 
 #ifndef lapack_int
-#if defined(LAPACK_ILP64)
-#define lapack_int              long
-#else
-#define lapack_int              int
-#endif
+    #if defined(LAPACK_ILP64)
+        #define lapack_int              long long  /* or int64_t */
+    #else
+        #define lapack_int              int
+    #endif
 #endif
 
 #ifndef lapack_logical
-#define lapack_logical          lapack_int
+    #define lapack_logical          lapack_int
 #endif
 
 // -----------------------------------------------------------------------------
@@ -76,16 +74,6 @@ typedef struct { double real, imag; } lapack_complex_double;
 #define lapack_complex_double_real(z)  ((z).real)
 #define lapack_complex_double_imag(z)  ((z).imag)
 
-#elif defined(LAPACK_COMPLEX_C99)
-
-#include <complex.h>
-#define lapack_complex_float    float _Complex
-#define lapack_complex_double   double _Complex
-#define lapack_complex_float_real(z)       (creal(z))
-#define lapack_complex_float_imag(z)       (cimag(z))
-#define lapack_complex_double_real(z)       (creal(z))
-#define lapack_complex_double_imag(z)       (cimag(z))
-
 #elif defined(LAPACK_COMPLEX_CPP)
 
 #define lapack_complex_float std::complex<float>
@@ -97,6 +85,7 @@ typedef struct { double real, imag; } lapack_complex_double;
 
 #else
 
+// default is LAPACK_COMPLEX_C99
 #include <complex.h>
 #define lapack_complex_float    float _Complex
 #define lapack_complex_double   double _Complex

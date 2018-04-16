@@ -30,7 +30,11 @@ int64_t syev(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_ssyev( &jobz_, &uplo_, &n_, A, &lda_, W, qry_work, &ineg_one, &info_ );
+    LAPACK_ssyev(
+        &jobz_, &uplo_, &n_,
+        A, &lda_,
+        W,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -39,7 +43,11 @@ int64_t syev(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_ssyev( &jobz_, &uplo_, &n_, A, &lda_, W, &work[0], &lwork_, &info_ );
+    LAPACK_ssyev(
+        &jobz_, &uplo_, &n_,
+        A, &lda_,
+        W,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -68,7 +76,11 @@ int64_t syev(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dsyev( &jobz_, &uplo_, &n_, A, &lda_, W, qry_work, &ineg_one, &info_ );
+    LAPACK_dsyev(
+        &jobz_, &uplo_, &n_,
+        A, &lda_,
+        W,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -77,7 +89,11 @@ int64_t syev(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dsyev( &jobz_, &uplo_, &n_, A, &lda_, W, &work[0], &lwork_, &info_ );
+    LAPACK_dsyev(
+        &jobz_, &uplo_, &n_,
+        A, &lda_,
+        W,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

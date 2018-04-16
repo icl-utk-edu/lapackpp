@@ -14,7 +14,7 @@ using blas::real;
 int64_t syevr(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     float* A, int64_t lda, float vl, float vu, int64_t il, int64_t iu, float abstol,
-    int64_t* m,
+    int64_t* nfound,
     float* W,
     float* Z, int64_t ldz,
     int64_t* isuppz )
@@ -34,7 +34,7 @@ int64_t syevr(
     blas_int lda_ = (blas_int) lda;
     blas_int il_ = (blas_int) il;
     blas_int iu_ = (blas_int) iu;
-    blas_int m_ = (blas_int) *m;
+    blas_int nfound_;  // output
     blas_int ldz_ = (blas_int) ldz;
     #if 1
         // 32-bit copy
@@ -49,7 +49,14 @@ int64_t syevr(
     float qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_ssyevr( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, isuppz_ptr, qry_work, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_ssyevr(
+        &jobz_, &range_, &uplo_, &n_,
+        A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_,
+        W,
+        Z, &ldz_,
+        isuppz_ptr,
+        qry_work, &ineg_one,
+        qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -60,11 +67,18 @@ int64_t syevr(
     std::vector< float > work( lwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_ssyevr( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, isuppz_ptr, &work[0], &lwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_ssyevr(
+        &jobz_, &range_, &uplo_, &n_,
+        A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_,
+        W,
+        Z, &ldz_,
+        isuppz_ptr,
+        &work[0], &lwork_,
+        &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
-    *m = m_;
+    *nfound = nfound_;
     #if 1
         std::copy( isuppz_.begin(), isuppz_.end(), isuppz );
     #endif
@@ -77,7 +91,7 @@ int64_t syevr(
 int64_t syevr(
     lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda, double vl, double vu, int64_t il, int64_t iu, double abstol,
-    int64_t* m,
+    int64_t* nfound,
     double* W,
     double* Z, int64_t ldz,
     int64_t* isuppz )
@@ -97,7 +111,7 @@ int64_t syevr(
     blas_int lda_ = (blas_int) lda;
     blas_int il_ = (blas_int) il;
     blas_int iu_ = (blas_int) iu;
-    blas_int m_ = (blas_int) *m;
+    blas_int nfound_;  // output
     blas_int ldz_ = (blas_int) ldz;
     #if 1
         // 32-bit copy
@@ -112,7 +126,14 @@ int64_t syevr(
     double qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_dsyevr( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, isuppz_ptr, qry_work, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_dsyevr(
+        &jobz_, &range_, &uplo_, &n_,
+        A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_,
+        W,
+        Z, &ldz_,
+        isuppz_ptr,
+        qry_work, &ineg_one,
+        qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -123,11 +144,18 @@ int64_t syevr(
     std::vector< double > work( lwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_dsyevr( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, isuppz_ptr, &work[0], &lwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_dsyevr(
+        &jobz_, &range_, &uplo_, &n_,
+        A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_,
+        W,
+        Z, &ldz_,
+        isuppz_ptr,
+        &work[0], &lwork_,
+        &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
-    *m = m_;
+    *nfound = nfound_;
     #if 1
         std::copy( isuppz_.begin(), isuppz_.end(), isuppz );
     #endif

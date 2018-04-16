@@ -30,7 +30,13 @@ int64_t stevd(
     float qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_sstevd( &jobz_, &n_, D, E, Z, &ldz_, qry_work, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_sstevd(
+        &jobz_, &n_,
+        D,
+        E,
+        Z, &ldz_,
+        qry_work, &ineg_one,
+        qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -41,7 +47,13 @@ int64_t stevd(
     std::vector< float > work( lwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_sstevd( &jobz_, &n_, D, E, Z, &ldz_, &work[0], &lwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_sstevd(
+        &jobz_, &n_,
+        D,
+        E,
+        Z, &ldz_,
+        &work[0], &lwork_,
+        &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -69,7 +81,13 @@ int64_t stevd(
     double qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_dstevd( &jobz_, &n_, D, E, Z, &ldz_, qry_work, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_dstevd(
+        &jobz_, &n_,
+        D,
+        E,
+        Z, &ldz_,
+        qry_work, &ineg_one,
+        qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -80,7 +98,13 @@ int64_t stevd(
     std::vector< double > work( lwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_dstevd( &jobz_, &n_, D, E, Z, &ldz_, &work[0], &lwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_dstevd(
+        &jobz_, &n_,
+        D,
+        E,
+        Z, &ldz_,
+        &work[0], &lwork_,
+        &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

@@ -33,7 +33,13 @@ int64_t spgv(
     // allocate workspace
     std::vector< float > work( (3*n) );
 
-    LAPACK_sspgv( &itype_, &jobz_, &uplo_, &n_, AP, BP, W, Z, &ldz_, &work[0], &info_ );
+    LAPACK_sspgv(
+        &itype_, &jobz_, &uplo_, &n_,
+        AP,
+        BP,
+        W,
+        Z, &ldz_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -64,7 +70,13 @@ int64_t spgv(
     // allocate workspace
     std::vector< double > work( (3*n) );
 
-    LAPACK_dspgv( &itype_, &jobz_, &uplo_, &n_, AP, BP, W, Z, &ldz_, &work[0], &info_ );
+    LAPACK_dspgv(
+        &itype_, &jobz_, &uplo_, &n_,
+        AP,
+        BP,
+        W,
+        Z, &ldz_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

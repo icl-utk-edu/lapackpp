@@ -53,7 +53,15 @@ int64_t sygvx(
     float qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_ssygvx( &itype_, &jobz_, &range_, &uplo_, &n_, A, &lda_, B, &ldb_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, qry_work, &ineg_one, qry_iwork, ifail_ptr, &info_ );
+    LAPACK_ssygvx(
+        &itype_, &jobz_, &range_, &uplo_, &n_,
+        A, &lda_,
+        B, &ldb_, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        qry_work, &ineg_one,
+        qry_iwork,
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -63,7 +71,15 @@ int64_t sygvx(
     std::vector< float > work( lwork_ );
     std::vector< blas_int > iwork( (5*n) );
 
-    LAPACK_ssygvx( &itype_, &jobz_, &range_, &uplo_, &n_, A, &lda_, B, &ldb_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, &work[0], &lwork_, &iwork[0], ifail_ptr, &info_ );
+    LAPACK_ssygvx(
+        &itype_, &jobz_, &range_, &uplo_, &n_,
+        A, &lda_,
+        B, &ldb_, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        &work[0], &lwork_,
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -118,7 +134,15 @@ int64_t sygvx(
     double qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_dsygvx( &itype_, &jobz_, &range_, &uplo_, &n_, A, &lda_, B, &ldb_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, qry_work, &ineg_one, qry_iwork, ifail_ptr, &info_ );
+    LAPACK_dsygvx(
+        &itype_, &jobz_, &range_, &uplo_, &n_,
+        A, &lda_,
+        B, &ldb_, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        qry_work, &ineg_one,
+        qry_iwork,
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -128,7 +152,15 @@ int64_t sygvx(
     std::vector< double > work( lwork_ );
     std::vector< blas_int > iwork( (5*n) );
 
-    LAPACK_dsygvx( &itype_, &jobz_, &range_, &uplo_, &n_, A, &lda_, B, &ldb_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, &work[0], &lwork_, &iwork[0], ifail_ptr, &info_ );
+    LAPACK_dsygvx(
+        &itype_, &jobz_, &range_, &uplo_, &n_,
+        A, &lda_,
+        B, &ldb_, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        &work[0], &lwork_,
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }

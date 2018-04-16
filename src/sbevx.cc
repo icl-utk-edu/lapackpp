@@ -53,7 +53,15 @@ int64_t sbevx(
     std::vector< float > work( (7*n) );
     std::vector< blas_int > iwork( (5*n) );
 
-    LAPACK_ssbevx( &jobz_, &range_, &uplo_, &n_, &kd_, AB, &ldab_, Q, &ldq_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, &work[0], &iwork[0], ifail_ptr, &info_ );
+    LAPACK_ssbevx(
+        &jobz_, &range_, &uplo_, &n_, &kd_,
+        AB, &ldab_,
+        Q, &ldq_, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        &work[0],
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -108,7 +116,15 @@ int64_t sbevx(
     std::vector< double > work( (7*n) );
     std::vector< blas_int > iwork( (5*n) );
 
-    LAPACK_dsbevx( &jobz_, &range_, &uplo_, &n_, &kd_, AB, &ldab_, Q, &ldq_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, &work[0], &iwork[0], ifail_ptr, &info_ );
+    LAPACK_dsbevx(
+        &jobz_, &range_, &uplo_, &n_, &kd_,
+        AB, &ldab_,
+        Q, &ldq_, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        &work[0],
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }

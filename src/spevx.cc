@@ -46,7 +46,14 @@ int64_t spevx(
     std::vector< float > work( (8*n) );
     std::vector< blas_int > iwork( (5*n) );
 
-    LAPACK_sspevx( &jobz_, &range_, &uplo_, &n_, AP, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, &work[0], &iwork[0], ifail_ptr, &info_ );
+    LAPACK_sspevx(
+        &jobz_, &range_, &uplo_, &n_,
+        AP, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        &work[0],
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -94,7 +101,14 @@ int64_t spevx(
     std::vector< double > work( (8*n) );
     std::vector< blas_int > iwork( (5*n) );
 
-    LAPACK_dspevx( &jobz_, &range_, &uplo_, &n_, AP, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, &work[0], &iwork[0], ifail_ptr, &info_ );
+    LAPACK_dspevx(
+        &jobz_, &range_, &uplo_, &n_,
+        AP, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        &work[0],
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }

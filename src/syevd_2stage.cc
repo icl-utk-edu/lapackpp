@@ -33,7 +33,12 @@ int64_t syevd_2stage(
     float qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_ssyevd_2stage( &jobz_, &uplo_, &n_, A, &lda_, W, qry_work, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_ssyevd_2stage(
+        &jobz_, &uplo_, &n_,
+        A, &lda_,
+        W,
+        qry_work, &ineg_one,
+        qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -44,7 +49,12 @@ int64_t syevd_2stage(
     std::vector< float > work( lwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_ssyevd_2stage( &jobz_, &uplo_, &n_, A, &lda_, W, &work[0], &lwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_ssyevd_2stage(
+        &jobz_, &uplo_, &n_,
+        A, &lda_,
+        W,
+        &work[0], &lwork_,
+        &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -74,7 +84,12 @@ int64_t syevd_2stage(
     double qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_dsyevd_2stage( &jobz_, &uplo_, &n_, A, &lda_, W, qry_work, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_dsyevd_2stage(
+        &jobz_, &uplo_, &n_,
+        A, &lda_,
+        W,
+        qry_work, &ineg_one,
+        qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -85,7 +100,12 @@ int64_t syevd_2stage(
     std::vector< double > work( lwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_dsyevd_2stage( &jobz_, &uplo_, &n_, A, &lda_, W, &work[0], &lwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_dsyevd_2stage(
+        &jobz_, &uplo_, &n_,
+        A, &lda_,
+        W,
+        &work[0], &lwork_,
+        &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

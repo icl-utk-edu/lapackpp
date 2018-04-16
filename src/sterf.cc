@@ -22,7 +22,10 @@ int64_t sterf(
     blas_int n_ = (blas_int) n;
     blas_int info_ = 0;
 
-    LAPACK_ssterf( &n_, D, E, &info_ );
+    LAPACK_ssterf(
+        &n_,
+        D,
+        E, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -42,7 +45,10 @@ int64_t sterf(
     blas_int n_ = (blas_int) n;
     blas_int info_ = 0;
 
-    LAPACK_dsterf( &n_, D, E, &info_ );
+    LAPACK_dsterf(
+        &n_,
+        D,
+        E, &info_ );
     if (info_ < 0) {
         throw Error();
     }

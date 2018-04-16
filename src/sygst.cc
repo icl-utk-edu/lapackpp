@@ -29,7 +29,10 @@ int64_t sygst(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_ssygst( &itype_, &uplo_, &n_, A, &lda_, B, &ldb_, &info_ );
+    LAPACK_ssygst(
+        &itype_, &uplo_, &n_,
+        A, &lda_,
+        B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -56,7 +59,10 @@ int64_t sygst(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_dsygst( &itype_, &uplo_, &n_, A, &lda_, B, &ldb_, &info_ );
+    LAPACK_dsygst(
+        &itype_, &uplo_, &n_,
+        A, &lda_,
+        B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

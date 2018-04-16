@@ -19,7 +19,8 @@ void lartgp(
     float* r )
 {
 
-    LAPACK_slartgp( &f, &g, cs, sn, r );
+    LAPACK_slartgp(
+        &f, &g, cs, sn, r );
 }
 
 // -----------------------------------------------------------------------------
@@ -30,7 +31,8 @@ void lartgp(
     double* r )
 {
 
-    LAPACK_dlartgp( &f, &g, cs, sn, r );
+    LAPACK_dlartgp(
+        &f, &g, cs, sn, r );
 }
 
 }  // namespace lapack

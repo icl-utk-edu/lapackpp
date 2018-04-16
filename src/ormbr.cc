@@ -38,7 +38,12 @@ int64_t ormbr(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_sormbr( &vect_, &side_, &trans_, &m_, &n_, &k_, A, &lda_, tau, C, &ldc_, qry_work, &ineg_one, &info_ );
+    LAPACK_sormbr(
+        &vect_, &side_, &trans_, &m_, &n_, &k_,
+        A, &lda_,
+        tau,
+        C, &ldc_,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -47,7 +52,12 @@ int64_t ormbr(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_sormbr( &vect_, &side_, &trans_, &m_, &n_, &k_, A, &lda_, tau, C, &ldc_, &work[0], &lwork_, &info_ );
+    LAPACK_sormbr(
+        &vect_, &side_, &trans_, &m_, &n_, &k_,
+        A, &lda_,
+        tau,
+        C, &ldc_,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -84,7 +94,12 @@ int64_t ormbr(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dormbr( &vect_, &side_, &trans_, &m_, &n_, &k_, A, &lda_, tau, C, &ldc_, qry_work, &ineg_one, &info_ );
+    LAPACK_dormbr(
+        &vect_, &side_, &trans_, &m_, &n_, &k_,
+        A, &lda_,
+        tau,
+        C, &ldc_,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -93,7 +108,12 @@ int64_t ormbr(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dormbr( &vect_, &side_, &trans_, &m_, &n_, &k_, A, &lda_, tau, C, &ldc_, &work[0], &lwork_, &info_ );
+    LAPACK_dormbr(
+        &vect_, &side_, &trans_, &m_, &n_, &k_,
+        A, &lda_,
+        tau,
+        C, &ldc_,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

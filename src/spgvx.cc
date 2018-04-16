@@ -49,7 +49,15 @@ int64_t spgvx(
     std::vector< float > work( (8*n) );
     std::vector< blas_int > iwork( (5*n) );
 
-    LAPACK_sspgvx( &itype_, &jobz_, &range_, &uplo_, &n_, AP, BP, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, &work[0], &iwork[0], ifail_ptr, &info_ );
+    LAPACK_sspgvx(
+        &itype_, &jobz_, &range_, &uplo_, &n_,
+        AP,
+        BP, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        &work[0],
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -100,7 +108,15 @@ int64_t spgvx(
     std::vector< double > work( (8*n) );
     std::vector< blas_int > iwork( (5*n) );
 
-    LAPACK_dspgvx( &itype_, &jobz_, &range_, &uplo_, &n_, AP, BP, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, &work[0], &iwork[0], ifail_ptr, &info_ );
+    LAPACK_dspgvx(
+        &itype_, &jobz_, &range_, &uplo_, &n_,
+        AP,
+        BP, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        &work[0],
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }

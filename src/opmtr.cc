@@ -13,7 +13,7 @@ using blas::real;
 int64_t opmtr(
     lapack::Side side, lapack::Uplo uplo, lapack::Op trans, int64_t m, int64_t n,
     float const* AP,
-    float const* TAU,
+    float const* tau,
     float* C, int64_t ldc )
 {
     // check for overflow
@@ -40,7 +40,12 @@ int64_t opmtr(
     // allocate workspace
     std::vector< float > work( lwork );
 
-    LAPACK_sopmtr( &side_, &uplo_, &trans_, &m_, &n_, AP, TAU, C, &ldc_, &work[0], &info_ );
+    LAPACK_sopmtr(
+        &side_, &uplo_, &trans_, &m_, &n_,
+        AP,
+        tau,
+        C, &ldc_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -51,7 +56,7 @@ int64_t opmtr(
 int64_t opmtr(
     lapack::Side side, lapack::Uplo uplo, lapack::Op trans, int64_t m, int64_t n,
     double const* AP,
-    double const* TAU,
+    double const* tau,
     double* C, int64_t ldc )
 {
     // check for overflow
@@ -78,7 +83,12 @@ int64_t opmtr(
     // allocate workspace
     std::vector< double > work( lwork );
 
-    LAPACK_dopmtr( &side_, &uplo_, &trans_, &m_, &n_, AP, TAU, C, &ldc_, &work[0], &info_ );
+    LAPACK_dopmtr(
+        &side_, &uplo_, &trans_, &m_, &n_,
+        AP,
+        tau,
+        C, &ldc_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

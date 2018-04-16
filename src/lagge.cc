@@ -43,7 +43,12 @@ int64_t lagge(
     // allocate workspace
     std::vector< float > work( (m+n) );
 
-    LAPACK_slagge( &m_, &n_, &kl_, &ku_, D, A, &lda_, iseed_ptr, &work[0], &info_ );
+    LAPACK_slagge(
+        &m_, &n_, &kl_, &ku_,
+        D,
+        A, &lda_,
+        iseed_ptr,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -85,7 +90,12 @@ int64_t lagge(
     // allocate workspace
     std::vector< double > work( (m+n) );
 
-    LAPACK_dlagge( &m_, &n_, &kl_, &ku_, D, A, &lda_, iseed_ptr, &work[0], &info_ );
+    LAPACK_dlagge(
+        &m_, &n_, &kl_, &ku_,
+        D,
+        A, &lda_,
+        iseed_ptr,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -127,7 +137,12 @@ int64_t lagge(
     // allocate workspace
     std::vector< std::complex<float> > work( (m+n) );
 
-    LAPACK_clagge( &m_, &n_, &kl_, &ku_, D, A, &lda_, iseed_ptr, &work[0], &info_ );
+    LAPACK_clagge(
+        &m_, &n_, &kl_, &ku_,
+        D,
+        (lapack_complex_float*) A, &lda_,
+        iseed_ptr,
+        (lapack_complex_float*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -169,7 +184,12 @@ int64_t lagge(
     // allocate workspace
     std::vector< std::complex<double> > work( (m+n) );
 
-    LAPACK_zlagge( &m_, &n_, &kl_, &ku_, D, A, &lda_, iseed_ptr, &work[0], &info_ );
+    LAPACK_zlagge(
+        &m_, &n_, &kl_, &ku_,
+        D,
+        (lapack_complex_double*) A, &lda_,
+        iseed_ptr,
+        (lapack_complex_double*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

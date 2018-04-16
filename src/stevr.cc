@@ -46,7 +46,15 @@ int64_t stevr(
     float qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_sstevr( &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, isuppz_ptr, qry_work, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_sstevr(
+        &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        isuppz_ptr,
+        qry_work, &ineg_one,
+        qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -57,7 +65,15 @@ int64_t stevr(
     std::vector< float > work( lwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_sstevr( &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, isuppz_ptr, &work[0], &lwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_sstevr(
+        &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        isuppz_ptr,
+        &work[0], &lwork_,
+        &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -105,7 +121,15 @@ int64_t stevr(
     double qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_dstevr( &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, isuppz_ptr, qry_work, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_dstevr(
+        &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        isuppz_ptr,
+        qry_work, &ineg_one,
+        qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -116,7 +140,15 @@ int64_t stevr(
     std::vector< double > work( lwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_dstevr( &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, isuppz_ptr, &work[0], &lwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_dstevr(
+        &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        isuppz_ptr,
+        &work[0], &lwork_,
+        &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

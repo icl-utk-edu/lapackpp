@@ -29,7 +29,12 @@ int64_t stev(
     // allocate workspace
     std::vector< float > work( (max( 1, 2*n-2 )) );
 
-    LAPACK_sstev( &jobz_, &n_, D, E, Z, &ldz_, &work[0], &info_ );
+    LAPACK_sstev(
+        &jobz_, &n_,
+        D,
+        E,
+        Z, &ldz_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -56,7 +61,12 @@ int64_t stev(
     // allocate workspace
     std::vector< double > work( (max( 1, 2*n-2 )) );
 
-    LAPACK_dstev( &jobz_, &n_, D, E, Z, &ldz_, &work[0], &info_ );
+    LAPACK_dstev(
+        &jobz_, &n_,
+        D,
+        E,
+        Z, &ldz_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

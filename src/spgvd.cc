@@ -34,7 +34,14 @@ int64_t spgvd(
     float qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_sspgvd( &itype_, &jobz_, &uplo_, &n_, AP, BP, W, Z, &ldz_, qry_work, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_sspgvd(
+        &itype_, &jobz_, &uplo_, &n_,
+        AP,
+        BP,
+        W,
+        Z, &ldz_,
+        qry_work, &ineg_one,
+        qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -45,7 +52,14 @@ int64_t spgvd(
     std::vector< float > work( lwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_sspgvd( &itype_, &jobz_, &uplo_, &n_, AP, BP, W, Z, &ldz_, &work[0], &lwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_sspgvd(
+        &itype_, &jobz_, &uplo_, &n_,
+        AP,
+        BP,
+        W,
+        Z, &ldz_,
+        &work[0], &lwork_,
+        &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -77,7 +91,14 @@ int64_t spgvd(
     double qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_dspgvd( &itype_, &jobz_, &uplo_, &n_, AP, BP, W, Z, &ldz_, qry_work, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_dspgvd(
+        &itype_, &jobz_, &uplo_, &n_,
+        AP,
+        BP,
+        W,
+        Z, &ldz_,
+        qry_work, &ineg_one,
+        qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -88,7 +109,14 @@ int64_t spgvd(
     std::vector< double > work( lwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_dspgvd( &itype_, &jobz_, &uplo_, &n_, AP, BP, W, Z, &ldz_, &work[0], &lwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_dspgvd(
+        &itype_, &jobz_, &uplo_, &n_,
+        AP,
+        BP,
+        W,
+        Z, &ldz_,
+        &work[0], &lwork_,
+        &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

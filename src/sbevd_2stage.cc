@@ -37,7 +37,13 @@ int64_t sbevd_2stage(
     float qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_ssbevd_2stage( &jobz_, &uplo_, &n_, &kd_, AB, &ldab_, W, Z, &ldz_, qry_work, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_ssbevd_2stage(
+        &jobz_, &uplo_, &n_, &kd_,
+        AB, &ldab_,
+        W,
+        Z, &ldz_,
+        qry_work, &ineg_one,
+        qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -48,7 +54,13 @@ int64_t sbevd_2stage(
     std::vector< float > work( lwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_ssbevd_2stage( &jobz_, &uplo_, &n_, &kd_, AB, &ldab_, W, Z, &ldz_, &work[0], &lwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_ssbevd_2stage(
+        &jobz_, &uplo_, &n_, &kd_,
+        AB, &ldab_,
+        W,
+        Z, &ldz_,
+        &work[0], &lwork_,
+        &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -81,7 +93,13 @@ int64_t sbevd_2stage(
     double qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_dsbevd_2stage( &jobz_, &uplo_, &n_, &kd_, AB, &ldab_, W, Z, &ldz_, qry_work, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_dsbevd_2stage(
+        &jobz_, &uplo_, &n_, &kd_,
+        AB, &ldab_,
+        W,
+        Z, &ldz_,
+        qry_work, &ineg_one,
+        qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -92,7 +110,13 @@ int64_t sbevd_2stage(
     std::vector< double > work( lwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_dsbevd_2stage( &jobz_, &uplo_, &n_, &kd_, AB, &ldab_, W, Z, &ldz_, &work[0], &lwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_dsbevd_2stage(
+        &jobz_, &uplo_, &n_, &kd_,
+        AB, &ldab_,
+        W,
+        Z, &ldz_,
+        &work[0], &lwork_,
+        &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

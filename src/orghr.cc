@@ -13,7 +13,7 @@ using blas::real;
 int64_t orghr(
     int64_t n, int64_t ilo, int64_t ihi,
     float* A, int64_t lda,
-    float const* TAU )
+    float const* tau )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -31,7 +31,11 @@ int64_t orghr(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_sorghr( &n_, &ilo_, &ihi_, A, &lda_, TAU, qry_work, &ineg_one, &info_ );
+    LAPACK_sorghr(
+        &n_, &ilo_, &ihi_,
+        A, &lda_,
+        tau,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -40,7 +44,11 @@ int64_t orghr(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_sorghr( &n_, &ilo_, &ihi_, A, &lda_, TAU, &work[0], &lwork_, &info_ );
+    LAPACK_sorghr(
+        &n_, &ilo_, &ihi_,
+        A, &lda_,
+        tau,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -51,7 +59,7 @@ int64_t orghr(
 int64_t orghr(
     int64_t n, int64_t ilo, int64_t ihi,
     double* A, int64_t lda,
-    double const* TAU )
+    double const* tau )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -69,7 +77,11 @@ int64_t orghr(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dorghr( &n_, &ilo_, &ihi_, A, &lda_, TAU, qry_work, &ineg_one, &info_ );
+    LAPACK_dorghr(
+        &n_, &ilo_, &ihi_,
+        A, &lda_,
+        tau,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -78,7 +90,11 @@ int64_t orghr(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dorghr( &n_, &ilo_, &ihi_, A, &lda_, TAU, &work[0], &lwork_, &info_ );
+    LAPACK_dorghr(
+        &n_, &ilo_, &ihi_,
+        A, &lda_,
+        tau,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

@@ -25,7 +25,10 @@ int64_t spgst(
     blas_int n_ = (blas_int) n;
     blas_int info_ = 0;
 
-    LAPACK_sspgst( &itype_, &uplo_, &n_, AP, BP, &info_ );
+    LAPACK_sspgst(
+        &itype_, &uplo_, &n_,
+        AP,
+        BP, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -48,7 +51,10 @@ int64_t spgst(
     blas_int n_ = (blas_int) n;
     blas_int info_ = 0;
 
-    LAPACK_dspgst( &itype_, &uplo_, &n_, AP, BP, &info_ );
+    LAPACK_dspgst(
+        &itype_, &uplo_, &n_,
+        AP,
+        BP, &info_ );
     if (info_ < 0) {
         throw Error();
     }

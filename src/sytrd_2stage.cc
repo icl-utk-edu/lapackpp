@@ -37,7 +37,14 @@ int64_t sytrd_2stage(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_ssytrd_2stage( &jobz_, &uplo_, &n_, A, &lda_, D, E, tau, hous2, &lhous2_, qry_work, &ineg_one, &info_ );
+    LAPACK_ssytrd_2stage(
+        &jobz_, &uplo_, &n_,
+        A, &lda_,
+        D,
+        E,
+        tau,
+        hous2, &lhous2_,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -46,7 +53,14 @@ int64_t sytrd_2stage(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_ssytrd_2stage( &jobz_, &uplo_, &n_, A, &lda_, D, E, tau, hous2, &lhous2_, &work[0], &lwork_, &info_ );
+    LAPACK_ssytrd_2stage(
+        &jobz_, &uplo_, &n_,
+        A, &lda_,
+        D,
+        E,
+        tau,
+        hous2, &lhous2_,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -80,7 +94,14 @@ int64_t sytrd_2stage(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dsytrd_2stage( &jobz_, &uplo_, &n_, A, &lda_, D, E, tau, hous2, &lhous2_, qry_work, &ineg_one, &info_ );
+    LAPACK_dsytrd_2stage(
+        &jobz_, &uplo_, &n_,
+        A, &lda_,
+        D,
+        E,
+        tau,
+        hous2, &lhous2_,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -89,7 +110,14 @@ int64_t sytrd_2stage(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dsytrd_2stage( &jobz_, &uplo_, &n_, A, &lda_, D, E, tau, hous2, &lhous2_, &work[0], &lwork_, &info_ );
+    LAPACK_dsytrd_2stage(
+        &jobz_, &uplo_, &n_,
+        A, &lda_,
+        D,
+        E,
+        tau,
+        hous2, &lhous2_,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

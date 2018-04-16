@@ -39,7 +39,13 @@ int64_t sbgv(
     // allocate workspace
     std::vector< float > work( (3*n) );
 
-    LAPACK_ssbgv( &jobz_, &uplo_, &n_, &ka_, &kb_, AB, &ldab_, BB, &ldbb_, W, Z, &ldz_, &work[0], &info_ );
+    LAPACK_ssbgv(
+        &jobz_, &uplo_, &n_, &ka_, &kb_,
+        AB, &ldab_,
+        BB, &ldbb_,
+        W,
+        Z, &ldz_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -76,7 +82,13 @@ int64_t sbgv(
     // allocate workspace
     std::vector< double > work( (3*n) );
 
-    LAPACK_dsbgv( &jobz_, &uplo_, &n_, &ka_, &kb_, AB, &ldab_, BB, &ldbb_, W, Z, &ldz_, &work[0], &info_ );
+    LAPACK_dsbgv(
+        &jobz_, &uplo_, &n_, &ka_, &kb_,
+        AB, &ldab_,
+        BB, &ldbb_,
+        W,
+        Z, &ldz_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

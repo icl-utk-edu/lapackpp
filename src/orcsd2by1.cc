@@ -49,7 +49,16 @@ int64_t orcsd2by1(
     float qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_sorcsd2by1( &jobu1_, &jobu2_, &jobv1t_, &m_, &p_, &q_, X11, &ldx11_, X21, &ldx21_, theta, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, qry_work, &ineg_one, qry_iwork, &info_ );
+    LAPACK_sorcsd2by1(
+        &jobu1_, &jobu2_, &jobv1t_, &m_, &p_, &q_,
+        X11, &ldx11_,
+        X21, &ldx21_,
+        theta,
+        U1, &ldu1_,
+        U2, &ldu2_,
+        V1T, &ldv1t_,
+        qry_work, &ineg_one,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -59,7 +68,16 @@ int64_t orcsd2by1(
     std::vector< float > work( lwork_ );
     std::vector< blas_int > iwork( (m - min( p, min( m-p, min( q, m-q )))) );
 
-    LAPACK_sorcsd2by1( &jobu1_, &jobu2_, &jobv1t_, &m_, &p_, &q_, X11, &ldx11_, X21, &ldx21_, theta, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, &work[0], &lwork_, &iwork[0], &info_ );
+    LAPACK_sorcsd2by1(
+        &jobu1_, &jobu2_, &jobv1t_, &m_, &p_, &q_,
+        X11, &ldx11_,
+        X21, &ldx21_,
+        theta,
+        U1, &ldu1_,
+        U2, &ldu2_,
+        V1T, &ldv1t_,
+        &work[0], &lwork_,
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -104,7 +122,16 @@ int64_t orcsd2by1(
     double qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_dorcsd2by1( &jobu1_, &jobu2_, &jobv1t_, &m_, &p_, &q_, X11, &ldx11_, X21, &ldx21_, theta, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, qry_work, &ineg_one, qry_iwork, &info_ );
+    LAPACK_dorcsd2by1(
+        &jobu1_, &jobu2_, &jobv1t_, &m_, &p_, &q_,
+        X11, &ldx11_,
+        X21, &ldx21_,
+        theta,
+        U1, &ldu1_,
+        U2, &ldu2_,
+        V1T, &ldv1t_,
+        qry_work, &ineg_one,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -114,7 +141,16 @@ int64_t orcsd2by1(
     std::vector< double > work( lwork_ );
     std::vector< blas_int > iwork( (m - min( p, min( m-p, min( q, m-q )))) );
 
-    LAPACK_dorcsd2by1( &jobu1_, &jobu2_, &jobv1t_, &m_, &p_, &q_, X11, &ldx11_, X21, &ldx21_, theta, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, &work[0], &lwork_, &iwork[0], &info_ );
+    LAPACK_dorcsd2by1(
+        &jobu1_, &jobu2_, &jobv1t_, &m_, &p_, &q_,
+        X11, &ldx11_,
+        X21, &ldx21_,
+        theta,
+        U1, &ldu1_,
+        U2, &ldu2_,
+        V1T, &ldv1t_,
+        &work[0], &lwork_,
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

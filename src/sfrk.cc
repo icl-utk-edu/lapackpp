@@ -28,7 +28,10 @@ void sfrk(
     blas_int k_ = (blas_int) k;
     blas_int lda_ = (blas_int) lda;
 
-    LAPACK_ssfrk( &transr_, &uplo_, &trans_, &n_, &k_, &alpha, A, &lda_, &beta, C );
+    LAPACK_ssfrk(
+        &transr_, &uplo_, &trans_, &n_, &k_, &alpha,
+        A, &lda_, &beta,
+        C );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,7 +53,10 @@ void sfrk(
     blas_int k_ = (blas_int) k;
     blas_int lda_ = (blas_int) lda;
 
-    LAPACK_dsfrk( &transr_, &uplo_, &trans_, &n_, &k_, &alpha, A, &lda_, &beta, C );
+    LAPACK_dsfrk(
+        &transr_, &uplo_, &trans_, &n_, &k_, &alpha,
+        A, &lda_, &beta,
+        C );
 }
 
 }  // namespace lapack

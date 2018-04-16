@@ -46,7 +46,15 @@ int64_t stevx(
     std::vector< float > work( (5*n) );
     std::vector< blas_int > iwork( (5*n) );
 
-    LAPACK_sstevx( &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, &work[0], &iwork[0], ifail_ptr, &info_ );
+    LAPACK_sstevx(
+        &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        &work[0],
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -94,7 +102,15 @@ int64_t stevx(
     std::vector< double > work( (5*n) );
     std::vector< blas_int > iwork( (5*n) );
 
-    LAPACK_dstevx( &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, &work[0], &iwork[0], ifail_ptr, &info_ );
+    LAPACK_dstevx(
+        &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        &work[0],
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }

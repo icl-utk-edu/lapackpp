@@ -29,7 +29,11 @@ int64_t orgtr(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_sorgtr( &uplo_, &n_, A, &lda_, tau, qry_work, &ineg_one, &info_ );
+    LAPACK_sorgtr(
+        &uplo_, &n_,
+        A, &lda_,
+        tau,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -38,7 +42,11 @@ int64_t orgtr(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_sorgtr( &uplo_, &n_, A, &lda_, tau, &work[0], &lwork_, &info_ );
+    LAPACK_sorgtr(
+        &uplo_, &n_,
+        A, &lda_,
+        tau,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -66,7 +74,11 @@ int64_t orgtr(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dorgtr( &uplo_, &n_, A, &lda_, tau, qry_work, &ineg_one, &info_ );
+    LAPACK_dorgtr(
+        &uplo_, &n_,
+        A, &lda_,
+        tau,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -75,7 +87,11 @@ int64_t orgtr(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dorgtr( &uplo_, &n_, A, &lda_, tau, &work[0], &lwork_, &info_ );
+    LAPACK_dorgtr(
+        &uplo_, &n_,
+        A, &lda_,
+        tau,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

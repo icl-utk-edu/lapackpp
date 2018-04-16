@@ -55,7 +55,15 @@ int64_t sbevx_2stage(
     float qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_ssbevx_2stage( &jobz_, &range_, &uplo_, &n_, &kd_, AB, &ldab_, Q, &ldq_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, qry_work, &ineg_one, qry_iwork, ifail_ptr, &info_ );
+    LAPACK_ssbevx_2stage(
+        &jobz_, &range_, &uplo_, &n_, &kd_,
+        AB, &ldab_,
+        Q, &ldq_, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        qry_work, &ineg_one,
+        qry_iwork,
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -65,7 +73,15 @@ int64_t sbevx_2stage(
     std::vector< float > work( lwork_ );
     std::vector< blas_int > iwork( (5*n) );
 
-    LAPACK_ssbevx_2stage( &jobz_, &range_, &uplo_, &n_, &kd_, AB, &ldab_, Q, &ldq_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, &work[0], &lwork_, &iwork[0], ifail_ptr, &info_ );
+    LAPACK_ssbevx_2stage(
+        &jobz_, &range_, &uplo_, &n_, &kd_,
+        AB, &ldab_,
+        Q, &ldq_, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        &work[0], &lwork_,
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -120,7 +136,15 @@ int64_t sbevx_2stage(
     double qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_dsbevx_2stage( &jobz_, &range_, &uplo_, &n_, &kd_, AB, &ldab_, Q, &ldq_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, qry_work, &ineg_one, qry_iwork, ifail_ptr, &info_ );
+    LAPACK_dsbevx_2stage(
+        &jobz_, &range_, &uplo_, &n_, &kd_,
+        AB, &ldab_,
+        Q, &ldq_, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        qry_work, &ineg_one,
+        qry_iwork,
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -130,7 +154,15 @@ int64_t sbevx_2stage(
     std::vector< double > work( lwork_ );
     std::vector< blas_int > iwork( (5*n) );
 
-    LAPACK_dsbevx_2stage( &jobz_, &range_, &uplo_, &n_, &kd_, AB, &ldab_, Q, &ldq_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, &work[0], &lwork_, &iwork[0], ifail_ptr, &info_ );
+    LAPACK_dsbevx_2stage(
+        &jobz_, &range_, &uplo_, &n_, &kd_,
+        AB, &ldab_,
+        Q, &ldq_, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        &work[0], &lwork_,
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }

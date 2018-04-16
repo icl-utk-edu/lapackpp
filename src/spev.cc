@@ -30,7 +30,12 @@ int64_t spev(
     // allocate workspace
     std::vector< float > work( (3*n) );
 
-    LAPACK_sspev( &jobz_, &uplo_, &n_, AP, W, Z, &ldz_, &work[0], &info_ );
+    LAPACK_sspev(
+        &jobz_, &uplo_, &n_,
+        AP,
+        W,
+        Z, &ldz_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -58,7 +63,12 @@ int64_t spev(
     // allocate workspace
     std::vector< double > work( (3*n) );
 
-    LAPACK_dspev( &jobz_, &uplo_, &n_, AP, W, Z, &ldz_, &work[0], &info_ );
+    LAPACK_dspev(
+        &jobz_, &uplo_, &n_,
+        AP,
+        W,
+        Z, &ldz_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

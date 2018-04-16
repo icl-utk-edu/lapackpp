@@ -49,7 +49,14 @@ int64_t syevx(
     float qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_ssyevx( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_, W, Z, &ldz_, qry_work, &ineg_one, qry_iwork, ifail_ptr, &info_ );
+    LAPACK_ssyevx(
+        &jobz_, &range_, &uplo_, &n_,
+        A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_,
+        W,
+        Z, &ldz_,
+        qry_work, &ineg_one,
+        qry_iwork,
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -59,7 +66,14 @@ int64_t syevx(
     std::vector< float > work( lwork_ );
     std::vector< blas_int > iwork( (5*n) );
 
-    LAPACK_ssyevx( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_, W, Z, &ldz_, &work[0], &lwork_, &iwork[0], ifail_ptr, &info_ );
+    LAPACK_ssyevx(
+        &jobz_, &range_, &uplo_, &n_,
+        A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_,
+        W,
+        Z, &ldz_,
+        &work[0], &lwork_,
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -111,7 +125,14 @@ int64_t syevx(
     double qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_dsyevx( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_, W, Z, &ldz_, qry_work, &ineg_one, qry_iwork, ifail_ptr, &info_ );
+    LAPACK_dsyevx(
+        &jobz_, &range_, &uplo_, &n_,
+        A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_,
+        W,
+        Z, &ldz_,
+        qry_work, &ineg_one,
+        qry_iwork,
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -121,7 +142,14 @@ int64_t syevx(
     std::vector< double > work( lwork_ );
     std::vector< blas_int > iwork( (5*n) );
 
-    LAPACK_dsyevx( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_, W, Z, &ldz_, &work[0], &lwork_, &iwork[0], ifail_ptr, &info_ );
+    LAPACK_dsyevx(
+        &jobz_, &range_, &uplo_, &n_,
+        A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_,
+        W,
+        Z, &ldz_,
+        &work[0], &lwork_,
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }

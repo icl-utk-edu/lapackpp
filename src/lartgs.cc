@@ -18,7 +18,8 @@ void lartgs(
     float* sn )
 {
 
-    LAPACK_slartgs( &x, &y, &sigma, cs, sn );
+    LAPACK_slartgs(
+        &x, &y, &sigma, cs, sn );
 }
 
 // -----------------------------------------------------------------------------
@@ -28,7 +29,8 @@ void lartgs(
     double* sn )
 {
 
-    LAPACK_dlartgs( &x, &y, &sigma, cs, sn );
+    LAPACK_dlartgs(
+        &x, &y, &sigma, cs, sn );
 }
 
 }  // namespace lapack

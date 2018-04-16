@@ -28,7 +28,10 @@ int64_t lag2d(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_slag2d( &m_, &n_, SA, &ldsa_, A, &lda_, &info_ );
+    LAPACK_slag2d(
+        &m_, &n_,
+        SA, &ldsa_,
+        A, &lda_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

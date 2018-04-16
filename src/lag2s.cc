@@ -28,7 +28,10 @@ int64_t lag2s(
     blas_int ldsa_ = (blas_int) ldsa;
     blas_int info_ = 0;
 
-    LAPACK_dlag2s( &m_, &n_, A, &lda_, SA, &ldsa_, &info_ );
+    LAPACK_dlag2s(
+        &m_, &n_,
+        A, &lda_,
+        SA, &ldsa_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

@@ -58,7 +58,16 @@ int64_t sbgvx(
     std::vector< float > work( (7*n) );
     std::vector< blas_int > iwork( (5*n) );
 
-    LAPACK_ssbgvx( &jobz_, &range_, &uplo_, &n_, &ka_, &kb_, AB, &ldab_, BB, &ldbb_, Q, &ldq_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, &work[0], &iwork[0], ifail_ptr, &info_ );
+    LAPACK_ssbgvx(
+        &jobz_, &range_, &uplo_, &n_, &ka_, &kb_,
+        AB, &ldab_,
+        BB, &ldbb_,
+        Q, &ldq_, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        &work[0],
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -118,7 +127,16 @@ int64_t sbgvx(
     std::vector< double > work( (7*n) );
     std::vector< blas_int > iwork( (5*n) );
 
-    LAPACK_dsbgvx( &jobz_, &range_, &uplo_, &n_, &ka_, &kb_, AB, &ldab_, BB, &ldbb_, Q, &ldq_, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, &work[0], &iwork[0], ifail_ptr, &info_ );
+    LAPACK_dsbgvx(
+        &jobz_, &range_, &uplo_, &n_, &ka_, &kb_,
+        AB, &ldab_,
+        BB, &ldbb_,
+        Q, &ldq_, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        &work[0],
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }

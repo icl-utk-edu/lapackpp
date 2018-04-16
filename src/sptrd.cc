@@ -15,7 +15,7 @@ int64_t sptrd(
     float* AP,
     float* D,
     float* E,
-    float* TAU )
+    float* tau )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -25,7 +25,12 @@ int64_t sptrd(
     blas_int n_ = (blas_int) n;
     blas_int info_ = 0;
 
-    LAPACK_ssptrd( &uplo_, &n_, AP, D, E, TAU, &info_ );
+    LAPACK_ssptrd(
+        &uplo_, &n_,
+        AP,
+        D,
+        E,
+        tau, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -38,7 +43,7 @@ int64_t sptrd(
     double* AP,
     double* D,
     double* E,
-    double* TAU )
+    double* tau )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -48,7 +53,12 @@ int64_t sptrd(
     blas_int n_ = (blas_int) n;
     blas_int info_ = 0;
 
-    LAPACK_dsptrd( &uplo_, &n_, AP, D, E, TAU, &info_ );
+    LAPACK_dsptrd(
+        &uplo_, &n_,
+        AP,
+        D,
+        E,
+        tau, &info_ );
     if (info_ < 0) {
         throw Error();
     }

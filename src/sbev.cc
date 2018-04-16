@@ -34,7 +34,12 @@ int64_t sbev(
     // allocate workspace
     std::vector< float > work( (max( 1, 3*n-2 )) );
 
-    LAPACK_ssbev( &jobz_, &uplo_, &n_, &kd_, AB, &ldab_, W, Z, &ldz_, &work[0], &info_ );
+    LAPACK_ssbev(
+        &jobz_, &uplo_, &n_, &kd_,
+        AB, &ldab_,
+        W,
+        Z, &ldz_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -66,7 +71,12 @@ int64_t sbev(
     // allocate workspace
     std::vector< double > work( (max( 1, 3*n-2 )) );
 
-    LAPACK_dsbev( &jobz_, &uplo_, &n_, &kd_, AB, &ldab_, W, Z, &ldz_, &work[0], &info_ );
+    LAPACK_dsbev(
+        &jobz_, &uplo_, &n_, &kd_,
+        AB, &ldab_,
+        W,
+        Z, &ldz_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

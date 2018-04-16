@@ -39,7 +39,12 @@ int64_t lagsy(
     // allocate workspace
     std::vector< float > work( (2*n) );
 
-    LAPACK_slagsy( &n_, &k_, D, A, &lda_, iseed_ptr, &work[0], &info_ );
+    LAPACK_slagsy(
+        &n_, &k_,
+        D,
+        A, &lda_,
+        iseed_ptr,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -77,7 +82,12 @@ int64_t lagsy(
     // allocate workspace
     std::vector< double > work( (2*n) );
 
-    LAPACK_dlagsy( &n_, &k_, D, A, &lda_, iseed_ptr, &work[0], &info_ );
+    LAPACK_dlagsy(
+        &n_, &k_,
+        D,
+        A, &lda_,
+        iseed_ptr,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -115,7 +125,12 @@ int64_t lagsy(
     // allocate workspace
     std::vector< std::complex<float> > work( (2*n) );
 
-    LAPACK_clagsy( &n_, &k_, D, A, &lda_, iseed_ptr, &work[0], &info_ );
+    LAPACK_clagsy(
+        &n_, &k_,
+        D,
+        (lapack_complex_float*) A, &lda_,
+        iseed_ptr,
+        (lapack_complex_float*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -153,7 +168,12 @@ int64_t lagsy(
     // allocate workspace
     std::vector< std::complex<double> > work( (2*n) );
 
-    LAPACK_zlagsy( &n_, &k_, D, A, &lda_, iseed_ptr, &work[0], &info_ );
+    LAPACK_zlagsy(
+        &n_, &k_,
+        D,
+        (lapack_complex_double*) A, &lda_,
+        iseed_ptr,
+        (lapack_complex_double*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

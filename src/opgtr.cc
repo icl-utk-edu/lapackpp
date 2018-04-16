@@ -13,7 +13,7 @@ using blas::real;
 int64_t opgtr(
     lapack::Uplo uplo, int64_t n,
     float const* AP,
-    float const* TAU,
+    float const* tau,
     float* Q, int64_t ldq )
 {
     // check for overflow
@@ -29,7 +29,12 @@ int64_t opgtr(
     // allocate workspace
     std::vector< float > work( (n-1) );
 
-    LAPACK_sopgtr( &uplo_, &n_, AP, TAU, Q, &ldq_, &work[0], &info_ );
+    LAPACK_sopgtr(
+        &uplo_, &n_,
+        AP,
+        tau,
+        Q, &ldq_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -40,7 +45,7 @@ int64_t opgtr(
 int64_t opgtr(
     lapack::Uplo uplo, int64_t n,
     double const* AP,
-    double const* TAU,
+    double const* tau,
     double* Q, int64_t ldq )
 {
     // check for overflow
@@ -56,7 +61,12 @@ int64_t opgtr(
     // allocate workspace
     std::vector< double > work( (n-1) );
 
-    LAPACK_dopgtr( &uplo_, &n_, AP, TAU, Q, &ldq_, &work[0], &info_ );
+    LAPACK_dopgtr(
+        &uplo_, &n_,
+        AP,
+        tau,
+        Q, &ldq_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

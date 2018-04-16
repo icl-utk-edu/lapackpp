@@ -34,7 +34,11 @@ int64_t hpcon(
     // allocate workspace
     std::vector< std::complex<float> > work( (2*n) );
 
-    LAPACK_chpcon( &uplo_, &n_, AP, ipiv_ptr, &anorm, rcond, &work[0], &info_ );
+    LAPACK_chpcon(
+        &uplo_, &n_,
+        (lapack_complex_float*) AP,
+        ipiv_ptr, &anorm, rcond,
+        (lapack_complex_float*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -66,7 +70,11 @@ int64_t hpcon(
     // allocate workspace
     std::vector< std::complex<double> > work( (2*n) );
 
-    LAPACK_zhpcon( &uplo_, &n_, AP, ipiv_ptr, &anorm, rcond, &work[0], &info_ );
+    LAPACK_zhpcon(
+        &uplo_, &n_,
+        (lapack_complex_double*) AP,
+        ipiv_ptr, &anorm, rcond,
+        (lapack_complex_double*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

@@ -45,7 +45,10 @@ void syr(
     }
 
     char uplo_ = uplo2char( uplo );
-    LAPACK_csyr( &uplo_, &n_, &alpha, x, &incx_, A, &lda_ );
+    LAPACK_csyr( &uplo_, &n_,
+                 (lapack_complex_float*) &alpha,
+                 (lapack_complex_float*) x, &incx_,
+                 (lapack_complex_float*) A, &lda_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,7 +87,10 @@ void syr(
     }
 
     char uplo_ = uplo2char( uplo );
-    LAPACK_zsyr( &uplo_, &n_, &alpha, x, &incx_, A, &lda_ );
+    LAPACK_zsyr( &uplo_, &n_,
+                 (lapack_complex_double*) &alpha,
+                 (lapack_complex_double*) x, &incx_,
+                 (lapack_complex_double*) A, &lda_ );
 }
 
 }  // namespace blas

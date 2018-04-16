@@ -38,7 +38,12 @@ int64_t sbgst(
     // allocate workspace
     std::vector< float > work( (2*n) );
 
-    LAPACK_ssbgst( &jobz_, &uplo_, &n_, &ka_, &kb_, AB, &ldab_, BB, &ldbb_, X, &ldx_, &work[0], &info_ );
+    LAPACK_ssbgst(
+        &jobz_, &uplo_, &n_, &ka_, &kb_,
+        AB, &ldab_,
+        BB, &ldbb_,
+        X, &ldx_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -74,7 +79,12 @@ int64_t sbgst(
     // allocate workspace
     std::vector< double > work( (2*n) );
 
-    LAPACK_dsbgst( &jobz_, &uplo_, &n_, &ka_, &kb_, AB, &ldab_, BB, &ldbb_, X, &ldx_, &work[0], &info_ );
+    LAPACK_dsbgst(
+        &jobz_, &uplo_, &n_, &ka_, &kb_,
+        AB, &ldab_,
+        BB, &ldbb_,
+        X, &ldx_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

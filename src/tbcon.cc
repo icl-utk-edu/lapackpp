@@ -33,7 +33,11 @@ int64_t tbcon(
     std::vector< float > work( (3*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_stbcon( &norm_, &uplo_, &diag_, &n_, &kd_, AB, &ldab_, rcond, &work[0], &iwork[0], &info_ );
+    LAPACK_stbcon(
+        &norm_, &uplo_, &diag_, &n_, &kd_,
+        AB, &ldab_, rcond,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -64,7 +68,11 @@ int64_t tbcon(
     std::vector< double > work( (3*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_dtbcon( &norm_, &uplo_, &diag_, &n_, &kd_, AB, &ldab_, rcond, &work[0], &iwork[0], &info_ );
+    LAPACK_dtbcon(
+        &norm_, &uplo_, &diag_, &n_, &kd_,
+        AB, &ldab_, rcond,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -95,7 +103,11 @@ int64_t tbcon(
     std::vector< std::complex<float> > work( (2*n) );
     std::vector< float > rwork( (n) );
 
-    LAPACK_ctbcon( &norm_, &uplo_, &diag_, &n_, &kd_, AB, &ldab_, rcond, &work[0], &rwork[0], &info_ );
+    LAPACK_ctbcon(
+        &norm_, &uplo_, &diag_, &n_, &kd_,
+        (lapack_complex_float*) AB, &ldab_, rcond,
+        (lapack_complex_float*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -126,7 +138,11 @@ int64_t tbcon(
     std::vector< std::complex<double> > work( (2*n) );
     std::vector< double > rwork( (n) );
 
-    LAPACK_ztbcon( &norm_, &uplo_, &diag_, &n_, &kd_, AB, &ldab_, rcond, &work[0], &rwork[0], &info_ );
+    LAPACK_ztbcon(
+        &norm_, &uplo_, &diag_, &n_, &kd_,
+        (lapack_complex_double*) AB, &ldab_, rcond,
+        (lapack_complex_double*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

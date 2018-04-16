@@ -31,7 +31,12 @@ int64_t heev(
     std::complex<float> qry_work[1];
     float qry_rwork[1];
     blas_int ineg_one = -1;
-    LAPACK_cheev( &jobz_, &uplo_, &n_, A, &lda_, W, qry_work, &ineg_one, qry_rwork, &info_ );
+    LAPACK_cheev(
+        &jobz_, &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        W,
+        (lapack_complex_float*) qry_work, &ineg_one,
+        qry_rwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -41,7 +46,12 @@ int64_t heev(
     std::vector< std::complex<float> > work( lwork_ );
     std::vector< float > rwork( (max( 1, 3*n-2 )) );
 
-    LAPACK_cheev( &jobz_, &uplo_, &n_, A, &lda_, W, &work[0], &lwork_, &rwork[0], &info_ );
+    LAPACK_cheev(
+        &jobz_, &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        W,
+        (lapack_complex_float*) &work[0], &lwork_,
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -117,7 +127,12 @@ int64_t heev(
     std::complex<double> qry_work[1];
     double qry_rwork[1];
     blas_int ineg_one = -1;
-    LAPACK_zheev( &jobz_, &uplo_, &n_, A, &lda_, W, qry_work, &ineg_one, qry_rwork, &info_ );
+    LAPACK_zheev(
+        &jobz_, &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        W,
+        (lapack_complex_double*) qry_work, &ineg_one,
+        qry_rwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -127,7 +142,12 @@ int64_t heev(
     std::vector< std::complex<double> > work( lwork_ );
     std::vector< double > rwork( (max( 1, 3*n-2 )) );
 
-    LAPACK_zheev( &jobz_, &uplo_, &n_, A, &lda_, W, &work[0], &lwork_, &rwork[0], &info_ );
+    LAPACK_zheev(
+        &jobz_, &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        W,
+        (lapack_complex_double*) &work[0], &lwork_,
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

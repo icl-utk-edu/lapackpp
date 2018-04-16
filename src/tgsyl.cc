@@ -49,7 +49,16 @@ int64_t tgsyl(
     float qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_stgsyl( &trans_, &ijob_, &m_, &n_, A, &lda_, B, &ldb_, C, &ldc_, D, &ldd_, E, &lde_, F, &ldf_, dif, scale, qry_work, &ineg_one, qry_iwork, &info_ );
+    LAPACK_stgsyl(
+        &trans_, &ijob_, &m_, &n_,
+        A, &lda_,
+        B, &ldb_,
+        C, &ldc_,
+        D, &ldd_,
+        E, &lde_,
+        F, &ldf_, dif, scale,
+        qry_work, &ineg_one,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -59,7 +68,16 @@ int64_t tgsyl(
     std::vector< float > work( lwork_ );
     std::vector< blas_int > iwork( (m+n+6) );
 
-    LAPACK_stgsyl( &trans_, &ijob_, &m_, &n_, A, &lda_, B, &ldb_, C, &ldc_, D, &ldd_, E, &lde_, F, &ldf_, dif, scale, &work[0], &lwork_, &iwork[0], &info_ );
+    LAPACK_stgsyl(
+        &trans_, &ijob_, &m_, &n_,
+        A, &lda_,
+        B, &ldb_,
+        C, &ldc_,
+        D, &ldd_,
+        E, &lde_,
+        F, &ldf_, dif, scale,
+        &work[0], &lwork_,
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -106,7 +124,16 @@ int64_t tgsyl(
     double qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_dtgsyl( &trans_, &ijob_, &m_, &n_, A, &lda_, B, &ldb_, C, &ldc_, D, &ldd_, E, &lde_, F, &ldf_, dif, scale, qry_work, &ineg_one, qry_iwork, &info_ );
+    LAPACK_dtgsyl(
+        &trans_, &ijob_, &m_, &n_,
+        A, &lda_,
+        B, &ldb_,
+        C, &ldc_,
+        D, &ldd_,
+        E, &lde_,
+        F, &ldf_, dif, scale,
+        qry_work, &ineg_one,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -116,7 +143,16 @@ int64_t tgsyl(
     std::vector< double > work( lwork_ );
     std::vector< blas_int > iwork( (m+n+6) );
 
-    LAPACK_dtgsyl( &trans_, &ijob_, &m_, &n_, A, &lda_, B, &ldb_, C, &ldc_, D, &ldd_, E, &lde_, F, &ldf_, dif, scale, &work[0], &lwork_, &iwork[0], &info_ );
+    LAPACK_dtgsyl(
+        &trans_, &ijob_, &m_, &n_,
+        A, &lda_,
+        B, &ldb_,
+        C, &ldc_,
+        D, &ldd_,
+        E, &lde_,
+        F, &ldf_, dif, scale,
+        &work[0], &lwork_,
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -163,7 +199,16 @@ int64_t tgsyl(
     std::complex<float> qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_ctgsyl( &trans_, &ijob_, &m_, &n_, A, &lda_, B, &ldb_, C, &ldc_, D, &ldd_, E, &lde_, F, &ldf_, dif, scale, qry_work, &ineg_one, qry_iwork, &info_ );
+    LAPACK_ctgsyl(
+        &trans_, &ijob_, &m_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) C, &ldc_,
+        (lapack_complex_float*) D, &ldd_,
+        (lapack_complex_float*) E, &lde_,
+        (lapack_complex_float*) F, &ldf_, dif, scale,
+        (lapack_complex_float*) qry_work, &ineg_one,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -173,7 +218,16 @@ int64_t tgsyl(
     std::vector< std::complex<float> > work( lwork_ );
     std::vector< blas_int > iwork( (m+n+2) );
 
-    LAPACK_ctgsyl( &trans_, &ijob_, &m_, &n_, A, &lda_, B, &ldb_, C, &ldc_, D, &ldd_, E, &lde_, F, &ldf_, dif, scale, &work[0], &lwork_, &iwork[0], &info_ );
+    LAPACK_ctgsyl(
+        &trans_, &ijob_, &m_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) C, &ldc_,
+        (lapack_complex_float*) D, &ldd_,
+        (lapack_complex_float*) E, &lde_,
+        (lapack_complex_float*) F, &ldf_, dif, scale,
+        (lapack_complex_float*) &work[0], &lwork_,
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -220,7 +274,16 @@ int64_t tgsyl(
     std::complex<double> qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_ztgsyl( &trans_, &ijob_, &m_, &n_, A, &lda_, B, &ldb_, C, &ldc_, D, &ldd_, E, &lde_, F, &ldf_, dif, scale, qry_work, &ineg_one, qry_iwork, &info_ );
+    LAPACK_ztgsyl(
+        &trans_, &ijob_, &m_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) C, &ldc_,
+        (lapack_complex_double*) D, &ldd_,
+        (lapack_complex_double*) E, &lde_,
+        (lapack_complex_double*) F, &ldf_, dif, scale,
+        (lapack_complex_double*) qry_work, &ineg_one,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -230,7 +293,16 @@ int64_t tgsyl(
     std::vector< std::complex<double> > work( lwork_ );
     std::vector< blas_int > iwork( (m+n+2) );
 
-    LAPACK_ztgsyl( &trans_, &ijob_, &m_, &n_, A, &lda_, B, &ldb_, C, &ldc_, D, &ldd_, E, &lde_, F, &ldf_, dif, scale, &work[0], &lwork_, &iwork[0], &info_ );
+    LAPACK_ztgsyl(
+        &trans_, &ijob_, &m_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) C, &ldc_,
+        (lapack_complex_double*) D, &ldd_,
+        (lapack_complex_double*) E, &lde_,
+        (lapack_complex_double*) F, &ldf_, dif, scale,
+        (lapack_complex_double*) &work[0], &lwork_,
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

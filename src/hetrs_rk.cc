@@ -41,7 +41,12 @@ int64_t hetrs_rk(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_chetrs_3( &uplo_, &n_, &nrhs_, A, &lda_, E, ipiv_ptr, B, &ldb_, &info_ );
+    LAPACK_chetrs_3(
+        &uplo_, &n_, &nrhs_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) E,
+        ipiv_ptr,
+        (lapack_complex_float*) B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -78,6 +83,7 @@ int64_t hetrs_rk(
 /// for consistency with `hesv_rk`, `hetrf_rk`, etc.
 ///
 /// @since LAPACK 3.7.0.
+/// This wraps LAPACK's hetrs_3 or sytrs_3.
 /// This interface replaces the older `lapack::hetrf_rook`.
 ///
 /// @param[in] uplo
@@ -163,7 +169,12 @@ int64_t hetrs_rk(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_zhetrs_3( &uplo_, &n_, &nrhs_, A, &lda_, E, ipiv_ptr, B, &ldb_, &info_ );
+    LAPACK_zhetrs_3(
+        &uplo_, &n_, &nrhs_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) E,
+        ipiv_ptr,
+        (lapack_complex_double*) B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

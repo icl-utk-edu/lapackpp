@@ -30,7 +30,10 @@ int64_t posv(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_sposv( &uplo_, &n_, &nrhs_, A, &lda_, B, &ldb_, &info_ );
+    LAPACK_sposv(
+        &uplo_, &n_, &nrhs_,
+        A, &lda_,
+        B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -58,7 +61,10 @@ int64_t posv(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_dposv( &uplo_, &n_, &nrhs_, A, &lda_, B, &ldb_, &info_ );
+    LAPACK_dposv(
+        &uplo_, &n_, &nrhs_,
+        A, &lda_,
+        B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -86,7 +92,10 @@ int64_t posv(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_cposv( &uplo_, &n_, &nrhs_, A, &lda_, B, &ldb_, &info_ );
+    LAPACK_cposv(
+        &uplo_, &n_, &nrhs_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -173,7 +182,10 @@ int64_t posv(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_zposv( &uplo_, &n_, &nrhs_, A, &lda_, B, &ldb_, &info_ );
+    LAPACK_zposv(
+        &uplo_, &n_, &nrhs_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -209,7 +221,13 @@ int64_t posv(
     std::vector< double > work( (n)*(nrhs) );
     std::vector< float > swork( (n*(n+nrhs)) );
 
-    LAPACK_dsposv( &uplo_, &n_, &nrhs_, A, &lda_, B, &ldb_, X, &ldx_, &work[0], &swork[0], &iter_, &info_ );
+    LAPACK_dsposv(
+        &uplo_, &n_, &nrhs_,
+        A, &lda_,
+        B, &ldb_,
+        X, &ldx_,
+        &work[0],
+        &swork[0], &iter_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -247,7 +265,14 @@ int64_t posv(
     std::vector< std::complex<float> > swork( (n*(n+nrhs)) );
     std::vector< double > rwork( (n) );
 
-    LAPACK_zcposv( &uplo_, &n_, &nrhs_, A, &lda_, B, &ldb_, X, &ldx_, &work[0], &swork[0], &rwork[0], &iter_, &info_ );
+    LAPACK_zcposv(
+        &uplo_, &n_, &nrhs_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) X, &ldx_,
+        (lapack_complex_double*) &work[0],
+        (lapack_complex_float*) &swork[0],
+        &rwork[0], &iter_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

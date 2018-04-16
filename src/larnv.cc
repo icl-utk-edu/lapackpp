@@ -31,7 +31,10 @@ void larnv(
     #endif
     blas_int n_ = (blas_int) n;
 
-    LAPACK_slarnv( &idist_, iseed_ptr, &n_, X );
+    LAPACK_slarnv(
+        &idist_,
+        iseed_ptr, &n_,
+        X );
     #if 1
         std::copy( iseed_.begin(), iseed_.end(), iseed );
     #endif
@@ -59,7 +62,10 @@ void larnv(
     #endif
     blas_int n_ = (blas_int) n;
 
-    LAPACK_dlarnv( &idist_, iseed_ptr, &n_, X );
+    LAPACK_dlarnv(
+        &idist_,
+        iseed_ptr, &n_,
+        X );
     #if 1
         std::copy( iseed_.begin(), iseed_.end(), iseed );
     #endif
@@ -87,7 +93,10 @@ void larnv(
     #endif
     blas_int n_ = (blas_int) n;
 
-    LAPACK_clarnv( &idist_, iseed_ptr, &n_, X );
+    LAPACK_clarnv(
+        &idist_,
+        iseed_ptr, &n_,
+        (lapack_complex_float*) X );
     #if 1
         std::copy( iseed_.begin(), iseed_.end(), iseed );
     #endif
@@ -151,7 +160,10 @@ void larnv(
     #endif
     blas_int n_ = (blas_int) n;
 
-    LAPACK_zlarnv( &idist_, iseed_ptr, &n_, X );
+    LAPACK_zlarnv(
+        &idist_,
+        iseed_ptr, &n_,
+        (lapack_complex_double*) X );
     #if 1
         std::copy( iseed_.begin(), iseed_.end(), iseed );
     #endif

@@ -29,7 +29,10 @@ void lacpy(
     blas_int lda_ = (blas_int) lda;
     blas_int ldb_ = (blas_int) ldb;
 
-    LAPACK_slacpy( &matrixtype_, &m_, &n_, A, &lda_, B, &ldb_ );
+    LAPACK_slacpy(
+        &matrixtype_, &m_, &n_,
+        A, &lda_,
+        B, &ldb_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +55,10 @@ void lacpy(
     blas_int lda_ = (blas_int) lda;
     blas_int ldb_ = (blas_int) ldb;
 
-    LAPACK_dlacpy( &matrixtype_, &m_, &n_, A, &lda_, B, &ldb_ );
+    LAPACK_dlacpy(
+        &matrixtype_, &m_, &n_,
+        A, &lda_,
+        B, &ldb_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +81,10 @@ void lacpy(
     blas_int lda_ = (blas_int) lda;
     blas_int ldb_ = (blas_int) ldb;
 
-    LAPACK_clacpy( &matrixtype_, &m_, &n_, A, &lda_, B, &ldb_ );
+    LAPACK_clacpy(
+        &matrixtype_, &m_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) B, &ldb_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,7 +141,10 @@ void lacpy(
     blas_int lda_ = (blas_int) lda;
     blas_int ldb_ = (blas_int) ldb;
 
-    LAPACK_zlacpy( &matrixtype_, &m_, &n_, A, &lda_, B, &ldb_ );
+    LAPACK_zlacpy(
+        &matrixtype_, &m_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_ );
 }
 
 }  // namespace lapack

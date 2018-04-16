@@ -30,7 +30,10 @@ int64_t pbequ(
     blas_int ldab_ = (blas_int) ldab;
     blas_int info_ = 0;
 
-    LAPACK_spbequ( &uplo_, &n_, &kd_, AB, &ldab_, S, scond, amax, &info_ );
+    LAPACK_spbequ(
+        &uplo_, &n_, &kd_,
+        AB, &ldab_,
+        S, scond, amax, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -58,7 +61,10 @@ int64_t pbequ(
     blas_int ldab_ = (blas_int) ldab;
     blas_int info_ = 0;
 
-    LAPACK_dpbequ( &uplo_, &n_, &kd_, AB, &ldab_, S, scond, amax, &info_ );
+    LAPACK_dpbequ(
+        &uplo_, &n_, &kd_,
+        AB, &ldab_,
+        S, scond, amax, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -86,7 +92,10 @@ int64_t pbequ(
     blas_int ldab_ = (blas_int) ldab;
     blas_int info_ = 0;
 
-    LAPACK_cpbequ( &uplo_, &n_, &kd_, AB, &ldab_, S, scond, amax, &info_ );
+    LAPACK_cpbequ(
+        &uplo_, &n_, &kd_,
+        (lapack_complex_float*) AB, &ldab_,
+        S, scond, amax, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -166,7 +175,10 @@ int64_t pbequ(
     blas_int ldab_ = (blas_int) ldab;
     blas_int info_ = 0;
 
-    LAPACK_zpbequ( &uplo_, &n_, &kd_, AB, &ldab_, S, scond, amax, &info_ );
+    LAPACK_zpbequ(
+        &uplo_, &n_, &kd_,
+        (lapack_complex_double*) AB, &ldab_,
+        S, scond, amax, &info_ );
     if (info_ < 0) {
         throw Error();
     }

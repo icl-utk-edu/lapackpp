@@ -35,7 +35,11 @@ int64_t gbequb(
     blas_int ldab_ = (blas_int) ldab;
     blas_int info_ = 0;
 
-    LAPACK_sgbequb( &m_, &n_, &kl_, &ku_, AB, &ldab_, R, C, rowcnd, colcnd, amax, &info_ );
+    LAPACK_sgbequb(
+        &m_, &n_, &kl_, &ku_,
+        AB, &ldab_,
+        R,
+        C, rowcnd, colcnd, amax, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -68,7 +72,11 @@ int64_t gbequb(
     blas_int ldab_ = (blas_int) ldab;
     blas_int info_ = 0;
 
-    LAPACK_dgbequb( &m_, &n_, &kl_, &ku_, AB, &ldab_, R, C, rowcnd, colcnd, amax, &info_ );
+    LAPACK_dgbequb(
+        &m_, &n_, &kl_, &ku_,
+        AB, &ldab_,
+        R,
+        C, rowcnd, colcnd, amax, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -101,7 +109,11 @@ int64_t gbequb(
     blas_int ldab_ = (blas_int) ldab;
     blas_int info_ = 0;
 
-    LAPACK_cgbequb( &m_, &n_, &kl_, &ku_, AB, &ldab_, R, C, rowcnd, colcnd, amax, &info_ );
+    LAPACK_cgbequb(
+        &m_, &n_, &kl_, &ku_,
+        (lapack_complex_float*) AB, &ldab_,
+        R,
+        C, rowcnd, colcnd, amax, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -206,7 +218,11 @@ int64_t gbequb(
     blas_int ldab_ = (blas_int) ldab;
     blas_int info_ = 0;
 
-    LAPACK_zgbequb( &m_, &n_, &kl_, &ku_, AB, &ldab_, R, C, rowcnd, colcnd, amax, &info_ );
+    LAPACK_zgbequb(
+        &m_, &n_, &kl_, &ku_,
+        (lapack_complex_double*) AB, &ldab_,
+        R,
+        C, rowcnd, colcnd, amax, &info_ );
     if (info_ < 0) {
         throw Error();
     }

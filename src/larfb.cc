@@ -44,8 +44,12 @@ void larfb(
     // allocate workspace
     std::vector< float > work( ldwork_ * k );
 
-    LAPACK_slarfb( &side_, &trans_, &direct_, &storev_, &m_, &n_, &k_,
-                   V, &ldv_, T, &ldt_, C, &ldc_, &work[0], &ldwork_ );
+    LAPACK_slarfb(
+        &side_, &trans_, &direct_, &storev_, &m_, &n_, &k_,
+        V, &ldv_,
+        T, &ldt_,
+        C, &ldc_,
+        &work[0], &ldwork_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,8 +87,12 @@ void larfb(
     // allocate workspace
     std::vector< double > work( ldwork_ * k );
 
-    LAPACK_dlarfb( &side_, &trans_, &direct_, &storev_, &m_, &n_, &k_,
-                   V, &ldv_, T, &ldt_, C, &ldc_, &work[0], &ldwork_ );
+    LAPACK_dlarfb(
+        &side_, &trans_, &direct_, &storev_, &m_, &n_, &k_,
+        V, &ldv_,
+        T, &ldt_,
+        C, &ldc_,
+        &work[0], &ldwork_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,8 +130,12 @@ void larfb(
     // allocate workspace
     std::vector< std::complex<float> > work( ldwork_ * k );
 
-    LAPACK_clarfb( &side_, &trans_, &direct_, &storev_, &m_, &n_, &k_,
-                   V, &ldv_, T, &ldt_, C, &ldc_, &work[0], &ldwork_ );
+    LAPACK_clarfb(
+        &side_, &trans_, &direct_, &storev_, &m_, &n_, &k_,
+        (lapack_complex_float*) V, &ldv_,
+        (lapack_complex_float*) T, &ldt_,
+        (lapack_complex_float*) C, &ldc_,
+        (lapack_complex_float*) &work[0], &ldwork_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -257,8 +269,12 @@ void larfb(
     // allocate workspace
     std::vector< std::complex<double> > work( ldwork_ * k );
 
-    LAPACK_zlarfb( &side_, &trans_, &direct_, &storev_, &m_, &n_, &k_,
-                   V, &ldv_, T, &ldt_, C, &ldc_, &work[0], &ldwork_ );
+    LAPACK_zlarfb(
+        &side_, &trans_, &direct_, &storev_, &m_, &n_, &k_,
+        (lapack_complex_double*) V, &ldv_,
+        (lapack_complex_double*) T, &ldt_,
+        (lapack_complex_double*) C, &ldc_,
+        (lapack_complex_double*) &work[0], &ldwork_ );
 }
 
 }  // namespace lapack

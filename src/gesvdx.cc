@@ -48,7 +48,14 @@ int64_t gesvdx(
     float qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_sgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &nfound_, S, U, &ldu_, VT, &ldvt_, qry_work, &ineg_one, qry_iwork, &info_ );
+    LAPACK_sgesvdx(
+        &jobu_, &jobvt_, &range_, &m_, &n_,
+        A, &lda_, &vl, &vu, &il_, &iu_, &nfound_,
+        S,
+        U, &ldu_,
+        VT, &ldvt_,
+        qry_work, &ineg_one,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -58,7 +65,14 @@ int64_t gesvdx(
     std::vector< float > work( lwork_ );
     std::vector< blas_int > iwork( (12*min(m,n)) );
 
-    LAPACK_sgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &nfound_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &iwork[0], &info_ );
+    LAPACK_sgesvdx(
+        &jobu_, &jobvt_, &range_, &m_, &n_,
+        A, &lda_, &vl, &vu, &il_, &iu_, &nfound_,
+        S,
+        U, &ldu_,
+        VT, &ldvt_,
+        &work[0], &lwork_,
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -103,7 +117,14 @@ int64_t gesvdx(
     double qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_dgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &nfound_, S, U, &ldu_, VT, &ldvt_, qry_work, &ineg_one, qry_iwork, &info_ );
+    LAPACK_dgesvdx(
+        &jobu_, &jobvt_, &range_, &m_, &n_,
+        A, &lda_, &vl, &vu, &il_, &iu_, &nfound_,
+        S,
+        U, &ldu_,
+        VT, &ldvt_,
+        qry_work, &ineg_one,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -113,7 +134,14 @@ int64_t gesvdx(
     std::vector< double > work( lwork_ );
     std::vector< blas_int > iwork( (12*min(m,n)) );
 
-    LAPACK_dgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &nfound_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &iwork[0], &info_ );
+    LAPACK_dgesvdx(
+        &jobu_, &jobvt_, &range_, &m_, &n_,
+        A, &lda_, &vl, &vu, &il_, &iu_, &nfound_,
+        S,
+        U, &ldu_,
+        VT, &ldvt_,
+        &work[0], &lwork_,
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -159,7 +187,15 @@ int64_t gesvdx(
     float qry_rwork[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_cgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &nfound_, S, U, &ldu_, VT, &ldvt_, qry_work, &ineg_one, qry_rwork, qry_iwork, &info_ );
+    LAPACK_cgesvdx(
+        &jobu_, &jobvt_, &range_, &m_, &n_,
+        (lapack_complex_float*) A, &lda_, &vl, &vu, &il_, &iu_, &nfound_,
+        S,
+        (lapack_complex_float*) U, &ldu_,
+        (lapack_complex_float*) VT, &ldvt_,
+        (lapack_complex_float*) qry_work, &ineg_one,
+        qry_rwork,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -173,7 +209,15 @@ int64_t gesvdx(
     std::vector< float > rwork( (max( 1, lrwork )) );
     std::vector< blas_int > iwork( (12*min(m,n)) );
 
-    LAPACK_cgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &nfound_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &rwork[0], &iwork[0], &info_ );
+    LAPACK_cgesvdx(
+        &jobu_, &jobvt_, &range_, &m_, &n_,
+        (lapack_complex_float*) A, &lda_, &vl, &vu, &il_, &iu_, &nfound_,
+        S,
+        (lapack_complex_float*) U, &ldu_,
+        (lapack_complex_float*) VT, &ldvt_,
+        (lapack_complex_float*) &work[0], &lwork_,
+        &rwork[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -346,7 +390,15 @@ int64_t gesvdx(
     double qry_rwork[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_zgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &nfound_, S, U, &ldu_, VT, &ldvt_, qry_work, &ineg_one, qry_rwork, qry_iwork, &info_ );
+    LAPACK_zgesvdx(
+        &jobu_, &jobvt_, &range_, &m_, &n_,
+        (lapack_complex_double*) A, &lda_, &vl, &vu, &il_, &iu_, &nfound_,
+        S,
+        (lapack_complex_double*) U, &ldu_,
+        (lapack_complex_double*) VT, &ldvt_,
+        (lapack_complex_double*) qry_work, &ineg_one,
+        qry_rwork,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -360,7 +412,15 @@ int64_t gesvdx(
     std::vector< double > rwork( (max( 1, lrwork )) );
     std::vector< blas_int > iwork( (12*min(m,n)) );
 
-    LAPACK_zgesvdx( &jobu_, &jobvt_, &range_, &m_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &nfound_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &rwork[0], &iwork[0], &info_ );
+    LAPACK_zgesvdx(
+        &jobu_, &jobvt_, &range_, &m_, &n_,
+        (lapack_complex_double*) A, &lda_, &vl, &vu, &il_, &iu_, &nfound_,
+        S,
+        (lapack_complex_double*) U, &ldu_,
+        (lapack_complex_double*) VT, &ldvt_,
+        (lapack_complex_double*) &work[0], &lwork_,
+        &rwork[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

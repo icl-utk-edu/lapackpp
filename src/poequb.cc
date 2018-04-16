@@ -27,7 +27,10 @@ int64_t poequb(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_spoequb( &n_, A, &lda_, S, scond, amax, &info_ );
+    LAPACK_spoequb(
+        &n_,
+        A, &lda_,
+        S, scond, amax, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -52,7 +55,10 @@ int64_t poequb(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_dpoequb( &n_, A, &lda_, S, scond, amax, &info_ );
+    LAPACK_dpoequb(
+        &n_,
+        A, &lda_,
+        S, scond, amax, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -77,7 +83,10 @@ int64_t poequb(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_cpoequb( &n_, A, &lda_, S, scond, amax, &info_ );
+    LAPACK_cpoequb(
+        &n_,
+        (lapack_complex_float*) A, &lda_,
+        S, scond, amax, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -149,7 +158,10 @@ int64_t poequb(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_zpoequb( &n_, A, &lda_, S, scond, amax, &info_ );
+    LAPACK_zpoequb(
+        &n_,
+        (lapack_complex_double*) A, &lda_,
+        S, scond, amax, &info_ );
     if (info_ < 0) {
         throw Error();
     }

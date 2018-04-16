@@ -39,7 +39,13 @@ int64_t ggbal(
     // allocate workspace
     std::vector< float > work( (lwork) );
 
-    LAPACK_sggbal( &balance_, &n_, A, &lda_, B, &ldb_, &ilo_, &ihi_, lscale, rscale, &work[0], &info_ );
+    LAPACK_sggbal(
+        &balance_, &n_,
+        A, &lda_,
+        B, &ldb_, &ilo_, &ihi_,
+        lscale,
+        rscale,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -78,7 +84,13 @@ int64_t ggbal(
     // allocate workspace
     std::vector< double > work( (lwork) );
 
-    LAPACK_dggbal( &balance_, &n_, A, &lda_, B, &ldb_, &ilo_, &ihi_, lscale, rscale, &work[0], &info_ );
+    LAPACK_dggbal(
+        &balance_, &n_,
+        A, &lda_,
+        B, &ldb_, &ilo_, &ihi_,
+        lscale,
+        rscale,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -117,7 +129,13 @@ int64_t ggbal(
     // allocate workspace
     std::vector< float > work( (lwork) );
 
-    LAPACK_cggbal( &balance_, &n_, A, &lda_, B, &ldb_, &ilo_, &ihi_, lscale, rscale, &work[0], &info_ );
+    LAPACK_cggbal(
+        &balance_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) B, &ldb_, &ilo_, &ihi_,
+        lscale,
+        rscale,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -156,7 +174,13 @@ int64_t ggbal(
     // allocate workspace
     std::vector< double > work( (lwork) );
 
-    LAPACK_zggbal( &balance_, &n_, A, &lda_, B, &ldb_, &ilo_, &ihi_, lscale, rscale, &work[0], &info_ );
+    LAPACK_zggbal(
+        &balance_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_, &ilo_, &ihi_,
+        lscale,
+        rscale,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

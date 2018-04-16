@@ -39,7 +39,13 @@ int64_t hbgst(
     std::vector< std::complex<float> > work( (n) );
     std::vector< float > rwork( (n) );
 
-    LAPACK_chbgst( &jobz_, &uplo_, &n_, &ka_, &kb_, AB, &ldab_, BB, &ldbb_, X, &ldx_, &work[0], &rwork[0], &info_ );
+    LAPACK_chbgst(
+        &jobz_, &uplo_, &n_, &ka_, &kb_,
+        (lapack_complex_float*) AB, &ldab_,
+        (lapack_complex_float*) BB, &ldbb_,
+        (lapack_complex_float*) X, &ldx_,
+        (lapack_complex_float*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -76,7 +82,13 @@ int64_t hbgst(
     std::vector< std::complex<double> > work( (n) );
     std::vector< double > rwork( (n) );
 
-    LAPACK_zhbgst( &jobz_, &uplo_, &n_, &ka_, &kb_, AB, &ldab_, BB, &ldbb_, X, &ldx_, &work[0], &rwork[0], &info_ );
+    LAPACK_zhbgst(
+        &jobz_, &uplo_, &n_, &ka_, &kb_,
+        (lapack_complex_double*) AB, &ldab_,
+        (lapack_complex_double*) BB, &ldbb_,
+        (lapack_complex_double*) X, &ldx_,
+        (lapack_complex_double*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

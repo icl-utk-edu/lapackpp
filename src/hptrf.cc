@@ -30,7 +30,10 @@ int64_t hptrf(
     #endif
     blas_int info_ = 0;
 
-    LAPACK_chptrf( &uplo_, &n_, AP, ipiv_ptr, &info_ );
+    LAPACK_chptrf(
+        &uplo_, &n_,
+        (lapack_complex_float*) AP,
+        ipiv_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -61,7 +64,10 @@ int64_t hptrf(
     #endif
     blas_int info_ = 0;
 
-    LAPACK_zhptrf( &uplo_, &n_, AP, ipiv_ptr, &info_ );
+    LAPACK_zhptrf(
+        &uplo_, &n_,
+        (lapack_complex_double*) AP,
+        ipiv_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }

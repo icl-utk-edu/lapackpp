@@ -37,7 +37,11 @@ int64_t gesv(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_sgesv( &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &info_ );
+    LAPACK_sgesv(
+        &n_, &nrhs_,
+        A, &lda_,
+        ipiv_ptr,
+        B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -75,7 +79,11 @@ int64_t gesv(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_dgesv( &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &info_ );
+    LAPACK_dgesv(
+        &n_, &nrhs_,
+        A, &lda_,
+        ipiv_ptr,
+        B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -113,7 +121,11 @@ int64_t gesv(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_cgesv( &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &info_ );
+    LAPACK_cgesv(
+        &n_, &nrhs_,
+        (lapack_complex_float*) A, &lda_,
+        ipiv_ptr,
+        (lapack_complex_float*) B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -200,7 +212,11 @@ int64_t gesv(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_zgesv( &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &info_ );
+    LAPACK_zgesv(
+        &n_, &nrhs_,
+        (lapack_complex_double*) A, &lda_,
+        ipiv_ptr,
+        (lapack_complex_double*) B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -246,7 +262,14 @@ int64_t gesv(
     std::vector< double > work( (n)*(nrhs) );
     std::vector< float > swork( (n*(n+nrhs)) );
 
-    LAPACK_dsgesv( &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, X, &ldx_, &work[0], &swork[0], &iter_, &info_ );
+    LAPACK_dsgesv(
+        &n_, &nrhs_,
+        A, &lda_,
+        ipiv_ptr,
+        B, &ldb_,
+        X, &ldx_,
+        &work[0],
+        &swork[0], &iter_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -294,7 +317,15 @@ int64_t gesv(
     std::vector< std::complex<float> > swork( (n*(n+nrhs)) );
     std::vector< double > rwork( (n) );
 
-    LAPACK_zcgesv( &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, X, &ldx_, &work[0], &swork[0], &rwork[0], &iter_, &info_ );
+    LAPACK_zcgesv(
+        &n_, &nrhs_,
+        (lapack_complex_double*) A, &lda_,
+        ipiv_ptr,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) X, &ldx_,
+        (lapack_complex_double*) &work[0],
+        (lapack_complex_float*) &swork[0],
+        &rwork[0], &iter_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

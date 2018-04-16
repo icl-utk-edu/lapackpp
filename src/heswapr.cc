@@ -30,7 +30,9 @@ void heswapr(
     blas_int i1_ = (blas_int) i1;
     blas_int i2_ = (blas_int) i2;
 
-    LAPACK_cheswapr( &uplo_, &n_, A, &lda_, &i1_, &i2_ );
+    LAPACK_cheswapr(
+        &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_, &i1_, &i2_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +84,9 @@ void heswapr(
     blas_int i1_ = (blas_int) i1;
     blas_int i2_ = (blas_int) i2;
 
-    LAPACK_zheswapr( &uplo_, &n_, A, &lda_, &i1_, &i2_ );
+    LAPACK_zheswapr(
+        &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_, &i1_, &i2_ );
 }
 
 }  // namespace lapack

@@ -29,7 +29,12 @@ int64_t gtsv(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_sgtsv( &n_, &nrhs_, DL, D, DU, B, &ldb_, &info_ );
+    LAPACK_sgtsv(
+        &n_, &nrhs_,
+        DL,
+        D,
+        DU,
+        B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -56,7 +61,12 @@ int64_t gtsv(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_dgtsv( &n_, &nrhs_, DL, D, DU, B, &ldb_, &info_ );
+    LAPACK_dgtsv(
+        &n_, &nrhs_,
+        DL,
+        D,
+        DU,
+        B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -83,7 +93,12 @@ int64_t gtsv(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_cgtsv( &n_, &nrhs_, DL, D, DU, B, &ldb_, &info_ );
+    LAPACK_cgtsv(
+        &n_, &nrhs_,
+        (lapack_complex_float*) DL,
+        (lapack_complex_float*) D,
+        (lapack_complex_float*) DU,
+        (lapack_complex_float*) B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -161,7 +176,12 @@ int64_t gtsv(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_zgtsv( &n_, &nrhs_, DL, D, DU, B, &ldb_, &info_ );
+    LAPACK_zgtsv(
+        &n_, &nrhs_,
+        (lapack_complex_double*) DL,
+        (lapack_complex_double*) D,
+        (lapack_complex_double*) DU,
+        (lapack_complex_double*) B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

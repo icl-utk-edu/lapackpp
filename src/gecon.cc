@@ -30,7 +30,11 @@ int64_t gecon(
     std::vector< float > work( (4*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_sgecon( &norm_, &n_, A, &lda_, &anorm, rcond, &work[0], &iwork[0], &info_ );
+    LAPACK_sgecon(
+        &norm_, &n_,
+        A, &lda_, &anorm, rcond,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -58,7 +62,11 @@ int64_t gecon(
     std::vector< double > work( (4*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_dgecon( &norm_, &n_, A, &lda_, &anorm, rcond, &work[0], &iwork[0], &info_ );
+    LAPACK_dgecon(
+        &norm_, &n_,
+        A, &lda_, &anorm, rcond,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -86,7 +94,11 @@ int64_t gecon(
     std::vector< std::complex<float> > work( (2*n) );
     std::vector< float > rwork( (2*n) );
 
-    LAPACK_cgecon( &norm_, &n_, A, &lda_, &anorm, rcond, &work[0], &rwork[0], &info_ );
+    LAPACK_cgecon(
+        &norm_, &n_,
+        (lapack_complex_float*) A, &lda_, &anorm, rcond,
+        (lapack_complex_float*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -152,7 +164,11 @@ int64_t gecon(
     std::vector< std::complex<double> > work( (2*n) );
     std::vector< double > rwork( (2*n) );
 
-    LAPACK_zgecon( &norm_, &n_, A, &lda_, &anorm, rcond, &work[0], &rwork[0], &info_ );
+    LAPACK_zgecon(
+        &norm_, &n_,
+        (lapack_complex_double*) A, &lda_, &anorm, rcond,
+        (lapack_complex_double*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

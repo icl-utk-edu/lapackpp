@@ -53,7 +53,19 @@ int64_t porfsx(
     std::vector< float > work( (4*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_sporfsx( &uplo_, &equed_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, S, B, &ldb_, X, &ldx_, rcond, berr, &n_err_bnds_, err_bnds_norm, err_bnds_comp, &nparams_, params, &work[0], &iwork[0], &info_ );
+    LAPACK_sporfsx(
+        &uplo_, &equed_, &n_, &nrhs_,
+        A, &lda_,
+        AF, &ldaf_,
+        S,
+        B, &ldb_,
+        X, &ldx_, rcond,
+        berr, &n_err_bnds_,
+        err_bnds_norm,
+        err_bnds_comp, &nparams_,
+        params,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -102,7 +114,19 @@ int64_t porfsx(
     std::vector< double > work( (4*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_dporfsx( &uplo_, &equed_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, S, B, &ldb_, X, &ldx_, rcond, berr, &n_err_bnds_, err_bnds_norm, err_bnds_comp, &nparams_, params, &work[0], &iwork[0], &info_ );
+    LAPACK_dporfsx(
+        &uplo_, &equed_, &n_, &nrhs_,
+        A, &lda_,
+        AF, &ldaf_,
+        S,
+        B, &ldb_,
+        X, &ldx_, rcond,
+        berr, &n_err_bnds_,
+        err_bnds_norm,
+        err_bnds_comp, &nparams_,
+        params,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -151,7 +175,19 @@ int64_t porfsx(
     std::vector< std::complex<float> > work( (2*n) );
     std::vector< float > rwork( (2*n) );
 
-    LAPACK_cporfsx( &uplo_, &equed_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, S, B, &ldb_, X, &ldx_, rcond, berr, &n_err_bnds_, err_bnds_norm, err_bnds_comp, &nparams_, params, &work[0], &rwork[0], &info_ );
+    LAPACK_cporfsx(
+        &uplo_, &equed_, &n_, &nrhs_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) AF, &ldaf_,
+        S,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) X, &ldx_, rcond,
+        berr, &n_err_bnds_,
+        err_bnds_norm,
+        err_bnds_comp, &nparams_,
+        params,
+        (lapack_complex_float*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -460,7 +496,19 @@ int64_t porfsx(
     std::vector< std::complex<double> > work( (2*n) );
     std::vector< double > rwork( (2*n) );
 
-    LAPACK_zporfsx( &uplo_, &equed_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, S, B, &ldb_, X, &ldx_, rcond, berr, &n_err_bnds_, err_bnds_norm, err_bnds_comp, &nparams_, params, &work[0], &rwork[0], &info_ );
+    LAPACK_zporfsx(
+        &uplo_, &equed_, &n_, &nrhs_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) AF, &ldaf_,
+        S,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) X, &ldx_, rcond,
+        berr, &n_err_bnds_,
+        err_bnds_norm,
+        err_bnds_comp, &nparams_,
+        params,
+        (lapack_complex_double*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

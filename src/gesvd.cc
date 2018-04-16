@@ -38,7 +38,13 @@ int64_t gesvd(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_sgesvd( &jobu_, &jobvt_, &m_, &n_, A, &lda_, S, U, &ldu_, VT, &ldvt_, qry_work, &ineg_one, &info_ );
+    LAPACK_sgesvd(
+        &jobu_, &jobvt_, &m_, &n_,
+        A, &lda_,
+        S,
+        U, &ldu_,
+        VT, &ldvt_,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -47,7 +53,13 @@ int64_t gesvd(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_sgesvd( &jobu_, &jobvt_, &m_, &n_, A, &lda_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &info_ );
+    LAPACK_sgesvd(
+        &jobu_, &jobvt_, &m_, &n_,
+        A, &lda_,
+        S,
+        U, &ldu_,
+        VT, &ldvt_,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -83,7 +95,13 @@ int64_t gesvd(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dgesvd( &jobu_, &jobvt_, &m_, &n_, A, &lda_, S, U, &ldu_, VT, &ldvt_, qry_work, &ineg_one, &info_ );
+    LAPACK_dgesvd(
+        &jobu_, &jobvt_, &m_, &n_,
+        A, &lda_,
+        S,
+        U, &ldu_,
+        VT, &ldvt_,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -92,7 +110,13 @@ int64_t gesvd(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dgesvd( &jobu_, &jobvt_, &m_, &n_, A, &lda_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &info_ );
+    LAPACK_dgesvd(
+        &jobu_, &jobvt_, &m_, &n_,
+        A, &lda_,
+        S,
+        U, &ldu_,
+        VT, &ldvt_,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -129,7 +153,14 @@ int64_t gesvd(
     std::complex<float> qry_work[1];
     float qry_rwork[1];
     blas_int ineg_one = -1;
-    LAPACK_cgesvd( &jobu_, &jobvt_, &m_, &n_, A, &lda_, S, U, &ldu_, VT, &ldvt_, qry_work, &ineg_one, qry_rwork, &info_ );
+    LAPACK_cgesvd(
+        &jobu_, &jobvt_, &m_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        S,
+        (lapack_complex_float*) U, &ldu_,
+        (lapack_complex_float*) VT, &ldvt_,
+        (lapack_complex_float*) qry_work, &ineg_one,
+        qry_rwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -139,7 +170,14 @@ int64_t gesvd(
     std::vector< std::complex<float> > work( lwork_ );
     std::vector< float > rwork( (5*min(m,n)) );
 
-    LAPACK_cgesvd( &jobu_, &jobvt_, &m_, &n_, A, &lda_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &rwork[0], &info_ );
+    LAPACK_cgesvd(
+        &jobu_, &jobvt_, &m_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        S,
+        (lapack_complex_float*) U, &ldu_,
+        (lapack_complex_float*) VT, &ldvt_,
+        (lapack_complex_float*) &work[0], &lwork_,
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -284,7 +322,14 @@ int64_t gesvd(
     std::complex<double> qry_work[1];
     double qry_rwork[1];
     blas_int ineg_one = -1;
-    LAPACK_zgesvd( &jobu_, &jobvt_, &m_, &n_, A, &lda_, S, U, &ldu_, VT, &ldvt_, qry_work, &ineg_one, qry_rwork, &info_ );
+    LAPACK_zgesvd(
+        &jobu_, &jobvt_, &m_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        S,
+        (lapack_complex_double*) U, &ldu_,
+        (lapack_complex_double*) VT, &ldvt_,
+        (lapack_complex_double*) qry_work, &ineg_one,
+        qry_rwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -294,7 +339,14 @@ int64_t gesvd(
     std::vector< std::complex<double> > work( lwork_ );
     std::vector< double > rwork( (5*min(m,n)) );
 
-    LAPACK_zgesvd( &jobu_, &jobvt_, &m_, &n_, A, &lda_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &rwork[0], &info_ );
+    LAPACK_zgesvd(
+        &jobu_, &jobvt_, &m_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        S,
+        (lapack_complex_double*) U, &ldu_,
+        (lapack_complex_double*) VT, &ldvt_,
+        (lapack_complex_double*) &work[0], &lwork_,
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

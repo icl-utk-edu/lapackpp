@@ -50,7 +50,15 @@ int64_t stemr(
     float qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_sstemr( &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &m_, W, Z, &ldz_, &nzc_, isuppz_ptr, &tryrac_, qry_work, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_sstemr(
+        &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &m_,
+        W,
+        Z, &ldz_, &nzc_,
+        isuppz_ptr, &tryrac_,
+        qry_work, &ineg_one,
+        qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -61,7 +69,15 @@ int64_t stemr(
     std::vector< float > work( lwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_sstemr( &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &m_, W, Z, &ldz_, &nzc_, isuppz_ptr, &tryrac_, &work[0], &lwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_sstemr(
+        &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &m_,
+        W,
+        Z, &ldz_, &nzc_,
+        isuppz_ptr, &tryrac_,
+        &work[0], &lwork_,
+        &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -114,7 +130,15 @@ int64_t stemr(
     double qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_dstemr( &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &m_, W, Z, &ldz_, &nzc_, isuppz_ptr, &tryrac_, qry_work, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_dstemr(
+        &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &m_,
+        W,
+        Z, &ldz_, &nzc_,
+        isuppz_ptr, &tryrac_,
+        qry_work, &ineg_one,
+        qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -125,7 +149,15 @@ int64_t stemr(
     std::vector< double > work( lwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_dstemr( &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &m_, W, Z, &ldz_, &nzc_, isuppz_ptr, &tryrac_, &work[0], &lwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_dstemr(
+        &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &m_,
+        W,
+        Z, &ldz_, &nzc_,
+        isuppz_ptr, &tryrac_,
+        &work[0], &lwork_,
+        &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -178,7 +210,15 @@ int64_t stemr(
     float qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_cstemr( &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &m_, W, Z, &ldz_, &nzc_, isuppz_ptr, &tryrac_, qry_work, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_cstemr(
+        &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &m_,
+        W,
+        (lapack_complex_float*) Z, &ldz_, &nzc_,
+        isuppz_ptr, &tryrac_,
+        qry_work, &ineg_one,
+        qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -189,7 +229,15 @@ int64_t stemr(
     std::vector< float > work( lwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_cstemr( &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &m_, W, Z, &ldz_, &nzc_, isuppz_ptr, &tryrac_, &work[0], &lwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_cstemr(
+        &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &m_,
+        W,
+        (lapack_complex_float*) Z, &ldz_, &nzc_,
+        isuppz_ptr, &tryrac_,
+        &work[0], &lwork_,
+        &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -242,7 +290,15 @@ int64_t stemr(
     double qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_zstemr( &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &m_, W, Z, &ldz_, &nzc_, isuppz_ptr, &tryrac_, qry_work, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_zstemr(
+        &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &m_,
+        W,
+        (lapack_complex_double*) Z, &ldz_, &nzc_,
+        isuppz_ptr, &tryrac_,
+        qry_work, &ineg_one,
+        qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -253,7 +309,15 @@ int64_t stemr(
     std::vector< double > work( lwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_zstemr( &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &m_, W, Z, &ldz_, &nzc_, isuppz_ptr, &tryrac_, &work[0], &lwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_zstemr(
+        &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &m_,
+        W,
+        (lapack_complex_double*) Z, &ldz_, &nzc_,
+        isuppz_ptr, &tryrac_,
+        &work[0], &lwork_,
+        &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

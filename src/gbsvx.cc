@@ -60,9 +60,20 @@ int64_t gbsvx(
     std::vector< float > work( (3*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_sgbsvx( &fact_, &trans_, &n_, &kl_, &ku_, &nrhs_, AB, &ldab_,
-                   AFB, &ldafb_, ipiv_ptr, &equed_, R, C, B, &ldb_, X, &ldx_,
-                   rcond, ferr, berr, &work[0], &iwork[0], &info_ );
+    LAPACK_sgbsvx(
+        &fact_, &trans_, &n_, &kl_, &ku_, &nrhs_,
+        AB, &ldab_,
+        AFB, &ldafb_,
+        ipiv_ptr,
+        &equed_,
+        R,
+        C,
+        B, &ldb_,
+        X, &ldx_, rcond,
+        ferr,
+        berr,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -124,9 +135,20 @@ int64_t gbsvx(
     std::vector< double > work( (3*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_dgbsvx( &fact_, &trans_, &n_, &kl_, &ku_, &nrhs_, AB, &ldab_,
-                   AFB, &ldafb_, ipiv_ptr, &equed_, R, C, B, &ldb_, X, &ldx_,
-                   rcond, ferr, berr, &work[0], &iwork[0], &info_ );
+    LAPACK_dgbsvx(
+        &fact_, &trans_, &n_, &kl_, &ku_, &nrhs_,
+        AB, &ldab_,
+        AFB, &ldafb_,
+        ipiv_ptr,
+        &equed_,
+        R,
+        C,
+        B, &ldb_,
+        X, &ldx_, rcond,
+        ferr,
+        berr,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -188,9 +210,20 @@ int64_t gbsvx(
     std::vector< std::complex<float> > work( (2*n) );
     std::vector< float > rwork( (n) );
 
-    LAPACK_cgbsvx( &fact_, &trans_, &n_, &kl_, &ku_, &nrhs_, AB, &ldab_,
-                   AFB, &ldafb_, ipiv_ptr, &equed_, R, C, B, &ldb_, X, &ldx_,
-                   rcond, ferr, berr, &work[0], &rwork[0], &info_ );
+    LAPACK_cgbsvx(
+        &fact_, &trans_, &n_, &kl_, &ku_, &nrhs_,
+        (lapack_complex_float*) AB, &ldab_,
+        (lapack_complex_float*) AFB, &ldafb_,
+        ipiv_ptr,
+        &equed_,
+        R,
+        C,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) X, &ldx_, rcond,
+        ferr,
+        berr,
+        (lapack_complex_float*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -466,9 +499,20 @@ int64_t gbsvx(
     std::vector< std::complex<double> > work( (2*n) );
     std::vector< double > rwork( (n) );
 
-    LAPACK_zgbsvx( &fact_, &trans_, &n_, &kl_, &ku_, &nrhs_, AB, &ldab_,
-                   AFB, &ldafb_, ipiv_ptr, &equed_, R, C, B, &ldb_, X, &ldx_,
-                   rcond, ferr, berr, &work[0], &rwork[0], &info_ );
+    LAPACK_zgbsvx(
+        &fact_, &trans_, &n_, &kl_, &ku_, &nrhs_,
+        (lapack_complex_double*) AB, &ldab_,
+        (lapack_complex_double*) AFB, &ldafb_,
+        ipiv_ptr,
+        &equed_,
+        R,
+        C,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) X, &ldx_, rcond,
+        ferr,
+        berr,
+        (lapack_complex_double*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

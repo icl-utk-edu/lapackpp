@@ -23,7 +23,10 @@ float lanht(
     char norm_ = norm2char( norm );
     blas_int n_ = (blas_int) n;
 
-    return LAPACK_clanht( &norm_, &n_, D, E );
+    return LAPACK_clanht(
+        &norm_, &n_,
+        D,
+        (lapack_complex_float*) E );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +71,10 @@ double lanht(
     char norm_ = norm2char( norm );
     blas_int n_ = (blas_int) n;
 
-    return LAPACK_zlanht( &norm_, &n_, D, E );
+    return LAPACK_zlanht(
+        &norm_, &n_,
+        D,
+        (lapack_complex_double*) E );
 }
 
 }  // namespace lapack

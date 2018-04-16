@@ -52,7 +52,15 @@ int64_t heevx_2stage(
     float qry_rwork[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_cheevx_2stage( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_, W, Z, &ldz_, qry_work, &ineg_one, qry_rwork, qry_iwork, ifail_ptr, &info_ );
+    LAPACK_cheevx_2stage(
+        &jobz_, &range_, &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_,
+        W,
+        (lapack_complex_float*) Z, &ldz_,
+        (lapack_complex_float*) qry_work, &ineg_one,
+        qry_rwork,
+        qry_iwork,
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -63,7 +71,15 @@ int64_t heevx_2stage(
     std::vector< float > rwork( (7*n) );
     std::vector< blas_int > iwork( (5*n) );
 
-    LAPACK_cheevx_2stage( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_, W, Z, &ldz_, &work[0], &lwork_, &rwork[0], &iwork[0], ifail_ptr, &info_ );
+    LAPACK_cheevx_2stage(
+        &jobz_, &range_, &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_,
+        W,
+        (lapack_complex_float*) Z, &ldz_,
+        (lapack_complex_float*) &work[0], &lwork_,
+        &rwork[0],
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -273,7 +289,15 @@ int64_t heevx_2stage(
     double qry_rwork[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_zheevx_2stage( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_, W, Z, &ldz_, qry_work, &ineg_one, qry_rwork, qry_iwork, ifail_ptr, &info_ );
+    LAPACK_zheevx_2stage(
+        &jobz_, &range_, &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_,
+        W,
+        (lapack_complex_double*) Z, &ldz_,
+        (lapack_complex_double*) qry_work, &ineg_one,
+        qry_rwork,
+        qry_iwork,
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -284,7 +308,15 @@ int64_t heevx_2stage(
     std::vector< double > rwork( (7*n) );
     std::vector< blas_int > iwork( (5*n) );
 
-    LAPACK_zheevx_2stage( &jobz_, &range_, &uplo_, &n_, A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_, W, Z, &ldz_, &work[0], &lwork_, &rwork[0], &iwork[0], ifail_ptr, &info_ );
+    LAPACK_zheevx_2stage(
+        &jobz_, &range_, &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_, &vl, &vu, &il_, &iu_, &abstol, &nfound_,
+        W,
+        (lapack_complex_double*) Z, &ldz_,
+        (lapack_complex_double*) &work[0], &lwork_,
+        &rwork[0],
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }

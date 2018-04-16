@@ -52,7 +52,17 @@ int64_t sysvx(
     float qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_ssysvx( &fact_, &uplo_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, ipiv_ptr, B, &ldb_, X, &ldx_, rcond, ferr, berr, qry_work, &ineg_one, qry_iwork, &info_ );
+    LAPACK_ssysvx(
+        &fact_, &uplo_, &n_, &nrhs_,
+        A, &lda_,
+        AF, &ldaf_,
+        ipiv_ptr,
+        B, &ldb_,
+        X, &ldx_, rcond,
+        ferr,
+        berr,
+        qry_work, &ineg_one,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -62,7 +72,17 @@ int64_t sysvx(
     std::vector< float > work( lwork_ );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_ssysvx( &fact_, &uplo_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, ipiv_ptr, B, &ldb_, X, &ldx_, rcond, ferr, berr, &work[0], &lwork_, &iwork[0], &info_ );
+    LAPACK_ssysvx(
+        &fact_, &uplo_, &n_, &nrhs_,
+        A, &lda_,
+        AF, &ldaf_,
+        ipiv_ptr,
+        B, &ldb_,
+        X, &ldx_, rcond,
+        ferr,
+        berr,
+        &work[0], &lwork_,
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -115,7 +135,17 @@ int64_t sysvx(
     double qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_dsysvx( &fact_, &uplo_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, ipiv_ptr, B, &ldb_, X, &ldx_, rcond, ferr, berr, qry_work, &ineg_one, qry_iwork, &info_ );
+    LAPACK_dsysvx(
+        &fact_, &uplo_, &n_, &nrhs_,
+        A, &lda_,
+        AF, &ldaf_,
+        ipiv_ptr,
+        B, &ldb_,
+        X, &ldx_, rcond,
+        ferr,
+        berr,
+        qry_work, &ineg_one,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -125,7 +155,17 @@ int64_t sysvx(
     std::vector< double > work( lwork_ );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_dsysvx( &fact_, &uplo_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, ipiv_ptr, B, &ldb_, X, &ldx_, rcond, ferr, berr, &work[0], &lwork_, &iwork[0], &info_ );
+    LAPACK_dsysvx(
+        &fact_, &uplo_, &n_, &nrhs_,
+        A, &lda_,
+        AF, &ldaf_,
+        ipiv_ptr,
+        B, &ldb_,
+        X, &ldx_, rcond,
+        ferr,
+        berr,
+        &work[0], &lwork_,
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -178,7 +218,17 @@ int64_t sysvx(
     std::complex<float> qry_work[1];
     float qry_rwork[1];
     blas_int ineg_one = -1;
-    LAPACK_csysvx( &fact_, &uplo_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, ipiv_ptr, B, &ldb_, X, &ldx_, rcond, ferr, berr, qry_work, &ineg_one, qry_rwork, &info_ );
+    LAPACK_csysvx(
+        &fact_, &uplo_, &n_, &nrhs_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) AF, &ldaf_,
+        ipiv_ptr,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) X, &ldx_, rcond,
+        ferr,
+        berr,
+        (lapack_complex_float*) qry_work, &ineg_one,
+        qry_rwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -188,7 +238,17 @@ int64_t sysvx(
     std::vector< std::complex<float> > work( lwork_ );
     std::vector< float > rwork( (n) );
 
-    LAPACK_csysvx( &fact_, &uplo_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, ipiv_ptr, B, &ldb_, X, &ldx_, rcond, ferr, berr, &work[0], &lwork_, &rwork[0], &info_ );
+    LAPACK_csysvx(
+        &fact_, &uplo_, &n_, &nrhs_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) AF, &ldaf_,
+        ipiv_ptr,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) X, &ldx_, rcond,
+        ferr,
+        berr,
+        (lapack_complex_float*) &work[0], &lwork_,
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -376,7 +436,17 @@ int64_t sysvx(
     std::complex<double> qry_work[1];
     double qry_rwork[1];
     blas_int ineg_one = -1;
-    LAPACK_zsysvx( &fact_, &uplo_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, ipiv_ptr, B, &ldb_, X, &ldx_, rcond, ferr, berr, qry_work, &ineg_one, qry_rwork, &info_ );
+    LAPACK_zsysvx(
+        &fact_, &uplo_, &n_, &nrhs_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) AF, &ldaf_,
+        ipiv_ptr,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) X, &ldx_, rcond,
+        ferr,
+        berr,
+        (lapack_complex_double*) qry_work, &ineg_one,
+        qry_rwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -386,7 +456,17 @@ int64_t sysvx(
     std::vector< std::complex<double> > work( lwork_ );
     std::vector< double > rwork( (n) );
 
-    LAPACK_zsysvx( &fact_, &uplo_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, ipiv_ptr, B, &ldb_, X, &ldx_, rcond, ferr, berr, &work[0], &lwork_, &rwork[0], &info_ );
+    LAPACK_zsysvx(
+        &fact_, &uplo_, &n_, &nrhs_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) AF, &ldaf_,
+        ipiv_ptr,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) X, &ldx_, rcond,
+        ferr,
+        berr,
+        (lapack_complex_double*) &work[0], &lwork_,
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

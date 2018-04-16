@@ -15,7 +15,7 @@ using blas::real;
 // -----------------------------------------------------------------------------
 /// @ingroup geev_computational
 int64_t trevc3(
-    lapack::Sides side, lapack::HowMany howmany,
+    lapack::Sides sides, lapack::HowMany howmany,
     bool* select, int64_t n,
     float const* T, int64_t ldt,
     float* VL, int64_t ldvl,
@@ -30,7 +30,7 @@ int64_t trevc3(
         lapack_error_if( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(mm) > std::numeric_limits<blas_int>::max() );
     }
-    char side_ = sides2char( side );
+    char sides_ = sides2char( sides );
     char howmany_ = howmany2char( howmany );
     #if 1
         // 32-bit copy
@@ -50,7 +50,13 @@ int64_t trevc3(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_strevc3( &side_, &howmany_, select_ptr, &n_, T, &ldt_, VL, &ldvl_, VR, &ldvr_, &mm_, &m_, qry_work, &ineg_one, &info_ );
+    LAPACK_strevc3(
+        &sides_, &howmany_,
+        select_ptr, &n_,
+        T, &ldt_,
+        VL, &ldvl_,
+        VR, &ldvr_, &mm_, &m_,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -59,7 +65,13 @@ int64_t trevc3(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_strevc3( &side_, &howmany_, select_ptr, &n_, T, &ldt_, VL, &ldvl_, VR, &ldvr_, &mm_, &m_, &work[0], &lwork_, &info_ );
+    LAPACK_strevc3(
+        &sides_, &howmany_,
+        select_ptr, &n_,
+        T, &ldt_,
+        VL, &ldvl_,
+        VR, &ldvr_, &mm_, &m_,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -73,7 +85,7 @@ int64_t trevc3(
 // -----------------------------------------------------------------------------
 /// @ingroup geev_computational
 int64_t trevc3(
-    lapack::Sides side, lapack::HowMany howmany,
+    lapack::Sides sides, lapack::HowMany howmany,
     bool* select, int64_t n,
     double const* T, int64_t ldt,
     double* VL, int64_t ldvl,
@@ -88,7 +100,7 @@ int64_t trevc3(
         lapack_error_if( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(mm) > std::numeric_limits<blas_int>::max() );
     }
-    char side_ = sides2char( side );
+    char sides_ = sides2char( sides );
     char howmany_ = howmany2char( howmany );
     #if 1
         // 32-bit copy
@@ -108,7 +120,13 @@ int64_t trevc3(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dtrevc3( &side_, &howmany_, select_ptr, &n_, T, &ldt_, VL, &ldvl_, VR, &ldvr_, &mm_, &m_, qry_work, &ineg_one, &info_ );
+    LAPACK_dtrevc3(
+        &sides_, &howmany_,
+        select_ptr, &n_,
+        T, &ldt_,
+        VL, &ldvl_,
+        VR, &ldvr_, &mm_, &m_,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -117,7 +135,13 @@ int64_t trevc3(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dtrevc3( &side_, &howmany_, select_ptr, &n_, T, &ldt_, VL, &ldvl_, VR, &ldvr_, &mm_, &m_, &work[0], &lwork_, &info_ );
+    LAPACK_dtrevc3(
+        &sides_, &howmany_,
+        select_ptr, &n_,
+        T, &ldt_,
+        VL, &ldvl_,
+        VR, &ldvr_, &mm_, &m_,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -131,7 +155,7 @@ int64_t trevc3(
 // -----------------------------------------------------------------------------
 /// @ingroup geev_computational
 int64_t trevc3(
-    lapack::Sides side, lapack::HowMany howmany,
+    lapack::Sides sides, lapack::HowMany howmany,
     bool const* select, int64_t n,
     std::complex<float>* T, int64_t ldt,
     std::complex<float>* VL, int64_t ldvl,
@@ -146,7 +170,7 @@ int64_t trevc3(
         lapack_error_if( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(mm) > std::numeric_limits<blas_int>::max() );
     }
-    char side_ = sides2char( side );
+    char sides_ = sides2char( sides );
     char howmany_ = howmany2char( howmany );
     #if 1
         // 32-bit copy
@@ -167,7 +191,14 @@ int64_t trevc3(
     std::complex<float> qry_work[1];
     float qry_rwork[1];
     blas_int ineg_one = -1;
-    LAPACK_ctrevc3( &side_, &howmany_, select_ptr, &n_, T, &ldt_, VL, &ldvl_, VR, &ldvr_, &mm_, &m_, qry_work, &ineg_one, qry_rwork, &ineg_one, &info_ );
+    LAPACK_ctrevc3(
+        &sides_, &howmany_,
+        select_ptr, &n_,
+        (lapack_complex_float*) T, &ldt_,
+        (lapack_complex_float*) VL, &ldvl_,
+        (lapack_complex_float*) VR, &ldvr_, &mm_, &m_,
+        (lapack_complex_float*) qry_work, &ineg_one,
+        qry_rwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -178,7 +209,14 @@ int64_t trevc3(
     std::vector< std::complex<float> > work( lwork_ );
     std::vector< float > rwork( lrwork_ );
 
-    LAPACK_ctrevc3( &side_, &howmany_, select_ptr, &n_, T, &ldt_, VL, &ldvl_, VR, &ldvr_, &mm_, &m_, &work[0], &lwork_, &rwork[0], &lrwork_, &info_ );
+    LAPACK_ctrevc3(
+        &sides_, &howmany_,
+        select_ptr, &n_,
+        (lapack_complex_float*) T, &ldt_,
+        (lapack_complex_float*) VL, &ldvl_,
+        (lapack_complex_float*) VR, &ldvr_, &mm_, &m_,
+        (lapack_complex_float*) &work[0], &lwork_,
+        &rwork[0], &lrwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -213,7 +251,7 @@ int64_t trevc3(
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
 ///
-/// @param[in] side
+/// @param[in] sides
 ///     - lapack::Sides::Right: compute right eigenvectors only;
 ///     - lapack::Sides::Left:  compute left eigenvectors only;
 ///     - lapack::Sides::Both:  compute both right and left eigenvectors.
@@ -310,7 +348,7 @@ int64_t trevc3(
 ///
 /// @ingroup geev_computational
 int64_t trevc3(
-    lapack::Sides side, lapack::HowMany howmany,
+    lapack::Sides sides, lapack::HowMany howmany,
     bool const* select, int64_t n,
     std::complex<double>* T, int64_t ldt,
     std::complex<double>* VL, int64_t ldvl,
@@ -325,7 +363,7 @@ int64_t trevc3(
         lapack_error_if( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(mm) > std::numeric_limits<blas_int>::max() );
     }
-    char side_ = sides2char( side );
+    char sides_ = sides2char( sides );
     char howmany_ = howmany2char( howmany );
     #if 1
         // 32-bit copy
@@ -346,7 +384,14 @@ int64_t trevc3(
     std::complex<double> qry_work[1];
     double qry_rwork[1];
     blas_int ineg_one = -1;
-    LAPACK_ztrevc3( &side_, &howmany_, select_ptr, &n_, T, &ldt_, VL, &ldvl_, VR, &ldvr_, &mm_, &m_, qry_work, &ineg_one, qry_rwork, &ineg_one, &info_ );
+    LAPACK_ztrevc3(
+        &sides_, &howmany_,
+        select_ptr, &n_,
+        (lapack_complex_double*) T, &ldt_,
+        (lapack_complex_double*) VL, &ldvl_,
+        (lapack_complex_double*) VR, &ldvr_, &mm_, &m_,
+        (lapack_complex_double*) qry_work, &ineg_one,
+        qry_rwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -357,7 +402,14 @@ int64_t trevc3(
     std::vector< std::complex<double> > work( lwork_ );
     std::vector< double > rwork( lrwork_ );
 
-    LAPACK_ztrevc3( &side_, &howmany_, select_ptr, &n_, T, &ldt_, VL, &ldvl_, VR, &ldvr_, &mm_, &m_, &work[0], &lwork_, &rwork[0], &lrwork_, &info_ );
+    LAPACK_ztrevc3(
+        &sides_, &howmany_,
+        select_ptr, &n_,
+        (lapack_complex_double*) T, &ldt_,
+        (lapack_complex_double*) VL, &ldvl_,
+        (lapack_complex_double*) VR, &ldvr_, &mm_, &m_,
+        (lapack_complex_double*) &work[0], &lwork_,
+        &rwork[0], &lrwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

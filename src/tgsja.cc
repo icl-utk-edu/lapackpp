@@ -34,9 +34,9 @@ int64_t tgsja(
         lapack_error_if( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
     }
-    char jobu_tgsja_ = job_compu2char( jobu );
-    char jobv_tgsja_ = job_comp2char( jobv );
-    char jobq_tgsja_ = job_compq2char( jobq );
+    char jobu_ = job_compu2char( jobu );
+    char jobv_ = job_comp2char( jobv );
+    char jobq_ = job_compq2char( jobq );
     blas_int m_ = (blas_int) m;
     blas_int p_ = (blas_int) p;
     blas_int n_ = (blas_int) n;
@@ -53,7 +53,16 @@ int64_t tgsja(
     // allocate workspace
     std::vector< float > work( (2*n) );
 
-    LAPACK_stgsja( &jobu_tgsja_, &jobv_tgsja_, &jobq_tgsja_, &m_, &p_, &n_, &k_, &l_, A, &lda_, B, &ldb_, &tola, &tolb, alpha, beta, U, &ldu_, V, &ldv_, Q, &ldq_, &work[0], &ncycle_, &info_ );
+    LAPACK_stgsja(
+        &jobu_, &jobv_, &jobq_, &m_, &p_, &n_, &k_, &l_,
+        A, &lda_,
+        B, &ldb_, &tola, &tolb,
+        alpha,
+        beta,
+        U, &ldu_,
+        V, &ldv_,
+        Q, &ldq_,
+        &work[0], &ncycle_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -86,9 +95,9 @@ int64_t tgsja(
         lapack_error_if( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
     }
-    char jobu_tgsja_ = job_compu2char( jobu );
-    char jobv_tgsja_ = job_comp2char( jobv );
-    char jobq_tgsja_ = job_compq2char( jobq );
+    char jobu_ = job_compu2char( jobu );
+    char jobv_ = job_comp2char( jobv );
+    char jobq_ = job_compq2char( jobq );
     blas_int m_ = (blas_int) m;
     blas_int p_ = (blas_int) p;
     blas_int n_ = (blas_int) n;
@@ -105,7 +114,16 @@ int64_t tgsja(
     // allocate workspace
     std::vector< double > work( (2*n) );
 
-    LAPACK_dtgsja( &jobu_tgsja_, &jobv_tgsja_, &jobq_tgsja_, &m_, &p_, &n_, &k_, &l_, A, &lda_, B, &ldb_, &tola, &tolb, alpha, beta, U, &ldu_, V, &ldv_, Q, &ldq_, &work[0], &ncycle_, &info_ );
+    LAPACK_dtgsja(
+        &jobu_, &jobv_, &jobq_, &m_, &p_, &n_, &k_, &l_,
+        A, &lda_,
+        B, &ldb_, &tola, &tolb,
+        alpha,
+        beta,
+        U, &ldu_,
+        V, &ldv_,
+        Q, &ldq_,
+        &work[0], &ncycle_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -138,9 +156,9 @@ int64_t tgsja(
         lapack_error_if( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
     }
-    char jobu_tgsja_ = job_compu2char( jobu );
-    char jobv_tgsja_ = job_comp2char( jobv );
-    char jobq_tgsja_ = job_compq2char( jobq );
+    char jobu_ = job_compu2char( jobu );
+    char jobv_ = job_comp2char( jobv );
+    char jobq_ = job_compq2char( jobq );
     blas_int m_ = (blas_int) m;
     blas_int p_ = (blas_int) p;
     blas_int n_ = (blas_int) n;
@@ -157,7 +175,16 @@ int64_t tgsja(
     // allocate workspace
     std::vector< std::complex<float> > work( (2*n) );
 
-    LAPACK_ctgsja( &jobu_tgsja_, &jobv_tgsja_, &jobq_tgsja_, &m_, &p_, &n_, &k_, &l_, A, &lda_, B, &ldb_, &tola, &tolb, alpha, beta, U, &ldu_, V, &ldv_, Q, &ldq_, &work[0], &ncycle_, &info_ );
+    LAPACK_ctgsja(
+        &jobu_, &jobv_, &jobq_, &m_, &p_, &n_, &k_, &l_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) B, &ldb_, &tola, &tolb,
+        alpha,
+        beta,
+        (lapack_complex_float*) U, &ldu_,
+        (lapack_complex_float*) V, &ldv_,
+        (lapack_complex_float*) Q, &ldq_,
+        (lapack_complex_float*) &work[0], &ncycle_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -190,9 +217,9 @@ int64_t tgsja(
         lapack_error_if( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
     }
-    char jobu_tgsja_ = job_compu2char( jobu );
-    char jobv_tgsja_ = job_comp2char( jobv );
-    char jobq_tgsja_ = job_compq2char( jobq );
+    char jobu_ = job_compu2char( jobu );
+    char jobv_ = job_comp2char( jobv );
+    char jobq_ = job_compq2char( jobq );
     blas_int m_ = (blas_int) m;
     blas_int p_ = (blas_int) p;
     blas_int n_ = (blas_int) n;
@@ -209,7 +236,16 @@ int64_t tgsja(
     // allocate workspace
     std::vector< std::complex<double> > work( (2*n) );
 
-    LAPACK_ztgsja( &jobu_tgsja_, &jobv_tgsja_, &jobq_tgsja_, &m_, &p_, &n_, &k_, &l_, A, &lda_, B, &ldb_, &tola, &tolb, alpha, beta, U, &ldu_, V, &ldv_, Q, &ldq_, &work[0], &ncycle_, &info_ );
+    LAPACK_ztgsja(
+        &jobu_, &jobv_, &jobq_, &m_, &p_, &n_, &k_, &l_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_, &tola, &tolb,
+        alpha,
+        beta,
+        (lapack_complex_double*) U, &ldu_,
+        (lapack_complex_double*) V, &ldv_,
+        (lapack_complex_double*) Q, &ldq_,
+        (lapack_complex_double*) &work[0], &ncycle_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

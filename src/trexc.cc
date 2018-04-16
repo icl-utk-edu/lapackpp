@@ -34,7 +34,11 @@ int64_t trexc(
     // allocate workspace
     std::vector< float > work( (n) );
 
-    LAPACK_strexc( &compq_, &n_, T, &ldt_, Q, &ldq_, &ifst_, &ilst_, &work[0], &info_ );
+    LAPACK_strexc(
+        &compq_, &n_,
+        T, &ldt_,
+        Q, &ldq_, &ifst_, &ilst_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -68,7 +72,11 @@ int64_t trexc(
     // allocate workspace
     std::vector< double > work( (n) );
 
-    LAPACK_dtrexc( &compq_, &n_, T, &ldt_, Q, &ldq_, &ifst_, &ilst_, &work[0], &info_ );
+    LAPACK_dtrexc(
+        &compq_, &n_,
+        T, &ldt_,
+        Q, &ldq_, &ifst_, &ilst_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -99,7 +107,10 @@ int64_t trexc(
     blas_int ilst_ = (blas_int) ilst;
     blas_int info_ = 0;
 
-    LAPACK_ctrexc( &compq_, &n_, T, &ldt_, Q, &ldq_, &ifst_, &ilst_, &info_ );
+    LAPACK_ctrexc(
+        &compq_, &n_,
+        (lapack_complex_float*) T, &ldt_,
+        (lapack_complex_float*) Q, &ldq_, &ifst_, &ilst_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -128,7 +139,10 @@ int64_t trexc(
     blas_int ilst_ = (blas_int) ilst;
     blas_int info_ = 0;
 
-    LAPACK_ztrexc( &compq_, &n_, T, &ldt_, Q, &ldq_, &ifst_, &ilst_, &info_ );
+    LAPACK_ztrexc(
+        &compq_, &n_,
+        (lapack_complex_double*) T, &ldt_,
+        (lapack_complex_double*) Q, &ldq_, &ifst_, &ilst_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

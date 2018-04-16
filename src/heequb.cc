@@ -31,7 +31,11 @@ int64_t heequb(
     // allocate workspace
     std::vector< std::complex<float> > work( (2*n) );
 
-    LAPACK_cheequb( &uplo_, &n_, A, &lda_, S, scond, amax, &work[0], &info_ );
+    LAPACK_cheequb(
+        &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        S, scond, amax,
+        (lapack_complex_float*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -105,7 +109,11 @@ int64_t heequb(
     // allocate workspace
     std::vector< std::complex<double> > work( (2*n) );
 
-    LAPACK_zheequb( &uplo_, &n_, A, &lda_, S, scond, amax, &work[0], &info_ );
+    LAPACK_zheequb(
+        &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        S, scond, amax,
+        (lapack_complex_double*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

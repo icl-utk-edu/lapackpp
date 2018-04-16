@@ -28,7 +28,10 @@ void hfrk(
     blas_int k_ = (blas_int) k;
     blas_int lda_ = (blas_int) lda;
 
-    LAPACK_chfrk( &transr_, &uplo_, &trans_, &n_, &k_, &alpha, A, &lda_, &beta, C );
+    LAPACK_chfrk(
+        &transr_, &uplo_, &trans_, &n_, &k_, &alpha,
+        (lapack_complex_float*) A, &lda_, &beta,
+        (lapack_complex_float*) C );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,7 +53,10 @@ void hfrk(
     blas_int k_ = (blas_int) k;
     blas_int lda_ = (blas_int) lda;
 
-    LAPACK_zhfrk( &transr_, &uplo_, &trans_, &n_, &k_, &alpha, A, &lda_, &beta, C );
+    LAPACK_zhfrk(
+        &transr_, &uplo_, &trans_, &n_, &k_, &alpha,
+        (lapack_complex_double*) A, &lda_, &beta,
+        (lapack_complex_double*) C );
 }
 
 }  // namespace lapack

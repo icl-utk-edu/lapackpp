@@ -12,7 +12,7 @@ using blas::real;
 // -----------------------------------------------------------------------------
 /// @ingroup auxiliary
 int64_t lascl(
-    lapack::MatrixType type, int64_t kl, int64_t ku, float cfrom, float cto, int64_t m, int64_t n,
+    lapack::MatrixType matrixtype, int64_t kl, int64_t ku, float cfrom, float cto, int64_t m, int64_t n,
     float* A, int64_t lda )
 {
     // check for overflow
@@ -23,7 +23,7 @@ int64_t lascl(
         lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
     }
-    char type_ = matrixtype2char( type );
+    char matrixtype_ = matrixtype2char( matrixtype );
     blas_int kl_ = (blas_int) kl;
     blas_int ku_ = (blas_int) ku;
     blas_int m_ = (blas_int) m;
@@ -31,7 +31,9 @@ int64_t lascl(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_slascl( &type_, &kl_, &ku_, &cfrom, &cto, &m_, &n_, A, &lda_, &info_ );
+    LAPACK_slascl(
+        &matrixtype_, &kl_, &ku_, &cfrom, &cto, &m_, &n_,
+        A, &lda_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -41,7 +43,7 @@ int64_t lascl(
 // -----------------------------------------------------------------------------
 /// @ingroup auxiliary
 int64_t lascl(
-    lapack::MatrixType type, int64_t kl, int64_t ku, double cfrom, double cto, int64_t m, int64_t n,
+    lapack::MatrixType matrixtype, int64_t kl, int64_t ku, double cfrom, double cto, int64_t m, int64_t n,
     double* A, int64_t lda )
 {
     // check for overflow
@@ -52,7 +54,7 @@ int64_t lascl(
         lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
     }
-    char type_ = matrixtype2char( type );
+    char matrixtype_ = matrixtype2char( matrixtype );
     blas_int kl_ = (blas_int) kl;
     blas_int ku_ = (blas_int) ku;
     blas_int m_ = (blas_int) m;
@@ -60,7 +62,9 @@ int64_t lascl(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_dlascl( &type_, &kl_, &ku_, &cfrom, &cto, &m_, &n_, A, &lda_, &info_ );
+    LAPACK_dlascl(
+        &matrixtype_, &kl_, &ku_, &cfrom, &cto, &m_, &n_,
+        A, &lda_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -70,7 +74,7 @@ int64_t lascl(
 // -----------------------------------------------------------------------------
 /// @ingroup auxiliary
 int64_t lascl(
-    lapack::MatrixType type, int64_t kl, int64_t ku, float cfrom, float cto, int64_t m, int64_t n,
+    lapack::MatrixType matrixtype, int64_t kl, int64_t ku, float cfrom, float cto, int64_t m, int64_t n,
     std::complex<float>* A, int64_t lda )
 {
     // check for overflow
@@ -81,7 +85,7 @@ int64_t lascl(
         lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
     }
-    char type_ = matrixtype2char( type );
+    char matrixtype_ = matrixtype2char( matrixtype );
     blas_int kl_ = (blas_int) kl;
     blas_int ku_ = (blas_int) ku;
     blas_int m_ = (blas_int) m;
@@ -89,7 +93,9 @@ int64_t lascl(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_clascl( &type_, &kl_, &ku_, &cfrom, &cto, &m_, &n_, A, &lda_, &info_ );
+    LAPACK_clascl(
+        &matrixtype_, &kl_, &ku_, &cfrom, &cto, &m_, &n_,
+        (lapack_complex_float*) A, &lda_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -106,7 +112,7 @@ int64_t lascl(
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
 ///
-/// @param[in] type
+/// @param[in] matrixtype
 ///     type indices the storage type of the input matrix.
 ///     - lapack::MatrixType::General:
 ///         A is a full matrix.
@@ -158,21 +164,21 @@ int64_t lascl(
 ///
 /// @param[in,out] A
 ///     The m-by-n matrix A, stored in an lda-by-n array.
-///     The matrix to be multiplied by cto/cfrom. See type for the
+///     The matrix to be multiplied by cto/cfrom. See matrixtype for the
 ///     storage type.
 ///
 /// @param[in] lda
 ///     The leading dimension of the array A.
-///     - If type = General, Lower, Upper, or Hessenberg, lda >= max(1,m);
-///     - if type = LowerBand, lda >= kl+1;
-///     - if type = UpperBand, lda >= ku+1;
-///     - if type = Band, lda >= 2*kl+ku+1.
+///     - If matrixtype = General, Lower, Upper, or Hessenberg, lda >= max(1,m);
+///     - if matrixtype = LowerBand, lda >= kl+1;
+///     - if matrixtype = UpperBand, lda >= ku+1;
+///     - if matrixtype = Band, lda >= 2*kl+ku+1.
 ///
 /// @retval = 0: successful exit
 ///
 /// @ingroup auxiliary
 int64_t lascl(
-    lapack::MatrixType type, int64_t kl, int64_t ku, double cfrom, double cto, int64_t m, int64_t n,
+    lapack::MatrixType matrixtype, int64_t kl, int64_t ku, double cfrom, double cto, int64_t m, int64_t n,
     std::complex<double>* A, int64_t lda )
 {
     // check for overflow
@@ -183,7 +189,7 @@ int64_t lascl(
         lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
     }
-    char type_ = matrixtype2char( type );
+    char matrixtype_ = matrixtype2char( matrixtype );
     blas_int kl_ = (blas_int) kl;
     blas_int ku_ = (blas_int) ku;
     blas_int m_ = (blas_int) m;
@@ -191,7 +197,9 @@ int64_t lascl(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_zlascl( &type_, &kl_, &ku_, &cfrom, &cto, &m_, &n_, A, &lda_, &info_ );
+    LAPACK_zlascl(
+        &matrixtype_, &kl_, &ku_, &cfrom, &cto, &m_, &n_,
+        (lapack_complex_double*) A, &lda_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

@@ -38,7 +38,16 @@ int64_t pprfs(
     std::vector< float > work( (3*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_spprfs( &uplo_, &n_, &nrhs_, AP, AFP, B, &ldb_, X, &ldx_, ferr, berr, &work[0], &iwork[0], &info_ );
+    LAPACK_spprfs(
+        &uplo_, &n_, &nrhs_,
+        AP,
+        AFP,
+        B, &ldb_,
+        X, &ldx_,
+        ferr,
+        berr,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -74,7 +83,16 @@ int64_t pprfs(
     std::vector< double > work( (3*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_dpprfs( &uplo_, &n_, &nrhs_, AP, AFP, B, &ldb_, X, &ldx_, ferr, berr, &work[0], &iwork[0], &info_ );
+    LAPACK_dpprfs(
+        &uplo_, &n_, &nrhs_,
+        AP,
+        AFP,
+        B, &ldb_,
+        X, &ldx_,
+        ferr,
+        berr,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -110,7 +128,16 @@ int64_t pprfs(
     std::vector< std::complex<float> > work( (2*n) );
     std::vector< float > rwork( (n) );
 
-    LAPACK_cpprfs( &uplo_, &n_, &nrhs_, AP, AFP, B, &ldb_, X, &ldx_, ferr, berr, &work[0], &rwork[0], &info_ );
+    LAPACK_cpprfs(
+        &uplo_, &n_, &nrhs_,
+        (lapack_complex_float*) AP,
+        (lapack_complex_float*) AFP,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) X, &ldx_,
+        ferr,
+        berr,
+        (lapack_complex_float*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -214,7 +241,16 @@ int64_t pprfs(
     std::vector< std::complex<double> > work( (2*n) );
     std::vector< double > rwork( (n) );
 
-    LAPACK_zpprfs( &uplo_, &n_, &nrhs_, AP, AFP, B, &ldb_, X, &ldx_, ferr, berr, &work[0], &rwork[0], &info_ );
+    LAPACK_zpprfs(
+        &uplo_, &n_, &nrhs_,
+        (lapack_complex_double*) AP,
+        (lapack_complex_double*) AFP,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) X, &ldx_,
+        ferr,
+        berr,
+        (lapack_complex_double*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

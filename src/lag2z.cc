@@ -28,7 +28,10 @@ int64_t lag2z(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_clag2z( &m_, &n_, SA, &ldsa_, A, &lda_, &info_ );
+    LAPACK_clag2z(
+        &m_, &n_,
+        (lapack_complex_float*) SA, &ldsa_,
+        (lapack_complex_double*) A, &lda_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

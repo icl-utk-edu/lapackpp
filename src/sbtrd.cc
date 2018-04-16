@@ -35,7 +35,13 @@ int64_t sbtrd(
     // allocate workspace
     std::vector< float > work( (n) );
 
-    LAPACK_ssbtrd( &jobz_, &uplo_, &n_, &kd_, AB, &ldab_, D, E, Q, &ldq_, &work[0], &info_ );
+    LAPACK_ssbtrd(
+        &jobz_, &uplo_, &n_, &kd_,
+        AB, &ldab_,
+        D,
+        E,
+        Q, &ldq_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -68,7 +74,13 @@ int64_t sbtrd(
     // allocate workspace
     std::vector< double > work( (n) );
 
-    LAPACK_dsbtrd( &jobz_, &uplo_, &n_, &kd_, AB, &ldab_, D, E, Q, &ldq_, &work[0], &info_ );
+    LAPACK_dsbtrd(
+        &jobz_, &uplo_, &n_, &kd_,
+        AB, &ldab_,
+        D,
+        E,
+        Q, &ldq_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

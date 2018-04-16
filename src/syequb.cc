@@ -31,7 +31,11 @@ int64_t syequb(
     // allocate workspace
     std::vector< float > work( (2*n) );
 
-    LAPACK_ssyequb( &uplo_, &n_, A, &lda_, S, scond, amax, &work[0], &info_ );
+    LAPACK_ssyequb(
+        &uplo_, &n_,
+        A, &lda_,
+        S, scond, amax,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -60,7 +64,11 @@ int64_t syequb(
     // allocate workspace
     std::vector< double > work( (2*n) );
 
-    LAPACK_dsyequb( &uplo_, &n_, A, &lda_, S, scond, amax, &work[0], &info_ );
+    LAPACK_dsyequb(
+        &uplo_, &n_,
+        A, &lda_,
+        S, scond, amax,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -89,7 +97,11 @@ int64_t syequb(
     // allocate workspace
     std::vector< std::complex<float> > work( (2*n) );
 
-    LAPACK_csyequb( &uplo_, &n_, A, &lda_, S, scond, amax, &work[0], &info_ );
+    LAPACK_csyequb(
+        &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        S, scond, amax,
+        (lapack_complex_float*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -163,7 +175,11 @@ int64_t syequb(
     // allocate workspace
     std::vector< std::complex<double> > work( (2*n) );
 
-    LAPACK_zsyequb( &uplo_, &n_, A, &lda_, S, scond, amax, &work[0], &info_ );
+    LAPACK_zsyequb(
+        &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        S, scond, amax,
+        (lapack_complex_double*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

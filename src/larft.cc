@@ -31,7 +31,11 @@ void larft(
     blas_int ldv_ = (blas_int) ldv;
     blas_int ldt_ = (blas_int) ldt;
 
-    LAPACK_slarft( &direct_, &storev_, &n_, &k_, V, &ldv_, tau, T, &ldt_ );
+    LAPACK_slarft(
+        &direct_, &storev_, &n_, &k_,
+        V, &ldv_,
+        tau,
+        T, &ldt_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,7 +60,11 @@ void larft(
     blas_int ldv_ = (blas_int) ldv;
     blas_int ldt_ = (blas_int) ldt;
 
-    LAPACK_dlarft( &direct_, &storev_, &n_, &k_, V, &ldv_, tau, T, &ldt_ );
+    LAPACK_dlarft(
+        &direct_, &storev_, &n_, &k_,
+        V, &ldv_,
+        tau,
+        T, &ldt_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +89,11 @@ void larft(
     blas_int ldv_ = (blas_int) ldv;
     blas_int ldt_ = (blas_int) ldt;
 
-    LAPACK_clarft( &direct_, &storev_, &n_, &k_, V, &ldv_, tau, T, &ldt_ );
+    LAPACK_clarft(
+        &direct_, &storev_, &n_, &k_,
+        (lapack_complex_float*) V, &ldv_,
+        (lapack_complex_float*) tau,
+        (lapack_complex_float*) T, &ldt_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -197,7 +209,11 @@ void larft(
     blas_int ldv_ = (blas_int) ldv;
     blas_int ldt_ = (blas_int) ldt;
 
-    LAPACK_zlarft( &direct_, &storev_, &n_, &k_, V, &ldv_, tau, T, &ldt_ );
+    LAPACK_zlarft(
+        &direct_, &storev_, &n_, &k_,
+        (lapack_complex_double*) V, &ldv_,
+        (lapack_complex_double*) tau,
+        (lapack_complex_double*) T, &ldt_ );
 }
 
 }  // namespace lapack

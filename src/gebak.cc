@@ -33,7 +33,10 @@ int64_t gebak(
     blas_int ldv_ = (blas_int) ldv;
     blas_int info_ = 0;
 
-    LAPACK_sgebak( &balance_, &side_, &n_, &ilo_, &ihi_, scale, &m_, V, &ldv_, &info_ );
+    LAPACK_sgebak(
+        &balance_, &side_, &n_, &ilo_, &ihi_,
+        scale, &m_,
+        V, &ldv_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -64,7 +67,10 @@ int64_t gebak(
     blas_int ldv_ = (blas_int) ldv;
     blas_int info_ = 0;
 
-    LAPACK_dgebak( &balance_, &side_, &n_, &ilo_, &ihi_, scale, &m_, V, &ldv_, &info_ );
+    LAPACK_dgebak(
+        &balance_, &side_, &n_, &ilo_, &ihi_,
+        scale, &m_,
+        V, &ldv_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -95,7 +101,10 @@ int64_t gebak(
     blas_int ldv_ = (blas_int) ldv;
     blas_int info_ = 0;
 
-    LAPACK_cgebak( &balance_, &side_, &n_, &ilo_, &ihi_, scale, &m_, V, &ldv_, &info_ );
+    LAPACK_cgebak(
+        &balance_, &side_, &n_, &ilo_, &ihi_,
+        scale, &m_,
+        (lapack_complex_float*) V, &ldv_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -175,7 +184,10 @@ int64_t gebak(
     blas_int ldv_ = (blas_int) ldv;
     blas_int info_ = 0;
 
-    LAPACK_zgebak( &balance_, &side_, &n_, &ilo_, &ihi_, scale, &m_, V, &ldv_, &info_ );
+    LAPACK_zgebak(
+        &balance_, &side_, &n_, &ilo_, &ihi_,
+        scale, &m_,
+        (lapack_complex_double*) V, &ldv_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

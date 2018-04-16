@@ -54,7 +54,17 @@ int64_t ggsvd3(
     float qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_sggsvd3( &jobu_, &jobv_, &jobq_, &m_, &n_, &p_, &k_, &l_, A, &lda_, B, &ldb_, alpha, beta, U, &ldu_, V, &ldv_, Q, &ldq_, qry_work, &ineg_one, qry_iwork, &info_ );
+    LAPACK_sggsvd3(
+        &jobu_, &jobv_, &jobq_, &m_, &n_, &p_, &k_, &l_,
+        A, &lda_,
+        B, &ldb_,
+        alpha,
+        beta,
+        U, &ldu_,
+        V, &ldv_,
+        Q, &ldq_,
+        qry_work, &ineg_one,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -64,7 +74,17 @@ int64_t ggsvd3(
     std::vector< float > work( lwork_ );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_sggsvd3( &jobu_, &jobv_, &jobq_, &m_, &n_, &p_, &k_, &l_, A, &lda_, B, &ldb_, alpha, beta, U, &ldu_, V, &ldv_, Q, &ldq_, &work[0], &lwork_, &iwork[0], &info_ );
+    LAPACK_sggsvd3(
+        &jobu_, &jobv_, &jobq_, &m_, &n_, &p_, &k_, &l_,
+        A, &lda_,
+        B, &ldb_,
+        alpha,
+        beta,
+        U, &ldu_,
+        V, &ldv_,
+        Q, &ldq_,
+        &work[0], &lwork_,
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -116,7 +136,17 @@ int64_t ggsvd3(
     double qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_dggsvd3( &jobu_, &jobv_, &jobq_, &m_, &n_, &p_, &k_, &l_, A, &lda_, B, &ldb_, alpha, beta, U, &ldu_, V, &ldv_, Q, &ldq_, qry_work, &ineg_one, qry_iwork, &info_ );
+    LAPACK_dggsvd3(
+        &jobu_, &jobv_, &jobq_, &m_, &n_, &p_, &k_, &l_,
+        A, &lda_,
+        B, &ldb_,
+        alpha,
+        beta,
+        U, &ldu_,
+        V, &ldv_,
+        Q, &ldq_,
+        qry_work, &ineg_one,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -126,7 +156,17 @@ int64_t ggsvd3(
     std::vector< double > work( lwork_ );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_dggsvd3( &jobu_, &jobv_, &jobq_, &m_, &n_, &p_, &k_, &l_, A, &lda_, B, &ldb_, alpha, beta, U, &ldu_, V, &ldv_, Q, &ldq_, &work[0], &lwork_, &iwork[0], &info_ );
+    LAPACK_dggsvd3(
+        &jobu_, &jobv_, &jobq_, &m_, &n_, &p_, &k_, &l_,
+        A, &lda_,
+        B, &ldb_,
+        alpha,
+        beta,
+        U, &ldu_,
+        V, &ldv_,
+        Q, &ldq_,
+        &work[0], &lwork_,
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -179,7 +219,18 @@ int64_t ggsvd3(
     float qry_rwork[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_cggsvd3( &jobu_, &jobv_, &jobq_, &m_, &n_, &p_, &k_, &l_, A, &lda_, B, &ldb_, alpha, beta, U, &ldu_, V, &ldv_, Q, &ldq_, qry_work, &ineg_one, qry_rwork, qry_iwork, &info_ );
+    LAPACK_cggsvd3(
+        &jobu_, &jobv_, &jobq_, &m_, &n_, &p_, &k_, &l_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) B, &ldb_,
+        alpha,
+        beta,
+        (lapack_complex_float*) U, &ldu_,
+        (lapack_complex_float*) V, &ldv_,
+        (lapack_complex_float*) Q, &ldq_,
+        (lapack_complex_float*) qry_work, &ineg_one,
+        qry_rwork,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -190,7 +241,18 @@ int64_t ggsvd3(
     std::vector< float > rwork( (2*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_cggsvd3( &jobu_, &jobv_, &jobq_, &m_, &n_, &p_, &k_, &l_, A, &lda_, B, &ldb_, alpha, beta, U, &ldu_, V, &ldv_, Q, &ldq_, &work[0], &lwork_, &rwork[0], &iwork[0], &info_ );
+    LAPACK_cggsvd3(
+        &jobu_, &jobv_, &jobq_, &m_, &n_, &p_, &k_, &l_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) B, &ldb_,
+        alpha,
+        beta,
+        (lapack_complex_float*) U, &ldu_,
+        (lapack_complex_float*) V, &ldv_,
+        (lapack_complex_float*) Q, &ldq_,
+        (lapack_complex_float*) &work[0], &lwork_,
+        &rwork[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -243,7 +305,18 @@ int64_t ggsvd3(
     double qry_rwork[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_zggsvd3( &jobu_, &jobv_, &jobq_, &m_, &n_, &p_, &k_, &l_, A, &lda_, B, &ldb_, alpha, beta, U, &ldu_, V, &ldv_, Q, &ldq_, qry_work, &ineg_one, qry_rwork, qry_iwork, &info_ );
+    LAPACK_zggsvd3(
+        &jobu_, &jobv_, &jobq_, &m_, &n_, &p_, &k_, &l_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_,
+        alpha,
+        beta,
+        (lapack_complex_double*) U, &ldu_,
+        (lapack_complex_double*) V, &ldv_,
+        (lapack_complex_double*) Q, &ldq_,
+        (lapack_complex_double*) qry_work, &ineg_one,
+        qry_rwork,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -254,7 +327,18 @@ int64_t ggsvd3(
     std::vector< double > rwork( (2*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_zggsvd3( &jobu_, &jobv_, &jobq_, &m_, &n_, &p_, &k_, &l_, A, &lda_, B, &ldb_, alpha, beta, U, &ldu_, V, &ldv_, Q, &ldq_, &work[0], &lwork_, &rwork[0], &iwork[0], &info_ );
+    LAPACK_zggsvd3(
+        &jobu_, &jobv_, &jobq_, &m_, &n_, &p_, &k_, &l_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_,
+        alpha,
+        beta,
+        (lapack_complex_double*) U, &ldu_,
+        (lapack_complex_double*) V, &ldv_,
+        (lapack_complex_double*) Q, &ldq_,
+        (lapack_complex_double*) &work[0], &lwork_,
+        &rwork[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

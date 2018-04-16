@@ -52,7 +52,16 @@ int64_t bdsdc(
     std::vector< float > work( (max( 1, lwork )) );
     std::vector< blas_int > iwork( (8*n) );
 
-    LAPACK_sbdsdc( &uplo_, &compq_, &n_, D, E, U, &ldu_, VT, &ldvt_, Q, IQ_ptr, &work[0], &iwork[0], &info_ );
+    LAPACK_sbdsdc(
+        &uplo_, &compq_, &n_,
+        D,
+        E,
+        U, &ldu_,
+        VT, &ldvt_,
+        Q,
+        IQ_ptr,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -208,7 +217,16 @@ int64_t bdsdc(
     std::vector< double > work( (max( 1, lwork )) );
     std::vector< blas_int > iwork( (8*n) );
 
-    LAPACK_dbdsdc( &uplo_, &compq_, &n_, D, E, U, &ldu_, VT, &ldvt_, Q, IQ_ptr, &work[0], &iwork[0], &info_ );
+    LAPACK_dbdsdc(
+        &uplo_, &compq_, &n_,
+        D,
+        E,
+        U, &ldu_,
+        VT, &ldvt_,
+        Q,
+        IQ_ptr,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

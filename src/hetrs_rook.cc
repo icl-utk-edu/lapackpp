@@ -40,7 +40,11 @@ int64_t hetrs_rook(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_chetrs_rook( &uplo_, &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &info_ );
+    LAPACK_chetrs_rook(
+        &uplo_, &n_, &nrhs_,
+        (lapack_complex_float*) A, &lda_,
+        ipiv_ptr,
+        (lapack_complex_float*) B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -78,7 +82,11 @@ int64_t hetrs_rook(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_zhetrs_rook( &uplo_, &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &info_ );
+    LAPACK_zhetrs_rook(
+        &uplo_, &n_, &nrhs_,
+        (lapack_complex_double*) A, &lda_,
+        ipiv_ptr,
+        (lapack_complex_double*) B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

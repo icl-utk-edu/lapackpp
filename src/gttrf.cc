@@ -33,7 +33,13 @@ int64_t gttrf(
     #endif
     blas_int info_ = 0;
 
-    LAPACK_sgttrf( &n_, DL, D, DU, DU2, ipiv_ptr, &info_ );
+    LAPACK_sgttrf(
+        &n_,
+        DL,
+        D,
+        DU,
+        DU2,
+        ipiv_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -67,7 +73,13 @@ int64_t gttrf(
     #endif
     blas_int info_ = 0;
 
-    LAPACK_dgttrf( &n_, DL, D, DU, DU2, ipiv_ptr, &info_ );
+    LAPACK_dgttrf(
+        &n_,
+        DL,
+        D,
+        DU,
+        DU2,
+        ipiv_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -101,7 +113,13 @@ int64_t gttrf(
     #endif
     blas_int info_ = 0;
 
-    LAPACK_cgttrf( &n_, DL, D, DU, DU2, ipiv_ptr, &info_ );
+    LAPACK_cgttrf(
+        &n_,
+        (lapack_complex_float*) DL,
+        (lapack_complex_float*) D,
+        (lapack_complex_float*) DU,
+        (lapack_complex_float*) DU2,
+        ipiv_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -189,7 +207,13 @@ int64_t gttrf(
     #endif
     blas_int info_ = 0;
 
-    LAPACK_zgttrf( &n_, DL, D, DU, DU2, ipiv_ptr, &info_ );
+    LAPACK_zgttrf(
+        &n_,
+        (lapack_complex_double*) DL,
+        (lapack_complex_double*) D,
+        (lapack_complex_double*) DU,
+        (lapack_complex_double*) DU2,
+        ipiv_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }

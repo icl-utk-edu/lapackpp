@@ -28,7 +28,10 @@ int64_t ppsv(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_sppsv( &uplo_, &n_, &nrhs_, AP, B, &ldb_, &info_ );
+    LAPACK_sppsv(
+        &uplo_, &n_, &nrhs_,
+        AP,
+        B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -54,7 +57,10 @@ int64_t ppsv(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_dppsv( &uplo_, &n_, &nrhs_, AP, B, &ldb_, &info_ );
+    LAPACK_dppsv(
+        &uplo_, &n_, &nrhs_,
+        AP,
+        B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -80,7 +86,10 @@ int64_t ppsv(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_cppsv( &uplo_, &n_, &nrhs_, AP, B, &ldb_, &info_ );
+    LAPACK_cppsv(
+        &uplo_, &n_, &nrhs_,
+        (lapack_complex_float*) AP,
+        (lapack_complex_float*) B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -177,7 +186,10 @@ int64_t ppsv(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_zppsv( &uplo_, &n_, &nrhs_, AP, B, &ldb_, &info_ );
+    LAPACK_zppsv(
+        &uplo_, &n_, &nrhs_,
+        (lapack_complex_double*) AP,
+        (lapack_complex_double*) B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

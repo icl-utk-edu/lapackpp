@@ -40,7 +40,12 @@ int64_t gemqr(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_sgemqr( &side_, &trans_, &m_, &n_, &k_, A, &lda_, T, &tsize_, C, &ldc_, qry_work, &ineg_one, &info_ );
+    LAPACK_sgemqr(
+        &side_, &trans_, &m_, &n_, &k_,
+        A, &lda_,
+        T, &tsize_,
+        C, &ldc_,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -49,7 +54,12 @@ int64_t gemqr(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_sgemqr( &side_, &trans_, &m_, &n_, &k_, A, &lda_, T, &tsize_, C, &ldc_, &work[0], &lwork_, &info_ );
+    LAPACK_sgemqr(
+        &side_, &trans_, &m_, &n_, &k_,
+        A, &lda_,
+        T, &tsize_,
+        C, &ldc_,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -85,7 +95,12 @@ int64_t gemqr(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dgemqr( &side_, &trans_, &m_, &n_, &k_, A, &lda_, T, &tsize_, C, &ldc_, qry_work, &ineg_one, &info_ );
+    LAPACK_dgemqr(
+        &side_, &trans_, &m_, &n_, &k_,
+        A, &lda_,
+        T, &tsize_,
+        C, &ldc_,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -94,7 +109,12 @@ int64_t gemqr(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dgemqr( &side_, &trans_, &m_, &n_, &k_, A, &lda_, T, &tsize_, C, &ldc_, &work[0], &lwork_, &info_ );
+    LAPACK_dgemqr(
+        &side_, &trans_, &m_, &n_, &k_,
+        A, &lda_,
+        T, &tsize_,
+        C, &ldc_,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -130,7 +150,12 @@ int64_t gemqr(
     // query for workspace size
     std::complex<float> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_cgemqr( &side_, &trans_, &m_, &n_, &k_, A, &lda_, T, &tsize_, C, &ldc_, qry_work, &ineg_one, &info_ );
+    LAPACK_cgemqr(
+        &side_, &trans_, &m_, &n_, &k_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) T, &tsize_,
+        (lapack_complex_float*) C, &ldc_,
+        (lapack_complex_float*) qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -139,7 +164,12 @@ int64_t gemqr(
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
 
-    LAPACK_cgemqr( &side_, &trans_, &m_, &n_, &k_, A, &lda_, T, &tsize_, C, &ldc_, &work[0], &lwork_, &info_ );
+    LAPACK_cgemqr(
+        &side_, &trans_, &m_, &n_, &k_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) T, &tsize_,
+        (lapack_complex_float*) C, &ldc_,
+        (lapack_complex_float*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -175,7 +205,12 @@ int64_t gemqr(
     // query for workspace size
     std::complex<double> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_zgemqr( &side_, &trans_, &m_, &n_, &k_, A, &lda_, T, &tsize_, C, &ldc_, qry_work, &ineg_one, &info_ );
+    LAPACK_zgemqr(
+        &side_, &trans_, &m_, &n_, &k_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) T, &tsize_,
+        (lapack_complex_double*) C, &ldc_,
+        (lapack_complex_double*) qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -184,7 +219,12 @@ int64_t gemqr(
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );
 
-    LAPACK_zgemqr( &side_, &trans_, &m_, &n_, &k_, A, &lda_, T, &tsize_, C, &ldc_, &work[0], &lwork_, &info_ );
+    LAPACK_zgemqr(
+        &side_, &trans_, &m_, &n_, &k_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) T, &tsize_,
+        (lapack_complex_double*) C, &ldc_,
+        (lapack_complex_double*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

@@ -23,7 +23,9 @@ int64_t pptrf(
     blas_int n_ = (blas_int) n;
     blas_int info_ = 0;
 
-    LAPACK_spptrf( &uplo_, &n_, AP, &info_ );
+    LAPACK_spptrf(
+        &uplo_, &n_,
+        AP, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -44,7 +46,9 @@ int64_t pptrf(
     blas_int n_ = (blas_int) n;
     blas_int info_ = 0;
 
-    LAPACK_dpptrf( &uplo_, &n_, AP, &info_ );
+    LAPACK_dpptrf(
+        &uplo_, &n_,
+        AP, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -65,7 +69,9 @@ int64_t pptrf(
     blas_int n_ = (blas_int) n;
     blas_int info_ = 0;
 
-    LAPACK_cpptrf( &uplo_, &n_, AP, &info_ );
+    LAPACK_cpptrf(
+        &uplo_, &n_,
+        (lapack_complex_float*) AP, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -140,7 +146,9 @@ int64_t pptrf(
     blas_int n_ = (blas_int) n;
     blas_int info_ = 0;
 
-    LAPACK_zpptrf( &uplo_, &n_, AP, &info_ );
+    LAPACK_zpptrf(
+        &uplo_, &n_,
+        (lapack_complex_double*) AP, &info_ );
     if (info_ < 0) {
         throw Error();
     }

@@ -50,7 +50,16 @@ int64_t hpgvx(
     std::vector< float > rwork( (7*n) );
     std::vector< blas_int > iwork( (5*n) );
 
-    LAPACK_chpgvx( &itype_, &jobz_, &range_, &uplo_, &n_, AP, BP, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, &work[0], &rwork[0], &iwork[0], ifail_ptr, &info_ );
+    LAPACK_chpgvx(
+        &itype_, &jobz_, &range_, &uplo_, &n_,
+        (lapack_complex_float*) AP,
+        (lapack_complex_float*) BP, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        (lapack_complex_float*) Z, &ldz_,
+        (lapack_complex_float*) &work[0],
+        &rwork[0],
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -102,7 +111,16 @@ int64_t hpgvx(
     std::vector< double > rwork( (7*n) );
     std::vector< blas_int > iwork( (5*n) );
 
-    LAPACK_zhpgvx( &itype_, &jobz_, &range_, &uplo_, &n_, AP, BP, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, &work[0], &rwork[0], &iwork[0], ifail_ptr, &info_ );
+    LAPACK_zhpgvx(
+        &itype_, &jobz_, &range_, &uplo_, &n_,
+        (lapack_complex_double*) AP,
+        (lapack_complex_double*) BP, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        (lapack_complex_double*) Z, &ldz_,
+        (lapack_complex_double*) &work[0],
+        &rwork[0],
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }

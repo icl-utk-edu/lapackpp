@@ -28,7 +28,10 @@ void lacp2(
     blas_int lda_ = (blas_int) lda;
     blas_int ldb_ = (blas_int) ldb;
 
-    LAPACK_clacp2( &uplo_, &m_, &n_, A, &lda_, B, &ldb_ );
+    LAPACK_clacp2(
+        &uplo_, &m_, &n_,
+        A, &lda_,
+        (lapack_complex_float*) B, &ldb_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,7 +53,10 @@ void lacp2(
     blas_int lda_ = (blas_int) lda;
     blas_int ldb_ = (blas_int) ldb;
 
-    LAPACK_zlacp2( &uplo_, &m_, &n_, A, &lda_, B, &ldb_ );
+    LAPACK_zlacp2(
+        &uplo_, &m_, &n_,
+        A, &lda_,
+        (lapack_complex_double*) B, &ldb_ );
 }
 
 }  // namespace lapack

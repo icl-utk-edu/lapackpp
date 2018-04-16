@@ -41,7 +41,13 @@ int64_t hseqr(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_shseqr( &jobschur_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, &WR[0], &WI[0], Z, &ldz_, qry_work, &ineg_one, &info_ );
+    LAPACK_shseqr(
+        &jobschur_, &compz_, &n_, &ilo_, &ihi_,
+        H, &ldh_,
+        &WR[0],
+        &WI[0],
+        Z, &ldz_,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -50,7 +56,13 @@ int64_t hseqr(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_shseqr( &jobschur_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, &WR[0], &WI[0], Z, &ldz_, &work[0], &lwork_, &info_ );
+    LAPACK_shseqr(
+        &jobschur_, &compz_, &n_, &ilo_, &ihi_,
+        H, &ldh_,
+        &WR[0],
+        &WI[0],
+        Z, &ldz_,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -93,7 +105,13 @@ int64_t hseqr(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dhseqr( &jobschur_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, &WR[0], &WI[0], Z, &ldz_, qry_work, &ineg_one, &info_ );
+    LAPACK_dhseqr(
+        &jobschur_, &compz_, &n_, &ilo_, &ihi_,
+        H, &ldh_,
+        &WR[0],
+        &WI[0],
+        Z, &ldz_,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -102,7 +120,13 @@ int64_t hseqr(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dhseqr( &jobschur_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, &WR[0], &WI[0], Z, &ldz_, &work[0], &lwork_, &info_ );
+    LAPACK_dhseqr(
+        &jobschur_, &compz_, &n_, &ilo_, &ihi_,
+        H, &ldh_,
+        &WR[0],
+        &WI[0],
+        Z, &ldz_,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -141,7 +165,12 @@ int64_t hseqr(
     // query for workspace size
     std::complex<float> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_chseqr( &jobschur_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, W, Z, &ldz_, qry_work, &ineg_one, &info_ );
+    LAPACK_chseqr(
+        &jobschur_, &compz_, &n_, &ilo_, &ihi_,
+        (lapack_complex_float*) H, &ldh_,
+        (lapack_complex_float*) W,
+        (lapack_complex_float*) Z, &ldz_,
+        (lapack_complex_float*) qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -150,7 +179,12 @@ int64_t hseqr(
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
 
-    LAPACK_chseqr( &jobschur_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, W, Z, &ldz_, &work[0], &lwork_, &info_ );
+    LAPACK_chseqr(
+        &jobschur_, &compz_, &n_, &ilo_, &ihi_,
+        (lapack_complex_float*) H, &ldh_,
+        (lapack_complex_float*) W,
+        (lapack_complex_float*) Z, &ldz_,
+        (lapack_complex_float*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -310,7 +344,12 @@ int64_t hseqr(
     // query for workspace size
     std::complex<double> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_zhseqr( &jobschur_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, W, Z, &ldz_, qry_work, &ineg_one, &info_ );
+    LAPACK_zhseqr(
+        &jobschur_, &compz_, &n_, &ilo_, &ihi_,
+        (lapack_complex_double*) H, &ldh_,
+        (lapack_complex_double*) W,
+        (lapack_complex_double*) Z, &ldz_,
+        (lapack_complex_double*) qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -319,7 +358,12 @@ int64_t hseqr(
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );
 
-    LAPACK_zhseqr( &jobschur_, &compz_, &n_, &ilo_, &ihi_, H, &ldh_, W, Z, &ldz_, &work[0], &lwork_, &info_ );
+    LAPACK_zhseqr(
+        &jobschur_, &compz_, &n_, &ilo_, &ihi_,
+        (lapack_complex_double*) H, &ldh_,
+        (lapack_complex_double*) W,
+        (lapack_complex_double*) Z, &ldz_,
+        (lapack_complex_double*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

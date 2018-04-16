@@ -37,7 +37,12 @@ int64_t upmtr(
     // allocate workspace
     std::vector< std::complex<float> > work( max(1,lwork) );
 
-    LAPACK_cupmtr( &side_, &uplo_, &trans_, &m_, &n_, AP, tau, C, &ldc_, &work[0], &info_ );
+    LAPACK_cupmtr(
+        &side_, &uplo_, &trans_, &m_, &n_,
+        (lapack_complex_float*) AP,
+        (lapack_complex_float*) tau,
+        (lapack_complex_float*) C, &ldc_,
+        (lapack_complex_float*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -135,7 +140,12 @@ int64_t upmtr(
     // allocate workspace
     std::vector< std::complex<double> > work( max(1,lwork) );
 
-    LAPACK_zupmtr( &side_, &uplo_, &trans_, &m_, &n_, AP, tau, C, &ldc_, &work[0], &info_ );
+    LAPACK_zupmtr(
+        &side_, &uplo_, &trans_, &m_, &n_,
+        (lapack_complex_double*) AP,
+        (lapack_complex_double*) tau,
+        (lapack_complex_double*) C, &ldc_,
+        (lapack_complex_double*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

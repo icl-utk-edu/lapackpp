@@ -42,7 +42,15 @@ int64_t tbrfs(
     std::vector< float > work( (3*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_stbrfs( &uplo_, &trans_, &diag_, &n_, &kd_, &nrhs_, AB, &ldab_, B, &ldb_, X, &ldx_, ferr, berr, &work[0], &iwork[0], &info_ );
+    LAPACK_stbrfs(
+        &uplo_, &trans_, &diag_, &n_, &kd_, &nrhs_,
+        AB, &ldab_,
+        B, &ldb_,
+        X, &ldx_,
+        ferr,
+        berr,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -82,7 +90,15 @@ int64_t tbrfs(
     std::vector< double > work( (3*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_dtbrfs( &uplo_, &trans_, &diag_, &n_, &kd_, &nrhs_, AB, &ldab_, B, &ldb_, X, &ldx_, ferr, berr, &work[0], &iwork[0], &info_ );
+    LAPACK_dtbrfs(
+        &uplo_, &trans_, &diag_, &n_, &kd_, &nrhs_,
+        AB, &ldab_,
+        B, &ldb_,
+        X, &ldx_,
+        ferr,
+        berr,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -122,7 +138,15 @@ int64_t tbrfs(
     std::vector< std::complex<float> > work( (2*n) );
     std::vector< float > rwork( (n) );
 
-    LAPACK_ctbrfs( &uplo_, &trans_, &diag_, &n_, &kd_, &nrhs_, AB, &ldab_, B, &ldb_, X, &ldx_, ferr, berr, &work[0], &rwork[0], &info_ );
+    LAPACK_ctbrfs(
+        &uplo_, &trans_, &diag_, &n_, &kd_, &nrhs_,
+        (lapack_complex_float*) AB, &ldab_,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) X, &ldx_,
+        ferr,
+        berr,
+        (lapack_complex_float*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -162,7 +186,15 @@ int64_t tbrfs(
     std::vector< std::complex<double> > work( (2*n) );
     std::vector< double > rwork( (n) );
 
-    LAPACK_ztbrfs( &uplo_, &trans_, &diag_, &n_, &kd_, &nrhs_, AB, &ldab_, B, &ldb_, X, &ldx_, ferr, berr, &work[0], &rwork[0], &info_ );
+    LAPACK_ztbrfs(
+        &uplo_, &trans_, &diag_, &n_, &kd_, &nrhs_,
+        (lapack_complex_double*) AB, &ldab_,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) X, &ldx_,
+        ferr,
+        berr,
+        (lapack_complex_double*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

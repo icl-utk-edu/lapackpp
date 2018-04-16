@@ -30,7 +30,10 @@ void tfsm(
     blas_int n_ = (blas_int) n;
     blas_int ldb_ = (blas_int) ldb;
 
-    LAPACK_stfsm( &transr_, &side_, &uplo_, &trans_, &diag_, &m_, &n_, &alpha, A, B, &ldb_ );
+    LAPACK_stfsm(
+        &transr_, &side_, &uplo_, &trans_, &diag_, &m_, &n_, &alpha,
+        A,
+        B, &ldb_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +57,10 @@ void tfsm(
     blas_int n_ = (blas_int) n;
     blas_int ldb_ = (blas_int) ldb;
 
-    LAPACK_dtfsm( &transr_, &side_, &uplo_, &trans_, &diag_, &m_, &n_, &alpha, A, B, &ldb_ );
+    LAPACK_dtfsm(
+        &transr_, &side_, &uplo_, &trans_, &diag_, &m_, &n_, &alpha,
+        A,
+        B, &ldb_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +84,11 @@ void tfsm(
     blas_int n_ = (blas_int) n;
     blas_int ldb_ = (blas_int) ldb;
 
-    LAPACK_ctfsm( &transr_, &side_, &uplo_, &trans_, &diag_, &m_, &n_, &alpha, A, B, &ldb_ );
+    LAPACK_ctfsm(
+        &transr_, &side_, &uplo_, &trans_, &diag_, &m_, &n_,
+        (lapack_complex_float*) &alpha,
+        (lapack_complex_float*) A,
+        (lapack_complex_float*) B, &ldb_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +112,11 @@ void tfsm(
     blas_int n_ = (blas_int) n;
     blas_int ldb_ = (blas_int) ldb;
 
-    LAPACK_ztfsm( &transr_, &side_, &uplo_, &trans_, &diag_, &m_, &n_, &alpha, A, B, &ldb_ );
+    LAPACK_ztfsm(
+        &transr_, &side_, &uplo_, &trans_, &diag_, &m_, &n_,
+        (lapack_complex_double*) &alpha,
+        (lapack_complex_double*) A,
+        (lapack_complex_double*) B, &ldb_ );
 }
 
 }  // namespace lapack

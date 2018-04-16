@@ -32,7 +32,10 @@ float lange(
     // allocate workspace
     std::vector< float > work( max( 1, lwork ) );
 
-    return LAPACK_slange( &norm_, &m_, &n_, A, &lda_, &work[0] );
+    return LAPACK_slange(
+        &norm_, &m_, &n_,
+        A, &lda_,
+        &work[0] );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,7 +61,10 @@ double lange(
     // allocate workspace
     std::vector< double > work( max( 1, lwork ) );
 
-    return LAPACK_dlange( &norm_, &m_, &n_, A, &lda_, &work[0] );
+    return LAPACK_dlange(
+        &norm_, &m_, &n_,
+        A, &lda_,
+        &work[0] );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,7 +90,10 @@ float lange(
     // allocate workspace
     std::vector< float > work( max( 1, lwork ) );
 
-    return LAPACK_clange( &norm_, &m_, &n_, A, &lda_, &work[0] );
+    return LAPACK_clange(
+        &norm_, &m_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        &work[0] );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +146,10 @@ double lange(
     // allocate workspace
     std::vector< double > work( max( 1, lwork ) );
 
-    return LAPACK_zlange( &norm_, &m_, &n_, A, &lda_, &work[0] );
+    return LAPACK_zlange(
+        &norm_, &m_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        &work[0] );
 }
 
 }  // namespace lapack

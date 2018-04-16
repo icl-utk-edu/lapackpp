@@ -29,7 +29,12 @@ int64_t pteqr(
     // allocate workspace
     std::vector< float > work( (4*n) );
 
-    LAPACK_spteqr( &compz_, &n_, D, E, Z, &ldz_, &work[0], &info_ );
+    LAPACK_spteqr(
+        &compz_, &n_,
+        D,
+        E,
+        Z, &ldz_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -56,7 +61,12 @@ int64_t pteqr(
     // allocate workspace
     std::vector< double > work( (4*n) );
 
-    LAPACK_dpteqr( &compz_, &n_, D, E, Z, &ldz_, &work[0], &info_ );
+    LAPACK_dpteqr(
+        &compz_, &n_,
+        D,
+        E,
+        Z, &ldz_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -83,7 +93,12 @@ int64_t pteqr(
     // allocate workspace
     std::vector< float > work( (4*n) );
 
-    LAPACK_cpteqr( &compz_, &n_, D, E, Z, &ldz_, &work[0], &info_ );
+    LAPACK_cpteqr(
+        &compz_, &n_,
+        D,
+        E,
+        (lapack_complex_float*) Z, &ldz_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -110,7 +125,12 @@ int64_t pteqr(
     // allocate workspace
     std::vector< double > work( (4*n) );
 
-    LAPACK_zpteqr( &compz_, &n_, D, E, Z, &ldz_, &work[0], &info_ );
+    LAPACK_zpteqr(
+        &compz_, &n_,
+        D,
+        E,
+        (lapack_complex_double*) Z, &ldz_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

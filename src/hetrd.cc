@@ -31,7 +31,13 @@ int64_t hetrd(
     // query for workspace size
     std::complex<float> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_chetrd( &uplo_, &n_, A, &lda_, D, E, tau, qry_work, &ineg_one, &info_ );
+    LAPACK_chetrd(
+        &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        D,
+        E,
+        (lapack_complex_float*) tau,
+        (lapack_complex_float*) qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -40,7 +46,13 @@ int64_t hetrd(
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
 
-    LAPACK_chetrd( &uplo_, &n_, A, &lda_, D, E, tau, &work[0], &lwork_, &info_ );
+    LAPACK_chetrd(
+        &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        D,
+        E,
+        (lapack_complex_float*) tau,
+        (lapack_complex_float*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -171,7 +183,13 @@ int64_t hetrd(
     // query for workspace size
     std::complex<double> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_zhetrd( &uplo_, &n_, A, &lda_, D, E, tau, qry_work, &ineg_one, &info_ );
+    LAPACK_zhetrd(
+        &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        D,
+        E,
+        (lapack_complex_double*) tau,
+        (lapack_complex_double*) qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -180,7 +198,13 @@ int64_t hetrd(
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );
 
-    LAPACK_zhetrd( &uplo_, &n_, A, &lda_, D, E, tau, &work[0], &lwork_, &info_ );
+    LAPACK_zhetrd(
+        &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        D,
+        E,
+        (lapack_complex_double*) tau,
+        (lapack_complex_double*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

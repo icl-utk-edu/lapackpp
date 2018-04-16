@@ -31,7 +31,13 @@ int64_t hpev(
     std::vector< std::complex<float> > work( (max( 1, 2*n-1 )) );
     std::vector< float > rwork( (max( 1, 3*n-2 )) );
 
-    LAPACK_chpev( &jobz_, &uplo_, &n_, AP, W, Z, &ldz_, &work[0], &rwork[0], &info_ );
+    LAPACK_chpev(
+        &jobz_, &uplo_, &n_,
+        (lapack_complex_float*) AP,
+        W,
+        (lapack_complex_float*) Z, &ldz_,
+        (lapack_complex_float*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -60,7 +66,13 @@ int64_t hpev(
     std::vector< std::complex<double> > work( (max( 1, 2*n-1 )) );
     std::vector< double > rwork( (max( 1, 3*n-2 )) );
 
-    LAPACK_zhpev( &jobz_, &uplo_, &n_, AP, W, Z, &ldz_, &work[0], &rwork[0], &info_ );
+    LAPACK_zhpev(
+        &jobz_, &uplo_, &n_,
+        (lapack_complex_double*) AP,
+        W,
+        (lapack_complex_double*) Z, &ldz_,
+        (lapack_complex_double*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

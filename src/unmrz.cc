@@ -13,7 +13,7 @@ using blas::real;
 int64_t unmrz(
     lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k, int64_t l,
     std::complex<float> const* A, int64_t lda,
-    std::complex<float> const* TAU,
+    std::complex<float> const* tau,
     std::complex<float>* C, int64_t ldc )
 {
     // check for overflow
@@ -38,7 +38,12 @@ int64_t unmrz(
     // query for workspace size
     std::complex<float> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_cunmrz( &side_, &trans_, &m_, &n_, &k_, &l_, A, &lda_, TAU, C, &ldc_, qry_work, &ineg_one, &info_ );
+    LAPACK_cunmrz(
+        &side_, &trans_, &m_, &n_, &k_, &l_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) tau,
+        (lapack_complex_float*) C, &ldc_,
+        (lapack_complex_float*) qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -47,7 +52,12 @@ int64_t unmrz(
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
 
-    LAPACK_cunmrz( &side_, &trans_, &m_, &n_, &k_, &l_, A, &lda_, TAU, C, &ldc_, &work[0], &lwork_, &info_ );
+    LAPACK_cunmrz(
+        &side_, &trans_, &m_, &n_, &k_, &l_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) tau,
+        (lapack_complex_float*) C, &ldc_,
+        (lapack_complex_float*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -58,7 +68,7 @@ int64_t unmrz(
 int64_t unmrz(
     lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k, int64_t l,
     std::complex<double> const* A, int64_t lda,
-    std::complex<double> const* TAU,
+    std::complex<double> const* tau,
     std::complex<double>* C, int64_t ldc )
 {
     // check for overflow
@@ -83,7 +93,12 @@ int64_t unmrz(
     // query for workspace size
     std::complex<double> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_zunmrz( &side_, &trans_, &m_, &n_, &k_, &l_, A, &lda_, TAU, C, &ldc_, qry_work, &ineg_one, &info_ );
+    LAPACK_zunmrz(
+        &side_, &trans_, &m_, &n_, &k_, &l_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) tau,
+        (lapack_complex_double*) C, &ldc_,
+        (lapack_complex_double*) qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -92,7 +107,12 @@ int64_t unmrz(
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );
 
-    LAPACK_zunmrz( &side_, &trans_, &m_, &n_, &k_, &l_, A, &lda_, TAU, C, &ldc_, &work[0], &lwork_, &info_ );
+    LAPACK_zunmrz(
+        &side_, &trans_, &m_, &n_, &k_, &l_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) tau,
+        (lapack_complex_double*) C, &ldc_,
+        (lapack_complex_double*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

@@ -37,7 +37,10 @@ void laswp(
     #endif
     blas_int incx_ = (blas_int) incx;
 
-    LAPACK_slaswp( &n_, A, &lda_, &k1_, &k2_, ipiv_ptr, &incx_ );
+    LAPACK_slaswp(
+        &n_,
+        A, &lda_, &k1_, &k2_,
+        ipiv_ptr, &incx_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +71,10 @@ void laswp(
     #endif
     blas_int incx_ = (blas_int) incx;
 
-    LAPACK_dlaswp( &n_, A, &lda_, &k1_, &k2_, ipiv_ptr, &incx_ );
+    LAPACK_dlaswp(
+        &n_,
+        A, &lda_, &k1_, &k2_,
+        ipiv_ptr, &incx_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +105,10 @@ void laswp(
     #endif
     blas_int incx_ = (blas_int) incx;
 
-    LAPACK_claswp( &n_, A, &lda_, &k1_, &k2_, ipiv_ptr, &incx_ );
+    LAPACK_claswp(
+        &n_,
+        (lapack_complex_float*) A, &lda_, &k1_, &k2_,
+        ipiv_ptr, &incx_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,7 +177,10 @@ void laswp(
     #endif
     blas_int incx_ = (blas_int) incx;
 
-    LAPACK_zlaswp( &n_, A, &lda_, &k1_, &k2_, ipiv_ptr, &incx_ );
+    LAPACK_zlaswp(
+        &n_,
+        (lapack_complex_double*) A, &lda_, &k1_, &k2_,
+        ipiv_ptr, &incx_ );
 }
 
 }  // namespace lapack

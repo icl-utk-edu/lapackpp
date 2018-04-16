@@ -35,7 +35,11 @@ int64_t sptrs(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_ssptrs( &uplo_, &n_, &nrhs_, AP, ipiv_ptr, B, &ldb_, &info_ );
+    LAPACK_ssptrs(
+        &uplo_, &n_, &nrhs_,
+        AP,
+        ipiv_ptr,
+        B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -68,7 +72,11 @@ int64_t sptrs(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_dsptrs( &uplo_, &n_, &nrhs_, AP, ipiv_ptr, B, &ldb_, &info_ );
+    LAPACK_dsptrs(
+        &uplo_, &n_, &nrhs_,
+        AP,
+        ipiv_ptr,
+        B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -101,7 +109,11 @@ int64_t sptrs(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_csptrs( &uplo_, &n_, &nrhs_, AP, ipiv_ptr, B, &ldb_, &info_ );
+    LAPACK_csptrs(
+        &uplo_, &n_, &nrhs_,
+        (lapack_complex_float*) AP,
+        ipiv_ptr,
+        (lapack_complex_float*) B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -134,7 +146,11 @@ int64_t sptrs(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_zsptrs( &uplo_, &n_, &nrhs_, AP, ipiv_ptr, B, &ldb_, &info_ );
+    LAPACK_zsptrs(
+        &uplo_, &n_, &nrhs_,
+        (lapack_complex_double*) AP,
+        ipiv_ptr,
+        (lapack_complex_double*) B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

@@ -34,7 +34,10 @@ void lapmt(
         blas_int* K_ptr = K;
     #endif
 
-    LAPACK_slapmt( &forwrd_, &m_, &n_, X, &ldx_, K_ptr );
+    LAPACK_slapmt(
+        &forwrd_, &m_, &n_,
+        X, &ldx_,
+        K_ptr );
     #if 1
         std::copy( K_.begin(), K_.end(), K );
     #endif
@@ -65,7 +68,10 @@ void lapmt(
         blas_int* K_ptr = K;
     #endif
 
-    LAPACK_dlapmt( &forwrd_, &m_, &n_, X, &ldx_, K_ptr );
+    LAPACK_dlapmt(
+        &forwrd_, &m_, &n_,
+        X, &ldx_,
+        K_ptr );
     #if 1
         std::copy( K_.begin(), K_.end(), K );
     #endif
@@ -96,7 +102,10 @@ void lapmt(
         blas_int* K_ptr = K;
     #endif
 
-    LAPACK_clapmt( &forwrd_, &m_, &n_, X, &ldx_, K_ptr );
+    LAPACK_clapmt(
+        &forwrd_, &m_, &n_,
+        (lapack_complex_float*) X, &ldx_,
+        K_ptr );
     #if 1
         std::copy( K_.begin(), K_.end(), K );
     #endif
@@ -127,7 +136,10 @@ void lapmt(
         blas_int* K_ptr = K;
     #endif
 
-    LAPACK_zlapmt( &forwrd_, &m_, &n_, X, &ldx_, K_ptr );
+    LAPACK_zlapmt(
+        &forwrd_, &m_, &n_,
+        (lapack_complex_double*) X, &ldx_,
+        K_ptr );
     #if 1
         std::copy( K_.begin(), K_.end(), K );
     #endif

@@ -38,7 +38,10 @@ int64_t gbtrf(
     #endif
     blas_int info_ = 0;
 
-    LAPACK_sgbtrf( &m_, &n_, &kl_, &ku_, AB, &ldab_, ipiv_ptr, &info_ );
+    LAPACK_sgbtrf(
+        &m_, &n_, &kl_, &ku_,
+        AB, &ldab_,
+        ipiv_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -77,7 +80,10 @@ int64_t gbtrf(
     #endif
     blas_int info_ = 0;
 
-    LAPACK_dgbtrf( &m_, &n_, &kl_, &ku_, AB, &ldab_, ipiv_ptr, &info_ );
+    LAPACK_dgbtrf(
+        &m_, &n_, &kl_, &ku_,
+        AB, &ldab_,
+        ipiv_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -116,7 +122,10 @@ int64_t gbtrf(
     #endif
     blas_int info_ = 0;
 
-    LAPACK_cgbtrf( &m_, &n_, &kl_, &ku_, AB, &ldab_, ipiv_ptr, &info_ );
+    LAPACK_cgbtrf(
+        &m_, &n_, &kl_, &ku_,
+        (lapack_complex_float*) AB, &ldab_,
+        ipiv_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -223,7 +232,10 @@ int64_t gbtrf(
     #endif
     blas_int info_ = 0;
 
-    LAPACK_zgbtrf( &m_, &n_, &kl_, &ku_, AB, &ldab_, ipiv_ptr, &info_ );
+    LAPACK_zgbtrf(
+        &m_, &n_, &kl_, &ku_,
+        (lapack_complex_double*) AB, &ldab_,
+        ipiv_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }

@@ -27,7 +27,9 @@ int64_t potrf2(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_spotrf2( &uplo_, &n_, A, &lda_, &info_ );
+    LAPACK_spotrf2(
+        &uplo_, &n_,
+        A, &lda_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -50,7 +52,9 @@ int64_t potrf2(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_dpotrf2( &uplo_, &n_, A, &lda_, &info_ );
+    LAPACK_dpotrf2(
+        &uplo_, &n_,
+        A, &lda_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -73,7 +77,9 @@ int64_t potrf2(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_cpotrf2( &uplo_, &n_, A, &lda_, &info_ );
+    LAPACK_cpotrf2(
+        &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -156,7 +162,9 @@ int64_t potrf2(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_zpotrf2( &uplo_, &n_, A, &lda_, &info_ );
+    LAPACK_zpotrf2(
+        &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

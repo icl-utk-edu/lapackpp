@@ -23,7 +23,9 @@ int64_t pptri(
     blas_int n_ = (blas_int) n;
     blas_int info_ = 0;
 
-    LAPACK_spptri( &uplo_, &n_, AP, &info_ );
+    LAPACK_spptri(
+        &uplo_, &n_,
+        AP, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -44,7 +46,9 @@ int64_t pptri(
     blas_int n_ = (blas_int) n;
     blas_int info_ = 0;
 
-    LAPACK_dpptri( &uplo_, &n_, AP, &info_ );
+    LAPACK_dpptri(
+        &uplo_, &n_,
+        AP, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -65,7 +69,9 @@ int64_t pptri(
     blas_int n_ = (blas_int) n;
     blas_int info_ = 0;
 
-    LAPACK_cpptri( &uplo_, &n_, AP, &info_ );
+    LAPACK_cpptri(
+        &uplo_, &n_,
+        (lapack_complex_float*) AP, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -116,7 +122,9 @@ int64_t pptri(
     blas_int n_ = (blas_int) n;
     blas_int info_ = 0;
 
-    LAPACK_zpptri( &uplo_, &n_, AP, &info_ );
+    LAPACK_zpptri(
+        &uplo_, &n_,
+        (lapack_complex_double*) AP, &info_ );
     if (info_ < 0) {
         throw Error();
     }

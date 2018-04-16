@@ -13,7 +13,7 @@ using blas::real;
 int64_t upgtr(
     lapack::Uplo uplo, int64_t n,
     std::complex<float> const* AP,
-    std::complex<float> const* TAU,
+    std::complex<float> const* tau,
     std::complex<float>* Q, int64_t ldq )
 {
     // check for overflow
@@ -29,7 +29,12 @@ int64_t upgtr(
     // allocate workspace
     std::vector< std::complex<float> > work( (n-1) );
 
-    LAPACK_cupgtr( &uplo_, &n_, AP, TAU, Q, &ldq_, &work[0], &info_ );
+    LAPACK_cupgtr(
+        &uplo_, &n_,
+        (lapack_complex_float*) AP,
+        (lapack_complex_float*) tau,
+        (lapack_complex_float*) Q, &ldq_,
+        (lapack_complex_float*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -40,7 +45,7 @@ int64_t upgtr(
 int64_t upgtr(
     lapack::Uplo uplo, int64_t n,
     std::complex<double> const* AP,
-    std::complex<double> const* TAU,
+    std::complex<double> const* tau,
     std::complex<double>* Q, int64_t ldq )
 {
     // check for overflow
@@ -56,7 +61,12 @@ int64_t upgtr(
     // allocate workspace
     std::vector< std::complex<double> > work( (n-1) );
 
-    LAPACK_zupgtr( &uplo_, &n_, AP, TAU, Q, &ldq_, &work[0], &info_ );
+    LAPACK_zupgtr(
+        &uplo_, &n_,
+        (lapack_complex_double*) AP,
+        (lapack_complex_double*) tau,
+        (lapack_complex_double*) Q, &ldq_,
+        (lapack_complex_double*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

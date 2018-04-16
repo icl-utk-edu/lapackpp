@@ -40,7 +40,12 @@ int64_t tpqrt(
     // allocate workspace
     std::vector< float > work( (nb*n) );
 
-    LAPACK_stpqrt( &m_, &n_, &l_, &nb_, A, &lda_, B, &ldb_, T, &ldt_, &work[0], &info_ );
+    LAPACK_stpqrt(
+        &m_, &n_, &l_, &nb_,
+        A, &lda_,
+        B, &ldb_,
+        T, &ldt_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -76,7 +81,12 @@ int64_t tpqrt(
     // allocate workspace
     std::vector< double > work( (nb*n) );
 
-    LAPACK_dtpqrt( &m_, &n_, &l_, &nb_, A, &lda_, B, &ldb_, T, &ldt_, &work[0], &info_ );
+    LAPACK_dtpqrt(
+        &m_, &n_, &l_, &nb_,
+        A, &lda_,
+        B, &ldb_,
+        T, &ldt_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -112,7 +122,12 @@ int64_t tpqrt(
     // allocate workspace
     std::vector< std::complex<float> > work( (nb*n) );
 
-    LAPACK_ctpqrt( &m_, &n_, &l_, &nb_, A, &lda_, B, &ldb_, T, &ldt_, &work[0], &info_ );
+    LAPACK_ctpqrt(
+        &m_, &n_, &l_, &nb_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) T, &ldt_,
+        (lapack_complex_float*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -148,7 +163,12 @@ int64_t tpqrt(
     // allocate workspace
     std::vector< std::complex<double> > work( (nb*n) );
 
-    LAPACK_ztpqrt( &m_, &n_, &l_, &nb_, A, &lda_, B, &ldb_, T, &ldt_, &work[0], &info_ );
+    LAPACK_ztpqrt(
+        &m_, &n_, &l_, &nb_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) T, &ldt_,
+        (lapack_complex_double*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

@@ -42,7 +42,14 @@ int64_t bdsvdx(
     std::vector< float > work( (14*n) );
     std::vector< blas_int > iwork( (12*n) );
 
-    LAPACK_sbdsvdx( &uplo_, &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &nfound_, S, Z, &ldz_, &work[0], &iwork[0], &info_ );
+    LAPACK_sbdsvdx(
+        &uplo_, &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &nfound_,
+        S,
+        Z, &ldz_,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -212,7 +219,14 @@ int64_t bdsvdx(
     std::vector< double > work( (14*n) );
     std::vector< blas_int > iwork( (12*n) );
 
-    LAPACK_dbdsvdx( &uplo_, &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &nfound_, S, Z, &ldz_, &work[0], &iwork[0], &info_ );
+    LAPACK_dbdsvdx(
+        &uplo_, &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &nfound_,
+        S,
+        Z, &ldz_,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

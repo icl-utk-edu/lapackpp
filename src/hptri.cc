@@ -33,7 +33,11 @@ int64_t hptri(
     // allocate workspace
     std::vector< std::complex<float> > work( (n) );
 
-    LAPACK_chptri( &uplo_, &n_, AP, ipiv_ptr, &work[0], &info_ );
+    LAPACK_chptri(
+        &uplo_, &n_,
+        (lapack_complex_float*) AP,
+        ipiv_ptr,
+        (lapack_complex_float*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -64,7 +68,11 @@ int64_t hptri(
     // allocate workspace
     std::vector< std::complex<double> > work( (n) );
 
-    LAPACK_zhptri( &uplo_, &n_, AP, ipiv_ptr, &work[0], &info_ );
+    LAPACK_zhptri(
+        &uplo_, &n_,
+        (lapack_complex_double*) AP,
+        ipiv_ptr,
+        (lapack_complex_double*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

@@ -15,7 +15,7 @@ using blas::real;
 int64_t geqrfp(
     int64_t m, int64_t n,
     float* A, int64_t lda,
-    float* TAU )
+    float* tau )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -31,7 +31,11 @@ int64_t geqrfp(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_sgeqrfp( &m_, &n_, A, &lda_, TAU, qry_work, &ineg_one, &info_ );
+    LAPACK_sgeqrfp(
+        &m_, &n_,
+        A, &lda_,
+        tau,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -40,7 +44,11 @@ int64_t geqrfp(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_sgeqrfp( &m_, &n_, A, &lda_, TAU, &work[0], &lwork_, &info_ );
+    LAPACK_sgeqrfp(
+        &m_, &n_,
+        A, &lda_,
+        tau,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -51,7 +59,7 @@ int64_t geqrfp(
 int64_t geqrfp(
     int64_t m, int64_t n,
     double* A, int64_t lda,
-    double* TAU )
+    double* tau )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -67,7 +75,11 @@ int64_t geqrfp(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dgeqrfp( &m_, &n_, A, &lda_, TAU, qry_work, &ineg_one, &info_ );
+    LAPACK_dgeqrfp(
+        &m_, &n_,
+        A, &lda_,
+        tau,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -76,7 +88,11 @@ int64_t geqrfp(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dgeqrfp( &m_, &n_, A, &lda_, TAU, &work[0], &lwork_, &info_ );
+    LAPACK_dgeqrfp(
+        &m_, &n_,
+        A, &lda_,
+        tau,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -87,7 +103,7 @@ int64_t geqrfp(
 int64_t geqrfp(
     int64_t m, int64_t n,
     std::complex<float>* A, int64_t lda,
-    std::complex<float>* TAU )
+    std::complex<float>* tau )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -103,7 +119,11 @@ int64_t geqrfp(
     // query for workspace size
     std::complex<float> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_cgeqrfp( &m_, &n_, A, &lda_, TAU, qry_work, &ineg_one, &info_ );
+    LAPACK_cgeqrfp(
+        &m_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) tau,
+        (lapack_complex_float*) qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -112,7 +132,11 @@ int64_t geqrfp(
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
 
-    LAPACK_cgeqrfp( &m_, &n_, A, &lda_, TAU, &work[0], &lwork_, &info_ );
+    LAPACK_cgeqrfp(
+        &m_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) tau,
+        (lapack_complex_float*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -123,7 +147,7 @@ int64_t geqrfp(
 int64_t geqrfp(
     int64_t m, int64_t n,
     std::complex<double>* A, int64_t lda,
-    std::complex<double>* TAU )
+    std::complex<double>* tau )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -139,7 +163,11 @@ int64_t geqrfp(
     // query for workspace size
     std::complex<double> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_zgeqrfp( &m_, &n_, A, &lda_, TAU, qry_work, &ineg_one, &info_ );
+    LAPACK_zgeqrfp(
+        &m_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) tau,
+        (lapack_complex_double*) qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -148,7 +176,11 @@ int64_t geqrfp(
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );
 
-    LAPACK_zgeqrfp( &m_, &n_, A, &lda_, TAU, &work[0], &lwork_, &info_ );
+    LAPACK_zgeqrfp(
+        &m_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) tau,
+        (lapack_complex_double*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

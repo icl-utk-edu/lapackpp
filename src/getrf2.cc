@@ -36,7 +36,10 @@ int64_t getrf2(
     #endif
     blas_int info_ = 0;
 
-    LAPACK_sgetrf2( &m_, &n_, A, &lda_, ipiv_ptr, &info_ );
+    LAPACK_sgetrf2(
+        &m_, &n_,
+        A, &lda_,
+        ipiv_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -71,7 +74,10 @@ int64_t getrf2(
     #endif
     blas_int info_ = 0;
 
-    LAPACK_dgetrf2( &m_, &n_, A, &lda_, ipiv_ptr, &info_ );
+    LAPACK_dgetrf2(
+        &m_, &n_,
+        A, &lda_,
+        ipiv_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -106,7 +112,10 @@ int64_t getrf2(
     #endif
     blas_int info_ = 0;
 
-    LAPACK_cgetrf2( &m_, &n_, A, &lda_, ipiv_ptr, &info_ );
+    LAPACK_cgetrf2(
+        &m_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        ipiv_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -211,7 +220,10 @@ int64_t getrf2(
     #endif
     blas_int info_ = 0;
 
-    LAPACK_zgetrf2( &m_, &n_, A, &lda_, ipiv_ptr, &info_ );
+    LAPACK_zgetrf2(
+        &m_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        ipiv_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }

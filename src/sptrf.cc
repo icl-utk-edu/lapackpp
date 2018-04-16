@@ -30,7 +30,10 @@ int64_t sptrf(
     #endif
     blas_int info_ = 0;
 
-    LAPACK_ssptrf( &uplo_, &n_, AP, ipiv_ptr, &info_ );
+    LAPACK_ssptrf(
+        &uplo_, &n_,
+        AP,
+        ipiv_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -61,7 +64,10 @@ int64_t sptrf(
     #endif
     blas_int info_ = 0;
 
-    LAPACK_dsptrf( &uplo_, &n_, AP, ipiv_ptr, &info_ );
+    LAPACK_dsptrf(
+        &uplo_, &n_,
+        AP,
+        ipiv_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -92,7 +98,10 @@ int64_t sptrf(
     #endif
     blas_int info_ = 0;
 
-    LAPACK_csptrf( &uplo_, &n_, AP, ipiv_ptr, &info_ );
+    LAPACK_csptrf(
+        &uplo_, &n_,
+        (lapack_complex_float*) AP,
+        ipiv_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -123,7 +132,10 @@ int64_t sptrf(
     #endif
     blas_int info_ = 0;
 
-    LAPACK_zsptrf( &uplo_, &n_, AP, ipiv_ptr, &info_ );
+    LAPACK_zsptrf(
+        &uplo_, &n_,
+        (lapack_complex_double*) AP,
+        ipiv_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }

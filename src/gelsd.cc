@@ -38,7 +38,13 @@ int64_t gelsd(
     float qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_sgelsd( &m_, &n_, &nrhs_, A, &lda_, B, &ldb_, S, &rcond, &rank_, qry_work, &ineg_one, qry_iwork, &info_ );
+    LAPACK_sgelsd(
+        &m_, &n_, &nrhs_,
+        A, &lda_,
+        B, &ldb_,
+        S, &rcond, &rank_,
+        qry_work, &ineg_one,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -49,7 +55,13 @@ int64_t gelsd(
     std::vector< float > work( lwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_sgelsd( &m_, &n_, &nrhs_, A, &lda_, B, &ldb_, S, &rcond, &rank_, &work[0], &lwork_, &iwork[0], &info_ );
+    LAPACK_sgelsd(
+        &m_, &n_, &nrhs_,
+        A, &lda_,
+        B, &ldb_,
+        S, &rcond, &rank_,
+        &work[0], &lwork_,
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -86,7 +98,13 @@ int64_t gelsd(
     double qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_dgelsd( &m_, &n_, &nrhs_, A, &lda_, B, &ldb_, S, &rcond, &rank_, qry_work, &ineg_one, qry_iwork, &info_ );
+    LAPACK_dgelsd(
+        &m_, &n_, &nrhs_,
+        A, &lda_,
+        B, &ldb_,
+        S, &rcond, &rank_,
+        qry_work, &ineg_one,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -97,7 +115,13 @@ int64_t gelsd(
     std::vector< double > work( lwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_dgelsd( &m_, &n_, &nrhs_, A, &lda_, B, &ldb_, S, &rcond, &rank_, &work[0], &lwork_, &iwork[0], &info_ );
+    LAPACK_dgelsd(
+        &m_, &n_, &nrhs_,
+        A, &lda_,
+        B, &ldb_,
+        S, &rcond, &rank_,
+        &work[0], &lwork_,
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -135,7 +159,14 @@ int64_t gelsd(
     float qry_rwork[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_cgelsd( &m_, &n_, &nrhs_, A, &lda_, B, &ldb_, S, &rcond, &rank_, qry_work, &ineg_one, qry_rwork, qry_iwork, &info_ );
+    LAPACK_cgelsd(
+        &m_, &n_, &nrhs_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) B, &ldb_,
+        S, &rcond, &rank_,
+        (lapack_complex_float*) qry_work, &ineg_one,
+        qry_rwork,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -148,7 +179,14 @@ int64_t gelsd(
     std::vector< float > rwork( lrwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_cgelsd( &m_, &n_, &nrhs_, A, &lda_, B, &ldb_, S, &rcond, &rank_, &work[0], &lwork_, &rwork[0], &iwork[0], &info_ );
+    LAPACK_cgelsd(
+        &m_, &n_, &nrhs_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) B, &ldb_,
+        S, &rcond, &rank_,
+        (lapack_complex_float*) &work[0], &lwork_,
+        &rwork[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -267,7 +305,14 @@ int64_t gelsd(
     double qry_rwork[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_zgelsd( &m_, &n_, &nrhs_, A, &lda_, B, &ldb_, S, &rcond, &rank_, qry_work, &ineg_one, qry_rwork, qry_iwork, &info_ );
+    LAPACK_zgelsd(
+        &m_, &n_, &nrhs_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_,
+        S, &rcond, &rank_,
+        (lapack_complex_double*) qry_work, &ineg_one,
+        qry_rwork,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -280,7 +325,14 @@ int64_t gelsd(
     std::vector< double > rwork( lrwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_zgelsd( &m_, &n_, &nrhs_, A, &lda_, B, &ldb_, S, &rcond, &rank_, &work[0], &lwork_, &rwork[0], &iwork[0], &info_ );
+    LAPACK_zgelsd(
+        &m_, &n_, &nrhs_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_,
+        S, &rcond, &rank_,
+        (lapack_complex_double*) &work[0], &lwork_,
+        &rwork[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

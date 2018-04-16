@@ -46,7 +46,15 @@ int64_t stegr(
     float qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_sstegr( &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, isuppz_ptr, qry_work, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_sstegr(
+        &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        isuppz_ptr,
+        qry_work, &ineg_one,
+        qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -57,7 +65,15 @@ int64_t stegr(
     std::vector< float > work( lwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_sstegr( &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, isuppz_ptr, &work[0], &lwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_sstegr(
+        &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        isuppz_ptr,
+        &work[0], &lwork_,
+        &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -105,7 +121,15 @@ int64_t stegr(
     double qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_dstegr( &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, isuppz_ptr, qry_work, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_dstegr(
+        &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        isuppz_ptr,
+        qry_work, &ineg_one,
+        qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -116,7 +140,15 @@ int64_t stegr(
     std::vector< double > work( lwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_dstegr( &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, isuppz_ptr, &work[0], &lwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_dstegr(
+        &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        Z, &ldz_,
+        isuppz_ptr,
+        &work[0], &lwork_,
+        &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -164,7 +196,15 @@ int64_t stegr(
     float qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_cstegr( &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, isuppz_ptr, qry_work, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_cstegr(
+        &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        (lapack_complex_float*) Z, &ldz_,
+        isuppz_ptr,
+        qry_work, &ineg_one,
+        qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -175,7 +215,15 @@ int64_t stegr(
     std::vector< float > work( lwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_cstegr( &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, isuppz_ptr, &work[0], &lwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_cstegr(
+        &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        (lapack_complex_float*) Z, &ldz_,
+        isuppz_ptr,
+        &work[0], &lwork_,
+        &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -223,7 +271,15 @@ int64_t stegr(
     double qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_zstegr( &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, isuppz_ptr, qry_work, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_zstegr(
+        &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        (lapack_complex_double*) Z, &ldz_,
+        isuppz_ptr,
+        qry_work, &ineg_one,
+        qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -234,7 +290,15 @@ int64_t stegr(
     std::vector< double > work( lwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_zstegr( &jobz_, &range_, &n_, D, E, &vl, &vu, &il_, &iu_, &abstol, &m_, W, Z, &ldz_, isuppz_ptr, &work[0], &lwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_zstegr(
+        &jobz_, &range_, &n_,
+        D,
+        E, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        W,
+        (lapack_complex_double*) Z, &ldz_,
+        isuppz_ptr,
+        &work[0], &lwork_,
+        &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

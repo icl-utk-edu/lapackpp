@@ -39,7 +39,12 @@ int64_t sytrf_rk(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_ssytrf_rk( &uplo_, &n_, A, &lda_, E, ipiv_ptr, qry_work, &ineg_one, &info_ );
+    LAPACK_ssytrf_rk(
+        &uplo_, &n_,
+        A, &lda_,
+        E,
+        ipiv_ptr,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -48,7 +53,12 @@ int64_t sytrf_rk(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_ssytrf_rk( &uplo_, &n_, A, &lda_, E, ipiv_ptr, &work[0], &lwork_, &info_ );
+    LAPACK_ssytrf_rk(
+        &uplo_, &n_,
+        A, &lda_,
+        E,
+        ipiv_ptr,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -86,7 +96,12 @@ int64_t sytrf_rk(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dsytrf_rk( &uplo_, &n_, A, &lda_, E, ipiv_ptr, qry_work, &ineg_one, &info_ );
+    LAPACK_dsytrf_rk(
+        &uplo_, &n_,
+        A, &lda_,
+        E,
+        ipiv_ptr,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -95,7 +110,12 @@ int64_t sytrf_rk(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dsytrf_rk( &uplo_, &n_, A, &lda_, E, ipiv_ptr, &work[0], &lwork_, &info_ );
+    LAPACK_dsytrf_rk(
+        &uplo_, &n_,
+        A, &lda_,
+        E,
+        ipiv_ptr,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -133,7 +153,12 @@ int64_t sytrf_rk(
     // query for workspace size
     std::complex<float> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_csytrf_rk( &uplo_, &n_, A, &lda_, E, ipiv_ptr, qry_work, &ineg_one, &info_ );
+    LAPACK_csytrf_rk(
+        &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) E,
+        ipiv_ptr,
+        (lapack_complex_float*) qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -142,7 +167,12 @@ int64_t sytrf_rk(
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
 
-    LAPACK_csytrf_rk( &uplo_, &n_, A, &lda_, E, ipiv_ptr, &work[0], &lwork_, &info_ );
+    LAPACK_csytrf_rk(
+        &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) E,
+        ipiv_ptr,
+        (lapack_complex_float*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -334,7 +364,12 @@ int64_t sytrf_rk(
     // query for workspace size
     std::complex<double> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_zsytrf_rk( &uplo_, &n_, A, &lda_, E, ipiv_ptr, qry_work, &ineg_one, &info_ );
+    LAPACK_zsytrf_rk(
+        &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) E,
+        ipiv_ptr,
+        (lapack_complex_double*) qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -343,7 +378,12 @@ int64_t sytrf_rk(
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );
 
-    LAPACK_zsytrf_rk( &uplo_, &n_, A, &lda_, E, ipiv_ptr, &work[0], &lwork_, &info_ );
+    LAPACK_zsytrf_rk(
+        &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) E,
+        ipiv_ptr,
+        (lapack_complex_double*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

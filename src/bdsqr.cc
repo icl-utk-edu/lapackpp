@@ -42,7 +42,14 @@ int64_t bdsqr(
     // allocate workspace
     std::vector< float > work( (4*n) );
 
-    LAPACK_sbdsqr( &uplo_, &n_, &ncvt_, &nru_, &ncc_, D, E, VT, &ldvt_, U, &ldu_, C, &ldc_, &work[0], &info_ );
+    LAPACK_sbdsqr(
+        &uplo_, &n_, &ncvt_, &nru_, &ncc_,
+        D,
+        E,
+        VT, &ldvt_,
+        U, &ldu_,
+        C, &ldc_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -82,7 +89,14 @@ int64_t bdsqr(
     // allocate workspace
     std::vector< double > work( (4*n) );
 
-    LAPACK_dbdsqr( &uplo_, &n_, &ncvt_, &nru_, &ncc_, D, E, VT, &ldvt_, U, &ldu_, C, &ldc_, &work[0], &info_ );
+    LAPACK_dbdsqr(
+        &uplo_, &n_, &ncvt_, &nru_, &ncc_,
+        D,
+        E,
+        VT, &ldvt_,
+        U, &ldu_,
+        C, &ldc_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -122,7 +136,14 @@ int64_t bdsqr(
     // allocate workspace
     std::vector< float > rwork( (4*n) );
 
-    LAPACK_cbdsqr( &uplo_, &n_, &ncvt_, &nru_, &ncc_, D, E, VT, &ldvt_, U, &ldu_, C, &ldc_, &rwork[0], &info_ );
+    LAPACK_cbdsqr(
+        &uplo_, &n_, &ncvt_, &nru_, &ncc_,
+        D,
+        E,
+        (lapack_complex_float*) VT, &ldvt_,
+        (lapack_complex_float*) U, &ldu_,
+        (lapack_complex_float*) C, &ldc_,
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -261,7 +282,14 @@ int64_t bdsqr(
     // allocate workspace
     std::vector< double > rwork( (4*n) );
 
-    LAPACK_zbdsqr( &uplo_, &n_, &ncvt_, &nru_, &ncc_, D, E, VT, &ldvt_, U, &ldu_, C, &ldc_, &rwork[0], &info_ );
+    LAPACK_zbdsqr(
+        &uplo_, &n_, &ncvt_, &nru_, &ncc_,
+        D,
+        E,
+        (lapack_complex_double*) VT, &ldvt_,
+        (lapack_complex_double*) U, &ldu_,
+        (lapack_complex_double*) C, &ldc_,
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

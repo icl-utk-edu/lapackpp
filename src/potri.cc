@@ -25,7 +25,9 @@ int64_t potri(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_spotri( &uplo_, &n_, A, &lda_, &info_ );
+    LAPACK_spotri(
+        &uplo_, &n_,
+        A, &lda_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -48,7 +50,9 @@ int64_t potri(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_dpotri( &uplo_, &n_, A, &lda_, &info_ );
+    LAPACK_dpotri(
+        &uplo_, &n_,
+        A, &lda_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -71,7 +75,9 @@ int64_t potri(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_cpotri( &uplo_, &n_, A, &lda_, &info_ );
+    LAPACK_cpotri(
+        &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -123,7 +129,9 @@ int64_t potri(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_zpotri( &uplo_, &n_, A, &lda_, &info_ );
+    LAPACK_zpotri(
+        &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

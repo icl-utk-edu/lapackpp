@@ -43,7 +43,12 @@ int64_t hetrs2(
     // allocate workspace
     std::vector< std::complex<float> > work( (n) );
 
-    LAPACK_chetrs2( &uplo_, &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &work[0], &info_ );
+    LAPACK_chetrs2(
+        &uplo_, &n_, &nrhs_,
+        (lapack_complex_float*) A, &lda_,
+        ipiv_ptr,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -129,7 +134,12 @@ int64_t hetrs2(
     // allocate workspace
     std::vector< std::complex<double> > work( (n) );
 
-    LAPACK_zhetrs2( &uplo_, &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &work[0], &info_ );
+    LAPACK_zhetrs2(
+        &uplo_, &n_, &nrhs_,
+        (lapack_complex_double*) A, &lda_,
+        ipiv_ptr,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

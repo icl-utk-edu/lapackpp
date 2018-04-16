@@ -43,7 +43,12 @@ int64_t sytrs2(
     // allocate workspace
     std::vector< float > work( (n) );
 
-    LAPACK_ssytrs2( &uplo_, &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &work[0], &info_ );
+    LAPACK_ssytrs2(
+        &uplo_, &n_, &nrhs_,
+        A, &lda_,
+        ipiv_ptr,
+        B, &ldb_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -82,7 +87,12 @@ int64_t sytrs2(
     // allocate workspace
     std::vector< double > work( (n) );
 
-    LAPACK_dsytrs2( &uplo_, &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &work[0], &info_ );
+    LAPACK_dsytrs2(
+        &uplo_, &n_, &nrhs_,
+        A, &lda_,
+        ipiv_ptr,
+        B, &ldb_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -121,7 +131,12 @@ int64_t sytrs2(
     // allocate workspace
     std::vector< std::complex<float> > work( (n) );
 
-    LAPACK_csytrs2( &uplo_, &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &work[0], &info_ );
+    LAPACK_csytrs2(
+        &uplo_, &n_, &nrhs_,
+        (lapack_complex_float*) A, &lda_,
+        ipiv_ptr,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -212,7 +227,12 @@ int64_t sytrs2(
     // allocate workspace
     std::vector< std::complex<double> > work( (n) );
 
-    LAPACK_zsytrs2( &uplo_, &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &work[0], &info_ );
+    LAPACK_zsytrs2(
+        &uplo_, &n_, &nrhs_,
+        (lapack_complex_double*) A, &lda_,
+        ipiv_ptr,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

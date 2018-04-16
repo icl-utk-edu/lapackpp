@@ -34,7 +34,10 @@ float lantr(
     // allocate workspace
     std::vector< float > work( max( 1, lwork ) );
 
-    return LAPACK_slantr( &norm_, &uplo_, &diag_, &m_, &n_, A, &lda_, &work[0] );
+    return LAPACK_slantr(
+        &norm_, &uplo_, &diag_, &m_, &n_,
+        A, &lda_,
+        &work[0] );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +65,10 @@ double lantr(
     // allocate workspace
     std::vector< double > work( max( 1, lwork ) );
 
-    return LAPACK_dlantr( &norm_, &uplo_, &diag_, &m_, &n_, A, &lda_, &work[0] );
+    return LAPACK_dlantr(
+        &norm_, &uplo_, &diag_, &m_, &n_,
+        A, &lda_,
+        &work[0] );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +96,10 @@ float lantr(
     // allocate workspace
     std::vector< float > work( max( 1, lwork ) );
 
-    return LAPACK_clantr( &norm_, &uplo_, &diag_, &m_, &n_, A, &lda_, &work[0] );
+    return LAPACK_clantr(
+        &norm_, &uplo_, &diag_, &m_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        &work[0] );
 }
 
 // -----------------------------------------------------------------------------
@@ -169,7 +178,10 @@ double lantr(
     // allocate workspace
     std::vector< double > work( max( 1, lwork ) );
 
-    return LAPACK_zlantr( &norm_, &uplo_, &diag_, &m_, &n_, A, &lda_, &work[0] );
+    return LAPACK_zlantr(
+        &norm_, &uplo_, &diag_, &m_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        &work[0] );
 }
 
 }  // namespace lapack

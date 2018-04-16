@@ -57,9 +57,20 @@ int64_t gesvx(
     std::vector< float > work( (4*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_sgesvx( &fact_, &trans_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, ipiv_ptr,
-                   &equed_, R, C, B, &ldb_, X, &ldx_, rcond, ferr, berr,
-                   &work[0], &iwork[0], &info_ );
+    LAPACK_sgesvx(
+        &fact_, &trans_, &n_, &nrhs_,
+        A, &lda_,
+        AF, &ldaf_,
+        ipiv_ptr,
+        &equed_,
+        R,
+        C,
+        B, &ldb_,
+        X, &ldx_, rcond,
+        ferr,
+        berr,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -119,9 +130,20 @@ int64_t gesvx(
     std::vector< double > work( (4*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_dgesvx( &fact_, &trans_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, ipiv_ptr,
-                   &equed_, R, C, B, &ldb_, X, &ldx_, rcond, ferr, berr,
-                   &work[0], &iwork[0], &info_ );
+    LAPACK_dgesvx(
+        &fact_, &trans_, &n_, &nrhs_,
+        A, &lda_,
+        AF, &ldaf_,
+        ipiv_ptr,
+        &equed_,
+        R,
+        C,
+        B, &ldb_,
+        X, &ldx_, rcond,
+        ferr,
+        berr,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -181,9 +203,20 @@ int64_t gesvx(
     std::vector< std::complex<float> > work( (2*n) );
     std::vector< float > rwork( (2*n) );
 
-    LAPACK_cgesvx( &fact_, &trans_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, ipiv_ptr,
-                   &equed_, R, C, B, &ldb_, X, &ldx_, rcond, ferr, berr,
-                   &work[0], &rwork[0], &info_ );
+    LAPACK_cgesvx(
+        &fact_, &trans_, &n_, &nrhs_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) AF, &ldaf_,
+        ipiv_ptr,
+        &equed_,
+        R,
+        C,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) X, &ldx_, rcond,
+        ferr,
+        berr,
+        (lapack_complex_float*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -452,9 +485,20 @@ int64_t gesvx(
     std::vector< std::complex<double> > work( (2*n) );
     std::vector< double > rwork( (2*n) );
 
-    LAPACK_zgesvx( &fact_, &trans_, &n_, &nrhs_, A, &lda_, AF, &ldaf_, ipiv_ptr,
-                   &equed_, R, C, B, &ldb_, X, &ldx_, rcond, ferr, berr,
-                   &work[0], &rwork[0], &info_ );
+    LAPACK_zgesvx(
+        &fact_, &trans_, &n_, &nrhs_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) AF, &ldaf_,
+        ipiv_ptr,
+        &equed_,
+        R,
+        C,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) X, &ldx_, rcond,
+        ferr,
+        berr,
+        (lapack_complex_double*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

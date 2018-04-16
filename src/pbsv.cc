@@ -32,7 +32,10 @@ int64_t pbsv(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_spbsv( &uplo_, &n_, &kd_, &nrhs_, AB, &ldab_, B, &ldb_, &info_ );
+    LAPACK_spbsv(
+        &uplo_, &n_, &kd_, &nrhs_,
+        AB, &ldab_,
+        B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -62,7 +65,10 @@ int64_t pbsv(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_dpbsv( &uplo_, &n_, &kd_, &nrhs_, AB, &ldab_, B, &ldb_, &info_ );
+    LAPACK_dpbsv(
+        &uplo_, &n_, &kd_, &nrhs_,
+        AB, &ldab_,
+        B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -92,7 +98,10 @@ int64_t pbsv(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_cpbsv( &uplo_, &n_, &kd_, &nrhs_, AB, &ldab_, B, &ldb_, &info_ );
+    LAPACK_cpbsv(
+        &uplo_, &n_, &kd_, &nrhs_,
+        (lapack_complex_float*) AB, &ldab_,
+        (lapack_complex_float*) B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -208,7 +217,10 @@ int64_t pbsv(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_zpbsv( &uplo_, &n_, &kd_, &nrhs_, AB, &ldab_, B, &ldb_, &info_ );
+    LAPACK_zpbsv(
+        &uplo_, &n_, &kd_, &nrhs_,
+        (lapack_complex_double*) AB, &ldab_,
+        (lapack_complex_double*) B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

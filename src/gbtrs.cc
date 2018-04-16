@@ -42,7 +42,11 @@ int64_t gbtrs(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_sgbtrs( &trans_, &n_, &kl_, &ku_, &nrhs_, AB, &ldab_, ipiv_ptr, B, &ldb_, &info_ );
+    LAPACK_sgbtrs(
+        &trans_, &n_, &kl_, &ku_, &nrhs_,
+        AB, &ldab_,
+        ipiv_ptr,
+        B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -82,7 +86,11 @@ int64_t gbtrs(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_dgbtrs( &trans_, &n_, &kl_, &ku_, &nrhs_, AB, &ldab_, ipiv_ptr, B, &ldb_, &info_ );
+    LAPACK_dgbtrs(
+        &trans_, &n_, &kl_, &ku_, &nrhs_,
+        AB, &ldab_,
+        ipiv_ptr,
+        B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -122,7 +130,11 @@ int64_t gbtrs(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_cgbtrs( &trans_, &n_, &kl_, &ku_, &nrhs_, AB, &ldab_, ipiv_ptr, B, &ldb_, &info_ );
+    LAPACK_cgbtrs(
+        &trans_, &n_, &kl_, &ku_, &nrhs_,
+        (lapack_complex_float*) AB, &ldab_,
+        ipiv_ptr,
+        (lapack_complex_float*) B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -217,7 +229,11 @@ int64_t gbtrs(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_zgbtrs( &trans_, &n_, &kl_, &ku_, &nrhs_, AB, &ldab_, ipiv_ptr, B, &ldb_, &info_ );
+    LAPACK_zgbtrs(
+        &trans_, &n_, &kl_, &ku_, &nrhs_,
+        (lapack_complex_double*) AB, &ldab_,
+        ipiv_ptr,
+        (lapack_complex_double*) B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

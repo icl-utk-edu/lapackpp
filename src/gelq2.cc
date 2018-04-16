@@ -30,7 +30,11 @@ int64_t gelq2(
     // allocate workspace
     std::vector< float > work( (m) );
 
-    LAPACK_sgelq2( &m_, &n_, A, &lda_, tau, &work[0], &info_ );
+    LAPACK_sgelq2(
+        &m_, &n_,
+        A, &lda_,
+        tau,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -58,7 +62,11 @@ int64_t gelq2(
     // allocate workspace
     std::vector< double > work( (m) );
 
-    LAPACK_dgelq2( &m_, &n_, A, &lda_, tau, &work[0], &info_ );
+    LAPACK_dgelq2(
+        &m_, &n_,
+        A, &lda_,
+        tau,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -86,7 +94,11 @@ int64_t gelq2(
     // allocate workspace
     std::vector< std::complex<float> > work( (m) );
 
-    LAPACK_cgelq2( &m_, &n_, A, &lda_, tau, &work[0], &info_ );
+    LAPACK_cgelq2(
+        &m_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) tau,
+        (lapack_complex_float*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -162,7 +174,11 @@ int64_t gelq2(
     // allocate workspace
     std::vector< std::complex<double> > work( (m) );
 
-    LAPACK_zgelq2( &m_, &n_, A, &lda_, tau, &work[0], &info_ );
+    LAPACK_zgelq2(
+        &m_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) tau,
+        (lapack_complex_double*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

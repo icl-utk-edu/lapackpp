@@ -31,7 +31,11 @@ int64_t geequb(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_sgeequb( &m_, &n_, A, &lda_, R, C, rowcnd, colcnd, amax, &info_ );
+    LAPACK_sgeequb(
+        &m_, &n_,
+        A, &lda_,
+        R,
+        C, rowcnd, colcnd, amax, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -60,7 +64,11 @@ int64_t geequb(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_dgeequb( &m_, &n_, A, &lda_, R, C, rowcnd, colcnd, amax, &info_ );
+    LAPACK_dgeequb(
+        &m_, &n_,
+        A, &lda_,
+        R,
+        C, rowcnd, colcnd, amax, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -89,7 +97,11 @@ int64_t geequb(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_cgeequb( &m_, &n_, A, &lda_, R, C, rowcnd, colcnd, amax, &info_ );
+    LAPACK_cgeequb(
+        &m_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        R,
+        C, rowcnd, colcnd, amax, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -182,7 +194,11 @@ int64_t geequb(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_zgeequb( &m_, &n_, A, &lda_, R, C, rowcnd, colcnd, amax, &info_ );
+    LAPACK_zgeequb(
+        &m_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        R,
+        C, rowcnd, colcnd, amax, &info_ );
     if (info_ < 0) {
         throw Error();
     }

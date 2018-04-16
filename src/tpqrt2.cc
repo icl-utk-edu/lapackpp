@@ -35,7 +35,11 @@ int64_t tpqrt2(
     blas_int ldt_ = (blas_int) ldt;
     blas_int info_ = 0;
 
-    LAPACK_stpqrt2( &m_, &n_, &l_, A, &lda_, B, &ldb_, T, &ldt_, &info_ );
+    LAPACK_stpqrt2(
+        &m_, &n_, &l_,
+        A, &lda_,
+        B, &ldb_,
+        T, &ldt_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -66,7 +70,11 @@ int64_t tpqrt2(
     blas_int ldt_ = (blas_int) ldt;
     blas_int info_ = 0;
 
-    LAPACK_dtpqrt2( &m_, &n_, &l_, A, &lda_, B, &ldb_, T, &ldt_, &info_ );
+    LAPACK_dtpqrt2(
+        &m_, &n_, &l_,
+        A, &lda_,
+        B, &ldb_,
+        T, &ldt_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -97,7 +105,11 @@ int64_t tpqrt2(
     blas_int ldt_ = (blas_int) ldt;
     blas_int info_ = 0;
 
-    LAPACK_ctpqrt2( &m_, &n_, &l_, A, &lda_, B, &ldb_, T, &ldt_, &info_ );
+    LAPACK_ctpqrt2(
+        &m_, &n_, &l_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) T, &ldt_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -128,7 +140,11 @@ int64_t tpqrt2(
     blas_int ldt_ = (blas_int) ldt;
     blas_int info_ = 0;
 
-    LAPACK_ztpqrt2( &m_, &n_, &l_, A, &lda_, B, &ldb_, T, &ldt_, &info_ );
+    LAPACK_ztpqrt2(
+        &m_, &n_, &l_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) T, &ldt_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

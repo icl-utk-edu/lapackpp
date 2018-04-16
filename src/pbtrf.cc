@@ -27,7 +27,9 @@ int64_t pbtrf(
     blas_int ldab_ = (blas_int) ldab;
     blas_int info_ = 0;
 
-    LAPACK_spbtrf( &uplo_, &n_, &kd_, AB, &ldab_, &info_ );
+    LAPACK_spbtrf(
+        &uplo_, &n_, &kd_,
+        AB, &ldab_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -52,7 +54,9 @@ int64_t pbtrf(
     blas_int ldab_ = (blas_int) ldab;
     blas_int info_ = 0;
 
-    LAPACK_dpbtrf( &uplo_, &n_, &kd_, AB, &ldab_, &info_ );
+    LAPACK_dpbtrf(
+        &uplo_, &n_, &kd_,
+        AB, &ldab_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -77,7 +81,9 @@ int64_t pbtrf(
     blas_int ldab_ = (blas_int) ldab;
     blas_int info_ = 0;
 
-    LAPACK_cpbtrf( &uplo_, &n_, &kd_, AB, &ldab_, &info_ );
+    LAPACK_cpbtrf(
+        &uplo_, &n_, &kd_,
+        (lapack_complex_float*) AB, &ldab_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -168,7 +174,9 @@ int64_t pbtrf(
     blas_int ldab_ = (blas_int) ldab;
     blas_int info_ = 0;
 
-    LAPACK_zpbtrf( &uplo_, &n_, &kd_, AB, &ldab_, &info_ );
+    LAPACK_zpbtrf(
+        &uplo_, &n_, &kd_,
+        (lapack_complex_double*) AB, &ldab_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

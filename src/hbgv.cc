@@ -40,7 +40,14 @@ int64_t hbgv(
     std::vector< std::complex<float> > work( (n) );
     std::vector< float > rwork( (3*n) );
 
-    LAPACK_chbgv( &jobz_, &uplo_, &n_, &ka_, &kb_, AB, &ldab_, BB, &ldbb_, W, Z, &ldz_, &work[0], &rwork[0], &info_ );
+    LAPACK_chbgv(
+        &jobz_, &uplo_, &n_, &ka_, &kb_,
+        (lapack_complex_float*) AB, &ldab_,
+        (lapack_complex_float*) BB, &ldbb_,
+        W,
+        (lapack_complex_float*) Z, &ldz_,
+        (lapack_complex_float*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -78,7 +85,14 @@ int64_t hbgv(
     std::vector< std::complex<double> > work( (n) );
     std::vector< double > rwork( (3*n) );
 
-    LAPACK_zhbgv( &jobz_, &uplo_, &n_, &ka_, &kb_, AB, &ldab_, BB, &ldbb_, W, Z, &ldz_, &work[0], &rwork[0], &info_ );
+    LAPACK_zhbgv(
+        &jobz_, &uplo_, &n_, &ka_, &kb_,
+        (lapack_complex_double*) AB, &ldab_,
+        (lapack_complex_double*) BB, &ldbb_,
+        W,
+        (lapack_complex_double*) Z, &ldz_,
+        (lapack_complex_double*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

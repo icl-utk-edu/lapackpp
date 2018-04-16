@@ -35,7 +35,13 @@ int64_t hbtrd(
     // allocate workspace
     std::vector< std::complex<float> > work( (n) );
 
-    LAPACK_chbtrd( &jobz_, &uplo_, &n_, &kd_, AB, &ldab_, D, E, Q, &ldq_, &work[0], &info_ );
+    LAPACK_chbtrd(
+        &jobz_, &uplo_, &n_, &kd_,
+        (lapack_complex_float*) AB, &ldab_,
+        D,
+        E,
+        (lapack_complex_float*) Q, &ldq_,
+        (lapack_complex_float*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -68,7 +74,13 @@ int64_t hbtrd(
     // allocate workspace
     std::vector< std::complex<double> > work( (n) );
 
-    LAPACK_zhbtrd( &jobz_, &uplo_, &n_, &kd_, AB, &ldab_, D, E, Q, &ldq_, &work[0], &info_ );
+    LAPACK_zhbtrd(
+        &jobz_, &uplo_, &n_, &kd_,
+        (lapack_complex_double*) AB, &ldab_,
+        D,
+        E,
+        (lapack_complex_double*) Q, &ldq_,
+        (lapack_complex_double*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

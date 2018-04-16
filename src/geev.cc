@@ -40,7 +40,13 @@ int64_t geev(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_sgeev( &jobvl_, &jobvr_, &n_, A, &lda_, &WR[0], &WI[0], VL, &ldvl_, VR, &ldvr_, qry_work, &ineg_one, &info_ );
+    LAPACK_sgeev(
+        &jobvl_, &jobvr_, &n_,
+        A, &lda_,
+        &WR[0], &WI[0],
+        VL, &ldvl_,
+        VR, &ldvr_,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -49,7 +55,13 @@ int64_t geev(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_sgeev( &jobvl_, &jobvr_, &n_, A, &lda_, &WR[0], &WI[0], VL, &ldvl_, VR, &ldvr_, &work[0], &lwork_, &info_ );
+    LAPACK_sgeev(
+        &jobvl_, &jobvr_, &n_,
+        A, &lda_,
+        &WR[0], &WI[0],
+        VL, &ldvl_,
+        VR, &ldvr_,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -91,7 +103,13 @@ int64_t geev(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dgeev( &jobvl_, &jobvr_, &n_, A, &lda_, &WR[0], &WI[0], VL, &ldvl_, VR, &ldvr_, qry_work, &ineg_one, &info_ );
+    LAPACK_dgeev(
+        &jobvl_, &jobvr_, &n_,
+        A, &lda_,
+        &WR[0], &WI[0],
+        VL, &ldvl_,
+        VR, &ldvr_,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -100,7 +118,13 @@ int64_t geev(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dgeev( &jobvl_, &jobvr_, &n_, A, &lda_, &WR[0], &WI[0], VL, &ldvl_, VR, &ldvr_, &work[0], &lwork_, &info_ );
+    LAPACK_dgeev(
+        &jobvl_, &jobvr_, &n_,
+        A, &lda_,
+        &WR[0], &WI[0],
+        VL, &ldvl_,
+        VR, &ldvr_,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -139,7 +163,14 @@ int64_t geev(
     std::complex<float> qry_work[1];
     float qry_rwork[1];
     blas_int ineg_one = -1;
-    LAPACK_cgeev( &jobvl_, &jobvr_, &n_, A, &lda_, W, VL, &ldvl_, VR, &ldvr_, qry_work, &ineg_one, qry_rwork, &info_ );
+    LAPACK_cgeev(
+        &jobvl_, &jobvr_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) W,
+        (lapack_complex_float*) VL, &ldvl_,
+        (lapack_complex_float*) VR, &ldvr_,
+        (lapack_complex_float*) qry_work, &ineg_one,
+        qry_rwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -149,7 +180,14 @@ int64_t geev(
     std::vector< std::complex<float> > work( lwork_ );
     std::vector< float > rwork( (2*n) );
 
-    LAPACK_cgeev( &jobvl_, &jobvr_, &n_, A, &lda_, W, VL, &ldvl_, VR, &ldvr_, &work[0], &lwork_, &rwork[0], &info_ );
+    LAPACK_cgeev(
+        &jobvl_, &jobvr_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) W,
+        (lapack_complex_float*) VL, &ldvl_,
+        (lapack_complex_float*) VR, &ldvr_,
+        (lapack_complex_float*) &work[0], &lwork_,
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -280,7 +318,14 @@ int64_t geev(
     std::complex<double> qry_work[1];
     double qry_rwork[1];
     blas_int ineg_one = -1;
-    LAPACK_zgeev( &jobvl_, &jobvr_, &n_, A, &lda_, W, VL, &ldvl_, VR, &ldvr_, qry_work, &ineg_one, qry_rwork, &info_ );
+    LAPACK_zgeev(
+        &jobvl_, &jobvr_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) W,
+        (lapack_complex_double*) VL, &ldvl_,
+        (lapack_complex_double*) VR, &ldvr_,
+        (lapack_complex_double*) qry_work, &ineg_one,
+        qry_rwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -290,7 +335,14 @@ int64_t geev(
     std::vector< std::complex<double> > work( lwork_ );
     std::vector< double > rwork( (2*n) );
 
-    LAPACK_zgeev( &jobvl_, &jobvr_, &n_, A, &lda_, W, VL, &ldvl_, VR, &ldvr_, &work[0], &lwork_, &rwork[0], &info_ );
+    LAPACK_zgeev(
+        &jobvl_, &jobvr_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) W,
+        (lapack_complex_double*) VL, &ldvl_,
+        (lapack_complex_double*) VR, &ldvr_,
+        (lapack_complex_double*) &work[0], &lwork_,
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

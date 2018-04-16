@@ -24,7 +24,11 @@ float langt(
     char norm_ = norm2char( norm );
     blas_int n_ = (blas_int) n;
 
-    return LAPACK_slangt( &norm_, &n_, DL, D, DU );
+    return LAPACK_slangt(
+        &norm_, &n_,
+        DL,
+        D,
+        DU );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +46,11 @@ double langt(
     char norm_ = norm2char( norm );
     blas_int n_ = (blas_int) n;
 
-    return LAPACK_dlangt( &norm_, &n_, DL, D, DU );
+    return LAPACK_dlangt(
+        &norm_, &n_,
+        DL,
+        D,
+        DU );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +68,11 @@ float langt(
     char norm_ = norm2char( norm );
     blas_int n_ = (blas_int) n;
 
-    return LAPACK_clangt( &norm_, &n_, DL, D, DU );
+    return LAPACK_clangt(
+        &norm_, &n_,
+        (lapack_complex_float*) DL,
+        (lapack_complex_float*) D,
+        (lapack_complex_float*) DU );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,7 +120,11 @@ double langt(
     char norm_ = norm2char( norm );
     blas_int n_ = (blas_int) n;
 
-    return LAPACK_zlangt( &norm_, &n_, DL, D, DU );
+    return LAPACK_zlangt(
+        &norm_, &n_,
+        (lapack_complex_double*) DL,
+        (lapack_complex_double*) D,
+        (lapack_complex_double*) DU );
 }
 
 }  // namespace lapack

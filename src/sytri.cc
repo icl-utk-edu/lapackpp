@@ -36,7 +36,11 @@ int64_t sytri(
     // allocate workspace
     std::vector< float > work( (n) );
 
-    LAPACK_ssytri( &uplo_, &n_, A, &lda_, ipiv_ptr, &work[0], &info_ );
+    LAPACK_ssytri(
+        &uplo_, &n_,
+        A, &lda_,
+        ipiv_ptr,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -70,7 +74,11 @@ int64_t sytri(
     // allocate workspace
     std::vector< double > work( (n) );
 
-    LAPACK_dsytri( &uplo_, &n_, A, &lda_, ipiv_ptr, &work[0], &info_ );
+    LAPACK_dsytri(
+        &uplo_, &n_,
+        A, &lda_,
+        ipiv_ptr,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -104,7 +112,11 @@ int64_t sytri(
     // allocate workspace
     std::vector< std::complex<float> > work( (2*n) );
 
-    LAPACK_csytri( &uplo_, &n_, A, &lda_, ipiv_ptr, &work[0], &info_ );
+    LAPACK_csytri(
+        &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        ipiv_ptr,
+        (lapack_complex_float*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -183,7 +195,11 @@ int64_t sytri(
     // allocate workspace
     std::vector< std::complex<double> > work( (2*n) );
 
-    LAPACK_zsytri( &uplo_, &n_, A, &lda_, ipiv_ptr, &work[0], &info_ );
+    LAPACK_zsytri(
+        &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        ipiv_ptr,
+        (lapack_complex_double*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

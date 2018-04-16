@@ -29,7 +29,11 @@ int64_t tpcon(
     std::vector< float > work( (3*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_stpcon( &norm_, &uplo_, &diag_, &n_, AP, rcond, &work[0], &iwork[0], &info_ );
+    LAPACK_stpcon(
+        &norm_, &uplo_, &diag_, &n_,
+        AP, rcond,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -56,7 +60,11 @@ int64_t tpcon(
     std::vector< double > work( (3*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_dtpcon( &norm_, &uplo_, &diag_, &n_, AP, rcond, &work[0], &iwork[0], &info_ );
+    LAPACK_dtpcon(
+        &norm_, &uplo_, &diag_, &n_,
+        AP, rcond,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -83,7 +91,11 @@ int64_t tpcon(
     std::vector< std::complex<float> > work( (2*n) );
     std::vector< float > rwork( (n) );
 
-    LAPACK_ctpcon( &norm_, &uplo_, &diag_, &n_, AP, rcond, &work[0], &rwork[0], &info_ );
+    LAPACK_ctpcon(
+        &norm_, &uplo_, &diag_, &n_,
+        (lapack_complex_float*) AP, rcond,
+        (lapack_complex_float*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -110,7 +122,11 @@ int64_t tpcon(
     std::vector< std::complex<double> > work( (2*n) );
     std::vector< double > rwork( (n) );
 
-    LAPACK_ztpcon( &norm_, &uplo_, &diag_, &n_, AP, rcond, &work[0], &rwork[0], &info_ );
+    LAPACK_ztpcon(
+        &norm_, &uplo_, &diag_, &n_,
+        (lapack_complex_double*) AP, rcond,
+        (lapack_complex_double*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

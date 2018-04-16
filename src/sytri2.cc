@@ -38,7 +38,11 @@ int64_t sytri2(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_ssytri2( &uplo_, &n_, A, &lda_, ipiv_ptr, qry_work, &ineg_one, &info_ );
+    LAPACK_ssytri2(
+        &uplo_, &n_,
+        A, &lda_,
+        ipiv_ptr,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -47,7 +51,11 @@ int64_t sytri2(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_ssytri2( &uplo_, &n_, A, &lda_, ipiv_ptr, &work[0], &lwork_, &info_ );
+    LAPACK_ssytri2(
+        &uplo_, &n_,
+        A, &lda_,
+        ipiv_ptr,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -81,7 +89,11 @@ int64_t sytri2(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dsytri2( &uplo_, &n_, A, &lda_, ipiv_ptr, qry_work, &ineg_one, &info_ );
+    LAPACK_dsytri2(
+        &uplo_, &n_,
+        A, &lda_,
+        ipiv_ptr,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -90,7 +102,11 @@ int64_t sytri2(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dsytri2( &uplo_, &n_, A, &lda_, ipiv_ptr, &work[0], &lwork_, &info_ );
+    LAPACK_dsytri2(
+        &uplo_, &n_,
+        A, &lda_,
+        ipiv_ptr,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -123,7 +139,11 @@ int64_t sytri2(
     // query for workspace size
     std::complex<float> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_csytri2( &uplo_, &n_, A, &lda_, ipiv_ptr, qry_work, &ineg_one, &info_ );
+    LAPACK_csytri2(
+        &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        ipiv_ptr,
+        (lapack_complex_float*) qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -132,7 +152,11 @@ int64_t sytri2(
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
 
-    LAPACK_csytri2( &uplo_, &n_, A, &lda_, ipiv_ptr, &work[0], &lwork_, &info_ );
+    LAPACK_csytri2(
+        &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        ipiv_ptr,
+        (lapack_complex_float*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -212,7 +236,11 @@ int64_t sytri2(
     // query for workspace size
     std::complex<double> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_zsytri2( &uplo_, &n_, A, &lda_, ipiv_ptr, qry_work, &ineg_one, &info_ );
+    LAPACK_zsytri2(
+        &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        ipiv_ptr,
+        (lapack_complex_double*) qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -221,7 +249,11 @@ int64_t sytri2(
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );
 
-    LAPACK_zsytri2( &uplo_, &n_, A, &lda_, ipiv_ptr, &work[0], &lwork_, &info_ );
+    LAPACK_zsytri2(
+        &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        ipiv_ptr,
+        (lapack_complex_double*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

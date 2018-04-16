@@ -25,7 +25,9 @@ int64_t lauum(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_slauum( &uplo_, &n_, A, &lda_, &info_ );
+    LAPACK_slauum(
+        &uplo_, &n_,
+        A, &lda_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -48,7 +50,9 @@ int64_t lauum(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_dlauum( &uplo_, &n_, A, &lda_, &info_ );
+    LAPACK_dlauum(
+        &uplo_, &n_,
+        A, &lda_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -71,7 +75,9 @@ int64_t lauum(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_clauum( &uplo_, &n_, A, &lda_, &info_ );
+    LAPACK_clauum(
+        &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -132,7 +138,9 @@ int64_t lauum(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_zlauum( &uplo_, &n_, A, &lda_, &info_ );
+    LAPACK_zlauum(
+        &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

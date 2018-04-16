@@ -13,9 +13,9 @@ using blas::real;
 int64_t ggrqf(
     int64_t m, int64_t p, int64_t n,
     float* A, int64_t lda,
-    float* TAUA,
+    float* taua,
     float* B, int64_t ldb,
-    float* TAUB )
+    float* taub )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -35,7 +35,13 @@ int64_t ggrqf(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_sggrqf( &m_, &p_, &n_, A, &lda_, TAUA, B, &ldb_, TAUB, qry_work, &ineg_one, &info_ );
+    LAPACK_sggrqf(
+        &m_, &p_, &n_,
+        A, &lda_,
+        taua,
+        B, &ldb_,
+        taub,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -44,7 +50,13 @@ int64_t ggrqf(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_sggrqf( &m_, &p_, &n_, A, &lda_, TAUA, B, &ldb_, TAUB, &work[0], &lwork_, &info_ );
+    LAPACK_sggrqf(
+        &m_, &p_, &n_,
+        A, &lda_,
+        taua,
+        B, &ldb_,
+        taub,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -55,9 +67,9 @@ int64_t ggrqf(
 int64_t ggrqf(
     int64_t m, int64_t p, int64_t n,
     double* A, int64_t lda,
-    double* TAUA,
+    double* taua,
     double* B, int64_t ldb,
-    double* TAUB )
+    double* taub )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -77,7 +89,13 @@ int64_t ggrqf(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dggrqf( &m_, &p_, &n_, A, &lda_, TAUA, B, &ldb_, TAUB, qry_work, &ineg_one, &info_ );
+    LAPACK_dggrqf(
+        &m_, &p_, &n_,
+        A, &lda_,
+        taua,
+        B, &ldb_,
+        taub,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -86,7 +104,13 @@ int64_t ggrqf(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dggrqf( &m_, &p_, &n_, A, &lda_, TAUA, B, &ldb_, TAUB, &work[0], &lwork_, &info_ );
+    LAPACK_dggrqf(
+        &m_, &p_, &n_,
+        A, &lda_,
+        taua,
+        B, &ldb_,
+        taub,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -97,9 +121,9 @@ int64_t ggrqf(
 int64_t ggrqf(
     int64_t m, int64_t p, int64_t n,
     std::complex<float>* A, int64_t lda,
-    std::complex<float>* TAUA,
+    std::complex<float>* taua,
     std::complex<float>* B, int64_t ldb,
-    std::complex<float>* TAUB )
+    std::complex<float>* taub )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -119,7 +143,13 @@ int64_t ggrqf(
     // query for workspace size
     std::complex<float> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_cggrqf( &m_, &p_, &n_, A, &lda_, TAUA, B, &ldb_, TAUB, qry_work, &ineg_one, &info_ );
+    LAPACK_cggrqf(
+        &m_, &p_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) taua,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) taub,
+        (lapack_complex_float*) qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -128,7 +158,13 @@ int64_t ggrqf(
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
 
-    LAPACK_cggrqf( &m_, &p_, &n_, A, &lda_, TAUA, B, &ldb_, TAUB, &work[0], &lwork_, &info_ );
+    LAPACK_cggrqf(
+        &m_, &p_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) taua,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) taub,
+        (lapack_complex_float*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -139,9 +175,9 @@ int64_t ggrqf(
 int64_t ggrqf(
     int64_t m, int64_t p, int64_t n,
     std::complex<double>* A, int64_t lda,
-    std::complex<double>* TAUA,
+    std::complex<double>* taua,
     std::complex<double>* B, int64_t ldb,
-    std::complex<double>* TAUB )
+    std::complex<double>* taub )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -161,7 +197,13 @@ int64_t ggrqf(
     // query for workspace size
     std::complex<double> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_zggrqf( &m_, &p_, &n_, A, &lda_, TAUA, B, &ldb_, TAUB, qry_work, &ineg_one, &info_ );
+    LAPACK_zggrqf(
+        &m_, &p_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) taua,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) taub,
+        (lapack_complex_double*) qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -170,7 +212,13 @@ int64_t ggrqf(
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );
 
-    LAPACK_zggrqf( &m_, &p_, &n_, A, &lda_, TAUA, B, &ldb_, TAUB, &work[0], &lwork_, &info_ );
+    LAPACK_zggrqf(
+        &m_, &p_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) taua,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) taub,
+        (lapack_complex_double*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

@@ -24,7 +24,7 @@ float lanhb(
     char norm_ = norm2char( norm );
     char uplo_ = uplo2char( uplo );
     blas_int n_ = (blas_int) n;
-    blas_int k_ = (blas_int) kd;
+    blas_int kd_ = (blas_int) kd;
     blas_int ldab_ = (blas_int) ldab;
 
     // from docs
@@ -33,7 +33,10 @@ float lanhb(
     // allocate workspace
     std::vector< float > work( max(1,lwork) );
 
-    return LAPACK_clanhb( &norm_, &uplo_, &n_, &k_, AB, &ldab_, &work[0] );
+    return LAPACK_clanhb(
+        &norm_, &uplo_, &n_, &kd_,
+        (lapack_complex_float*) AB, &ldab_,
+        &work[0] );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +97,7 @@ double lanhb(
     char norm_ = norm2char( norm );
     char uplo_ = uplo2char( uplo );
     blas_int n_ = (blas_int) n;
-    blas_int k_ = (blas_int) kd;
+    blas_int kd_ = (blas_int) kd;
     blas_int ldab_ = (blas_int) ldab;
 
     // from docs
@@ -103,7 +106,10 @@ double lanhb(
     // allocate workspace
     std::vector< double > work( max(1,lwork) );
 
-    return LAPACK_zlanhb( &norm_, &uplo_, &n_, &k_, AB, &ldab_, &work[0] );
+    return LAPACK_zlanhb(
+        &norm_, &uplo_, &n_, &kd_,
+        (lapack_complex_double*) AB, &ldab_,
+        &work[0] );
 }
 
 }  // namespace lapack

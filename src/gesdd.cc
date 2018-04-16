@@ -38,7 +38,14 @@ int64_t gesdd(
     float qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_sgesdd( &jobz_, &m_, &n_, A, &lda_, S, U, &ldu_, VT, &ldvt_, qry_work, &ineg_one, qry_iwork, &info_ );
+    LAPACK_sgesdd(
+        &jobz_, &m_, &n_,
+        A, &lda_,
+        S,
+        U, &ldu_,
+        VT, &ldvt_,
+        qry_work, &ineg_one,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -48,7 +55,14 @@ int64_t gesdd(
     std::vector< float > work( lwork_ );
     std::vector< blas_int > iwork( (8*min(m,n)) );
 
-    LAPACK_sgesdd( &jobz_, &m_, &n_, A, &lda_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &iwork[0], &info_ );
+    LAPACK_sgesdd(
+        &jobz_, &m_, &n_,
+        A, &lda_,
+        S,
+        U, &ldu_,
+        VT, &ldvt_,
+        &work[0], &lwork_,
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -84,7 +98,14 @@ int64_t gesdd(
     double qry_work[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_dgesdd( &jobz_, &m_, &n_, A, &lda_, S, U, &ldu_, VT, &ldvt_, qry_work, &ineg_one, qry_iwork, &info_ );
+    LAPACK_dgesdd(
+        &jobz_, &m_, &n_,
+        A, &lda_,
+        S,
+        U, &ldu_,
+        VT, &ldvt_,
+        qry_work, &ineg_one,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -94,7 +115,14 @@ int64_t gesdd(
     std::vector< double > work( lwork_ );
     std::vector< blas_int > iwork( (8*min(m,n)) );
 
-    LAPACK_dgesdd( &jobz_, &m_, &n_, A, &lda_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &iwork[0], &info_ );
+    LAPACK_dgesdd(
+        &jobz_, &m_, &n_,
+        A, &lda_,
+        S,
+        U, &ldu_,
+        VT, &ldvt_,
+        &work[0], &lwork_,
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -131,7 +159,15 @@ int64_t gesdd(
     float qry_rwork[1] = { 0 };
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_cgesdd( &jobz_, &m_, &n_, A, &lda_, S, U, &ldu_, VT, &ldvt_, qry_work, &ineg_one, qry_rwork, qry_iwork, &info_ );
+    LAPACK_cgesdd(
+        &jobz_, &m_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        S,
+        (lapack_complex_float*) U, &ldu_,
+        (lapack_complex_float*) VT, &ldvt_,
+        (lapack_complex_float*) qry_work, &ineg_one,
+        qry_rwork,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -155,7 +191,15 @@ int64_t gesdd(
     std::vector< float > rwork( lrwork_ );
     std::vector< blas_int > iwork( (8*min(m,n)) );
 
-    LAPACK_cgesdd( &jobz_, &m_, &n_, A, &lda_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &rwork[0], &iwork[0], &info_ );
+    LAPACK_cgesdd(
+        &jobz_, &m_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        S,
+        (lapack_complex_float*) U, &ldu_,
+        (lapack_complex_float*) VT, &ldvt_,
+        (lapack_complex_float*) &work[0], &lwork_,
+        &rwork[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -297,7 +341,15 @@ int64_t gesdd(
     double qry_rwork[1] = { 0 };
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_zgesdd( &jobz_, &m_, &n_, A, &lda_, S, U, &ldu_, VT, &ldvt_, qry_work, &ineg_one, qry_rwork, qry_iwork, &info_ );
+    LAPACK_zgesdd(
+        &jobz_, &m_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        S,
+        (lapack_complex_double*) U, &ldu_,
+        (lapack_complex_double*) VT, &ldvt_,
+        (lapack_complex_double*) qry_work, &ineg_one,
+        qry_rwork,
+        qry_iwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -321,7 +373,15 @@ int64_t gesdd(
     std::vector< double > rwork( lrwork_ );
     std::vector< blas_int > iwork( (8*min(m,n)) );
 
-    LAPACK_zgesdd( &jobz_, &m_, &n_, A, &lda_, S, U, &ldu_, VT, &ldvt_, &work[0], &lwork_, &rwork[0], &iwork[0], &info_ );
+    LAPACK_zgesdd(
+        &jobz_, &m_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        S,
+        (lapack_complex_double*) U, &ldu_,
+        (lapack_complex_double*) VT, &ldvt_,
+        (lapack_complex_double*) &work[0], &lwork_,
+        &rwork[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

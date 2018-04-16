@@ -33,7 +33,11 @@ void larfx(
     // allocate workspace
     std::vector< float > work( lwork );
 
-    LAPACK_slarfx( &side_, &m_, &n_, v, &tau, C, &ldc_, &work[0] );
+    LAPACK_slarfx(
+        &side_, &m_, &n_,
+        v, &tau,
+        C, &ldc_,
+        &work[0] );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +64,11 @@ void larfx(
     // allocate workspace
     std::vector< double > work( lwork );
 
-    LAPACK_dlarfx( &side_, &m_, &n_, v, &tau, C, &ldc_, &work[0] );
+    LAPACK_dlarfx(
+        &side_, &m_, &n_,
+        v, &tau,
+        C, &ldc_,
+        &work[0] );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +95,11 @@ void larfx(
     // allocate workspace
     std::vector< std::complex<float> > work( lwork );
 
-    LAPACK_clarfx( &side_, &m_, &n_, v, &tau, C, &ldc_, &work[0] );
+    LAPACK_clarfx(
+        &side_, &m_, &n_,
+        (lapack_complex_float*) v, (lapack_complex_float*) &tau,
+        (lapack_complex_float*) C, &ldc_,
+        (lapack_complex_float*) &work[0] );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +167,11 @@ void larfx(
     // allocate workspace
     std::vector< std::complex<double> > work( lwork );
 
-    LAPACK_zlarfx( &side_, &m_, &n_, v, &tau, C, &ldc_, &work[0] );
+    LAPACK_zlarfx(
+        &side_, &m_, &n_,
+        (lapack_complex_double*) v, (lapack_complex_double*) &tau,
+        (lapack_complex_double*) C, &ldc_,
+        (lapack_complex_double*) &work[0] );
 }
 
 }  // namespace lapack

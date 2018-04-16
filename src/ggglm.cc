@@ -37,7 +37,14 @@ int64_t ggglm(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_sggglm( &n_, &m_, &p_, A, &lda_, B, &ldb_, D, X, Y, qry_work, &ineg_one, &info_ );
+    LAPACK_sggglm(
+        &n_, &m_, &p_,
+        A, &lda_,
+        B, &ldb_,
+        D,
+        X,
+        Y,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -46,7 +53,14 @@ int64_t ggglm(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_sggglm( &n_, &m_, &p_, A, &lda_, B, &ldb_, D, X, Y, &work[0], &lwork_, &info_ );
+    LAPACK_sggglm(
+        &n_, &m_, &p_,
+        A, &lda_,
+        B, &ldb_,
+        D,
+        X,
+        Y,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -81,7 +95,14 @@ int64_t ggglm(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dggglm( &n_, &m_, &p_, A, &lda_, B, &ldb_, D, X, Y, qry_work, &ineg_one, &info_ );
+    LAPACK_dggglm(
+        &n_, &m_, &p_,
+        A, &lda_,
+        B, &ldb_,
+        D,
+        X,
+        Y,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -90,7 +111,14 @@ int64_t ggglm(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dggglm( &n_, &m_, &p_, A, &lda_, B, &ldb_, D, X, Y, &work[0], &lwork_, &info_ );
+    LAPACK_dggglm(
+        &n_, &m_, &p_,
+        A, &lda_,
+        B, &ldb_,
+        D,
+        X,
+        Y,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -125,7 +153,14 @@ int64_t ggglm(
     // query for workspace size
     std::complex<float> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_cggglm( &n_, &m_, &p_, A, &lda_, B, &ldb_, D, X, Y, qry_work, &ineg_one, &info_ );
+    LAPACK_cggglm(
+        &n_, &m_, &p_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) D,
+        (lapack_complex_float*) X,
+        (lapack_complex_float*) Y,
+        (lapack_complex_float*) qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -134,7 +169,14 @@ int64_t ggglm(
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
 
-    LAPACK_cggglm( &n_, &m_, &p_, A, &lda_, B, &ldb_, D, X, Y, &work[0], &lwork_, &info_ );
+    LAPACK_cggglm(
+        &n_, &m_, &p_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) D,
+        (lapack_complex_float*) X,
+        (lapack_complex_float*) Y,
+        (lapack_complex_float*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -251,7 +293,14 @@ int64_t ggglm(
     // query for workspace size
     std::complex<double> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_zggglm( &n_, &m_, &p_, A, &lda_, B, &ldb_, D, X, Y, qry_work, &ineg_one, &info_ );
+    LAPACK_zggglm(
+        &n_, &m_, &p_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) D,
+        (lapack_complex_double*) X,
+        (lapack_complex_double*) Y,
+        (lapack_complex_double*) qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -260,7 +309,14 @@ int64_t ggglm(
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );
 
-    LAPACK_zggglm( &n_, &m_, &p_, A, &lda_, B, &ldb_, D, X, Y, &work[0], &lwork_, &info_ );
+    LAPACK_zggglm(
+        &n_, &m_, &p_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) D,
+        (lapack_complex_double*) X,
+        (lapack_complex_double*) Y,
+        (lapack_complex_double*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

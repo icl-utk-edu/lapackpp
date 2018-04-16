@@ -31,7 +31,10 @@ float lansy(
     // allocate workspace
     std::vector< float > work( max( 1, lwork ) );
 
-    return LAPACK_slansy( &norm_, &uplo_, &n_, A, &lda_, &work[0] );
+    return LAPACK_slansy(
+        &norm_, &uplo_, &n_,
+        A, &lda_,
+        &work[0] );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,7 +59,10 @@ double lansy(
     // allocate workspace
     std::vector< double > work( max( 1, lwork ) );
 
-    return LAPACK_dlansy( &norm_, &uplo_, &n_, A, &lda_, &work[0] );
+    return LAPACK_dlansy(
+        &norm_, &uplo_, &n_,
+        A, &lda_,
+        &work[0] );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +87,10 @@ float lansy(
     // allocate workspace
     std::vector< float > work( max( 1, lwork ) );
 
-    return LAPACK_clansy( &norm_, &uplo_, &n_, A, &lda_, &work[0] );
+    return LAPACK_clansy(
+        &norm_, &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        &work[0] );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +157,10 @@ double lansy(
     // allocate workspace
     std::vector< double > work( max( 1, lwork ) );
 
-    return LAPACK_zlansy( &norm_, &uplo_, &n_, A, &lda_, &work[0] );
+    return LAPACK_zlansy(
+        &norm_, &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        &work[0] );
 }
 
 }  // namespace lapack

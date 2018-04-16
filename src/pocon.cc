@@ -30,7 +30,11 @@ int64_t pocon(
     std::vector< float > work( (3*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_spocon( &uplo_, &n_, A, &lda_, &anorm, rcond, &work[0], &iwork[0], &info_ );
+    LAPACK_spocon(
+        &uplo_, &n_,
+        A, &lda_, &anorm, rcond,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -58,7 +62,11 @@ int64_t pocon(
     std::vector< double > work( (3*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_dpocon( &uplo_, &n_, A, &lda_, &anorm, rcond, &work[0], &iwork[0], &info_ );
+    LAPACK_dpocon(
+        &uplo_, &n_,
+        A, &lda_, &anorm, rcond,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -86,7 +94,11 @@ int64_t pocon(
     std::vector< std::complex<float> > work( (2*n) );
     std::vector< float > rwork( (n) );
 
-    LAPACK_cpocon( &uplo_, &n_, A, &lda_, &anorm, rcond, &work[0], &rwork[0], &info_ );
+    LAPACK_cpocon(
+        &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_, &anorm, rcond,
+        (lapack_complex_float*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -149,7 +161,11 @@ int64_t pocon(
     std::vector< std::complex<double> > work( (2*n) );
     std::vector< double > rwork( (n) );
 
-    LAPACK_zpocon( &uplo_, &n_, A, &lda_, &anorm, rcond, &work[0], &rwork[0], &info_ );
+    LAPACK_zpocon(
+        &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_, &anorm, rcond,
+        (lapack_complex_double*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

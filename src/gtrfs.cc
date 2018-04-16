@@ -51,7 +51,22 @@ int64_t gtrfs(
     std::vector< float > work( (3*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_sgtrfs( &trans_, &n_, &nrhs_, DL, D, DU, DLF, DF, DUF, DU2, ipiv_ptr, B, &ldb_, X, &ldx_, ferr, berr, &work[0], &iwork[0], &info_ );
+    LAPACK_sgtrfs(
+        &trans_, &n_, &nrhs_,
+        DL,
+        D,
+        DU,
+        DLF,
+        DF,
+        DUF,
+        DU2,
+        ipiv_ptr,
+        B, &ldb_,
+        X, &ldx_,
+        ferr,
+        berr,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -100,7 +115,22 @@ int64_t gtrfs(
     std::vector< double > work( (3*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_dgtrfs( &trans_, &n_, &nrhs_, DL, D, DU, DLF, DF, DUF, DU2, ipiv_ptr, B, &ldb_, X, &ldx_, ferr, berr, &work[0], &iwork[0], &info_ );
+    LAPACK_dgtrfs(
+        &trans_, &n_, &nrhs_,
+        DL,
+        D,
+        DU,
+        DLF,
+        DF,
+        DUF,
+        DU2,
+        ipiv_ptr,
+        B, &ldb_,
+        X, &ldx_,
+        ferr,
+        berr,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -149,7 +179,22 @@ int64_t gtrfs(
     std::vector< std::complex<float> > work( (2*n) );
     std::vector< float > rwork( (n) );
 
-    LAPACK_cgtrfs( &trans_, &n_, &nrhs_, DL, D, DU, DLF, DF, DUF, DU2, ipiv_ptr, B, &ldb_, X, &ldx_, ferr, berr, &work[0], &rwork[0], &info_ );
+    LAPACK_cgtrfs(
+        &trans_, &n_, &nrhs_,
+        (lapack_complex_float*) DL,
+        (lapack_complex_float*) D,
+        (lapack_complex_float*) DU,
+        (lapack_complex_float*) DLF,
+        (lapack_complex_float*) DF,
+        (lapack_complex_float*) DUF,
+        (lapack_complex_float*) DU2,
+        ipiv_ptr,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) X, &ldx_,
+        ferr,
+        berr,
+        (lapack_complex_float*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -289,7 +334,22 @@ int64_t gtrfs(
     std::vector< std::complex<double> > work( (2*n) );
     std::vector< double > rwork( (n) );
 
-    LAPACK_zgtrfs( &trans_, &n_, &nrhs_, DL, D, DU, DLF, DF, DUF, DU2, ipiv_ptr, B, &ldb_, X, &ldx_, ferr, berr, &work[0], &rwork[0], &info_ );
+    LAPACK_zgtrfs(
+        &trans_, &n_, &nrhs_,
+        (lapack_complex_double*) DL,
+        (lapack_complex_double*) D,
+        (lapack_complex_double*) DU,
+        (lapack_complex_double*) DLF,
+        (lapack_complex_double*) DF,
+        (lapack_complex_double*) DUF,
+        (lapack_complex_double*) DU2,
+        ipiv_ptr,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) X, &ldx_,
+        ferr,
+        berr,
+        (lapack_complex_double*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

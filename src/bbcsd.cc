@@ -57,7 +57,23 @@ int64_t bbcsd(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_sbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, theta, phi, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, qry_work, &ineg_one, &info_ );
+    LAPACK_sbbcsd(
+        &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_,
+        theta,
+        phi,
+        U1, &ldu1_,
+        U2, &ldu2_,
+        V1T, &ldv1t_,
+        V2T, &ldv2t_,
+        B11D,
+        B11E,
+        B12D,
+        B12E,
+        B21D,
+        B21E,
+        B22D,
+        B22E,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -66,7 +82,23 @@ int64_t bbcsd(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_sbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, theta, phi, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, &work[0], &lwork_, &info_ );
+    LAPACK_sbbcsd(
+        &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_,
+        theta,
+        phi,
+        U1, &ldu1_,
+        U2, &ldu2_,
+        V1T, &ldv1t_,
+        V2T, &ldv2t_,
+        B11D,
+        B11E,
+        B12D,
+        B12E,
+        B21D,
+        B21E,
+        B22D,
+        B22E,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -119,7 +151,23 @@ int64_t bbcsd(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, theta, phi, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, qry_work, &ineg_one, &info_ );
+    LAPACK_dbbcsd(
+        &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_,
+        theta,
+        phi,
+        U1, &ldu1_,
+        U2, &ldu2_,
+        V1T, &ldv1t_,
+        V2T, &ldv2t_,
+        B11D,
+        B11E,
+        B12D,
+        B12E,
+        B21D,
+        B21E,
+        B22D,
+        B22E,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -128,7 +176,23 @@ int64_t bbcsd(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, theta, phi, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, &work[0], &lwork_, &info_ );
+    LAPACK_dbbcsd(
+        &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_,
+        theta,
+        phi,
+        U1, &ldu1_,
+        U2, &ldu2_,
+        V1T, &ldv1t_,
+        V2T, &ldv2t_,
+        B11D,
+        B11E,
+        B12D,
+        B12E,
+        B21D,
+        B21E,
+        B22D,
+        B22E,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -181,7 +245,23 @@ int64_t bbcsd(
     // query for workspace size
     float qry_rwork[1];
     blas_int ineg_one = -1;
-    LAPACK_cbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, theta, phi, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, qry_rwork, &ineg_one, &info_ );
+    LAPACK_cbbcsd(
+        &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_,
+        theta,
+        phi,
+        (lapack_complex_float*) U1, &ldu1_,
+        (lapack_complex_float*) U2, &ldu2_,
+        (lapack_complex_float*) V1T, &ldv1t_,
+        (lapack_complex_float*) V2T, &ldv2t_,
+        B11D,
+        B11E,
+        B12D,
+        B12E,
+        B21D,
+        B21E,
+        B22D,
+        B22E,
+        qry_rwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -190,7 +270,23 @@ int64_t bbcsd(
     // allocate workspace
     std::vector< float > rwork( lrwork_ );
 
-    LAPACK_cbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, theta, phi, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, &rwork[0], &lrwork_, &info_ );
+    LAPACK_cbbcsd(
+        &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_,
+        theta,
+        phi,
+        (lapack_complex_float*) U1, &ldu1_,
+        (lapack_complex_float*) U2, &ldu2_,
+        (lapack_complex_float*) V1T, &ldv1t_,
+        (lapack_complex_float*) V2T, &ldv2t_,
+        B11D,
+        B11E,
+        B12D,
+        B12E,
+        B21D,
+        B21E,
+        B22D,
+        B22E,
+        &rwork[0], &lrwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -432,7 +528,23 @@ int64_t bbcsd(
     // query for workspace size
     double qry_rwork[1];
     blas_int ineg_one = -1;
-    LAPACK_zbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, theta, phi, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, qry_rwork, &ineg_one, &info_ );
+    LAPACK_zbbcsd(
+        &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_,
+        theta,
+        phi,
+        (lapack_complex_double*) U1, &ldu1_,
+        (lapack_complex_double*) U2, &ldu2_,
+        (lapack_complex_double*) V1T, &ldv1t_,
+        (lapack_complex_double*) V2T, &ldv2t_,
+        B11D,
+        B11E,
+        B12D,
+        B12E,
+        B21D,
+        B21E,
+        B22D,
+        B22E,
+        qry_rwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -441,7 +553,23 @@ int64_t bbcsd(
     // allocate workspace
     std::vector< double > rwork( lrwork_ );
 
-    LAPACK_zbbcsd( &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_, theta, phi, U1, &ldu1_, U2, &ldu2_, V1T, &ldv1t_, V2T, &ldv2t_, B11D, B11E, B12D, B12E, B21D, B21E, B22D, B22E, &rwork[0], &lrwork_, &info_ );
+    LAPACK_zbbcsd(
+        &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_,
+        theta,
+        phi,
+        (lapack_complex_double*) U1, &ldu1_,
+        (lapack_complex_double*) U2, &ldu2_,
+        (lapack_complex_double*) V1T, &ldv1t_,
+        (lapack_complex_double*) V2T, &ldv2t_,
+        B11D,
+        B11E,
+        B12D,
+        B12E,
+        B21D,
+        B21E,
+        B22D,
+        B22E,
+        &rwork[0], &lrwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

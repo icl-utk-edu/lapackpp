@@ -94,6 +94,7 @@ import sys
 import re
 import os
 import argparse
+import traceback
 
 from text_balanced import extract_bracketed
 from first_version import first_version
@@ -116,6 +117,7 @@ debug = args.debug
 # configuration
 
 # --------------------
+# for lapack_wrappers.hh
 header_top = '''\
 #ifndef ICL_LAPACK_WRAPPERS_HH
 #define ICL_LAPACK_WRAPPERS_HH
@@ -134,6 +136,7 @@ header_bottom = '''\
 '''
 
 # --------------------
+# for src/*.cc wrappers
 wrapper_top1 = '''\
 #include "lapack.hh"
 #include "lapack_fortran.h"
@@ -156,6 +159,7 @@ wrapper_bottom = '''\
 '''
 
 # --------------------
+# for test/test_*.cc testers
 tester_top = '''\
 #include "test.hh"
 #include "lapack.hh"
@@ -656,6 +660,9 @@ class Func:
 
 # ------------------------------------------------------------------------------
 # joins a and b with ";"
+# if a is empty, returns b. Useful for building up lists:
+#     foo = ''
+#     foo = join( foo, 'arg i' )
 def join( a, b ):
     if (a):
         return a + '; ' + b
@@ -1111,7 +1118,7 @@ def sub_enum_list( arg, match ):
 # end
 
 # ------------------------------------------------------------------------------
-def parse_docs( txt, variables, indent=0 ):
+def parse_docs( func, txt, variables, indent=0 ):
     # exponents
     txt = re.sub( r'\*\*', r'^', txt )
 
@@ -1154,7 +1161,8 @@ def parse_docs( txt, variables, indent=0 ):
 # end
 
 # ------------------------------------------------------------------------------
-def generate_docs( func, header=False ):
+# returns C++ docs for given function
+def generate_docs( func ):
     variables = []
     for arg in func.args:
         if (arg.name_orig != arg.name):
@@ -1169,7 +1177,7 @@ def generate_docs( func, header=False ):
     # strip function name and capitalize first word, e.g.,
     # "ZPOTRF computes ..." => "Computes ..."
     d = re.sub( r'^\s*[A-Z0-9_]+ (\w)', lambda s: s.group(1).upper(), d )
-    txt += parse_docs( d, variables, indent=0 )
+    txt += parse_docs( func, d, variables, indent=0 )
     txt += '''\
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -1204,7 +1212,7 @@ def generate_docs( func, header=False ):
             # increase indented lines
             d = re.sub( r'^      ', r'             ', d, 0, re.M )
 
-            txt += parse_docs( d, variables, indent=0 )
+            txt += parse_docs( func, d, variables, indent=0 )
         else:
             txt += '/// @param[' + arg.intent + '] ' + arg.name + '\n'
 
@@ -1246,7 +1254,7 @@ def generate_docs( func, header=False ):
                             d, 0, re.M )
             # end
 
-            d = parse_docs( d, variables, indent=4 )
+            d = parse_docs( func, d, variables, indent=4 )
 
             # add "\n" on blank lines
             d = re.sub( r'^(/// +)\n///', r'\1\\n\n///', d, 0, re.M )
@@ -1260,7 +1268,7 @@ def generate_docs( func, header=False ):
     if (d):
         txt += '// -----------------------------------------------------------------------------\n'
         txt += '/// @par Further Details\n'
-        txt += parse_docs( d, variables, indent=4 )
+        txt += parse_docs( func, d, variables, indent=4 )
     # end
 
     txt += '/// @ingroup ' + func.group + '\n'
@@ -1277,6 +1285,7 @@ def generate_docs( func, header=False ):
 # end
 
 # ------------------------------------------------------------------------------
+# returns LAPACK++ wrapper for given function
 def generate_wrapper( func, header=False ):
     # --------------------
     # build list of arguments for prototype, query, and call
@@ -1294,13 +1303,29 @@ def generate_wrapper( func, header=False ):
     use_query  = False
     i = 0
     for arg in func.args:
-        call_args.append( arg.pname )
+        # arg.name  is base name, like "m" or "A"
+        # arg.lname is local name, like "m_"
+        # arg.pname is pointer name to pass to Fortran, like "&m_" or "A"
+        ##print( 'arg ' + arg.name + ', pname ' + arg.pname + ', dtype ' + arg.dtype )
+        
+        # arrays start new line
+        prefix = ''
+        if (arg.is_array):
+            prefix = '\n' + tab*2
+        
+        # cast complex pointers
+        cast = ''
+        m = re.search( '^std::complex<(\w+)>$', arg.dtype )
+        if (m):
+            cast = '(lapack_complex_' + m.group(1) + '*) '
+        call_args.append( prefix + cast + arg.pname )
+        
         if (arg.intent == 'in'):
             if (arg.is_array):
                 # input arrays
                 proto_args.append( '\n    ' + arg.dtype + ' const* ' + arg.name )
                 alias_args.append( arg.name )
-                query_args.append( arg.pname )
+                query_args.append( prefix + cast + arg.pname )
                 if (arg.dtype in ('int64_t', 'bool')):
                     # integer input arrays: copy in input
                     local_vars += (tab + '#if 1\n'
@@ -1321,7 +1346,7 @@ def generate_wrapper( func, header=False ):
             else:
                 proto_args.append( arg.dtype + ' ' + arg.name )
                 alias_args.append( arg.name )
-                query_args.append( arg.pname )
+                query_args.append( prefix + cast + arg.pname )
                 if (arg.dtype in ('int64_t', 'bool')):
                     # local 32-bit copy of 64-bit int
                     int_checks += tab*2 + 'lapack_error_if( std::abs(' + arg.name + ') > std::numeric_limits<blas_int>::max() );\n'
@@ -1334,7 +1359,7 @@ def generate_wrapper( func, header=False ):
         else:
             if (arg.is_array and arg.is_work):
                 # work, rwork, etc. local variables; not in proto_args
-                query_args.append( 'qry_' + arg.name )
+                query_args.append( prefix + cast + 'qry_' + arg.name )
                 query += tab + arg.dtype + ' qry_' + arg.name + '[1];\n'
 
                 if (arg.use_query):
@@ -1347,7 +1372,7 @@ def generate_wrapper( func, header=False ):
                 ##free_work  +=  tab + 'delete[] ' + arg.name + '_;\n'
             elif (not arg.is_array and arg.dtype in ('int64_t', 'bool')):
                 # output dimensions (nfound, etc.)
-                query_args.append( arg.pname )
+                query_args.append( prefix + cast + arg.pname )
                 if (arg.name == 'info'):
                     # info not in proto_args
                     local_vars += tab + 'blas_int ' + arg.lname + ' = 0;\n'
@@ -1363,7 +1388,7 @@ def generate_wrapper( func, header=False ):
                     cleanup += tab + '*' + arg.name + ' = ' + arg.lname + ';\n'
             else:
                 # output array
-                query_args.append( arg.pname )
+                query_args.append( prefix + cast + arg.pname )
                 proto_args.append( '\n    ' + arg.dtype + '* ' + arg.name )
                 alias_args.append( arg.name )
                 if (arg.is_array and (arg.dtype in ('int64_t', 'bool'))):
@@ -1401,7 +1426,7 @@ def generate_wrapper( func, header=False ):
               +   tab + '// query for workspace size\n'
               +   query
               +   tab + 'blas_int ineg_one = -1;\n'
-              +   tab + 'LAPACK_' + func.xname + '( ' + ', '.join( query_args ) + ' );\n'
+              +   tab + 'LAPACK_' + func.xname + '(\n' + tab*2 + ', '.join( query_args ) + ' );\n'
               +   tab + 'if (info_ < 0) {\n'
               +   tab*2 + 'throw Error();\n'
               +   tab + '}\n')
@@ -1430,11 +1455,11 @@ def generate_wrapper( func, header=False ):
     # end
 
     if (func.is_func):
-        call = '\n' + tab + 'return LAPACK_' + func.xname + '( ' + ', '.join( call_args ) + ' );\n'
+        call = '\n' + tab + 'return LAPACK_' + func.xname + '(\n' + tab*2 + ', '.join( call_args ) + ' );\n'
         if (info_throw or cleanup or info_return):
             print( 'Warning: why is info or cleanup on a function?' )
     else:
-        call = '\n' + tab + 'LAPACK_' + func.xname + '( ' + ', '.join( call_args ) + ' );\n'
+        call = '\n' + tab + 'LAPACK_' + func.xname + '(\n' + tab*2 + ', '.join( call_args ) + ' );\n'
 
     if (header):
         txt = (func.retval + ' ' + func.name + '(\n'
@@ -1769,18 +1794,9 @@ void test_''' + func.name + '''( Params& params, bool run )
 # end
 
 # ------------------------------------------------------------------------------
-# Process each function on the command line, given as a base name like "getrf".
-# Finds LAPACK functions with that base name and some precision prefix.
-# Outputs to ../gen/basename.cc
-lapack = os.environ['LAPACKDIR']
-
-if (args.header):
-    header_file = '../gen/lapack_wrappers.hh'
-    print( 'generating', header_file )
-    header = open( header_file, 'w' )
-    print( header_top, file=header, end='' )
-
-for arg in args.argv:
+# processes each routine (given as command line argument)
+# to generate header, wrapper, or tester.
+def process_routine( arg ):
     files = []
     for subdir in ('SRC', 'TESTING/MATGEN'):
         for p in ('s', 'd', 'c', 'z'):  #, 'ds', 'zc'):
@@ -1792,7 +1808,7 @@ for arg in args.argv:
 
     if (not files):
         print( "no files found matching:", arg )
-        continue
+        return
     # end
 
     if (args.header):
@@ -1865,6 +1881,27 @@ for arg in args.argv:
         tester.close()
 
     print()
+# end
+
+# ------------------------------------------------------------------------------
+# Process each function on the command line, given as a base name like "getrf".
+# Finds LAPACK functions with that base name and some precision prefix.
+# Outputs to ../gen/basename.cc
+lapack = os.environ['LAPACKDIR']
+
+if (args.header):
+    header_file = '../gen/lapack_wrappers.hh'
+    print( 'generating', header_file )
+    header = open( header_file, 'w' )
+    print( header_top, file=header, end='' )
+
+for arg in args.argv:
+    try:
+        process_routine( arg )
+    except Exception, e:
+        print( 'Error:' + arg + ':', e )
+        traceback.print_exc()
+        print()
 # end
 
 if (args.header):

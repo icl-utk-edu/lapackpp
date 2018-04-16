@@ -15,7 +15,7 @@ int64_t hptrd(
     std::complex<float>* AP,
     float* D,
     float* E,
-    std::complex<float>* TAU )
+    std::complex<float>* tau )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -25,7 +25,12 @@ int64_t hptrd(
     blas_int n_ = (blas_int) n;
     blas_int info_ = 0;
 
-    LAPACK_chptrd( &uplo_, &n_, AP, D, E, TAU, &info_ );
+    LAPACK_chptrd(
+        &uplo_, &n_,
+        (lapack_complex_float*) AP,
+        D,
+        E,
+        (lapack_complex_float*) tau, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -38,7 +43,7 @@ int64_t hptrd(
     std::complex<double>* AP,
     double* D,
     double* E,
-    std::complex<double>* TAU )
+    std::complex<double>* tau )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -48,7 +53,12 @@ int64_t hptrd(
     blas_int n_ = (blas_int) n;
     blas_int info_ = 0;
 
-    LAPACK_zhptrd( &uplo_, &n_, AP, D, E, TAU, &info_ );
+    LAPACK_zhptrd(
+        &uplo_, &n_,
+        (lapack_complex_double*) AP,
+        D,
+        E,
+        (lapack_complex_double*) tau, &info_ );
     if (info_ < 0) {
         throw Error();
     }

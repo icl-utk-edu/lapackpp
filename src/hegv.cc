@@ -35,7 +35,13 @@ int64_t hegv(
     std::complex<float> qry_work[1];
     float qry_rwork[1];
     blas_int ineg_one = -1;
-    LAPACK_chegv( &itype_, &jobz_, &uplo_, &n_, A, &lda_, B, &ldb_, W, qry_work, &ineg_one, qry_rwork, &info_ );
+    LAPACK_chegv(
+        &itype_, &jobz_, &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) B, &ldb_,
+        W,
+        (lapack_complex_float*) qry_work, &ineg_one,
+        qry_rwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -45,7 +51,13 @@ int64_t hegv(
     std::vector< std::complex<float> > work( lwork_ );
     std::vector< float > rwork( (max( 1, 3*n-2 )) );
 
-    LAPACK_chegv( &itype_, &jobz_, &uplo_, &n_, A, &lda_, B, &ldb_, W, &work[0], &lwork_, &rwork[0], &info_ );
+    LAPACK_chegv(
+        &itype_, &jobz_, &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) B, &ldb_,
+        W,
+        (lapack_complex_float*) &work[0], &lwork_,
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -78,7 +90,13 @@ int64_t hegv(
     std::complex<double> qry_work[1];
     double qry_rwork[1];
     blas_int ineg_one = -1;
-    LAPACK_zhegv( &itype_, &jobz_, &uplo_, &n_, A, &lda_, B, &ldb_, W, qry_work, &ineg_one, qry_rwork, &info_ );
+    LAPACK_zhegv(
+        &itype_, &jobz_, &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_,
+        W,
+        (lapack_complex_double*) qry_work, &ineg_one,
+        qry_rwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -88,7 +106,13 @@ int64_t hegv(
     std::vector< std::complex<double> > work( lwork_ );
     std::vector< double > rwork( (max( 1, 3*n-2 )) );
 
-    LAPACK_zhegv( &itype_, &jobz_, &uplo_, &n_, A, &lda_, B, &ldb_, W, &work[0], &lwork_, &rwork[0], &info_ );
+    LAPACK_zhegv(
+        &itype_, &jobz_, &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_,
+        W,
+        (lapack_complex_double*) &work[0], &lwork_,
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

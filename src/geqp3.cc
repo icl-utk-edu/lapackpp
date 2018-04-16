@@ -14,7 +14,7 @@ int64_t geqp3(
     int64_t m, int64_t n,
     float* A, int64_t lda,
     int64_t* jpvt,
-    float* TAU )
+    float* tau )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -37,7 +37,12 @@ int64_t geqp3(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_sgeqp3( &m_, &n_, A, &lda_, jpvt_ptr, TAU, qry_work, &ineg_one, &info_ );
+    LAPACK_sgeqp3(
+        &m_, &n_,
+        A, &lda_,
+        jpvt_ptr,
+        tau,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -46,7 +51,12 @@ int64_t geqp3(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_sgeqp3( &m_, &n_, A, &lda_, jpvt_ptr, TAU, &work[0], &lwork_, &info_ );
+    LAPACK_sgeqp3(
+        &m_, &n_,
+        A, &lda_,
+        jpvt_ptr,
+        tau,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -61,7 +71,7 @@ int64_t geqp3(
     int64_t m, int64_t n,
     double* A, int64_t lda,
     int64_t* jpvt,
-    double* TAU )
+    double* tau )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -84,7 +94,12 @@ int64_t geqp3(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dgeqp3( &m_, &n_, A, &lda_, jpvt_ptr, TAU, qry_work, &ineg_one, &info_ );
+    LAPACK_dgeqp3(
+        &m_, &n_,
+        A, &lda_,
+        jpvt_ptr,
+        tau,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -93,7 +108,12 @@ int64_t geqp3(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dgeqp3( &m_, &n_, A, &lda_, jpvt_ptr, TAU, &work[0], &lwork_, &info_ );
+    LAPACK_dgeqp3(
+        &m_, &n_,
+        A, &lda_,
+        jpvt_ptr,
+        tau,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -108,7 +128,7 @@ int64_t geqp3(
     int64_t m, int64_t n,
     std::complex<float>* A, int64_t lda,
     int64_t* jpvt,
-    std::complex<float>* TAU )
+    std::complex<float>* tau )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -132,7 +152,13 @@ int64_t geqp3(
     std::complex<float> qry_work[1];
     float qry_rwork[1];
     blas_int ineg_one = -1;
-    LAPACK_cgeqp3( &m_, &n_, A, &lda_, jpvt_ptr, TAU, qry_work, &ineg_one, qry_rwork, &info_ );
+    LAPACK_cgeqp3(
+        &m_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        jpvt_ptr,
+        (lapack_complex_float*) tau,
+        (lapack_complex_float*) qry_work, &ineg_one,
+        qry_rwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -142,7 +168,13 @@ int64_t geqp3(
     std::vector< std::complex<float> > work( lwork_ );
     std::vector< float > rwork( (2*n) );
 
-    LAPACK_cgeqp3( &m_, &n_, A, &lda_, jpvt_ptr, TAU, &work[0], &lwork_, &rwork[0], &info_ );
+    LAPACK_cgeqp3(
+        &m_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        jpvt_ptr,
+        (lapack_complex_float*) tau,
+        (lapack_complex_float*) &work[0], &lwork_,
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -157,7 +189,7 @@ int64_t geqp3(
     int64_t m, int64_t n,
     std::complex<double>* A, int64_t lda,
     int64_t* jpvt,
-    std::complex<double>* TAU )
+    std::complex<double>* tau )
 {
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
@@ -181,7 +213,13 @@ int64_t geqp3(
     std::complex<double> qry_work[1];
     double qry_rwork[1];
     blas_int ineg_one = -1;
-    LAPACK_zgeqp3( &m_, &n_, A, &lda_, jpvt_ptr, TAU, qry_work, &ineg_one, qry_rwork, &info_ );
+    LAPACK_zgeqp3(
+        &m_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        jpvt_ptr,
+        (lapack_complex_double*) tau,
+        (lapack_complex_double*) qry_work, &ineg_one,
+        qry_rwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -191,7 +229,13 @@ int64_t geqp3(
     std::vector< std::complex<double> > work( lwork_ );
     std::vector< double > rwork( (2*n) );
 
-    LAPACK_zgeqp3( &m_, &n_, A, &lda_, jpvt_ptr, TAU, &work[0], &lwork_, &rwork[0], &info_ );
+    LAPACK_zgeqp3(
+        &m_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        jpvt_ptr,
+        (lapack_complex_double*) tau,
+        (lapack_complex_double*) &work[0], &lwork_,
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

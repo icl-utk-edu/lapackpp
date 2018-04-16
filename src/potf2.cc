@@ -25,7 +25,9 @@ int64_t potf2(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_spotf2( &uplo_, &n_, A, &lda_, &info_ );
+    LAPACK_spotf2(
+        &uplo_, &n_,
+        A, &lda_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -48,7 +50,9 @@ int64_t potf2(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_dpotf2( &uplo_, &n_, A, &lda_, &info_ );
+    LAPACK_dpotf2(
+        &uplo_, &n_,
+        A, &lda_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -71,7 +75,9 @@ int64_t potf2(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_cpotf2( &uplo_, &n_, A, &lda_, &info_ );
+    LAPACK_cpotf2(
+        &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -139,7 +145,9 @@ int64_t potf2(
     blas_int lda_ = (blas_int) lda;
     blas_int info_ = 0;
 
-    LAPACK_zpotf2( &uplo_, &n_, A, &lda_, &info_ );
+    LAPACK_zpotf2(
+        &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

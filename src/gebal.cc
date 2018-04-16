@@ -30,7 +30,10 @@ int64_t gebal(
     blas_int ihi_ = (blas_int) *ihi;
     blas_int info_ = 0;
 
-    LAPACK_sgebal( &balance_, &n_, A, &lda_, &ilo_, &ihi_, scale, &info_ );
+    LAPACK_sgebal(
+        &balance_, &n_,
+        A, &lda_, &ilo_, &ihi_,
+        scale, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -60,7 +63,10 @@ int64_t gebal(
     blas_int ihi_ = (blas_int) *ihi;
     blas_int info_ = 0;
 
-    LAPACK_dgebal( &balance_, &n_, A, &lda_, &ilo_, &ihi_, scale, &info_ );
+    LAPACK_dgebal(
+        &balance_, &n_,
+        A, &lda_, &ilo_, &ihi_,
+        scale, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -90,7 +96,10 @@ int64_t gebal(
     blas_int ihi_ = (blas_int) *ihi;
     blas_int info_ = 0;
 
-    LAPACK_cgebal( &balance_, &n_, A, &lda_, &ilo_, &ihi_, scale, &info_ );
+    LAPACK_cgebal(
+        &balance_, &n_,
+        (lapack_complex_float*) A, &lda_, &ilo_, &ihi_,
+        scale, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -210,7 +219,10 @@ int64_t gebal(
     blas_int ihi_ = (blas_int) *ihi;
     blas_int info_ = 0;
 
-    LAPACK_zgebal( &balance_, &n_, A, &lda_, &ilo_, &ihi_, scale, &info_ );
+    LAPACK_zgebal(
+        &balance_, &n_,
+        (lapack_complex_double*) A, &lda_, &ilo_, &ihi_,
+        scale, &info_ );
     if (info_ < 0) {
         throw Error();
     }

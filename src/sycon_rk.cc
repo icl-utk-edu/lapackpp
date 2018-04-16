@@ -41,7 +41,13 @@ int64_t sycon_rk(
     std::vector< float > work( (2*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_ssycon_3( &uplo_, &n_, A, &lda_, E, ipiv_ptr, &anorm, rcond, &work[0], &iwork[0], &info_ );
+    LAPACK_ssycon_3(
+        &uplo_, &n_,
+        A, &lda_,
+        E,
+        ipiv_ptr, &anorm, rcond,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -78,7 +84,13 @@ int64_t sycon_rk(
     std::vector< double > work( (2*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_dsycon_3( &uplo_, &n_, A, &lda_, E, ipiv_ptr, &anorm, rcond, &work[0], &iwork[0], &info_ );
+    LAPACK_dsycon_3(
+        &uplo_, &n_,
+        A, &lda_,
+        E,
+        ipiv_ptr, &anorm, rcond,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -115,7 +127,13 @@ int64_t sycon_rk(
     std::vector< std::complex<float> > work( (2*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_csycon_3( &uplo_, &n_, A, &lda_, E, ipiv_ptr, &anorm, rcond, &work[0], &iwork[0], &info_ );
+    LAPACK_csycon_3(
+        &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) E,
+        ipiv_ptr, &anorm, rcond,
+        (lapack_complex_float*) &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -225,7 +243,13 @@ int64_t sycon_rk(
     std::vector< std::complex<double> > work( (2*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_zsycon_3( &uplo_, &n_, A, &lda_, E, ipiv_ptr, &anorm, rcond, &work[0], &iwork[0], &info_ );
+    LAPACK_zsycon_3(
+        &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) E,
+        ipiv_ptr, &anorm, rcond,
+        (lapack_complex_double*) &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

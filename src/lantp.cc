@@ -30,7 +30,10 @@ float lantp(
     // allocate workspace
     std::vector< float > work( max(1,lwork) );
 
-    return LAPACK_slantp( &norm_, &uplo_, &diag_, &n_, AP, &work[0] );
+    return LAPACK_slantp(
+        &norm_, &uplo_, &diag_, &n_,
+        AP,
+        &work[0] );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +57,10 @@ double lantp(
     // allocate workspace
     std::vector< double > work( max(1,lwork) );
 
-    return LAPACK_dlantp( &norm_, &uplo_, &diag_, &n_, AP, &work[0] );
+    return LAPACK_dlantp(
+        &norm_, &uplo_, &diag_, &n_,
+        AP,
+        &work[0] );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +84,10 @@ float lantp(
     // allocate workspace
     std::vector< float > work( max(1,lwork) );
 
-    return LAPACK_clantp( &norm_, &uplo_, &diag_, &n_, AP, &work[0] );
+    return LAPACK_clantp(
+        &norm_, &uplo_, &diag_, &n_,
+        (lapack_complex_float*) AP,
+        &work[0] );
 }
 
 // -----------------------------------------------------------------------------
@@ -141,7 +150,10 @@ double lantp(
     // allocate workspace
     std::vector< double > work( max(1,lwork) );
 
-    return LAPACK_zlantp( &norm_, &uplo_, &diag_, &n_, AP, &work[0] );
+    return LAPACK_zlantp(
+        &norm_, &uplo_, &diag_, &n_,
+        (lapack_complex_double*) AP,
+        &work[0] );
 }
 
 }  // namespace lapack

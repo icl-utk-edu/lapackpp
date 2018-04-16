@@ -41,7 +41,14 @@ int64_t hecon_rk(
     std::vector< std::complex<float> > work( (2*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_checon_3( &uplo_, &n_, A, &lda_, E, ipiv_ptr, &anorm, rcond, &work[0], &iwork[0], &info_ );
+    LAPACK_checon_3(
+        &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) E,
+        ipiv_ptr, &anorm, rcond,
+        (lapack_complex_float*) &work[0],
+        &iwork[0],
+        &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -71,6 +78,7 @@ int64_t hecon_rk(
 /// For complex symmetric matrices, see `lapack::sycon_rk`.
 ///
 /// @since LAPACK 3.7.0.
+/// This wraps LAPACK's hecon_3 or sycon_3.
 ///
 /// @param[in] uplo
 ///     Specifies whether the details of the factorization are
@@ -151,7 +159,14 @@ int64_t hecon_rk(
     std::vector< std::complex<double> > work( (2*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_zhecon_3( &uplo_, &n_, A, &lda_, E, ipiv_ptr, &anorm, rcond, &work[0], &iwork[0], &info_ );
+    LAPACK_zhecon_3(
+        &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) E,
+        ipiv_ptr, &anorm, rcond,
+        (lapack_complex_double*) &work[0],
+        &iwork[0],
+        &info_ );
     if (info_ < 0) {
         throw Error();
     }

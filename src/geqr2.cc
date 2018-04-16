@@ -30,7 +30,11 @@ int64_t geqr2(
     // allocate workspace
     std::vector< float > work( (n) );
 
-    LAPACK_sgeqr2( &m_, &n_, A, &lda_, tau, &work[0], &info_ );
+    LAPACK_sgeqr2(
+        &m_, &n_,
+        A, &lda_,
+        tau,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -58,7 +62,11 @@ int64_t geqr2(
     // allocate workspace
     std::vector< double > work( (n) );
 
-    LAPACK_dgeqr2( &m_, &n_, A, &lda_, tau, &work[0], &info_ );
+    LAPACK_dgeqr2(
+        &m_, &n_,
+        A, &lda_,
+        tau,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -86,7 +94,11 @@ int64_t geqr2(
     // allocate workspace
     std::vector< std::complex<float> > work( (n) );
 
-    LAPACK_cgeqr2( &m_, &n_, A, &lda_, tau, &work[0], &info_ );
+    LAPACK_cgeqr2(
+        &m_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) tau,
+        (lapack_complex_float*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -163,7 +175,11 @@ int64_t geqr2(
     // allocate workspace
     std::vector< std::complex<double> > work( (n) );
 
-    LAPACK_zgeqr2( &m_, &n_, A, &lda_, tau, &work[0], &info_ );
+    LAPACK_zgeqr2(
+        &m_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) tau,
+        (lapack_complex_double*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

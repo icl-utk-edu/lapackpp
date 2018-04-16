@@ -33,7 +33,11 @@ int64_t sptri(
     // allocate workspace
     std::vector< float > work( (n) );
 
-    LAPACK_ssptri( &uplo_, &n_, AP, ipiv_ptr, &work[0], &info_ );
+    LAPACK_ssptri(
+        &uplo_, &n_,
+        AP,
+        ipiv_ptr,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -64,7 +68,11 @@ int64_t sptri(
     // allocate workspace
     std::vector< double > work( (n) );
 
-    LAPACK_dsptri( &uplo_, &n_, AP, ipiv_ptr, &work[0], &info_ );
+    LAPACK_dsptri(
+        &uplo_, &n_,
+        AP,
+        ipiv_ptr,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -95,7 +103,11 @@ int64_t sptri(
     // allocate workspace
     std::vector< std::complex<float> > work( (n) );
 
-    LAPACK_csptri( &uplo_, &n_, AP, ipiv_ptr, &work[0], &info_ );
+    LAPACK_csptri(
+        &uplo_, &n_,
+        (lapack_complex_float*) AP,
+        ipiv_ptr,
+        (lapack_complex_float*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -126,7 +138,11 @@ int64_t sptri(
     // allocate workspace
     std::vector< std::complex<double> > work( (n) );
 
-    LAPACK_zsptri( &uplo_, &n_, AP, ipiv_ptr, &work[0], &info_ );
+    LAPACK_zsptri(
+        &uplo_, &n_,
+        (lapack_complex_double*) AP,
+        ipiv_ptr,
+        (lapack_complex_double*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

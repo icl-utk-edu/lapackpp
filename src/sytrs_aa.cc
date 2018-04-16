@@ -44,7 +44,12 @@ int64_t sytrs_aa(
     // allocate workspace
     std::vector< float > work( (max(1,lwork_)) );
 
-    LAPACK_ssytrs_aa( &uplo_, &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &work[0], &lwork_, &info_ );
+    LAPACK_ssytrs_aa(
+        &uplo_, &n_, &nrhs_,
+        A, &lda_,
+        ipiv_ptr,
+        B, &ldb_,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -84,7 +89,12 @@ int64_t sytrs_aa(
     // allocate workspace
     std::vector< double > work( (max(1,lwork_)) );
 
-    LAPACK_dsytrs_aa( &uplo_, &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &work[0], &lwork_, &info_ );
+    LAPACK_dsytrs_aa(
+        &uplo_, &n_, &nrhs_,
+        A, &lda_,
+        ipiv_ptr,
+        B, &ldb_,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -124,7 +134,12 @@ int64_t sytrs_aa(
     // allocate workspace
     std::vector< std::complex<float> > work( (max(1,lwork_)) );
 
-    LAPACK_csytrs_aa( &uplo_, &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &work[0], &lwork_, &info_ );
+    LAPACK_csytrs_aa(
+        &uplo_, &n_, &nrhs_,
+        (lapack_complex_float*) A, &lda_,
+        ipiv_ptr,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -207,7 +222,12 @@ int64_t sytrs_aa(
     // allocate workspace
     std::vector< std::complex<double> > work( (max(1,lwork_)) );
 
-    LAPACK_zsytrs_aa( &uplo_, &n_, &nrhs_, A, &lda_, ipiv_ptr, B, &ldb_, &work[0], &lwork_, &info_ );
+    LAPACK_zsytrs_aa(
+        &uplo_, &n_, &nrhs_,
+        (lapack_complex_double*) A, &lda_,
+        ipiv_ptr,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

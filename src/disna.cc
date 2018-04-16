@@ -25,7 +25,10 @@ int64_t disna(
     blas_int n_ = (blas_int) n;
     blas_int info_ = 0;
 
-    LAPACK_sdisna( &jobcond_, &m_, &n_, D, SEP, &info_ );
+    LAPACK_sdisna(
+        &jobcond_, &m_, &n_,
+        D,
+        SEP, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -48,7 +51,10 @@ int64_t disna(
     blas_int n_ = (blas_int) n;
     blas_int info_ = 0;
 
-    LAPACK_ddisna( &jobcond_, &m_, &n_, D, SEP, &info_ );
+    LAPACK_ddisna(
+        &jobcond_, &m_, &n_,
+        D,
+        SEP, &info_ );
     if (info_ < 0) {
         throw Error();
     }

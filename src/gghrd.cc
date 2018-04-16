@@ -38,7 +38,12 @@ int64_t gghrd(
     blas_int ldz_ = (blas_int) ldz;
     blas_int info_ = 0;
 
-    LAPACK_sgghrd( &compq_, &compz_, &n_, &ilo_, &ihi_, A, &lda_, B, &ldb_, Q, &ldq_, Z, &ldz_, &info_ );
+    LAPACK_sgghrd(
+        &compq_, &compz_, &n_, &ilo_, &ihi_,
+        A, &lda_,
+        B, &ldb_,
+        Q, &ldq_,
+        Z, &ldz_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -74,7 +79,12 @@ int64_t gghrd(
     blas_int ldz_ = (blas_int) ldz;
     blas_int info_ = 0;
 
-    LAPACK_dgghrd( &compq_, &compz_, &n_, &ilo_, &ihi_, A, &lda_, B, &ldb_, Q, &ldq_, Z, &ldz_, &info_ );
+    LAPACK_dgghrd(
+        &compq_, &compz_, &n_, &ilo_, &ihi_,
+        A, &lda_,
+        B, &ldb_,
+        Q, &ldq_,
+        Z, &ldz_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -110,7 +120,12 @@ int64_t gghrd(
     blas_int ldz_ = (blas_int) ldz;
     blas_int info_ = 0;
 
-    LAPACK_cgghrd( &compq_, &compz_, &n_, &ilo_, &ihi_, A, &lda_, B, &ldb_, Q, &ldq_, Z, &ldz_, &info_ );
+    LAPACK_cgghrd(
+        &compq_, &compz_, &n_, &ilo_, &ihi_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) Q, &ldq_,
+        (lapack_complex_float*) Z, &ldz_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -146,7 +161,12 @@ int64_t gghrd(
     blas_int ldz_ = (blas_int) ldz;
     blas_int info_ = 0;
 
-    LAPACK_zgghrd( &compq_, &compz_, &n_, &ilo_, &ihi_, A, &lda_, B, &ldb_, Q, &ldq_, Z, &ldz_, &info_ );
+    LAPACK_zgghrd(
+        &compq_, &compz_, &n_, &ilo_, &ihi_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) Q, &ldq_,
+        (lapack_complex_double*) Z, &ldz_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

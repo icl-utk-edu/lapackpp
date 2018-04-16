@@ -24,8 +24,7 @@ libtest_so   = ${libtest_path}/libtest.so
 LAPACKPP_FLAGS = -I../libtest \
                  -I../blaspp/include \
                  -I../blaspp/test \
-                 -Iinclude \
-                 -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_CPP
+                 -Iinclude
 
 LAPACKPP_LIBS  = -L../libtest -Wl,-rpath,${libtest_path} -ltest \
                  -Llib -Wl,-rpath,${pwd}/lib -llapackpp

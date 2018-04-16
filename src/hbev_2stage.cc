@@ -37,7 +37,13 @@ int64_t hbev_2stage(
     std::complex<float> qry_work[1];
     float qry_rwork[1];
     blas_int ineg_one = -1;
-    LAPACK_chbev_2stage( &jobz_, &uplo_, &n_, &kd_, AB, &ldab_, W, Z, &ldz_, qry_work, &ineg_one, qry_rwork, &info_ );
+    LAPACK_chbev_2stage(
+        &jobz_, &uplo_, &n_, &kd_,
+        (lapack_complex_float*) AB, &ldab_,
+        W,
+        (lapack_complex_float*) Z, &ldz_,
+        (lapack_complex_float*) qry_work, &ineg_one,
+        qry_rwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -47,7 +53,13 @@ int64_t hbev_2stage(
     std::vector< std::complex<float> > work( lwork_ );
     std::vector< float > rwork( (max( 1, 3*n-2 )) );
 
-    LAPACK_chbev_2stage( &jobz_, &uplo_, &n_, &kd_, AB, &ldab_, W, Z, &ldz_, &work[0], &lwork_, &rwork[0], &info_ );
+    LAPACK_chbev_2stage(
+        &jobz_, &uplo_, &n_, &kd_,
+        (lapack_complex_float*) AB, &ldab_,
+        W,
+        (lapack_complex_float*) Z, &ldz_,
+        (lapack_complex_float*) &work[0], &lwork_,
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -80,7 +92,13 @@ int64_t hbev_2stage(
     std::complex<double> qry_work[1];
     double qry_rwork[1];
     blas_int ineg_one = -1;
-    LAPACK_zhbev_2stage( &jobz_, &uplo_, &n_, &kd_, AB, &ldab_, W, Z, &ldz_, qry_work, &ineg_one, qry_rwork, &info_ );
+    LAPACK_zhbev_2stage(
+        &jobz_, &uplo_, &n_, &kd_,
+        (lapack_complex_double*) AB, &ldab_,
+        W,
+        (lapack_complex_double*) Z, &ldz_,
+        (lapack_complex_double*) qry_work, &ineg_one,
+        qry_rwork, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -90,7 +108,13 @@ int64_t hbev_2stage(
     std::vector< std::complex<double> > work( lwork_ );
     std::vector< double > rwork( (max( 1, 3*n-2 )) );
 
-    LAPACK_zhbev_2stage( &jobz_, &uplo_, &n_, &kd_, AB, &ldab_, W, Z, &ldz_, &work[0], &lwork_, &rwork[0], &info_ );
+    LAPACK_zhbev_2stage(
+        &jobz_, &uplo_, &n_, &kd_,
+        (lapack_complex_double*) AB, &ldab_,
+        W,
+        (lapack_complex_double*) Z, &ldz_,
+        (lapack_complex_double*) &work[0], &lwork_,
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

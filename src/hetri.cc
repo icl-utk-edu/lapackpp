@@ -36,7 +36,11 @@ int64_t hetri(
     // allocate workspace
     std::vector< std::complex<float> > work( (n) );
 
-    LAPACK_chetri( &uplo_, &n_, A, &lda_, ipiv_ptr, &work[0], &info_ );
+    LAPACK_chetri(
+        &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        ipiv_ptr,
+        (lapack_complex_float*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -115,7 +119,11 @@ int64_t hetri(
     // allocate workspace
     std::vector< std::complex<double> > work( (n) );
 
-    LAPACK_zhetri( &uplo_, &n_, A, &lda_, ipiv_ptr, &work[0], &info_ );
+    LAPACK_zhetri(
+        &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        ipiv_ptr,
+        (lapack_complex_double*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

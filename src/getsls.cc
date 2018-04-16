@@ -40,7 +40,11 @@ int64_t getsls(
     // query for workspace size
     float qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_sgetsls( &trans_, &m_, &n_, &nrhs_, A, &lda_, B, &ldb_, qry_work, &ineg_one, &info_ );
+    LAPACK_sgetsls(
+        &trans_, &m_, &n_, &nrhs_,
+        A, &lda_,
+        B, &ldb_,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -49,7 +53,11 @@ int64_t getsls(
     // allocate workspace
     std::vector< float > work( lwork_ );
 
-    LAPACK_sgetsls( &trans_, &m_, &n_, &nrhs_, A, &lda_, B, &ldb_, &work[0], &lwork_, &info_ );
+    LAPACK_sgetsls(
+        &trans_, &m_, &n_, &nrhs_,
+        A, &lda_,
+        B, &ldb_,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -85,7 +93,11 @@ int64_t getsls(
     // query for workspace size
     double qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_dgetsls( &trans_, &m_, &n_, &nrhs_, A, &lda_, B, &ldb_, qry_work, &ineg_one, &info_ );
+    LAPACK_dgetsls(
+        &trans_, &m_, &n_, &nrhs_,
+        A, &lda_,
+        B, &ldb_,
+        qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -94,7 +106,11 @@ int64_t getsls(
     // allocate workspace
     std::vector< double > work( lwork_ );
 
-    LAPACK_dgetsls( &trans_, &m_, &n_, &nrhs_, A, &lda_, B, &ldb_, &work[0], &lwork_, &info_ );
+    LAPACK_dgetsls(
+        &trans_, &m_, &n_, &nrhs_,
+        A, &lda_,
+        B, &ldb_,
+        &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -126,7 +142,11 @@ int64_t getsls(
     // query for workspace size
     std::complex<float> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_cgetsls( &trans_, &m_, &n_, &nrhs_, A, &lda_, B, &ldb_, qry_work, &ineg_one, &info_ );
+    LAPACK_cgetsls(
+        &trans_, &m_, &n_, &nrhs_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -135,7 +155,11 @@ int64_t getsls(
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
 
-    LAPACK_cgetsls( &trans_, &m_, &n_, &nrhs_, A, &lda_, B, &ldb_, &work[0], &lwork_, &info_ );
+    LAPACK_cgetsls(
+        &trans_, &m_, &n_, &nrhs_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -167,7 +191,11 @@ int64_t getsls(
     // query for workspace size
     std::complex<double> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_zgetsls( &trans_, &m_, &n_, &nrhs_, A, &lda_, B, &ldb_, qry_work, &ineg_one, &info_ );
+    LAPACK_zgetsls(
+        &trans_, &m_, &n_, &nrhs_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -176,7 +204,11 @@ int64_t getsls(
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );
 
-    LAPACK_zgetsls( &trans_, &m_, &n_, &nrhs_, A, &lda_, B, &ldb_, &work[0], &lwork_, &info_ );
+    LAPACK_zgetsls(
+        &trans_, &m_, &n_, &nrhs_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

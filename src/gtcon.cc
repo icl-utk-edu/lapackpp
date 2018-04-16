@@ -39,7 +39,15 @@ int64_t gtcon(
     std::vector< float > work( (2*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_sgtcon( &norm_, &n_, DL, D, DU, DU2, ipiv_ptr, &anorm, rcond, &work[0], &iwork[0], &info_ );
+    LAPACK_sgtcon(
+        &norm_, &n_,
+        DL,
+        D,
+        DU,
+        DU2,
+        ipiv_ptr, &anorm, rcond,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -76,7 +84,15 @@ int64_t gtcon(
     std::vector< double > work( (2*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_dgtcon( &norm_, &n_, DL, D, DU, DU2, ipiv_ptr, &anorm, rcond, &work[0], &iwork[0], &info_ );
+    LAPACK_dgtcon(
+        &norm_, &n_,
+        DL,
+        D,
+        DU,
+        DU2,
+        ipiv_ptr, &anorm, rcond,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -112,7 +128,14 @@ int64_t gtcon(
     // allocate workspace
     std::vector< std::complex<float> > work( (2*n) );
 
-    LAPACK_cgtcon( &norm_, &n_, DL, D, DU, DU2, ipiv_ptr, &anorm, rcond, &work[0], &info_ );
+    LAPACK_cgtcon(
+        &norm_, &n_,
+        (lapack_complex_float*) DL,
+        (lapack_complex_float*) D,
+        (lapack_complex_float*) DU,
+        (lapack_complex_float*) DU2,
+        ipiv_ptr, &anorm, rcond,
+        (lapack_complex_float*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -203,7 +226,14 @@ int64_t gtcon(
     // allocate workspace
     std::vector< std::complex<double> > work( (2*n) );
 
-    LAPACK_zgtcon( &norm_, &n_, DL, D, DU, DU2, ipiv_ptr, &anorm, rcond, &work[0], &info_ );
+    LAPACK_zgtcon(
+        &norm_, &n_,
+        (lapack_complex_double*) DL,
+        (lapack_complex_double*) D,
+        (lapack_complex_double*) DU,
+        (lapack_complex_double*) DU2,
+        ipiv_ptr, &anorm, rcond,
+        (lapack_complex_double*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

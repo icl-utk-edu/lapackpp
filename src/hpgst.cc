@@ -25,7 +25,10 @@ int64_t hpgst(
     blas_int n_ = (blas_int) n;
     blas_int info_ = 0;
 
-    LAPACK_chpgst( &itype_, &uplo_, &n_, AP, BP, &info_ );
+    LAPACK_chpgst(
+        &itype_, &uplo_, &n_,
+        (lapack_complex_float*) AP,
+        (lapack_complex_float*) BP, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -48,7 +51,10 @@ int64_t hpgst(
     blas_int n_ = (blas_int) n;
     blas_int info_ = 0;
 
-    LAPACK_zhpgst( &itype_, &uplo_, &n_, AP, BP, &info_ );
+    LAPACK_zhpgst(
+        &itype_, &uplo_, &n_,
+        (lapack_complex_double*) AP,
+        (lapack_complex_double*) BP, &info_ );
     if (info_ < 0) {
         throw Error();
     }

@@ -35,7 +35,11 @@ int64_t hpsv(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_chpsv( &uplo_, &n_, &nrhs_, AP, ipiv_ptr, B, &ldb_, &info_ );
+    LAPACK_chpsv(
+        &uplo_, &n_, &nrhs_,
+        (lapack_complex_float*) AP,
+        ipiv_ptr,
+        (lapack_complex_float*) B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -71,7 +75,11 @@ int64_t hpsv(
     blas_int ldb_ = (blas_int) ldb;
     blas_int info_ = 0;
 
-    LAPACK_zhpsv( &uplo_, &n_, &nrhs_, AP, ipiv_ptr, B, &ldb_, &info_ );
+    LAPACK_zhpsv(
+        &uplo_, &n_, &nrhs_,
+        (lapack_complex_double*) AP,
+        ipiv_ptr,
+        (lapack_complex_double*) B, &ldb_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

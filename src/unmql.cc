@@ -37,7 +37,12 @@ int64_t unmql(
     // query for workspace size
     std::complex<float> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_cunmql( &side_, &trans_, &m_, &n_, &k_, A, &lda_, tau, C, &ldc_, qry_work, &ineg_one, &info_ );
+    LAPACK_cunmql(
+        &side_, &trans_, &m_, &n_, &k_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) tau,
+        (lapack_complex_float*) C, &ldc_,
+        (lapack_complex_float*) qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -46,7 +51,12 @@ int64_t unmql(
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
 
-    LAPACK_cunmql( &side_, &trans_, &m_, &n_, &k_, A, &lda_, tau, C, &ldc_, &work[0], &lwork_, &info_ );
+    LAPACK_cunmql(
+        &side_, &trans_, &m_, &n_, &k_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) tau,
+        (lapack_complex_float*) C, &ldc_,
+        (lapack_complex_float*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -147,7 +157,12 @@ int64_t unmql(
     // query for workspace size
     std::complex<double> qry_work[1];
     blas_int ineg_one = -1;
-    LAPACK_zunmql( &side_, &trans_, &m_, &n_, &k_, A, &lda_, tau, C, &ldc_, qry_work, &ineg_one, &info_ );
+    LAPACK_zunmql(
+        &side_, &trans_, &m_, &n_, &k_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) tau,
+        (lapack_complex_double*) C, &ldc_,
+        (lapack_complex_double*) qry_work, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -156,7 +171,12 @@ int64_t unmql(
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );
 
-    LAPACK_zunmql( &side_, &trans_, &m_, &n_, &k_, A, &lda_, tau, C, &ldc_, &work[0], &lwork_, &info_ );
+    LAPACK_zunmql(
+        &side_, &trans_, &m_, &n_, &k_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) tau,
+        (lapack_complex_double*) C, &ldc_,
+        (lapack_complex_double*) &work[0], &lwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

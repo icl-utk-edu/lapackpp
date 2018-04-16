@@ -47,7 +47,17 @@ int64_t hpsvx(
     std::vector< std::complex<float> > work( (2*n) );
     std::vector< float > rwork( (n) );
 
-    LAPACK_chpsvx( &fact_, &uplo_, &n_, &nrhs_, AP, AFP, ipiv_ptr, B, &ldb_, X, &ldx_, rcond, ferr, berr, &work[0], &rwork[0], &info_ );
+    LAPACK_chpsvx(
+        &fact_, &uplo_, &n_, &nrhs_,
+        (lapack_complex_float*) AP,
+        (lapack_complex_float*) AFP,
+        ipiv_ptr,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) X, &ldx_, rcond,
+        ferr,
+        berr,
+        (lapack_complex_float*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -95,7 +105,17 @@ int64_t hpsvx(
     std::vector< std::complex<double> > work( (2*n) );
     std::vector< double > rwork( (n) );
 
-    LAPACK_zhpsvx( &fact_, &uplo_, &n_, &nrhs_, AP, AFP, ipiv_ptr, B, &ldb_, X, &ldx_, rcond, ferr, berr, &work[0], &rwork[0], &info_ );
+    LAPACK_zhpsvx(
+        &fact_, &uplo_, &n_, &nrhs_,
+        (lapack_complex_double*) AP,
+        (lapack_complex_double*) AFP,
+        ipiv_ptr,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) X, &ldx_, rcond,
+        ferr,
+        berr,
+        (lapack_complex_double*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

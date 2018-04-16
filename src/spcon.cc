@@ -35,7 +35,12 @@ int64_t spcon(
     std::vector< float > work( (2*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_sspcon( &uplo_, &n_, AP, ipiv_ptr, &anorm, rcond, &work[0], &iwork[0], &info_ );
+    LAPACK_sspcon(
+        &uplo_, &n_,
+        AP,
+        ipiv_ptr, &anorm, rcond,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -68,7 +73,12 @@ int64_t spcon(
     std::vector< double > work( (2*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_dspcon( &uplo_, &n_, AP, ipiv_ptr, &anorm, rcond, &work[0], &iwork[0], &info_ );
+    LAPACK_dspcon(
+        &uplo_, &n_,
+        AP,
+        ipiv_ptr, &anorm, rcond,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -100,7 +110,11 @@ int64_t spcon(
     // allocate workspace
     std::vector< std::complex<float> > work( (2*n) );
 
-    LAPACK_cspcon( &uplo_, &n_, AP, ipiv_ptr, &anorm, rcond, &work[0], &info_ );
+    LAPACK_cspcon(
+        &uplo_, &n_,
+        (lapack_complex_float*) AP,
+        ipiv_ptr, &anorm, rcond,
+        (lapack_complex_float*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -132,7 +146,11 @@ int64_t spcon(
     // allocate workspace
     std::vector< std::complex<double> > work( (2*n) );
 
-    LAPACK_zspcon( &uplo_, &n_, AP, ipiv_ptr, &anorm, rcond, &work[0], &info_ );
+    LAPACK_zspcon(
+        &uplo_, &n_,
+        (lapack_complex_double*) AP,
+        ipiv_ptr, &anorm, rcond,
+        (lapack_complex_double*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

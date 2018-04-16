@@ -47,7 +47,15 @@ int64_t gbbrd(
     // allocate workspace
     std::vector< float > work( (2*max(m,n)) );
 
-    LAPACK_sgbbrd( &vect_, &m_, &n_, &ncc_, &kl_, &ku_, AB, &ldab_, D, E, Q, &ldq_, PT, &ldpt_, C, &ldc_, &work[0], &info_ );
+    LAPACK_sgbbrd(
+        &vect_, &m_, &n_, &ncc_, &kl_, &ku_,
+        AB, &ldab_,
+        D,
+        E,
+        Q, &ldq_,
+        PT, &ldpt_,
+        C, &ldc_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -92,7 +100,15 @@ int64_t gbbrd(
     // allocate workspace
     std::vector< double > work( (2*max(m,n)) );
 
-    LAPACK_dgbbrd( &vect_, &m_, &n_, &ncc_, &kl_, &ku_, AB, &ldab_, D, E, Q, &ldq_, PT, &ldpt_, C, &ldc_, &work[0], &info_ );
+    LAPACK_dgbbrd(
+        &vect_, &m_, &n_, &ncc_, &kl_, &ku_,
+        AB, &ldab_,
+        D,
+        E,
+        Q, &ldq_,
+        PT, &ldpt_,
+        C, &ldc_,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -138,7 +154,16 @@ int64_t gbbrd(
     std::vector< std::complex<float> > work( (max(m,n)) );
     std::vector< float > rwork( (max(m,n)) );
 
-    LAPACK_cgbbrd( &vect_, &m_, &n_, &ncc_, &kl_, &ku_, AB, &ldab_, D, E, Q, &ldq_, PT, &ldpt_, C, &ldc_, &work[0], &rwork[0], &info_ );
+    LAPACK_cgbbrd(
+        &vect_, &m_, &n_, &ncc_, &kl_, &ku_,
+        (lapack_complex_float*) AB, &ldab_,
+        D,
+        E,
+        (lapack_complex_float*) Q, &ldq_,
+        (lapack_complex_float*) PT, &ldpt_,
+        (lapack_complex_float*) C, &ldc_,
+        (lapack_complex_float*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -269,7 +294,16 @@ int64_t gbbrd(
     std::vector< std::complex<double> > work( (max(m,n)) );
     std::vector< double > rwork( (max(m,n)) );
 
-    LAPACK_zgbbrd( &vect_, &m_, &n_, &ncc_, &kl_, &ku_, AB, &ldab_, D, E, Q, &ldq_, PT, &ldpt_, C, &ldc_, &work[0], &rwork[0], &info_ );
+    LAPACK_zgbbrd(
+        &vect_, &m_, &n_, &ncc_, &kl_, &ku_,
+        (lapack_complex_double*) AB, &ldab_,
+        D,
+        E,
+        (lapack_complex_double*) Q, &ldq_,
+        (lapack_complex_double*) PT, &ldpt_,
+        (lapack_complex_double*) C, &ldc_,
+        (lapack_complex_double*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

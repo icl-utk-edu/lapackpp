@@ -27,7 +27,11 @@ int64_t ptcon(
     // allocate workspace
     std::vector< float > work( (n) );
 
-    LAPACK_sptcon( &n_, D, E, &anorm, rcond, &work[0], &info_ );
+    LAPACK_sptcon(
+        &n_,
+        D,
+        E, &anorm, rcond,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -52,7 +56,11 @@ int64_t ptcon(
     // allocate workspace
     std::vector< double > work( (n) );
 
-    LAPACK_dptcon( &n_, D, E, &anorm, rcond, &work[0], &info_ );
+    LAPACK_dptcon(
+        &n_,
+        D,
+        E, &anorm, rcond,
+        &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -77,7 +85,11 @@ int64_t ptcon(
     // allocate workspace
     std::vector< float > rwork( (n) );
 
-    LAPACK_cptcon( &n_, D, E, &anorm, rcond, &rwork[0], &info_ );
+    LAPACK_cptcon(
+        &n_,
+        D,
+        (lapack_complex_float*) E, &anorm, rcond,
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -143,7 +155,11 @@ int64_t ptcon(
     // allocate workspace
     std::vector< double > rwork( (n) );
 
-    LAPACK_zptcon( &n_, D, E, &anorm, rcond, &rwork[0], &info_ );
+    LAPACK_zptcon(
+        &n_,
+        D,
+        (lapack_complex_double*) E, &anorm, rcond,
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

@@ -37,7 +37,11 @@ int64_t hecon(
     // allocate workspace
     std::vector< std::complex<float> > work( (2*n) );
 
-    LAPACK_checon( &uplo_, &n_, A, &lda_, ipiv_ptr, &anorm, rcond, &work[0], &info_ );
+    LAPACK_checon(
+        &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        ipiv_ptr, &anorm, rcond,
+        (lapack_complex_float*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -116,7 +120,11 @@ int64_t hecon(
     // allocate workspace
     std::vector< std::complex<double> > work( (2*n) );
 
-    LAPACK_zhecon( &uplo_, &n_, A, &lda_, ipiv_ptr, &anorm, rcond, &work[0], &info_ );
+    LAPACK_zhecon(
+        &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        ipiv_ptr, &anorm, rcond,
+        (lapack_complex_double*) &work[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

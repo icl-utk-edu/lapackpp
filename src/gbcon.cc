@@ -42,7 +42,12 @@ int64_t gbcon(
     std::vector< float > work( (3*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_sgbcon( &norm_, &n_, &kl_, &ku_, AB, &ldab_, ipiv_ptr, &anorm, rcond, &work[0], &iwork[0], &info_ );
+    LAPACK_sgbcon(
+        &norm_, &n_, &kl_, &ku_,
+        AB, &ldab_,
+        ipiv_ptr, &anorm, rcond,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -82,7 +87,12 @@ int64_t gbcon(
     std::vector< double > work( (3*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_dgbcon( &norm_, &n_, &kl_, &ku_, AB, &ldab_, ipiv_ptr, &anorm, rcond, &work[0], &iwork[0], &info_ );
+    LAPACK_dgbcon(
+        &norm_, &n_, &kl_, &ku_,
+        AB, &ldab_,
+        ipiv_ptr, &anorm, rcond,
+        &work[0],
+        &iwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -122,7 +132,12 @@ int64_t gbcon(
     std::vector< std::complex<float> > work( (2*n) );
     std::vector< float > rwork( (n) );
 
-    LAPACK_cgbcon( &norm_, &n_, &kl_, &ku_, AB, &ldab_, ipiv_ptr, &anorm, rcond, &work[0], &rwork[0], &info_ );
+    LAPACK_cgbcon(
+        &norm_, &n_, &kl_, &ku_,
+        (lapack_complex_float*) AB, &ldab_,
+        ipiv_ptr, &anorm, rcond,
+        (lapack_complex_float*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -214,7 +229,12 @@ int64_t gbcon(
     std::vector< std::complex<double> > work( (2*n) );
     std::vector< double > rwork( (n) );
 
-    LAPACK_zgbcon( &norm_, &n_, &kl_, &ku_, AB, &ldab_, ipiv_ptr, &anorm, rcond, &work[0], &rwork[0], &info_ );
+    LAPACK_zgbcon(
+        &norm_, &n_, &kl_, &ku_,
+        (lapack_complex_double*) AB, &ldab_,
+        ipiv_ptr, &anorm, rcond,
+        (lapack_complex_double*) &work[0],
+        &rwork[0], &info_ );
     if (info_ < 0) {
         throw Error();
     }

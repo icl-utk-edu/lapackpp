@@ -36,7 +36,14 @@ int64_t hegvd(
     float qry_rwork[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_chegvd( &itype_, &jobz_, &uplo_, &n_, A, &lda_, B, &ldb_, W, qry_work, &ineg_one, qry_rwork, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_chegvd(
+        &itype_, &jobz_, &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) B, &ldb_,
+        W,
+        (lapack_complex_float*) qry_work, &ineg_one,
+        qry_rwork, &ineg_one,
+        qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -49,7 +56,14 @@ int64_t hegvd(
     std::vector< float > rwork( lrwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_chegvd( &itype_, &jobz_, &uplo_, &n_, A, &lda_, B, &ldb_, W, &work[0], &lwork_, &rwork[0], &lrwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_chegvd(
+        &itype_, &jobz_, &uplo_, &n_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) B, &ldb_,
+        W,
+        (lapack_complex_float*) &work[0], &lwork_,
+        &rwork[0], &lrwork_,
+        &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -83,7 +97,14 @@ int64_t hegvd(
     double qry_rwork[1];
     blas_int qry_iwork[1];
     blas_int ineg_one = -1;
-    LAPACK_zhegvd( &itype_, &jobz_, &uplo_, &n_, A, &lda_, B, &ldb_, W, qry_work, &ineg_one, qry_rwork, &ineg_one, qry_iwork, &ineg_one, &info_ );
+    LAPACK_zhegvd(
+        &itype_, &jobz_, &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_,
+        W,
+        (lapack_complex_double*) qry_work, &ineg_one,
+        qry_rwork, &ineg_one,
+        qry_iwork, &ineg_one, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -96,7 +117,14 @@ int64_t hegvd(
     std::vector< double > rwork( lrwork_ );
     std::vector< blas_int > iwork( liwork_ );
 
-    LAPACK_zhegvd( &itype_, &jobz_, &uplo_, &n_, A, &lda_, B, &ldb_, W, &work[0], &lwork_, &rwork[0], &lrwork_, &iwork[0], &liwork_, &info_ );
+    LAPACK_zhegvd(
+        &itype_, &jobz_, &uplo_, &n_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_,
+        W,
+        (lapack_complex_double*) &work[0], &lwork_,
+        &rwork[0], &lrwork_,
+        &iwork[0], &liwork_, &info_ );
     if (info_ < 0) {
         throw Error();
     }

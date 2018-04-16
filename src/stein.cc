@@ -56,7 +56,17 @@ int64_t stein(
     std::vector< float > work( (5*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_sstein( &n_, D, E, &m_, W, iblock_ptr, isplit_ptr, Z, &ldz_, &work[0], &iwork[0], ifail_ptr, &info_ );
+    LAPACK_sstein(
+        &n_,
+        D,
+        E, &m_,
+        W,
+        iblock_ptr,
+        isplit_ptr,
+        Z, &ldz_,
+        &work[0],
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -113,7 +123,17 @@ int64_t stein(
     std::vector< double > work( (5*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_dstein( &n_, D, E, &m_, W, iblock_ptr, isplit_ptr, Z, &ldz_, &work[0], &iwork[0], ifail_ptr, &info_ );
+    LAPACK_dstein(
+        &n_,
+        D,
+        E, &m_,
+        W,
+        iblock_ptr,
+        isplit_ptr,
+        Z, &ldz_,
+        &work[0],
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -170,7 +190,17 @@ int64_t stein(
     std::vector< float > work( (5*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_cstein( &n_, D, E, &m_, W, iblock_ptr, isplit_ptr, Z, &ldz_, &work[0], &iwork[0], ifail_ptr, &info_ );
+    LAPACK_cstein(
+        &n_,
+        D,
+        E, &m_,
+        W,
+        iblock_ptr,
+        isplit_ptr,
+        (lapack_complex_float*) Z, &ldz_,
+        &work[0],
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -227,7 +257,17 @@ int64_t stein(
     std::vector< double > work( (5*n) );
     std::vector< blas_int > iwork( (n) );
 
-    LAPACK_zstein( &n_, D, E, &m_, W, iblock_ptr, isplit_ptr, Z, &ldz_, &work[0], &iwork[0], ifail_ptr, &info_ );
+    LAPACK_zstein(
+        &n_,
+        D,
+        E, &m_,
+        W,
+        iblock_ptr,
+        isplit_ptr,
+        (lapack_complex_double*) Z, &ldz_,
+        &work[0],
+        &iwork[0],
+        ifail_ptr, &info_ );
     if (info_ < 0) {
         throw Error();
     }

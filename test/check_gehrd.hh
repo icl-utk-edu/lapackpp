@@ -14,10 +14,10 @@ void check_gehrd(
     scalar_t const* H, int64_t ldh,
     scalar_t const* tau,
     int64_t verbose,
-    typename blas::traits< scalar_t >::real_t results[2] )
+    blas::real_type< scalar_t > results[2] )
 {
     using namespace blas;
-    typedef typename traits< scalar_t >::real_t real_t;
+    using real_t = blas::real_type< scalar_t >;
 
     size_t size_A = lda * n;
     std::vector< scalar_t > U( size_A ), H2( size_A ), work( size_A );

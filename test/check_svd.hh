@@ -17,14 +17,14 @@ void check_svd(
     lapack::Job jobu, lapack::Job jobvt,
     int64_t m, int64_t n,
     scalar_t const* A, int64_t lda,
-    typename blas::traits< scalar_t >::real_t const* s,
+    blas::real_type< scalar_t > const* s,
     scalar_t const* U,  int64_t ldu,
     scalar_t const* VT, int64_t ldvt,
-    typename blas::traits< scalar_t >::real_t result[4] )
+    blas::real_type< scalar_t > result[4] )
 {
     using namespace blas;
     using namespace lapack;
-    typedef typename blas::traits< scalar_t >::real_t real_t;
+    using real_t = blas::real_type< scalar_t >;
 
     if (jobu == Job::NoVec) {
         U = nullptr;

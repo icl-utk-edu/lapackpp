@@ -413,6 +413,7 @@ std::vector< libtest::routines_t > routines = {
 Params::Params():
     ParamsBase(),
     matrix(),
+    matrixB(),
 
     // w = width
     // p = precision
@@ -508,6 +509,11 @@ Params::Params():
     //          name,     w, type,              def, min, max, help
     okay      ( "status", 6, ParamType::Output,  -1,   0,   0, "success indicator" )
 {
+    // change names of matrix B's params
+    matrixB.kind.name( "matrixB" );
+    matrixB.cond.name( "condB" );
+    matrixB.condD.name( "condD_B" );
+
     // mark standard set of output fields as used
     okay  .value();
     error .value();

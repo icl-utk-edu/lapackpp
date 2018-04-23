@@ -38,6 +38,7 @@ public:
 
     // ----- test matrix parameters
     MatrixParams matrix;
+    MatrixParams matrixB;
 
     // ----- test framework parameters
     libtest::ParamChar   check;

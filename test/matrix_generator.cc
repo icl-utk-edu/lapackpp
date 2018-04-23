@@ -395,7 +395,6 @@ void generate_geev(
     MatrixParams& params,
     Dist dist,
     blas::real_type<scalar_t> cond,
-    blas::real_type<scalar_t> condD,
     blas::real_type<scalar_t> sigma_max,
     Vector< blas::real_type<scalar_t> >& sigma,
     Matrix<scalar_t>& A )
@@ -409,7 +408,6 @@ void generate_geevx(
     MatrixParams& params,
     Dist dist,
     blas::real_type<scalar_t> cond,
-    blas::real_type<scalar_t> condD,
     blas::real_type<scalar_t> sigma_max,
     Vector< blas::real_type<scalar_t> >& sigma,
     Matrix<scalar_t>& A )
@@ -686,11 +684,11 @@ void generate_matrix(
             break;
 
         case TestMatrixType::geev:
-            generate_geev( params, dist, cond, condD, sigma_max, sigma, A );
+            generate_geev( params, dist, cond, sigma_max, sigma, A );
             break;
 
         case TestMatrixType::geevx:
-            generate_geevx( params, dist, cond, condD, sigma_max, sigma, A );
+            generate_geevx( params, dist, cond, sigma_max, sigma, A );
             break;
     }
 

@@ -22,19 +22,22 @@ inline scalar_t rand( scalar_t max_ )
 }
 
 // -----------------------------------------------------------------------------
-/// true if str begins with prefix
-inline bool begins( std::string const &str, std::string const &prefix )
+/// Splits a string by any of the delimiters.
+/// Adjacent delimiters will give empty tokens.
+/// See https://stackoverflow.com/questions/53849
+std::vector< std::string >
+    split( const std::string& str, const std::string& delims )
 {
-    return (str.compare( 0, prefix.size(), prefix) == 0);
+    size_t npos = std::string::npos;
+    std::vector< std::string > tokens;
+    size_t start = (str.size() > 0 ? 0 : npos);
+    while (start != npos) {
+        size_t end = str.find_first_of( delims, start );
+        tokens.push_back( str.substr( start, end - start ));
+        start = (end == npos ? npos : end + 1);
+    }
+    return tokens;
 }
-
-// -----------------------------------------------------------------------------
-/// true if str contains pattern
-inline bool contains( std::string const &str, std::string const &pattern )
-{
-    return (str.find( pattern ) != std::string::npos);
-}
-
 
 // =============================================================================
 namespace lapack {
@@ -137,6 +140,10 @@ void generate_sigma(
             // user-specified sigma values; don't modify
             sigma_max = 1;
             rand_sign = false;
+            break;
+
+        case Dist::none:
+            assert( false );
             break;
     }
 
@@ -542,12 +549,21 @@ void generate_matrix(
     const scalar_t c_one  = 1;
 
     // locals
-    std::string name = params.kind.value();
+    std::string kind = params.kind.value();
+    std::vector< std::string > tokens = split( kind, "-_" );
+
     real_t cond = params.cond.value();
-    if (cond == 0) {
+    bool cond_default = std::isnan( cond );
+    if (cond_default) {
         cond = 1 / sqrt( eps );
     }
+
     real_t condD = params.condD.value();
+    bool condD_default = std::isnan( condD );
+    if (condD_default) {
+        condD = 1;
+    }
+
     real_t sigma_max = 1;
     int64_t minmn = std::min( A.m, A.n );
 
@@ -556,26 +572,140 @@ void generate_matrix(
     lapack::laset( lapack::MatrixType::General, sigma.n, 1, nan, nan, sigma(0), sigma.n );
 
     // ----- decode matrix type
+    auto token = tokens.begin();
+    if (token == tokens.end()) {
+        throw std::runtime_error( "Error: empty matrix kind\n" );
+    }
+    std::string base = *token;
+    ++token;
     TestMatrixType type = TestMatrixType::identity;
-    if      (name == "zero")          { type = TestMatrixType::zero;      }
-    else if (name == "identity")      { type = TestMatrixType::identity;  }
-    else if (name == "jordan")        { type = TestMatrixType::jordan;    }
-    else if (begins( name, "randn" )) { type = TestMatrixType::randn;     }
-    else if (begins( name, "randu" )) { type = TestMatrixType::randu;     }
-    else if (begins( name, "rand"  )) { type = TestMatrixType::rand;      }
-    else if (begins( name, "diag"  )) { type = TestMatrixType::diag;      }
-    else if (begins( name, "svd"   )) { type = TestMatrixType::svd;       }
-    else if (begins( name, "poev"  ) ||
-             begins( name, "spd"   )) { type = TestMatrixType::poev;      }
-    else if (begins( name, "heev"  ) ||
-             begins( name, "syev"  )) { type = TestMatrixType::heev;      }
-    else if (begins( name, "geevx" )) { type = TestMatrixType::geevx;     }
-    else if (begins( name, "geev"  )) { type = TestMatrixType::geev;      }
+    if      (base == "zero"    ) { type = TestMatrixType::zero;     }
+    else if (base == "identity") { type = TestMatrixType::identity; }
+    else if (base == "jordan"  ) { type = TestMatrixType::jordan;   }
+    else if (base == "randn"   ) { type = TestMatrixType::randn;    }
+    else if (base == "randu"   ) { type = TestMatrixType::randu;    }
+    else if (base == "rand"    ) { type = TestMatrixType::rand;     }
+    else if (base == "diag"    ) { type = TestMatrixType::diag;     }
+    else if (base == "svd"     ) { type = TestMatrixType::svd;      }
+    else if (base == "poev" ||
+             base == "spd"     ) { type = TestMatrixType::poev;     }
+    else if (base == "heev" ||
+             base == "syev"    ) { type = TestMatrixType::heev;     }
+    else if (base == "geevx"   ) { type = TestMatrixType::geevx;    }
+    else if (base == "geev"    ) { type = TestMatrixType::geev;     }
     else {
-        fprintf( stderr, "Unrecognized matrix '%s'\n", name.c_str() );
+        fprintf( stderr, "%sUnrecognized matrix '%s'%s\n",
+                 ansi_red, kind.c_str(), ansi_normal );
         throw std::exception();
     }
 
+    // ----- decode distribution
+    std::string suffix;
+    Dist dist = Dist::none;
+    if (token != tokens.end()) {
+        suffix = *token;
+        if      (suffix == "randn"    ) { dist = Dist::randn;     }
+        else if (suffix == "randu"    ) { dist = Dist::randu;     }
+        else if (suffix == "rand"     ) { dist = Dist::rand;      }
+        else if (suffix == "logrand"  ) { dist = Dist::logrand;   }
+        else if (suffix == "arith"    ) { dist = Dist::arith;     }
+        else if (suffix == "geo"      ) { dist = Dist::geo;       }
+        else if (suffix == "cluster2" ) { dist = Dist::cluster2;  }
+        else if (suffix == "cluster"  ) { dist = Dist::cluster;   }
+        else if (suffix == "rarith"   ) { dist = Dist::rarith;    }
+        else if (suffix == "rgeo"     ) { dist = Dist::rgeo;      }
+        else if (suffix == "rcluster2") { dist = Dist::rcluster2; }
+        else if (suffix == "rcluster" ) { dist = Dist::rcluster;  }
+        else if (suffix == "specified") { dist = Dist::specified; }
+
+        // if found, move to next token
+        if (dist != Dist::none) {
+            ++token;
+
+            // error if matrix type doesn't support it
+            if (! (type == TestMatrixType::diag ||
+                   type == TestMatrixType::svd  ||
+                   type == TestMatrixType::poev ||
+                   type == TestMatrixType::heev ||
+                   type == TestMatrixType::geev ||
+                   type == TestMatrixType::geevx))
+            {
+                fprintf( stderr, "%sError in '%s': matrix '%s' doesn't support"
+                         " distribution suffix.%s\n",
+                         ansi_red, kind.c_str(), base.c_str(), ansi_normal );
+                throw std::exception();
+            }
+        }
+    }
+    if (dist == Dist::none)
+        dist = Dist::logrand;  // default
+
+    // ----- decode scaling
+    sigma_max = 1;
+    if (token != tokens.end()) {
+        suffix = *token;
+        if      (suffix == "small") { sigma_max = sqrt( ufl ); }
+        else if (suffix == "large") { sigma_max = sqrt( ofl ); }
+        else if (suffix == "ufl"  ) { sigma_max = ufl; }
+        else if (suffix == "ofl"  ) { sigma_max = ofl; }
+
+        // if found, move to next token
+        if (sigma_max != 1) {
+            ++token;
+
+            // error if matrix type doesn't support it
+            if (! (type == TestMatrixType::rand  ||
+                   type == TestMatrixType::randu ||
+                   type == TestMatrixType::randn ||
+                   type == TestMatrixType::svd   ||
+                   type == TestMatrixType::poev  ||
+                   type == TestMatrixType::heev  ||
+                   type == TestMatrixType::geev  ||
+                   type == TestMatrixType::geevx))
+            {
+                fprintf( stderr, "%sError in '%s': matrix '%s' doesn't support"
+                         " scaling suffix.%s\n",
+                         ansi_red, kind.c_str(), base.c_str(), ansi_normal );
+                throw std::exception();
+            }
+        }
+    }
+
+    // ----- decode modifier
+    bool dominant = false;
+    if (token != tokens.end()) {
+        suffix = *token;
+        if (suffix == "dominant") {
+            dominant = true;
+
+            // move to next token
+            ++token;
+
+            // error if matrix type doesn't support it
+            if (! (type == TestMatrixType::rand  ||
+                   type == TestMatrixType::randu ||
+                   type == TestMatrixType::randn ||
+                   type == TestMatrixType::svd   ||
+                   type == TestMatrixType::poev  ||
+                   type == TestMatrixType::heev  ||
+                   type == TestMatrixType::geev  ||
+                   type == TestMatrixType::geevx))
+            {
+                fprintf( stderr, "%sError in '%s': matrix '%s' doesn't support"
+                         " modifier suffix.%s\n",
+                         ansi_red, kind.c_str(), base.c_str(), ansi_normal );
+                throw std::exception();
+            }
+        }
+    }
+
+    if (token != tokens.end()) {
+        fprintf( stderr, "%sError in '%s': unknown suffix '%s'.%s\n",
+                 ansi_red, kind.c_str(), token->c_str(), ansi_normal );
+        throw std::exception();
+    }
+
+    // ----- check compatability of options
     if (A.m != A.n &&
         (type == TestMatrixType::jordan ||
          type == TestMatrixType::poev   ||
@@ -583,61 +713,66 @@ void generate_matrix(
          type == TestMatrixType::geev   ||
          type == TestMatrixType::geevx))
     {
-        fprintf( stderr, "Eigenvalue matrix requires m == n.\n" );
+        fprintf( stderr, "%sError: matrix '%s' requires m == n.%s\n",
+                 ansi_red, kind.c_str(), ansi_normal );
         throw std::exception();
     }
 
-    if (params.cond.value() != 0 &&
-        (type == TestMatrixType::zero      ||
-         type == TestMatrixType::identity  ||
-         type == TestMatrixType::jordan    ||
-         type == TestMatrixType::randn     ||
-         type == TestMatrixType::randu     ||
-         type == TestMatrixType::rand))
+    if (type == TestMatrixType::zero      ||
+        type == TestMatrixType::identity  ||
+        type == TestMatrixType::jordan    ||
+        type == TestMatrixType::randn     ||
+        type == TestMatrixType::randu     ||
+        type == TestMatrixType::rand)
     {
-        fprintf( stderr, "%sWarning: --matrix %s ignores --cond %.2e.%s\n",
-                 ansi_red, name.c_str(), params.cond.value(), ansi_normal );
+        // warn first time if user set cond and matrix doesn't use it
+        static std::string last;
+        if (! cond_default && last != kind) {
+            last = kind;
+            fprintf( stderr, "%sWarning: matrix '%s' ignores cond %.2e.%s\n",
+                     ansi_red, kind.c_str(), params.cond.value(), ansi_normal );
+        }
+        params.cond_used.value() = libtest::no_data_flag;
+    }
+    else if (dist == Dist::randn ||
+             dist == Dist::randu ||
+             dist == Dist::rand)
+    {
+        // warn first time if user set cond and distribution doesn't use it
+        static std::string last;
+        if (! cond_default && last != kind) {
+            last = kind;
+            fprintf( stderr, "%sWarning: matrix '%s': rand, randn, and randu "
+                     "singular/eigenvalue distributions ignore cond %.2e.%s\n",
+                     ansi_red, kind.c_str(), params.cond.value(), ansi_normal );
+        }
+        params.cond_used.value() = libtest::no_data_flag;
+    }
+    else {
+        params.cond_used.value() = cond;
     }
 
-    // ----- decode distribution
-    Dist dist = Dist::rand;
-    if      (contains( name, "_randn"     )) { dist = Dist::randn;     }
-    else if (contains( name, "_randu"     )) { dist = Dist::randu;     }
-    else if (contains( name, "_rand"      )) { dist = Dist::rand;      } // after randn, randu
-    else if (contains( name, "_logrand"   )) { dist = Dist::logrand;   }
-    else if (contains( name, "_arith"     )) { dist = Dist::arith;     }
-    else if (contains( name, "_geo"       )) { dist = Dist::geo;       }
-    else if (contains( name, "_cluster2"  )) { dist = Dist::cluster2;  }
-    else if (contains( name, "_cluster"   )) { dist = Dist::cluster;   } // after cluster2
-    else if (contains( name, "_rarith"    )) { dist = Dist::rarith;    }
-    else if (contains( name, "_rgeo"      )) { dist = Dist::rgeo;      }
-    else if (contains( name, "_rcluster2" )) { dist = Dist::rcluster2; }
-    else if (contains( name, "_rcluster"  )) { dist = Dist::rcluster;  } // after rcluster2
-    else if (contains( name, "_specified" )) { dist = Dist::specified; }
-
-    if (params.cond.value() != 0 &&
-        (dist == Dist::randn ||
-         dist == Dist::randu ||
-         dist == Dist::rand))
+    if (! (type == TestMatrixType::svd ||
+           type == TestMatrixType::heev ||
+           type == TestMatrixType::poev))
     {
-        fprintf( stderr, "%sWarning: --matrix '%s' ignores --cond %.2e; use a different distribution.%s\n",
-                 ansi_red, name.c_str(), params.cond.value(), ansi_normal );
+        // warn first time if user set condD and matrix doesn't use it
+        static std::string last;
+        if (! condD_default && last != kind) {
+            last = kind;
+            fprintf( stderr, "%sWarning: matrix '%s' ignores condD %.2e.%s\n",
+                     ansi_red, kind.c_str(), params.condD.value(), ansi_normal );
+        }
     }
 
     if (type == TestMatrixType::poev &&
         (dist == Dist::randu ||
          dist == Dist::randn))
     {
-        fprintf( stderr, "%sWarning: --matrix '%s' using randu or randn "
+        fprintf( stderr, "%sWarning: matrix '%s' using randu or randn "
                  "will not generate SPD matrix; use rand instead.%s\n",
-                 ansi_red, name.c_str(), ansi_normal );
+                 ansi_red, kind.c_str(), ansi_normal );
     }
-
-    // ----- decode scaling
-    if      (contains( name, "_small"  )) { sigma_max = sqrt( ufl ); }
-    else if (contains( name, "_large"  )) { sigma_max = sqrt( ofl ); }
-    else if (contains( name, "_ufl"    )) { sigma_max = ufl; }
-    else if (contains( name, "_ofl"    )) { sigma_max = ofl; }
 
     // ----- generate matrix
     switch (type) {
@@ -697,7 +832,7 @@ void generate_matrix(
             break;
     }
 
-    if (contains( name, "_dominant" )) {
+    if (dominant) {
         // make diagonally dominant; strict unless diagonal has zeros
         for (int i = 0; i < minmn; ++i) {
             real_t sum = std::max( blas::asum( A.m, A(0,i), 1    ),    // i-th col

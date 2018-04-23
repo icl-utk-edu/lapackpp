@@ -586,6 +586,40 @@ void Params::get_range(
 }
 
 // -----------------------------------------------------------------------------
+// Compare a == b, bitwise. Returns true if a and b are both the same NaN value,
+// unlike (a == b) which is false for NaNs.
+bool same( double a, double b )
+{
+    return (memcmp( &a, &b, sizeof(double) ) == 0);
+}
+
+// -----------------------------------------------------------------------------
+// Prints line describing matrix kind and cond, if kind or cond changed.
+// Updates kind and cond to current values.
+void print_matrix_header(
+    MatrixParams& params, const char* caption,
+    std::string* matrix, double* cond, double* condD )
+{
+    if (params.kind.used() &&
+        (*matrix != params.kind.value() ||
+         ! same( *cond,  params.cond_used.value() ) ||
+         ! same( *condD, params.condD.value() )))
+    {
+        *matrix = params.kind.value();
+        *cond   = params.cond_used.value();
+        *condD  = params.condD.value();
+        printf( "%s: %s, cond(S) = ", caption, matrix->c_str() );
+        if (std::isnan( *cond ))
+            printf( "NA" );
+        else
+            printf( "%.2e", *cond );
+        if (! std::isnan(*condD))
+            printf( ", cond(D) = %.2e", *condD );
+        printf( "\n" );
+    }
+}
+
+// -----------------------------------------------------------------------------
 int main( int argc, char** argv )
 {
     // check that all sections have names
@@ -628,19 +662,15 @@ int main( int argc, char** argv )
     int status = 0;
     int repeat = params.repeat.value();
     libtest::DataType last = params.datatype.value();
-    std::string mat_name = params.matrix.name.value();
+    std::string matrix, matrixB;
+    double cond = 0, condD = 0, condB = 0, condD_B = 0;
     params.header();
-    printf( "Test Matrix: %s\n", mat_name.c_str() );
 
     do {
         if (params.datatype.value() != last) {
             last = params.datatype.value();
             printf( "\n" );
         }
-	if (params.matrix.name.value() != mat_name) {
-            mat_name = params.matrix.name.value();
-            printf( "Test Matrix: %s\n", mat_name.c_str() );
-	}
         for (int iter = 0; iter < repeat; ++iter) {
             try {
                 test_routine( params, true );
@@ -653,6 +683,10 @@ int main( int argc, char** argv )
                 // happens for assert_throw failures
                 params.okay.value() = false;
                 printf( "Caught error\n" );
+            }
+            if (iter == 0) {
+                print_matrix_header( params.matrix,  "test matrix A", &matrix,  &cond,  &condD   );
+                print_matrix_header( params.matrixB, "test matrix B", &matrixB, &condB, &condD_B );
             }
             params.print();
             status += ! params.okay.value();

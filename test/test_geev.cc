@@ -112,7 +112,7 @@ void test_geev_work( Params& params, bool run )
     std::vector< scalar_t > VR_ref( size_VR );
 
     // Generate test matrix
-    lapack_generate_matrix( params.matrix, n, n, nullptr, &A_tst[0], lda );
+    lapack::generate_matrix( params.matrix, n, n, nullptr, &A_tst[0], lda );
 
     A_ref = A_tst;
 

@@ -75,7 +75,7 @@ void test_gelsd_work( Params& params, bool run )
     std::vector< real_t > S_tst( size_S );
     std::vector< real_t > S_ref( size_S );
 
-    lapack_generate_matrix( params.matrix, m, n, nullptr, &A_tst[0], lda );
+    lapack::generate_matrix( params.matrix, m, n, nullptr, &A_tst[0], lda );
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, B_tst.size(), &B_tst[0] );

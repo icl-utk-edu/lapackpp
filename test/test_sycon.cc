@@ -72,7 +72,7 @@ void test_sycon_work( Params& params, bool run )
     std::vector< int64_t > ipiv_tst( size_ipiv );
     std::vector< lapack_int > ipiv_ref( size_ipiv );
 
-    lapack_generate_matrix( params.matrix, n, n, nullptr, &A[0], lda );
+    lapack::generate_matrix( params.matrix, n, n, nullptr, &A[0], lda );
 
     // ---------- factor before test
     int64_t info = lapack::sytrf( uplo, n, &A[0], lda, &ipiv_tst[0] );

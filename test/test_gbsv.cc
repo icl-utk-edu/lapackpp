@@ -73,9 +73,9 @@ void test_gbsv_work( Params& params, bool run )
     std::vector< scalar_t > B_tst( size_B );
     std::vector< scalar_t > B_ref( size_B );
 
-    lapack_generate_matrix( params.matrix, ldab, n, nullptr, &AB_tst[0], ldab );
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
+    lapack::larnv( idist, iseed, AB_tst.size(), &AB_tst[0] );
     lapack::larnv( idist, iseed, B_tst.size(), &B_tst[0] );
     AB_ref = AB_tst;
     B_ref = B_tst;

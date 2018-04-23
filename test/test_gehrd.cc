@@ -79,7 +79,7 @@ void test_gehrd_work( Params& params, bool run )
     std::vector< scalar_t > tau_tst( size_tau );
     std::vector< scalar_t > tau_ref( size_tau );
 
-    lapack_generate_matrix( params.matrix, n, n, nullptr, &A_tst[0], lda );
+    lapack::generate_matrix( params.matrix, n, n, nullptr, &A_tst[0], lda );
     A_ref = A_tst;
 
     // ---------- run test

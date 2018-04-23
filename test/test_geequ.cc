@@ -75,7 +75,7 @@ void test_geequ_work( Params& params, bool run )
     std::vector< real_t > C_tst( size_C );
     std::vector< real_t > C_ref( size_C );
 
-    lapack_generate_matrix( params.matrix, m, n, nullptr, &A[0], lda );
+    lapack::generate_matrix( params.matrix, m, n, nullptr, &A[0], lda );
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );

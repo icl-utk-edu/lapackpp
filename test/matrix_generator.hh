@@ -2,19 +2,14 @@
 #define MATRIX_GENERATOR_HPP
 
 #include <algorithm>  // copy, swap
+
 #include "test.hh"
+#include "matrix_params.hh"
 #include "lapack.hh"
 
-/******************************************************************************/
-// Uses copy-and-swap idiom.
-// https://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom
-//
+namespace lapack {
 
-#define LAPACK_D_ZERO 0.0
-#define LAPACK_D_ONE 1.0
-#define LAPACK_S_ZERO 0.0
-#define LAPACK_S_ONE 1.0
-
+// -----------------------------------------------------------------------------
 const int64_t idist_rand  = 1;
 const int64_t idist_randu = 2;
 const int64_t idist_randn = 3;
@@ -33,6 +28,7 @@ enum class TestMatrixType {
     geev,
     geevx,
 };
+
 enum class Dist {
     rand      = 1,  // maps to larnv idist
     randu     = 2,  // maps to larnv idist
@@ -49,21 +45,26 @@ enum class Dist {
     specified,
 };
 
-template< typename FloatType >
+// -----------------------------------------------------------------------------
+/// Simple vector class that can wrap existing memory or allocate its own memory.
+//
+// Uses copy-and-swap idiom.
+// https://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom
+template< typename scalar_t >
 class Vector
 {
 public:
     // constructor allocates new memory (unless n == 0)
     Vector( int64_t in_n=0 ):
         n    ( in_n ),
-        data_( n > 0 ? new FloatType[n] : nullptr ),
+        data_( n > 0 ? new scalar_t[n] : nullptr ),
         own_ ( true )
     {
         if (n < 0) { throw std::exception(); }
     }
 
     // constructor wraps existing memory; caller maintains ownership
-    Vector( FloatType* data, int64_t in_n ):
+    Vector( scalar_t* data, int64_t in_n ):
         n    ( in_n ),
         data_( data ),
         own_ ( false )
@@ -79,7 +80,7 @@ public:
     {
         if (other.own_) {
             if (n > 0) {
-                data_ = new FloatType[n];
+                data_ = new scalar_t[n];
                 std::copy( other.data_, other.data_ + n, data_ );
             }
         }
@@ -122,13 +123,13 @@ public:
 
     // returns pointer to element i, because that's what we normally need to
     // call BLAS / LAPACK, which avoids littering the code with &.
-    FloatType*       operator () ( int64_t i )       { return &data_[ i ]; }
-    FloatType const* operator () ( int64_t i ) const { return &data_[ i ]; }
+    scalar_t*       operator () ( int64_t i )       { return &data_[ i ]; }
+    scalar_t const* operator () ( int64_t i ) const { return &data_[ i ]; }
 
     // return element i itself, as usual in C/C++.
     // unfortunately, this won't work for matrices.
-    FloatType&       operator [] ( int64_t i )       { return data_[ i ]; }
-    FloatType const& operator [] ( int64_t i ) const { return data_[ i ]; }
+    scalar_t&       operator [] ( int64_t i )       { return data_[ i ]; }
+    scalar_t const& operator [] ( int64_t i ) const { return data_[ i ]; }
 
     int64_t size() const { return n; }
     bool        own()  const { return own_; }
@@ -137,12 +138,13 @@ public:
     int64_t n;
 
 private:
-    FloatType *data_;
+    scalar_t *data_;
     bool own_;
 };
 
-/******************************************************************************/
-template< typename FloatType >
+// -----------------------------------------------------------------------------
+/// Simple matrix class that can wrap existing memory or allocate its own memory.
+template< typename scalar_t >
 class Matrix
 {
 public:
@@ -161,7 +163,7 @@ public:
 
     // constructor wraps existing memory; caller maintains ownership
     // ld = m by default
-    Matrix( FloatType* data, int64_t in_m, int64_t in_n, int64_t in_ld=0 ):
+    Matrix( scalar_t* data, int64_t in_m, int64_t in_n, int64_t in_ld=0 ):
         m( in_m ),
         n( in_n ),
         ld( in_ld == 0 ? m : in_ld ),
@@ -177,30 +179,33 @@ public:
 
     // returns pointer to element (i,j), because that's what we normally need to
     // call BLAS / LAPACK, which avoids littering the code with &.
-    FloatType* operator () ( int i, int j )
+    scalar_t* operator () ( int i, int j )
         { return &data_[ i + j*ld ]; }
 
-    FloatType const* operator () ( int i, int j ) const
+    scalar_t const* operator () ( int i, int j ) const
         { return &data_[ i + j*ld ]; }
 
 public:
     int64_t m, n, ld;
 
 protected:
-    Vector<FloatType> data_;
+    Vector<scalar_t> data_;
 };
 
-template< typename FloatT >
-void lapack_generate_matrix(
-    matrix_opts& opts,
-    Vector< typename blas::traits<FloatT>::real_t >& sigma,
-    Matrix< FloatT >& A );
+// -----------------------------------------------------------------------------
+template< typename scalar_t >
+void generate_matrix(
+    MatrixParams& params,
+    Vector< blas::real_type<scalar_t> >& sigma,
+    Matrix< scalar_t >& A );
 
-template< typename FloatT >
-void lapack_generate_matrix(
-    matrix_opts& opts,
+template< typename scalar_t >
+void generate_matrix(
+    MatrixParams& params,
     int64_t m, int64_t n,
-    typename blas::traits<FloatT>::real_t* sigma,
-    FloatT* A, int64_t lda );
+    blas::real_type<scalar_t>* sigma,
+    scalar_t* A, int64_t lda );
+
+} // namespace lapack
 
 #endif        // #ifndef MATRIX_GENERATOR_HPP

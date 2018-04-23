@@ -3,7 +3,7 @@
 
 #include "libtest.hh"
 #include "lapack_util.hh"
-#include "matrix_opts.hh"
+#include "matrix_params.hh"
 #include "matrix_generator.hh"
 
 #ifdef HAVE_MKL
@@ -33,11 +33,12 @@ public:
         float* vl, float* vu,
         int64_t* il, int64_t* iu );
 
-    // test matrix options for use in matrix generator
-    matrix_opts matrix;
-
     // Field members are explicitly public.
     // Order here determines output order.
+
+    // ----- test matrix parameters
+    MatrixParams matrix;
+
     // ----- test framework parameters
     libtest::ParamChar   check;
     libtest::ParamChar   error_exit;

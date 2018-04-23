@@ -207,6 +207,8 @@ void generate_matrix(
     blas::real_type<scalar_t>* sigma,
     scalar_t* A, int64_t lda );
 
+void generate_matrix_usage();
+
 } // namespace lapack
 
 #endif        // #ifndef MATRIX_GENERATOR_HPP

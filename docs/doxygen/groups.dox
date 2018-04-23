@@ -106,4 +106,11 @@
     ----------------------------------------------------------------------------
     @defgroup blas_lapack Additional BLAS
     BLAS-like routines that are not in the reference BLAS standard.
+
+    ----------------------------------------------------------------------------
+    @defgroup group_test Test routines
+    @{
+        @defgroup generate_matrix Test matrix generation
+        @defgroup util Utilities
+    @}
 **/

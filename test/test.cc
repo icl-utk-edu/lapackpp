@@ -626,7 +626,6 @@ int main( int argc, char** argv )
     assert( sizeof(section_names)/sizeof(*section_names) == Section::num_sections );
 
     // Usage: test routine [params]
-    // find routine to test
     if (argc < 2 ||
         strcmp( argv[1], "-h" ) == 0 ||
         strcmp( argv[1], "--help" ) == 0)
@@ -634,6 +633,14 @@ int main( int argc, char** argv )
         usage( argc, argv, routines, section_names );
         return 0;
     }
+
+    if (strcmp( argv[1], "--help-matrix" ) == 0)
+    {
+        lapack::generate_matrix_usage();
+        return 0;
+    }
+
+    // find routine to test
     const char* routine = argv[1];
     libtest::test_func_ptr test_routine = find_tester( routine, routines );
     if (test_routine == nullptr) {
@@ -649,6 +656,7 @@ int main( int argc, char** argv )
     test_routine( params, false );
 
     // parse parameters after routine name
+    // (prints routine's help and exits for arg = "-h")
     params.parse( routine, argc-2, argv+2 );
 
     // print input so running `test [input] > out.txt` documents input

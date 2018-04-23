@@ -46,13 +46,11 @@ void test_gelsy_work( Params& params, bool run )
     int64_t n = params.dim.n();
     int64_t nrhs = params.nrhs.value();
     int64_t align = params.align.value();
+    params.matrix.mark();
 
     // mark non-standard output values
     params.ref_time.value();
     // params.ref_gflops.value();
-    params.matrix.name.value();
-    params.matrix.cond.value();
-    params.matrix.condD.value();
 
     if (! run)
         return;

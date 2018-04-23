@@ -51,9 +51,7 @@ void test_getrf_work( Params& params, bool run )
     params.ref_time.value();
     params.ref_gflops.value();
     params.gflops.value();
-    params.matrix.name.value();
-    params.matrix.cond.value();
-    params.matrix.condD.value();
+    params.matrix.mark();
 
     if (! run)
         return;

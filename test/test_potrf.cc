@@ -46,14 +46,17 @@ void test_potrf_work( Params& params, bool run )
     int64_t n = params.dim.n();
     int64_t align = params.align.value();
     int64_t verbose = params.verbose.value();
+    params.matrix.mark();
 
     // mark non-standard output values
     params.ref_time.value();
     params.ref_gflops.value();
     params.gflops.value();
 
-    if (! run)
+    if (! run) {
+        params.matrix.kind.set_default( "rand_dominant" );
         return;
+    }
 
     // ---------- setup
     int64_t lda = roundup( max( 1, n ), align );
@@ -62,14 +65,7 @@ void test_potrf_work( Params& params, bool run )
     std::vector< scalar_t > A_tst( size_A );
     std::vector< scalar_t > A_ref( size_A );
 
-    int64_t idist = 1;
-    int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A_tst.size(), &A_tst[0] );
-
-    // diagonally dominant -> positive definite
-    for (int64_t i = 0; i < n; ++i) {
-        A_tst[ i + i*lda ] += n;
-    }
+    lapack::generate_matrix( params.matrix, n, n, nullptr, &A_tst[0], lda );
     A_ref = A_tst;
 
     if (verbose >= 1) {

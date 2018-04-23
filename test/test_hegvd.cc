@@ -47,14 +47,18 @@ void test_hegvd_work( Params& params, bool run )
     lapack::Uplo uplo = params.uplo.value();
     int64_t n = params.dim.n();
     int64_t align = params.align.value();
+    params.matrix.mark();
+    params.matrixB.mark();
 
     // mark non-standard output values
     params.ref_time.value();
     // params.ref_gflops.value();
     // params.gflops.value();
 
-    if (! run)
+    if (! run) {
+        params.matrix.kind.set_default( "rand_dominant" );
         return;
+    }
 
     // ---------- setup
     int64_t lda = roundup( max( 1, n ), align );
@@ -70,16 +74,9 @@ void test_hegvd_work( Params& params, bool run )
     std::vector< real_t > W_tst( size_W );
     std::vector< real_t > W_ref( size_W );
 
-    int64_t idist = 1;
-    int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A_tst.size(), &A_tst[0] );
-    lapack::larnv( idist, iseed, B_tst.size(), &B_tst[0] );
-
-    // diagonally dominant -> positive definite
-    for (int64_t i = 0; i < n; ++i) {
-        B_tst[ i + i*ldb ] += n;
-    }
-
+    // todo: how to specify A and B separately?
+    lapack::generate_matrix( params.matrix,  n, n, nullptr, &A_tst[0], lda );
+    lapack::generate_matrix( params.matrixB, n, n, nullptr, &B_tst[0], lda );
     A_ref = A_tst;
     B_ref = B_tst;
 

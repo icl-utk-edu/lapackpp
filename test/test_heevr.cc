@@ -53,6 +53,7 @@ void test_heevr_work( Params& params, bool run )
     int64_t iu;  // = params.iu.value();
     lapack::Range range;  // derived from vl,vu,il,iu
     params.get_range( n, &range, &vl, &vu, &il, &iu );
+    params.matrix.mark();
 
     // mark non-standard output values
     params.ref_time.value();
@@ -82,9 +83,7 @@ void test_heevr_work( Params& params, bool run )
     std::vector< int64_t > isuppz_tst( size_isuppz );
     std::vector< lapack_int > isuppz_ref( size_isuppz );
 
-    int64_t idist = 1;
-    int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A_tst.size(), &A_tst[0] );
+    lapack::generate_matrix( params.matrix, n, n, nullptr, &A_tst[0], lda );
     A_ref = A_tst;
 
     // ---------- run test

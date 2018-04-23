@@ -64,14 +64,12 @@ void test_gesvdx_work( Params& params, bool run )
     int64_t iu;  // = params.iu.value();
     lapack::Range range;  // derived from vl,vu,il,iu
     params.get_range( n, &range, &vl, &vu, &il, &iu );
+    params.matrix.mark();
 
     // mark non-standard output values
     params.ref_time.value();
     // params.ref_gflops.value();
     // params.gflops.value();
-    params.matrix.name.value();
-    params.matrix.cond.value();
-    params.matrix.condD.value();
 
     if (! run)
         return;

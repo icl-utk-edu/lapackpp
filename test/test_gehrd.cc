@@ -49,6 +49,7 @@ void test_gehrd_work( Params& params, bool run )
     int64_t ihi = n;
     int64_t align = params.align.value();
     int64_t verbose = params.verbose.value();
+    params.matrix.mark();
 
     real_t eps = std::numeric_limits< real_t >::epsilon();
     real_t tol = params.tol.value() * eps;
@@ -61,10 +62,6 @@ void test_gehrd_work( Params& params, bool run )
 
     params.error.name( "A - U H U^H\nerror" );
     params.ortho.name( "I - U U^H\nerror" );
-    
-    params.matrix.name.value();
-    params.matrix.cond.value();
-    params.matrix.condD.value();
 
     if (! run)
         return;

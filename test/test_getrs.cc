@@ -47,14 +47,12 @@ void test_getrs_work( Params& params, bool run )
     int64_t nrhs = params.nrhs.value();
     int64_t align = params.align.value();
     int64_t verbose = params.verbose.value();
+    params.matrix.mark();
 
     // mark non-standard output values
     params.ref_time.value();
     params.ref_gflops.value();
     params.gflops.value();
-    params.matrix.name.value();
-    params.matrix.cond.value();
-    params.matrix.condD.value();
 
     if (! run)
         return;

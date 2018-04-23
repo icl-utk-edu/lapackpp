@@ -48,6 +48,7 @@ void test_gesdd_work( Params& params, bool run )
     int64_t m = params.dim.m();
     int64_t n = params.dim.n();
     int64_t align = params.align.value();
+    params.matrix.mark();
 
     // mark non-standard output values
     params.ref_time.value();
@@ -56,9 +57,6 @@ void test_gesdd_work( Params& params, bool run )
     params.ortho_U.value();
     params.ortho_V.value();
     params.error_sigma.value();
-    params.matrix.name.value();
-    params.matrix.cond.value();
-    params.matrix.condD.value();
 
     if (! run)
         return;

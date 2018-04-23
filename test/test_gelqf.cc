@@ -45,6 +45,7 @@ void test_gelqf_work( Params& params, bool run )
     int64_t m = params.dim.m();
     int64_t n = params.dim.n();
     int64_t align = params.align.value();
+    params.matrix.mark();
 
     // mark non-standard output values
     params.ortho.value();
@@ -52,11 +53,6 @@ void test_gelqf_work( Params& params, bool run )
     params.gflops.value();
     params.ref_time.value();
     params.ref_gflops.value();
-    params.okay.value();
-    params.matrix.name.value();
-    params.matrix.cond.value();
-    params.matrix.condD.value();
-
 
     if (! run)
         return;

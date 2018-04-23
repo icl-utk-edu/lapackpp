@@ -45,20 +45,15 @@ void test_sycon_work( Params& params, bool run )
     lapack::Uplo uplo = params.uplo.value();
     int64_t n = params.dim.n();
     int64_t align = params.align.value();
+    params.matrix.mark();
 
     // mark non-standard output values
     params.ref_time.value();
     // params.ref_gflops.value();
     // params.gflops.value();
-    params.matrix.name.value();
-    params.matrix.cond.value();
-    params.matrix.condD.value();
 
-    if (! run) {
-        params.matrix.name.set_type( "syev" );
-        //params.matrix.name.clear();
+    if (! run)
         return;
-    }
 
     // ---------- setup
     int64_t lda = roundup( max( 1, n ), align );

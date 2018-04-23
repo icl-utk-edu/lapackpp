@@ -47,6 +47,8 @@ void test_gglse_work( Params& params, bool run )
     // TODO int64_t p = params.p.value();
     int64_t p = params.dim.k();
     int64_t align = params.align.value();
+    params.matrix.mark();
+    params.matrixB.mark();
 
     // mark non-standard output values
     params.ref_time.value();
@@ -55,7 +57,7 @@ void test_gglse_work( Params& params, bool run )
 
     if (! run)
         return;
-    
+
     if (! ((0 <= p) && (p <= n) && ( n <= m+p ))) {
         printf( "skipping because gglse requires 0 <= p <= n <= m+p\n" );
         return;
@@ -81,10 +83,10 @@ void test_gglse_work( Params& params, bool run )
     std::vector< scalar_t > X_tst( size_X );
     std::vector< scalar_t > X_ref( size_X );
 
+    lapack::generate_matrix( params.matrix,  m, n, nullptr, &A_tst[0], lda );
+    lapack::generate_matrix( params.matrixB, p, n, nullptr, &B_tst[0], ldb );
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A_tst.size(), &A_tst[0] );
-    lapack::larnv( idist, iseed, B_tst.size(), &B_tst[0] );
     lapack::larnv( idist, iseed, C_tst.size(), &C_tst[0] );
     lapack::larnv( idist, iseed, D_tst.size(), &D_tst[0] );
     A_ref = A_tst;

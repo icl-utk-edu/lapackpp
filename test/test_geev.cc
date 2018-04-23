@@ -67,6 +67,7 @@ void test_geev_work( Params& params, bool run )
     int64_t n = params.dim.n();
     int64_t align = params.align.value();
     int64_t verbose = params.verbose.value();
+    params.matrix.mark();
 
     real_t eps = std::numeric_limits< real_t >::epsilon();
     real_t tol = params.tol.value() * eps;
@@ -80,9 +81,6 @@ void test_geev_work( Params& params, bool run )
     params.ref_time.value();
     //params.ref_gflops.value();
     //params.gflops.value();
-    params.matrix.name.value();
-    params.matrix.cond.value();
-    params.matrix.condD.value();
 
     params.error .name( "A' Vl-Vl W'\nerror" );
     params.error2.name( "Vl(j) norm\nerror" );

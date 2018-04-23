@@ -46,6 +46,7 @@ void test_pocon_work( Params& params, bool run )
     int64_t n = params.dim.n();
     int64_t align = params.align.value();
     int64_t verbose = params.verbose.value();
+    params.matrix.mark();
 
     real_t eps = std::numeric_limits< real_t >::epsilon();
 
@@ -53,12 +54,9 @@ void test_pocon_work( Params& params, bool run )
     params.ref_time.value();
     //params.ref_gflops.value();
     //params.gflops.value();
-    params.matrix.name.value();
-    params.matrix.cond.value();
-    params.matrix.condD.value();
 
     if (! run) {
-	params.matrix.name.set_type( "poev" );
+        params.matrix.kind.set_default( "rand_dominant" );
         return;
     }
 

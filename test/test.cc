@@ -261,9 +261,9 @@ std::vector< libtest::routines_t > routines = {
     { "hbev",               test_hbev,      Section::heev }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },
 
-    { "heevx",              test_heevx,     Section::heev }, // tested via LAPACKE 
-    { "hpevx",              test_hpevx,     Section::heev }, // tested via LAPACKE 
-    { "hbevx",              test_hbevx,     Section::heev }, // tested via LAPACKE 
+    { "heevx",              test_heevx,     Section::heev }, // tested via LAPACKE
+    { "hpevx",              test_hpevx,     Section::heev }, // tested via LAPACKE
+    { "hbevx",              test_hbevx,     Section::heev }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },
 
     { "heevd",              test_heevd,     Section::heev }, // tested via LAPACKE using gcc/MKL
@@ -461,7 +461,7 @@ Params::Params():
 
 
     //          name,      w, p, type,            def,   min,     max, help
-    dim       ( "dim",     6,    ParamType::List,          0, 1000000, "m x n x k dimensions" ),
+    dim       ( "dim",     6,    ParamType::List,          0, 1000000, "m by n by k dimensions" ),
     kd        ( "kd",      6,    ParamType::List, 100,     0, 1000000, "bandwidth" ),
     kl        ( "kl",      6,    ParamType::List, 100,     0, 1000000, "lower bandwidth" ),
     ku        ( "ku",      6,    ParamType::List, 100,     0, 1000000, "upper bandwidth" ),
@@ -480,28 +480,28 @@ Params::Params():
 
     alpha     ( "alpha",   9, 4, ParamType::List,  pi,  -inf,     inf, "scalar alpha" ),
     beta      ( "beta",    9, 4, ParamType::List,   e,  -inf,     inf, "scalar beta" ),
-    incx      ( "incx",    6,    ParamType::List,   1, -1000,    1000, "stride of x vector" ),
-    incy      ( "incy",    6,    ParamType::List,   1, -1000,    1000, "stride of y vector" ),
-    align     ( "align",   6,    ParamType::List,   1,     1,    1024, "column alignment (sets lda, ldb, etc. to multiple of align)" ),
+    incx      ( "incx",    4,    ParamType::List,   1, -1000,    1000, "stride of x vector" ),
+    incy      ( "incy",    4,    ParamType::List,   1, -1000,    1000, "stride of y vector" ),
+    align     ( "align",   0,    ParamType::List,   1,     1,    1024, "column alignment (sets lda, ldb, etc. to multiple of align)" ),
 
     // ----- output parameters
     // min, max are ignored
     //           name,                    w, p, type,              default,               min, max, help
-    error      ( "error",                11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
-    error2     ( "error2",               11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
-    error3     ( "error3",               11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
-    error4     ( "error4",               11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
-    error5     ( "error5",               11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
-    ortho      ( "orth. error",          11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "orthogonality error" ),
-    ortho_U    ( "U orth.",              11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "U orthogonality error" ),
-    ortho_V    ( "V orth.",              11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "V orthogonality error" ),
-    error_sigma( "Sigma error",          11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "Sigma error" ),
+    error      ( "error",                 9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
+    error2     ( "error2",                9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
+    error3     ( "error3",                9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
+    error4     ( "error4",                9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
+    error5     ( "error5",                9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
+    ortho      ( "orth. error",           9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "orthogonality error" ),
+    ortho_U    ( "U orth.",               9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "U orthogonality error" ),
+    ortho_V    ( "V orth.",               9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "V orthogonality error" ),
+    error_sigma( "Sigma error",           9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "Sigma error" ),
 
-    time      ( "LAPACK++\ntime (s)",    11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "time to solution" ),
+    time      ( "LAPACK++\ntime (s)",    10, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "time to solution" ),
     gflops    ( "LAPACK++\nGflop/s",     11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "Gflop/s rate" ),
     iters     ( "LAPACK++\niters",        6,    ParamType::Output,                     0,   0,   0, "iterations to solution" ),
 
-    ref_time  ( "Ref.\ntime (s)",        11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "reference time to solution" ),
+    ref_time  ( "Ref.\ntime (s)",        10, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "reference time to solution" ),
     ref_gflops( "Ref.\nGflop/s",         11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "reference Gflop/s rate" ),
     ref_iters ( "Ref.\niters",            6,    ParamType::Output,                     0,   0,   0, "reference iterations to solution" ),
 
@@ -665,6 +665,11 @@ int main( int argc, char** argv )
         printf( " %s", argv[i] );
     }
     printf( "\n" );
+
+    // show align column if it has non-default values
+    if (params.align.size() != 1 || params.align.value() != 1) {
+        params.align.width( 5 );
+    }
 
     // run tests
     int status = 0;

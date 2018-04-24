@@ -3,9 +3,11 @@
 
 #include "libtest.hh"
 #include "lapack_util.hh"
+#include "matrix_params.hh"
+#include "matrix_generator.hh"
 
 #ifdef HAVE_MKL
-    #include <mkl_lapacke.h>
+    #include <mkl.h>
 #else
     #include <lapacke.h>
 #endif
@@ -33,6 +35,11 @@ public:
 
     // Field members are explicitly public.
     // Order here determines output order.
+
+    // ----- test matrix parameters
+    MatrixParams matrix;
+    MatrixParams matrixB;
+
     // ----- test framework parameters
     libtest::ParamChar   check;
     libtest::ParamChar   error_exit;

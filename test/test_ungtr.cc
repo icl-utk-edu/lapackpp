@@ -45,6 +45,7 @@ void test_ungtr_work( Params& params, bool run )
     lapack::Uplo uplo = params.uplo.value();
     int64_t n = params.dim.n();
     int64_t align = params.align.value();
+    params.matrix.mark();
 
     // mark non-standard output values
     params.ref_time.value();
@@ -67,10 +68,8 @@ void test_ungtr_work( Params& params, bool run )
     std::vector< real_t > D_tst( size_D );
     std::vector< real_t > E_tst( size_E );
 
-    int64_t idist = 1;
-    int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A_tst.size(), &A_tst[0] );
-    
+    lapack::generate_matrix( params.matrix, n, n, nullptr, &A_tst[0], lda );
+
     // reduce to tridiagonal form to use the tau later
     int64_t info = lapack::hetrd( uplo, n, &A_tst[0], lda, &D_tst[0], &E_tst[0], &tau[0] );
     if (info != 0) {

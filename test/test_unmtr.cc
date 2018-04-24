@@ -50,6 +50,7 @@ void test_unmtr_work( Params& params, bool run )
     int64_t m = params.dim.m();
     int64_t n = params.dim.n();
     int64_t align = params.align.value();
+    params.matrix.mark();
 
     // mark non-standard output values
     params.ref_time.value();
@@ -76,9 +77,9 @@ void test_unmtr_work( Params& params, bool run )
     std::vector< real_t > D( size_D );
     std::vector< real_t > E( size_E );
 
+    lapack::generate_matrix( params.matrix, r, r, nullptr, &A[0], lda );
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A.size(), &A[0] );
     lapack::larnv( idist, iseed, tau.size(), &tau[0] );
     lapack::larnv( idist, iseed, C_tst.size(), &C_tst[0] );
     C_ref = C_tst;

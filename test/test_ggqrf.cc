@@ -47,6 +47,8 @@ void test_ggqrf_work( Params& params, bool run )
     int64_t p = params.dim.k();  // TODO Using k as a stand-in for p
     // int64_t p = params.p.value();
     int64_t align = params.align.value();
+    params.matrix.mark();
+    params.matrixB.mark();
 
     // mark non-standard output values
     params.ref_time.value();
@@ -73,10 +75,8 @@ void test_ggqrf_work( Params& params, bool run )
     std::vector< scalar_t > taub_tst( size_taub );
     std::vector< scalar_t > taub_ref( size_taub );
 
-    int64_t idist = 1;
-    int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A_tst.size(), &A_tst[0] );
-    lapack::larnv( idist, iseed, B_tst.size(), &B_tst[0] );
+    lapack::generate_matrix( params.matrix,  n, m, nullptr, &A_tst[0], lda );
+    lapack::generate_matrix( params.matrixB, n, p, nullptr, &B_tst[0], ldb );
     A_ref = A_tst;
     B_ref = B_tst;
 

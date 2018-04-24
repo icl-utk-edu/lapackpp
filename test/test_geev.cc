@@ -67,6 +67,7 @@ void test_geev_work( Params& params, bool run )
     int64_t n = params.dim.n();
     int64_t align = params.align.value();
     int64_t verbose = params.verbose.value();
+    params.matrix.mark();
 
     real_t eps = std::numeric_limits< real_t >::epsilon();
     real_t tol = params.tol.value() * eps;
@@ -108,9 +109,9 @@ void test_geev_work( Params& params, bool run )
     std::vector< scalar_t > VR_tst( size_VR );
     std::vector< scalar_t > VR_ref( size_VR );
 
-    int64_t idist = 1;
-    int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A_tst.size(), &A_tst[0] );
+    // Generate test matrix
+    lapack::generate_matrix( params.matrix, n, n, nullptr, &A_tst[0], lda );
+
     A_ref = A_tst;
 
     if (verbose >= 1) {
@@ -125,7 +126,9 @@ void test_geev_work( Params& params, bool run )
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
     double time = get_wtime();
+    //printf (" test start\n");
     int64_t info_tst = lapack::geev( jobvl, jobvr, n, &A_tst[0], lda, &W_tst[0], &VL_tst[0], ldvl, &VR_tst[0], ldvr );
+    //printf (" test done\n");
     time = get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::geev returned error %lld\n", (lld) info_tst );
@@ -177,7 +180,9 @@ void test_geev_work( Params& params, bool run )
         // ---------- run reference
         libtest::flush_cache( params.cache.value() );
         time = get_wtime();
+    //printf (" ref start\n");
         int64_t info_ref = LAPACKE_geev( job2char(jobvl), job2char(jobvr), n, &A_ref[0], lda, &W_ref[0], &VL_ref[0], ldvl, &VR_ref[0], ldvr );
+    //printf (" ref done\n");
         time = get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_geev returned error %lld\n", (lld) info_ref );

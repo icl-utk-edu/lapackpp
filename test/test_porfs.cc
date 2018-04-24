@@ -48,14 +48,17 @@ void test_porfs_work( Params& params, bool run )
     int64_t align = params.align.value();
 
     real_t eps = std::numeric_limits< real_t >::epsilon();
+    params.matrix.mark();
 
     // mark non-standard output values
     params.ref_time.value();
     //params.ref_gflops.value();
     //params.gflops.value();
 
-    if (! run)
+    if (! run) {
+        params.matrix.kind.set_default( "rand_dominant" );
         return;
+    }
 
     // ---------- setup
     // make A and AF, B and X, the same size
@@ -80,15 +83,10 @@ void test_porfs_work( Params& params, bool run )
     std::vector< real_t > berr_tst( size_berr );
     std::vector< real_t > berr_ref( size_berr );
 
+    lapack::generate_matrix( params.matrix, n, n, nullptr, &A[0], lda );
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A.size(), &A[0] );
     lapack::larnv( idist, iseed, B.size(), &B[0] );
-
-    // diagonally dominant -> positive definite
-    for (int64_t i = 0; i < n; ++i) {
-        A[ i + i*lda ] += n;
-    }
 
     // factor AF = LU
     AF = A;

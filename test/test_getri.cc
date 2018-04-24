@@ -71,6 +71,7 @@ void test_getri_work( Params& params, bool run )
     int64_t n = params.dim.n();
     int64_t align = params.align.value();
     int64_t verbose = params.verbose.value();
+    params.matrix.mark();
 
     // mark non-standard output values
     params.ref_time.value();
@@ -90,9 +91,7 @@ void test_getri_work( Params& params, bool run )
     std::vector< int64_t > ipiv_tst( size_ipiv );
     std::vector< lapack_int > ipiv_ref( size_ipiv );
 
-    int64_t idist = 1;
-    int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A_tst.size(), &A_tst[0] );
+    lapack::generate_matrix( params.matrix, n, n, nullptr, &A_tst[0], lda );
     A_ref = A_tst;
 
     if (verbose >= 1) {

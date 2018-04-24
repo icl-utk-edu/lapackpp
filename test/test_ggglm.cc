@@ -46,6 +46,8 @@ void test_ggglm_work( Params& params, bool run )
     int64_t m = params.dim.m();
     int64_t p = params.dim.k();
     int64_t align = params.align.value();
+    params.matrix.mark();
+    params.matrixB.mark();
 
     // mark non-standard output values
     params.ref_time.value();
@@ -85,10 +87,10 @@ void test_ggglm_work( Params& params, bool run )
     std::vector< scalar_t > Y_tst( size_Y );
     std::vector< scalar_t > Y_ref( size_Y );
 
+    lapack::generate_matrix( params.matrix,  n, m, nullptr, &A_tst[0], lda );
+    lapack::generate_matrix( params.matrixB, n, p, nullptr, &B_tst[0], ldb );
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A_tst.size(), &A_tst[0] );
-    lapack::larnv( idist, iseed, B_tst.size(), &B_tst[0] );
     lapack::larnv( idist, iseed, D_tst.size(), &D_tst[0] );
     A_ref = A_tst;
     B_ref = B_tst;

@@ -44,6 +44,7 @@ void test_hecon_work( Params& params, bool run )
     lapack::Uplo uplo = params.uplo.value();
     int64_t n = params.dim.n();
     int64_t align = params.align.value();
+    params.matrix.mark();
 
     // mark non-standard output values
     params.ref_time.value();
@@ -65,9 +66,7 @@ void test_hecon_work( Params& params, bool run )
     std::vector< int64_t > ipiv_tst( size_ipiv );
     std::vector< lapack_int > ipiv_ref( size_ipiv );
 
-    int64_t idist = 1;
-    int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A.size(), &A[0] );
+    lapack::generate_matrix( params.matrix, n, n, nullptr, &A[0], lda );
 
     // initialize anorm as the norm of the original matrix
     anorm = lapack::lange( lapack::Norm::One, n, n, &A[0], lda );

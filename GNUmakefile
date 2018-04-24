@@ -1,8 +1,8 @@
 include make.inc
 
 # defaults if not defined in make.inc
-LDFLAGS  ?= -fPIC -fopenmp
-CXXFLAGS ?= -fPIC -fopenmp -MMD -std=c++11 -pedantic \
+LDFLAGS  ?= -fPIC
+CXXFLAGS ?= -fPIC -MMD -std=c++11 -pedantic \
             -Wall -Wmissing-declarations \
             -Wno-unused-local-typedefs \
             -I${LAPACKDIR}/LAPACKE/include \

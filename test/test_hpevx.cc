@@ -5,7 +5,6 @@
 #include "error.hh"
 
 #include <vector>
-#include <omp.h>
 
 // -----------------------------------------------------------------------------
 // simple overloaded wrappers around LAPACKE
@@ -37,7 +36,7 @@ static lapack_int LAPACKE_hpevx(
 template< typename scalar_t >
 void test_hpevx_work( Params& params, bool run )
 {
-    using libtest::get_wtime;
+    using namespace libtest;
     using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;

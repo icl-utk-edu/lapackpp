@@ -46,6 +46,7 @@ void test_ungqr_work( Params& params, bool run )
     int64_t n = params.dim.n();
     int64_t k = params.dim.k();
     int64_t align = params.align.value();
+    params.matrix.mark();
 
     // mark non-standard output values
     params.ortho.value();
@@ -74,9 +75,9 @@ void test_ungqr_work( Params& params, bool run )
     std::vector< scalar_t > A_factored( size_A );
     std::vector< scalar_t > tau( size_tau );
 
+    lapack::generate_matrix( params.matrix, m, n, nullptr, &A_tst[0], lda );
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A_tst.size(), &A_tst[0] );
     lapack::larnv( idist, iseed, tau.size(), &tau[0] );
     // save matrix
     A_ref = A_tst;

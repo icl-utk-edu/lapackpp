@@ -46,6 +46,7 @@ void test_gelsy_work( Params& params, bool run )
     int64_t n = params.dim.n();
     int64_t nrhs = params.nrhs.value();
     int64_t align = params.align.value();
+    params.matrix.mark();
 
     // mark non-standard output values
     params.ref_time.value();
@@ -71,9 +72,9 @@ void test_gelsy_work( Params& params, bool run )
     std::vector< int64_t > jpvt_tst( size_jpvt );
     std::vector< lapack_int > jpvt_ref( size_jpvt );
 
+    lapack::generate_matrix( params.matrix, m, n, nullptr, &A_tst[0], lda );
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A_tst.size(), &A_tst[0] );
     lapack::larnv( idist, iseed, B_tst.size(), &B_tst[0] );
 
     A_ref = A_tst;

@@ -45,6 +45,7 @@ void test_gecon_work( Params& params, bool run )
     lapack::Norm norm = params.norm.value();
     int64_t n = params.dim.n();
     int64_t align = params.align.value();
+    params.matrix.mark();
 
     // mark non-standard output values
     params.ref_time.value();
@@ -63,9 +64,7 @@ void test_gecon_work( Params& params, bool run )
 
     std::vector< scalar_t > A( size_A );
 
-    int64_t idist = 1;
-    int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A.size(), &A[0] );
+    lapack::generate_matrix( params.matrix, n, n, nullptr, &A[0], lda );
 
     anorm = lapack::lange( norm, n, n, &A[0], lda );
 

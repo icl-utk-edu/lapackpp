@@ -47,14 +47,17 @@ void test_posv_work( Params& params, bool run )
     int64_t nrhs = params.nrhs.value();
     int64_t align = params.align.value();
     int64_t verbose = params.verbose.value();
+    params.matrix.mark();
 
     // mark non-standard output values
     params.ref_time.value();
     params.ref_gflops.value();
     params.gflops.value();
 
-    if (! run)
+    if (! run) {
+        params.matrix.kind.set_default( "rand_dominant" );
         return;
+    }
 
     // ---------- setup
     int64_t lda = roundup( max( 1, n ), align );
@@ -67,22 +70,18 @@ void test_posv_work( Params& params, bool run )
     std::vector< scalar_t > B_tst( size_B );
     std::vector< scalar_t > B_ref( size_B );
 
+    lapack::generate_matrix( params.matrix, n, n, nullptr, &A_tst[0], lda );
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A_tst.size(), &A_tst[0] );
     lapack::larnv( idist, iseed, B_tst.size(), &B_tst[0] );
 
-    // diagonally dominant -> positive definite
-    for (int64_t i = 0; i < n; ++i) {
-        A_tst[ i + i*lda ] += n;
-    }
     A_ref = A_tst;
     B_ref = B_tst;
 
     if (verbose >= 1) {
         printf( "\n"
                 "A n=%5lld, lda=%5lld\n"
-                "B n=%5lld, nrhs=%5lld, ldb=%5lld",
+                "B n=%5lld, nrhs=%5lld, ldb=%5lld\n",
                 (lld) n, (lld) lda,
                 (lld) n, (lld) nrhs, (lld) ldb );
     }

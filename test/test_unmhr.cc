@@ -51,6 +51,7 @@ void test_unmhr_work( Params& params, bool run )
     int64_t ilo = 1; // TODO params.ilo.value();
     int64_t ihi = n; // TODO params.ihi.value();
     int64_t align = params.align.value();
+    params.matrix.mark();
 
     // mark non-standard output values
     params.ref_time.value();
@@ -73,9 +74,9 @@ void test_unmhr_work( Params& params, bool run )
     std::vector< scalar_t > C_tst( size_C );
     std::vector< scalar_t > C_ref( size_C );
 
+    lapack::generate_matrix( params.matrix, r, r, nullptr, &A[0], lda );
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, A.size(), &A[0] );
     lapack::larnv( idist, iseed, tau.size(), &tau[0] );
     lapack::larnv( idist, iseed, C_tst.size(), &C_tst[0] );
 
@@ -83,7 +84,7 @@ void test_unmhr_work( Params& params, bool run )
     int64_t info_hrd = lapack::gehrd( r, ilo, ihi, &A[0], lda, &tau[0] );
     if (info_hrd != 0) {
         fprintf( stderr, "lapack::gehrd returned error %lld\n", (lld) info_hrd );
-    }    
+    }
 
     C_ref = C_tst;
 

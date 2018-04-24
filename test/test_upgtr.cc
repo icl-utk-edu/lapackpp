@@ -36,7 +36,6 @@ static lapack_int LAPACKE_upgtr(
 template< typename scalar_t >
 void test_upgtr_work( Params& params, bool run )
 {
-    using libtest::get_wtime;
     using namespace libtest;
     using namespace blas;
     using real_t = blas::real_type< scalar_t >;

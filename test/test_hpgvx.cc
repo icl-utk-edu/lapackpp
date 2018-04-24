@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_hpgvx(
-    lapack_int itype, char jobz, char range, char uplo, lapack_int n, float* AP, float* BP, float vl, float vu, lapack_int il, lapack_int iu, float abstol, lapack_int* m, float* W, float* Z, lapack_int ldz, lapack_int* ifail )
-{
-    return LAPACKE_sspgvx( LAPACK_COL_MAJOR, itype, jobz, range, uplo, n, AP, BP, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
-}
-
-static lapack_int LAPACKE_hpgvx(
-    lapack_int itype, char jobz, char range, char uplo, lapack_int n, double* AP, double* BP, double vl, double vu, lapack_int il, lapack_int iu, double abstol, lapack_int* m, double* W, double* Z, lapack_int ldz, lapack_int* ifail )
-{
-    return LAPACKE_dspgvx( LAPACK_COL_MAJOR, itype, jobz, range, uplo, n, AP, BP, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
-}
-
-static lapack_int LAPACKE_hpgvx(
-    lapack_int itype, char jobz, char range, char uplo, lapack_int n, std::complex<float>* AP, std::complex<float>* BP, float vl, float vu, lapack_int il, lapack_int iu, float abstol, lapack_int* m, float* W, std::complex<float>* Z, lapack_int ldz, lapack_int* ifail )
-{
-    return LAPACKE_chpgvx( LAPACK_COL_MAJOR, itype, jobz, range, uplo, n, AP, BP, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
-}
-
-static lapack_int LAPACKE_hpgvx(
-    lapack_int itype, char jobz, char range, char uplo, lapack_int n, std::complex<double>* AP, std::complex<double>* BP, double vl, double vu, lapack_int il, lapack_int iu, double abstol, lapack_int* m, double* W, std::complex<double>* Z, lapack_int ldz, lapack_int* ifail )
-{
-    return LAPACKE_zhpgvx( LAPACK_COL_MAJOR, itype, jobz, range, uplo, n, AP, BP, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

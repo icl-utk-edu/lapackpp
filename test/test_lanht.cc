@@ -3,72 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-#include "lapack_mangling.h"
-extern "C" {
-// give Fortran prototypes if not given via lapacke.h
-
-#ifndef LAPACK_slanst
-#define LAPACK_slanst LAPACK_GLOBAL(slanst,SLANST)
-blas_float_return LAPACK_slanst(
-    char const* norm, lapack_int const* n,
-    float const* D,
-    float const* E );
-#endif
-
-#ifndef LAPACK_dlanst
-#define LAPACK_dlanst LAPACK_GLOBAL(dlanst,DLANST)
-double LAPACK_dlanst(
-    char const* norm, lapack_int const* n,
-    double const* D,
-    double const* E );
-#endif
-
-#ifndef LAPACK_clanht
-#define LAPACK_clanht LAPACK_GLOBAL(clanht,CLANHT)
-blas_float_return LAPACK_clanht(
-    char const* norm, lapack_int const* n,
-    float const* D,
-    lapack_complex_float const* E );
-#endif
-
-#ifndef LAPACK_zlanht
-#define LAPACK_zlanht LAPACK_GLOBAL(zlanht,ZLANHT)
-double LAPACK_zlanht(
-    char const* norm, lapack_int const* n,
-    double const* D,
-    lapack_complex_double const* E );
-#endif
-
-}  // extern "C"
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACK (not in LAPACKE)
-static lapack_int LAPACKE_lanht(
-    char norm, lapack_int n, float* D, float* E )
-{
-    return LAPACK_slanst( &norm, &n, D, E );
-}
-
-static lapack_int LAPACKE_lanht(
-    char norm, lapack_int n, double* D, double* E )
-{
-    return LAPACK_dlanst( &norm, &n, D, E );
-}
-
-static lapack_int LAPACKE_lanht(
-    char norm, lapack_int n, float* D, std::complex<float>* E )
-{
-    return LAPACK_clanht( &norm, &n, D, E );
-}
-
-static lapack_int LAPACKE_lanht(
-    char norm, lapack_int n, double* D, std::complex<double>* E )
-{
-    return LAPACK_zlanht( &norm, &n, D, E );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

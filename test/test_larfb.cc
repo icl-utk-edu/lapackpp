@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_larfb(
-    char side, char trans, char direct, char storev, lapack_int m, lapack_int n, lapack_int k, float* V, lapack_int ldv, float* T, lapack_int ldt, float* C, lapack_int ldc )
-{
-    return LAPACKE_slarfb( LAPACK_COL_MAJOR, side, trans, direct, storev, m, n, k, V, ldv, T, ldt, C, ldc );
-}
-
-static lapack_int LAPACKE_larfb(
-    char side, char trans, char direct, char storev, lapack_int m, lapack_int n, lapack_int k, double* V, lapack_int ldv, double* T, lapack_int ldt, double* C, lapack_int ldc )
-{
-    return LAPACKE_dlarfb( LAPACK_COL_MAJOR, side, trans, direct, storev, m, n, k, V, ldv, T, ldt, C, ldc );
-}
-
-static lapack_int LAPACKE_larfb(
-    char side, char trans, char direct, char storev, lapack_int m, lapack_int n, lapack_int k, std::complex<float>* V, lapack_int ldv, std::complex<float>* T, lapack_int ldt, std::complex<float>* C, lapack_int ldc )
-{
-    return LAPACKE_clarfb( LAPACK_COL_MAJOR, side, trans, direct, storev, m, n, k, V, ldv, T, ldt, C, ldc );
-}
-
-static lapack_int LAPACKE_larfb(
-    char side, char trans, char direct, char storev, lapack_int m, lapack_int n, lapack_int k, std::complex<double>* V, lapack_int ldv, std::complex<double>* T, lapack_int ldt, std::complex<double>* C, lapack_int ldc )
-{
-    return LAPACKE_zlarfb( LAPACK_COL_MAJOR, side, trans, direct, storev, m, n, k, V, ldv, T, ldt, C, ldc );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

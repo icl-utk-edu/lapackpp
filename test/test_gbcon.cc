@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_gbcon(
-    char norm, lapack_int n, lapack_int kl, lapack_int ku, float* AB, lapack_int ldab, lapack_int* ipiv, float anorm, float* rcond )
-{
-    return LAPACKE_sgbcon( LAPACK_COL_MAJOR, norm, n, kl, ku, AB, ldab, ipiv, anorm, rcond );
-}
-
-static lapack_int LAPACKE_gbcon(
-    char norm, lapack_int n, lapack_int kl, lapack_int ku, double* AB, lapack_int ldab, lapack_int* ipiv, double anorm, double* rcond )
-{
-    return LAPACKE_dgbcon( LAPACK_COL_MAJOR, norm, n, kl, ku, AB, ldab, ipiv, anorm, rcond );
-}
-
-static lapack_int LAPACKE_gbcon(
-    char norm, lapack_int n, lapack_int kl, lapack_int ku, std::complex<float>* AB, lapack_int ldab, lapack_int* ipiv, float anorm, float* rcond )
-{
-    return LAPACKE_cgbcon( LAPACK_COL_MAJOR, norm, n, kl, ku, AB, ldab, ipiv, anorm, rcond );
-}
-
-static lapack_int LAPACKE_gbcon(
-    char norm, lapack_int n, lapack_int kl, lapack_int ku, std::complex<double>* AB, lapack_int ldab, lapack_int* ipiv, double anorm, double* rcond )
-{
-    return LAPACKE_zgbcon( LAPACK_COL_MAJOR, norm, n, kl, ku, AB, ldab, ipiv, anorm, rcond );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

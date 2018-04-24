@@ -3,36 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_upmtr(
-    char side, char uplo, char trans, lapack_int m, lapack_int n, float* AP, float* tau, float* C, lapack_int ldc )
-{
-    if (trans == 'C') trans = 'T';
-    return LAPACKE_sopmtr( LAPACK_COL_MAJOR, side, uplo, trans, m, n, AP, tau, C, ldc );
-}
-
-static lapack_int LAPACKE_upmtr(
-    char side, char uplo, char trans, lapack_int m, lapack_int n, double* AP, double* tau, double* C, lapack_int ldc )
-{
-    if (trans == 'C') trans = 'T';
-    return LAPACKE_dopmtr( LAPACK_COL_MAJOR, side, uplo, trans, m, n, AP, tau, C, ldc );
-}
-
-static lapack_int LAPACKE_upmtr(
-    char side, char uplo, char trans, lapack_int m, lapack_int n, std::complex<float>* AP, std::complex<float>* tau, std::complex<float>* C, lapack_int ldc )
-{
-    return LAPACKE_cupmtr( LAPACK_COL_MAJOR, side, uplo, trans, m, n, AP, tau, C, ldc );
-}
-
-static lapack_int LAPACKE_upmtr(
-    char side, char uplo, char trans, lapack_int m, lapack_int n, std::complex<double>* AP, std::complex<double>* tau, std::complex<double>* C, lapack_int ldc )
-{
-    return LAPACKE_zupmtr( LAPACK_COL_MAJOR, side, uplo, trans, m, n, AP, tau, C, ldc );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

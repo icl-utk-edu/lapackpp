@@ -12,12 +12,13 @@
 
 #include "syr.hh"  // from blaspp
 
+// -----------------------------------------------------------------------------
+// give Fortran prototypes if not given via lapacke.h
 #include "lapack_mangling.h"
 
 extern "C" {
 
 /* ----- symmetric rank-1 update */
-// give Fortran prototypes if not given via lapacke.h
 #ifndef LAPACK_csyr
 #define LAPACK_csyr LAPACK_GLOBAL(csyr,CSYR)
 void LAPACK_csyr(
@@ -52,7 +53,10 @@ cblas_syr(
     if (layout == CblasRowMajor) {
         uplo_ = (uplo == CblasUpper ? 'l' : 'u');  // switch upper <=> lower
     }
-    LAPACK_csyr( &uplo_, &n, &alpha, x, &incx, A, &lda );
+    LAPACK_csyr( &uplo_, &n,
+                 (lapack_complex_float*) &alpha,
+                 (lapack_complex_float*) x, &incx,
+                 (lapack_complex_float*) A, &lda );
 }
 
 inline void
@@ -66,7 +70,10 @@ cblas_syr(
     if (layout == CblasRowMajor) {
         uplo_ = (uplo == CblasUpper ? 'l' : 'u');  // switch upper <=> lower
     }
-    LAPACK_zsyr( &uplo_, &n, &alpha, x, &incx, A, &lda );
+    LAPACK_zsyr( &uplo_, &n,
+                 (lapack_complex_double*) &alpha,
+                 (lapack_complex_double*) x, &incx,
+                 (lapack_complex_double*) A, &lda );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +106,7 @@ void test_syr_work( Params& params, bool run )
     // setup
     int64_t lda = roundup( n, align );
     size_t size_A = size_t(lda)*n;
-    size_t size_x = (n - 1) * abs(incx) + 1;
+    size_t size_x = (n - 1) * std::abs(incx) + 1;
     TA* A    = new TA[ size_A ];
     TA* Aref = new TA[ size_A ];
     TX* x    = new TX[ size_x ];
@@ -112,7 +119,7 @@ void test_syr_work( Params& params, bool run )
 
     // norms for error check
     real_t Anorm = lapack::lansy( lapack::Norm::Fro, uplo, n, A, lda );
-    real_t Xnorm = cblas_nrm2( n, x, abs(incx) );
+    real_t Xnorm = cblas_nrm2( n, x, std::abs(incx) );
 
     // test error exits
     assert_throw( blas::syr( Layout(0), uplo,     n, alpha, x, incx, A, lda ), blas::Error );

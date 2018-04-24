@@ -3,35 +3,10 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 #include "check_svd.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_gesdd(
-    char jobz, lapack_int m, lapack_int n, float* A, lapack_int lda, float* S, float* U, lapack_int ldu, float* VT, lapack_int ldvt )
-{
-    return LAPACKE_sgesdd( LAPACK_COL_MAJOR, jobz, m, n, A, lda, S, U, ldu, VT, ldvt );
-}
-
-static lapack_int LAPACKE_gesdd(
-    char jobz, lapack_int m, lapack_int n, double* A, lapack_int lda, double* S, double* U, lapack_int ldu, double* VT, lapack_int ldvt )
-{
-    return LAPACKE_dgesdd( LAPACK_COL_MAJOR, jobz, m, n, A, lda, S, U, ldu, VT, ldvt );
-}
-
-static lapack_int LAPACKE_gesdd(
-    char jobz, lapack_int m, lapack_int n, std::complex<float>* A, lapack_int lda, float* S, std::complex<float>* U, lapack_int ldu, std::complex<float>* VT, lapack_int ldvt )
-{
-    return LAPACKE_cgesdd( LAPACK_COL_MAJOR, jobz, m, n, A, lda, S, U, ldu, VT, ldvt );
-}
-
-static lapack_int LAPACKE_gesdd(
-    char jobz, lapack_int m, lapack_int n, std::complex<double>* A, lapack_int lda, double* S, std::complex<double>* U, lapack_int ldu, std::complex<double>* VT, lapack_int ldvt )
-{
-    return LAPACKE_zgesdd( LAPACK_COL_MAJOR, jobz, m, n, A, lda, S, U, ldu, VT, ldvt );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

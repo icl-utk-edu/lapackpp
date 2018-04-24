@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_pbsv(
-    char uplo, lapack_int n, lapack_int kd, lapack_int nrhs, float* AB, lapack_int ldab, float* B, lapack_int ldb )
-{
-    return LAPACKE_spbsv( LAPACK_COL_MAJOR, uplo, n, kd, nrhs, AB, ldab, B, ldb );
-}
-
-static lapack_int LAPACKE_pbsv(
-    char uplo, lapack_int n, lapack_int kd, lapack_int nrhs, double* AB, lapack_int ldab, double* B, lapack_int ldb )
-{
-    return LAPACKE_dpbsv( LAPACK_COL_MAJOR, uplo, n, kd, nrhs, AB, ldab, B, ldb );
-}
-
-static lapack_int LAPACKE_pbsv(
-    char uplo, lapack_int n, lapack_int kd, lapack_int nrhs, std::complex<float>* AB, lapack_int ldab, std::complex<float>* B, lapack_int ldb )
-{
-    return LAPACKE_cpbsv( LAPACK_COL_MAJOR, uplo, n, kd, nrhs, AB, ldab, B, ldb );
-}
-
-static lapack_int LAPACKE_pbsv(
-    char uplo, lapack_int n, lapack_int kd, lapack_int nrhs, std::complex<double>* AB, lapack_int ldab, std::complex<double>* B, lapack_int ldb )
-{
-    return LAPACKE_zpbsv( LAPACK_COL_MAJOR, uplo, n, kd, nrhs, AB, ldab, B, ldb );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

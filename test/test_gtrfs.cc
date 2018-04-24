@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_gtrfs(
-    char trans, lapack_int n, lapack_int nrhs, float* DL, float* D, float* DU, float* DLF, float* DF, float* DUF, float* DU2, lapack_int* ipiv, float* B, lapack_int ldb, float* X, lapack_int ldx, float* ferr, float* berr )
-{
-    return LAPACKE_sgtrfs( LAPACK_COL_MAJOR, trans, n, nrhs, DL, D, DU, DLF, DF, DUF, DU2, ipiv, B, ldb, X, ldx, ferr, berr );
-}
-
-static lapack_int LAPACKE_gtrfs(
-    char trans, lapack_int n, lapack_int nrhs, double* DL, double* D, double* DU, double* DLF, double* DF, double* DUF, double* DU2, lapack_int* ipiv, double* B, lapack_int ldb, double* X, lapack_int ldx, double* ferr, double* berr )
-{
-    return LAPACKE_dgtrfs( LAPACK_COL_MAJOR, trans, n, nrhs, DL, D, DU, DLF, DF, DUF, DU2, ipiv, B, ldb, X, ldx, ferr, berr );
-}
-
-static lapack_int LAPACKE_gtrfs(
-    char trans, lapack_int n, lapack_int nrhs, std::complex<float>* DL, std::complex<float>* D, std::complex<float>* DU, std::complex<float>* DLF, std::complex<float>* DF, std::complex<float>* DUF, std::complex<float>* DU2, lapack_int* ipiv, std::complex<float>* B, lapack_int ldb, std::complex<float>* X, lapack_int ldx, float* ferr, float* berr )
-{
-    return LAPACKE_cgtrfs( LAPACK_COL_MAJOR, trans, n, nrhs, DL, D, DU, DLF, DF, DUF, DU2, ipiv, B, ldb, X, ldx, ferr, berr );
-}
-
-static lapack_int LAPACKE_gtrfs(
-    char trans, lapack_int n, lapack_int nrhs, std::complex<double>* DL, std::complex<double>* D, std::complex<double>* DU, std::complex<double>* DLF, std::complex<double>* DF, std::complex<double>* DUF, std::complex<double>* DU2, lapack_int* ipiv, std::complex<double>* B, lapack_int ldb, std::complex<double>* X, lapack_int ldx, double* ferr, double* berr )
-{
-    return LAPACKE_zgtrfs( LAPACK_COL_MAJOR, trans, n, nrhs, DL, D, DU, DLF, DF, DUF, DU2, ipiv, B, ldb, X, ldx, ferr, berr );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

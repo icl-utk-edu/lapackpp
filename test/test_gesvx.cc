@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_gesvx(
-    char fact, char trans, lapack_int n, lapack_int nrhs, float* A, lapack_int lda, float* AF, lapack_int ldaf, lapack_int* ipiv, char* equed, float* R, float* C, float* B, lapack_int ldb, float* X, lapack_int ldx, float* rcond, float* ferr, float* berr, float* rpivot )
-{
-    return LAPACKE_sgesvx( LAPACK_COL_MAJOR, fact, trans, n, nrhs, A, lda, AF, ldaf, ipiv, equed, R, C, B, ldb, X, ldx, rcond, ferr, berr, rpivot );
-}
-
-static lapack_int LAPACKE_gesvx(
-    char fact, char trans, lapack_int n, lapack_int nrhs, double* A, lapack_int lda, double* AF, lapack_int ldaf, lapack_int* ipiv, char* equed, double* R, double* C, double* B, lapack_int ldb, double* X, lapack_int ldx, double* rcond, double* ferr, double* berr, double* rpivot )
-{
-    return LAPACKE_dgesvx( LAPACK_COL_MAJOR, fact, trans, n, nrhs, A, lda, AF, ldaf, ipiv, equed, R, C, B, ldb, X, ldx, rcond, ferr, berr, rpivot );
-}
-
-static lapack_int LAPACKE_gesvx(
-    char fact, char trans, lapack_int n, lapack_int nrhs, std::complex<float>* A, lapack_int lda, std::complex<float>* AF, lapack_int ldaf, lapack_int* ipiv, char* equed, float* R, float* C, std::complex<float>* B, lapack_int ldb, std::complex<float>* X, lapack_int ldx, float* rcond, float* ferr, float* berr, float* rpivot )
-{
-    return LAPACKE_cgesvx( LAPACK_COL_MAJOR, fact, trans, n, nrhs, A, lda, AF, ldaf, ipiv, equed, R, C, B, ldb, X, ldx, rcond, ferr, berr, rpivot );
-}
-
-static lapack_int LAPACKE_gesvx(
-    char fact, char trans, lapack_int n, lapack_int nrhs, std::complex<double>* A, lapack_int lda, std::complex<double>* AF, lapack_int ldaf, lapack_int* ipiv, char* equed, double* R, double* C, std::complex<double>* B, lapack_int ldb, std::complex<double>* X, lapack_int ldx, double* rcond, double* ferr, double* berr, double* rpivot )
-{
-    return LAPACKE_zgesvx( LAPACK_COL_MAJOR, fact, trans, n, nrhs, A, lda, AF, ldaf, ipiv, equed, R, C, B, ldb, X, ldx, rcond, ferr, berr, rpivot );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

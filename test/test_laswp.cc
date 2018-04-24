@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_laswp(
-    lapack_int n, float* A, lapack_int lda, lapack_int k1, lapack_int k2, lapack_int* ipiv, lapack_int incx )
-{
-    return LAPACKE_slaswp( LAPACK_COL_MAJOR, n, A, lda, k1, k2, ipiv, incx );
-}
-
-static lapack_int LAPACKE_laswp(
-    lapack_int n, double* A, lapack_int lda, lapack_int k1, lapack_int k2, lapack_int* ipiv, lapack_int incx )
-{
-    return LAPACKE_dlaswp( LAPACK_COL_MAJOR, n, A, lda, k1, k2, ipiv, incx );
-}
-
-static lapack_int LAPACKE_laswp(
-    lapack_int n, std::complex<float>* A, lapack_int lda, lapack_int k1, lapack_int k2, lapack_int* ipiv, lapack_int incx )
-{
-    return LAPACKE_claswp( LAPACK_COL_MAJOR, n, A, lda, k1, k2, ipiv, incx );
-}
-
-static lapack_int LAPACKE_laswp(
-    lapack_int n, std::complex<double>* A, lapack_int lda, lapack_int k1, lapack_int k2, lapack_int* ipiv, lapack_int incx )
-{
-    return LAPACKE_zlaswp( LAPACK_COL_MAJOR, n, A, lda, k1, k2, ipiv, incx );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >
@@ -62,7 +37,7 @@ void test_laswp_work( Params& params, bool run )
     int64_t k1 = 1;
     int64_t k2 = nb;
     size_t size_A = (size_t) lda * n;
-    size_t size_ipiv = (size_t) (k1+(k2-k1)*abs(incx));
+    size_t size_ipiv = (size_t) (k1+(k2-k1)*std::abs(incx));
 
     std::vector< scalar_t > A_tst( size_A );
     std::vector< scalar_t > A_ref( size_A );

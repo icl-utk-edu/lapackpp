@@ -3,60 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_sytrs(
-    char uplo, lapack_int n, lapack_int nrhs, float* A, lapack_int lda, lapack_int* ipiv, float* B, lapack_int ldb )
-{
-    return LAPACKE_ssytrs( LAPACK_COL_MAJOR, uplo, n, nrhs, A, lda, ipiv, B, ldb );
-}
-
-static lapack_int LAPACKE_sytrs(
-    char uplo, lapack_int n, lapack_int nrhs, double* A, lapack_int lda, lapack_int* ipiv, double* B, lapack_int ldb )
-{
-    return LAPACKE_dsytrs( LAPACK_COL_MAJOR, uplo, n, nrhs, A, lda, ipiv, B, ldb );
-}
-
-static lapack_int LAPACKE_sytrs(
-    char uplo, lapack_int n, lapack_int nrhs, std::complex<float>* A, lapack_int lda, lapack_int* ipiv, std::complex<float>* B, lapack_int ldb )
-{
-    return LAPACKE_csytrs( LAPACK_COL_MAJOR, uplo, n, nrhs, A, lda, ipiv, B, ldb );
-}
-
-static lapack_int LAPACKE_sytrs(
-    char uplo, lapack_int n, lapack_int nrhs, std::complex<double>* A, lapack_int lda, lapack_int* ipiv, std::complex<double>* B, lapack_int ldb )
-{
-    return LAPACKE_zsytrs( LAPACK_COL_MAJOR, uplo, n, nrhs, A, lda, ipiv, B, ldb );
-}
-
-// -----------------------------------------------------------------------------
-
-static lapack_int LAPACKE_sytrf(
-    char uplo, lapack_int n, float* A, lapack_int lda, lapack_int* ipiv )
-{
-    return LAPACKE_ssytrf( LAPACK_COL_MAJOR, uplo, n, A, lda, ipiv );
-}
-
-static lapack_int LAPACKE_sytrf(
-    char uplo, lapack_int n, double* A, lapack_int lda, lapack_int* ipiv )
-{
-    return LAPACKE_dsytrf( LAPACK_COL_MAJOR, uplo, n, A, lda, ipiv );
-}
-
-static lapack_int LAPACKE_sytrf(
-    char uplo, lapack_int n, std::complex<float>* A, lapack_int lda, lapack_int* ipiv )
-{
-    return LAPACKE_csytrf( LAPACK_COL_MAJOR, uplo, n, A, lda, ipiv );
-}
-
-static lapack_int LAPACKE_sytrf(
-    char uplo, lapack_int n, std::complex<double>* A, lapack_int lda, lapack_int* ipiv )
-{
-    return LAPACKE_zsytrf( LAPACK_COL_MAJOR, uplo, n, A, lda, ipiv );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

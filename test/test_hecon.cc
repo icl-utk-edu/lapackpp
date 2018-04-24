@@ -3,34 +3,10 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_hecon(
-    char uplo, lapack_int n, float* A, lapack_int lda, lapack_int* ipiv, float anorm, float* rcond )
-{
-    return LAPACKE_ssycon( LAPACK_COL_MAJOR, uplo, n, A, lda, ipiv, anorm, rcond );
-}
-
-static lapack_int LAPACKE_hecon(
-    char uplo, lapack_int n, double* A, lapack_int lda, lapack_int* ipiv, double anorm, double* rcond )
-{
-    return LAPACKE_dsycon( LAPACK_COL_MAJOR, uplo, n, A, lda, ipiv, anorm, rcond );
-}
-
-static lapack_int LAPACKE_hecon(
-    char uplo, lapack_int n, std::complex<float>* A, lapack_int lda, lapack_int* ipiv, float anorm, float* rcond )
-{
-    return LAPACKE_checon( LAPACK_COL_MAJOR, uplo, n, A, lda, ipiv, anorm, rcond );
-}
-
-static lapack_int LAPACKE_hecon(
-    char uplo, lapack_int n, std::complex<double>* A, lapack_int lda, lapack_int* ipiv, double anorm, double* rcond )
-{
-    return LAPACKE_zhecon( LAPACK_COL_MAJOR, uplo, n, A, lda, ipiv, anorm, rcond );
-}
 // -----------------------------------------------------------------------------
 template< typename scalar_t >
 void test_hecon_work( Params& params, bool run )

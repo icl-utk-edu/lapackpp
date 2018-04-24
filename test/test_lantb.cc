@@ -3,80 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-#include "lapack_mangling.h"
-extern "C" {
-// give Fortran prototypes if not given via lapacke.h
-
-#ifndef LAPACK_slantb
-#define LAPACK_slantb LAPACK_GLOBAL(slantb,SLANTB)
-blas_float_return LAPACK_slantb(
-    char const* norm, char const* uplo, char const* diag,
-    lapack_int const* n, lapack_int const* k,
-    float const* AB, lapack_int const* ldab,
-    float* work );
-#endif
-
-#ifndef LAPACK_dlantb
-#define LAPACK_dlantb LAPACK_GLOBAL(dlantb,DLANTB)
-double LAPACK_dlantb(
-    char const* norm, char const* uplo, char const* diag,
-    lapack_int const* n, lapack_int const* k,
-    double const* AB, lapack_int const* ldab,
-    double* work );
-#endif
-
-#ifndef LAPACK_clantb
-#define LAPACK_clantb LAPACK_GLOBAL(clantb,CLANTB)
-blas_float_return LAPACK_clantb(
-    char const* norm, char const* uplo, char const* diag,
-    lapack_int const* n, lapack_int const* k,
-    lapack_complex_float const* AB, lapack_int const* ldab,
-    float* work );
-#endif
-
-#ifndef LAPACK_zlantb
-#define LAPACK_zlantb LAPACK_GLOBAL(zlantb,ZLANTB)
-double LAPACK_zlantb(
-    char const* norm, char const* uplo, char const* diag,
-    lapack_int const* n, lapack_int const* k,
-    lapack_complex_double const* AB, lapack_int const* ldab,
-    double* work );
-#endif
-
-}  // extern "C"
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACK (not in LAPACKE)
-static lapack_int LAPACKE_lantb(
-    char norm, char uplo, char diag, lapack_int n, lapack_int k, float* AB, lapack_int ldab )
-{
-    std::vector< float > work( n );
-    return LAPACK_slantb( &norm, &uplo, &diag, &n, &k, AB, &ldab, &work[0] );
-}
-
-static lapack_int LAPACKE_lantb(
-    char norm, char uplo, char diag, lapack_int n, lapack_int k, double* AB, lapack_int ldab )
-{
-    std::vector< double > work( n );
-    return LAPACK_dlantb( &norm, &uplo, &diag, &n, &k, AB, &ldab, &work[0] );
-}
-
-static lapack_int LAPACKE_lantb(
-    char norm, char uplo, char diag, lapack_int n, lapack_int k, std::complex<float>* AB, lapack_int ldab )
-{
-    std::vector< float > work( n );
-    return LAPACK_clantb( &norm, &uplo, &diag, &n, &k, AB, &ldab, &work[0] );
-}
-
-static lapack_int LAPACKE_lantb(
-    char norm, char uplo, char diag, lapack_int n, lapack_int k, std::complex<double>* AB, lapack_int ldab )
-{
-    std::vector< double > work( n );
-    return LAPACK_zlantb( &norm, &uplo, &diag, &n, &k, AB, &ldab, &work[0] );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

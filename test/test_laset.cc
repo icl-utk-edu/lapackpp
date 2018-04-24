@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_laset(
-    char uplo, lapack_int m, lapack_int n, float alpha, float beta, float* A, lapack_int lda )
-{
-    return LAPACKE_slaset( LAPACK_COL_MAJOR, uplo, m, n, alpha, beta, A, lda );
-}
-
-static lapack_int LAPACKE_laset(
-    char uplo, lapack_int m, lapack_int n, double alpha, double beta, double* A, lapack_int lda )
-{
-    return LAPACKE_dlaset( LAPACK_COL_MAJOR, uplo, m, n, alpha, beta, A, lda );
-}
-
-static lapack_int LAPACKE_laset(
-    char uplo, lapack_int m, lapack_int n, std::complex<float> alpha, std::complex<float> beta, std::complex<float>* A, lapack_int lda )
-{
-    return LAPACKE_claset( LAPACK_COL_MAJOR, uplo, m, n, alpha, beta, A, lda );
-}
-
-static lapack_int LAPACKE_laset(
-    char uplo, lapack_int m, lapack_int n, std::complex<double> alpha, std::complex<double> beta, std::complex<double>* A, lapack_int lda )
-{
-    return LAPACKE_zlaset( LAPACK_COL_MAJOR, uplo, m, n, alpha, beta, A, lda );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

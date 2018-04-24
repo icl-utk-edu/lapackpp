@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_hpgvd(
-    lapack_int itype, char jobz, char uplo, lapack_int n, float* AP, float* BP, float* W, float* Z, lapack_int ldz )
-{
-    return LAPACKE_sspgvd( LAPACK_COL_MAJOR, itype, jobz, uplo, n, AP, BP, W, Z, ldz );
-}
-
-static lapack_int LAPACKE_hpgvd(
-    lapack_int itype, char jobz, char uplo, lapack_int n, double* AP, double* BP, double* W, double* Z, lapack_int ldz )
-{
-    return LAPACKE_dspgvd( LAPACK_COL_MAJOR, itype, jobz, uplo, n, AP, BP, W, Z, ldz );
-}
-
-static lapack_int LAPACKE_hpgvd(
-    lapack_int itype, char jobz, char uplo, lapack_int n, std::complex<float>* AP, std::complex<float>* BP, float* W, std::complex<float>* Z, lapack_int ldz )
-{
-    return LAPACKE_chpgvd( LAPACK_COL_MAJOR, itype, jobz, uplo, n, AP, BP, W, Z, ldz );
-}
-
-static lapack_int LAPACKE_hpgvd(
-    lapack_int itype, char jobz, char uplo, lapack_int n, std::complex<double>* AP, std::complex<double>* BP, double* W, std::complex<double>* Z, lapack_int ldz )
-{
-    return LAPACKE_zhpgvd( LAPACK_COL_MAJOR, itype, jobz, uplo, n, AP, BP, W, Z, ldz );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

@@ -3,82 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-#include "lapack_mangling.h"
-
-extern "C" {
-
-/* ----- matrix norm - symmetric banded */
-// give Fortran prototypes if not given via lapacke.h
-#ifndef LAPACK_slansb
-#define LAPACK_slansb LAPACK_GLOBAL(slansb,SLANSB)
-blas_float_return LAPACK_slansb(
-    char const* norm, char const* uplo,
-    lapack_int const* n, lapack_int const* kd,
-    float const* AB, lapack_int const* ldab,
-    float* work );
-#endif
-
-#ifndef LAPACK_dlansb
-#define LAPACK_dlansb LAPACK_GLOBAL(dlansb,DLANSB)
-double LAPACK_dlansb(
-    char const* norm, char const* uplo,
-    lapack_int const* n, lapack_int const* kd,
-    double const* AB, lapack_int const* ldab,
-    double* work );
-#endif
-
-#ifndef LAPACK_clansb
-#define LAPACK_clansb LAPACK_GLOBAL(clansb,CLANSB)
-blas_float_return LAPACK_clansb(
-    char const* norm, char const* uplo,
-    lapack_int const* n, lapack_int const* kd,
-    lapack_complex_float const* AB, lapack_int const* ldab,
-    float* work );
-#endif
-
-#ifndef LAPACK_zlansb
-#define LAPACK_zlansb LAPACK_GLOBAL(zlansb,ZLANSB)
-double LAPACK_zlansb(
-    char const* norm, char const* uplo,
-    lapack_int const* n, lapack_int const* kd,
-    lapack_complex_double const* AB, lapack_int const* ldab,
-    double* work );
-#endif
-
-}  // extern "C"
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACK (not in LAPACKE)
-static float LAPACKE_lansb(
-    char norm, char uplo, lapack_int n, lapack_int kd, float* AB, lapack_int ldab )
-{
-    std::vector< float > work( n );
-    return LAPACK_slansb( &norm, &uplo, &n, &kd, AB, &ldab, &work[0] );
-}
-
-static double LAPACKE_lansb(
-    char norm, char uplo, lapack_int n, lapack_int kd, double* AB, lapack_int ldab )
-{
-    std::vector< double > work( n );
-    return LAPACK_dlansb( &norm, &uplo, &n, &kd, AB, &ldab, &work[0] );
-}
-
-static float LAPACKE_lansb(
-    char norm, char uplo, lapack_int n, lapack_int kd, std::complex<float>* AB, lapack_int ldab )
-{
-    std::vector< float > work( n );
-    return LAPACK_clansb( &norm, &uplo, &n, &kd, AB, &ldab, &work[0] );
-}
-
-static double LAPACKE_lansb(
-    char norm, char uplo, lapack_int n, lapack_int kd, std::complex<double>* AB, lapack_int ldab )
-{
-    std::vector< double > work( n );
-    return LAPACK_zlansb( &norm, &uplo, &n, &kd, AB, &ldab, &work[0] );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

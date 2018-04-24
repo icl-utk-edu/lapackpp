@@ -3,36 +3,11 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
 
 #if LAPACK_VERSION >= 30700  // >= 3.7
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_sytrf_rk(
-    char uplo, lapack_int n, float* A, lapack_int lda, float* E, lapack_int* ipiv )
-{
-    return LAPACKE_ssytrf_rk( LAPACK_COL_MAJOR, uplo, n, A, lda, E, ipiv );
-}
-
-static lapack_int LAPACKE_sytrf_rk(
-    char uplo, lapack_int n, double* A, lapack_int lda, double* E, lapack_int* ipiv )
-{
-    return LAPACKE_dsytrf_rk( LAPACK_COL_MAJOR, uplo, n, A, lda, E, ipiv );
-}
-
-static lapack_int LAPACKE_sytrf_rk(
-    char uplo, lapack_int n, std::complex<float>* A, lapack_int lda, std::complex<float>* E, lapack_int* ipiv )
-{
-    return LAPACKE_csytrf_rk( LAPACK_COL_MAJOR, uplo, n, A, lda, E, ipiv );
-}
-
-static lapack_int LAPACKE_sytrf_rk(
-    char uplo, lapack_int n, std::complex<double>* A, lapack_int lda, std::complex<double>* E, lapack_int* ipiv )
-{
-    return LAPACKE_zsytrf_rk( LAPACK_COL_MAJOR, uplo, n, A, lda, E, ipiv );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

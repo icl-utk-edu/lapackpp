@@ -3,44 +3,11 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
 
 #if LAPACK_VERSION >= 30600  // >= 3.6.0
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_gesvdx(
-    char jobu, char jobvt, char range, lapack_int m, lapack_int n, float* A, lapack_int lda, float vl, float vu, lapack_int il, lapack_int iu, lapack_int* ns, float* S, float* U, lapack_int ldu, float* VT, lapack_int ldvt )
-{
-    int64_t minmn = ( m < n ? m : n );
-    std::vector< lapack_int > superb( 12 * minmn );
-    return LAPACKE_sgesvdx( LAPACK_COL_MAJOR, jobu, jobvt, range, m, n, A, lda, vl, vu, il, iu, ns, S, U, ldu, VT, ldvt, &superb[0] );
-}
-
-static lapack_int LAPACKE_gesvdx(
-    char jobu, char jobvt, char range, lapack_int m, lapack_int n, double* A, lapack_int lda, double vl, double vu, lapack_int il, lapack_int iu, lapack_int* ns, double* S, double* U, lapack_int ldu, double* VT, lapack_int ldvt )
-{
-    int64_t minmn = ( m < n ? m : n );
-    std::vector< lapack_int > superb( 12 * minmn );
-    return LAPACKE_dgesvdx( LAPACK_COL_MAJOR, jobu, jobvt, range, m, n, A, lda, vl, vu, il, iu, ns, S, U, ldu, VT, ldvt, &superb[0] );
-}
-
-static lapack_int LAPACKE_gesvdx(
-    char jobu, char jobvt, char range, lapack_int m, lapack_int n, std::complex<float>* A, lapack_int lda, float vl, float vu, lapack_int il, lapack_int iu, lapack_int* ns, float* S, std::complex<float>* U, lapack_int ldu, std::complex<float>* VT, lapack_int ldvt )
-{
-    int64_t minmn = ( m < n ? m : n );
-    std::vector< lapack_int > superb( 12 * minmn );
-    return LAPACKE_cgesvdx( LAPACK_COL_MAJOR, jobu, jobvt, range, m, n, A, lda, vl, vu, il, iu, ns, S, U, ldu, VT, ldvt, &superb[0] );
-}
-
-static lapack_int LAPACKE_gesvdx(
-    char jobu, char jobvt, char range, lapack_int m, lapack_int n, std::complex<double>* A, lapack_int lda, double vl, double vu, lapack_int il, lapack_int iu, lapack_int* ns, double* S, std::complex<double>* U, lapack_int ldu, std::complex<double>* VT, lapack_int ldvt )
-{
-    int64_t minmn = ( m < n ? m : n );
-    std::vector< lapack_int > superb( 12 * minmn );
-    return LAPACKE_zgesvdx( LAPACK_COL_MAJOR, jobu, jobvt, range, m, n, A, lda, vl, vu, il, iu, ns, S, U, ldu, VT, ldvt, &superb[0] );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

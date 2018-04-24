@@ -3,39 +3,10 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 #include "check_svd.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_gesvd(
-    char jobu, char jobvt, lapack_int m, lapack_int n, float* A, lapack_int lda, float* S, float* U, lapack_int ldu, float* VT, lapack_int ldvt )
-{
-    std::vector< float > superdiag( std::min( m, n ));
-    return LAPACKE_sgesvd( LAPACK_COL_MAJOR, jobu, jobvt, m, n, A, lda, S, U, ldu, VT, ldvt, &superdiag[0] );
-}
-
-static lapack_int LAPACKE_gesvd(
-    char jobu, char jobvt, lapack_int m, lapack_int n, double* A, lapack_int lda, double* S, double* U, lapack_int ldu, double* VT, lapack_int ldvt )
-{
-    std::vector< double > superdiag( std::min( m, n ));
-    return LAPACKE_dgesvd( LAPACK_COL_MAJOR, jobu, jobvt, m, n, A, lda, S, U, ldu, VT, ldvt, &superdiag[0] );
-}
-
-static lapack_int LAPACKE_gesvd(
-    char jobu, char jobvt, lapack_int m, lapack_int n, std::complex<float>* A, lapack_int lda, float* S, std::complex<float>* U, lapack_int ldu, std::complex<float>* VT, lapack_int ldvt )
-{
-    std::vector< float > superdiag( std::min( m, n ));
-    return LAPACKE_cgesvd( LAPACK_COL_MAJOR, jobu, jobvt, m, n, A, lda, S, U, ldu, VT, ldvt, &superdiag[0] );
-}
-
-static lapack_int LAPACKE_gesvd(
-    char jobu, char jobvt, lapack_int m, lapack_int n, std::complex<double>* A, lapack_int lda, double* S, std::complex<double>* U, lapack_int ldu, std::complex<double>* VT, lapack_int ldvt )
-{
-    std::vector< double > superdiag( std::min( m, n ));
-    return LAPACKE_zgesvd( LAPACK_COL_MAJOR, jobu, jobvt, m, n, A, lda, S, U, ldu, VT, ldvt, &superdiag[0] );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

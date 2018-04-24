@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_larft(
-    char direct, char storev, lapack_int n, lapack_int k, float* V, lapack_int ldv, float* tau, float* T, lapack_int ldt )
-{
-    return LAPACKE_slarft( LAPACK_COL_MAJOR, direct, storev, n, k, V, ldv, tau, T, ldt );
-}
-
-static lapack_int LAPACKE_larft(
-    char direct, char storev, lapack_int n, lapack_int k, double* V, lapack_int ldv, double* tau, double* T, lapack_int ldt )
-{
-    return LAPACKE_dlarft( LAPACK_COL_MAJOR, direct, storev, n, k, V, ldv, tau, T, ldt );
-}
-
-static lapack_int LAPACKE_larft(
-    char direct, char storev, lapack_int n, lapack_int k, std::complex<float>* V, lapack_int ldv, std::complex<float>* tau, std::complex<float>* T, lapack_int ldt )
-{
-    return LAPACKE_clarft( LAPACK_COL_MAJOR, direct, storev, n, k, V, ldv, tau, T, ldt );
-}
-
-static lapack_int LAPACKE_larft(
-    char direct, char storev, lapack_int n, lapack_int k, std::complex<double>* V, lapack_int ldv, std::complex<double>* tau, std::complex<double>* T, lapack_int ldt )
-{
-    return LAPACKE_zlarft( LAPACK_COL_MAJOR, direct, storev, n, k, V, ldv, tau, T, ldt );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

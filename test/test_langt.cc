@@ -3,76 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-#include "lapack_mangling.h"
-extern "C" {
-// give Fortran prototypes if not given via lapacke.h
-
-#ifndef LAPACK_slangt
-#define LAPACK_slangt LAPACK_GLOBAL(slangt,SLANGT)
-blas_float_return LAPACK_slangt(
-    char const* norm, lapack_int const* n,
-    float const* DL,
-    float const* D,
-    float const* DU );
-#endif
-
-#ifndef LAPACK_dlangt
-#define LAPACK_dlangt LAPACK_GLOBAL(dlangt,DLANGT)
-double LAPACK_dlangt(
-    char const* norm, lapack_int const* n,
-    double const* DL,
-    double const* D,
-    double const* DU );
-#endif
-
-#ifndef LAPACK_clangt
-#define LAPACK_clangt LAPACK_GLOBAL(clangt,CLANGT)
-blas_float_return LAPACK_clangt(
-    char const* norm, lapack_int const* n,
-    lapack_complex_float const* DL,
-    lapack_complex_float const* D,
-    lapack_complex_float const* DU );
-#endif
-
-#ifndef LAPACK_zlangt
-#define LAPACK_zlangt LAPACK_GLOBAL(zlangt,ZLANGT)
-double LAPACK_zlangt(
-    char const* norm, lapack_int const* n,
-    lapack_complex_double const* DL,
-    lapack_complex_double const* D,
-    lapack_complex_double const* DU );
-#endif
-
-}  // extern "C"
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACK (not in LAPACKE)
-static lapack_int LAPACKE_langt(
-    char norm, lapack_int n, float* DL, float* D, float* DU )
-{
-    return LAPACK_slangt( &norm, &n, DL, D, DU );
-}
-
-static lapack_int LAPACKE_langt(
-    char norm, lapack_int n, double* DL, double* D, double* DU )
-{
-    return LAPACK_dlangt( &norm, &n, DL, D, DU );
-}
-
-static lapack_int LAPACKE_langt(
-    char norm, lapack_int n, std::complex<float>* DL, std::complex<float>* D, std::complex<float>* DU )
-{
-    return LAPACK_clangt( &norm, &n, DL, D, DU );
-}
-
-static lapack_int LAPACKE_langt(
-    char norm, lapack_int n, std::complex<double>* DL, std::complex<double>* D, std::complex<double>* DU )
-{
-    return LAPACK_zlangt( &norm, &n, DL, D, DU );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

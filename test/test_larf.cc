@@ -3,95 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-#include "lapack_mangling.h"
-
-extern "C" {
-
-/* ----- apply Householder reflector */
-// give Fortran prototypes if not given via lapacke.h
-#ifndef LAPACK_slarf
-#define LAPACK_slarf LAPACK_GLOBAL(slarf,SLARF)
-void LAPACK_slarf(
-    char const* side,
-    lapack_int const* m, lapack_int const* n,
-    float const* v, lapack_int const* incv,
-    float const* tau,
-    float* c, lapack_int const* ldc,
-    float* work );
-#endif
-
-#ifndef LAPACK_dlarf
-#define LAPACK_dlarf LAPACK_GLOBAL(dlarf,DLARF)
-void LAPACK_dlarf(
-    char const* side,
-    lapack_int const* m, lapack_int const* n,
-    double const* v, lapack_int const* incv,
-    double const* tau,
-    double* c, lapack_int const* ldc,
-    double* work );
-#endif
-
-#ifndef LAPACK_clarf
-#define LAPACK_clarf LAPACK_GLOBAL(clarf,CLARF)
-void LAPACK_clarf(
-    char const* side,
-    lapack_int const* m, lapack_int const* n,
-    lapack_complex_float const* v, lapack_int const* incv,
-    lapack_complex_float const* tau,
-    lapack_complex_float* c, lapack_int const* ldc,
-    lapack_complex_float* work );
-#endif
-
-#ifndef LAPACK_zlarf
-#define LAPACK_zlarf LAPACK_GLOBAL(zlarf,ZLARF)
-void LAPACK_zlarf(
-    char const* side,
-    lapack_int const* m, lapack_int const* n,
-    lapack_complex_double const* v, lapack_int const* incv,
-    lapack_complex_double const* tau,
-    lapack_complex_double* c, lapack_int const* ldc,
-    lapack_complex_double* work );
-#endif
-
-}  // extern "C"
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACK (not in LAPACKE)
-// todo: LAPACK has no error checks for larf
-static lapack_int LAPACKE_larf(
-    char side, lapack_int m, lapack_int n, float* V, lapack_int incv, float tau, float* C, lapack_int ldc )
-{
-    std::vector< float > work( side == 'l' || side == 'L' ? n : m );
-    LAPACK_slarf( &side, &m, &n, V, &incv, &tau, C, &ldc, &work[0] );
-    return 0;
-}
-
-static lapack_int LAPACKE_larf(
-    char side, lapack_int m, lapack_int n, double* V, lapack_int incv, double tau, double* C, lapack_int ldc )
-{
-    std::vector< double > work( side == 'l' || side == 'L' ? n : m );
-    LAPACK_dlarf( &side, &m, &n, V, &incv, &tau, C, &ldc, &work[0] );
-    return 0;
-}
-
-static lapack_int LAPACKE_larf(
-    char side, lapack_int m, lapack_int n, std::complex<float>* V, lapack_int incv, std::complex<float> tau, std::complex<float>* C, lapack_int ldc )
-{
-    std::vector< std::complex<float> > work( side == 'l' || side == 'L' ? n : m );
-    LAPACK_clarf( &side, &m, &n, V, &incv, &tau, C, &ldc, &work[0] );
-    return 0;
-}
-
-static lapack_int LAPACKE_larf(
-    char side, lapack_int m, lapack_int n, std::complex<double>* V, lapack_int incv, std::complex<double> tau, std::complex<double>* C, lapack_int ldc )
-{
-    std::vector< std::complex<double> > work( side == 'l' || side == 'L' ? n : m );
-    LAPACK_zlarf( &side, &m, &n, V, &incv, &tau, C, &ldc, &work[0] );
-    return 0;
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

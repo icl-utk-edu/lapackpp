@@ -3,38 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_gtcon(
-    char norm, lapack_int n, float* DL, float* D, float* DU, float* DU2, lapack_int* ipiv, float anorm, float* rcond )
-{
-    //return LAPACKE_sgtcon( LAPACK_COL_MAJOR, norm, n, DL, D, DU, DU2, ipiv, anorm, rcond );
-    return LAPACKE_sgtcon( norm, n, DL, D, DU, DU2, ipiv, anorm, rcond );
-}
-
-static lapack_int LAPACKE_gtcon(
-    char norm, lapack_int n, double* DL, double* D, double* DU, double* DU2, lapack_int* ipiv, double anorm, double* rcond )
-{
-    //return LAPACKE_dgtcon( LAPACK_COL_MAJOR, norm, n, DL, D, DU, DU2, ipiv, anorm, rcond );
-    return LAPACKE_dgtcon( norm, n, DL, D, DU, DU2, ipiv, anorm, rcond );
-}
-
-static lapack_int LAPACKE_gtcon(
-    char norm, lapack_int n, std::complex<float>* DL, std::complex<float>* D, std::complex<float>* DU, std::complex<float>* DU2, lapack_int* ipiv, float anorm, float* rcond )
-{
-    //return LAPACKE_cgtcon( LAPACK_COL_MAJOR, norm, n, DL, D, DU, DU2, ipiv, anorm, rcond );
-    return LAPACKE_cgtcon( norm, n, DL, D, DU, DU2, ipiv, anorm, rcond );
-}
-
-static lapack_int LAPACKE_gtcon(
-    char norm, lapack_int n, std::complex<double>* DL, std::complex<double>* D, std::complex<double>* DU, std::complex<double>* DU2, lapack_int* ipiv, double anorm, double* rcond )
-{
-    //return LAPACKE_zgtcon( LAPACK_COL_MAJOR, norm, n, DL, D, DU, DU2, ipiv, anorm, rcond );
-    return LAPACKE_zgtcon( norm, n, DL, D, DU, DU2, ipiv, anorm, rcond );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

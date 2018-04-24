@@ -3,33 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_hbgvd(
-    char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb, float* AB, lapack_int ldab, float* BB, lapack_int ldbb, float* W, float* Z, lapack_int ldz )
-{
-    return LAPACKE_ssbgvd( LAPACK_COL_MAJOR, jobz, uplo, n, ka, kb, AB, ldab, BB, ldbb, W, Z, ldz );
-}
-
-static lapack_int LAPACKE_hbgvd(
-    char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb, double* AB, lapack_int ldab, double* BB, lapack_int ldbb, double* W, double* Z, lapack_int ldz )
-{
-    return LAPACKE_dsbgvd( LAPACK_COL_MAJOR, jobz, uplo, n, ka, kb, AB, ldab, BB, ldbb, W, Z, ldz );
-}
-
-static lapack_int LAPACKE_hbgvd(
-    char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb, std::complex<float>* AB, lapack_int ldab, std::complex<float>* BB, lapack_int ldbb, float* W, std::complex<float>* Z, lapack_int ldz )
-{
-    return LAPACKE_chbgvd( LAPACK_COL_MAJOR, jobz, uplo, n, ka, kb, AB, ldab, BB, ldbb, W, Z, ldz );
-}
-static lapack_int LAPACKE_hbgvd(
-    char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb, std::complex<double>* AB, lapack_int ldab, std::complex<double>* BB, lapack_int ldbb, double* W, std::complex<double>* Z, lapack_int ldz )
-{
-    return LAPACKE_zhbgvd( LAPACK_COL_MAJOR, jobz, uplo, n, ka, kb, AB, ldab, BB, ldbb, W, Z, ldz );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

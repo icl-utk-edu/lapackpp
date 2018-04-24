@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_hptrd(
-    char uplo, lapack_int n, float* AP, float* D, float* E, float* tau )
-{
-    return LAPACKE_ssptrd( LAPACK_COL_MAJOR, uplo, n, AP, D, E, tau );
-}
-
-static lapack_int LAPACKE_hptrd(
-    char uplo, lapack_int n, double* AP, double* D, double* E, double* tau )
-{
-    return LAPACKE_dsptrd( LAPACK_COL_MAJOR, uplo, n, AP, D, E, tau );
-}
-
-static lapack_int LAPACKE_hptrd(
-    char uplo, lapack_int n, std::complex<float>* AP, float* D, float* E, std::complex<float>* tau )
-{
-    return LAPACKE_chptrd( LAPACK_COL_MAJOR, uplo, n, AP, D, E, tau );
-}
-
-static lapack_int LAPACKE_hptrd(
-    char uplo, lapack_int n, std::complex<double>* AP, double* D, double* E, std::complex<double>* tau )
-{
-    return LAPACKE_zhptrd( LAPACK_COL_MAJOR, uplo, n, AP, D, E, tau );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

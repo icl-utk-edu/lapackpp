@@ -3,6 +3,7 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 #include "check_geev.hh"
 
 #include <vector>
@@ -14,42 +15,6 @@ template< typename T >
 bool lessthan( T a, T b )
 {
     return (real(a) < real(b)) || (real(a) == real(b) && imag(a) < imag(b));
-}
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_geev(
-    char jobvl, char jobvr, lapack_int n, float* A, lapack_int lda, std::complex<float>* W, float* VL, lapack_int ldvl, float* VR, lapack_int ldvr )
-{
-    std::vector< float > WR( n ), WI( n );
-    lapack_int err = LAPACKE_sgeev( LAPACK_COL_MAJOR, jobvl, jobvr, n, A, lda, &WR[0], &WI[0], VL, ldvl, VR, ldvr );
-    for (int64_t i = 0; i < n; ++i) {
-        W[i] = std::complex<float>( WR[i], WI[i] );
-    }
-    return err;
-}
-
-static lapack_int LAPACKE_geev(
-    char jobvl, char jobvr, lapack_int n, double* A, lapack_int lda, std::complex<double>* W, double* VL, lapack_int ldvl, double* VR, lapack_int ldvr )
-{
-    std::vector< double > WR( n ), WI( n );
-    lapack_int err = LAPACKE_dgeev( LAPACK_COL_MAJOR, jobvl, jobvr, n, A, lda, &WR[0], &WI[0], VL, ldvl, VR, ldvr );
-    for (int64_t i = 0; i < n; ++i) {
-        W[i] = std::complex<double>( WR[i], WI[i] );
-    }
-    return err;
-}
-
-static lapack_int LAPACKE_geev(
-    char jobvl, char jobvr, lapack_int n, std::complex<float>* A, lapack_int lda, std::complex<float>* W, std::complex<float>* VL, lapack_int ldvl, std::complex<float>* VR, lapack_int ldvr )
-{
-    return LAPACKE_cgeev( LAPACK_COL_MAJOR, jobvl, jobvr, n, A, lda, W, VL, ldvl, VR, ldvr );
-}
-
-static lapack_int LAPACKE_geev(
-    char jobvl, char jobvr, lapack_int n, std::complex<double>* A, lapack_int lda, std::complex<double>* W, std::complex<double>* VL, lapack_int ldvl, std::complex<double>* VR, lapack_int ldvr )
-{
-    return LAPACKE_zgeev( LAPACK_COL_MAJOR, jobvl, jobvr, n, A, lda, W, VL, ldvl, VR, ldvr );
 }
 
 // -----------------------------------------------------------------------------

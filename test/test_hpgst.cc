@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_hpgst(
-    lapack_int itype, char uplo, lapack_int n, float* AP, float* BP )
-{
-    return LAPACKE_sspgst( LAPACK_COL_MAJOR, itype, uplo, n, AP, BP );
-}
-
-static lapack_int LAPACKE_hpgst(
-    lapack_int itype, char uplo, lapack_int n, double* AP, double* BP )
-{
-    return LAPACKE_dspgst( LAPACK_COL_MAJOR, itype, uplo, n, AP, BP );
-}
-
-static lapack_int LAPACKE_hpgst(
-    lapack_int itype, char uplo, lapack_int n, std::complex<float>* AP, std::complex<float>* BP )
-{
-    return LAPACKE_chpgst( LAPACK_COL_MAJOR, itype, uplo, n, AP, BP );
-}
-
-static lapack_int LAPACKE_hpgst(
-    lapack_int itype, char uplo, lapack_int n, std::complex<double>* AP, std::complex<double>* BP )
-{
-    return LAPACKE_zhpgst( LAPACK_COL_MAJOR, itype, uplo, n, AP, BP );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

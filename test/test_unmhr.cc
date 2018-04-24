@@ -3,36 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_unmhr(
-    char side, char trans, lapack_int m, lapack_int n, lapack_int ilo, lapack_int ihi, float* A, lapack_int lda, float* tau, float* C, lapack_int ldc )
-{
-    if (trans == 'C') trans = 'T';
-    return LAPACKE_sormhr( LAPACK_COL_MAJOR, side, trans, m, n, ilo, ihi, A, lda, tau, C, ldc );
-}
-
-static lapack_int LAPACKE_unmhr(
-    char side, char trans, lapack_int m, lapack_int n, lapack_int ilo, lapack_int ihi, double* A, lapack_int lda, double* tau, double* C, lapack_int ldc )
-{
-    if (trans == 'C') trans = 'T';
-    return LAPACKE_dormhr( LAPACK_COL_MAJOR, side, trans, m, n, ilo, ihi, A, lda, tau, C, ldc );
-}
-
-static lapack_int LAPACKE_unmhr(
-    char side, char trans, lapack_int m, lapack_int n, lapack_int ilo, lapack_int ihi, std::complex<float>* A, lapack_int lda, std::complex<float>* tau, std::complex<float>* C, lapack_int ldc )
-{
-    return LAPACKE_cunmhr( LAPACK_COL_MAJOR, side, trans, m, n, ilo, ihi, A, lda, tau, C, ldc );
-}
-
-static lapack_int LAPACKE_unmhr(
-    char side, char trans, lapack_int m, lapack_int n, lapack_int ilo, lapack_int ihi, std::complex<double>* A, lapack_int lda, std::complex<double>* tau, std::complex<double>* C, lapack_int ldc )
-{
-    return LAPACKE_zunmhr( LAPACK_COL_MAJOR, side, trans, m, n, ilo, ihi, A, lda, tau, C, ldc );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

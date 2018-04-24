@@ -3,86 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-#include "lapack_mangling.h"
-
-extern "C" {
-
-/* ----- matrix norm - symmetric packed */
-// give Fortran prototypes if not given via lapacke.h
-#ifndef LAPACK_slansp
-#define LAPACK_slansp LAPACK_GLOBAL(slansp,SLANSP)
-blas_float_return LAPACK_slansp(
-    char const* norm, char const* uplo,
-    lapack_int const* n,
-    float const* AP, float* work );
-#endif
-
-#ifndef LAPACK_dlansp
-#define LAPACK_dlansp LAPACK_GLOBAL(dlansp,DLANSP)
-double LAPACK_dlansp(
-    char const* norm, char const* uplo,
-    lapack_int const* n,
-    double const* AP, double* work );
-#endif
-
-#ifndef LAPACK_clanhp
-#define LAPACK_clanhp LAPACK_GLOBAL(clanhp,CLANHP)
-blas_float_return LAPACK_clanhp(
-    char const* norm, char const* uplo,
-    lapack_int const* n,
-    lapack_complex_float const* AP, float* work );
-#endif
-
-#ifndef LAPACK_zlanhp
-#define LAPACK_zlanhp LAPACK_GLOBAL(zlanhp,ZLANHP)
-double LAPACK_zlanhp(
-    char const* norm, char const* uplo,
-    lapack_int const* n,
-    lapack_complex_double const* AP, double* work );
-#endif
-
-}  // extern "C"
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACK (not in LAPACKE)
-static float LAPACKE_lanhp(
-    char norm, char uplo,
-    lapack_int n,
-    float const* AP )
-{
-    std::vector< float > work( n );
-    return LAPACK_slansp( &norm, &uplo, &n, AP, &work[0] );
-}
-
-static double LAPACKE_lanhp(
-    char norm, char uplo,
-    lapack_int n,
-    double const* AP )
-{
-    std::vector< double > work( n );
-    return LAPACK_dlansp( &norm, &uplo, &n, AP, &work[0] );
-}
-
-static float LAPACKE_lanhp(
-    char norm, char uplo,
-    lapack_int n,
-    lapack_complex_float const* AP )
-{
-    std::vector< float > work( n );
-    return LAPACK_clanhp( &norm, &uplo, &n, AP, &work[0] );
-}
-
-static double LAPACKE_lanhp(
-    char norm, char uplo,
-    lapack_int n,
-    lapack_complex_double const* AP )
-{
-    std::vector< double > work( n );
-    return LAPACK_zlanhp( &norm, &uplo, &n, AP, &work[0] );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

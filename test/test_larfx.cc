@@ -3,38 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_larfx(
-    char side, lapack_int m, lapack_int n, float* V, float tau, float* C, lapack_int ldc )
-{
-    std::vector< float > work( side == 'l' || side == 'L' ? n : m );
-    return LAPACKE_slarfx( LAPACK_COL_MAJOR, side, m, n, V, tau, C, ldc, &work[0] );
-}
-
-static lapack_int LAPACKE_larfx(
-    char side, lapack_int m, lapack_int n, double* V, double tau, double* C, lapack_int ldc )
-{
-    std::vector< double > work( side == 'l' || side == 'L' ? n : m );
-    return LAPACKE_dlarfx( LAPACK_COL_MAJOR, side, m, n, V, tau, C, ldc, &work[0] );
-}
-
-static lapack_int LAPACKE_larfx(
-    char side, lapack_int m, lapack_int n, std::complex<float>* V, std::complex<float> tau, std::complex<float>* C, lapack_int ldc )
-{
-    std::vector< std::complex<float> > work( side == 'l' || side == 'L' ? n : m );
-    return LAPACKE_clarfx( LAPACK_COL_MAJOR, side, m, n, V, tau, C, ldc, &work[0] );
-}
-
-static lapack_int LAPACKE_larfx(
-    char side, lapack_int m, lapack_int n, std::complex<double>* V, std::complex<double> tau, std::complex<double>* C, lapack_int ldc )
-{
-    std::vector< std::complex<double> > work( side == 'l' || side == 'L' ? n : m );
-    return LAPACKE_zlarfx( LAPACK_COL_MAJOR, side, m, n, V, tau, C, ldc, &work[0] );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

@@ -3,60 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_getri(
-    lapack_int n, float* A, lapack_int lda, lapack_int* ipiv )
-{
-    return LAPACKE_sgetri( LAPACK_COL_MAJOR, n, A, lda, ipiv );
-}
-
-static lapack_int LAPACKE_getri(
-    lapack_int n, double* A, lapack_int lda, lapack_int* ipiv )
-{
-    return LAPACKE_dgetri( LAPACK_COL_MAJOR, n, A, lda, ipiv );
-}
-
-static lapack_int LAPACKE_getri(
-    lapack_int n, std::complex<float>* A, lapack_int lda, lapack_int* ipiv )
-{
-    return LAPACKE_cgetri( LAPACK_COL_MAJOR, n, A, lda, ipiv );
-}
-
-static lapack_int LAPACKE_getri(
-    lapack_int n, std::complex<double>* A, lapack_int lda, lapack_int* ipiv )
-{
-    return LAPACKE_zgetri( LAPACK_COL_MAJOR, n, A, lda, ipiv );
-}
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_getrf(
-    lapack_int m, lapack_int n, float* A, lapack_int lda, lapack_int* ipiv )
-{
-    return LAPACKE_sgetrf( LAPACK_COL_MAJOR, m, n, A, lda, ipiv );
-}
-
-static lapack_int LAPACKE_getrf(
-    lapack_int m, lapack_int n, double* A, lapack_int lda, lapack_int* ipiv )
-{
-    return LAPACKE_dgetrf( LAPACK_COL_MAJOR, m, n, A, lda, ipiv );
-}
-
-static lapack_int LAPACKE_getrf(
-    lapack_int m, lapack_int n, std::complex<float>* A, lapack_int lda, lapack_int* ipiv )
-{
-    return LAPACKE_cgetrf( LAPACK_COL_MAJOR, m, n, A, lda, ipiv );
-}
-
-static lapack_int LAPACKE_getrf(
-    lapack_int m, lapack_int n, std::complex<double>* A, lapack_int lda, lapack_int* ipiv )
-{
-    return LAPACKE_zgetrf( LAPACK_COL_MAJOR, m, n, A, lda, ipiv );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

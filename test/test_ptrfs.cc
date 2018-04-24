@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_ptrfs(
-    char uplo, lapack_int n, lapack_int nrhs, float* D, float* E, float* DF, float* EF, float* B, lapack_int ldb, float* X, lapack_int ldx, float* ferr, float* berr )
-{
-    return LAPACKE_sptrfs( LAPACK_COL_MAJOR, n, nrhs, D, E, DF, EF, B, ldb, X, ldx, ferr, berr );
-}
-
-static lapack_int LAPACKE_ptrfs(
-    char uplo, lapack_int n, lapack_int nrhs, double* D, double* E, double* DF, double* EF, double* B, lapack_int ldb, double* X, lapack_int ldx, double* ferr, double* berr )
-{
-    return LAPACKE_dptrfs( LAPACK_COL_MAJOR, n, nrhs, D, E, DF, EF, B, ldb, X, ldx, ferr, berr );
-}
-
-static lapack_int LAPACKE_ptrfs(
-    char uplo, lapack_int n, lapack_int nrhs, float* D, std::complex<float>* E, float* DF, std::complex<float>* EF, std::complex<float>* B, lapack_int ldb, std::complex<float>* X, lapack_int ldx, float* ferr, float* berr )
-{
-    return LAPACKE_cptrfs( LAPACK_COL_MAJOR, uplo, n, nrhs, D, E, DF, EF, B, ldb, X, ldx, ferr, berr );
-}
-
-static lapack_int LAPACKE_ptrfs(
-    char uplo, lapack_int n, lapack_int nrhs, double* D, std::complex<double>* E, double* DF, std::complex<double>* EF, std::complex<double>* B, lapack_int ldb, std::complex<double>* X, lapack_int ldx, double* ferr, double* berr )
-{
-    return LAPACKE_zptrfs( LAPACK_COL_MAJOR, uplo, n, nrhs, D, E, DF, EF, B, ldb, X, ldx, ferr, berr );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

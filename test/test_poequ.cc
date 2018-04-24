@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_poequ(
-    lapack_int n, float* A, lapack_int lda, float* S, float* scond, float* amax )
-{
-    return LAPACKE_spoequ( LAPACK_COL_MAJOR, n, A, lda, S, scond, amax );
-}
-
-static lapack_int LAPACKE_poequ(
-    lapack_int n, double* A, lapack_int lda, double* S, double* scond, double* amax )
-{
-    return LAPACKE_dpoequ( LAPACK_COL_MAJOR, n, A, lda, S, scond, amax );
-}
-
-static lapack_int LAPACKE_poequ(
-    lapack_int n, std::complex<float>* A, lapack_int lda, float* S, float* scond, float* amax )
-{
-    return LAPACKE_cpoequ( LAPACK_COL_MAJOR, n, A, lda, S, scond, amax );
-}
-
-static lapack_int LAPACKE_poequ(
-    lapack_int n, std::complex<double>* A, lapack_int lda, double* S, double* scond, double* amax )
-{
-    return LAPACKE_zpoequ( LAPACK_COL_MAJOR, n, A, lda, S, scond, amax );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_gbsv(
-    lapack_int n, lapack_int kl, lapack_int ku, lapack_int nrhs, float* AB, lapack_int ldab, lapack_int* ipiv, float* B, lapack_int ldb )
-{
-    return LAPACKE_sgbsv( LAPACK_COL_MAJOR, n, kl, ku, nrhs, AB, ldab, ipiv, B, ldb );
-}
-
-static lapack_int LAPACKE_gbsv(
-    lapack_int n, lapack_int kl, lapack_int ku, lapack_int nrhs, double* AB, lapack_int ldab, lapack_int* ipiv, double* B, lapack_int ldb )
-{
-    return LAPACKE_dgbsv( LAPACK_COL_MAJOR, n, kl, ku, nrhs, AB, ldab, ipiv, B, ldb );
-}
-
-static lapack_int LAPACKE_gbsv(
-    lapack_int n, lapack_int kl, lapack_int ku, lapack_int nrhs, std::complex<float>* AB, lapack_int ldab, lapack_int* ipiv, std::complex<float>* B, lapack_int ldb )
-{
-    return LAPACKE_cgbsv( LAPACK_COL_MAJOR, n, kl, ku, nrhs, AB, ldab, ipiv, B, ldb );
-}
-
-static lapack_int LAPACKE_gbsv(
-    lapack_int n, lapack_int kl, lapack_int ku, lapack_int nrhs, std::complex<double>* AB, lapack_int ldab, lapack_int* ipiv, std::complex<double>* B, lapack_int ldb )
-{
-    return LAPACKE_zgbsv( LAPACK_COL_MAJOR, n, kl, ku, nrhs, AB, ldab, ipiv, B, ldb );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

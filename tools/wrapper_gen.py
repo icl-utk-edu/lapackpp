@@ -1599,7 +1599,8 @@ def generate_tester( funcs ):
                     if (arg.is_enum):
                         # convert enum to char, e.g., uplo2char(uplo)
                         enum2char = enum_map[ arg.name ][1]
-                        ref_args.append( s.group(1).lower() + enum2char + '(' + arg.name + ')' )
+                        #s.group(1).lower() + 
+                        ref_args.append( enum2char + '(' + arg.name + ')' )
                     else:
                         ref_args.append( arg.name )
                 else:
@@ -1635,23 +1636,31 @@ def generate_tester( funcs ):
                 lapacke_proto.append( 'char ' + arg.name )
             elif (arg.dtype in ('int64_t')):
                 if (arg.is_array):
-                    lapacke_proto.append( 'lapack_int* ' + arg.name )
+                    lapacke_proto.append( '\n' + tab + 'lapack_int* ' + arg.name )
                 else:
                     lapacke_proto.append( 'lapack_int ' + arg.name )
             else:
                 if (arg.is_array or ('out' in arg.intent)):
-                    lapacke_proto.append( arg.dtype + '* ' + arg.name )
+                    lapacke_proto.append( '\n' + tab + arg.dtype + '* ' + arg.name )
                 else:
                     lapacke_proto.append( arg.dtype + ' ' + arg.name )
             # end
-            lapacke_args.append( arg.name )
+            
+            pre = ''
+            if (arg.is_array or ('out' in arg.intent)):
+                pre = '\n' + tab*2
+            # cast complex pointers
+            m = re.search( '^std::complex<(\w+)>$', arg.dtype )
+            if (m):
+                pre += '(lapack_complex_' + m.group(1) + '*) '
+            lapacke_args.append( pre + arg.name )
         # end
         lapacke_proto = ', '.join( lapacke_proto )
         lapacke_args  = ', '.join( lapacke_args )
         lapacke += ('static lapack_int LAPACKE_' + func.name + '(\n'
                 +   tab + lapacke_proto + ' )\n'
                 +   '{\n'
-                +   tab + 'return LAPACKE_' + func.xname + '( LAPACK_COL_MAJOR, ' + lapacke_args + ' );\n'
+                +   tab + 'return LAPACKE_' + func.xname + '(\n' + tab*2 + 'LAPACK_COL_MAJOR, ' + lapacke_args + ' );\n'
                 +   '}\n\n')
     # end
 
@@ -1717,7 +1726,7 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  '{\n'
         +  tab + 'using namespace libtest;\n'
         +  tab + 'using namespace blas;\n'
-        +  tab + 'typedef typename traits< scalar_t >::real_t real_t;\n'
+        +  tab + 'using real_t = blas::real_type< scalar_t >;\n'
         +  tab + 'typedef long long lld;\n'
         +  '\n'
         +  tab + '// get & mark input values\n'

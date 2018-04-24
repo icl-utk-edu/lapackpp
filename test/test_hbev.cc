@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_hbev(
-    char jobz, char uplo, lapack_int n, lapack_int kd, float* AB, lapack_int ldab, float* W, float* Z, lapack_int ldz )
-{
-    return LAPACKE_ssbev( LAPACK_COL_MAJOR, jobz, uplo, n, kd, AB, ldab, W, Z, ldz );
-}
-
-static lapack_int LAPACKE_hbev(
-    char jobz, char uplo, lapack_int n, lapack_int kd, double* AB, lapack_int ldab, double* W, double* Z, lapack_int ldz )
-{
-    return LAPACKE_dsbev( LAPACK_COL_MAJOR, jobz, uplo, n, kd, AB, ldab, W, Z, ldz );
-}
-
-static lapack_int LAPACKE_hbev(
-    char jobz, char uplo, lapack_int n, lapack_int kd, std::complex<float>* AB, lapack_int ldab, float* W, std::complex<float>* Z, lapack_int ldz )
-{
-    return LAPACKE_chbev( LAPACK_COL_MAJOR, jobz, uplo, n, kd, AB, ldab, W, Z, ldz );
-}
-
-static lapack_int LAPACKE_hbev(
-    char jobz, char uplo, lapack_int n, lapack_int kd, std::complex<double>* AB, lapack_int ldab, double* W, std::complex<double>* Z, lapack_int ldz )
-{
-    return LAPACKE_zhbev( LAPACK_COL_MAJOR, jobz, uplo, n, kd, AB, ldab, W, Z, ldz );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

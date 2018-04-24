@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_hegvd(
-    lapack_int itype, char jobz, char uplo, lapack_int n, float* A, lapack_int lda, float* B, lapack_int ldb, float* W )
-{
-    return LAPACKE_ssygvd( LAPACK_COL_MAJOR, itype, jobz, uplo, n, A, lda, B, ldb, W );
-}
-
-static lapack_int LAPACKE_hegvd(
-    lapack_int itype, char jobz, char uplo, lapack_int n, double* A, lapack_int lda, double* B, lapack_int ldb, double* W )
-{
-    return LAPACKE_dsygvd( LAPACK_COL_MAJOR, itype, jobz, uplo, n, A, lda, B, ldb, W );
-}
-
-static lapack_int LAPACKE_hegvd(
-    lapack_int itype, char jobz, char uplo, lapack_int n, std::complex<float>* A, lapack_int lda, std::complex<float>* B, lapack_int ldb, float* W )
-{
-    return LAPACKE_chegvd( LAPACK_COL_MAJOR, itype, jobz, uplo, n, A, lda, B, ldb, W );
-}
-
-static lapack_int LAPACKE_hegvd(
-    lapack_int itype, char jobz, char uplo, lapack_int n, std::complex<double>* A, lapack_int lda, std::complex<double>* B, lapack_int ldb, double* W )
-{
-    return LAPACKE_zhegvd( LAPACK_COL_MAJOR, itype, jobz, uplo, n, A, lda, B, ldb, W );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

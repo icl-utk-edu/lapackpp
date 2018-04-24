@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_ptsv(
-    lapack_int n, lapack_int nrhs, float* D, float* E, float* B, lapack_int ldb )
-{
-    return LAPACKE_sptsv( LAPACK_COL_MAJOR, n, nrhs, D, E, B, ldb );
-}
-
-static lapack_int LAPACKE_ptsv(
-    lapack_int n, lapack_int nrhs, double* D, double* E, double* B, lapack_int ldb )
-{
-    return LAPACKE_dptsv( LAPACK_COL_MAJOR, n, nrhs, D, E, B, ldb );
-}
-
-static lapack_int LAPACKE_ptsv(
-    lapack_int n, lapack_int nrhs, float* D, std::complex<float>* E, std::complex<float>* B, lapack_int ldb )
-{
-    return LAPACKE_cptsv( LAPACK_COL_MAJOR, n, nrhs, D, E, B, ldb );
-}
-
-static lapack_int LAPACKE_ptsv(
-    lapack_int n, lapack_int nrhs, double* D, std::complex<double>* E, std::complex<double>* B, lapack_int ldb )
-{
-    return LAPACKE_zptsv( LAPACK_COL_MAJOR, n, nrhs, D, E, B, ldb );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

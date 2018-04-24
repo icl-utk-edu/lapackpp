@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_gelsy(
-    lapack_int m, lapack_int n, lapack_int nrhs, float* A, lapack_int lda, float* B, lapack_int ldb, lapack_int* jpvt, float rcond, lapack_int* rank )
-{
-    return LAPACKE_sgelsy( LAPACK_COL_MAJOR, m, n, nrhs, A, lda, B, ldb, jpvt, rcond, rank );
-}
-
-static lapack_int LAPACKE_gelsy(
-    lapack_int m, lapack_int n, lapack_int nrhs, double* A, lapack_int lda, double* B, lapack_int ldb, lapack_int* jpvt, double rcond, lapack_int* rank )
-{
-    return LAPACKE_dgelsy( LAPACK_COL_MAJOR, m, n, nrhs, A, lda, B, ldb, jpvt, rcond, rank );
-}
-
-static lapack_int LAPACKE_gelsy(
-    lapack_int m, lapack_int n, lapack_int nrhs, std::complex<float>* A, lapack_int lda, std::complex<float>* B, lapack_int ldb, lapack_int* jpvt, float rcond, lapack_int* rank )
-{
-    return LAPACKE_cgelsy( LAPACK_COL_MAJOR, m, n, nrhs, A, lda, B, ldb, jpvt, rcond, rank );
-}
-
-static lapack_int LAPACKE_gelsy(
-    lapack_int m, lapack_int n, lapack_int nrhs, std::complex<double>* A, lapack_int lda, std::complex<double>* B, lapack_int ldb, lapack_int* jpvt, double rcond, lapack_int* rank )
-{
-    return LAPACKE_zgelsy( LAPACK_COL_MAJOR, m, n, nrhs, A, lda, B, ldb, jpvt, rcond, rank );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

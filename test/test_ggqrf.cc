@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_ggqrf(
-    lapack_int n, lapack_int m, lapack_int p, float* A, lapack_int lda, float* taua, float* B, lapack_int ldb, float* taub )
-{
-    return LAPACKE_sggqrf( LAPACK_COL_MAJOR, n, m, p, A, lda, taua, B, ldb, taub );
-}
-
-static lapack_int LAPACKE_ggqrf(
-    lapack_int n, lapack_int m, lapack_int p, double* A, lapack_int lda, double* taua, double* B, lapack_int ldb, double* taub )
-{
-    return LAPACKE_dggqrf( LAPACK_COL_MAJOR, n, m, p, A, lda, taua, B, ldb, taub );
-}
-
-static lapack_int LAPACKE_ggqrf(
-    lapack_int n, lapack_int m, lapack_int p, std::complex<float>* A, lapack_int lda, std::complex<float>* taua, std::complex<float>* B, lapack_int ldb, std::complex<float>* taub )
-{
-    return LAPACKE_cggqrf( LAPACK_COL_MAJOR, n, m, p, A, lda, taua, B, ldb, taub );
-}
-
-static lapack_int LAPACKE_ggqrf(
-    lapack_int n, lapack_int m, lapack_int p, std::complex<double>* A, lapack_int lda, std::complex<double>* taua, std::complex<double>* B, lapack_int ldb, std::complex<double>* taub )
-{
-    return LAPACKE_zggqrf( LAPACK_COL_MAJOR, n, m, p, A, lda, taua, B, ldb, taub );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

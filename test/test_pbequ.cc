@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_pbequ(
-    char uplo, lapack_int n, lapack_int kd, float* AB, lapack_int ldab, float* S, float* scond, float* amax )
-{
-    return LAPACKE_spbequ( LAPACK_COL_MAJOR, uplo, n, kd, AB, ldab, S, scond, amax );
-}
-
-static lapack_int LAPACKE_pbequ(
-    char uplo, lapack_int n, lapack_int kd, double* AB, lapack_int ldab, double* S, double* scond, double* amax )
-{
-    return LAPACKE_dpbequ( LAPACK_COL_MAJOR, uplo, n, kd, AB, ldab, S, scond, amax );
-}
-
-static lapack_int LAPACKE_pbequ(
-    char uplo, lapack_int n, lapack_int kd, std::complex<float>* AB, lapack_int ldab, float* S, float* scond, float* amax )
-{
-    return LAPACKE_cpbequ( LAPACK_COL_MAJOR, uplo, n, kd, AB, ldab, S, scond, amax );
-}
-
-static lapack_int LAPACKE_pbequ(
-    char uplo, lapack_int n, lapack_int kd, std::complex<double>* AB, lapack_int ldab, double* S, double* scond, double* amax )
-{
-    return LAPACKE_zpbequ( LAPACK_COL_MAJOR, uplo, n, kd, AB, ldab, S, scond, amax );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

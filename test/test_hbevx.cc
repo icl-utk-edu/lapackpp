@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_hbevx(
-    char jobz, char range, char uplo, lapack_int n, lapack_int kd, float* AB, lapack_int ldab, float* Q, lapack_int ldq, float vl, float vu, lapack_int il, lapack_int iu, float abstol, lapack_int* m, float* W, float* Z, lapack_int ldz, lapack_int* ifail )
-{
-    return LAPACKE_ssbevx( LAPACK_COL_MAJOR, jobz, range, uplo, n, kd, AB, ldab, Q, ldq, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
-}
-
-static lapack_int LAPACKE_hbevx(
-    char jobz, char range, char uplo, lapack_int n, lapack_int kd, double* AB, lapack_int ldab, double* Q, lapack_int ldq, double vl, double vu, lapack_int il, lapack_int iu, double abstol, lapack_int* m, double* W, double* Z, lapack_int ldz, lapack_int* ifail )
-{
-    return LAPACKE_dsbevx( LAPACK_COL_MAJOR, jobz, range, uplo, n, kd, AB, ldab, Q, ldq, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
-}
-
-static lapack_int LAPACKE_hbevx(
-    char jobz, char range, char uplo, lapack_int n, lapack_int kd, std::complex<float>* AB, lapack_int ldab, std::complex<float>* Q, lapack_int ldq, float vl, float vu, lapack_int il, lapack_int iu, float abstol, lapack_int* m, float* W, std::complex<float>* Z, lapack_int ldz, lapack_int* ifail )
-{
-    return LAPACKE_chbevx( LAPACK_COL_MAJOR, jobz, range, uplo, n, kd, AB, ldab, Q, ldq, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
-}
-
-static lapack_int LAPACKE_hbevx(
-    char jobz, char range, char uplo, lapack_int n, lapack_int kd, std::complex<double>* AB, lapack_int ldab, std::complex<double>* Q, lapack_int ldq, double vl, double vu, lapack_int il, lapack_int iu, double abstol, lapack_int* m, double* W, std::complex<double>* Z, lapack_int ldz, lapack_int* ifail )
-{
-    return LAPACKE_zhbevx( LAPACK_COL_MAJOR, jobz, range, uplo, n, kd, AB, ldab, Q, ldq, vl, vu, il, iu, abstol, m, W, Z, ldz, ifail );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_gbtrf(
-    lapack_int m, lapack_int n, lapack_int kl, lapack_int ku, float* AB, lapack_int ldab, lapack_int* ipiv )
-{
-    return LAPACKE_sgbtrf( LAPACK_COL_MAJOR, m, n, kl, ku, AB, ldab, ipiv );
-}
-
-static lapack_int LAPACKE_gbtrf(
-    lapack_int m, lapack_int n, lapack_int kl, lapack_int ku, double* AB, lapack_int ldab, lapack_int* ipiv )
-{
-    return LAPACKE_dgbtrf( LAPACK_COL_MAJOR, m, n, kl, ku, AB, ldab, ipiv );
-}
-
-static lapack_int LAPACKE_gbtrf(
-    lapack_int m, lapack_int n, lapack_int kl, lapack_int ku, std::complex<float>* AB, lapack_int ldab, lapack_int* ipiv )
-{
-    return LAPACKE_cgbtrf( LAPACK_COL_MAJOR, m, n, kl, ku, AB, ldab, ipiv );
-}
-
-static lapack_int LAPACKE_gbtrf(
-    lapack_int m, lapack_int n, lapack_int kl, lapack_int ku, std::complex<double>* AB, lapack_int ldab, lapack_int* ipiv )
-{
-    return LAPACKE_zgbtrf( LAPACK_COL_MAJOR, m, n, kl, ku, AB, ldab, ipiv );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

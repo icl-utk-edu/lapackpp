@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_gbequ(
-    lapack_int m, lapack_int n, lapack_int kl, lapack_int ku, float* AB, lapack_int ldab, float* R, float* C, float* rowcnd, float* colcnd, float* amax )
-{
-    return LAPACKE_sgbequ( LAPACK_COL_MAJOR, m, n, kl, ku, AB, ldab, R, C, rowcnd, colcnd, amax );
-}
-
-static lapack_int LAPACKE_gbequ(
-    lapack_int m, lapack_int n, lapack_int kl, lapack_int ku, double* AB, lapack_int ldab, double* R, double* C, double* rowcnd, double* colcnd, double* amax )
-{
-    return LAPACKE_dgbequ( LAPACK_COL_MAJOR, m, n, kl, ku, AB, ldab, R, C, rowcnd, colcnd, amax );
-}
-
-static lapack_int LAPACKE_gbequ(
-    lapack_int m, lapack_int n, lapack_int kl, lapack_int ku, std::complex<float>* AB, lapack_int ldab, float* R, float* C, float* rowcnd, float* colcnd, float* amax )
-{
-    return LAPACKE_cgbequ( LAPACK_COL_MAJOR, m, n, kl, ku, AB, ldab, R, C, rowcnd, colcnd, amax );
-}
-
-static lapack_int LAPACKE_gbequ(
-    lapack_int m, lapack_int n, lapack_int kl, lapack_int ku, std::complex<double>* AB, lapack_int ldab, double* R, double* C, double* rowcnd, double* colcnd, double* amax )
-{
-    return LAPACKE_zgbequ( LAPACK_COL_MAJOR, m, n, kl, ku, AB, ldab, R, C, rowcnd, colcnd, amax );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

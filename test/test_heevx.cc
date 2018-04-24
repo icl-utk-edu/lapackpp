@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_heevx(
-    char jobz, char range, char uplo, lapack_int n, float* A, lapack_int lda, float vl, float vu, lapack_int il, lapack_int iu, float abstol, lapack_int* nfound, float* W, float* Z, lapack_int ldz, lapack_int* ifail )
-{
-    return LAPACKE_ssyevx( LAPACK_COL_MAJOR, jobz, range, uplo, n, A, lda, vl, vu, il, iu, abstol, nfound, W, Z, ldz, ifail );
-}
-
-static lapack_int LAPACKE_heevx(
-    char jobz, char range, char uplo, lapack_int n, double* A, lapack_int lda, double vl, double vu, lapack_int il, lapack_int iu, double abstol, lapack_int* nfound, double* W, double* Z, lapack_int ldz, lapack_int* ifail )
-{
-    return LAPACKE_dsyevx( LAPACK_COL_MAJOR, jobz, range, uplo, n, A, lda, vl, vu, il, iu, abstol, nfound, W, Z, ldz, ifail );
-}
-
-static lapack_int LAPACKE_heevx(
-    char jobz, char range, char uplo, lapack_int n, std::complex<float>* A, lapack_int lda, float vl, float vu, lapack_int il, lapack_int iu, float abstol, lapack_int* nfound, float* W, std::complex<float>* Z, lapack_int ldz, lapack_int* ifail )
-{
-    return LAPACKE_cheevx( LAPACK_COL_MAJOR, jobz, range, uplo, n, A, lda, vl, vu, il, iu, abstol, nfound, W, Z, ldz, ifail );
-}
-
-static lapack_int LAPACKE_heevx(
-    char jobz, char range, char uplo, lapack_int n, std::complex<double>* A, lapack_int lda, double vl, double vu, lapack_int il, lapack_int iu, double abstol, lapack_int* nfound, double* W, std::complex<double>* Z, lapack_int ldz, lapack_int* ifail )
-{
-    return LAPACKE_zheevx( LAPACK_COL_MAJOR, jobz, range, uplo, n, A, lda, vl, vu, il, iu, abstol, nfound, W, Z, ldz, ifail );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

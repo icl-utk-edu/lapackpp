@@ -3,45 +3,10 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
 #include <iostream>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_ggev(
-    char jobvl, char jobvr, lapack_int n, float* A, lapack_int lda, float* B, lapack_int ldb, std::complex<float>* alpha, float* beta, float* VL, lapack_int ldvl, float* VR, lapack_int ldvr )
-{
-    std::vector< float > alphar( n ), alphai( n );
-    lapack_int err = LAPACKE_sggev( LAPACK_COL_MAJOR, jobvl, jobvr, n, A, lda, B, ldb, &alphar[0], &alphai[0], beta, VL, ldvl, VR, ldvr );
-    for (int64_t i = 0; i < n; ++i) {
-        alpha[i] = std::complex<float>( alphar[i], alphai[i] );
-    }
-    return err;
-}
-
-static lapack_int LAPACKE_ggev(
-    char jobvl, char jobvr, lapack_int n, double* A, lapack_int lda, double* B, lapack_int ldb, std::complex<double>* alpha, double* beta, double* VL, lapack_int ldvl, double* VR, lapack_int ldvr )
-{
-    std::vector< double > alphar( n ), alphai( n );
-    lapack_int err = LAPACKE_dggev( LAPACK_COL_MAJOR, jobvl, jobvr, n, A, lda, B, ldb, &alphar[0], &alphai[0], beta, VL, ldvl, VR, ldvr );
-    for (int64_t i = 0; i < n; ++i) {
-        alpha[i] = std::complex<double>( alphar[i], alphai[i] );
-    }
-    return err;
-}
-
-static lapack_int LAPACKE_ggev(
-    char jobvl, char jobvr, lapack_int n, std::complex<float>* A, lapack_int lda, std::complex<float>* B, lapack_int ldb, std::complex<float>* alpha, std::complex<float>* beta, std::complex<float>* VL, lapack_int ldvl, std::complex<float>* VR, lapack_int ldvr )
-{
-    return LAPACKE_cggev( LAPACK_COL_MAJOR, jobvl, jobvr, n, A, lda, B, ldb, alpha, beta, VL, ldvl, VR, ldvr );
-}
-
-static lapack_int LAPACKE_ggev(
-    char jobvl, char jobvr, lapack_int n, std::complex<double>* A, lapack_int lda, std::complex<double>* B, lapack_int ldb, std::complex<double>* alpha, std::complex<double>* beta, std::complex<double>* VL, lapack_int ldvl, std::complex<double>* VR, lapack_int ldvr )
-{
-    return LAPACKE_zggev( LAPACK_COL_MAJOR, jobvl, jobvr, n, A, lda, B, ldb, alpha, beta, VL, ldvl, VR, ldvr );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

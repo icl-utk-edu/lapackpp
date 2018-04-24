@@ -3,34 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACKE
-static lapack_int LAPACKE_ggglm(
-    lapack_int n, lapack_int m, lapack_int p, float* A, lapack_int lda, float* B, lapack_int ldb, float* D, float* X, float* Y )
-{
-    return LAPACKE_sggglm( LAPACK_COL_MAJOR, n, m, p, A, lda, B, ldb, D, X, Y );
-}
-
-static lapack_int LAPACKE_ggglm(
-    lapack_int n, lapack_int m, lapack_int p, double* A, lapack_int lda, double* B, lapack_int ldb, double* D, double* X, double* Y )
-{
-    return LAPACKE_dggglm( LAPACK_COL_MAJOR, n, m, p, A, lda, B, ldb, D, X, Y );
-}
-
-static lapack_int LAPACKE_ggglm(
-    lapack_int n, lapack_int m, lapack_int p, std::complex<float>* A, lapack_int lda, std::complex<float>* B, lapack_int ldb, std::complex<float>* D, std::complex<float>* X, std::complex<float>* Y )
-{
-    return LAPACKE_cggglm( LAPACK_COL_MAJOR, n, m, p, A, lda, B, ldb, D, X, Y );
-}
-
-static lapack_int LAPACKE_ggglm(
-    lapack_int n, lapack_int m, lapack_int p, std::complex<double>* A, lapack_int lda, std::complex<double>* B, lapack_int ldb, std::complex<double>* D, std::complex<double>* X, std::complex<double>* Y )
-{
-    return LAPACKE_zggglm( LAPACK_COL_MAJOR, n, m, p, A, lda, B, ldb, D, X, Y );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

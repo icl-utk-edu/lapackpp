@@ -3,80 +3,9 @@
 #include "lapack_flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
-
-#include "lapack_mangling.h"
-extern "C" {
-// give Fortran prototypes if not given via lapacke.h
-
-#ifndef LAPACK_slangb
-#define LAPACK_slangb LAPACK_GLOBAL(slangb,SLANGB)
-blas_float_return LAPACK_slangb(
-    char const* norm, lapack_int const* n,
-    lapack_int const* kl, lapack_int const* ku,
-    float const* AB, lapack_int const* ldab,
-    float* work );
-#endif
-
-#ifndef LAPACK_dlangb
-#define LAPACK_dlangb LAPACK_GLOBAL(dlangb,DLANGB)
-double LAPACK_dlangb(
-    char const* norm, lapack_int const* n,
-    lapack_int const* kl, lapack_int const* ku,
-    double const* AB, lapack_int const* ldab,
-    double* work );
-#endif
-
-#ifndef LAPACK_clangb
-#define LAPACK_clangb LAPACK_GLOBAL(clangb,CLANGB)
-blas_float_return LAPACK_clangb(
-    char const* norm, lapack_int const* n,
-    lapack_int const* kl, lapack_int const* ku,
-    lapack_complex_float const* AB, lapack_int const* ldab,
-    float* work );
-#endif
-
-#ifndef LAPACK_zlangb
-#define LAPACK_zlangb LAPACK_GLOBAL(zlangb,ZLANGB)
-double LAPACK_zlangb(
-    char const* norm, lapack_int const* n,
-    lapack_int const* kl, lapack_int const* ku,
-    lapack_complex_double const* AB, lapack_int const* ldab,
-    double* work );
-#endif
-
-}  // extern "C"
-
-// -----------------------------------------------------------------------------
-// simple overloaded wrappers around LAPACK (not in LAPACKE)
-static lapack_int LAPACKE_langb(
-    char norm, lapack_int n, lapack_int kl, lapack_int ku, float* AB, lapack_int ldab )
-{
-    std::vector< float > work( n );
-    return LAPACK_slangb( &norm, &n, &kl, &ku, AB, &ldab, &work[0] );
-}
-
-static lapack_int LAPACKE_langb(
-    char norm, lapack_int n, lapack_int kl, lapack_int ku, double* AB, lapack_int ldab )
-{
-    std::vector< double > work( n );
-    return LAPACK_dlangb( &norm, &n, &kl, &ku, AB, &ldab, &work[0] );
-}
-
-static lapack_int LAPACKE_langb(
-    char norm, lapack_int n, lapack_int kl, lapack_int ku, std::complex<float>* AB, lapack_int ldab )
-{
-    std::vector< float > work( n );
-    return LAPACK_clangb( &norm, &n, &kl, &ku, AB, &ldab, &work[0] );
-}
-
-static lapack_int LAPACKE_langb(
-    char norm, lapack_int n, lapack_int kl, lapack_int ku, std::complex<double>* AB, lapack_int ldab )
-{
-    std::vector< double > work( n );
-    return LAPACK_zlangb( &norm, &n, &kl, &ku, AB, &ldab, &work[0] );
-}
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >

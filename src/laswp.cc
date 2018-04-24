@@ -30,7 +30,7 @@ void laswp(
     blas_int k2_ = (blas_int) k2;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( &ipiv[0], &ipiv[(k1+(k2-k1)*abs(incx))] );
+        std::vector< blas_int > ipiv_( &ipiv[0], &ipiv[(k1+(k2-k1)*std::abs(incx))] );
         blas_int const* ipiv_ptr = &ipiv_[0];
     #else
         blas_int const* ipiv_ptr = ipiv_;
@@ -64,7 +64,7 @@ void laswp(
     blas_int k2_ = (blas_int) k2;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( &ipiv[0], &ipiv[(k1+(k2-k1)*abs(incx))] );
+        std::vector< blas_int > ipiv_( &ipiv[0], &ipiv[(k1+(k2-k1)*std::abs(incx))] );
         blas_int const* ipiv_ptr = &ipiv_[0];
     #else
         blas_int const* ipiv_ptr = ipiv_;
@@ -98,7 +98,7 @@ void laswp(
     blas_int k2_ = (blas_int) k2;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( &ipiv[0], &ipiv[(k1+(k2-k1)*abs(incx))] );
+        std::vector< blas_int > ipiv_( &ipiv[0], &ipiv[(k1+(k2-k1)*std::abs(incx))] );
         blas_int const* ipiv_ptr = &ipiv_[0];
     #else
         blas_int const* ipiv_ptr = ipiv_;
@@ -170,7 +170,7 @@ void laswp(
     blas_int k2_ = (blas_int) k2;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( &ipiv[0], &ipiv[(k1+(k2-k1)*abs(incx))] );
+        std::vector< blas_int > ipiv_( &ipiv[0], &ipiv[(k1+(k2-k1)*std::abs(incx))] );
         blas_int const* ipiv_ptr = &ipiv_[0];
     #else
         blas_int const* ipiv_ptr = ipiv_;

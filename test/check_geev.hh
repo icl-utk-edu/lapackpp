@@ -121,7 +121,7 @@ real_t check_geev_Vnormalization(
                 // real eigenvector
                 nrm = blas::nrm2( n, &V(0,j), 1 );
             }
-            error = max( error, fabs( nrm - 1 ) );
+            error = max( error, std::abs( nrm - 1 ) );
 
             // check largest component is real; set to inf if not
             if (imag( W[j] ) > 0) {
@@ -131,8 +131,8 @@ real_t check_geev_Vnormalization(
                     real_t tmp = lapack::lapy2( V(i,j), V(i,j+1) );
                     if (tmp > Vmax)
                         Vmax = tmp;
-                    if (V(i,j+1) == 0 && fabs( V(i,j) ) > Vrmax)
-                        Vrmax = fabs( V(i,j) );
+                    if (V(i,j+1) == 0 && std::abs( V(i,j) ) > Vrmax)
+                        Vrmax = std::abs( V(i,j) );
                 }
                 if (Vrmax / Vmax < 1 - 2*eps) {
                     //printf( "Vrmax %.2e, Vmax %.2e\n", Vrmax, Vmax );
@@ -165,18 +165,18 @@ real_t check_geev_Vnormalization(
     real_t error = 0;
     for (int64_t j = 0; j < n; ++j) {
         real_t nrm = blas::nrm2( n, &V(0,j), 1 );
-        error = max( error, fabs( nrm - 1 ) );
+        error = max( error, std::abs( nrm - 1 ) );
 
         // check largest component is real; set to inf if not
         if (imag( W[j] ) > 0) {
             real_t Vmax = 0;
             real_t Vrmax = 0;
             for (int64_t i = 0; i < n; ++i) {
-                real_t tmp = fabs( V(i,j) );
+                real_t tmp = std::abs( V(i,j) );
                 if (tmp > Vmax)
                     Vmax = tmp;
-                if (imag( V(i,j) ) == 0 && fabs( real( V(i,j) )) > Vrmax)
-                    Vrmax = fabs( real( V(i,j) ));
+                if (imag( V(i,j) ) == 0 && std::abs( real( V(i,j) )) > Vrmax)
+                    Vrmax = std::abs( real( V(i,j) ));
             }
             if (Vrmax / Vmax < 1 - 2*eps) {
                 //printf( "Vrmax %.2e, Vmax %.2e\n", Vrmax, Vmax );

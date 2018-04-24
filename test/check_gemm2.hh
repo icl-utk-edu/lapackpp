@@ -45,7 +45,7 @@ void check_gemm(
     }
 
     error[0] = lapack::lange( lapack::Norm::Fro, m, n, C, ldc )
-             / (sqrt(real_t(k)+2)*fabs(alpha)*Anorm*Bnorm + 2*fabs(beta)*Cnorm);
+             / (sqrt(real_t(k)+2)*std::abs(alpha)*Anorm*Bnorm + 2*std::abs(beta)*Cnorm);
 
     // Allow 3*eps; complex needs 2*sqrt(2) factor; see Higham, 2002, sec. 3.6.
     real_t eps = std::numeric_limits< real_t >::epsilon();
@@ -106,7 +106,7 @@ void check_herk(
     }
 
     error[0] = lapack::lanhe( lapack::Norm::Fro, uplo, n, C, ldc )
-             / (sqrt(real_t(k)+2)*fabs(alpha)*Anorm*Bnorm + 2*fabs(beta)*Cnorm);
+             / (sqrt(real_t(k)+2)*std::abs(alpha)*Anorm*Bnorm + 2*std::abs(beta)*Cnorm);
 
     // Allow 3*eps; complex needs 2*sqrt(2) factor; see Higham, 2002, sec. 3.6.
     real_t eps = std::numeric_limits< real_t >::epsilon();

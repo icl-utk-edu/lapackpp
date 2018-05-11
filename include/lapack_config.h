@@ -34,10 +34,6 @@
 #ifndef LAPACK_CONFIG_H
 #define LAPACK_CONFIG_H
 
-#if defined(__cplusplus) && defined(LAPACK_COMPLEX_CPP)
-    #include <complex>
-#endif
-
 #include <stdlib.h>
 
 #ifndef lapack_int
@@ -52,15 +48,26 @@
     #define lapack_logical          lapack_int
 #endif
 
-// -----------------------------------------------------------------------------
-// f2c, hence MacOS Accelerate, returns double instead of float
-// for sdot, slange, clange, etc.
+/* f2c, hence MacOS Accelerate, returns double instead of float
+ * for sdot, slange, clange, etc. */
 #if defined(HAVE_MACOS_ACCELERATE) || defined(HAVE_F2C)
     typedef double lapack_float_return;
 #else
     typedef float lapack_float_return;
 #endif
 
+/* -----------------------------------------------------------------------------
+ * If user defines LAPACK_COMPLEX_CUSTOM, then use the user's definitions for:
+ *     lapack_complex_float
+ *     lapack_complex_double
+ *     lapack_complex_float_real(z)
+ *     lapack_complex_float_imag(z)
+ *     lapack_complex_double_real(z)
+ *     lapack_complex_double_imag(z)
+ * Else if user defines LAPACK_COMPLEX_STRUCTURE, then use a struct;
+ * Else if user defines LAPACK_COMPLEX_CPP, then use C++ std::complex;
+ * Otherwise, the default is to use C99 _Complex.
+ */
 #ifndef LAPACK_COMPLEX_CUSTOM
 
 #if defined(LAPACK_COMPLEX_STRUCTURE)
@@ -74,8 +81,9 @@ typedef struct { double real, imag; } lapack_complex_double;
 #define lapack_complex_double_real(z)  ((z).real)
 #define lapack_complex_double_imag(z)  ((z).imag)
 
-#elif defined(LAPACK_COMPLEX_CPP)
+#elif defined(__cplusplus) && defined(LAPACK_COMPLEX_CPP)
 
+#include <complex>
 #define lapack_complex_float std::complex<float>
 #define lapack_complex_double std::complex<double>
 #define lapack_complex_float_real(z)       ((z).real())
@@ -85,7 +93,7 @@ typedef struct { double real, imag; } lapack_complex_double;
 
 #else
 
-// default is LAPACK_COMPLEX_C99
+/* default is LAPACK_COMPLEX_C99 */
 #include <complex.h>
 #define lapack_complex_float    float _Complex
 #define lapack_complex_double   double _Complex
@@ -107,7 +115,7 @@ lapack_complex_double lapack_make_complex_double( double re, double im );
 }
 #endif /* __cplusplus */
 
-#endif
+#endif /* not LAPACK_COMPLEX_CUSTOM */
 
 #ifndef LAPACK_malloc
 #define LAPACK_malloc( size )   malloc( size )

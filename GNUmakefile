@@ -1,8 +1,10 @@
 # Usage:
 # make by default:
+#    - Runs configure.py to create make.inc, if it doesn't exist.
 #    - Compiles lib/liblapackpp.so, or lib/liblapackpp.a (if static=1).
 #    - Compiles the tester, test/test.
 #
+# make config - Runs configure.py to create make.inc.
 # make lib    - Compiles lib/liblapackpp.so, or liblapackpp.a (if static=1).
 # make test   - Compiles the tester, test/test.
 # make docs   - Compiles Doxygen documentation.
@@ -17,6 +19,13 @@
 #   prefix          -- where to install LAPACK++
 
 include make.inc
+
+make.inc:
+	python configure.py
+
+.PHONY: config
+config:
+	python configure.py
 
 # defaults if not given in make.inc
 CXXFLAGS ?= -O3 -std=c++11 -MMD \

@@ -1,85 +1,165 @@
+# Usage:
+# make by default:
+#    - Compiles lib/liblapackpp.so, or lib/liblapackpp.a (if static=1).
+#    - Compiles the tester, test/test.
+#
+# make lib    - Compiles lib/liblapackpp.so, or liblapackpp.a (if static=1).
+# make test   - Compiles the tester, test/test.
+# make docs   - Compiles Doxygen documentation.
+# make clean  - Deletes all objects, libraries, and the tester.
+
+#-------------------------------------------------------------------------------
+# Configuration
+# Variables defined in make.inc, or use make's defaults:
+#   CXX, CXXFLAGS   -- C compiler and flags
+#   LDFLAGS, LIBS   -- Linker options, library paths, and libraries
+#   AR, RANLIB      -- Archiver, ranlib updates library TOC
+#   prefix          -- where to install LAPACK++
+
 include make.inc
 
-# defaults if not defined in make.inc
-LDFLAGS  ?= -fPIC
-CXXFLAGS ?= -fPIC -MMD -std=c++11 -pedantic \
-            -Wall -Wmissing-declarations \
+# defaults if not given in make.inc
+CXXFLAGS ?= -O3 -std=c++11 -MMD \
+            -Wall -pedantic \
+            -Wshadow \
             -Wno-unused-local-typedefs \
-            -I${LAPACKDIR}/LAPACKE/include \
-            -DLAPACK_VERSION=30800 \
-            -DLAPACK_MATGEN
-#CXXFLAGS += -Werror
+            -Wno-unused-function \
+
+#CXXFLAGS += -Wmissing-declarations
 #CXXFLAGS += -Wconversion
+#CXXFLAGS += -Werror
 
-LIBS     ?= -L${LAPACKDIR} -llapacke -llapack -lblas
+# GNU make doesn't have defaults for these
+RANLIB   ?= ranlib
+prefix   ?= /usr/local/lapackpp
 
-# ------------------------------------------------------------------------------
-# LAPACK++ specific flags
-pwd = ${shell pwd}
-libtest_path = ${realpath ${pwd}/../libtest}
-libtest_src  = ${wildcard ${libtest_path}/*.cc} \
-               ${wildcard ${libtest_path}/*.hh}
-libtest_so   = ${libtest_path}/libtest.so
-
-LAPACKPP_FLAGS = -I../libtest \
-                 -I../blaspp/include \
-                 -I../blaspp/test \
-                 -Iinclude
-
-LAPACKPP_LIBS  = -L../libtest -Wl,-rpath,${libtest_path} -ltest \
-                 -Llib -Wl,-rpath,${pwd}/lib -llapackpp
-
-# ------------------------------------------------------------------------------
-# files
-src = ${wildcard src/*.cc}
-obj = ${addsuffix .o, ${basename ${src}}}
-dep = ${addsuffix .d, ${basename ${src}}}
-
-test_src = ${wildcard test/*.cc}
-test_obj = ${addsuffix .o, ${basename ${test_src}}}
-test_dep = ${addsuffix .d, ${basename ${test_src}}}
-
-tools_src = ${wildcard tools/*.cc}
-tools_obj = ${addsuffix .o, ${basename ${tools_src}}}
-tools_dep = ${addsuffix .d, ${basename ${tools_src}}}
-
-liblapackpp_so = lib/liblapackpp.so
-liblapackpp_a  = lib/liblapackpp.a
-
-# --------------------
-# MacOS (darwin) needs shared library's path set
+# auto-detect OS
 # $OSTYPE may not be exported from the shell, so echo it
-ostype = ${shell echo $${OSTYPE}}
-ifneq ($(findstring darwin, ${ostype}),)
-   install_name = -install_name @rpath/$(notdir $@)
-else
-   install_name =
+ostype = $(shell echo $${OSTYPE})
+ifneq ($(findstring darwin, $(ostype)),)
+	# MacOS is darwin
+	macos = 1
 endif
 
-# ------------------------------------------------------------------------------
-# rules
-.PHONY: default all shared static include src test docs clean test_headers
+#-------------------------------------------------------------------------------
+# if shared
+ifneq ($(static),1)
+	CXXFLAGS += -fPIC
+	LDFLAGS  += -fPIC
+endif
 
-default: shared test
+#-------------------------------------------------------------------------------
+# MacOS needs shared library's path set
+ifeq ($(macos),1)
+	install_name = -install_name @rpath/$(notdir $@)
+else
+	install_name =
+endif
 
-all: shared static test
+#-------------------------------------------------------------------------------
+# Files
 
-shared: ${liblapackpp_so}
+lib_src  = $(wildcard src/*.cc)
+lib_obj  = $(addsuffix .o, $(basename $(lib_src)))
+dep      = $(addsuffix .d, $(basename $(lib_src)))
 
-static: ${liblapackpp_a}
+test_src = $(wildcard test/*.cc)
+test_obj = $(addsuffix .o, $(basename $(test_src)))
+dep     += $(addsuffix .d, $(basename $(test_src)))
 
-lib:
-	mkdir lib
+test     = test/test
 
-# defalut rules for subdirectories
-include: test_headers
+libtest_dir = ../libtest
+libtest_src = $(wildcard $(libtest_dir)/*.cc $(libtest_dir)/*.hh)
+libtest     = $(libtest_dir)/libtest.so
 
-src: shared
+blaspp_dir = ../blaspp
+blaspp_src = $(wildcard $(blaspp_dir)/src/*.cc $(blaspp_dir)/include/*.hh)
+#blaspp    = $(blaspp_dir)/lib/libblaspp.so  # todo
 
-test: test/test
+lib_a  = ./lib/liblapackpp.a
+lib_so = ./lib/liblapackpp.so
 
-tools: tools/lapack_version
+ifeq ($(static),1)
+	lib = $(lib_a)
+else
+	lib = $(lib_so)
+endif
 
+#-------------------------------------------------------------------------------
+# LAPACK++ specific flags and libraries
+CXXFLAGS += -I./include
+CXXFLAGS += -I$(blaspp_dir)/include
+
+# additional flags and libraries for testers
+$(test_obj): CXXFLAGS += -I$(blaspp_dir)/test    # for blas_flops.hh
+$(test_obj): CXXFLAGS += -I$(libtest_dir)
+
+TEST_LDFLAGS += -L./lib -Wl,-rpath,$(abspath ./lib)
+TEST_LDFLAGS += -L$(libtest_dir) -Wl,-rpath,$(abspath $(libtest_dir))
+TEST_LIBS    += -llapackpp -ltest
+
+#-------------------------------------------------------------------------------
+# Rules
+.DELETE_ON_ERROR:
+.SUFFIXES:
+.PHONY: all lib src test headers include docs clean distclean
+.DEFAULT_GOAL = all
+
+all: lib test
+
+#-------------------------------------------------------------------------------
+# liblapackpp library
+$(lib_so): $(lib_obj)
+	mkdir -p lib
+	$(CXX) $(LDFLAGS) -shared $(install_name) $(lib_obj) $(LIBS) -o $@
+
+$(lib_a): $(lib_obj)
+	mkdir -p lib
+	$(RM) $@
+	$(AR) cr $@ $(lib_obj)
+	$(RANLIB) $@
+
+# sub-directory rules
+lib src: $(lib)
+
+lib/clean src/clean:
+	$(RM) lib/*.{a,so} src/*.o
+
+#-------------------------------------------------------------------------------
+# tester
+$(test): $(test_obj) $(lib) $(libtest)
+	$(CXX) $(TEST_LDFLAGS) $(LDFLAGS) $(test_obj) \
+		$(TEST_LIBS) $(LIBS) -o $@
+
+# forward libtest to libtest directory
+$(libtest): $(libtest_src)
+	cd $(libtest_dir) && $(MAKE)
+
+# sub-directory rules
+test: $(test)
+
+test/clean:
+	$(RM) $(test) test/*.o
+
+#-------------------------------------------------------------------------------
+# headers
+# precompile headers to verify self-sufficiency
+headers     = $(wildcard include/*.h include/*.hh test/*.hh)
+headers_gch = $(addsuffix .gch, $(headers))
+
+headers: $(headers_gch)
+
+headers/clean:
+	$(RM) $(headers_gch)
+
+# sub-directory rules
+include: headers
+
+include/clean: headers/clean
+
+#-------------------------------------------------------------------------------
+# documentation
 docs:
 	doxygen docs/doxygen/doxyfile.conf
 	@echo ========================================
@@ -88,70 +168,65 @@ docs:
 	@echo "Documentation available in docs/html/index.html"
 	@echo ========================================
 
-test/test: ${test_obj} ${liblapackpp_so} ${libtest_so}
-	${CXX} ${LDFLAGS} -o $@ ${test_obj} ${LAPACKPP_LIBS} ${LIBS}
-
-tools/lapack_version: tools/lapack_version.o
-	${CXX} ${LDFLAGS} -o $@ $^ ${LIBS}
-
-${liblapackpp_so}: ${obj} | lib
-	${CXX} ${LDFLAGS} -shared ${install_name} -o $@ ${obj} ${LIBS}
-
-${liblapackpp_a}: ${obj} | lib
-	ar cr $@ ${obj}
-	ranlib $@
-
-${libtest_so}: ${libtest_src}
-	cd ${libtest_path} && ${MAKE}
-
-%.o: %.cc
-	${CXX} ${CXXFLAGS} ${LAPACKPP_FLAGS} -c -o $@ $<
-
-%.i: %.cc
-	${CXX} ${CXXFLAGS} ${LAPACKPP_FLAGS} -E -o $@ $<
-
-clean: include/clean src/clean test/clean tools/clean
-
-include/clean:
-	-${RM} gch/include/*.gch
-
-src/clean:
-	-${RM} lib/*.{a,so} src/*.{o,d}
-
-test/clean:
-	-${RM} test/test test/*.{o,d} gch/test/*.gch
-
-tools/clean:
-	-${RM} tools/lapack_version tools/*.{o,d}
-
--include ${dep} ${test_dep}
-
-# ------------------------------------------------------------------------------
-# subdirectory redirects
-src/test_headers: test_headers
-test/test_headers: test_headers
-
+# sub-directory redirects
 src/docs: docs
 test/docs: docs
 
-# ------------------------------------------------------------------------------
-# precompile headers to verify self-sufficiency
-headers     = ${wildcard include/*.h include/*.hh test/*.hh}
-headers_gch = ${addprefix gch/, ${addsuffix .gch, ${headers}}}
+#-------------------------------------------------------------------------------
+# general rules
+clean: lib/clean test/clean headers/clean
 
-test_headers: ${headers_gch}
+distclean: clean
+	$(RM) $(dep) make.inc
 
-gch/include/%.h.gch: include/%.h | gch/include
-	${CXX} ${CXXFLAGS} ${LAPACKPP_FLAGS} -c -o $@ $<
+%.o: %.cc
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-gch/include/%.hh.gch: include/%.hh | gch/include
-	${CXX} ${CXXFLAGS} ${LAPACKPP_FLAGS} -c -o $@ $<
+# preprocess source
+%.i: %.cc
+	$(CXX) $(CXXFLAGS) -I$(blaspp_dir)/test -I$(libtest_dir) -E $< -o $@
 
-gch/test/%.hh.gch: test/%.hh | gch/test
-	${CXX} ${CXXFLAGS} ${LAPACKPP_FLAGS} -c -o $@ $<
+# precompile header to check for errors
+%.h.gch: %.h
+	$(CXX) $(CXXFLAGS) -I$(blaspp_dir)/test -I$(libtest_dir) -c $< -o $@
 
-# make directories
-gch/include: | gch
-gch/test:    | gch
-gch/include gch/test gch:
-	mkdir $@
+%.hh.gch: %.hh
+	$(CXX) $(CXXFLAGS) -I$(blaspp_dir)/test -I$(libtest_dir) -c $< -o $@
+
+-include $(dep)
+
+#-------------------------------------------------------------------------------
+# debugging
+echo:
+	@echo "static        = '$(static)'"
+	@echo
+	@echo "lib_a         = $(lib_a)"
+	@echo "lib_so        = $(lib_so)"
+	@echo "lib           = $(lib)"
+	@echo
+	@echo "lib_obj       = $(lib_obj)"
+	@echo
+	@echo "test_src      = $(test_src)"
+	@echo
+	@echo "test_obj      = $(test_obj)"
+	@echo
+	@echo "test          = $(test)"
+	@echo
+	@echo "dep           = $(dep)"
+	@echo
+	@echo "libtest_dir   = $(libtest_dir)"
+	@echo "libtest_src   = $(libtest_src)"
+	@echo "libtest       = $(libtest)"
+	@echo
+	@echo "blaspp_dir    = $(blaspp_dir)"
+	@echo "blaspp_src    = $(blaspp_src)"
+	@echo "blaspp        = $(blaspp)  # todo"
+	@echo
+	@echo "CXX           = $(CXX)"
+	@echo "CXXFLAGS      = $(CXXFLAGS)"
+	@echo
+	@echo "LDFLAGS       = $(LDFLAGS)"
+	@echo "LIBS          = $(LIBS)"
+	@echo
+	@echo "TEST_LDFLAGS  = $(TEST_LDFLAGS)"
+	@echo "TEST_LIBS     = $(TEST_LIBS)"

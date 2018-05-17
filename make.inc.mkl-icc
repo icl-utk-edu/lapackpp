@@ -1,18 +1,34 @@
-# Intel MKL with Intel icc/icpc
+# Intel MKL with Intel icpc
 # Assumes $MKLROOT is set, e.g., in ~/.bashrc:
 #     source /opt/intel/bin/compilervars.sh intel64
 # or
 #     source /opt/intel/mkl/bin/mklvars.sh intel64
 
+ifeq (${MKLROOT},)
+    $(warning $$MKLROOT not set. See comments in make.inc.)
+endif
+
 CXX       = icpc
 
-LDFLAGS   = -fPIC -qopenmp
-CXXFLAGS  = -fPIC -qopenmp -MMD -std=c++11 -pedantic \
-            -Wall -Wmissing-declarations \
-            -Wno-unused-local-typedefs
+CXXFLAGS  = -O2 -MMD -std=c++11 \
+            -Wall -pedantic \
+            -Wshadow \
+            -Wno-unused-local-typedefs \
+            -Wno-unused-function \
 
-CXXFLAGS += -I${MKLROOT}/include \
-            -DLAPACK_VERSION=30700 -DHAVE_XBLAS \
+#CXXFLAGS += -Wmissing-declarations
+#CXXFLAGS += -Wconversion
+#CXXFLAGS += -Werror
+
+# MKL-specific flags
+CXXFLAGS += -qopenmp \
+            -I${MKLROOT}/include \
+            -DLAPACK_VERSION=30700 \
+            -DHAVE_XBLAS \
             -DHAVE_MKL \
+            -DBLAS_COMPLEX_RETURN_ARGUMENT \
 
-LIBS      = -L${MKLROOT}/lib -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -lm
+LDFLAGS   = -qopenmp \
+            -L${MKLROOT}/lib/intel64 \
+
+LIBS      = -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -lm

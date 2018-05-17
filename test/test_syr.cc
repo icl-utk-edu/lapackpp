@@ -14,6 +14,7 @@
 
 // -----------------------------------------------------------------------------
 // give Fortran prototypes if not given via lapacke.h
+#include "lapack_config.h"
 #include "lapack_mangling.h"
 
 extern "C" {

@@ -6,12 +6,6 @@
 #include "matrix_params.hh"
 #include "matrix_generator.hh"
 
-#ifdef HAVE_MKL
-    #include <mkl.h>
-#else
-    #include <lapacke.h>
-#endif
-
 // -----------------------------------------------------------------------------
 class Params: public libtest::ParamsBase
 {

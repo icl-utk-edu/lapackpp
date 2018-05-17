@@ -14,7 +14,5 @@ CXXFLAGS  = -fPIC -fopenmp -MMD -std=c++11 -pedantic \
 CXXFLAGS += -I${MKLROOT}/include \
             -DLAPACK_VERSION=30700 -DHAVE_XBLAS \
             -DHAVE_MKL \
-            -DMKL_Complex8="std::complex<float>" \
-            -DMKL_Complex16="std::complex<double>"
 
 LIBS      = -L${MKLROOT}/lib -lmkl_gf_lp64 -lmkl_gnu_thread -lmkl_core -lm

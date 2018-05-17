@@ -7,6 +7,16 @@
 #include <complex>
 #include <vector>
 
+#ifdef HAVE_MKL
+    // define lapack_complex and MKL_Complex to be consistent
+    #include "lapack_config.h"
+    #define MKL_Complex8  lapack_complex_float
+    #define MKL_Complex16 lapack_complex_double
+    #include <mkl_lapacke.h>
+#else
+    #include <lapacke.h>
+#endif
+
 // -----------------------------------------------------------------------------
 static inline lapack_int LAPACKE_gbcon(
     char norm, lapack_int n, lapack_int kl, lapack_int ku,

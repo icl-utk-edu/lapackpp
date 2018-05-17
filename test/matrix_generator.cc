@@ -27,6 +27,9 @@ inline scalar_t rand( scalar_t max_ )
 /// See https://stackoverflow.com/questions/53849
 /// @ingroup util
 std::vector< std::string >
+    split( const std::string& str, const std::string& delims );
+
+std::vector< std::string >
     split( const std::string& str, const std::string& delims )
 {
     size_t npos = std::string::npos;

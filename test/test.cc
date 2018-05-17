@@ -534,60 +534,62 @@ Params::Params():
 // -----------------------------------------------------------------------------
 // determines the range, il, iu, vl, vu values.
 void Params::get_range(
-    int64_t n, lapack::Range* range,
-    double* vl, double* vu,
-    int64_t* il, int64_t* iu )
+    int64_t n, lapack::Range* range_arg,
+    double* vl_arg, double* vu_arg,
+    int64_t* il_arg, int64_t* iu_arg )
 {
     typedef long long lld;
 
     // default assume All
-    *vl = this->vl.value();
-    *vu = this->vu.value();
-    *il = std::min( this->il.value(), n );
-    *iu = std::min( this->iu.value(), n );
-    if (*iu == -1)
-        *iu = n;
-    double fraction_start = this->fraction_start.value();
-    double fraction = this->fraction.value();
-    if (fraction_start + fraction > 1)
+    *vl_arg = this->vl.value();
+    *vu_arg = this->vu.value();
+    *il_arg = std::min( this->il.value(), n );
+    *iu_arg = std::min( this->iu.value(), n );
+    if (*iu_arg == -1)
+        *iu_arg = n;
+    double frac_start = this->fraction_start.value();
+    double frac = this->fraction.value();
+    if (frac_start + frac > 1)
         throw lapack::Error( "Error: fraction_start + fraction > 1" );
 
     // set range based on fraction, il/iu, vl/vu values
-    if (fraction != 1) {
-        *range = lapack::Range::Index;
-        *il = std::min( 1 + int64_t( fraction_start * n ), n );
-        *iu = std::min( (*il) - 1 + int64_t( fraction * n ), n );
+    if (frac != 1) {
+        *range_arg = lapack::Range::Index;
+        *il_arg = std::min( 1 + int64_t( frac_start * n ), n );
+        *iu_arg = std::min( (*il_arg) - 1 + int64_t( frac * n ), n );
     }
-    else if (*il != 1 || *iu != n) {
-        *range = lapack::Range::Index;
+    else if (*il_arg != 1 || *iu_arg != n) {
+        *range_arg = lapack::Range::Index;
     }
-    else if (*vl != -inf || *vu != inf) {
-        *range = lapack::Range::Value;
+    else if (*vl_arg != -inf || *vu_arg != inf) {
+        *range_arg = lapack::Range::Value;
     }
     else {
-        *range = lapack::Range::All;
+        *range_arg = lapack::Range::All;
     }
 
-    this->range.value()  = *range;
-    this->il_out.value() = *il;
-    this->iu_out.value() = *iu;
+    this->range.value() = *range_arg;
+    this->il.value() = *il_arg;
+    this->iu.value() = *iu_arg;
 }
 
 // -----------------------------------------------------------------------------
 void Params::get_range(
-    int64_t n, lapack::Range* range,
-    float* vl, float* vu,
-    int64_t* il, int64_t* iu )
+    int64_t n, lapack::Range* range_arg,
+    float* vl_arg, float* vu_arg,
+    int64_t* il_arg, int64_t* iu_arg )
 {
     double dvl, dvu;
-    this->get_range( n, range, &dvl, &dvu, il, iu );
-    *vl = float(dvl);
-    *vu = float(dvu);
+    this->get_range( n, range_arg, &dvl, &dvu, il_arg, iu_arg );
+    *vl_arg = float(dvl);
+    *vu_arg = float(dvu);
 }
 
 // -----------------------------------------------------------------------------
 // Compare a == b, bitwise. Returns true if a and b are both the same NaN value,
 // unlike (a == b) which is false for NaNs.
+bool same( double a, double b );
+
 bool same( double a, double b )
 {
     return (memcmp( &a, &b, sizeof(double) ) == 0);
@@ -596,6 +598,10 @@ bool same( double a, double b )
 // -----------------------------------------------------------------------------
 // Prints line describing matrix kind and cond, if kind or cond changed.
 // Updates kind and cond to current values.
+void print_matrix_header(
+    MatrixParams& params, const char* caption,
+    std::string* matrix, double* cond, double* condD );
+
 void print_matrix_header(
     MatrixParams& params, const char* caption,
     std::string* matrix, double* cond, double* condD )

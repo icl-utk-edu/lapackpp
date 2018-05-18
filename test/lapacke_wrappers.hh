@@ -2,7 +2,6 @@
 #define ICL_LAPACKE_WRAPPERS_HH
 
 #include "lapack_util.hh"
-#include "lapack_mangling.h"
 
 #include <complex>
 #include <vector>
@@ -16,6 +15,9 @@
 #else
     #include <lapacke.h>
 #endif
+
+// *after* lapacke.h, which may define LAPACK_GLOBAL macro
+#include "lapack_mangling.h"
 
 // -----------------------------------------------------------------------------
 static inline lapack_int LAPACKE_gbcon(
@@ -1287,6 +1289,7 @@ static inline lapack_int LAPACKE_gesvd(
 }
 
 // -----------------------------------------------------------------------------
+#if LAPACK_VERSION >= 30600
 static inline lapack_int LAPACKE_gesvdx(
     char jobu, char jobvt, char range, lapack_int m, lapack_int n,
     float* A, lapack_int lda,
@@ -1366,6 +1369,7 @@ static inline lapack_int LAPACKE_gesvdx(
         (lapack_complex_double*) VT, ldvt,
         &superb[0] );
 }
+#endif // 30600
 
 // -----------------------------------------------------------------------------
 static inline lapack_int LAPACKE_gesvx(
@@ -1618,6 +1622,7 @@ static inline lapack_int LAPACKE_getrs(
 }
 
 // -----------------------------------------------------------------------------
+#if LAPACK_VERSION >= 30700
 static inline lapack_int LAPACKE_getsls(
     char trans, lapack_int m, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -1665,6 +1670,7 @@ static inline lapack_int LAPACKE_getsls(
         (lapack_complex_double*) A, lda,
         (lapack_complex_double*) B, ldb );
 }
+#endif // 30700
 
 // -----------------------------------------------------------------------------
 static inline lapack_int LAPACKE_ggev(
@@ -7626,6 +7632,7 @@ static inline lapack_int LAPACKE_sysv(
 }
 
 // -----------------------------------------------------------------------------
+#if LAPACK_VERSION >= 30700
 static inline lapack_int LAPACKE_sysv_aa(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -7677,8 +7684,10 @@ static inline lapack_int LAPACKE_sysv_aa(
         ipiv,
         (lapack_complex_double*) B, ldb );
 }
+#endif // 30700
 
 // -----------------------------------------------------------------------------
+#if LAPACK_VERSION >= 30700
 static inline lapack_int LAPACKE_sysv_rk(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -7738,8 +7747,10 @@ static inline lapack_int LAPACKE_sysv_rk(
         ipiv,
         (lapack_complex_double*) B, ldb );
 }
+#endif // 30700
 
 // -----------------------------------------------------------------------------
+#if LAPACK_VERSION >= 30500
 static inline lapack_int LAPACKE_sysv_rook(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -7791,6 +7802,7 @@ static inline lapack_int LAPACKE_sysv_rook(
         ipiv,
         (lapack_complex_double*) B, ldb );
 }
+#endif // 30500
 
 // -----------------------------------------------------------------------------
 static inline lapack_int LAPACKE_sytrf(
@@ -7912,6 +7924,7 @@ void LAPACK_zhetrf_aa(
 
 // -----------------------------------------------------------------------------
 // TODO: LAPACKE has a bug; use LAPACK for now
+#if LAPACK_VERSION >= 30700
 static inline lapack_int LAPACKE_sytrf_aa(
     char uplo, lapack_int n,
     float* A, lapack_int lda,
@@ -7983,8 +7996,10 @@ static inline lapack_int LAPACKE_sytrf_aa(
         (lapack_complex_double*) &work[0], &lwork_, &info_ );
     return info_;
 }
+#endif // 30700
 
 // -----------------------------------------------------------------------------
+#if LAPACK_VERSION >= 30700
 static inline lapack_int LAPACKE_sytrf_rk(
     char uplo, lapack_int n,
     float* A, lapack_int lda,
@@ -8036,8 +8051,10 @@ static inline lapack_int LAPACKE_sytrf_rk(
         (lapack_complex_double*) E,
         ipiv );
 }
+#endif // 30700
 
 // -----------------------------------------------------------------------------
+#if LAPACK_VERSION >= 30500
 static inline lapack_int LAPACKE_sytrf_rook(
     char uplo, lapack_int n,
     float* A, lapack_int lda,
@@ -8081,6 +8098,7 @@ static inline lapack_int LAPACKE_sytrf_rook(
         (lapack_complex_double*) A, lda,
         ipiv );
 }
+#endif // 30500
 
 // -----------------------------------------------------------------------------
 static inline lapack_int LAPACKE_sytri(
@@ -8181,6 +8199,7 @@ static inline lapack_int LAPACKE_sytrs(
 }
 
 // -----------------------------------------------------------------------------
+#if LAPACK_VERSION >= 30700
 static inline lapack_int LAPACKE_sytrs_aa(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -8232,8 +8251,10 @@ static inline lapack_int LAPACKE_sytrs_aa(
         ipiv,
         (lapack_complex_double*) B, ldb );
 }
+#endif // 30700
 
 // -----------------------------------------------------------------------------
+#if LAPACK_VERSION >= 30500
 static inline lapack_int LAPACKE_sytrs_rook(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -8285,6 +8306,7 @@ static inline lapack_int LAPACKE_sytrs_rook(
         ipiv,
         (lapack_complex_double*) B, ldb );
 }
+#endif // 30500
 
 // -----------------------------------------------------------------------------
 static inline lapack_int LAPACKE_unghr(

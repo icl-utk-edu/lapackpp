@@ -10,7 +10,7 @@ int main()
 {
     int n = 5;
     // symmetric positive definite A = L L^T, with exact L.
-    // -1 values in upper triangle (viewed column-major) are not referenced
+    // -1 values in upper triangle (viewed column-major) are not referenced.
     double A[] = {
         4,  2,  0,  0,  0,
        -1,  5,  2,  0,  0,

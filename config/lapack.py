@@ -179,7 +179,32 @@ def lapack():
     for (label, env) in choices:
         config.environ.push()
         config.environ.merge( env )
-        (rc, out, err) = config.compile_run( 'config/lapack.cc', label )
+        (rc, out, err) = config.compile_run( 'config/lapack_potrf.cc', label )
+        config.environ.pop()
+        if (rc == 0):
+            passed.append( (label, env) )
+            break
+    # end
+
+    labels = map( lambda c: c[0] + ': ' + c[1]['LIBS'], passed )
+    i = config.choose( labels )
+    config.environ.merge( passed[i][1] )
+    config.environ.append( 'CXXFLAGS', '-DHAVE_LAPACK' )
+# end lapack
+
+#-------------------------------------------------------------------------------
+def lapack2():
+    print_header( 'LAPACK library (2)' )
+    choices = [
+        ('Default, in BLAS library', {'LIBS': ''}),
+        ('Netlib LAPACK: -llapack',  {'LIBS': '-llapack'}),
+    ]
+
+    passed = []
+    for (label, env) in choices:
+        config.environ.push()
+        config.environ.merge( env )
+        (rc, out, err) = config.compile_run( 'config/lapack_pstrf.cc', label )
         config.environ.pop()
         if (rc == 0):
             passed.append( (label, env) )
@@ -204,7 +229,32 @@ def lapacke():
     for (label, env) in choices:
         config.environ.push()
         config.environ.merge( env )
-        (rc, out, err) = config.compile_run( 'config/lapacke.cc', label )
+        (rc, out, err) = config.compile_run( 'config/lapacke_potrf.cc', label )
+        config.environ.pop()
+        if (rc == 0):
+            passed.append( (label, env) )
+            break
+    # end
+
+    labels = map( lambda c: c[0] + ': ' + c[1]['LIBS'], passed )
+    i = config.choose( labels )
+    config.environ.merge( passed[i][1] )
+    config.environ.append( 'CXXFLAGS', '-DHAVE_LAPACKE' )
+# end lapacke
+
+#-------------------------------------------------------------------------------
+def lapacke2():
+    print_header( 'LAPACKE library (2)' )
+    choices = [
+        ('Default, in LAPACK library', {'LIBS': ''}),
+        ('Netlib LAPACKE: -llapacke',  {'LIBS': '-llapacke'}),
+    ]
+
+    passed = []
+    for (label, env) in choices:
+        config.environ.push()
+        config.environ.merge( env )
+        (rc, out, err) = config.compile_run( 'config/lapacke_pstrf.cc', label )
         config.environ.pop()
         if (rc == 0):
             passed.append( (label, env) )

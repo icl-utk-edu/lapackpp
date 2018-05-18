@@ -94,12 +94,14 @@ except Error:
     pass
 
 config.lapack.lapack()
+config.lapack.lapack2()
 config.lapack.lapack_version()
 config.lapack.lapack_xblas()
 config.lapack.lapack_matgen()
 
 try:
     config.lapack.lapacke()
+    config.lapack.lapacke2()
 except Error:
     print( ansi_red + 'LAPACK++ needs LAPACKE only in testers.' + ansi_normal )
     pass

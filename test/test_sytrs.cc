@@ -73,7 +73,7 @@ void test_sytrs_work( Params& params, bool run )
 
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
         // ---------- factor
-        int64_t info = LAPACKE_sytrf( uplo2char(uplo), n, &A_ref[0], lda, &ipiv_ref[0] );
+        info = LAPACKE_sytrf( uplo2char(uplo), n, &A_ref[0], lda, &ipiv_ref[0] );
         if (info != 0) {
             fprintf( stderr, "LAPACKE_sytrf returned error %lld\n", (lld) info );
         }

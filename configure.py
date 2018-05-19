@@ -25,11 +25,15 @@ By default, this configuration script will automatically choose the first valid
 value it finds for each option. You can set it to interactive to find all
 possible values and give you a choice:
     ''' + ansi_blue + 'python configure.py --interactive' + ansi_normal + '''
+or
+    ''' + ansi_blue + 'make config interactive=1' + ansi_normal + '''
 
 To select versions of BLAS and LAPACK to check for, set one or more of:
-    mkl=1  acml=1  essl=1  openblas=1  accelerate=1
-For instance,
-    make config CXX=xlc++ essl=1
+    mkl=1, acml=1, essl=1, openblas=1, accelerate=1;
+    fortran_add_=1, fortran_lower=1, fortran_upper=1;
+    lp64=1, ilp64=1
+for instance,
+    make config CXX=xlc++ essl=1 fortran_lower=1
 
 This script assumes flags are set in your environment to make your BLAS
 and LAPACK libraries accessible to your compiler, for example:
@@ -71,20 +75,7 @@ config.lapack.blas()
 print()
 config.lapack.blas_float_return()
 config.lapack.blas_complex_return()
-
-# If we can, be smart looking for MKL, ESSL, or OpenBLAS version;
-# otherwise, check them all.
-LIBS = config.environ['LIBS']
-if (re.search( 'mkl', LIBS )):
-    config.lapack.mkl_version()
-elif (re.search( 'essl', LIBS )):
-    config.lapack.essl_version()
-elif (re.search( 'openblas', LIBS )):
-    config.lapack.openblas_version()
-else:
-    config.lapack.mkl_version()
-    config.lapack.essl_version()
-    config.lapack.openblas_version()
+config.lapack.vendor_version()
 
 # Must test mkl_version before cblas and lapacke, to define HAVE_MKL.
 try:
@@ -93,15 +84,27 @@ except Error:
     print( ansi_red + 'LAPACK++ needs CBLAS only in test_syr.' + ansi_normal )
     pass
 
+# todo: can LAPACK++ be compiled without uncommon routines?
 config.lapack.lapack()
-config.lapack.lapack2()
+config.lapack.lapack_uncommon()
 config.lapack.lapack_version()
-config.lapack.lapack_xblas()
-config.lapack.lapack_matgen()
+
+# XBLAS and Matgen are optional
+try:
+    config.lapack.lapack_xblas()
+except Error:
+    print( ansi_red + 'LAPACK++ will exclude wrappers for XBLAS.' + ansi_normal )
+    pass
+
+try:
+    config.lapack.lapack_matgen()
+except Error:
+    print( ansi_red + 'LAPACK++ will exclude wrappers for matgen.' + ansi_normal )
+    pass
 
 try:
     config.lapack.lapacke()
-    config.lapack.lapacke2()
+    config.lapack.lapacke_uncommon()
 except Error:
     print( ansi_red + 'LAPACK++ needs LAPACKE only in testers.' + ansi_normal )
     pass

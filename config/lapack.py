@@ -1,10 +1,23 @@
 import re
 import config
+from   config import ansi_bold, ansi_red, ansi_normal
 from   config import print_header, print_subhead, print_line, print_result
 from   config import get
 
 #-------------------------------------------------------------------------------
+# todo mkl_threaded, mkl_intel, mkl_gnu.
 def blas():
+    '''
+    Searches for BLAS in default libraries, MKL, ACML, ESSL, OpenBLAS,
+    and Accelerate.
+    Checks FORTRAN_ADD_, FORTRAN_LOWER, FORTRAN_UPPER.
+    Checks int (LP64) and int64_t (ILP64).
+    Setting in environment or on command line one or more of:
+        mkl=1, acml=1, essl=1, openblas=1, accelerate=1;
+        fortran_add_=1, fortran_lower=1, fortran_upper=1;
+        lp64=1, ilp64=1
+    limits search space.
+    '''
     print_header( 'BLAS library' )
     print( 'Also detects Fortran name mangling and BLAS integer size.' )
 
@@ -23,7 +36,7 @@ def blas():
     if (test_all):
         # sometimes BLAS is in default libraries (e.g., on Cray)
         choices.extend([
-            ('Default', {'LIBS': ''}),
+            ['Default', {}],
         ])
     # end
 
@@ -31,83 +44,105 @@ def blas():
         choices.extend([
             # each pair has Intel conventions, then GNU conventions
             # int, threaded
-            ('Intel MKL (int, Intel conventions)',
+            ['Intel MKL (int, Intel conventions)',
                 {'LIBS':     '-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -lpthread -lm',
                  'CXXFLAGS': '-fopenmp',
-                 'LDFLAGS':  '-fopenmp'}),
-            ('Intel MKL (int, GNU conventions)',
+                 'LDFLAGS':  '-fopenmp'}],
+            ['Intel MKL (int, GNU conventions)',
                 {'LIBS':     '-lmkl_gf_lp64 -lmkl_gnu_thread -lmkl_core -lpthread -lm',
                  'CXXFLAGS': '-fopenmp',
-                 'LDFLAGS':  '-fopenmp'}),
+                 'LDFLAGS':  '-fopenmp'}],
 
             # int64_t, threaded
-            ('Intel MKL (int64_t, Intel conventions)',
+            ['Intel MKL (int64_t, Intel conventions)',
                 {'LIBS':     '-lmkl_intel_ilp64 -lmkl_intel_thread -lmkl_core -lpthread -lm',
                  'CXXFLAGS': '-fopenmp -DMKL_ILP64',
-                 'LDFLAGS':  '-fopenmp'}),
-            ('Intel MKL (int64_t, GNU conventions)',
+                 'LDFLAGS':  '-fopenmp'}],
+            ['Intel MKL (int64_t, GNU conventions)',
                 {'LIBS':     '-lmkl_gf_ilp64 -lmkl_gnu_thread -lmkl_core -lpthread -lm',
                  'CXXFLAGS': '-fopenmp -DMKL_ILP64',
-                 'LDFLAGS':  '-fopenmp'}),
+                 'LDFLAGS':  '-fopenmp'}],
 
             # int, sequential
-            ('Intel MKL (int, Intel conventions)',
+            ['Intel MKL (int, Intel conventions)',
                 {'LIBS':     '-lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lm',
-                 'CXXFLAGS': ''}),
-            ('Intel MKL (int, GNU conventions)',
+                 'CXXFLAGS': ''}],
+            ['Intel MKL (int, GNU conventions)',
                 {'LIBS':     '-lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lm',
-                 'CXXFLAGS': ''}),
+                 'CXXFLAGS': ''}],
 
             # int64_t, sequential
-            ('Intel MKL (int64_t, Intel conventions)',
+            ['Intel MKL (int64_t, Intel conventions)',
                 {'LIBS':     '-lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -lm',
-                 'CXXFLAGS': '-DMKL_ILP64'}),
-            ('Intel MKL (int64_t, GNU conventions)',
+                 'CXXFLAGS': '-DMKL_ILP64'}],
+            ['Intel MKL (int64_t, GNU conventions)',
                 {'LIBS':     '-lmkl_gf_ilp64 -lmkl_sequential -lmkl_core -lm',
-                 'CXXFLAGS': '-DMKL_ILP64'}),
+                 'CXXFLAGS': '-DMKL_ILP64'}],
         ])
     # end
 
     if (test_all or test_acml):
         choices.extend([
-            ('AMD ACML', {'LIBS': '-lacml'}),
-            ('AMD ACML', {'LIBS': '-lacml_mp'}),
+            ['AMD ACML', {'LIBS': '-lacml'}],
+            ['AMD ACML', {'LIBS': '-lacml_mp'}],
         ])
     # end
 
     if (test_all or test_essl):
         choices.extend([
-            ('IBM ESSL', {'LIBS': '-lessl'}),
+            ['IBM ESSL', {'LIBS': '-lessl'}],
         ])
     # end
 
     if (test_all or test_openblas):
         choices.extend([
-            ('OpenBLAS', {'LIBS': '-lopenblas'}),
+            ['OpenBLAS', {'LIBS': '-lopenblas'}],
         ])
     # end
 
     if (test_all or test_accelerate):
         choices.extend([
-            ('MacOS Accelerate', {'LIBS': '-framework Accelerate'}),
+            ['MacOS Accelerate', {'LIBS': '-framework Accelerate'}],
         ])
     # end
+    
+    # ADD_, NOCHANGE, UPCASE are traditional in lapack
+    # FORTRAN_ADD_, FORTRAN_LOWER, DFORTRAN_UPPER are BLAS++/LAPACK++.
+    manglings = []
+    if (config.environ['fortran_add_'] == '1'):
+        manglings.append('-DFORTRAN_ADD_ -DADD_')
+    if (config.environ['fortran_lower'] == '1'):
+        manglings.append('-DFORTRAN_LOWER -DNOCHANGE')
+    if (config.environ['fortran_upper'] == '1'):
+        manglings.append('-DFORTRAN_UPPER -DUPCASE')
+    if (not manglings):
+        manglings = ['-DFORTRAN_ADD_ -DADD_',
+                     '-DFORTRAN_LOWER -DNOCHANGE',
+                     '-DFORTRAN_UPPER -DUPCASE']
+
+    sizes = []
+    if (config.environ['lp64'] == '1'):
+        sizes.append('') # i.e., default int
+    if (config.environ['ilp64'] == '1'):
+        sizes.append('-DBLAS_ILP64')
+    if (not sizes):
+        sizes = ['', '-DBLAS_ILP64']
 
     passed = []
     for (label, env) in choices:
         title = label
-        if (env['LIBS']):
+        if ('LIBS' in env):
             title += '\n    ' + env['LIBS']
         print_subhead( title )
         # BLAS uses the FORTRAN_*; LAPACK uses older ADD_, NOCHANGE, UPCASE.
-        for mangling in ('-DFORTRAN_ADD_  -DADD_',
-                         '-DFORTRAN_LOWER -DNOCHANGE',
-                         '-DFORTRAN_UPPER -DUPCASE'):
-            for size in ('', '-DBLAS_ILP64'):
+        for mangling in manglings:
+            for size in sizes:
                 print_line( '    ' + mangling +' '+ size )
-                env['CXXFLAGS'] = get(env, 'CXXFLAGS') +' '+ mangling +' '+ size
+                # modify a copy to save in passed
+                env2 = env.copy()
+                env2['CXXFLAGS'] = get(env2, 'CXXFLAGS') +' '+ mangling +' '+ size
                 config.environ.push()
-                config.environ.merge( env )
+                config.environ.merge( env2 )
                 (rc, out, err) = config.compile_exe( 'config/blas.cc' )
                 config.environ.pop()
                 # if int32 didn't link, int64 won't either
@@ -126,7 +161,7 @@ def blas():
                 break
         # end
         if (rc == 0):
-            passed.append( (label, env) )
+            passed.append( (label, env2) )
             if (config.auto):
                 break
     # end
@@ -141,8 +176,8 @@ def blas():
 def cblas():
     print_header( 'CBLAS library' )
     choices = [
-        ('Default, in BLAS library', {'LIBS': ''}),
-        ('Netlib CBLAS: -lcblas',    {'LIBS': '-lcblas'}),
+        ['CBLAS routines (cblas_ddot) available', {}],
+        ['CBLAS routines (cblas_ddot) in -lcblas', {'LIBS': '-lcblas'}],
     ]
 
     passed = []
@@ -156,11 +191,11 @@ def cblas():
             break
     # end
 
-    labels = map( lambda c: c[0] + ': ' + c[1]['LIBS'], passed )
+    labels = map( lambda c: c[0], passed )
     i = config.choose( labels )
     config.environ.merge( passed[i][1] )
     config.environ.append( 'CXXFLAGS', '-DHAVE_CBLAS' )
-# end lapacke
+# end cblas
 
 #-------------------------------------------------------------------------------
 # Should -llapack be appended or prepended?
@@ -171,8 +206,8 @@ def cblas():
 def lapack():
     print_header( 'LAPACK library' )
     choices = [
-        ('Default, in BLAS library', {'LIBS': ''}),
-        ('Netlib LAPACK: -llapack',  {'LIBS': '-llapack'}),
+        ['LAPACK routines (dpotrf) available', {}],
+        ['LAPACK routines (dpotrf) in -llapack',  {'LIBS': '-llapack'}],
     ]
 
     passed = []
@@ -186,19 +221,24 @@ def lapack():
             break
     # end
 
-    labels = map( lambda c: c[0] + ': ' + c[1]['LIBS'], passed )
+    labels = map( lambda c: c[0], passed )
     i = config.choose( labels )
     config.environ.merge( passed[i][1] )
     config.environ.append( 'CXXFLAGS', '-DHAVE_LAPACK' )
 # end lapack
 
 #-------------------------------------------------------------------------------
-def lapack2():
-    print_header( 'LAPACK library (2)' )
+def lapack_uncommon():
+    '''
+    ESSL doesn't include all of LAPACK, so needs -llapack added.
+    Cholesky with pivoting (pstrf) is one from LAPACK >= 3.2 that ESSL excludes.
+    '''
     choices = [
-        ('Default, in BLAS library', {'LIBS': ''}),
-        ('Netlib LAPACK: -llapack',  {'LIBS': '-llapack'}),
+        ['Uncommon routines (dpstrf) available', {}],
     ]
+    if ('-llapack' not in config.environ['LIBS']):
+        choices.append( ['Uncommon routines (pstrf) in -llapack',
+                            {'LIBS': '-llapack'}] )
 
     passed = []
     for (label, env) in choices:
@@ -211,18 +251,22 @@ def lapack2():
             break
     # end
 
-    labels = map( lambda c: c[0] + ': ' + c[1]['LIBS'], passed )
+    labels = map( lambda c: c[0], passed )
     i = config.choose( labels )
     config.environ.merge( passed[i][1] )
-    config.environ.append( 'CXXFLAGS', '-DHAVE_LAPACK' )
-# end lapack
+# end lapack_uncommon
 
 #-------------------------------------------------------------------------------
 def lapacke():
+    '''
+    Search for LAPACKE in existing BLAS/LAPACK libraries,
+    found with blas() and lapack()), then in -llapacke.
+    '''
     print_header( 'LAPACKE library' )
     choices = [
-        ('Default, in LAPACK library', {'LIBS': ''}),
-        ('Netlib LAPACKE: -llapacke',  {'LIBS': '-llapacke'}),
+        ['LAPACKE routines (LAPACKE_dpotrf) available', {}],
+        ['LAPACKE routines (LAPACKE_dpotrf) in -llapacke',
+            {'LIBS': '-llapacke'}],
     ]
 
     passed = []
@@ -236,19 +280,25 @@ def lapacke():
             break
     # end
 
-    labels = map( lambda c: c[0] + ': ' + c[1]['LIBS'], passed )
+    labels = map( lambda c: c[0], passed )
     i = config.choose( labels )
     config.environ.merge( passed[i][1] )
     config.environ.append( 'CXXFLAGS', '-DHAVE_LAPACKE' )
 # end lapacke
 
 #-------------------------------------------------------------------------------
-def lapacke2():
-    print_header( 'LAPACKE library (2)' )
+def lapacke_uncommon():
+    '''
+    ESSL doesn't include all of LAPACKE, so needs -llapacke added.
+    Cholesky with pivoting (LAPACKE_pstrf) is one from LAPACK >= 3.4 that ESSL
+    excludes.
+    '''
     choices = [
-        ('Default, in LAPACK library', {'LIBS': ''}),
-        ('Netlib LAPACKE: -llapacke',  {'LIBS': '-llapacke'}),
+        ('Uncommon routines (LAPACKE_dpstrf) available', {}),
     ]
+    if ('-llapacke' not in config.environ['LIBS']):
+        choices.append( ['Uncommon routines (LAPACKE_dpstrf) in -llapacke',
+                            {'LIBS': '-llapacke'}] )
 
     passed = []
     for (label, env) in choices:
@@ -261,23 +311,28 @@ def lapacke2():
             break
     # end
 
-    labels = map( lambda c: c[0] + ': ' + c[1]['LIBS'], passed )
+    labels = map( lambda c: c[0], passed )
     i = config.choose( labels )
     config.environ.merge( passed[i][1] )
     config.environ.append( 'CXXFLAGS', '-DHAVE_LAPACKE' )
-# end lapacke
+# end lapacke_uncommon
 
 #-------------------------------------------------------------------------------
 def blas_float_return():
+    '''
+    Normally, float functions like sdot return float.
+    f2c and g77 always returned double, even for float functions like sdot.
+    This affects clapack and MacOS Accelerate.
+    '''
     (rc, out, err) = config.compile_run(
         'config/return_float.cc',
-        'BLAS returns float as float (standard)' )
+        'BLAS (sdot) returns float as float (standard)' )
     if (rc == 0):
         return
 
     (rc, out, err) = config.compile_run(
         'config/return_float_f2c.cc',
-        'BLAS returns float as double (f2c convention)' )
+        'BLAS (sdot) returns float as double (f2c convention)' )
     if (rc == 0):
         config.environ.append( 'CXXFLAGS', '-DHAVE_F2C' )
     else:
@@ -286,15 +341,19 @@ def blas_float_return():
 
 #-------------------------------------------------------------------------------
 def blas_complex_return():
+    '''
+    For complex valued functions like zdotc, GNU returns complex, while
+    Intel ifort and f2c return the complex in a hidden first argument.
+    '''
     (rc, out, err) = config.compile_run(
         'config/return_complex.cc',
-        'BLAS returns complex (GNU gfortran convention)' )
+        'BLAS (zdotc) returns complex (GNU gfortran convention)' )
     if (rc == 0):
         return
 
     (rc, out, err) = config.compile_run(
         'config/return_complex_argument.cc',
-        'BLAS returns complex as hidden argument (Intel ifort, f2c convention)' )
+        'BLAS (zdotc) returns complex as hidden argument (Intel ifort convention)' )
     if (rc == 0):
         config.environ.append( 'CXXFLAGS', '-DBLAS_COMPLEX_RETURN_ARGUMENT' )
     else:
@@ -303,6 +362,9 @@ def blas_complex_return():
 
 #-------------------------------------------------------------------------------
 def lapack_version():
+    '''
+    Check for LAPACK version using ilaver().
+    '''
     config.print_line( 'LAPACK version' )
     (rc, out, err) = config.compile_run( 'config/lapack_version.cc' )
     s = re.search( r'^LAPACK_VERSION=((\d+)\.(\d+)\.(\d+))', out )
@@ -316,20 +378,45 @@ def lapack_version():
 
 #-------------------------------------------------------------------------------
 def lapack_xblas():
-    (rc, out, err) = config.compile_run( 'config/xblas.cc', 'LAPACK XBLAS' )
+    '''
+    Check for LAPACK routines that use XBLAS in found BLAS/LAPACK libraries.
+    '''
+    (rc, out, err) = config.compile_run( 'config/lapack_xblas.cc',
+                                         'LAPACK XBLAS routines (dposvxx) available' )
     if (rc == 0):
         config.environ.append( 'CXXFLAGS', '-DHAVE_XBLAS' )
 # end
 
 #-------------------------------------------------------------------------------
 def lapack_matgen():
-    (rc, out, err) = config.compile_run( 'config/matgen.cc', 'LAPACK MATGEN' )
-    if (rc == 0):
-        config.environ.append( 'CXXFLAGS', '-DHAVE_MATGEN' )
+    '''
+    Search for LAPACK matrix generation routines (tmglib)
+    in found BLAS/LAPACK libraries, then in -llapacke.
+    '''
+    choices = [
+        ['Matrix generation routines (lagsy) available', {}],
+        ['Matrix generation routines (lagsy) in -ltmglib',
+            {'LIBS': '-ltmglib'}],
+    ]
+
+    passed = []
+    for (label, env) in choices:
+        config.environ.push()
+        config.environ.merge( env )
+        (rc, out, err) = config.compile_run( 'config/lapack_matgen.cc', label )
+        config.environ.pop()
+        if (rc == 0):
+            config.environ.merge( env )
+            config.environ.append( 'CXXFLAGS', '-DHAVE_MATGEN' )
+            break
+    # end
 # end
 
 #-------------------------------------------------------------------------------
 def mkl_version():
+    '''
+    Check for MKL version via MKL_Get_Version().
+    '''
     config.print_line( 'MKL version' )
     (rc, out, err) = config.compile_run( 'config/mkl_version.cc' )
     s = re.search( r'^MKL_VERSION=((\d+)\.(\d+)\.(\d+))', out )
@@ -341,7 +428,25 @@ def mkl_version():
 # end
 
 #-------------------------------------------------------------------------------
+def acml_version():
+    '''
+    Check for ACML version via acmlversion().
+    '''
+    config.print_line( 'ACML version' )
+    (rc, out, err) = config.compile_run( 'config/acml_version.cc' )
+    s = re.search( r'^ACML_VERSION=((\d+)\.(\d+)\.(\d+)\.(\d+))', out )
+    if (rc == 0 and s):
+        config.environ.append( 'CXXFLAGS', '-DHAVE_ACML' )
+        config.print_result( 'ACML', rc, '(' + s.group(1) + ')' )
+    else:
+        config.print_result( 'ACML', rc )
+# end
+
+#-------------------------------------------------------------------------------
 def essl_version():
+    '''
+    Check for ESSL version via iessl().
+    '''
     config.print_line( 'ESSL version' )
     (rc, out, err) = config.compile_run( 'config/essl_version.cc' )
     s = re.search( r'^ESSL_VERSION=((\d+)\.(\d+)\.(\d+)\.(\d+))', out )
@@ -354,6 +459,9 @@ def essl_version():
 
 #-------------------------------------------------------------------------------
 def openblas_version():
+    '''
+    Check for OpenBLAS version via OPENBLAS_VERSION constant.
+    '''
     config.print_line( 'OpenBLAS version' )
     (rc, out, err) = config.compile_run( 'config/openblas_version.cc' )
     s = re.search( r'^OPENBLAS_VERSION=((\d+)\.(\d+)\.(\d+))', out )
@@ -362,4 +470,31 @@ def openblas_version():
         config.print_result( 'OpenBLAS', rc, '(' + s.group(1) + ')' )
     else:
         config.print_result( 'OpenBLAS', rc )
+# end
+
+#-------------------------------------------------------------------------------
+def vendor_version():
+    '''
+    Check for MKL, ACML, ESSL, or OpenBLAS version number in BLAS/LAPACK
+    libraries.
+    '''
+    # If we can, be smart looking for MKL, ESSL, or OpenBLAS version;
+    # otherwise, check them all.
+    LIBS = config.environ['LIBS']
+    if (re.search( '-lmkl', LIBS )):
+        mkl_version()
+    elif (re.search( '-lacml', LIBS )):
+        acml_version()
+    elif (re.search( '-lessl', LIBS )):
+        essl_version()
+    elif (re.search( '-lopenblas', LIBS )):
+        openblas_version()
+    elif (re.search( '-framework Accelerate', LIBS )):
+        pass
+    else:
+        mkl_version()
+        acml_version()
+        essl_version()
+        openblas_version()
+    # end
 # end

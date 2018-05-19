@@ -384,19 +384,30 @@ def init( prefix='/usr/local' ):
     if (sys.platform.startswith('darwin') and
         'LD_LIBRARY_PATH' not in os.environ and
         'DYLD_LIBRARY_PATH' not in os.environ):
-        print( ansi_bold + ansi_red + '''
-NOTICE: $DYLD_LIBRARY_PATH was not inherited (or not set);
-setting $DYLD_LIBRARY_PATH = $LIBRARY_PATH to run test programs.'''
-+ ansi_normal + ansi_red + '''
+        print( ansi_bold + ansi_red +
+               'NOTICE: $DYLD_LIBRARY_PATH was not inherited (or not set).' )
+        if ('LIBRARY_PATH' in os.environ):
+            print( 'Setting $DYLD_LIBRARY_PATH = $LIBRARY_PATH to run test programs.' )
+            os.environ['DYLD_LIBRARY_PATH'] = os.environ['LIBRARY_PATH']
+            print( ansi_red + 'set $DYLD_LIBRARY_PATH = $LIBRARY_PATH =',
+                   os.environ['LIBRARY_PATH'] + ansi_normal, file=log )
+        else:
+            print( '$LIBRARY_PATH is also not set. Leaving $DYLD_LIBRARY_PATH unset.' )
+            print( ansi_red +
+                   '$LIBRARY_PATH is also not set. Leaving $DYLD_LIBRARY_PATH unset.'
+                   + ansi_normal,
+                   file=log )
+        # end
+        print( ansi_normal + ansi_red + '''\
 MacOS System Integrity Protection (SIP) prevents configure.py from inheriting
 $DYLD_LIBRARY_PATH. Using
     python configure.py
 with python installed from python.org, instead of Apple's python in /usr/bin,
 will allow $DYLD_LIBRARY_PATH to be inherited.''' + ansi_normal )
-        os.environ['DYLD_LIBRARY_PATH'] = os.environ['LIBRARY_PATH']
-        print( ansi_red + 'set $DYLD_LIBRARY_PATH = $LIBRARY_PATH =',
-               os.environ['LIBRARY_PATH'] + ansi_normal, file=log )
     # end
+    
+    if (environ['interactive'] == '1'):
+        auto = False
 
     #--------------------
     # parse command line

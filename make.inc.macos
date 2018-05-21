@@ -8,7 +8,7 @@
 # Assumes $LAPACKDIR is set to where lapacke library exists, e.g., in ~/.bashrc:
 #     export LAPACKDIR=${HOME}/lapack
 
-CBLASDIR ?= ${wildcard /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/Headers}
+CBLASDIR ?= ${wildcard /System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers}
 
 ifeq (${CBLASDIR},)
     $(warning $$CBLASDIR not set. See comments in make.inc.)

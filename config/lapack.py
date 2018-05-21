@@ -1,8 +1,76 @@
+import os
 import re
 import config
 from   config import ansi_bold, ansi_red, ansi_normal
 from   config import print_header, print_subhead, print_line, print_result
 from   config import get
+
+#-------------------------------------------------------------------------------
+def get_manglings():
+    # ADD_, NOCHANGE, UPCASE are traditional in lapack
+    # FORTRAN_ADD_, FORTRAN_LOWER, DFORTRAN_UPPER are BLAS++/LAPACK++.
+    manglings = []
+    if (config.environ['fortran_add_'] == '1'):
+        manglings.append('-DFORTRAN_ADD_ -DADD_')
+    if (config.environ['fortran_lower'] == '1'):
+        manglings.append('-DFORTRAN_LOWER -DNOCHANGE')
+    if (config.environ['fortran_upper'] == '1'):
+        manglings.append('-DFORTRAN_UPPER -DUPCASE')
+    if (not manglings):
+        manglings = ['-DFORTRAN_ADD_ -DADD_',
+                     '-DFORTRAN_LOWER -DNOCHANGE',
+                     '-DFORTRAN_UPPER -DUPCASE']
+    return manglings
+# end
+
+#-------------------------------------------------------------------------------
+def get_sizes():
+    sizes = []
+    if (config.environ['lp64'] == '1'):
+        sizes.append('') # i.e., default int
+    if (config.environ['ilp64'] == '1'):
+        sizes.append('-DBLAS_ILP64')
+    if (not sizes):
+        sizes = ['', '-DBLAS_ILP64']
+    return sizes
+# end
+
+#-------------------------------------------------------------------------------
+def compile_with_manglings( src, env, manglings, sizes ):
+    (base, ext) = os.path.splitext( src )
+    exe = './' + base
+    
+    rc = -1
+    for mangling in manglings:
+        for size in sizes:
+            print_line( '    ' + mangling +' '+ size )
+            # modify a copy to save in passed
+            env2 = env.copy()
+            env2['CXXFLAGS'] = get(env2, 'CXXFLAGS') +' '+ mangling +' '+ size
+            (rc_link, out, err) = config.compile_exe( 'config/hello.cc', env2 )
+            # if hello didn't link, assume library not found
+            if (rc_link != 0):
+                print_result( 'label', rc_link )
+                break
+
+            (rc, out, err) = config.compile_exe( src, env2 )
+            # if int32 didn't link, int64 won't either
+            if (rc != 0):
+                print_result( 'label', rc )
+                break
+
+            # if int32 runs, skip int64
+            (rc, out, err) = config.run( exe )
+            print_result( 'label', rc )
+            if (rc == 0):
+                break
+        # end
+        # break if library not found or on first mangling that works
+        if (rc_link != 0 or rc == 0):
+            break
+    # end
+    return (rc, out, err, env2)
+# end
 
 #-------------------------------------------------------------------------------
 # todo mkl_threaded, mkl_intel, mkl_gnu.
@@ -101,76 +169,31 @@ def blas():
     # end
 
     if (test_all or test_accelerate):
+        path = '/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers'
+        inc = '-I' + path if (os.path.exists( path )) else ''
         choices.extend([
-            ['MacOS Accelerate', {'LIBS': '-framework Accelerate'}],
+            ['MacOS Accelerate',
+                {'LIBS': '-framework Accelerate', 'CXXFLAGS': inc}],
         ])
     # end
 
-    # ADD_, NOCHANGE, UPCASE are traditional in lapack
-    # FORTRAN_ADD_, FORTRAN_LOWER, DFORTRAN_UPPER are BLAS++/LAPACK++.
-    manglings = []
-    if (config.environ['fortran_add_'] == '1'):
-        manglings.append('-DFORTRAN_ADD_ -DADD_')
-    if (config.environ['fortran_lower'] == '1'):
-        manglings.append('-DFORTRAN_LOWER -DNOCHANGE')
-    if (config.environ['fortran_upper'] == '1'):
-        manglings.append('-DFORTRAN_UPPER -DUPCASE')
-    if (not manglings):
-        manglings = ['-DFORTRAN_ADD_ -DADD_',
-                     '-DFORTRAN_LOWER -DNOCHANGE',
-                     '-DFORTRAN_UPPER -DUPCASE']
-
-    sizes = []
-    if (config.environ['lp64'] == '1'):
-        sizes.append('') # i.e., default int
-    if (config.environ['ilp64'] == '1'):
-        sizes.append('-DBLAS_ILP64')
-    if (not sizes):
-        sizes = ['', '-DBLAS_ILP64']
-
-    rc = -1
+    manglings = get_manglings()
+    sizes = get_sizes()
     passed = []
     for (label, env) in choices:
         title = label
         if ('LIBS' in env):
             title += '\n    ' + env['LIBS']
         print_subhead( title )
-        # BLAS uses the FORTRAN_*; LAPACK uses older ADD_, NOCHANGE, UPCASE.
-        for mangling in manglings:
-            for size in sizes:
-                print_line( '    ' + mangling +' '+ size )
-                # modify a copy to save in passed
-                env2 = env.copy()
-                env2['CXXFLAGS'] = get(env2, 'CXXFLAGS') +' '+ mangling +' '+ size
-                (rc_link, out, err) = config.compile_exe( 'config/hello.cc', env2 )
-                # if hello didn't link, assume library not found
-                if (rc_link != 0):
-                    print_result( label, rc_link )
-                    break
-
-                (rc, out, err) = config.compile_exe( 'config/blas.cc', env2 )
-                # if int32 didn't link, int64 won't either
-                if (rc != 0):
-                    print_result( label, rc )
-                    break
-
-                # if int32 runs, skip int64
-                (rc, out2, err2) = config.run( 'config/blas' )
-                print_result( label, rc )
-                if (rc == 0):
-                    break
-            # end
-            # break if library not found or on first mangling that works
-            if (rc_link != 0 or rc == 0):
-                break
-        # end
+        (rc, out, err, env2) = compile_with_manglings(
+            'config/blas.cc', env, manglings, sizes )
         if (rc == 0):
             passed.append( (label, env2) )
             if (config.auto):
                 break
     # end
 
-    labels = map( lambda c: c[0] + ': ' + c[1]['LIBS'], passed )
+    labels = map( lambda c: c[0], passed )
     i = config.choose( labels )
     config.environ.merge( passed[i][1] )
     config.environ.append( 'CXXFLAGS', '-DHAVE_BLAS' )

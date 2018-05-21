@@ -44,38 +44,38 @@ def blas():
         choices.extend([
             # each pair has Intel conventions, then GNU conventions
             # int, threaded
-            ['Intel MKL (int, Intel conventions)',
+            ['Intel MKL (int, Intel conventions, threaded)',
                 {'LIBS':     '-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -lpthread -lm',
                  'CXXFLAGS': '-fopenmp',
                  'LDFLAGS':  '-fopenmp'}],
-            ['Intel MKL (int, GNU conventions)',
+            ['Intel MKL (int, GNU conventions, threaded)',
                 {'LIBS':     '-lmkl_gf_lp64 -lmkl_gnu_thread -lmkl_core -lpthread -lm',
                  'CXXFLAGS': '-fopenmp',
                  'LDFLAGS':  '-fopenmp'}],
 
             # int64_t, threaded
-            ['Intel MKL (int64_t, Intel conventions)',
+            ['Intel MKL (int64_t, Intel conventions, threaded)',
                 {'LIBS':     '-lmkl_intel_ilp64 -lmkl_intel_thread -lmkl_core -lpthread -lm',
                  'CXXFLAGS': '-fopenmp -DMKL_ILP64',
                  'LDFLAGS':  '-fopenmp'}],
-            ['Intel MKL (int64_t, GNU conventions)',
+            ['Intel MKL (int64_t, GNU conventions, threaded)',
                 {'LIBS':     '-lmkl_gf_ilp64 -lmkl_gnu_thread -lmkl_core -lpthread -lm',
                  'CXXFLAGS': '-fopenmp -DMKL_ILP64',
                  'LDFLAGS':  '-fopenmp'}],
 
             # int, sequential
-            ['Intel MKL (int, Intel conventions)',
+            ['Intel MKL (int, Intel conventions, sequential)',
                 {'LIBS':     '-lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lm',
                  'CXXFLAGS': ''}],
-            ['Intel MKL (int, GNU conventions)',
+            ['Intel MKL (int, GNU conventions, sequential)',
                 {'LIBS':     '-lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lm',
                  'CXXFLAGS': ''}],
 
             # int64_t, sequential
-            ['Intel MKL (int64_t, Intel conventions)',
+            ['Intel MKL (int64_t, Intel conventions, sequential)',
                 {'LIBS':     '-lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -lm',
                  'CXXFLAGS': '-DMKL_ILP64'}],
-            ['Intel MKL (int64_t, GNU conventions)',
+            ['Intel MKL (int64_t, GNU conventions, sequential)',
                 {'LIBS':     '-lmkl_gf_ilp64 -lmkl_sequential -lmkl_core -lm',
                  'CXXFLAGS': '-DMKL_ILP64'}],
         ])
@@ -83,8 +83,8 @@ def blas():
 
     if (test_all or test_acml):
         choices.extend([
-            ['AMD ACML', {'LIBS': '-lacml'}],
-            ['AMD ACML', {'LIBS': '-lacml_mp'}],
+            ['AMD ACML (threaded)', {'LIBS': '-lacml_mp'}],
+            ['AMD ACML (sequential)', {'LIBS': '-lacml'}],
         ])
     # end
 
@@ -105,7 +105,7 @@ def blas():
             ['MacOS Accelerate', {'LIBS': '-framework Accelerate'}],
         ])
     # end
-    
+
     # ADD_, NOCHANGE, UPCASE are traditional in lapack
     # FORTRAN_ADD_, FORTRAN_LOWER, DFORTRAN_UPPER are BLAS++/LAPACK++.
     manglings = []
@@ -128,6 +128,7 @@ def blas():
     if (not sizes):
         sizes = ['', '-DBLAS_ILP64']
 
+    rc = -1
     passed = []
     for (label, env) in choices:
         title = label
@@ -143,8 +144,17 @@ def blas():
                 env2['CXXFLAGS'] = get(env2, 'CXXFLAGS') +' '+ mangling +' '+ size
                 config.environ.push()
                 config.environ.merge( env2 )
+                (rc_link, out, err) = config.compile_exe( 'config/hello.cc' )
+                config.environ.pop()
+                # if hello didn't link, assume library not found
+                if (rc_link != 0):
+                    print_result( label, rc_link )
+                    break
+                config.environ.push()
+                config.environ.merge( env2 )
                 (rc, out, err) = config.compile_exe( 'config/blas.cc' )
                 config.environ.pop()
+
                 # if int32 didn't link, int64 won't either
                 if (rc != 0):
                     print_result( label, rc )
@@ -156,8 +166,8 @@ def blas():
                 if (rc == 0):
                     break
             # end
-            # break on first mangling that works
-            if (rc == 0):
+            # break if library not found or on first mangling that works
+            if (rc_link != 0 or rc == 0):
                 break
         # end
         if (rc == 0):
@@ -234,7 +244,7 @@ def lapack_uncommon():
     Cholesky with pivoting (pstrf) is one from LAPACK >= 3.2 that ESSL excludes.
     '''
     choices = [
-        ['Uncommon routines (dpstrf) available', {}],
+        ['Uncommon routines (dpstrf) available', {'LIBS': ''}],
     ]
     if ('-llapack' not in config.environ['LIBS']):
         choices.append( ['Uncommon routines (pstrf) in -llapack',
@@ -251,9 +261,10 @@ def lapack_uncommon():
             break
     # end
 
+    # append -llapack to LIBS, instead of prepending as merge would do
     labels = map( lambda c: c[0], passed )
     i = config.choose( labels )
-    config.environ.merge( passed[i][1] )
+    config.environ.append( 'LIBS', passed[i][1]['LIBS'] )
 # end lapack_uncommon
 
 #-------------------------------------------------------------------------------
@@ -314,7 +325,6 @@ def lapacke_uncommon():
     labels = map( lambda c: c[0], passed )
     i = config.choose( labels )
     config.environ.merge( passed[i][1] )
-    config.environ.append( 'CXXFLAGS', '-DHAVE_LAPACKE' )
 # end lapacke_uncommon
 
 #-------------------------------------------------------------------------------

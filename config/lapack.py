@@ -142,19 +142,13 @@ def blas():
                 # modify a copy to save in passed
                 env2 = env.copy()
                 env2['CXXFLAGS'] = get(env2, 'CXXFLAGS') +' '+ mangling +' '+ size
-                config.environ.push()
-                config.environ.merge( env2 )
-                (rc_link, out, err) = config.compile_exe( 'config/hello.cc' )
-                config.environ.pop()
+                (rc_link, out, err) = config.compile_exe( 'config/hello.cc', env2 )
                 # if hello didn't link, assume library not found
                 if (rc_link != 0):
                     print_result( label, rc_link )
                     break
-                config.environ.push()
-                config.environ.merge( env2 )
-                (rc, out, err) = config.compile_exe( 'config/blas.cc' )
-                config.environ.pop()
 
+                (rc, out, err) = config.compile_exe( 'config/blas.cc', env2 )
                 # if int32 didn't link, int64 won't either
                 if (rc != 0):
                     print_result( label, rc )
@@ -192,10 +186,7 @@ def cblas():
 
     passed = []
     for (label, env) in choices:
-        config.environ.push()
-        config.environ.merge( env )
-        (rc, out, err) = config.compile_run( 'config/cblas.cc', label )
-        config.environ.pop()
+        (rc, out, err) = config.compile_run( 'config/cblas.cc', env, label )
         if (rc == 0):
             passed.append( (label, env) )
             break
@@ -222,10 +213,7 @@ def lapack():
 
     passed = []
     for (label, env) in choices:
-        config.environ.push()
-        config.environ.merge( env )
-        (rc, out, err) = config.compile_run( 'config/lapack_potrf.cc', label )
-        config.environ.pop()
+        (rc, out, err) = config.compile_run( 'config/lapack_potrf.cc', env, label )
         if (rc == 0):
             passed.append( (label, env) )
             break
@@ -252,10 +240,7 @@ def lapack_uncommon():
 
     passed = []
     for (label, env) in choices:
-        config.environ.push()
-        config.environ.merge( env )
-        (rc, out, err) = config.compile_run( 'config/lapack_pstrf.cc', label )
-        config.environ.pop()
+        (rc, out, err) = config.compile_run( 'config/lapack_pstrf.cc', env, label )
         if (rc == 0):
             passed.append( (label, env) )
             break
@@ -282,10 +267,7 @@ def lapacke():
 
     passed = []
     for (label, env) in choices:
-        config.environ.push()
-        config.environ.merge( env )
-        (rc, out, err) = config.compile_run( 'config/lapacke_potrf.cc', label )
-        config.environ.pop()
+        (rc, out, err) = config.compile_run( 'config/lapacke_potrf.cc', env, label )
         if (rc == 0):
             passed.append( (label, env) )
             break
@@ -313,10 +295,7 @@ def lapacke_uncommon():
 
     passed = []
     for (label, env) in choices:
-        config.environ.push()
-        config.environ.merge( env )
-        (rc, out, err) = config.compile_run( 'config/lapacke_pstrf.cc', label )
-        config.environ.pop()
+        (rc, out, err) = config.compile_run( 'config/lapacke_pstrf.cc', env, label )
         if (rc == 0):
             passed.append( (label, env) )
             break
@@ -335,13 +314,13 @@ def blas_float_return():
     This affects clapack and MacOS Accelerate.
     '''
     (rc, out, err) = config.compile_run(
-        'config/return_float.cc',
+        'config/return_float.cc', {},
         'BLAS (sdot) returns float as float (standard)' )
     if (rc == 0):
         return
 
     (rc, out, err) = config.compile_run(
-        'config/return_float_f2c.cc',
+        'config/return_float_f2c.cc', {},
         'BLAS (sdot) returns float as double (f2c convention)' )
     if (rc == 0):
         config.environ.append( 'CXXFLAGS', '-DHAVE_F2C' )
@@ -356,13 +335,13 @@ def blas_complex_return():
     Intel ifort and f2c return the complex in a hidden first argument.
     '''
     (rc, out, err) = config.compile_run(
-        'config/return_complex.cc',
+        'config/return_complex.cc', {},
         'BLAS (zdotc) returns complex (GNU gfortran convention)' )
     if (rc == 0):
         return
 
     (rc, out, err) = config.compile_run(
-        'config/return_complex_argument.cc',
+        'config/return_complex_argument.cc', {},
         'BLAS (zdotc) returns complex as hidden argument (Intel ifort convention)' )
     if (rc == 0):
         config.environ.append( 'CXXFLAGS', '-DBLAS_COMPLEX_RETURN_ARGUMENT' )
@@ -391,7 +370,7 @@ def lapack_xblas():
     '''
     Check for LAPACK routines that use XBLAS in found BLAS/LAPACK libraries.
     '''
-    (rc, out, err) = config.compile_run( 'config/lapack_xblas.cc',
+    (rc, out, err) = config.compile_run( 'config/lapack_xblas.cc', {},
                                          'LAPACK XBLAS routines (dposvxx) available' )
     if (rc == 0):
         config.environ.append( 'CXXFLAGS', '-DHAVE_XBLAS' )
@@ -411,10 +390,7 @@ def lapack_matgen():
 
     passed = []
     for (label, env) in choices:
-        config.environ.push()
-        config.environ.merge( env )
-        (rc, out, err) = config.compile_run( 'config/lapack_matgen.cc', label )
-        config.environ.pop()
+        (rc, out, err) = config.compile_run( 'config/lapack_matgen.cc', env, label )
         if (rc == 0):
             config.environ.merge( env )
             config.environ.append( 'CXXFLAGS', '-DHAVE_MATGEN' )

@@ -10,6 +10,10 @@ import time
 import re
 
 # ------------------------------------------------------------------------------
+# variables to replace instead of appending/prepending
+replace_vars = ['CC', 'CXX', 'NVCC', 'FC', 'AR', 'RANLIB', 'prefix']
+
+# ------------------------------------------------------------------------------
 # map file extensions to languages
 lang_map = {
     '.c':   'CC',
@@ -134,9 +138,9 @@ class Environments( object ):
         self.stack = [ os.environ, {} ]
 
     def push( self, env=None ):
-        if (env is None):
-            env = {}
-        self.stack.append( env )
+        self.stack.append( {} )
+        if (env):
+            self.merge( env )
 
     def top( self ):
         return self.stack[-1]
@@ -160,7 +164,7 @@ class Environments( object ):
         if (val):
             if (orig):
                 val = orig + ' ' + val
-            self[key] = val
+            self[ key ] = val
         return orig
 
     def prepend( self, key, val ):
@@ -168,15 +172,17 @@ class Environments( object ):
         if (val):
             if (orig):
                 val = val + ' ' + orig
-            self[key] = val
+            self[ key ] = val
         return orig
 
     def merge( self, env ):
         for key in env:
-            if (key == 'LIBS'):
+            if (key in replace_vars):
+                self[ key ] = env[ key ]
+            elif (key == 'LIBS'):
                 self.prepend( key, env[ key ] )
             else:
-                self.append( key, env[key] )
+                self.append( key, env[ key ] )
 # end
 
 #-------------------------------------------------------------------------------
@@ -211,7 +217,9 @@ def choose( choices ):
 # end
 
 #-------------------------------------------------------------------------------
-def run( cmd ):
+def run( cmd, env=None ):
+    environ.push( env )
+
     if (not isinstance( cmd, str )):
         cmd = ' '.join( flatten( cmd ))
 
@@ -230,13 +238,17 @@ def run( cmd ):
         rc = -1
         stdout = ''
         stderr = str(err)
+
+    environ.pop()
     return (rc, stdout, stderr)
 # end
 
 #-------------------------------------------------------------------------------
 # Ex:
-# compile_obj( 'foo.c', 'Test foo' )
-def compile_obj( src, label=None ):
+# compile_obj( 'foo.c', {'CC': 'gcc'}, 'Test foo' )
+def compile_obj( src, env=None, label=None ):
+    environ.push( env )
+
     print_line( label )
     (base, ext) = os.path.splitext( src )
     obj      = base + '.o'
@@ -245,13 +257,17 @@ def compile_obj( src, label=None ):
     flags    = environ[ flag_map[ lang ]]
     (rc, stdout, stderr) = run([ compiler, flags, '-c', src, '-o', obj ])
     print_result( label, rc )
+
+    environ.pop()
     return (rc, stdout, stderr)
 # end
 
 #-------------------------------------------------------------------------------
 # Ex:
-# compile_exe( 'foo.c', 'Test foo' )
-def compile_exe( src, label=None ):
+# compile_exe( 'foo.c', {'CC': 'gcc'}, 'Test foo' )
+def compile_exe( src, env=None, label=None ):
+    environ.push( env )
+
     print_line( label )
     (base, ext) = os.path.splitext( src )
     obj      = base + '.o'
@@ -263,19 +279,25 @@ def compile_exe( src, label=None ):
     if (rc == 0):
         (rc, stdout, stderr) = run([ compiler, obj, '-o', base, LDFLAGS, LIBS ])
     print_result( label, rc )
+
+    environ.pop()
     return (rc, stdout, stderr)
 # end
 
 #-------------------------------------------------------------------------------
 # Ex:
-# compile_run( 'foo.c', 'Test foo' )
-def compile_run( src, label=None ):
+# compile_exe( 'foo.c', {'CC': 'gcc'}, 'Test foo' )
+def compile_run( src, env=None, label=None ):
+    environ.push( env )
+
     print_line( label )
     (base, ext) = os.path.splitext( src )
     (rc, stdout, stderr) = compile_exe( src )
     if (rc == 0):
         (rc, stdout, stderr) = run( './' + base )
     print_result( label, rc )
+
+    environ.pop()
     return (rc, stdout, stderr)
 # end
 
@@ -291,9 +313,7 @@ def prog_cxx( choices=['g++', 'c++', 'CC', 'cxx', 'icpc', 'xlc++', 'clang++'] ):
     passed = []
     for cxx in choices:
         print_line( cxx )
-        environ.push( {'CXX': cxx} )
-        (rc, out, err) = compile_run( 'config/compiler_cxx.cc' )
-        environ.pop()
+        (rc, out, err) = compile_run( 'config/compiler_cxx.cc', {'CXX': cxx} )
         # print (g++), (clang++), etc., as output by compiler_cxx, after yes
         if (rc == 0):
             out = '(' + out.strip() + ')'
@@ -312,10 +332,7 @@ def prog_cxx_flags( flags ):
     print_header( 'C++ compiler flags' )
     for flag in flags:
         print_line( flag )
-        environ.push()
-        environ.append( 'CXXFLAGS', flag )
-        (rc, out, err) = compile_obj( 'config/compiler_cxx.cc' )
-        environ.pop()
+        (rc, out, err) = compile_obj( 'config/compiler_cxx.cc', {'CXXFLAGS': flag} )
         # assume a mention of the flag in stderr means it isn't supported
         if (flag in err):
             rc = 1

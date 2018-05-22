@@ -22,12 +22,17 @@
 
 include make.inc
 
+# Existence of .make.inc.$${PPID} is used so 'make config' doesn't run
+# configure.py twice when make.inc doesn't exist initially.
 make.inc:
 	python configure.py
+	touch .make.inc.$${PPID}
 
 .PHONY: config
 config:
-	python configure.py
+	if [ ! -e .make.inc.$${PPID} ]; then \
+		python configure.py; \
+	fi
 
 # defaults if not given in make.inc
 CXXFLAGS ?= -O3 -std=c++11 -MMD \

@@ -15,7 +15,7 @@ from   config import Error
 import config.lapack
 
 #-------------------------------------------------------------------------------
-# main
+# header
 
 print( '-'*80 + '\n' +
 ansi_bold + ansi_red + '                              Welcome to LAPACK++.' +
@@ -57,58 +57,68 @@ and LIBS, e.g.:
     export LIBS="-lmkl_gf_lp64 -lmkl_gnu_thread -lmkl_core -lm"
 ''' + '-'*80 )
 
-config.init( prefix='/usr/local/lapackpp' )
-config.prog_cxx()
-config.prog_cxx_flags([
-    '-O2', '-std=c++11', '-MMD',
-    '-Wall',
-    '-pedantic',
-    '-Wshadow',
-    '-Wno-unused-local-typedefs',
-    '-Wno-unused-function',
-    #'-Wmissing-declarations',
-    #'-Wconversion',
-    #'-Werror',
-])
+#-------------------------------------------------------------------------------
+def main():
+    config.init( prefix='/usr/local/lapackpp' )
+    config.prog_cxx()
+    config.prog_cxx_flags([
+        '-O2', '-std=c++11', '-MMD',
+        '-Wall',
+        '-pedantic',
+        '-Wshadow',
+        '-Wno-unused-local-typedefs',
+        '-Wno-unused-function',
+        #'-Wmissing-declarations',
+        #'-Wconversion',
+        #'-Werror',
+    ])
+    
+    config.lapack.blas()
+    print()
+    config.lapack.blas_float_return()
+    config.lapack.blas_complex_return()
+    config.lapack.vendor_version()
+    
+    # Must test mkl_version before cblas and lapacke, to define HAVE_MKL.
+    try:
+        config.lapack.cblas()
+    except Error:
+        print( ansi_red + 'LAPACK++ needs CBLAS only in test_syr.' + ansi_normal )
+        pass
+    
+    # todo: can LAPACK++ be compiled without uncommon routines?
+    config.lapack.lapack()
+    config.lapack.lapack_uncommon()
+    config.lapack.lapack_version()
+    
+    # XBLAS and Matgen are optional
+    try:
+        config.lapack.lapack_xblas()
+    except Error:
+        print( ansi_red + 'LAPACK++ will exclude wrappers for XBLAS.' + ansi_normal )
+        pass
+    
+    try:
+        config.lapack.lapack_matgen()
+    except Error:
+        print( ansi_red + 'LAPACK++ will exclude wrappers for matgen.' + ansi_normal )
+        pass
+    
+    try:
+        config.lapack.lapacke()
+        config.lapack.lapacke_uncommon()
+    except Error:
+        print( ansi_red + 'LAPACK++ needs LAPACKE only in testers.' + ansi_normal )
+        pass
+    
+    config.output_files( 'make.inc' )
+    
+    print( '-'*80 )
+# end
 
-config.lapack.blas()
-print()
-config.lapack.blas_float_return()
-config.lapack.blas_complex_return()
-config.lapack.vendor_version()
-
-# Must test mkl_version before cblas and lapacke, to define HAVE_MKL.
+#-------------------------------------------------------------------------------
 try:
-    config.lapack.cblas()
-except Error:
-    print( ansi_red + 'LAPACK++ needs CBLAS only in test_syr.' + ansi_normal )
-    pass
-
-# todo: can LAPACK++ be compiled without uncommon routines?
-config.lapack.lapack()
-config.lapack.lapack_uncommon()
-config.lapack.lapack_version()
-
-# XBLAS and Matgen are optional
-try:
-    config.lapack.lapack_xblas()
-except Error:
-    print( ansi_red + 'LAPACK++ will exclude wrappers for XBLAS.' + ansi_normal )
-    pass
-
-try:
-    config.lapack.lapack_matgen()
-except Error:
-    print( ansi_red + 'LAPACK++ will exclude wrappers for matgen.' + ansi_normal )
-    pass
-
-try:
-    config.lapack.lapacke()
-    config.lapack.lapacke_uncommon()
-except Error:
-    print( ansi_red + 'LAPACK++ needs LAPACKE only in testers.' + ansi_normal )
-    pass
-
-config.output_files( 'make.inc' )
-
-print( '-'*80 )
+    main()
+except Error as err:
+    print( ansi_bold + ansi_red + 'A fatal error occurred. ' + str(err) + '\n'
+           'LAPACK++ could not be configured.' + ansi_normal )

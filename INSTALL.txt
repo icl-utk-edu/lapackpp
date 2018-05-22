@@ -1,0 +1,86 @@
+Welcome to LAPACK++.
+
+#-------------------------------------------------------------------------------
+Synopsis:
+    make && make install
+will configure and compile the LAPACK++ library and its tester,
+then install the headers and library.
+
+#-------------------------------------------------------------------------------
+Overview:
+    make           - configures (if make.inc is missing),
+                     then compiles the library and tester.
+    make config    - configures LAPACK++, create a make.inc file.
+    make lib       - compiles the library (lib/liblapackpp.so).
+    make test      - compiles the tester (test/test).
+    make docs      - generates documentation in docs/html/index.html
+    make install   - installs the library and headers to $prefix.
+    make clean     - deletes object (*.o) and library (*.a, *.so) files.
+    make distclean - also deletes make.inc and dependency files (*.d).
+
+#-------------------------------------------------------------------------------
+Details:
+
+- make config [options]
+
+Runs tests to find your compiler and library properties, then creates a make.inc
+configuration file. You can also manually edit the make.inc file. Options are
+name=value pairs to set variables. The configure.py script can be invoked
+directly:
+    python configure.py [options]
+This is especially helpful on MacOS where System Integrity Protection (SIP)
+otherwise purges $DYLD_LIBRARY_PATH.
+
+By default, configure will automatically choose the first valid value it finds
+for each option. You can set it to interactive to find all possible values and
+give you a choice:
+    make config interactive=1
+
+If you have multiple compilers, we suggest specifying your desired compiler by
+setting CXX, as the automated search may prefer a different compiler. To limit
+which versions of BLAS and LAPACK to search for, set one or more of:
+    mkl=1, acml=1, essl=1, openblas=1, accelerate=1;
+    lp64=1, ilp64=1.
+For instance,
+    make config CXX=xlc++ essl=1
+
+BLAS and LAPACK are written in Fortran, which has a compiler-specific name
+mangling scheme: routine DGEMM is called dgemm_, dgemm, or DGEMM in the
+library. (Some libraries like MKL and ESSL support multiple schemes.)
+Configure will auto-detect the scheme, but you can also specify it by
+setting one or more of the corresponding options:
+    fortran_add_=1, fortran_lower=1, fortran_upper=1.
+
+Configure assumes environment variables are set so your compiler can find BLAS
+and LAPACK libraries. For example:
+    export LD_LIBRARY_PATH="/opt/my-blas/lib64"  # or DYLD_LIBRARY_PATH on MacOS
+    export LIBRARY_PATH="/opt/my-blas/lib64"
+    export CPATH="/opt/my-blas/include"
+or
+    export LDFLAGS="-L/opt/my-blas/lib64 -Wl,-rpath,/opt/my-blas/lib64"
+    export CXXFLAGS="-I/opt/my-blas/include"
+On some systems, loading the appropriate module will set these flags:
+    module load my-blas
+Intel MKL provides a script to set these flags:
+    source /opt/intel/bin/compilervars.sh intel64
+or
+    source /opt/intel/mkl/bin/mklvars.sh intel64
+If you have a specific configuration that you want, set CXX, CXXFLAGS, LDFLAGS,
+and LIBS, e.g.:
+    export CXX="g++"
+    export CXXFLAGS="-I${MKLROOT}/include -fopenmp"
+    export LDFLAGS="-L${MKLROOT}/lib/intel64 -Wl,-rpath,${MKLROOT}/lib/intel64"
+    export LIBS="-lmkl_gf_lp64 -lmkl_gnu_thread -lmkl_core -lm"
+These can also be set when running configure:
+    make config CXX=g++ \
+                CXXFLAGS="-I${MKLROOT}/include -fopenmp" \
+                LDFLAGS="-L${MKLROOT}/lib/intel64 -Wl,-rpath,${MKLROOT}/lib/intel64" \
+                LIBS="-lmkl_gf_lp64 -lmkl_gnu_thread -lmkl_core -lm"
+Note that all test programs are compiled with those options, so errors may cause
+configure to fail.
+
+If you experience unexpected problems, please see config/log.txt to diagnose the
+issue. The log shows the option being tested, the exact command run, the
+command's standard output (stdout), error output (stderr), and exit status. All
+test files are in the config directory. You can also manually edit the make.inc
+file, if necessary.

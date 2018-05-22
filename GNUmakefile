@@ -4,11 +4,13 @@
 #    - Compiles lib/liblapackpp.so, or lib/liblapackpp.a (if static=1).
 #    - Compiles the tester, test/test.
 #
-# make config - Runs configure.py to create make.inc.
-# make lib    - Compiles lib/liblapackpp.so, or liblapackpp.a (if static=1).
-# make test   - Compiles the tester, test/test.
-# make docs   - Compiles Doxygen documentation.
-# make clean  - Deletes all objects, libraries, and the tester.
+# make config    - Runs configure.py to create make.inc.
+# make lib       - Compiles lib/liblapackpp.so, or liblapackpp.a (if static=1).
+# make test      - Compiles the tester, test/test.
+# make docs      - Compiles Doxygen documentation.
+# make install   - Installs the library and headers to $prefix.
+# make clean     - Deletes all objects, libraries, and the tester.
+# make distclean - Also deletes make.inc and dependency files (*.d).
 
 #-------------------------------------------------------------------------------
 # Configuration
@@ -117,6 +119,16 @@ TEST_LIBS    += -llapackpp -ltest
 
 all: lib test
 
+install: lib
+	mkdir -p $(DESTDIR)$(prefix)/include
+	mkdir -p $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)
+	cp include/*.{h,hh} $(DESTDIR)$(prefix)/include
+	cp lib/liblapackpp.* $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)
+
+uninstall:
+	$(RM) $(addprefix $(DESTDIR)$(prefix), $(headers))
+	$(RM) $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)/liblapackpp.*
+
 #-------------------------------------------------------------------------------
 # liblapackpp library
 $(lib_so): $(lib_obj)
@@ -160,7 +172,7 @@ headers_gch = $(addsuffix .gch, $(headers))
 headers: $(headers_gch)
 
 headers/clean:
-	$(RM) $(headers_gch)
+	$(RM) include/*.h.gch include/*.hh.gch test/*.hh.gch
 
 # sub-directory rules
 include: headers
@@ -186,7 +198,7 @@ test/docs: docs
 clean: lib/clean test/clean headers/clean
 
 distclean: clean
-	$(RM) $(dep) make.inc
+	$(RM) make.inc src/*.d test/*.d
 
 %.o: %.cc
 	$(CXX) $(CXXFLAGS) -c $< -o $@

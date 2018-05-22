@@ -1,9 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 #
 # Usage: python configure.py [--interactive]
-#
-# Note: using #!/usr/bin/env python or #!/usr/bin/python doesn't work,
-# because LD_LIBRARY_PATH isn't propogated.
 
 from __future__ import print_function
 
@@ -21,40 +18,28 @@ print( '-'*80 + '\n' +
 ansi_bold + ansi_red + '                              Welcome to LAPACK++.' +
 ansi_normal + '''
 
-By default, this configuration script will automatically choose the first valid
-value it finds for each option. You can set it to interactive to find all
-possible values and give you a choice:
-    ''' + ansi_blue + 'python configure.py --interactive' + ansi_normal + '''
-or
+By default, configure will automatically choose the first valid value it finds
+for each option. You can set it to interactive to find all possible values and
+give you a choice:
     ''' + ansi_blue + 'make config interactive=1' + ansi_normal + '''
 
-To select versions of BLAS and LAPACK to check for, set one or more of:
+If you have multiple compilers, we suggest specifying your desired compiler by
+setting CXX, as the automated search may prefer a different compiler. To limit
+which versions of BLAS and LAPACK to search for, set one or more of:
     mkl=1, acml=1, essl=1, openblas=1, accelerate=1;
-    fortran_add_=1, fortran_lower=1, fortran_upper=1;
-    lp64=1, ilp64=1
-for instance,
-    make config CXX=xlc++ essl=1 fortran_lower=1
+    lp64=1, ilp64=1.
+For instance,
+    ''' + ansi_blue + 'make config CXX=xlc++ essl=1' + ansi_normal + '''
 
-This script assumes flags are set in your environment to make your BLAS
-and LAPACK libraries accessible to your compiler, for example:
-    export LD_LIBRARY_PATH="/opt/my-blas/lib64"  # or DYLD_LIBRARY_PATH on MacOS
-    export LIBRARY_PATH="/opt/my-blas/lib64"
-    export CPATH="/opt/my-blas/include"
-or
-    export LDFLAGS="-L/opt/my-blas/lib64 -Wl,-rpath,/opt/my-blas/lib64"
-    export CXXFLAGS="-I/opt/my-blas/include"
-On some systems, loading the appropriate module will set these flags:
-    module load my-blas
-Intel MKL provides a script to set these flags:
-    source /opt/intel/bin/compilervars.sh intel64
-or
-    source /opt/intel/mkl/bin/mklvars.sh intel64
-If you have a specific configuration that you want, set CXX, CXXFLAGS, LDFLAGS,
-and LIBS, e.g.:
-    export CXX="g++"
-    export CXXFLAGS="-I${MKLROOT}/include -fopenmp"
-    export LDFLAGS="-L${MKLROOT}/lib/intel64"
-    export LIBS="-lmkl_gf_lp64 -lmkl_gnu_thread -lmkl_core -lm"
+BLAS and LAPACK are written in Fortran, which has a compiler-specific name
+mangling scheme: routine DGEMM is called dgemm_, dgemm, or DGEMM in the
+library. (Some libraries like MKL and ESSL support multiple schemes.)
+Configure will auto-detect the scheme, but you can also specify it by
+setting one or more of the corresponding options:
+    fortran_add_=1, fortran_lower=1, fortran_upper=1.
+
+Configure assumes environment variables CPATH, LIBRARY_PATH, and LD_LIBRARY_PATH
+are set so your compiler can find libraries. See INSTALL.txt for more details.
 ''' + '-'*80 )
 
 #-------------------------------------------------------------------------------

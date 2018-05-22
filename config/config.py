@@ -409,9 +409,15 @@ def output_files( files ):
     for fname in files:
         txt = read( fname + '.in' )
         out = re.sub( r'@(\w+)@', sub_env, txt )
-        if (os.path.exists( fname ) and out == read( fname )):
+        exists = os.path.exists( fname )
+        if (exists and out == read( fname )):
             print( fname, 'is unchanged' )
         else:
+            if (exists):
+                bak = fname + '.bak'
+                print( 'backing up', fname, 'to', bak )
+                os.rename( fname, bak )
+            # end
             print( 'creating', fname )
             write( fname, out )
         # end

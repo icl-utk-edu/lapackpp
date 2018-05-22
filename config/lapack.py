@@ -1,9 +1,12 @@
+from __future__ import print_function
+
 import os
 import re
 import config
 from   config import ansi_bold, ansi_red, ansi_normal
 from   config import print_header, print_subhead, print_line, print_result
 from   config import get
+from   config import Error
 
 #-------------------------------------------------------------------------------
 def get_manglings():
@@ -37,9 +40,6 @@ def get_sizes():
 
 #-------------------------------------------------------------------------------
 def compile_with_manglings( src, env, manglings, sizes ):
-    (base, ext) = os.path.splitext( src )
-    exe = './' + base
-    
     rc = -1
     for mangling in manglings:
         for size in sizes:
@@ -60,7 +60,7 @@ def compile_with_manglings( src, env, manglings, sizes ):
                 break
 
             # if int32 runs, skip int64
-            (rc, out, err) = config.run( exe )
+            (rc, out, err) = config.run_exe( src )
             print_result( 'label', rc )
             if (rc == 0):
                 break
@@ -222,57 +222,118 @@ def cblas():
 # end cblas
 
 #-------------------------------------------------------------------------------
-# Should -llapack be appended or prepended?
-# Depends: -llapack -lopenblas (LAPACK requires BLAS),
-# but:     -lessl -llapack (LAPACK provides functions missing in ESSL).
-# Safest is prepend (what autoconf does), but then LAPACK may override
-# optimized versions in ESSL. config.environ.merge prepends LIBS.
-def lapack():
-    print_header( 'LAPACK library' )
-    choices = [
-        ['LAPACK routines (dpotrf) available', {}],
-        ['LAPACK routines (dpotrf) in -llapack',  {'LIBS': '-llapack'}],
-    ]
+def test_lapack( src, label, append=False ):
+    '''
+    Used by lapack() and lapack_uncommon() to search for LAPACK routines,
+    first in already found libraries, then in -llapack.
+    Rechecks Fortran name mangling if -llapack exists but linking fails.
+    '''
+    # try in BLAS library
+    print_line( label + ' available' )
+    (rc, out, err) = config.compile_obj( src )
+    if (rc != 0):
+        raise Error
 
-    passed = []
-    for (label, env) in choices:
-        (rc, out, err) = config.compile_run( 'config/lapack_potrf.cc', env, label )
+    (rc, out, err) = config.link_exe( src )
+    if (rc == 0):
+        (rc, out, err) = config.run_exe( src )
+        print_result( 'label', rc )
+        if (rc != 0):
+            raise Error( 'LAPACK linked, but failed to run' )
+        # Otherwise, success! See also lapack().
+    else:
+        # Default failed, try with -llapack
+        print_result( 'label', rc )
+        print_line( label + ' in -llapack' )
+        env = {'LIBS': '-llapack'}
+        (rc, out, err) = config.compile_exe( 'config/hello.cc', env )
         if (rc == 0):
-            passed.append( (label, env) )
-            break
-    # end
+            # -llapack exists
+            (rc, out, err) = config.compile_obj( src, env )
+            if (rc != 0):
+                raise Error( 'Unexpected error: ' + src + ' failed to compile' )
 
-    labels = map( lambda c: c[0], passed )
-    i = config.choose( labels )
-    config.environ.merge( passed[i][1] )
+            (rc, out, err) = config.link_exe( src, env )
+            if (rc == 0):
+                # -llapack linked
+                (rc, out, err) = config.run_exe( src, env )
+                print_result( 'label', rc )
+                if (rc == 0):
+                    # Success! -llapack worked. See also lapack().
+                    if (append):
+                        config.environ.append( 'LIBS', env['LIBS'] )
+                    else:
+                        config.environ.merge( env )
+                else:
+                    raise Error( 'LAPACK linked -llapack, but failed to run' )
+                # end
+            else:
+                print_result( 'label', rc )
+                # -llapack exists but didn't link
+                print_subhead( '-llapack exists, but linking failed. Re-checking Fortran mangling.' )
+                # Get, then undef, original mangling & sizes.
+                cxxflags = config.environ['CXXFLAGS']
+                old_mangling_sizes = re.findall(
+                    r'-D(FORTRAN_(?:ADD_|LOWER|UPPER)|\w*ILP64)\b', cxxflags )
+                config.environ['CXXFLAGS'] = re.sub(
+                    r'-D(FORTRAN_(?:ADD_|LOWER|UPPER)|\w*ILP64|ADD_|NOCHANGE|UPCASE)\b',
+                    r'', cxxflags )
+                manglings = get_manglings()
+                sizes = get_sizes()
+                (rc, out, err, env) = compile_with_manglings(
+                    src, env, manglings, sizes )
+                if (rc == 0):
+                    (rc, out, err) = config.compile_run( 'config/blas.cc', env,
+                        'Re-checking Fortran mangling for BLAS' )
+                    if (rc == 0):
+                        # Success! See also lapack().
+                        new_mangling_sizes = re.findall(
+                            r'-D(FORTRAN_(?:ADD_|LOWER|UPPER)|\w*ILP64)\b',
+                            env['CXXFLAGS'])
+                        print( ansi_red +
+                               'Changing Fortran name mangling for both BLAS and LAPACK to '
+                               + ' '.join( new_mangling_sizes ) + ansi_normal )
+                        config.environ.merge( env )
+
+                    else:
+                        raise Error( 'BLAS and LAPACK require different Fortran name manglings' )
+                    # end
+                else:
+                    raise Error( 'No Fortran name mangling worked for LAPACK (seems odd).' )
+                # end
+            # end
+        else:
+            # -llapack doesn't exist
+            print_result( 'label', rc )
+            raise Error( 'LAPACK not found' )
+        # end
+    # end
+# end test_lapack
+
+#-------------------------------------------------------------------------------
+def lapack():
+    '''
+    Search for common LAPACK routines, first in already found libraries,
+    then in -llapack.
+    '''
+    print_header( 'LAPACK library' )
+    test_lapack( 'config/lapack_potrf.cc', 'LAPACK routines (dpotrf)' )
+    # no error thrown: success!
     config.environ.append( 'CXXFLAGS', '-DHAVE_LAPACK' )
 # end lapack
 
 #-------------------------------------------------------------------------------
 def lapack_uncommon():
     '''
-    ESSL doesn't include all of LAPACK, so needs -llapack added.
-    Cholesky with pivoting (pstrf) is one from LAPACK >= 3.2 that ESSL excludes.
+    Search for uncommon LAPACK routines, first in already found libraries,
+    then in -llapack.
+
+    This is needed because some libraries, like ESSL and ATLAS,
+    include part but not all of LAPACK, so need -llapack added.
+    Cholesky with pivoting (pstrf) is a routine from LAPACK >= 3.2 that is
+    unlikely to be included in a subset of LAPACK routines.
     '''
-    choices = [
-        ['Uncommon routines (dpstrf) available', {'LIBS': ''}],
-    ]
-    if ('-llapack' not in config.environ['LIBS']):
-        choices.append( ['Uncommon routines (pstrf) in -llapack',
-                            {'LIBS': '-llapack'}] )
-
-    passed = []
-    for (label, env) in choices:
-        (rc, out, err) = config.compile_run( 'config/lapack_pstrf.cc', env, label )
-        if (rc == 0):
-            passed.append( (label, env) )
-            break
-    # end
-
-    # append -llapack to LIBS, instead of prepending as merge would do
-    labels = map( lambda c: c[0], passed )
-    i = config.choose( labels )
-    config.environ.append( 'LIBS', passed[i][1]['LIBS'] )
+    test_lapack( 'config/lapack_pstrf.cc', 'Uncommon routines (dpstrf)', append=True )
 # end lapack_uncommon
 
 #-------------------------------------------------------------------------------

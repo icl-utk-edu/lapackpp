@@ -264,6 +264,26 @@ def compile_obj( src, env=None, label=None ):
 
 #-------------------------------------------------------------------------------
 # Ex:
+# link_exe( 'foo.c', {'CC': 'gcc'}, 'Test foo' )
+def link_exe( src, env=None, label=None ):
+    environ.push( env )
+
+    print_line( label )
+    (base, ext) = os.path.splitext( src )
+    obj      = base + '.o'
+    lang     = lang_map[ ext ]
+    compiler = environ[ lang ]
+    LDFLAGS  = environ[ 'LDFLAGS' ]
+    LIBS     = environ[ 'LIBS' ] or environ[ 'LDLIBS' ]
+    (rc, stdout, stderr) = run([ compiler, obj, '-o', base, LDFLAGS, LIBS ])
+    print_result( label, rc )
+
+    environ.pop()
+    return (rc, stdout, stderr)
+# end
+
+#-------------------------------------------------------------------------------
+# Ex:
 # compile_exe( 'foo.c', {'CC': 'gcc'}, 'Test foo' )
 def compile_exe( src, env=None, label=None ):
     environ.push( env )
@@ -286,7 +306,7 @@ def compile_exe( src, env=None, label=None ):
 
 #-------------------------------------------------------------------------------
 # Ex:
-# compile_exe( 'foo.c', {'CC': 'gcc'}, 'Test foo' )
+# compile_run( 'foo.c', {'CC': 'gcc'}, 'Test foo' )
 def compile_run( src, env=None, label=None ):
     environ.push( env )
 
@@ -295,6 +315,21 @@ def compile_run( src, env=None, label=None ):
     (rc, stdout, stderr) = compile_exe( src )
     if (rc == 0):
         (rc, stdout, stderr) = run( './' + base )
+    print_result( label, rc )
+
+    environ.pop()
+    return (rc, stdout, stderr)
+# end
+
+#-------------------------------------------------------------------------------
+# Ex:
+# run_exe( 'foo.c', {'CC': 'gcc'}, 'Test foo' )
+def run_exe( src, env=None, label=None ):
+    environ.push( env )
+
+    print_line( label )
+    (base, ext) = os.path.splitext( src )
+    (rc, stdout, stderr) = run( './' + base )
     print_result( label, rc )
 
     environ.pop()

@@ -225,7 +225,7 @@ def run( cmd ):
         log.write( ansi_red )
         log.write( stderr )
         log.write( ansi_normal )
-        print( 'return code = %d' % rc, file=log )
+        print( 'exit status = %d' % rc, file=log )
     except Exception as err:
         rc = -1
         stdout = ''
@@ -373,10 +373,8 @@ def init( prefix='/usr/local' ):
     environ['prefix'] = prefix
 
     #--------------------
-    tm = time.localtime()
-    logfile = 'config/log-%04d-%02d-%02d-%02d-%02d-%02d.txt' % (
-        tm.tm_year, tm.tm_mon, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec)
-    print( 'opening log file', logfile )
+    logfile = 'config/log.txt'
+    print( 'opening log file ' + logfile + '\n' )
     log = open( logfile, 'w' )
 
     #--------------------
@@ -402,12 +400,10 @@ def init( prefix='/usr/local' ):
 MacOS System Integrity Protection (SIP) prevents configure.py from inheriting
 $DYLD_LIBRARY_PATH. Using
     python configure.py
-with python installed from python.org, instead of Apple's python in /usr/bin,
-will allow $DYLD_LIBRARY_PATH to be inherited.''' + ansi_normal )
+directly (not via make), with python installed from python.org (not Apple's
+python in /usr/bin), will allow $DYLD_LIBRARY_PATH to be inherited.'''
++ ansi_normal )
     # end
-    
-    if (environ['interactive'] == '1'):
-        auto = False
 
     #--------------------
     # parse command line
@@ -422,6 +418,9 @@ will allow $DYLD_LIBRARY_PATH to be inherited.''' + ansi_normal )
                 print( 'Unknown argument:', arg )
                 exit(1)
     # end
+
+    if (environ['interactive'] == '1'):
+        auto = False
 # end
 
 # ------------------------------------------------------------------------------

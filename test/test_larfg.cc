@@ -34,7 +34,7 @@ void test_larfg_work( Params& params, bool run )
     // ---------- setup
     scalar_t tau_tst;
     scalar_t tau_ref;
-    size_t size_X = (size_t) (1+(n-2)*abs(incx));
+    size_t size_X = (size_t) (1+(n-2)*std::abs(incx));
 
     std::vector< scalar_t > X_tst( size_X );
     std::vector< scalar_t > X_ref( size_X );

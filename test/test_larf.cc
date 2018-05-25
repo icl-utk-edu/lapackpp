@@ -36,9 +36,9 @@ void test_larf_work( Params& params, bool run )
     int64_t ldc = roundup( max( 1, m ), align );
     size_t size_V;
     if (side == lapack::Side::Left)
-        size_V = 1 + (m-1)*abs(incv);
+        size_V = 1 + (m-1)*std::abs(incv);
     else
-        size_V = 1 + (n-1)*abs(incv);
+        size_V = 1 + (n-1)*std::abs(incv);
     size_t size_C = (size_t) ldc * n;
 
     std::vector< scalar_t > V( size_V );

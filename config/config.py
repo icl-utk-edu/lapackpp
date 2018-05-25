@@ -364,6 +364,9 @@ def prog_cxx( choices=['g++', 'c++', 'CC', 'cxx', 'icpc', 'xlc++', 'clang++'] ):
 
 #-------------------------------------------------------------------------------
 def prog_cxx_flags( flags ):
+    '''
+    Tests each flag in flags; if it passes, adds the flag to CXXFLAGS.
+    '''
     print_header( 'C++ compiler flags' )
     for flag in flags:
         print_line( flag )
@@ -374,6 +377,24 @@ def prog_cxx_flags( flags ):
         print_result( flag, rc )
         if (rc == 0):
             environ.append( 'CXXFLAGS', flag )
+    # end
+# end
+
+#-------------------------------------------------------------------------------
+def openmp( flags=['-fopenmp', '-qopenmp', '-openmp', '-omp', ''] ):
+    '''
+    Tests for OpenMP support with one of the given flags.
+    '''
+    print_header( 'OpenMP support' )
+    src = 'config/openmp.cc'
+    for flag in flags:
+        print_line( flag )
+        env = {'CXXFLAGS': flag, 'LDFLAGS': flag}
+        (rc, out, err) = compile_run( src, env )
+        print_result( flag, rc )
+        if (rc == 0):
+            environ.merge( env )
+            break
     # end
 # end
 

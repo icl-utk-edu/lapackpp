@@ -57,6 +57,7 @@ def main():
         #'-Wconversion',
         #'-Werror',
     ])
+    config.openmp()
     
     config.lapack.blas()
     print()

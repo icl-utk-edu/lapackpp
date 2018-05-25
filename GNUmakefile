@@ -230,6 +230,8 @@ echo:
 	@echo "lib_so        = $(lib_so)"
 	@echo "lib           = $(lib)"
 	@echo
+	@echo "lib_src       = $(lib_src)"
+	@echo
 	@echo "lib_obj       = $(lib_obj)"
 	@echo
 	@echo "test_src      = $(test_src)"

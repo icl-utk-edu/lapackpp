@@ -77,7 +77,7 @@ endif
 
 lib_src  = $(wildcard src/*.cc)
 lib_obj  = $(addsuffix .o, $(basename $(lib_src)))
-dep      = $(addsuffix .d, $(basename $(lib_src)))
+dep     += $(addsuffix .d, $(basename $(lib_src)))
 
 test_src = $(wildcard test/*.cc)
 test_obj = $(addsuffix .o, $(basename $(test_src)))
@@ -87,11 +87,19 @@ test     = test/test
 
 libtest_dir = ../libtest
 libtest_src = $(wildcard $(libtest_dir)/*.cc $(libtest_dir)/*.hh)
-libtest     = $(libtest_dir)/libtest.so
+ifeq ($(static),1)
+	libtest = $(libtest_dir)/libtest.a
+else
+	libtest = $(libtest_dir)/libtest.so
+endif
 
 blaspp_dir = ../blaspp
 blaspp_src = $(wildcard $(blaspp_dir)/src/*.cc $(blaspp_dir)/include/*.hh)
-#blaspp    = $(blaspp_dir)/lib/libblaspp.so  # todo
+ifeq ($(static),1)
+	libblaspp  = $(blaspp_dir)/lib/libblaspp.a
+else
+	libblaspp  = $(blaspp_dir)/lib/libblaspp.so
+endif
 
 lib_a  = ./lib/liblapackpp.a
 lib_so = ./lib/liblapackpp.so
@@ -112,8 +120,9 @@ $(test_obj): CXXFLAGS += -I$(blaspp_dir)/test    # for blas_flops.hh
 $(test_obj): CXXFLAGS += -I$(libtest_dir)
 
 TEST_LDFLAGS += -L./lib -Wl,-rpath,$(abspath ./lib)
+TEST_LDFLAGS += -L$(blaspp_dir)/lib -Wl,-rpath,$(abspath $(blaspp_dir)/lib)
 TEST_LDFLAGS += -L$(libtest_dir) -Wl,-rpath,$(abspath $(libtest_dir))
-TEST_LIBS    += -llapackpp -ltest
+TEST_LIBS    += -lblaspp -llapackpp -ltest
 
 #-------------------------------------------------------------------------------
 # Rules
@@ -135,7 +144,7 @@ uninstall:
 	$(RM) $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)/liblapackpp.*
 
 #-------------------------------------------------------------------------------
-# liblapackpp library
+# LAPACK++ library
 $(lib_so): $(lib_obj)
 	mkdir -p lib
 	$(CXX) $(LDFLAGS) -shared $(install_name) $(lib_obj) $(LIBS) -o $@
@@ -153,14 +162,20 @@ lib/clean src/clean:
 	$(RM) lib/*.{a,so} src/*.o
 
 #-------------------------------------------------------------------------------
+# BLAS++ library
+$(libblaspp): $(libblaspp_src)
+	cd $(blaspp_dir) && $(MAKE) lib
+
+#-------------------------------------------------------------------------------
+# libtest library
+$(libtest): $(libtest_src)
+	cd $(libtest_dir) && $(MAKE) lib
+
+#-------------------------------------------------------------------------------
 # tester
-$(test): $(test_obj) $(lib) $(libtest)
+$(test): $(test_obj) $(lib) $(libtest) $(libblaspp)
 	$(CXX) $(TEST_LDFLAGS) $(LDFLAGS) $(test_obj) \
 		$(TEST_LIBS) $(LIBS) -o $@
-
-# forward libtest to libtest directory
-$(libtest): $(libtest_src)
-	cd $(libtest_dir) && $(MAKE)
 
 # sub-directory rules
 test: $(test)
@@ -248,7 +263,7 @@ echo:
 	@echo
 	@echo "blaspp_dir    = $(blaspp_dir)"
 	@echo "blaspp_src    = $(blaspp_src)"
-	@echo "blaspp        = $(blaspp)  # todo"
+	@echo "libblaspp     = $(libblaspp)"
 	@echo
 	@echo "CXX           = $(CXX)"
 	@echo "CXXFLAGS      = $(CXXFLAGS)"

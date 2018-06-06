@@ -41,7 +41,7 @@ void test_heevd_work( Params& params, bool run )
     std::vector< real_t > W_tst( size_W );
     std::vector< real_t > W_ref( size_W );
 
-    lapack::generate_matrix( params.matrix, n, n, nullptr, &A_tst[0], lda );
+    lapack::generate_matrix( params.matrix, n, n, &A_tst[0], lda );
     A_ref = A_tst;
 
     // ---------- run test

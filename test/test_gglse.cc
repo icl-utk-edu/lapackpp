@@ -58,8 +58,8 @@ void test_gglse_work( Params& params, bool run )
     std::vector< scalar_t > X_tst( size_X );
     std::vector< scalar_t > X_ref( size_X );
 
-    lapack::generate_matrix( params.matrix,  m, n, nullptr, &A_tst[0], lda );
-    lapack::generate_matrix( params.matrixB, p, n, nullptr, &B_tst[0], ldb );
+    lapack::generate_matrix( params.matrix,  m, n, &A_tst[0], lda );
+    lapack::generate_matrix( params.matrixB, p, n, &B_tst[0], ldb );
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, C_tst.size(), &C_tst[0] );

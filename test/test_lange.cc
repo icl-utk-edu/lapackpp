@@ -38,7 +38,7 @@ void test_lange_work( Params& params, bool run )
 
     std::vector< scalar_t > A( size_A );
 
-    lapack::generate_matrix( params.matrix, m, n, nullptr, &A[0], lda );
+    lapack::generate_matrix( params.matrix, m, n, &A[0], lda );
 
     if (verbose >= 1) {
         printf( "\n"

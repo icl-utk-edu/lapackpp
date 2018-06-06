@@ -40,7 +40,7 @@ void test_potrf_work( Params& params, bool run )
     std::vector< scalar_t > A_tst( size_A );
     std::vector< scalar_t > A_ref( size_A );
 
-    lapack::generate_matrix( params.matrix, n, n, nullptr, &A_tst[0], lda );
+    lapack::generate_matrix( params.matrix, n, n, &A_tst[0], lda );
     A_ref = A_tst;
 
     if (verbose >= 1) {

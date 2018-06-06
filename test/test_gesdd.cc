@@ -55,7 +55,7 @@ void test_gesdd_work( Params& params, bool run )
     std::vector< scalar_t > VT_tst( size_VT );
     std::vector< scalar_t > VT_ref( size_VT );
 
-    lapack::generate_matrix( params.matrix, m, n, nullptr, &A_tst[0], lda );
+    lapack::generate_matrix( params.matrix, m, n, &A_tst[0], lda );
     A_ref = A_tst;
 
     // ---------- run test

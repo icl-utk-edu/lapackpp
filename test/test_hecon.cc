@@ -42,7 +42,7 @@ void test_hecon_work( Params& params, bool run )
     std::vector< int64_t > ipiv_tst( size_ipiv );
     std::vector< lapack_int > ipiv_ref( size_ipiv );
 
-    lapack::generate_matrix( params.matrix, n, n, nullptr, &A[0], lda );
+    lapack::generate_matrix( params.matrix, n, n, &A[0], lda );
 
     // initialize anorm as the norm of the original matrix
     anorm = lapack::lange( lapack::Norm::One, n, n, &A[0], lda );

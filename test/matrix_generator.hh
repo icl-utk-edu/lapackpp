@@ -197,15 +197,15 @@ protected:
 template< typename scalar_t >
 void generate_matrix(
     MatrixParams& params,
-    Vector< blas::real_type<scalar_t> >& sigma,
-    Matrix< scalar_t >& A );
+    Matrix< scalar_t >& A,
+    Vector< blas::real_type<scalar_t> >& sigma );
 
 template< typename scalar_t >
 void generate_matrix(
     MatrixParams& params,
     int64_t m, int64_t n,
-    blas::real_type<scalar_t>* sigma,
-    scalar_t* A, int64_t lda );
+    scalar_t* A, int64_t lda,
+    blas::real_type<scalar_t>* sigma=nullptr );
 
 void generate_matrix_usage();
 

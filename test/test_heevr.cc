@@ -58,7 +58,7 @@ void test_heevr_work( Params& params, bool run )
     std::vector< int64_t > isuppz_tst( size_isuppz );
     std::vector< lapack_int > isuppz_ref( size_isuppz );
 
-    lapack::generate_matrix( params.matrix, n, n, nullptr, &A_tst[0], lda );
+    lapack::generate_matrix( params.matrix, n, n, &A_tst[0], lda );
     A_ref = A_tst;
 
     // ---------- run test

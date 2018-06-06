@@ -40,7 +40,7 @@ void test_unghr_work( Params& params, bool run )
     std::vector< scalar_t > A_ref( size_A );
     std::vector< scalar_t > tau( size_tau );
 
-    lapack::generate_matrix( params.matrix, n, n, nullptr, &A_tst[0], lda );
+    lapack::generate_matrix( params.matrix, n, n, &A_tst[0], lda );
 
     // reduce A to Hessenberg form
     int64_t info_hrd = lapack::gehrd( n, ilo, ihi, &A_tst[0], lda, &tau[0] );

@@ -47,7 +47,7 @@ void test_sysv_rook_work( Params& params, bool run )
     std::vector< scalar_t > B_tst( size_B );
     std::vector< scalar_t > B_ref( size_B );
 
-    lapack::generate_matrix( params.matrix, n, n, nullptr, &A_tst[0], lda );
+    lapack::generate_matrix( params.matrix, n, n, &A_tst[0], lda );
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, B_tst.size(), &B_tst[0] );

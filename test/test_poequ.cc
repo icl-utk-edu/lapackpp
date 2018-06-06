@@ -44,7 +44,7 @@ void test_poequ_work( Params& params, bool run )
     std::vector< real_t > S_tst( size_S );
     std::vector< real_t > S_ref( size_S );
 
-    lapack::generate_matrix( params.matrix, n, n, nullptr, &A[0], lda );
+    lapack::generate_matrix( params.matrix, n, n, &A[0], lda );
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );

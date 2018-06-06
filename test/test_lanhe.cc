@@ -37,7 +37,7 @@ void test_lanhe_work( Params& params, bool run )
 
     std::vector< scalar_t > A( size_A );
 
-    lapack::generate_matrix( params.matrix, n, n, nullptr, &A[0], lda );
+    lapack::generate_matrix( params.matrix, n, n, &A[0], lda );
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );

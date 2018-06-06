@@ -58,8 +58,8 @@ void generate_sigma(
     Dist dist, bool rand_sign,
     blas::real_type<scalar_t> cond,
     blas::real_type<scalar_t> sigma_max,
-    Vector< blas::real_type<scalar_t> >& sigma,
-    Matrix<scalar_t>& A )
+    Matrix<scalar_t>& A,
+    Vector< blas::real_type<scalar_t> >& sigma )
 {
     using real_t = blas::real_type<scalar_t>;
 
@@ -250,8 +250,8 @@ void generate_svd(
     blas::real_type<scalar_t> cond,
     blas::real_type<scalar_t> condD,
     blas::real_type<scalar_t> sigma_max,
-    Vector< blas::real_type<scalar_t> >& sigma,
-    Matrix<scalar_t>& A )
+    Matrix<scalar_t>& A,
+    Vector< blas::real_type<scalar_t> >& sigma )
 {
     using real_t = blas::real_type<scalar_t>;
 
@@ -274,7 +274,7 @@ void generate_svd(
     assert( info == 0 );
 
     // ----------
-    generate_sigma( params, dist, false, cond, sigma_max, sigma, A );
+    generate_sigma( params, dist, false, cond, sigma_max, A, sigma );
 
     // for generate correlation factor, need sum sigma_i^2 = n
     // scaling doesn't change cond
@@ -356,8 +356,8 @@ void generate_heev(
     blas::real_type<scalar_t> cond,
     blas::real_type<scalar_t> condD,
     blas::real_type<scalar_t> sigma_max,
-    Vector< blas::real_type<scalar_t> >& sigma,
-    Matrix<scalar_t>& A )
+    Matrix<scalar_t>& A,
+    Vector< blas::real_type<scalar_t> >& sigma )
 {
     using real_t = blas::real_type<scalar_t>;
 
@@ -380,7 +380,7 @@ void generate_heev(
     assert( info == 0 );
 
     // ----------
-    generate_sigma( params, dist, rand_sign, cond, sigma_max, sigma, A );
+    generate_sigma( params, dist, rand_sign, cond, sigma_max, A, sigma );
 
     // random U, n-by-n
     // just make each random column into a Householder vector;
@@ -438,8 +438,8 @@ void generate_geev(
     Dist dist,
     blas::real_type<scalar_t> cond,
     blas::real_type<scalar_t> sigma_max,
-    Vector< blas::real_type<scalar_t> >& sigma,
-    Matrix<scalar_t>& A )
+    Matrix<scalar_t>& A,
+    Vector< blas::real_type<scalar_t> >& sigma )
 {
     throw std::exception();  // not implemented
 }
@@ -458,8 +458,8 @@ void generate_geevx(
     Dist dist,
     blas::real_type<scalar_t> cond,
     blas::real_type<scalar_t> sigma_max,
-    Vector< blas::real_type<scalar_t> >& sigma,
-    Matrix<scalar_t>& A )
+    Matrix<scalar_t>& A,
+    Vector< blas::real_type<scalar_t> >& sigma )
 {
     throw std::exception();  // not implemented
 }
@@ -543,16 +543,16 @@ void generate_matrix_usage()
 ///     Test matrix parameters. Uses matrix, cond, condD parameters;
 ///     see further details.
 ///
+/// @param[out] A
+///     Complex array, dimension (lda, n).
+///     On output, the m-by-n test matrix A in an lda-by-n array.
+///
 /// @param[in,out] sigma
 ///     Real array, dimension (min(m,n))
 ///     - On input with matrix distribution "_specified",
 ///       contains user-specified singular or eigenvalues.
 ///     - On output, contains singular or eigenvalues, if known,
 ///       else set to NaN. sigma is not necesarily sorted.
-///
-/// @param[out] A
-///     Complex array, dimension (lda, n).
-///     On output, the m-by-n test matrix A in an lda-by-n array.
 ///
 /// ### Further Details
 ///
@@ -668,8 +668,8 @@ void generate_matrix_usage()
 template< typename scalar_t >
 void generate_matrix(
     MatrixParams& params,
-    Vector< blas::real_type<scalar_t> >& sigma,
-    Matrix<scalar_t>& A )
+    Matrix<scalar_t>& A,
+    Vector< blas::real_type<scalar_t> >& sigma )
 {
     using real_t = blas::real_type<scalar_t>;
 
@@ -943,27 +943,27 @@ void generate_matrix(
         }
 
         case TestMatrixType::diag:
-            generate_sigma( params, dist, false, cond, sigma_max, sigma, A );
+            generate_sigma( params, dist, false, cond, sigma_max, A, sigma );
             break;
 
         case TestMatrixType::svd:
-            generate_svd( params, dist, cond, condD, sigma_max, sigma, A );
+            generate_svd( params, dist, cond, condD, sigma_max, A, sigma );
             break;
 
         case TestMatrixType::poev:
-            generate_heev( params, dist, false, cond, condD, sigma_max, sigma, A );
+            generate_heev( params, dist, false, cond, condD, sigma_max, A, sigma );
             break;
 
         case TestMatrixType::heev:
-            generate_heev( params, dist, true, cond, condD, sigma_max, sigma, A );
+            generate_heev( params, dist, true, cond, condD, sigma_max, A, sigma );
             break;
 
         case TestMatrixType::geev:
-            generate_geev( params, dist, cond, sigma_max, sigma, A );
+            generate_geev( params, dist, cond, sigma_max, A, sigma );
             break;
 
         case TestMatrixType::geevx:
-            generate_geevx( params, dist, cond, sigma_max, sigma, A );
+            generate_geevx( params, dist, cond, sigma_max, A, sigma );
             break;
     }
 
@@ -991,8 +991,8 @@ template< typename scalar_t >
 void generate_matrix(
     MatrixParams& params,
     int64_t m, int64_t n,
-    blas::real_type<scalar_t>* sigma_ptr,
-    scalar_t* A_ptr, int64_t lda )
+    scalar_t* A_ptr, int64_t lda,
+    blas::real_type<scalar_t>* sigma_ptr )
 {
     using real_t = blas::real_type<scalar_t>;
 
@@ -1003,7 +1003,7 @@ void generate_matrix(
         sigma = Vector<real_t>( std::min( m, n ) );
     }
     Matrix<scalar_t> A( A_ptr, m, n, lda );
-    generate_matrix( params, sigma, A );
+    generate_matrix( params, A, sigma );
 }
 
 
@@ -1013,28 +1013,28 @@ template
 void generate_matrix(
     MatrixParams& params,
     int64_t m, int64_t n,
-    float* sigma_ptr,
-    float* A_ptr, int64_t lda );
+    float* A_ptr, int64_t lda,
+    float* sigma_ptr );
 
 template
 void generate_matrix(
     MatrixParams& params,
     int64_t m, int64_t n,
-    double* sigma_ptr,
-    double* A_ptr, int64_t lda );
+    double* A_ptr, int64_t lda,
+    double* sigma_ptr );
 
 template
 void generate_matrix(
     MatrixParams& params,
     int64_t m, int64_t n,
-    float* sigma_ptr,
-    std::complex<float>* A_ptr, int64_t lda );
+    std::complex<float>* A_ptr, int64_t lda,
+    float* sigma_ptr );
 
 template
 void generate_matrix(
     MatrixParams& params,
     int64_t m, int64_t n,
-    double* sigma_ptr,
-    std::complex<double>* A_ptr, int64_t lda );
+    std::complex<double>* A_ptr, int64_t lda,
+    double* sigma_ptr );
 
 } // namespace lapack

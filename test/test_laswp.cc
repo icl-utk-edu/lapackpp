@@ -44,7 +44,7 @@ void test_laswp_work( Params& params, bool run )
     std::vector< int64_t > ipiv_tst( size_ipiv );
     std::vector< lapack_int > ipiv_ref( size_ipiv );
 
-    lapack::generate_matrix( params.matrix, m, n, nullptr, &A_tst[0], lda );
+    lapack::generate_matrix( params.matrix, m, n, &A_tst[0], lda );
 
     // factor first panel of A, to get ipiv
     int64_t info = lapack::getrf( m, nb, &A_tst[0], lda, &ipiv_tst[0] );

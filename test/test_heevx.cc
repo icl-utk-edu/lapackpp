@@ -58,7 +58,7 @@ void test_heevx_work( Params& params, bool run )
     std::vector< int64_t > ifail_tst( size_ifail );
     std::vector< lapack_int > ifail_ref( size_ifail );
 
-    lapack::generate_matrix( params.matrix, n, n, nullptr, &A_tst[0], lda );
+    lapack::generate_matrix( params.matrix, n, n, &A_tst[0], lda );
     A_ref = A_tst;
 
     // ---------- run test

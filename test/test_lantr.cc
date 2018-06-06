@@ -39,7 +39,7 @@ void test_lantr_work( Params& params, bool run )
 
     std::vector< scalar_t > A( size_A );
 
-    lapack::generate_matrix( params.matrix, m, n, nullptr, &A[0], lda );
+    lapack::generate_matrix( params.matrix, m, n, &A[0], lda );
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );

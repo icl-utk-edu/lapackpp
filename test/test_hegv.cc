@@ -51,8 +51,8 @@ void test_hegv_work( Params& params, bool run )
     std::vector< real_t > W_ref( size_W );
 
     // todo: how to specify A and B separately?
-    lapack::generate_matrix( params.matrix,  n, n, nullptr, &A_tst[0], lda );
-    lapack::generate_matrix( params.matrixB, n, n, nullptr, &B_tst[0], lda );
+    lapack::generate_matrix( params.matrix,  n, n, &A_tst[0], lda );
+    lapack::generate_matrix( params.matrixB, n, n, &B_tst[0], lda );
     A_ref = A_tst;
     B_ref = B_tst;
 

@@ -50,8 +50,8 @@ void test_ggrqf_work( Params& params, bool run )
     std::vector< scalar_t > taub_tst( size_taub );
     std::vector< scalar_t > taub_ref( size_taub );
 
-    lapack::generate_matrix( params.matrix,  m, n, nullptr, &A_tst[0], lda );
-    lapack::generate_matrix( params.matrixB, p, n, nullptr, &B_tst[0], ldb );
+    lapack::generate_matrix( params.matrix,  m, n, &A_tst[0], lda );
+    lapack::generate_matrix( params.matrixB, p, n, &B_tst[0], ldb );
     A_ref = A_tst;
     B_ref = B_tst;
 

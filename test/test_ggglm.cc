@@ -62,8 +62,8 @@ void test_ggglm_work( Params& params, bool run )
     std::vector< scalar_t > Y_tst( size_Y );
     std::vector< scalar_t > Y_ref( size_Y );
 
-    lapack::generate_matrix( params.matrix,  n, m, nullptr, &A_tst[0], lda );
-    lapack::generate_matrix( params.matrixB, n, p, nullptr, &B_tst[0], ldb );
+    lapack::generate_matrix( params.matrix,  n, m, &A_tst[0], lda );
+    lapack::generate_matrix( params.matrixB, n, p, &B_tst[0], ldb );
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, D_tst.size(), &D_tst[0] );

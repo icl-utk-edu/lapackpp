@@ -46,8 +46,8 @@ void test_hegst_work( Params& params, bool run )
     std::vector< scalar_t > B_ref( size_B );
 
     // todo: how to specify A and B separately?
-    lapack::generate_matrix( params.matrix,  n, n, nullptr, &A_tst[0], lda );
-    lapack::generate_matrix( params.matrixB, n, n, nullptr, &B_tst[0], lda );
+    lapack::generate_matrix( params.matrix,  n, n, &A_tst[0], lda );
+    lapack::generate_matrix( params.matrixB, n, n, &B_tst[0], lda );
 
     // factor B
     int64_t info = lapack::potrf( uplo, n, &B_tst[0], ldb );

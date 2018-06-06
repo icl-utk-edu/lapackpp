@@ -41,8 +41,8 @@ void test_lacpy_work( Params& params, bool run )
     std::vector< scalar_t > B_tst( size_B );
     std::vector< scalar_t > B_ref( size_B );
 
-    lapack::generate_matrix( params.matrix, m, n, nullptr, &A[0],     lda );
-    lapack::generate_matrix( params.matrix, m, n, nullptr, &B_tst[0], ldb );
+    lapack::generate_matrix( params.matrix, m, n, &A[0],     lda );
+    lapack::generate_matrix( params.matrix, m, n, &B_tst[0], ldb );
     B_ref = B_tst;
 
     // ---------- run test

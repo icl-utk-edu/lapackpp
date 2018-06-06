@@ -47,7 +47,7 @@ void test_unmhr_work( Params& params, bool run )
     std::vector< scalar_t > C_tst( size_C );
     std::vector< scalar_t > C_ref( size_C );
 
-    lapack::generate_matrix( params.matrix, r, r, nullptr, &A[0], lda );
+    lapack::generate_matrix( params.matrix, r, r, &A[0], lda );
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, tau.size(), &tau[0] );

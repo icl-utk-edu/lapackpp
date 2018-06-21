@@ -15,6 +15,12 @@ float lantr(
     lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t m, int64_t n,
     float const* A, int64_t lda )
 {
+    lapack_error_if( lda < m );
+    if (uplo == Uplo::Lower)
+        lapack_error_if( m < n );
+    else if (uplo == Uplo::Upper)
+        lapack_error_if( m > n );
+
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
         lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
@@ -46,6 +52,12 @@ double lantr(
     lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t m, int64_t n,
     double const* A, int64_t lda )
 {
+    lapack_error_if( lda < m );
+    if (uplo == Uplo::Lower)
+        lapack_error_if( m < n );
+    else if (uplo == Uplo::Upper)
+        lapack_error_if( m > n );
+
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
         lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
@@ -77,6 +89,12 @@ float lantr(
     lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t m, int64_t n,
     std::complex<float> const* A, int64_t lda )
 {
+    lapack_error_if( lda < m );
+    if (uplo == Uplo::Lower)
+        lapack_error_if( m < n );
+    else if (uplo == Uplo::Upper)
+        lapack_error_if( m > n );
+
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
         lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
@@ -130,12 +148,14 @@ float lantr(
 ///     - lapack::Diag::Unit: Unit diagonal
 ///
 /// @param[in] m
-///     The number of rows of the matrix A. m >= 0, and if
-///     uplo = Upper, m <= n. When m = 0, returns zero.
+///     The number of rows of the matrix A. m >= 0.
+///     When m = 0, returns zero.
+///     - If uplo == Upper, m <= n;
+///     - if uplo == Lower, m >= n.
 ///
 /// @param[in] n
-///     The number of columns of the matrix A. n >= 0, and if
-///     uplo = Lower, n <= m. When n = 0, returns zero.
+///     The number of columns of the matrix A.
+///     When n = 0, returns zero.
 ///
 /// @param[in] A
 ///     The m-by-n matrix A, stored in an lda-by-n array.
@@ -159,6 +179,12 @@ double lantr(
     lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t m, int64_t n,
     std::complex<double> const* A, int64_t lda )
 {
+    lapack_error_if( lda < m );
+    if (uplo == Uplo::Lower)
+        lapack_error_if( m < n );
+    else if (uplo == Uplo::Upper)
+        lapack_error_if( m > n );
+
     // check for overflow
     if (sizeof(int64_t) > sizeof(blas_int)) {
         lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );

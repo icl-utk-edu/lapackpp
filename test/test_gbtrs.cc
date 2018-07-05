@@ -47,9 +47,10 @@ void test_gbtrs_work( Params& params, bool run )
 
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, AB.size(), &AB[0] );
     lapack::larnv( idist, iseed, B_tst.size(), &B_tst[0] );
     B_ref = B_tst;
+
+    lapack::generate_matrix( params.matrix, n, n, &AB[0], ldab );
 
     // factor
     int64_t info = lapack::gbtrf( n, n, kl, ku, &AB[0], ldab, &ipiv_tst[0] );

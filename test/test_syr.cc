@@ -114,8 +114,8 @@ void test_syr_work( Params& params, bool run )
 
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 0, 0, 1 };
-    lapack::larnv( idist, iseed, size_A, A );
     lapack::larnv( idist, iseed, size_x, x );
+    lapack::generate_matrix( params.matrix, n, n, &A[0], lda );
     Aref = A;
 
     // norms for error check

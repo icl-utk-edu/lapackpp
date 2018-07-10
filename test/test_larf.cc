@@ -49,7 +49,7 @@ void test_larf_work( Params& params, bool run )
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, V.size(), &V[0] );
     lapack::larnv( idist, iseed, 1, &tau );
-    lapack::larnv( idist, iseed, C_tst.size(), &C_tst[0] );
+    lapack::generate_matrix( params.matrix, m, n, &C_tst[0], ldc );
     C_ref = C_tst;
 
     // ---------- run test

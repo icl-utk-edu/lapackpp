@@ -41,9 +41,7 @@ void test_gbtrf_work( Params& params, bool run )
     std::vector< int64_t > ipiv_tst( size_ipiv );
     std::vector< lapack_int > ipiv_ref( size_ipiv );
 
-    int64_t idist = 1;
-    int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, AB_tst.size(), &AB_tst[0] );
+    lapack::generate_matrix( params.matrix, n, n, &AB_tst[0], ldab );
     AB_ref = AB_tst;
 
     // ---------- run test

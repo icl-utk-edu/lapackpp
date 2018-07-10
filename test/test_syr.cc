@@ -118,7 +118,6 @@ void test_syr_work( Params& params, bool run )
     lapack::larnv( idist, iseed, size_x, x );
     Aref = A;
 
-
     // norms for error check
     real_t Anorm = lapack::lansy( lapack::Norm::Fro, uplo, n, A, lda );
     real_t Xnorm = cblas_nrm2( n, x, std::abs(incx) );

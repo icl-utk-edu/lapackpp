@@ -49,9 +49,7 @@ void test_gbequ_work( Params& params, bool run )
     std::vector< real_t > C_tst( size_C );
     std::vector< real_t > C_ref( size_C );
 
-    int64_t idist = 1;
-    int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, AB.size(), &AB[0] );
+    lapack::generate_matrix( params.matrix, n, n, &AB[0], ldab );
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );

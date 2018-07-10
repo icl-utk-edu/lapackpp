@@ -47,7 +47,7 @@ void test_gbsv_work( Params& params, bool run )
 
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, AB_tst.size(), &AB_tst[0] );
+    lapack::generate_matrix( params.matrix, n, n, &AB_tst[0], ldab );
     lapack::larnv( idist, iseed, B_tst.size(), &B_tst[0] );
     AB_ref = AB_tst;
     B_ref = B_tst;

@@ -47,6 +47,7 @@ void test_gbcon_work( Params& params, bool run )
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, AB.size(), &AB[0] );
 
+
     anorm = lapack::langb( norm, n, kl, ku, &AB[kl], ldab );
 
     int64_t info = lapack::gbtrf( n, n, kl, ku, &AB[0], ldab, &ipiv_tst[0] );

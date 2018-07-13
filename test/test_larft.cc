@@ -63,7 +63,7 @@ void test_larft_work( Params& params, bool run )
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, V.size(), &V[0] );
-    lapack::larnv( idist, iseed, T_tst.size(), &T_tst[0] );
+    lapack::generate_matrix( params.matrix, k, k, &T_tst[0], ldt );
     T_ref = T_tst;
 
     // generate Householder vectors; initializes tau

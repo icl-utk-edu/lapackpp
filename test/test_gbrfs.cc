@@ -59,12 +59,10 @@ void test_gbrfs_work( Params& params, bool run )
 
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
+    lapack::larnv( idist, iseed, AB.size(), &AB[0] );
     lapack::larnv( idist, iseed, AFB.size(), &AFB[0] );
     // todo: initialize ipiv_tst and ipiv_ref
     lapack::larnv( idist, iseed, B.size(), &B[0] );
-
-    lapack::generate_matrix( params.matrix, n, n, &AB[0], ldab );
-
     lapack::larnv( idist, iseed, X_tst.size(), &X_tst[0] );
     X_ref = X_tst;
 

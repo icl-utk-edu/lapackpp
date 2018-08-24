@@ -57,16 +57,16 @@
 #endif
 
 /* -----------------------------------------------------------------------------
- * If user defines LAPACK_COMPLEX_CUSTOM, then use the user's definitions for:
+ * If user defines LAPACK_COMPLEX_CUSTOM, then the user must define:
  *     lapack_complex_float
  *     lapack_complex_double
  *     lapack_complex_float_real(z)
  *     lapack_complex_float_imag(z)
  *     lapack_complex_double_real(z)
  *     lapack_complex_double_imag(z)
- * Else if user defines LAPACK_COMPLEX_STRUCTURE, then use a struct;
- * Else if user defines LAPACK_COMPLEX_CPP, then use C++ std::complex;
- * Otherwise, the default is to use C99 _Complex.
+ * else if user defines LAPACK_COMPLEX_STRUCTURE, then use a struct;
+ * else if C or user defines LAPACK_COMPLEX_C99, then use C99's _Complex;
+ * else if C++, then use C++ std::complex.
  */
 #ifndef LAPACK_COMPLEX_CUSTOM
 
@@ -74,33 +74,34 @@
 
 typedef struct { float  real, imag; } lapack_complex_float;
 typedef struct { double real, imag; } lapack_complex_double;
-#define lapack_complex_float  lapack_complex_float
-#define lapack_complex_double lapack_complex_double
+#define lapack_complex_float          lapack_complex_float
+#define lapack_complex_double         lapack_complex_double
 #define lapack_complex_float_real(z)  ((z).real)
 #define lapack_complex_float_imag(z)  ((z).imag)
-#define lapack_complex_double_real(z)  ((z).real)
-#define lapack_complex_double_imag(z)  ((z).imag)
+#define lapack_complex_double_real(z) ((z).real)
+#define lapack_complex_double_imag(z) ((z).imag)
 
-#elif defined(__cplusplus) && defined(LAPACK_COMPLEX_CPP)
+#elif ! defined(__cplusplus) || defined(LAPACK_COMPLEX_C99)
 
-#include <complex>
-#define lapack_complex_float std::complex<float>
-#define lapack_complex_double std::complex<double>
-#define lapack_complex_float_real(z)       ((z).real())
-#define lapack_complex_float_imag(z)       ((z).imag())
-#define lapack_complex_double_real(z)       ((z).real())
-#define lapack_complex_double_imag(z)       ((z).imag())
-
-#else
-
-/* default is LAPACK_COMPLEX_C99 */
+/* Default in C is _Complex. */
 #include <complex.h>
-#define lapack_complex_float    float _Complex
-#define lapack_complex_double   double _Complex
-#define lapack_complex_float_real(z)       (creal(z))
-#define lapack_complex_float_imag(z)       (cimag(z))
-#define lapack_complex_double_real(z)       (creal(z))
-#define lapack_complex_double_imag(z)       (cimag(z))
+#define lapack_complex_float          float _Complex
+#define lapack_complex_double         double _Complex
+#define lapack_complex_float_real(z)  (creal(z))
+#define lapack_complex_float_imag(z)  (cimag(z))
+#define lapack_complex_double_real(z) (creal(z))
+#define lapack_complex_double_imag(z) (cimag(z))
+
+#elif defined(__cplusplus)
+
+/* Default in C++ is std::complex. */
+#include <complex>
+#define lapack_complex_float          std::complex<float>
+#define lapack_complex_double         std::complex<double>
+#define lapack_complex_float_real(z)  ((z).real())
+#define lapack_complex_float_imag(z)  ((z).imag())
+#define lapack_complex_double_real(z) ((z).real())
+#define lapack_complex_double_imag(z) ((z).imag())
 
 #endif
 
@@ -108,7 +109,7 @@ typedef struct { double real, imag; } lapack_complex_double;
 extern "C" {
 #endif /* __cplusplus */
 
-lapack_complex_float lapack_make_complex_float( float re, float im );
+lapack_complex_float  lapack_make_complex_float( float re, float im );
 lapack_complex_double lapack_make_complex_double( double re, double im );
 
 #ifdef __cplusplus

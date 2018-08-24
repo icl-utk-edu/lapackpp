@@ -32,9 +32,9 @@ def get_sizes():
     if (config.environ['lp64'] == '1'):
         sizes.append('') # i.e., default int
     if (config.environ['ilp64'] == '1'):
-        sizes.append('-DBLAS_ILP64')
+        sizes.append('-DBLAS_ILP64 -DLAPACK_ILP64')
     if (not sizes):
-        sizes = ['', '-DBLAS_ILP64']
+        sizes = ['', '-DBLAS_ILP64 -DLAPACK_ILP64']
     return sizes
 # end
 

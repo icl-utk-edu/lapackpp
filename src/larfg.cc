@@ -18,12 +18,12 @@ void larfg(
     float* tau )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(incx) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(incx) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int incx_ = (blas_int) incx;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int incx_ = (lapack_int) incx;
 
     LAPACK_slarfg(
         &n_, alpha,
@@ -39,12 +39,12 @@ void larfg(
     double* tau )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(incx) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(incx) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int incx_ = (blas_int) incx;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int incx_ = (lapack_int) incx;
 
     LAPACK_dlarfg(
         &n_, alpha,
@@ -60,12 +60,12 @@ void larfg(
     std::complex<float>* tau )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(incx) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(incx) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int incx_ = (blas_int) incx;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int incx_ = (lapack_int) incx;
 
     LAPACK_clarfg(
         &n_, (lapack_complex_float*) alpha,
@@ -143,12 +143,12 @@ void larfg(
     std::complex<double>* tau )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(incx) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(incx) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int incx_ = (blas_int) incx;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int incx_ = (lapack_int) incx;
 
     LAPACK_zlarfg(
         &n_, (lapack_complex_double*) alpha,

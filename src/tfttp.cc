@@ -16,13 +16,13 @@ int64_t tfttp(
     float* AP )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     char transr_ = op2char( transr );
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int info_ = 0;
 
     LAPACK_stfttp(
         &transr_, &uplo_, &n_,
@@ -41,13 +41,13 @@ int64_t tfttp(
     double* AP )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     char transr_ = op2char( transr );
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int info_ = 0;
 
     LAPACK_dtfttp(
         &transr_, &uplo_, &n_,
@@ -66,13 +66,13 @@ int64_t tfttp(
     std::complex<float>* AP )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     char transr_ = op2char( transr );
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int info_ = 0;
 
     LAPACK_ctfttp(
         &transr_, &uplo_, &n_,
@@ -91,13 +91,13 @@ int64_t tfttp(
     std::complex<double>* AP )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     char transr_ = op2char( transr );
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int info_ = 0;
 
     LAPACK_ztfttp(
         &transr_, &uplo_, &n_,

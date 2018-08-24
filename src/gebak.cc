@@ -17,21 +17,21 @@ int64_t gebak(
     float* V, int64_t ldv )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ilo) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ihi) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
     }
     char balance_ = balance2char( balance );
     char side_ = side2char( side );
-    blas_int n_ = (blas_int) n;
-    blas_int ilo_ = (blas_int) ilo;
-    blas_int ihi_ = (blas_int) ihi;
-    blas_int m_ = (blas_int) m;
-    blas_int ldv_ = (blas_int) ldv;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ilo_ = (lapack_int) ilo;
+    lapack_int ihi_ = (lapack_int) ihi;
+    lapack_int m_ = (lapack_int) m;
+    lapack_int ldv_ = (lapack_int) ldv;
+    lapack_int info_ = 0;
 
     LAPACK_sgebak(
         &balance_, &side_, &n_, &ilo_, &ihi_,
@@ -51,21 +51,21 @@ int64_t gebak(
     double* V, int64_t ldv )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ilo) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ihi) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
     }
     char balance_ = balance2char( balance );
     char side_ = side2char( side );
-    blas_int n_ = (blas_int) n;
-    blas_int ilo_ = (blas_int) ilo;
-    blas_int ihi_ = (blas_int) ihi;
-    blas_int m_ = (blas_int) m;
-    blas_int ldv_ = (blas_int) ldv;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ilo_ = (lapack_int) ilo;
+    lapack_int ihi_ = (lapack_int) ihi;
+    lapack_int m_ = (lapack_int) m;
+    lapack_int ldv_ = (lapack_int) ldv;
+    lapack_int info_ = 0;
 
     LAPACK_dgebak(
         &balance_, &side_, &n_, &ilo_, &ihi_,
@@ -85,21 +85,21 @@ int64_t gebak(
     std::complex<float>* V, int64_t ldv )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ilo) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ihi) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
     }
     char balance_ = balance2char( balance );
     char side_ = side2char( side );
-    blas_int n_ = (blas_int) n;
-    blas_int ilo_ = (blas_int) ilo;
-    blas_int ihi_ = (blas_int) ihi;
-    blas_int m_ = (blas_int) m;
-    blas_int ldv_ = (blas_int) ldv;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ilo_ = (lapack_int) ilo;
+    lapack_int ihi_ = (lapack_int) ihi;
+    lapack_int m_ = (lapack_int) m;
+    lapack_int ldv_ = (lapack_int) ldv;
+    lapack_int info_ = 0;
 
     LAPACK_cgebak(
         &balance_, &side_, &n_, &ilo_, &ihi_,
@@ -168,21 +168,21 @@ int64_t gebak(
     std::complex<double>* V, int64_t ldv )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ilo) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ihi) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
     }
     char balance_ = balance2char( balance );
     char side_ = side2char( side );
-    blas_int n_ = (blas_int) n;
-    blas_int ilo_ = (blas_int) ilo;
-    blas_int ihi_ = (blas_int) ihi;
-    blas_int m_ = (blas_int) m;
-    blas_int ldv_ = (blas_int) ldv;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ilo_ = (lapack_int) ilo;
+    lapack_int ihi_ = (lapack_int) ihi;
+    lapack_int m_ = (lapack_int) m;
+    lapack_int ldv_ = (lapack_int) ldv;
+    lapack_int info_ = 0;
 
     LAPACK_zgebak(
         &balance_, &side_, &n_, &ilo_, &ihi_,

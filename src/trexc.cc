@@ -18,18 +18,18 @@ int64_t trexc(
     int64_t* ilst )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
     }
     char compq_ = job_comp2char( compq );
-    blas_int n_ = (blas_int) n;
-    blas_int ldt_ = (blas_int) ldt;
-    blas_int ldq_ = (blas_int) ldq;
-    blas_int ifst_ = (blas_int) *ifst;
-    blas_int ilst_ = (blas_int) *ilst;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ldt_ = (lapack_int) ldt;
+    lapack_int ldq_ = (lapack_int) ldq;
+    lapack_int ifst_ = (lapack_int) *ifst;
+    lapack_int ilst_ = (lapack_int) *ilst;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< float > work( (n) );
@@ -56,18 +56,18 @@ int64_t trexc(
     int64_t* ilst )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
     }
     char compq_ = job_comp2char( compq );
-    blas_int n_ = (blas_int) n;
-    blas_int ldt_ = (blas_int) ldt;
-    blas_int ldq_ = (blas_int) ldq;
-    blas_int ifst_ = (blas_int) *ifst;
-    blas_int ilst_ = (blas_int) *ilst;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ldt_ = (lapack_int) ldt;
+    lapack_int ldq_ = (lapack_int) ldq;
+    lapack_int ifst_ = (lapack_int) *ifst;
+    lapack_int ilst_ = (lapack_int) *ilst;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< double > work( (n) );
@@ -92,20 +92,20 @@ int64_t trexc(
     std::complex<float>* Q, int64_t ldq, int64_t ifst, int64_t ilst )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ifst) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ilst) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ifst) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ilst) > std::numeric_limits<lapack_int>::max() );
     }
     char compq_ = job_comp2char( compq );
-    blas_int n_ = (blas_int) n;
-    blas_int ldt_ = (blas_int) ldt;
-    blas_int ldq_ = (blas_int) ldq;
-    blas_int ifst_ = (blas_int) ifst;
-    blas_int ilst_ = (blas_int) ilst;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ldt_ = (lapack_int) ldt;
+    lapack_int ldq_ = (lapack_int) ldq;
+    lapack_int ifst_ = (lapack_int) ifst;
+    lapack_int ilst_ = (lapack_int) ilst;
+    lapack_int info_ = 0;
 
     LAPACK_ctrexc(
         &compq_, &n_,
@@ -124,20 +124,20 @@ int64_t trexc(
     std::complex<double>* Q, int64_t ldq, int64_t ifst, int64_t ilst )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ifst) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ilst) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ifst) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ilst) > std::numeric_limits<lapack_int>::max() );
     }
     char compq_ = job_comp2char( compq );
-    blas_int n_ = (blas_int) n;
-    blas_int ldt_ = (blas_int) ldt;
-    blas_int ldq_ = (blas_int) ldq;
-    blas_int ifst_ = (blas_int) ifst;
-    blas_int ilst_ = (blas_int) ilst;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ldt_ = (lapack_int) ldt;
+    lapack_int ldq_ = (lapack_int) ldq;
+    lapack_int ifst_ = (lapack_int) ifst;
+    lapack_int ilst_ = (lapack_int) ilst;
+    lapack_int info_ = 0;
 
     LAPACK_ztrexc(
         &compq_, &n_,

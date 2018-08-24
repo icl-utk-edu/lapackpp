@@ -20,32 +20,32 @@ int64_t stegr(
     int64_t* isuppz )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(il) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(iu) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(il) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(iu) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
     char jobz_ = job2char( jobz );
     char range_ = range2char( range );
-    blas_int n_ = (blas_int) n;
-    blas_int il_ = (blas_int) il;
-    blas_int iu_ = (blas_int) iu;
-    blas_int m_ = (blas_int) *m;
-    blas_int ldz_ = (blas_int) ldz;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int il_ = (lapack_int) il;
+    lapack_int iu_ = (lapack_int) iu;
+    lapack_int m_ = (lapack_int) *m;
+    lapack_int ldz_ = (lapack_int) ldz;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > isuppz_( (2*max( 1, n )) );  // was m; n >= m
-        blas_int* isuppz_ptr = &isuppz_[0];
+        std::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was m; n >= m
+        lapack_int* isuppz_ptr = &isuppz_[0];
     #else
-        blas_int* isuppz_ptr = isuppz;
+        lapack_int* isuppz_ptr = isuppz;
     #endif
-    blas_int info_ = 0;
+    lapack_int info_ = 0;
 
     // query for workspace size
     float qry_work[1];
-    blas_int qry_iwork[1];
-    blas_int ineg_one = -1;
+    lapack_int qry_iwork[1];
+    lapack_int ineg_one = -1;
     LAPACK_sstegr(
         &jobz_, &range_, &n_,
         D,
@@ -58,12 +58,12 @@ int64_t stegr(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
-    blas_int liwork_ = real(qry_iwork[0]);
+    lapack_int lwork_ = real(qry_work[0]);
+    lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
     std::vector< float > work( lwork_ );
-    std::vector< blas_int > iwork( liwork_ );
+    std::vector< lapack_int > iwork( liwork_ );
 
     LAPACK_sstegr(
         &jobz_, &range_, &n_,
@@ -95,32 +95,32 @@ int64_t stegr(
     int64_t* isuppz )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(il) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(iu) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(il) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(iu) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
     char jobz_ = job2char( jobz );
     char range_ = range2char( range );
-    blas_int n_ = (blas_int) n;
-    blas_int il_ = (blas_int) il;
-    blas_int iu_ = (blas_int) iu;
-    blas_int m_ = (blas_int) *m;
-    blas_int ldz_ = (blas_int) ldz;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int il_ = (lapack_int) il;
+    lapack_int iu_ = (lapack_int) iu;
+    lapack_int m_ = (lapack_int) *m;
+    lapack_int ldz_ = (lapack_int) ldz;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > isuppz_( (2*max( 1, n )) );  // was m; n >= m
-        blas_int* isuppz_ptr = &isuppz_[0];
+        std::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was m; n >= m
+        lapack_int* isuppz_ptr = &isuppz_[0];
     #else
-        blas_int* isuppz_ptr = isuppz;
+        lapack_int* isuppz_ptr = isuppz;
     #endif
-    blas_int info_ = 0;
+    lapack_int info_ = 0;
 
     // query for workspace size
     double qry_work[1];
-    blas_int qry_iwork[1];
-    blas_int ineg_one = -1;
+    lapack_int qry_iwork[1];
+    lapack_int ineg_one = -1;
     LAPACK_dstegr(
         &jobz_, &range_, &n_,
         D,
@@ -133,12 +133,12 @@ int64_t stegr(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
-    blas_int liwork_ = real(qry_iwork[0]);
+    lapack_int lwork_ = real(qry_work[0]);
+    lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
     std::vector< double > work( lwork_ );
-    std::vector< blas_int > iwork( liwork_ );
+    std::vector< lapack_int > iwork( liwork_ );
 
     LAPACK_dstegr(
         &jobz_, &range_, &n_,
@@ -170,32 +170,32 @@ int64_t stegr(
     int64_t* isuppz )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(il) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(iu) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(il) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(iu) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
     char jobz_ = job2char( jobz );
     char range_ = range2char( range );
-    blas_int n_ = (blas_int) n;
-    blas_int il_ = (blas_int) il;
-    blas_int iu_ = (blas_int) iu;
-    blas_int m_ = (blas_int) *m;
-    blas_int ldz_ = (blas_int) ldz;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int il_ = (lapack_int) il;
+    lapack_int iu_ = (lapack_int) iu;
+    lapack_int m_ = (lapack_int) *m;
+    lapack_int ldz_ = (lapack_int) ldz;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > isuppz_( (2*max( 1, n )) );  // was m; n >= m
-        blas_int* isuppz_ptr = &isuppz_[0];
+        std::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was m; n >= m
+        lapack_int* isuppz_ptr = &isuppz_[0];
     #else
-        blas_int* isuppz_ptr = isuppz;
+        lapack_int* isuppz_ptr = isuppz;
     #endif
-    blas_int info_ = 0;
+    lapack_int info_ = 0;
 
     // query for workspace size
     float qry_work[1];
-    blas_int qry_iwork[1];
-    blas_int ineg_one = -1;
+    lapack_int qry_iwork[1];
+    lapack_int ineg_one = -1;
     LAPACK_cstegr(
         &jobz_, &range_, &n_,
         D,
@@ -208,12 +208,12 @@ int64_t stegr(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
-    blas_int liwork_ = real(qry_iwork[0]);
+    lapack_int lwork_ = real(qry_work[0]);
+    lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
     std::vector< float > work( lwork_ );
-    std::vector< blas_int > iwork( liwork_ );
+    std::vector< lapack_int > iwork( liwork_ );
 
     LAPACK_cstegr(
         &jobz_, &range_, &n_,
@@ -245,32 +245,32 @@ int64_t stegr(
     int64_t* isuppz )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(il) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(iu) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(il) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(iu) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
     char jobz_ = job2char( jobz );
     char range_ = range2char( range );
-    blas_int n_ = (blas_int) n;
-    blas_int il_ = (blas_int) il;
-    blas_int iu_ = (blas_int) iu;
-    blas_int m_ = (blas_int) *m;
-    blas_int ldz_ = (blas_int) ldz;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int il_ = (lapack_int) il;
+    lapack_int iu_ = (lapack_int) iu;
+    lapack_int m_ = (lapack_int) *m;
+    lapack_int ldz_ = (lapack_int) ldz;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > isuppz_( (2*max( 1, n )) );  // was m; n >= m
-        blas_int* isuppz_ptr = &isuppz_[0];
+        std::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was m; n >= m
+        lapack_int* isuppz_ptr = &isuppz_[0];
     #else
-        blas_int* isuppz_ptr = isuppz;
+        lapack_int* isuppz_ptr = isuppz;
     #endif
-    blas_int info_ = 0;
+    lapack_int info_ = 0;
 
     // query for workspace size
     double qry_work[1];
-    blas_int qry_iwork[1];
-    blas_int ineg_one = -1;
+    lapack_int qry_iwork[1];
+    lapack_int ineg_one = -1;
     LAPACK_zstegr(
         &jobz_, &range_, &n_,
         D,
@@ -283,12 +283,12 @@ int64_t stegr(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
-    blas_int liwork_ = real(qry_iwork[0]);
+    lapack_int lwork_ = real(qry_work[0]);
+    lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
     std::vector< double > work( lwork_ );
-    std::vector< blas_int > iwork( liwork_ );
+    std::vector< lapack_int > iwork( liwork_ );
 
     LAPACK_zstegr(
         &jobz_, &range_, &n_,

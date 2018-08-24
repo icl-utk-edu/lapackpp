@@ -18,18 +18,18 @@ void larft(
     float* T, int64_t ldt )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
     }
     char direct_ = direct2char( direct );
     char storev_ = storev2char( storev );
-    blas_int n_ = (blas_int) n;
-    blas_int k_ = (blas_int) k;
-    blas_int ldv_ = (blas_int) ldv;
-    blas_int ldt_ = (blas_int) ldt;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int k_ = (lapack_int) k;
+    lapack_int ldv_ = (lapack_int) ldv;
+    lapack_int ldt_ = (lapack_int) ldt;
 
     LAPACK_slarft(
         &direct_, &storev_, &n_, &k_,
@@ -47,18 +47,18 @@ void larft(
     double* T, int64_t ldt )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
     }
     char direct_ = direct2char( direct );
     char storev_ = storev2char( storev );
-    blas_int n_ = (blas_int) n;
-    blas_int k_ = (blas_int) k;
-    blas_int ldv_ = (blas_int) ldv;
-    blas_int ldt_ = (blas_int) ldt;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int k_ = (lapack_int) k;
+    lapack_int ldv_ = (lapack_int) ldv;
+    lapack_int ldt_ = (lapack_int) ldt;
 
     LAPACK_dlarft(
         &direct_, &storev_, &n_, &k_,
@@ -76,18 +76,18 @@ void larft(
     std::complex<float>* T, int64_t ldt )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
     }
     char direct_ = direct2char( direct );
     char storev_ = storev2char( storev );
-    blas_int n_ = (blas_int) n;
-    blas_int k_ = (blas_int) k;
-    blas_int ldv_ = (blas_int) ldv;
-    blas_int ldt_ = (blas_int) ldt;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int k_ = (lapack_int) k;
+    lapack_int ldv_ = (lapack_int) ldv;
+    lapack_int ldt_ = (lapack_int) ldt;
 
     LAPACK_clarft(
         &direct_, &storev_, &n_, &k_,
@@ -196,18 +196,18 @@ void larft(
     std::complex<double>* T, int64_t ldt )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
     }
     char direct_ = direct2char( direct );
     char storev_ = storev2char( storev );
-    blas_int n_ = (blas_int) n;
-    blas_int k_ = (blas_int) k;
-    blas_int ldv_ = (blas_int) ldv;
-    blas_int ldt_ = (blas_int) ldt;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int k_ = (lapack_int) k;
+    lapack_int ldv_ = (lapack_int) ldv;
+    lapack_int ldt_ = (lapack_int) ldt;
 
     LAPACK_zlarft(
         &direct_, &storev_, &n_, &k_,

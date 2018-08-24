@@ -19,16 +19,16 @@ int64_t gebal(
     float* scale )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
     char balance_ = balance2char( balance );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int ilo_ = (blas_int) *ilo;
-    blas_int ihi_ = (blas_int) *ihi;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int ilo_ = (lapack_int) *ilo;
+    lapack_int ihi_ = (lapack_int) *ihi;
+    lapack_int info_ = 0;
 
     LAPACK_sgebal(
         &balance_, &n_,
@@ -52,16 +52,16 @@ int64_t gebal(
     double* scale )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
     char balance_ = balance2char( balance );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int ilo_ = (blas_int) *ilo;
-    blas_int ihi_ = (blas_int) *ihi;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int ilo_ = (lapack_int) *ilo;
+    lapack_int ihi_ = (lapack_int) *ihi;
+    lapack_int info_ = 0;
 
     LAPACK_dgebal(
         &balance_, &n_,
@@ -85,16 +85,16 @@ int64_t gebal(
     float* scale )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
     char balance_ = balance2char( balance );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int ilo_ = (blas_int) *ilo;
-    blas_int ihi_ = (blas_int) *ihi;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int ilo_ = (lapack_int) *ilo;
+    lapack_int ihi_ = (lapack_int) *ihi;
+    lapack_int info_ = 0;
 
     LAPACK_cgebal(
         &balance_, &n_,
@@ -208,16 +208,16 @@ int64_t gebal(
     double* scale )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
     char balance_ = balance2char( balance );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int ilo_ = (blas_int) *ilo;
-    blas_int ihi_ = (blas_int) *ihi;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int ilo_ = (lapack_int) *ilo;
+    lapack_int ihi_ = (lapack_int) *ihi;
+    lapack_int info_ = 0;
 
     LAPACK_zgebal(
         &balance_, &n_,

@@ -18,25 +18,25 @@ int64_t gghrd(
     float* Z, int64_t ldz )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ilo) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ihi) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
     char compq_ = job_comp2char( compq );
     char compz_ = job_comp2char( compz );
-    blas_int n_ = (blas_int) n;
-    blas_int ilo_ = (blas_int) ilo;
-    blas_int ihi_ = (blas_int) ihi;
-    blas_int lda_ = (blas_int) lda;
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int ldq_ = (blas_int) ldq;
-    blas_int ldz_ = (blas_int) ldz;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ilo_ = (lapack_int) ilo;
+    lapack_int ihi_ = (lapack_int) ihi;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int ldq_ = (lapack_int) ldq;
+    lapack_int ldz_ = (lapack_int) ldz;
+    lapack_int info_ = 0;
 
     LAPACK_sgghrd(
         &compq_, &compz_, &n_, &ilo_, &ihi_,
@@ -59,25 +59,25 @@ int64_t gghrd(
     double* Z, int64_t ldz )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ilo) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ihi) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
     char compq_ = job_comp2char( compq );
     char compz_ = job_comp2char( compz );
-    blas_int n_ = (blas_int) n;
-    blas_int ilo_ = (blas_int) ilo;
-    blas_int ihi_ = (blas_int) ihi;
-    blas_int lda_ = (blas_int) lda;
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int ldq_ = (blas_int) ldq;
-    blas_int ldz_ = (blas_int) ldz;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ilo_ = (lapack_int) ilo;
+    lapack_int ihi_ = (lapack_int) ihi;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int ldq_ = (lapack_int) ldq;
+    lapack_int ldz_ = (lapack_int) ldz;
+    lapack_int info_ = 0;
 
     LAPACK_dgghrd(
         &compq_, &compz_, &n_, &ilo_, &ihi_,
@@ -100,25 +100,25 @@ int64_t gghrd(
     std::complex<float>* Z, int64_t ldz )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ilo) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ihi) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
     char compq_ = job_comp2char( compq );
     char compz_ = job_comp2char( compz );
-    blas_int n_ = (blas_int) n;
-    blas_int ilo_ = (blas_int) ilo;
-    blas_int ihi_ = (blas_int) ihi;
-    blas_int lda_ = (blas_int) lda;
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int ldq_ = (blas_int) ldq;
-    blas_int ldz_ = (blas_int) ldz;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ilo_ = (lapack_int) ilo;
+    lapack_int ihi_ = (lapack_int) ihi;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int ldq_ = (lapack_int) ldq;
+    lapack_int ldz_ = (lapack_int) ldz;
+    lapack_int info_ = 0;
 
     LAPACK_cgghrd(
         &compq_, &compz_, &n_, &ilo_, &ihi_,
@@ -141,25 +141,25 @@ int64_t gghrd(
     std::complex<double>* Z, int64_t ldz )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ilo) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ihi) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ilo) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ihi) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
     char compq_ = job_comp2char( compq );
     char compz_ = job_comp2char( compz );
-    blas_int n_ = (blas_int) n;
-    blas_int ilo_ = (blas_int) ilo;
-    blas_int ihi_ = (blas_int) ihi;
-    blas_int lda_ = (blas_int) lda;
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int ldq_ = (blas_int) ldq;
-    blas_int ldz_ = (blas_int) ldz;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ilo_ = (lapack_int) ilo;
+    lapack_int ihi_ = (lapack_int) ihi;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int ldq_ = (lapack_int) ldq;
+    lapack_int ldz_ = (lapack_int) ldz;
+    lapack_int info_ = 0;
 
     LAPACK_zgghrd(
         &compq_, &compz_, &n_, &ilo_, &ihi_,

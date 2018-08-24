@@ -16,14 +16,14 @@ int64_t lauum(
     float* A, int64_t lda )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int info_ = 0;
 
     LAPACK_slauum(
         &uplo_, &n_,
@@ -41,14 +41,14 @@ int64_t lauum(
     double* A, int64_t lda )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int info_ = 0;
 
     LAPACK_dlauum(
         &uplo_, &n_,
@@ -66,14 +66,14 @@ int64_t lauum(
     std::complex<float>* A, int64_t lda )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int info_ = 0;
 
     LAPACK_clauum(
         &uplo_, &n_,
@@ -129,14 +129,14 @@ int64_t lauum(
     std::complex<double>* A, int64_t lda )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int info_ = 0;
 
     LAPACK_zlauum(
         &uplo_, &n_,

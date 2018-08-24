@@ -19,15 +19,15 @@ int64_t gtsv(
     float* B, int64_t ldb )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int nrhs_ = (blas_int) nrhs;
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int nrhs_ = (lapack_int) nrhs;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int info_ = 0;
 
     LAPACK_sgtsv(
         &n_, &nrhs_,
@@ -51,15 +51,15 @@ int64_t gtsv(
     double* B, int64_t ldb )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int nrhs_ = (blas_int) nrhs;
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int nrhs_ = (lapack_int) nrhs;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int info_ = 0;
 
     LAPACK_dgtsv(
         &n_, &nrhs_,
@@ -83,15 +83,15 @@ int64_t gtsv(
     std::complex<float>* B, int64_t ldb )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int nrhs_ = (blas_int) nrhs;
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int nrhs_ = (lapack_int) nrhs;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int info_ = 0;
 
     LAPACK_cgtsv(
         &n_, &nrhs_,
@@ -166,15 +166,15 @@ int64_t gtsv(
     std::complex<double>* B, int64_t ldb )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int nrhs_ = (blas_int) nrhs;
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int nrhs_ = (lapack_int) nrhs;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int info_ = 0;
 
     LAPACK_zgtsv(
         &n_, &nrhs_,

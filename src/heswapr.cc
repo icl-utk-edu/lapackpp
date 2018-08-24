@@ -18,17 +18,17 @@ void heswapr(
     std::complex<float>* A, int64_t lda, int64_t i1, int64_t i2 )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(i1) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(i2) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(i1) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(i2) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int i1_ = (blas_int) i1;
-    blas_int i2_ = (blas_int) i2;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int i1_ = (lapack_int) i1;
+    lapack_int i2_ = (lapack_int) i2;
 
     LAPACK_cheswapr(
         &uplo_, &n_,
@@ -72,17 +72,17 @@ void heswapr(
     std::complex<double>* A, int64_t lda, int64_t i1, int64_t i2 )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(i1) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(i2) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(i1) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(i2) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int i1_ = (blas_int) i1;
-    blas_int i2_ = (blas_int) i2;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int i1_ = (lapack_int) i1;
+    lapack_int i2_ = (lapack_int) i2;
 
     LAPACK_zheswapr(
         &uplo_, &n_,

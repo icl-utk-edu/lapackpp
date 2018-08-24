@@ -18,28 +18,28 @@ int64_t gbsv(
     float* B, int64_t ldb )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(kl) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int kl_ = (blas_int) kl;
-    blas_int ku_ = (blas_int) ku;
-    blas_int nrhs_ = (blas_int) nrhs;
-    blas_int ldab_ = (blas_int) ldab;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int kl_ = (lapack_int) kl;
+    lapack_int ku_ = (lapack_int) ku;
+    lapack_int nrhs_ = (lapack_int) nrhs;
+    lapack_int ldab_ = (lapack_int) ldab;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( (n) );
-        blas_int* ipiv_ptr = &ipiv_[0];
+        std::vector< lapack_int > ipiv_( (n) );
+        lapack_int* ipiv_ptr = &ipiv_[0];
     #else
-        blas_int* ipiv_ptr = ipiv;
+        lapack_int* ipiv_ptr = ipiv;
     #endif
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int info_ = 0;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int info_ = 0;
 
     LAPACK_sgbsv(
         &n_, &kl_, &ku_, &nrhs_,
@@ -64,28 +64,28 @@ int64_t gbsv(
     double* B, int64_t ldb )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(kl) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int kl_ = (blas_int) kl;
-    blas_int ku_ = (blas_int) ku;
-    blas_int nrhs_ = (blas_int) nrhs;
-    blas_int ldab_ = (blas_int) ldab;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int kl_ = (lapack_int) kl;
+    lapack_int ku_ = (lapack_int) ku;
+    lapack_int nrhs_ = (lapack_int) nrhs;
+    lapack_int ldab_ = (lapack_int) ldab;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( (n) );
-        blas_int* ipiv_ptr = &ipiv_[0];
+        std::vector< lapack_int > ipiv_( (n) );
+        lapack_int* ipiv_ptr = &ipiv_[0];
     #else
-        blas_int* ipiv_ptr = ipiv;
+        lapack_int* ipiv_ptr = ipiv;
     #endif
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int info_ = 0;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int info_ = 0;
 
     LAPACK_dgbsv(
         &n_, &kl_, &ku_, &nrhs_,
@@ -110,28 +110,28 @@ int64_t gbsv(
     std::complex<float>* B, int64_t ldb )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(kl) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int kl_ = (blas_int) kl;
-    blas_int ku_ = (blas_int) ku;
-    blas_int nrhs_ = (blas_int) nrhs;
-    blas_int ldab_ = (blas_int) ldab;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int kl_ = (lapack_int) kl;
+    lapack_int ku_ = (lapack_int) ku;
+    lapack_int nrhs_ = (lapack_int) nrhs;
+    lapack_int ldab_ = (lapack_int) ldab;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( (n) );
-        blas_int* ipiv_ptr = &ipiv_[0];
+        std::vector< lapack_int > ipiv_( (n) );
+        lapack_int* ipiv_ptr = &ipiv_[0];
     #else
-        blas_int* ipiv_ptr = ipiv;
+        lapack_int* ipiv_ptr = ipiv;
     #endif
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int info_ = 0;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int info_ = 0;
 
     LAPACK_cgbsv(
         &n_, &kl_, &ku_, &nrhs_,
@@ -238,28 +238,28 @@ int64_t gbsv(
     std::complex<double>* B, int64_t ldb )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(kl) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int kl_ = (blas_int) kl;
-    blas_int ku_ = (blas_int) ku;
-    blas_int nrhs_ = (blas_int) nrhs;
-    blas_int ldab_ = (blas_int) ldab;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int kl_ = (lapack_int) kl;
+    lapack_int ku_ = (lapack_int) ku;
+    lapack_int nrhs_ = (lapack_int) nrhs;
+    lapack_int ldab_ = (lapack_int) ldab;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( (n) );
-        blas_int* ipiv_ptr = &ipiv_[0];
+        std::vector< lapack_int > ipiv_( (n) );
+        lapack_int* ipiv_ptr = &ipiv_[0];
     #else
-        blas_int* ipiv_ptr = ipiv;
+        lapack_int* ipiv_ptr = ipiv;
     #endif
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int info_ = 0;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int info_ = 0;
 
     LAPACK_zgbsv(
         &n_, &kl_, &ku_, &nrhs_,

@@ -16,17 +16,17 @@ float lantb(
     float const* AB, int64_t ldab )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
     }
     char norm_ = norm2char( norm );
     char uplo_ = uplo2char( uplo );
     char diag_ = diag2char( diag );
-    blas_int n_ = (blas_int) n;
-    blas_int k_ = (blas_int) k;
-    blas_int ldab_ = (blas_int) ldab;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int k_ = (lapack_int) k;
+    lapack_int ldab_ = (lapack_int) ldab;
 
     // from docs
     int64_t lwork = (norm == Norm::Inf ? n : 1);
@@ -47,17 +47,17 @@ double lantb(
     double const* AB, int64_t ldab )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
     }
     char norm_ = norm2char( norm );
     char uplo_ = uplo2char( uplo );
     char diag_ = diag2char( diag );
-    blas_int n_ = (blas_int) n;
-    blas_int k_ = (blas_int) k;
-    blas_int ldab_ = (blas_int) ldab;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int k_ = (lapack_int) k;
+    lapack_int ldab_ = (lapack_int) ldab;
 
     // from docs
     int64_t lwork = (norm == Norm::Inf ? n : 1);
@@ -78,17 +78,17 @@ float lantb(
     std::complex<float> const* AB, int64_t ldab )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
     }
     char norm_ = norm2char( norm );
     char uplo_ = uplo2char( uplo );
     char diag_ = diag2char( diag );
-    blas_int n_ = (blas_int) n;
-    blas_int k_ = (blas_int) k;
-    blas_int ldab_ = (blas_int) ldab;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int k_ = (lapack_int) k;
+    lapack_int ldab_ = (lapack_int) ldab;
 
     // from docs
     int64_t lwork = (norm == Norm::Inf ? n : 1);
@@ -156,17 +156,17 @@ double lantb(
     std::complex<double> const* AB, int64_t ldab )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
     }
     char norm_ = norm2char( norm );
     char uplo_ = uplo2char( uplo );
     char diag_ = diag2char( diag );
-    blas_int n_ = (blas_int) n;
-    blas_int k_ = (blas_int) k;
-    blas_int ldab_ = (blas_int) ldab;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int k_ = (lapack_int) k;
+    lapack_int ldab_ = (lapack_int) ldab;
 
     // from docs
     int64_t lwork = (norm == Norm::Inf ? n : 1);

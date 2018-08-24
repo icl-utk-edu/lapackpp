@@ -23,33 +23,33 @@ int64_t trevc3(
     int64_t* m )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(mm) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvl) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvr) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(mm) > std::numeric_limits<lapack_int>::max() );
     }
     char sides_ = sides2char( sides );
     char howmany_ = howmany2char( howmany );
     #if 1
         // 32-bit copy
-        std::vector< blas_int > select_( &select[0], &select[(n)] );
-        blas_int* select_ptr = &select_[0];
+        std::vector< lapack_int > select_( &select[0], &select[(n)] );
+        lapack_int* select_ptr = &select_[0];
     #else
-        blas_int* select_ptr = select;
+        lapack_int* select_ptr = select;
     #endif
-    blas_int n_ = (blas_int) n;
-    blas_int ldt_ = (blas_int) ldt;
-    blas_int ldvl_ = (blas_int) ldvl;
-    blas_int ldvr_ = (blas_int) ldvr;
-    blas_int mm_ = (blas_int) mm;
-    blas_int m_ = (blas_int) *m;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ldt_ = (lapack_int) ldt;
+    lapack_int ldvl_ = (lapack_int) ldvl;
+    lapack_int ldvr_ = (lapack_int) ldvr;
+    lapack_int mm_ = (lapack_int) mm;
+    lapack_int m_ = (lapack_int) *m;
+    lapack_int info_ = 0;
 
     // query for workspace size
     float qry_work[1];
-    blas_int ineg_one = -1;
+    lapack_int ineg_one = -1;
     LAPACK_strevc3(
         &sides_, &howmany_,
         select_ptr, &n_,
@@ -60,7 +60,7 @@ int64_t trevc3(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
+    lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
     std::vector< float > work( lwork_ );
@@ -93,33 +93,33 @@ int64_t trevc3(
     int64_t* m )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(mm) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvl) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvr) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(mm) > std::numeric_limits<lapack_int>::max() );
     }
     char sides_ = sides2char( sides );
     char howmany_ = howmany2char( howmany );
     #if 1
         // 32-bit copy
-        std::vector< blas_int > select_( &select[0], &select[(n)] );
-        blas_int* select_ptr = &select_[0];
+        std::vector< lapack_int > select_( &select[0], &select[(n)] );
+        lapack_int* select_ptr = &select_[0];
     #else
-        blas_int* select_ptr = select;
+        lapack_int* select_ptr = select;
     #endif
-    blas_int n_ = (blas_int) n;
-    blas_int ldt_ = (blas_int) ldt;
-    blas_int ldvl_ = (blas_int) ldvl;
-    blas_int ldvr_ = (blas_int) ldvr;
-    blas_int mm_ = (blas_int) mm;
-    blas_int m_ = (blas_int) *m;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ldt_ = (lapack_int) ldt;
+    lapack_int ldvl_ = (lapack_int) ldvl;
+    lapack_int ldvr_ = (lapack_int) ldvr;
+    lapack_int mm_ = (lapack_int) mm;
+    lapack_int m_ = (lapack_int) *m;
+    lapack_int info_ = 0;
 
     // query for workspace size
     double qry_work[1];
-    blas_int ineg_one = -1;
+    lapack_int ineg_one = -1;
     LAPACK_dtrevc3(
         &sides_, &howmany_,
         select_ptr, &n_,
@@ -130,7 +130,7 @@ int64_t trevc3(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
+    lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
     std::vector< double > work( lwork_ );
@@ -163,34 +163,34 @@ int64_t trevc3(
     int64_t* m )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(mm) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvl) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvr) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(mm) > std::numeric_limits<lapack_int>::max() );
     }
     char sides_ = sides2char( sides );
     char howmany_ = howmany2char( howmany );
     #if 1
         // 32-bit copy
-        std::vector< blas_int > select_( &select[0], &select[(n)] );
-        blas_int const* select_ptr = &select_[0];
+        std::vector< lapack_int > select_( &select[0], &select[(n)] );
+        lapack_int const* select_ptr = &select_[0];
     #else
-        blas_int const* select_ptr = select_;
+        lapack_int const* select_ptr = select_;
     #endif
-    blas_int n_ = (blas_int) n;
-    blas_int ldt_ = (blas_int) ldt;
-    blas_int ldvl_ = (blas_int) ldvl;
-    blas_int ldvr_ = (blas_int) ldvr;
-    blas_int mm_ = (blas_int) mm;
-    blas_int m_ = (blas_int) *m;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ldt_ = (lapack_int) ldt;
+    lapack_int ldvl_ = (lapack_int) ldvl;
+    lapack_int ldvr_ = (lapack_int) ldvr;
+    lapack_int mm_ = (lapack_int) mm;
+    lapack_int m_ = (lapack_int) *m;
+    lapack_int info_ = 0;
 
     // query for workspace size
     std::complex<float> qry_work[1];
     float qry_rwork[1];
-    blas_int ineg_one = -1;
+    lapack_int ineg_one = -1;
     LAPACK_ctrevc3(
         &sides_, &howmany_,
         select_ptr, &n_,
@@ -202,8 +202,8 @@ int64_t trevc3(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
-    blas_int lrwork_ = real(qry_rwork[0]);
+    lapack_int lwork_ = real(qry_work[0]);
+    lapack_int lrwork_ = real(qry_rwork[0]);
 
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
@@ -356,34 +356,34 @@ int64_t trevc3(
     int64_t* m )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(mm) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvl) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvr) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(mm) > std::numeric_limits<lapack_int>::max() );
     }
     char sides_ = sides2char( sides );
     char howmany_ = howmany2char( howmany );
     #if 1
         // 32-bit copy
-        std::vector< blas_int > select_( &select[0], &select[(n)] );
-        blas_int const* select_ptr = &select_[0];
+        std::vector< lapack_int > select_( &select[0], &select[(n)] );
+        lapack_int const* select_ptr = &select_[0];
     #else
-        blas_int const* select_ptr = select_;
+        lapack_int const* select_ptr = select_;
     #endif
-    blas_int n_ = (blas_int) n;
-    blas_int ldt_ = (blas_int) ldt;
-    blas_int ldvl_ = (blas_int) ldvl;
-    blas_int ldvr_ = (blas_int) ldvr;
-    blas_int mm_ = (blas_int) mm;
-    blas_int m_ = (blas_int) *m;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ldt_ = (lapack_int) ldt;
+    lapack_int ldvl_ = (lapack_int) ldvl;
+    lapack_int ldvr_ = (lapack_int) ldvr;
+    lapack_int mm_ = (lapack_int) mm;
+    lapack_int m_ = (lapack_int) *m;
+    lapack_int info_ = 0;
 
     // query for workspace size
     std::complex<double> qry_work[1];
     double qry_rwork[1];
-    blas_int ineg_one = -1;
+    lapack_int ineg_one = -1;
     LAPACK_ztrevc3(
         &sides_, &howmany_,
         select_ptr, &n_,
@@ -395,8 +395,8 @@ int64_t trevc3(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
-    blas_int lrwork_ = real(qry_rwork[0]);
+    lapack_int lwork_ = real(qry_work[0]);
+    lapack_int lrwork_ = real(qry_rwork[0]);
 
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );

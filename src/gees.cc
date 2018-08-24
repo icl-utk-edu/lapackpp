@@ -18,18 +18,18 @@ int64_t gees(
     float* VS, int64_t ldvs )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvs) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvs) > std::numeric_limits<lapack_int>::max() );
     }
     char jobvs_ = job2char( jobvs );
     char sort_ = sort2char( sort );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int sdim_ = (blas_int) *sdim;
-    blas_int ldvs_ = (blas_int) ldvs;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int sdim_ = (lapack_int) *sdim;
+    lapack_int ldvs_ = (lapack_int) ldvs;
+    lapack_int info_ = 0;
 
     // split-complex representation
     std::vector< float > WR( max( 1, n ) );
@@ -37,8 +37,8 @@ int64_t gees(
 
     // query for workspace size
     float qry_work[1];
-    blas_int qry_bwork[1];
-    blas_int ineg_one = -1;
+    lapack_int qry_bwork[1];
+    lapack_int ineg_one = -1;
     LAPACK_sgees(
         &jobvs_, &sort_,
         select, &n_,
@@ -51,11 +51,11 @@ int64_t gees(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
+    lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
     std::vector< float > work( lwork_ );
-    std::vector< blas_int > bwork( (n) );
+    std::vector< lapack_int > bwork( (n) );
 
     LAPACK_sgees(
         &jobvs_, &sort_,
@@ -86,18 +86,18 @@ int64_t gees(
     double* VS, int64_t ldvs )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvs) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvs) > std::numeric_limits<lapack_int>::max() );
     }
     char jobvs_ = job2char( jobvs );
     char sort_ = sort2char( sort );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int sdim_ = (blas_int) *sdim;
-    blas_int ldvs_ = (blas_int) ldvs;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int sdim_ = (lapack_int) *sdim;
+    lapack_int ldvs_ = (lapack_int) ldvs;
+    lapack_int info_ = 0;
 
     // split-complex representation
     std::vector< double > WR( max( 1, n ) );
@@ -105,8 +105,8 @@ int64_t gees(
 
     // query for workspace size
     double qry_work[1];
-    blas_int qry_bwork[1];
-    blas_int ineg_one = -1;
+    lapack_int qry_bwork[1];
+    lapack_int ineg_one = -1;
     LAPACK_dgees(
         &jobvs_, &sort_,
         select, &n_,
@@ -119,11 +119,11 @@ int64_t gees(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
+    lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
     std::vector< double > work( lwork_ );
-    std::vector< blas_int > bwork( (n) );
+    std::vector< lapack_int > bwork( (n) );
 
     LAPACK_dgees(
         &jobvs_, &sort_,
@@ -154,24 +154,24 @@ int64_t gees(
     std::complex<float>* VS, int64_t ldvs )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvs) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvs) > std::numeric_limits<lapack_int>::max() );
     }
     char jobvs_ = job2char( jobvs );
     char sort_ = sort2char( sort );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int sdim_ = (blas_int) *sdim;
-    blas_int ldvs_ = (blas_int) ldvs;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int sdim_ = (lapack_int) *sdim;
+    lapack_int ldvs_ = (lapack_int) ldvs;
+    lapack_int info_ = 0;
 
     // query for workspace size
     std::complex<float> qry_work[1];
     float qry_rwork[1];
-    blas_int qry_bwork[1];
-    blas_int ineg_one = -1;
+    lapack_int qry_bwork[1];
+    lapack_int ineg_one = -1;
     LAPACK_cgees(
         &jobvs_, &sort_,
         (LAPACK_C_SELECT1) select, &n_,
@@ -184,12 +184,12 @@ int64_t gees(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
+    lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
     std::vector< float > rwork( (n) );
-    std::vector< blas_int > bwork( (n) );
+    std::vector< lapack_int > bwork( (n) );
 
     LAPACK_cgees(
         &jobvs_, &sort_,
@@ -216,24 +216,24 @@ int64_t gees(
     std::complex<double>* VS, int64_t ldvs )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvs) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvs) > std::numeric_limits<lapack_int>::max() );
     }
     char jobvs_ = job2char( jobvs );
     char sort_ = sort2char( sort );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int sdim_ = (blas_int) *sdim;
-    blas_int ldvs_ = (blas_int) ldvs;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int sdim_ = (lapack_int) *sdim;
+    lapack_int ldvs_ = (lapack_int) ldvs;
+    lapack_int info_ = 0;
 
     // query for workspace size
     std::complex<double> qry_work[1];
     double qry_rwork[1];
-    blas_int qry_bwork[1];
-    blas_int ineg_one = -1;
+    lapack_int qry_bwork[1];
+    lapack_int ineg_one = -1;
     LAPACK_zgees(
         &jobvs_, &sort_,
         (LAPACK_Z_SELECT1) select, &n_,
@@ -246,12 +246,12 @@ int64_t gees(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
+    lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );
     std::vector< double > rwork( (n) );
-    std::vector< blas_int > bwork( (n) );
+    std::vector< lapack_int > bwork( (n) );
 
     LAPACK_zgees(
         &jobvs_, &sort_,

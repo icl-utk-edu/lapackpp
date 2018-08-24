@@ -20,21 +20,21 @@ int64_t ggev(
     float* VR, int64_t ldvr )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvl) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvr) > std::numeric_limits<lapack_int>::max() );
     }
     char jobvl_ = job2char( jobvl );
     char jobvr_ = job2char( jobvr );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int ldvl_ = (blas_int) ldvl;
-    blas_int ldvr_ = (blas_int) ldvr;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int ldvl_ = (lapack_int) ldvl;
+    lapack_int ldvr_ = (lapack_int) ldvr;
+    lapack_int info_ = 0;
 
     // split-complex representation
     std::vector< float > alphar( max( 1, n ) );
@@ -42,7 +42,7 @@ int64_t ggev(
 
     // query for workspace size
     float qry_work[1];
-    blas_int ineg_one = -1;
+    lapack_int ineg_one = -1;
     LAPACK_sggev(
         &jobvl_, &jobvr_, &n_,
         A, &lda_,
@@ -55,7 +55,7 @@ int64_t ggev(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
+    lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
     std::vector< float > work( lwork_ );
@@ -90,21 +90,21 @@ int64_t ggev(
     double* VR, int64_t ldvr )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvl) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvr) > std::numeric_limits<lapack_int>::max() );
     }
     char jobvl_ = job2char( jobvl );
     char jobvr_ = job2char( jobvr );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int ldvl_ = (blas_int) ldvl;
-    blas_int ldvr_ = (blas_int) ldvr;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int ldvl_ = (lapack_int) ldvl;
+    lapack_int ldvr_ = (lapack_int) ldvr;
+    lapack_int info_ = 0;
 
     // split-complex representation
     std::vector< double > alphar( max( 1, n ) );
@@ -112,7 +112,7 @@ int64_t ggev(
 
     // query for workspace size
     double qry_work[1];
-    blas_int ineg_one = -1;
+    lapack_int ineg_one = -1;
     LAPACK_dggev(
         &jobvl_, &jobvr_, &n_,
         A, &lda_,
@@ -125,7 +125,7 @@ int64_t ggev(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
+    lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
     std::vector< double > work( lwork_ );
@@ -160,26 +160,26 @@ int64_t ggev(
     std::complex<float>* VR, int64_t ldvr )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvl) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvr) > std::numeric_limits<lapack_int>::max() );
     }
     char jobvl_ = job2char( jobvl );
     char jobvr_ = job2char( jobvr );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int ldvl_ = (blas_int) ldvl;
-    blas_int ldvr_ = (blas_int) ldvr;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int ldvl_ = (lapack_int) ldvl;
+    lapack_int ldvr_ = (lapack_int) ldvr;
+    lapack_int info_ = 0;
 
     // query for workspace size
     std::complex<float> qry_work[1];
     float qry_rwork[1];
-    blas_int ineg_one = -1;
+    lapack_int ineg_one = -1;
     LAPACK_cggev(
         &jobvl_, &jobvr_, &n_,
         (lapack_complex_float*) A, &lda_,
@@ -193,7 +193,7 @@ int64_t ggev(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
+    lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
@@ -226,26 +226,26 @@ int64_t ggev(
     std::complex<double>* VR, int64_t ldvr )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvl) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvr) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvl) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvr) > std::numeric_limits<lapack_int>::max() );
     }
     char jobvl_ = job2char( jobvl );
     char jobvr_ = job2char( jobvr );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int ldvl_ = (blas_int) ldvl;
-    blas_int ldvr_ = (blas_int) ldvr;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int ldvl_ = (lapack_int) ldvl;
+    lapack_int ldvr_ = (lapack_int) ldvr;
+    lapack_int info_ = 0;
 
     // query for workspace size
     std::complex<double> qry_work[1];
     double qry_rwork[1];
-    blas_int ineg_one = -1;
+    lapack_int ineg_one = -1;
     LAPACK_zggev(
         &jobvl_, &jobvr_, &n_,
         (lapack_complex_double*) A, &lda_,
@@ -259,7 +259,7 @@ int64_t ggev(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
+    lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );

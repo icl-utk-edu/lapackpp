@@ -19,16 +19,16 @@ int64_t pbequ(
     float* amax )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(kd) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int kd_ = (blas_int) kd;
-    blas_int ldab_ = (blas_int) ldab;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int kd_ = (lapack_int) kd;
+    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int info_ = 0;
 
     LAPACK_spbequ(
         &uplo_, &n_, &kd_,
@@ -50,16 +50,16 @@ int64_t pbequ(
     double* amax )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(kd) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int kd_ = (blas_int) kd;
-    blas_int ldab_ = (blas_int) ldab;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int kd_ = (lapack_int) kd;
+    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int info_ = 0;
 
     LAPACK_dpbequ(
         &uplo_, &n_, &kd_,
@@ -81,16 +81,16 @@ int64_t pbequ(
     float* amax )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(kd) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int kd_ = (blas_int) kd;
-    blas_int ldab_ = (blas_int) ldab;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int kd_ = (lapack_int) kd;
+    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int info_ = 0;
 
     LAPACK_cpbequ(
         &uplo_, &n_, &kd_,
@@ -164,16 +164,16 @@ int64_t pbequ(
     double* amax )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(kd) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int kd_ = (blas_int) kd;
-    blas_int ldab_ = (blas_int) ldab;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int kd_ = (lapack_int) kd;
+    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int info_ = 0;
 
     LAPACK_zpbequ(
         &uplo_, &n_, &kd_,

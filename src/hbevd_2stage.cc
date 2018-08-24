@@ -19,25 +19,25 @@ int64_t hbevd_2stage(
     std::complex<float>* Z, int64_t ldz )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(kd) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
     char jobz_ = job2char( jobz );
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int kd_ = (blas_int) kd;
-    blas_int ldab_ = (blas_int) ldab;
-    blas_int ldz_ = (blas_int) ldz;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int kd_ = (lapack_int) kd;
+    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int ldz_ = (lapack_int) ldz;
+    lapack_int info_ = 0;
 
     // query for workspace size
     std::complex<float> qry_work[1];
     float qry_rwork[1];
-    blas_int qry_iwork[1];
-    blas_int ineg_one = -1;
+    lapack_int qry_iwork[1];
+    lapack_int ineg_one = -1;
     LAPACK_chbevd_2stage(
         &jobz_, &uplo_, &n_, &kd_,
         (lapack_complex_float*) AB, &ldab_,
@@ -49,14 +49,14 @@ int64_t hbevd_2stage(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
-    blas_int lrwork_ = real(qry_rwork[0]);
-    blas_int liwork_ = real(qry_iwork[0]);
+    lapack_int lwork_ = real(qry_work[0]);
+    lapack_int lrwork_ = real(qry_rwork[0]);
+    lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
     std::vector< float > rwork( lrwork_ );
-    std::vector< blas_int > iwork( liwork_ );
+    std::vector< lapack_int > iwork( liwork_ );
 
     LAPACK_chbevd_2stage(
         &jobz_, &uplo_, &n_, &kd_,
@@ -80,25 +80,25 @@ int64_t hbevd_2stage(
     std::complex<double>* Z, int64_t ldz )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(kd) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
     char jobz_ = job2char( jobz );
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int kd_ = (blas_int) kd;
-    blas_int ldab_ = (blas_int) ldab;
-    blas_int ldz_ = (blas_int) ldz;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int kd_ = (lapack_int) kd;
+    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int ldz_ = (lapack_int) ldz;
+    lapack_int info_ = 0;
 
     // query for workspace size
     std::complex<double> qry_work[1];
     double qry_rwork[1];
-    blas_int qry_iwork[1];
-    blas_int ineg_one = -1;
+    lapack_int qry_iwork[1];
+    lapack_int ineg_one = -1;
     LAPACK_zhbevd_2stage(
         &jobz_, &uplo_, &n_, &kd_,
         (lapack_complex_double*) AB, &ldab_,
@@ -110,14 +110,14 @@ int64_t hbevd_2stage(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
-    blas_int lrwork_ = real(qry_rwork[0]);
-    blas_int liwork_ = real(qry_iwork[0]);
+    lapack_int lwork_ = real(qry_work[0]);
+    lapack_int lrwork_ = real(qry_rwork[0]);
+    lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );
     std::vector< double > rwork( lrwork_ );
-    std::vector< blas_int > iwork( liwork_ );
+    std::vector< lapack_int > iwork( liwork_ );
 
     LAPACK_zhbevd_2stage(
         &jobz_, &uplo_, &n_, &kd_,

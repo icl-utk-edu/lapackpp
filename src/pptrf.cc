@@ -16,12 +16,12 @@ int64_t pptrf(
     float* AP )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int info_ = 0;
 
     LAPACK_spptrf(
         &uplo_, &n_,
@@ -39,12 +39,12 @@ int64_t pptrf(
     double* AP )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int info_ = 0;
 
     LAPACK_dpptrf(
         &uplo_, &n_,
@@ -62,12 +62,12 @@ int64_t pptrf(
     std::complex<float>* AP )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int info_ = 0;
 
     LAPACK_cpptrf(
         &uplo_, &n_,
@@ -139,12 +139,12 @@ int64_t pptrf(
     std::complex<double>* AP )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int info_ = 0;
 
     LAPACK_zpptrf(
         &uplo_, &n_,

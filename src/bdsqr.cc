@@ -20,24 +20,24 @@ int64_t bdsqr(
     float* C, int64_t ldc )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ncvt) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(nru) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ncc) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvt) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldu) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldc) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ncvt) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(nru) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ncc) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvt) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int ncvt_ = (blas_int) ncvt;
-    blas_int nru_ = (blas_int) nru;
-    blas_int ncc_ = (blas_int) ncc;
-    blas_int ldvt_ = (blas_int) ldvt;
-    blas_int ldu_ = (blas_int) ldu;
-    blas_int ldc_ = (blas_int) ldc;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ncvt_ = (lapack_int) ncvt;
+    lapack_int nru_ = (lapack_int) nru;
+    lapack_int ncc_ = (lapack_int) ncc;
+    lapack_int ldvt_ = (lapack_int) ldvt;
+    lapack_int ldu_ = (lapack_int) ldu;
+    lapack_int ldc_ = (lapack_int) ldc;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< float > work( (4*n) );
@@ -67,24 +67,24 @@ int64_t bdsqr(
     double* C, int64_t ldc )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ncvt) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(nru) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ncc) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvt) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldu) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldc) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ncvt) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(nru) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ncc) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvt) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int ncvt_ = (blas_int) ncvt;
-    blas_int nru_ = (blas_int) nru;
-    blas_int ncc_ = (blas_int) ncc;
-    blas_int ldvt_ = (blas_int) ldvt;
-    blas_int ldu_ = (blas_int) ldu;
-    blas_int ldc_ = (blas_int) ldc;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ncvt_ = (lapack_int) ncvt;
+    lapack_int nru_ = (lapack_int) nru;
+    lapack_int ncc_ = (lapack_int) ncc;
+    lapack_int ldvt_ = (lapack_int) ldvt;
+    lapack_int ldu_ = (lapack_int) ldu;
+    lapack_int ldc_ = (lapack_int) ldc;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< double > work( (4*n) );
@@ -114,24 +114,24 @@ int64_t bdsqr(
     std::complex<float>* C, int64_t ldc )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ncvt) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(nru) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ncc) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvt) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldu) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldc) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ncvt) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(nru) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ncc) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvt) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int ncvt_ = (blas_int) ncvt;
-    blas_int nru_ = (blas_int) nru;
-    blas_int ncc_ = (blas_int) ncc;
-    blas_int ldvt_ = (blas_int) ldvt;
-    blas_int ldu_ = (blas_int) ldu;
-    blas_int ldc_ = (blas_int) ldc;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ncvt_ = (lapack_int) ncvt;
+    lapack_int nru_ = (lapack_int) nru;
+    lapack_int ncc_ = (lapack_int) ncc;
+    lapack_int ldvt_ = (lapack_int) ldvt;
+    lapack_int ldu_ = (lapack_int) ldu;
+    lapack_int ldc_ = (lapack_int) ldc;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< float > rwork( (4*n) );
@@ -260,24 +260,24 @@ int64_t bdsqr(
     std::complex<double>* C, int64_t ldc )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ncvt) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(nru) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ncc) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvt) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldu) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldc) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ncvt) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(nru) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ncc) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvt) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int ncvt_ = (blas_int) ncvt;
-    blas_int nru_ = (blas_int) nru;
-    blas_int ncc_ = (blas_int) ncc;
-    blas_int ldvt_ = (blas_int) ldvt;
-    blas_int ldu_ = (blas_int) ldu;
-    blas_int ldc_ = (blas_int) ldc;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ncvt_ = (lapack_int) ncvt;
+    lapack_int nru_ = (lapack_int) nru;
+    lapack_int ncc_ = (lapack_int) ncc;
+    lapack_int ldvt_ = (lapack_int) ldvt;
+    lapack_int ldu_ = (lapack_int) ldu;
+    lapack_int ldc_ = (lapack_int) ldc;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< double > rwork( (4*n) );

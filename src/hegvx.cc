@@ -20,40 +20,40 @@ int64_t hegvx(
     int64_t* ifail )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(itype) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(il) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(iu) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(itype) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(il) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(iu) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int itype_ = (blas_int) itype;
+    lapack_int itype_ = (lapack_int) itype;
     char jobz_ = job2char( jobz );
     char range_ = range2char( range );
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int il_ = (blas_int) il;
-    blas_int iu_ = (blas_int) iu;
-    blas_int m_ = (blas_int) *m;
-    blas_int ldz_ = (blas_int) ldz;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int il_ = (lapack_int) il;
+    lapack_int iu_ = (lapack_int) iu;
+    lapack_int m_ = (lapack_int) *m;
+    lapack_int ldz_ = (lapack_int) ldz;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ifail_( (n) );
-        blas_int* ifail_ptr = &ifail_[0];
+        std::vector< lapack_int > ifail_( (n) );
+        lapack_int* ifail_ptr = &ifail_[0];
     #else
-        blas_int* ifail_ptr = ifail;
+        lapack_int* ifail_ptr = ifail;
     #endif
-    blas_int info_ = 0;
+    lapack_int info_ = 0;
 
     // query for workspace size
     std::complex<float> qry_work[1];
     float qry_rwork[1];
-    blas_int qry_iwork[1];
-    blas_int ineg_one = -1;
+    lapack_int qry_iwork[1];
+    lapack_int ineg_one = -1;
     LAPACK_chegvx(
         &itype_, &jobz_, &range_, &uplo_, &n_,
         (lapack_complex_float*) A, &lda_,
@@ -67,12 +67,12 @@ int64_t hegvx(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
+    lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
     std::vector< float > rwork( (7*n) );
-    std::vector< blas_int > iwork( (5*n) );
+    std::vector< lapack_int > iwork( (5*n) );
 
     LAPACK_chegvx(
         &itype_, &jobz_, &range_, &uplo_, &n_,
@@ -105,40 +105,40 @@ int64_t hegvx(
     int64_t* ifail )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(itype) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(il) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(iu) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(itype) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(il) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(iu) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int itype_ = (blas_int) itype;
+    lapack_int itype_ = (lapack_int) itype;
     char jobz_ = job2char( jobz );
     char range_ = range2char( range );
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int il_ = (blas_int) il;
-    blas_int iu_ = (blas_int) iu;
-    blas_int m_ = (blas_int) *m;
-    blas_int ldz_ = (blas_int) ldz;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int il_ = (lapack_int) il;
+    lapack_int iu_ = (lapack_int) iu;
+    lapack_int m_ = (lapack_int) *m;
+    lapack_int ldz_ = (lapack_int) ldz;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ifail_( (n) );
-        blas_int* ifail_ptr = &ifail_[0];
+        std::vector< lapack_int > ifail_( (n) );
+        lapack_int* ifail_ptr = &ifail_[0];
     #else
-        blas_int* ifail_ptr = ifail;
+        lapack_int* ifail_ptr = ifail;
     #endif
-    blas_int info_ = 0;
+    lapack_int info_ = 0;
 
     // query for workspace size
     std::complex<double> qry_work[1];
     double qry_rwork[1];
-    blas_int qry_iwork[1];
-    blas_int ineg_one = -1;
+    lapack_int qry_iwork[1];
+    lapack_int ineg_one = -1;
     LAPACK_zhegvx(
         &itype_, &jobz_, &range_, &uplo_, &n_,
         (lapack_complex_double*) A, &lda_,
@@ -152,12 +152,12 @@ int64_t hegvx(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
+    lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );
     std::vector< double > rwork( (7*n) );
-    std::vector< blas_int > iwork( (5*n) );
+    std::vector< lapack_int > iwork( (5*n) );
 
     LAPACK_zhegvx(
         &itype_, &jobz_, &range_, &uplo_, &n_,

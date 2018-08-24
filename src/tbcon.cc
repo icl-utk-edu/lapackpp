@@ -16,22 +16,22 @@ int64_t tbcon(
     float* rcond )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(kd) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
     }
     char norm_ = norm2char( norm );
     char uplo_ = uplo2char( uplo );
     char diag_ = diag2char( diag );
-    blas_int n_ = (blas_int) n;
-    blas_int kd_ = (blas_int) kd;
-    blas_int ldab_ = (blas_int) ldab;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int kd_ = (lapack_int) kd;
+    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< float > work( (3*n) );
-    std::vector< blas_int > iwork( (n) );
+    std::vector< lapack_int > iwork( (n) );
 
     LAPACK_stbcon(
         &norm_, &uplo_, &diag_, &n_, &kd_,
@@ -51,22 +51,22 @@ int64_t tbcon(
     double* rcond )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(kd) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
     }
     char norm_ = norm2char( norm );
     char uplo_ = uplo2char( uplo );
     char diag_ = diag2char( diag );
-    blas_int n_ = (blas_int) n;
-    blas_int kd_ = (blas_int) kd;
-    blas_int ldab_ = (blas_int) ldab;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int kd_ = (lapack_int) kd;
+    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< double > work( (3*n) );
-    std::vector< blas_int > iwork( (n) );
+    std::vector< lapack_int > iwork( (n) );
 
     LAPACK_dtbcon(
         &norm_, &uplo_, &diag_, &n_, &kd_,
@@ -86,18 +86,18 @@ int64_t tbcon(
     float* rcond )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(kd) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
     }
     char norm_ = norm2char( norm );
     char uplo_ = uplo2char( uplo );
     char diag_ = diag2char( diag );
-    blas_int n_ = (blas_int) n;
-    blas_int kd_ = (blas_int) kd;
-    blas_int ldab_ = (blas_int) ldab;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int kd_ = (lapack_int) kd;
+    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< std::complex<float> > work( (2*n) );
@@ -121,18 +121,18 @@ int64_t tbcon(
     double* rcond )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(kd) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
     }
     char norm_ = norm2char( norm );
     char uplo_ = uplo2char( uplo );
     char diag_ = diag2char( diag );
-    blas_int n_ = (blas_int) n;
-    blas_int kd_ = (blas_int) kd;
-    blas_int ldab_ = (blas_int) ldab;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int kd_ = (lapack_int) kd;
+    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< std::complex<double> > work( (2*n) );

@@ -15,13 +15,13 @@ int64_t pftri(
     float* A )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     char transr_ = op2char( transr );
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int info_ = 0;
 
     LAPACK_spftri(
         &transr_, &uplo_, &n_,
@@ -38,13 +38,13 @@ int64_t pftri(
     double* A )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     char transr_ = op2char( transr );
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int info_ = 0;
 
     LAPACK_dpftri(
         &transr_, &uplo_, &n_,
@@ -61,13 +61,13 @@ int64_t pftri(
     std::complex<float>* A )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     char transr_ = op2char( transr );
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int info_ = 0;
 
     LAPACK_cpftri(
         &transr_, &uplo_, &n_,
@@ -84,13 +84,13 @@ int64_t pftri(
     std::complex<double>* A )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     char transr_ = op2char( transr );
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int info_ = 0;
 
     LAPACK_zpftri(
         &transr_, &uplo_, &n_,

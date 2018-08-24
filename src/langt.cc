@@ -18,11 +18,11 @@ float langt(
     float const* DU )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     char norm_ = norm2char( norm );
-    blas_int n_ = (blas_int) n;
+    lapack_int n_ = (lapack_int) n;
 
     return LAPACK_slangt(
         &norm_, &n_,
@@ -40,11 +40,11 @@ double langt(
     double const* DU )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     char norm_ = norm2char( norm );
-    blas_int n_ = (blas_int) n;
+    lapack_int n_ = (lapack_int) n;
 
     return LAPACK_dlangt(
         &norm_, &n_,
@@ -62,11 +62,11 @@ float langt(
     std::complex<float> const* DU )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     char norm_ = norm2char( norm );
-    blas_int n_ = (blas_int) n;
+    lapack_int n_ = (lapack_int) n;
 
     return LAPACK_clangt(
         &norm_, &n_,
@@ -114,11 +114,11 @@ double langt(
     std::complex<double> const* DU )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     char norm_ = norm2char( norm );
-    blas_int n_ = (blas_int) n;
+    lapack_int n_ = (lapack_int) n;
 
     return LAPACK_zlangt(
         &norm_, &n_,

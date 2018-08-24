@@ -21,40 +21,40 @@ int64_t stein(
     int64_t* ifail )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int m_ = (blas_int) m;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int m_ = (lapack_int) m;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > iblock_( &iblock[0], &iblock[(n)] );
-        blas_int const* iblock_ptr = &iblock_[0];
+        std::vector< lapack_int > iblock_( &iblock[0], &iblock[(n)] );
+        lapack_int const* iblock_ptr = &iblock_[0];
     #else
-        blas_int const* iblock_ptr = iblock_;
+        lapack_int const* iblock_ptr = iblock_;
     #endif
     #if 1
         // 32-bit copy
-        std::vector< blas_int > isplit_( &isplit[0], &isplit[(n)] );
-        blas_int const* isplit_ptr = &isplit_[0];
+        std::vector< lapack_int > isplit_( &isplit[0], &isplit[(n)] );
+        lapack_int const* isplit_ptr = &isplit_[0];
     #else
-        blas_int const* isplit_ptr = isplit_;
+        lapack_int const* isplit_ptr = isplit_;
     #endif
-    blas_int ldz_ = (blas_int) ldz;
+    lapack_int ldz_ = (lapack_int) ldz;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ifail_( (m) );
-        blas_int* ifail_ptr = &ifail_[0];
+        std::vector< lapack_int > ifail_( (m) );
+        lapack_int* ifail_ptr = &ifail_[0];
     #else
-        blas_int* ifail_ptr = ifail;
+        lapack_int* ifail_ptr = ifail;
     #endif
-    blas_int info_ = 0;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< float > work( (5*n) );
-    std::vector< blas_int > iwork( (n) );
+    std::vector< lapack_int > iwork( (n) );
 
     LAPACK_sstein(
         &n_,
@@ -88,40 +88,40 @@ int64_t stein(
     int64_t* ifail )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int m_ = (blas_int) m;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int m_ = (lapack_int) m;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > iblock_( &iblock[0], &iblock[(n)] );
-        blas_int const* iblock_ptr = &iblock_[0];
+        std::vector< lapack_int > iblock_( &iblock[0], &iblock[(n)] );
+        lapack_int const* iblock_ptr = &iblock_[0];
     #else
-        blas_int const* iblock_ptr = iblock_;
+        lapack_int const* iblock_ptr = iblock_;
     #endif
     #if 1
         // 32-bit copy
-        std::vector< blas_int > isplit_( &isplit[0], &isplit[(n)] );
-        blas_int const* isplit_ptr = &isplit_[0];
+        std::vector< lapack_int > isplit_( &isplit[0], &isplit[(n)] );
+        lapack_int const* isplit_ptr = &isplit_[0];
     #else
-        blas_int const* isplit_ptr = isplit_;
+        lapack_int const* isplit_ptr = isplit_;
     #endif
-    blas_int ldz_ = (blas_int) ldz;
+    lapack_int ldz_ = (lapack_int) ldz;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ifail_( (m) );
-        blas_int* ifail_ptr = &ifail_[0];
+        std::vector< lapack_int > ifail_( (m) );
+        lapack_int* ifail_ptr = &ifail_[0];
     #else
-        blas_int* ifail_ptr = ifail;
+        lapack_int* ifail_ptr = ifail;
     #endif
-    blas_int info_ = 0;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< double > work( (5*n) );
-    std::vector< blas_int > iwork( (n) );
+    std::vector< lapack_int > iwork( (n) );
 
     LAPACK_dstein(
         &n_,
@@ -155,40 +155,40 @@ int64_t stein(
     int64_t* ifail )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int m_ = (blas_int) m;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int m_ = (lapack_int) m;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > iblock_( &iblock[0], &iblock[(n)] );
-        blas_int const* iblock_ptr = &iblock_[0];
+        std::vector< lapack_int > iblock_( &iblock[0], &iblock[(n)] );
+        lapack_int const* iblock_ptr = &iblock_[0];
     #else
-        blas_int const* iblock_ptr = iblock_;
+        lapack_int const* iblock_ptr = iblock_;
     #endif
     #if 1
         // 32-bit copy
-        std::vector< blas_int > isplit_( &isplit[0], &isplit[(n)] );
-        blas_int const* isplit_ptr = &isplit_[0];
+        std::vector< lapack_int > isplit_( &isplit[0], &isplit[(n)] );
+        lapack_int const* isplit_ptr = &isplit_[0];
     #else
-        blas_int const* isplit_ptr = isplit_;
+        lapack_int const* isplit_ptr = isplit_;
     #endif
-    blas_int ldz_ = (blas_int) ldz;
+    lapack_int ldz_ = (lapack_int) ldz;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ifail_( (m) );
-        blas_int* ifail_ptr = &ifail_[0];
+        std::vector< lapack_int > ifail_( (m) );
+        lapack_int* ifail_ptr = &ifail_[0];
     #else
-        blas_int* ifail_ptr = ifail;
+        lapack_int* ifail_ptr = ifail;
     #endif
-    blas_int info_ = 0;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< float > work( (5*n) );
-    std::vector< blas_int > iwork( (n) );
+    std::vector< lapack_int > iwork( (n) );
 
     LAPACK_cstein(
         &n_,
@@ -222,40 +222,40 @@ int64_t stein(
     int64_t* ifail )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int m_ = (blas_int) m;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int m_ = (lapack_int) m;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > iblock_( &iblock[0], &iblock[(n)] );
-        blas_int const* iblock_ptr = &iblock_[0];
+        std::vector< lapack_int > iblock_( &iblock[0], &iblock[(n)] );
+        lapack_int const* iblock_ptr = &iblock_[0];
     #else
-        blas_int const* iblock_ptr = iblock_;
+        lapack_int const* iblock_ptr = iblock_;
     #endif
     #if 1
         // 32-bit copy
-        std::vector< blas_int > isplit_( &isplit[0], &isplit[(n)] );
-        blas_int const* isplit_ptr = &isplit_[0];
+        std::vector< lapack_int > isplit_( &isplit[0], &isplit[(n)] );
+        lapack_int const* isplit_ptr = &isplit_[0];
     #else
-        blas_int const* isplit_ptr = isplit_;
+        lapack_int const* isplit_ptr = isplit_;
     #endif
-    blas_int ldz_ = (blas_int) ldz;
+    lapack_int ldz_ = (lapack_int) ldz;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ifail_( (m) );
-        blas_int* ifail_ptr = &ifail_[0];
+        std::vector< lapack_int > ifail_( (m) );
+        lapack_int* ifail_ptr = &ifail_[0];
     #else
-        blas_int* ifail_ptr = ifail;
+        lapack_int* ifail_ptr = ifail;
     #endif
-    blas_int info_ = 0;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< double > work( (5*n) );
-    std::vector< blas_int > iwork( (n) );
+    std::vector< lapack_int > iwork( (n) );
 
     LAPACK_zstein(
         &n_,

@@ -16,18 +16,18 @@ int64_t tptrs(
     float* B, int64_t ldb )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
     char trans_ = op2char( trans );
     char diag_ = diag2char( diag );
-    blas_int n_ = (blas_int) n;
-    blas_int nrhs_ = (blas_int) nrhs;
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int nrhs_ = (lapack_int) nrhs;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int info_ = 0;
 
     LAPACK_stptrs(
         &uplo_, &trans_, &diag_, &n_, &nrhs_,
@@ -46,18 +46,18 @@ int64_t tptrs(
     double* B, int64_t ldb )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
     char trans_ = op2char( trans );
     char diag_ = diag2char( diag );
-    blas_int n_ = (blas_int) n;
-    blas_int nrhs_ = (blas_int) nrhs;
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int nrhs_ = (lapack_int) nrhs;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int info_ = 0;
 
     LAPACK_dtptrs(
         &uplo_, &trans_, &diag_, &n_, &nrhs_,
@@ -76,18 +76,18 @@ int64_t tptrs(
     std::complex<float>* B, int64_t ldb )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
     char trans_ = op2char( trans );
     char diag_ = diag2char( diag );
-    blas_int n_ = (blas_int) n;
-    blas_int nrhs_ = (blas_int) nrhs;
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int nrhs_ = (lapack_int) nrhs;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int info_ = 0;
 
     LAPACK_ctptrs(
         &uplo_, &trans_, &diag_, &n_, &nrhs_,
@@ -106,18 +106,18 @@ int64_t tptrs(
     std::complex<double>* B, int64_t ldb )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
     char trans_ = op2char( trans );
     char diag_ = diag2char( diag );
-    blas_int n_ = (blas_int) n;
-    blas_int nrhs_ = (blas_int) nrhs;
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int nrhs_ = (lapack_int) nrhs;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int info_ = 0;
 
     LAPACK_ztptrs(
         &uplo_, &trans_, &diag_, &n_, &nrhs_,

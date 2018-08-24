@@ -16,13 +16,13 @@ float lantp(
     float const* AP )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     char norm_ = norm2char( norm );
     char uplo_ = uplo2char( uplo );
     char diag_ = diag2char( diag );
-    blas_int n_ = (blas_int) n;
+    lapack_int n_ = (lapack_int) n;
 
     // from docs
     int64_t lwork = (norm == Norm::Inf ? n : 1);
@@ -43,13 +43,13 @@ double lantp(
     double const* AP )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     char norm_ = norm2char( norm );
     char uplo_ = uplo2char( uplo );
     char diag_ = diag2char( diag );
-    blas_int n_ = (blas_int) n;
+    lapack_int n_ = (lapack_int) n;
 
     // from docs
     int64_t lwork = (norm == Norm::Inf ? n : 1);
@@ -70,13 +70,13 @@ float lantp(
     std::complex<float> const* AP )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     char norm_ = norm2char( norm );
     char uplo_ = uplo2char( uplo );
     char diag_ = diag2char( diag );
-    blas_int n_ = (blas_int) n;
+    lapack_int n_ = (lapack_int) n;
 
     // from docs
     int64_t lwork = (norm == Norm::Inf ? n : 1);
@@ -136,13 +136,13 @@ double lantp(
     std::complex<double> const* AP )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     char norm_ = norm2char( norm );
     char uplo_ = uplo2char( uplo );
     char diag_ = diag2char( diag );
-    blas_int n_ = (blas_int) n;
+    lapack_int n_ = (lapack_int) n;
 
     // from docs
     int64_t lwork = (norm == Norm::Inf ? n : 1);

@@ -17,21 +17,21 @@ int64_t heevd(
     float* W )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
     char jobz_ = job2char( jobz );
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int info_ = 0;
 
     // query for workspace size
     std::complex<float> qry_work[1];
     float qry_rwork[1];
-    blas_int qry_iwork[1];
-    blas_int ineg_one = -1;
+    lapack_int qry_iwork[1];
+    lapack_int ineg_one = -1;
     LAPACK_cheevd(
         &jobz_, &uplo_, &n_,
         (lapack_complex_float*) A, &lda_,
@@ -42,14 +42,14 @@ int64_t heevd(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
-    blas_int lrwork_ = real(qry_rwork[0]);
-    blas_int liwork_ = real(qry_iwork[0]);
+    lapack_int lwork_ = real(qry_work[0]);
+    lapack_int lrwork_ = real(qry_rwork[0]);
+    lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
     std::vector< float > rwork( lrwork_ );
-    std::vector< blas_int > iwork( liwork_ );
+    std::vector< lapack_int > iwork( liwork_ );
 
     LAPACK_cheevd(
         &jobz_, &uplo_, &n_,
@@ -131,21 +131,21 @@ int64_t heevd(
     double* W )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
     char jobz_ = job2char( jobz );
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int info_ = 0;
 
     // query for workspace size
     std::complex<double> qry_work[1];
     double qry_rwork[1];
-    blas_int qry_iwork[1];
-    blas_int ineg_one = -1;
+    lapack_int qry_iwork[1];
+    lapack_int ineg_one = -1;
     LAPACK_zheevd(
         &jobz_, &uplo_, &n_,
         (lapack_complex_double*) A, &lda_,
@@ -156,14 +156,14 @@ int64_t heevd(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
-    blas_int lrwork_ = real(qry_rwork[0]);
-    blas_int liwork_ = real(qry_iwork[0]);
+    lapack_int lwork_ = real(qry_work[0]);
+    lapack_int lrwork_ = real(qry_rwork[0]);
+    lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );
     std::vector< double > rwork( lrwork_ );
-    std::vector< blas_int > iwork( liwork_ );
+    std::vector< lapack_int > iwork( liwork_ );
 
     LAPACK_zheevd(
         &jobz_, &uplo_, &n_,

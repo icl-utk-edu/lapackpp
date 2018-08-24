@@ -17,17 +17,17 @@ void larf(
     float* C, int64_t ldc )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(incv) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldc) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(incv) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
     char side_ = side2char( side );
-    blas_int m_ = (blas_int) m;
-    blas_int n_ = (blas_int) n;
-    blas_int incv_ = (blas_int) incv;
-    blas_int ldc_ = (blas_int) ldc;
+    lapack_int m_ = (lapack_int) m;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int incv_ = (lapack_int) incv;
+    lapack_int ldc_ = (lapack_int) ldc;
 
     // from docs
     int64_t lwork = (side == Side::Left ? n : m);
@@ -50,17 +50,17 @@ void larf(
     double* C, int64_t ldc )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(incv) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldc) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(incv) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
     char side_ = side2char( side );
-    blas_int m_ = (blas_int) m;
-    blas_int n_ = (blas_int) n;
-    blas_int incv_ = (blas_int) incv;
-    blas_int ldc_ = (blas_int) ldc;
+    lapack_int m_ = (lapack_int) m;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int incv_ = (lapack_int) incv;
+    lapack_int ldc_ = (lapack_int) ldc;
 
     // from docs
     int64_t lwork = (side == Side::Left ? n : m);
@@ -83,17 +83,17 @@ void larf(
     std::complex<float>* C, int64_t ldc )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(incv) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldc) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(incv) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
     char side_ = side2char( side );
-    blas_int m_ = (blas_int) m;
-    blas_int n_ = (blas_int) n;
-    blas_int incv_ = (blas_int) incv;
-    blas_int ldc_ = (blas_int) ldc;
+    lapack_int m_ = (lapack_int) m;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int incv_ = (lapack_int) incv;
+    lapack_int ldc_ = (lapack_int) ldc;
 
     // from docs
     int64_t lwork = (side == Side::Left ? n : m);
@@ -161,17 +161,17 @@ void larf(
     std::complex<double>* C, int64_t ldc )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(incv) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldc) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(incv) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
     char side_ = side2char( side );
-    blas_int m_ = (blas_int) m;
-    blas_int n_ = (blas_int) n;
-    blas_int incv_ = (blas_int) incv;
-    blas_int ldc_ = (blas_int) ldc;
+    lapack_int m_ = (lapack_int) m;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int incv_ = (lapack_int) incv;
+    lapack_int ldc_ = (lapack_int) ldc;
 
     // from docs
     int64_t lwork = (side == Side::Left ? n : m);

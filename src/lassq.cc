@@ -18,12 +18,12 @@ void lassq(
     float* sumsq )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(incx) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(incx) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int incx_ = (blas_int) incx;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int incx_ = (lapack_int) incx;
 
     LAPACK_slassq(
         &n_,
@@ -39,12 +39,12 @@ void lassq(
     double* sumsq )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(incx) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(incx) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int incx_ = (blas_int) incx;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int incx_ = (lapack_int) incx;
 
     LAPACK_dlassq(
         &n_,
@@ -60,12 +60,12 @@ void lassq(
     float* sumsq )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(incx) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(incx) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int incx_ = (blas_int) incx;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int incx_ = (lapack_int) incx;
 
     LAPACK_classq(
         &n_,
@@ -121,12 +121,12 @@ void lassq(
     double* sumsq )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(incx) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(incx) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int incx_ = (blas_int) incx;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int incx_ = (lapack_int) incx;
 
     LAPACK_zlassq(
         &n_,

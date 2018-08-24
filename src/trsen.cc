@@ -21,25 +21,25 @@ int64_t trsen(
     float* sep )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
     }
     char sense_ = sense2char( sense );
     char compq_ = job_comp2char( compq );
     #if 1
         // 32-bit copy
-        std::vector< blas_int > select_( &select[0], &select[(n)] );
-        blas_int const* select_ptr = &select_[0];
+        std::vector< lapack_int > select_( &select[0], &select[(n)] );
+        lapack_int const* select_ptr = &select_[0];
     #else
-        blas_int const* select_ptr = select_;
+        lapack_int const* select_ptr = select_;
     #endif
-    blas_int n_ = (blas_int) n;
-    blas_int ldt_ = (blas_int) ldt;
-    blas_int ldq_ = (blas_int) ldq;
-    blas_int m_ = (blas_int) *m;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ldt_ = (lapack_int) ldt;
+    lapack_int ldq_ = (lapack_int) ldq;
+    lapack_int m_ = (lapack_int) *m;
+    lapack_int info_ = 0;
 
     // split-complex representation
     std::vector< float > WR( max( 1, n ) );
@@ -47,8 +47,8 @@ int64_t trsen(
 
     // query for workspace size
     float qry_work[1];
-    blas_int qry_iwork[1];
-    blas_int ineg_one = -1;
+    lapack_int qry_iwork[1];
+    lapack_int ineg_one = -1;
     LAPACK_strsen(
         &sense_, &compq_,
         select_ptr, &n_,
@@ -62,12 +62,12 @@ int64_t trsen(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
-    blas_int liwork_ = real(qry_iwork[0]);
+    lapack_int lwork_ = real(qry_work[0]);
+    lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
     std::vector< float > work( lwork_ );
-    std::vector< blas_int > iwork( liwork_ );
+    std::vector< lapack_int > iwork( liwork_ );
 
     LAPACK_strsen(
         &sense_, &compq_,
@@ -102,25 +102,25 @@ int64_t trsen(
     double* sep )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
     }
     char sense_ = sense2char( sense );
     char compq_ = job_comp2char( compq );
     #if 1
         // 32-bit copy
-        std::vector< blas_int > select_( &select[0], &select[(n)] );
-        blas_int const* select_ptr = &select_[0];
+        std::vector< lapack_int > select_( &select[0], &select[(n)] );
+        lapack_int const* select_ptr = &select_[0];
     #else
-        blas_int const* select_ptr = select_;
+        lapack_int const* select_ptr = select_;
     #endif
-    blas_int n_ = (blas_int) n;
-    blas_int ldt_ = (blas_int) ldt;
-    blas_int ldq_ = (blas_int) ldq;
-    blas_int m_ = (blas_int) *m;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ldt_ = (lapack_int) ldt;
+    lapack_int ldq_ = (lapack_int) ldq;
+    lapack_int m_ = (lapack_int) *m;
+    lapack_int info_ = 0;
 
     // split-complex representation
     std::vector< double > WR( max( 1, n ) );
@@ -128,8 +128,8 @@ int64_t trsen(
 
     // query for workspace size
     double qry_work[1];
-    blas_int qry_iwork[1];
-    blas_int ineg_one = -1;
+    lapack_int qry_iwork[1];
+    lapack_int ineg_one = -1;
     LAPACK_dtrsen(
         &sense_, &compq_,
         select_ptr, &n_,
@@ -143,12 +143,12 @@ int64_t trsen(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
-    blas_int liwork_ = real(qry_iwork[0]);
+    lapack_int lwork_ = real(qry_work[0]);
+    lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
     std::vector< double > work( lwork_ );
-    std::vector< blas_int > iwork( liwork_ );
+    std::vector< lapack_int > iwork( liwork_ );
 
     LAPACK_dtrsen(
         &sense_, &compq_,
@@ -183,29 +183,29 @@ int64_t trsen(
     float* sep )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
     }
     char sense_ = sense2char( sense );
     char compq_ = job_comp2char( compq );
     #if 1
         // 32-bit copy
-        std::vector< blas_int > select_( &select[0], &select[(n)] );
-        blas_int const* select_ptr = &select_[0];
+        std::vector< lapack_int > select_( &select[0], &select[(n)] );
+        lapack_int const* select_ptr = &select_[0];
     #else
-        blas_int const* select_ptr = select_;
+        lapack_int const* select_ptr = select_;
     #endif
-    blas_int n_ = (blas_int) n;
-    blas_int ldt_ = (blas_int) ldt;
-    blas_int ldq_ = (blas_int) ldq;
-    blas_int m_ = (blas_int) *m;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ldt_ = (lapack_int) ldt;
+    lapack_int ldq_ = (lapack_int) ldq;
+    lapack_int m_ = (lapack_int) *m;
+    lapack_int info_ = 0;
 
     // query for workspace size
     std::complex<float> qry_work[1];
-    blas_int ineg_one = -1;
+    lapack_int ineg_one = -1;
     LAPACK_ctrsen(
         &sense_, &compq_,
         select_ptr, &n_,
@@ -216,7 +216,7 @@ int64_t trsen(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
+    lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
@@ -247,29 +247,29 @@ int64_t trsen(
     double* sep )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
     }
     char sense_ = sense2char( sense );
     char compq_ = job_comp2char( compq );
     #if 1
         // 32-bit copy
-        std::vector< blas_int > select_( &select[0], &select[(n)] );
-        blas_int const* select_ptr = &select_[0];
+        std::vector< lapack_int > select_( &select[0], &select[(n)] );
+        lapack_int const* select_ptr = &select_[0];
     #else
-        blas_int const* select_ptr = select_;
+        lapack_int const* select_ptr = select_;
     #endif
-    blas_int n_ = (blas_int) n;
-    blas_int ldt_ = (blas_int) ldt;
-    blas_int ldq_ = (blas_int) ldq;
-    blas_int m_ = (blas_int) *m;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ldt_ = (lapack_int) ldt;
+    lapack_int ldq_ = (lapack_int) ldq;
+    lapack_int m_ = (lapack_int) *m;
+    lapack_int info_ = 0;
 
     // query for workspace size
     std::complex<double> qry_work[1];
-    blas_int ineg_one = -1;
+    lapack_int ineg_one = -1;
     LAPACK_ztrsen(
         &sense_, &compq_,
         select_ptr, &n_,
@@ -280,7 +280,7 @@ int64_t trsen(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
+    lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );

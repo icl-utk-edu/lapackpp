@@ -16,13 +16,13 @@ float lanhs(
     float const* A, int64_t lda )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
     char norm_ = norm2char( norm );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
 
     // from docs
     int64_t lwork = (norm == Norm::Inf ? n : 1);
@@ -43,13 +43,13 @@ double lanhs(
     double const* A, int64_t lda )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
     char norm_ = norm2char( norm );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
 
     // from docs
     int64_t lwork = (norm == Norm::Inf ? n : 1);
@@ -70,13 +70,13 @@ float lanhs(
     std::complex<float> const* A, int64_t lda )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
     char norm_ = norm2char( norm );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
 
     // from docs
     int64_t lwork = (norm == Norm::Inf ? n : 1);
@@ -123,13 +123,13 @@ double lanhs(
     std::complex<double> const* A, int64_t lda )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
     char norm_ = norm2char( norm );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
 
     // from docs
     int64_t lwork = (norm == Norm::Inf ? n : 1);

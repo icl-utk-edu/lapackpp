@@ -17,11 +17,11 @@ int64_t pttrf(
     float* E )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int info_ = 0;
 
     LAPACK_spttrf(
         &n_,
@@ -41,11 +41,11 @@ int64_t pttrf(
     double* E )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int info_ = 0;
 
     LAPACK_dpttrf(
         &n_,
@@ -65,11 +65,11 @@ int64_t pttrf(
     std::complex<float>* E )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int info_ = 0;
 
     LAPACK_cpttrf(
         &n_,
@@ -119,11 +119,11 @@ int64_t pttrf(
     std::complex<double>* E )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int info_ = 0;
 
     LAPACK_zpttrf(
         &n_,

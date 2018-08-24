@@ -21,21 +21,21 @@ int64_t bdsdc(
     int64_t* IQ )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldu) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvt) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvt) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
     char compq_ = job_comp2char( compq );
-    blas_int n_ = (blas_int) n;
-    blas_int ldu_ = (blas_int) ldu;
-    blas_int ldvt_ = (blas_int) ldvt;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ldu_ = (lapack_int) ldu;
+    lapack_int ldvt_ = (lapack_int) ldvt;
+    lapack_int info_ = 0;
 
     // IQ disabled for now, due to complicated dimension
-    blas_int IQ_[1];
-    blas_int *IQ_ptr = &IQ_[0];
+    lapack_int IQ_[1];
+    lapack_int *IQ_ptr = &IQ_[0];
 
     // formulas from docs
     int64_t lwork = 0;
@@ -50,7 +50,7 @@ int64_t bdsdc(
 
     // allocate workspace
     std::vector< float > work( (max( 1, lwork )) );
-    std::vector< blas_int > iwork( (8*n) );
+    std::vector< lapack_int > iwork( (8*n) );
 
     LAPACK_sbdsdc(
         &uplo_, &compq_, &n_,
@@ -186,21 +186,21 @@ int64_t bdsdc(
     int64_t* IQ )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldu) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvt) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvt) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
     char compq_ = job_comp2char( compq );
-    blas_int n_ = (blas_int) n;
-    blas_int ldu_ = (blas_int) ldu;
-    blas_int ldvt_ = (blas_int) ldvt;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ldu_ = (lapack_int) ldu;
+    lapack_int ldvt_ = (lapack_int) ldvt;
+    lapack_int info_ = 0;
 
     // IQ disabled for now, due to complicated dimension
-    blas_int IQ_[1];
-    blas_int *IQ_ptr = &IQ_[0];
+    lapack_int IQ_[1];
+    lapack_int *IQ_ptr = &IQ_[0];
 
     // formulas from docs
     int64_t lwork = 0;
@@ -215,7 +215,7 @@ int64_t bdsdc(
 
     // allocate workspace
     std::vector< double > work( (max( 1, lwork )) );
-    std::vector< blas_int > iwork( (8*n) );
+    std::vector< lapack_int > iwork( (8*n) );
 
     LAPACK_dbdsdc(
         &uplo_, &compq_, &n_,

@@ -16,17 +16,17 @@ void sfrk(
     float* C )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
     char transr_ = op2char( transr );
     char uplo_ = uplo2char( uplo );
     char trans_ = op2char( trans );
-    blas_int n_ = (blas_int) n;
-    blas_int k_ = (blas_int) k;
-    blas_int lda_ = (blas_int) lda;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int k_ = (lapack_int) k;
+    lapack_int lda_ = (lapack_int) lda;
 
     LAPACK_ssfrk(
         &transr_, &uplo_, &trans_, &n_, &k_, &alpha,
@@ -41,17 +41,17 @@ void sfrk(
     double* C )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
     char transr_ = op2char( transr );
     char uplo_ = uplo2char( uplo );
     char trans_ = op2char( trans );
-    blas_int n_ = (blas_int) n;
-    blas_int k_ = (blas_int) k;
-    blas_int lda_ = (blas_int) lda;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int k_ = (lapack_int) k;
+    lapack_int lda_ = (lapack_int) lda;
 
     LAPACK_dsfrk(
         &transr_, &uplo_, &trans_, &n_, &k_, &alpha,

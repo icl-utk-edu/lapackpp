@@ -17,19 +17,19 @@ void larnv(
     float* X )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(idist) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(idist) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int idist_ = (blas_int) idist;
+    lapack_int idist_ = (lapack_int) idist;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > iseed_( &iseed[0], &iseed[(4)] );
-        blas_int* iseed_ptr = &iseed_[0];
+        std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
+        lapack_int* iseed_ptr = &iseed_[0];
     #else
-        blas_int* iseed_ptr = iseed;
+        lapack_int* iseed_ptr = iseed;
     #endif
-    blas_int n_ = (blas_int) n;
+    lapack_int n_ = (lapack_int) n;
 
     LAPACK_slarnv(
         &idist_,
@@ -48,19 +48,19 @@ void larnv(
     double* X )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(idist) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(idist) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int idist_ = (blas_int) idist;
+    lapack_int idist_ = (lapack_int) idist;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > iseed_( &iseed[0], &iseed[(4)] );
-        blas_int* iseed_ptr = &iseed_[0];
+        std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
+        lapack_int* iseed_ptr = &iseed_[0];
     #else
-        blas_int* iseed_ptr = iseed;
+        lapack_int* iseed_ptr = iseed;
     #endif
-    blas_int n_ = (blas_int) n;
+    lapack_int n_ = (lapack_int) n;
 
     LAPACK_dlarnv(
         &idist_,
@@ -79,19 +79,19 @@ void larnv(
     std::complex<float>* X )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(idist) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(idist) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int idist_ = (blas_int) idist;
+    lapack_int idist_ = (lapack_int) idist;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > iseed_( &iseed[0], &iseed[(4)] );
-        blas_int* iseed_ptr = &iseed_[0];
+        std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
+        lapack_int* iseed_ptr = &iseed_[0];
     #else
-        blas_int* iseed_ptr = iseed;
+        lapack_int* iseed_ptr = iseed;
     #endif
-    blas_int n_ = (blas_int) n;
+    lapack_int n_ = (lapack_int) n;
 
     LAPACK_clarnv(
         &idist_,
@@ -146,19 +146,19 @@ void larnv(
     std::complex<double>* X )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(idist) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(idist) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int idist_ = (blas_int) idist;
+    lapack_int idist_ = (lapack_int) idist;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > iseed_( &iseed[0], &iseed[(4)] );
-        blas_int* iseed_ptr = &iseed_[0];
+        std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
+        lapack_int* iseed_ptr = &iseed_[0];
     #else
-        blas_int* iseed_ptr = iseed;
+        lapack_int* iseed_ptr = iseed;
     #endif
-    blas_int n_ = (blas_int) n;
+    lapack_int n_ = (lapack_int) n;
 
     LAPACK_zlarnv(
         &idist_,

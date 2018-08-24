@@ -21,42 +21,42 @@ int64_t sbgvx(
     int64_t* ifail )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ka) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(kb) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldbb) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(il) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(iu) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ka) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(kb) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldbb) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(il) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(iu) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
     char jobz_ = job2char( jobz );
     char range_ = range2char( range );
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int ka_ = (blas_int) ka;
-    blas_int kb_ = (blas_int) kb;
-    blas_int ldab_ = (blas_int) ldab;
-    blas_int ldbb_ = (blas_int) ldbb;
-    blas_int ldq_ = (blas_int) ldq;
-    blas_int il_ = (blas_int) il;
-    blas_int iu_ = (blas_int) iu;
-    blas_int m_ = (blas_int) *m;
-    blas_int ldz_ = (blas_int) ldz;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ka_ = (lapack_int) ka;
+    lapack_int kb_ = (lapack_int) kb;
+    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int ldbb_ = (lapack_int) ldbb;
+    lapack_int ldq_ = (lapack_int) ldq;
+    lapack_int il_ = (lapack_int) il;
+    lapack_int iu_ = (lapack_int) iu;
+    lapack_int m_ = (lapack_int) *m;
+    lapack_int ldz_ = (lapack_int) ldz;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ifail_( n );  // was m; n >= m
-        blas_int* ifail_ptr = &ifail_[0];
+        std::vector< lapack_int > ifail_( n );  // was m; n >= m
+        lapack_int* ifail_ptr = &ifail_[0];
     #else
-        blas_int* ifail_ptr = ifail;
+        lapack_int* ifail_ptr = ifail;
     #endif
-    blas_int info_ = 0;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< float > work( (7*n) );
-    std::vector< blas_int > iwork( (5*n) );
+    std::vector< lapack_int > iwork( (5*n) );
 
     LAPACK_ssbgvx(
         &jobz_, &range_, &uplo_, &n_, &ka_, &kb_,
@@ -90,42 +90,42 @@ int64_t sbgvx(
     int64_t* ifail )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ka) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(kb) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldbb) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(il) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(iu) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ka) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(kb) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldbb) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(il) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(iu) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
     char jobz_ = job2char( jobz );
     char range_ = range2char( range );
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int ka_ = (blas_int) ka;
-    blas_int kb_ = (blas_int) kb;
-    blas_int ldab_ = (blas_int) ldab;
-    blas_int ldbb_ = (blas_int) ldbb;
-    blas_int ldq_ = (blas_int) ldq;
-    blas_int il_ = (blas_int) il;
-    blas_int iu_ = (blas_int) iu;
-    blas_int m_ = (blas_int) *m;
-    blas_int ldz_ = (blas_int) ldz;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ka_ = (lapack_int) ka;
+    lapack_int kb_ = (lapack_int) kb;
+    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int ldbb_ = (lapack_int) ldbb;
+    lapack_int ldq_ = (lapack_int) ldq;
+    lapack_int il_ = (lapack_int) il;
+    lapack_int iu_ = (lapack_int) iu;
+    lapack_int m_ = (lapack_int) *m;
+    lapack_int ldz_ = (lapack_int) ldz;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ifail_( n );  // was m; n >= m
-        blas_int* ifail_ptr = &ifail_[0];
+        std::vector< lapack_int > ifail_( n );  // was m; n >= m
+        lapack_int* ifail_ptr = &ifail_[0];
     #else
-        blas_int* ifail_ptr = ifail;
+        lapack_int* ifail_ptr = ifail;
     #endif
-    blas_int info_ = 0;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< double > work( (7*n) );
-    std::vector< blas_int > iwork( (5*n) );
+    std::vector< lapack_int > iwork( (5*n) );
 
     LAPACK_dsbgvx(
         &jobz_, &range_, &uplo_, &n_, &ka_, &kb_,

@@ -22,23 +22,23 @@ int64_t gges(
     float* VSR, int64_t ldvsr )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvsl) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvsr) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvsl) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvsr) > std::numeric_limits<lapack_int>::max() );
     }
     char jobvsl_ = job2char( jobvsl );
     char jobvsr_ = job2char( jobvsr );
     char sort_ = sort2char( sort );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int sdim_ = (blas_int) *sdim;
-    blas_int ldvsl_ = (blas_int) ldvsl;
-    blas_int ldvsr_ = (blas_int) ldvsr;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int sdim_ = (lapack_int) *sdim;
+    lapack_int ldvsl_ = (lapack_int) ldvsl;
+    lapack_int ldvsr_ = (lapack_int) ldvsr;
+    lapack_int info_ = 0;
 
     // split-complex representation
     std::vector< float > alphar( max( 1, n ) );
@@ -46,8 +46,8 @@ int64_t gges(
 
     // query for workspace size
     float qry_work[1];
-    blas_int qry_bwork[1];
-    blas_int ineg_one = -1;
+    lapack_int qry_bwork[1];
+    lapack_int ineg_one = -1;
     LAPACK_sgges(
         &jobvsl_, &jobvsr_, &sort_,
         select, &n_,
@@ -63,11 +63,11 @@ int64_t gges(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
+    lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
     std::vector< float > work( lwork_ );
-    std::vector< blas_int > bwork( (n) );
+    std::vector< lapack_int > bwork( (n) );
 
     LAPACK_sgges(
         &jobvsl_, &jobvsr_, &sort_,
@@ -105,23 +105,23 @@ int64_t gges(
     double* VSR, int64_t ldvsr )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvsl) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvsr) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvsl) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvsr) > std::numeric_limits<lapack_int>::max() );
     }
     char jobvsl_ = job2char( jobvsl );
     char jobvsr_ = job2char( jobvsr );
     char sort_ = sort2char( sort );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int sdim_ = (blas_int) *sdim;
-    blas_int ldvsl_ = (blas_int) ldvsl;
-    blas_int ldvsr_ = (blas_int) ldvsr;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int sdim_ = (lapack_int) *sdim;
+    lapack_int ldvsl_ = (lapack_int) ldvsl;
+    lapack_int ldvsr_ = (lapack_int) ldvsr;
+    lapack_int info_ = 0;
 
     // split-complex representation
     std::vector< double > alphar( max( 1, n ) );
@@ -129,8 +129,8 @@ int64_t gges(
 
     // query for workspace size
     double qry_work[1];
-    blas_int qry_bwork[1];
-    blas_int ineg_one = -1;
+    lapack_int qry_bwork[1];
+    lapack_int ineg_one = -1;
     LAPACK_dgges(
         &jobvsl_, &jobvsr_, &sort_,
         select, &n_,
@@ -146,11 +146,11 @@ int64_t gges(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
+    lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
     std::vector< double > work( lwork_ );
-    std::vector< blas_int > bwork( (n) );
+    std::vector< lapack_int > bwork( (n) );
 
     LAPACK_dgges(
         &jobvsl_, &jobvsr_, &sort_,
@@ -188,29 +188,29 @@ int64_t gges(
     std::complex<float>* VSR, int64_t ldvsr )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvsl) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvsr) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvsl) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvsr) > std::numeric_limits<lapack_int>::max() );
     }
     char jobvsl_ = job2char( jobvsl );
     char jobvsr_ = job2char( jobvsr );
     char sort_ = sort2char( sort );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int sdim_ = (blas_int) *sdim;
-    blas_int ldvsl_ = (blas_int) ldvsl;
-    blas_int ldvsr_ = (blas_int) ldvsr;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int sdim_ = (lapack_int) *sdim;
+    lapack_int ldvsl_ = (lapack_int) ldvsl;
+    lapack_int ldvsr_ = (lapack_int) ldvsr;
+    lapack_int info_ = 0;
 
     // query for workspace size
     std::complex<float> qry_work[1];
     float qry_rwork[1];
-    blas_int qry_bwork[1];
-    blas_int ineg_one = -1;
+    lapack_int qry_bwork[1];
+    lapack_int ineg_one = -1;
     LAPACK_cgges(
         &jobvsl_, &jobvsr_, &sort_,
         (LAPACK_C_SELECT2) select, &n_,
@@ -226,12 +226,12 @@ int64_t gges(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
+    lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
     std::vector< float > rwork( (8*n) );
-    std::vector< blas_int > bwork( (n) );
+    std::vector< lapack_int > bwork( (n) );
 
     LAPACK_cgges(
         &jobvsl_, &jobvsr_, &sort_,
@@ -265,29 +265,29 @@ int64_t gges(
     std::complex<double>* VSR, int64_t ldvsr )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvsl) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldvsr) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvsl) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldvsr) > std::numeric_limits<lapack_int>::max() );
     }
     char jobvsl_ = job2char( jobvsl );
     char jobvsr_ = job2char( jobvsr );
     char sort_ = sort2char( sort );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int sdim_ = (blas_int) *sdim;
-    blas_int ldvsl_ = (blas_int) ldvsl;
-    blas_int ldvsr_ = (blas_int) ldvsr;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int sdim_ = (lapack_int) *sdim;
+    lapack_int ldvsl_ = (lapack_int) ldvsl;
+    lapack_int ldvsr_ = (lapack_int) ldvsr;
+    lapack_int info_ = 0;
 
     // query for workspace size
     std::complex<double> qry_work[1];
     double qry_rwork[1];
-    blas_int qry_bwork[1];
-    blas_int ineg_one = -1;
+    lapack_int qry_bwork[1];
+    lapack_int ineg_one = -1;
     LAPACK_zgges(
         &jobvsl_, &jobvsr_, &sort_,
         (LAPACK_Z_SELECT2) select, &n_,
@@ -303,12 +303,12 @@ int64_t gges(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
+    lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );
     std::vector< double > rwork( (8*n) );
-    std::vector< blas_int > bwork( (n) );
+    std::vector< lapack_int > bwork( (n) );
 
     LAPACK_zgges(
         &jobvsl_, &jobvsr_, &sort_,

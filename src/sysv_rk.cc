@@ -21,29 +21,29 @@ int64_t sysv_rk(
     float* B, int64_t ldb )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int nrhs_ = (blas_int) nrhs;
-    blas_int lda_ = (blas_int) lda;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int nrhs_ = (lapack_int) nrhs;
+    lapack_int lda_ = (lapack_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( (n) );
-        blas_int* ipiv_ptr = &ipiv_[0];
+        std::vector< lapack_int > ipiv_( (n) );
+        lapack_int* ipiv_ptr = &ipiv_[0];
     #else
-        blas_int* ipiv_ptr = ipiv;
+        lapack_int* ipiv_ptr = ipiv;
     #endif
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int info_ = 0;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int info_ = 0;
 
     // query for workspace size
     float qry_work[1];
-    blas_int ineg_one = -1;
+    lapack_int ineg_one = -1;
     LAPACK_ssysv_rk(
         &uplo_, &n_, &nrhs_,
         A, &lda_,
@@ -54,7 +54,7 @@ int64_t sysv_rk(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
+    lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
     std::vector< float > work( lwork_ );
@@ -85,29 +85,29 @@ int64_t sysv_rk(
     double* B, int64_t ldb )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int nrhs_ = (blas_int) nrhs;
-    blas_int lda_ = (blas_int) lda;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int nrhs_ = (lapack_int) nrhs;
+    lapack_int lda_ = (lapack_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( (n) );
-        blas_int* ipiv_ptr = &ipiv_[0];
+        std::vector< lapack_int > ipiv_( (n) );
+        lapack_int* ipiv_ptr = &ipiv_[0];
     #else
-        blas_int* ipiv_ptr = ipiv;
+        lapack_int* ipiv_ptr = ipiv;
     #endif
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int info_ = 0;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int info_ = 0;
 
     // query for workspace size
     double qry_work[1];
-    blas_int ineg_one = -1;
+    lapack_int ineg_one = -1;
     LAPACK_dsysv_rk(
         &uplo_, &n_, &nrhs_,
         A, &lda_,
@@ -118,7 +118,7 @@ int64_t sysv_rk(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
+    lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
     std::vector< double > work( lwork_ );
@@ -149,29 +149,29 @@ int64_t sysv_rk(
     std::complex<float>* B, int64_t ldb )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int nrhs_ = (blas_int) nrhs;
-    blas_int lda_ = (blas_int) lda;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int nrhs_ = (lapack_int) nrhs;
+    lapack_int lda_ = (lapack_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( (n) );
-        blas_int* ipiv_ptr = &ipiv_[0];
+        std::vector< lapack_int > ipiv_( (n) );
+        lapack_int* ipiv_ptr = &ipiv_[0];
     #else
-        blas_int* ipiv_ptr = ipiv;
+        lapack_int* ipiv_ptr = ipiv;
     #endif
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int info_ = 0;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int info_ = 0;
 
     // query for workspace size
     std::complex<float> qry_work[1];
-    blas_int ineg_one = -1;
+    lapack_int ineg_one = -1;
     LAPACK_csysv_rk(
         &uplo_, &n_, &nrhs_,
         (lapack_complex_float*) A, &lda_,
@@ -182,7 +182,7 @@ int64_t sysv_rk(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
+    lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
@@ -324,29 +324,29 @@ int64_t sysv_rk(
     std::complex<double>* B, int64_t ldb )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int nrhs_ = (blas_int) nrhs;
-    blas_int lda_ = (blas_int) lda;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int nrhs_ = (lapack_int) nrhs;
+    lapack_int lda_ = (lapack_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( (n) );
-        blas_int* ipiv_ptr = &ipiv_[0];
+        std::vector< lapack_int > ipiv_( (n) );
+        lapack_int* ipiv_ptr = &ipiv_[0];
     #else
-        blas_int* ipiv_ptr = ipiv;
+        lapack_int* ipiv_ptr = ipiv;
     #endif
-    blas_int ldb_ = (blas_int) ldb;
-    blas_int info_ = 0;
+    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int info_ = 0;
 
     // query for workspace size
     std::complex<double> qry_work[1];
-    blas_int ineg_one = -1;
+    lapack_int ineg_one = -1;
     LAPACK_zsysv_rk(
         &uplo_, &n_, &nrhs_,
         (lapack_complex_double*) A, &lda_,
@@ -357,7 +357,7 @@ int64_t sysv_rk(
     if (info_ < 0) {
         throw Error();
     }
-    blas_int lwork_ = real(qry_work[0]);
+    lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );

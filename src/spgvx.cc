@@ -20,34 +20,34 @@ int64_t spgvx(
     int64_t* ifail )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(itype) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(il) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(iu) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(itype) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(il) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(iu) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int itype_ = (blas_int) itype;
+    lapack_int itype_ = (lapack_int) itype;
     char jobz_ = job2char( jobz );
     char range_ = range2char( range );
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int il_ = (blas_int) il;
-    blas_int iu_ = (blas_int) iu;
-    blas_int m_ = (blas_int) *m;
-    blas_int ldz_ = (blas_int) ldz;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int il_ = (lapack_int) il;
+    lapack_int iu_ = (lapack_int) iu;
+    lapack_int m_ = (lapack_int) *m;
+    lapack_int ldz_ = (lapack_int) ldz;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ifail_( (n) );
-        blas_int* ifail_ptr = &ifail_[0];
+        std::vector< lapack_int > ifail_( (n) );
+        lapack_int* ifail_ptr = &ifail_[0];
     #else
-        blas_int* ifail_ptr = ifail;
+        lapack_int* ifail_ptr = ifail;
     #endif
-    blas_int info_ = 0;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< float > work( (8*n) );
-    std::vector< blas_int > iwork( (5*n) );
+    std::vector< lapack_int > iwork( (5*n) );
 
     LAPACK_sspgvx(
         &itype_, &jobz_, &range_, &uplo_, &n_,
@@ -79,34 +79,34 @@ int64_t spgvx(
     int64_t* ifail )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(itype) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(il) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(iu) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(itype) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(il) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(iu) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int itype_ = (blas_int) itype;
+    lapack_int itype_ = (lapack_int) itype;
     char jobz_ = job2char( jobz );
     char range_ = range2char( range );
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int il_ = (blas_int) il;
-    blas_int iu_ = (blas_int) iu;
-    blas_int m_ = (blas_int) *m;
-    blas_int ldz_ = (blas_int) ldz;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int il_ = (lapack_int) il;
+    lapack_int iu_ = (lapack_int) iu;
+    lapack_int m_ = (lapack_int) *m;
+    lapack_int ldz_ = (lapack_int) ldz;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ifail_( (n) );
-        blas_int* ifail_ptr = &ifail_[0];
+        std::vector< lapack_int > ifail_( (n) );
+        lapack_int* ifail_ptr = &ifail_[0];
     #else
-        blas_int* ifail_ptr = ifail;
+        lapack_int* ifail_ptr = ifail;
     #endif
-    blas_int info_ = 0;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< double > work( (8*n) );
-    std::vector< blas_int > iwork( (5*n) );
+    std::vector< lapack_int > iwork( (5*n) );
 
     LAPACK_dspgvx(
         &itype_, &jobz_, &range_, &uplo_, &n_,

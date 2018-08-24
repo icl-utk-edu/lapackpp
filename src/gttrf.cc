@@ -20,18 +20,18 @@ int64_t gttrf(
     int64_t* ipiv )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
+    lapack_int n_ = (lapack_int) n;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( (n) );
-        blas_int* ipiv_ptr = &ipiv_[0];
+        std::vector< lapack_int > ipiv_( (n) );
+        lapack_int* ipiv_ptr = &ipiv_[0];
     #else
-        blas_int* ipiv_ptr = ipiv;
+        lapack_int* ipiv_ptr = ipiv;
     #endif
-    blas_int info_ = 0;
+    lapack_int info_ = 0;
 
     LAPACK_sgttrf(
         &n_,
@@ -60,18 +60,18 @@ int64_t gttrf(
     int64_t* ipiv )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
+    lapack_int n_ = (lapack_int) n;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( (n) );
-        blas_int* ipiv_ptr = &ipiv_[0];
+        std::vector< lapack_int > ipiv_( (n) );
+        lapack_int* ipiv_ptr = &ipiv_[0];
     #else
-        blas_int* ipiv_ptr = ipiv;
+        lapack_int* ipiv_ptr = ipiv;
     #endif
-    blas_int info_ = 0;
+    lapack_int info_ = 0;
 
     LAPACK_dgttrf(
         &n_,
@@ -100,18 +100,18 @@ int64_t gttrf(
     int64_t* ipiv )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
+    lapack_int n_ = (lapack_int) n;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( (n) );
-        blas_int* ipiv_ptr = &ipiv_[0];
+        std::vector< lapack_int > ipiv_( (n) );
+        lapack_int* ipiv_ptr = &ipiv_[0];
     #else
-        blas_int* ipiv_ptr = ipiv;
+        lapack_int* ipiv_ptr = ipiv;
     #endif
-    blas_int info_ = 0;
+    lapack_int info_ = 0;
 
     LAPACK_cgttrf(
         &n_,
@@ -194,18 +194,18 @@ int64_t gttrf(
     int64_t* ipiv )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int n_ = (blas_int) n;
+    lapack_int n_ = (lapack_int) n;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > ipiv_( (n) );
-        blas_int* ipiv_ptr = &ipiv_[0];
+        std::vector< lapack_int > ipiv_( (n) );
+        lapack_int* ipiv_ptr = &ipiv_[0];
     #else
-        blas_int* ipiv_ptr = ipiv;
+        lapack_int* ipiv_ptr = ipiv;
     #endif
-    blas_int info_ = 0;
+    lapack_int info_ = 0;
 
     LAPACK_zgttrf(
         &n_,

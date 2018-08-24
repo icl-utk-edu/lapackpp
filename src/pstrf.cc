@@ -17,22 +17,22 @@ int64_t pstrf(
     int64_t* rank, float tol )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > piv_( (n) );
-        blas_int* piv_ptr = &piv_[0];
+        std::vector< lapack_int > piv_( (n) );
+        lapack_int* piv_ptr = &piv_[0];
     #else
-        blas_int* piv_ptr = piv;
+        lapack_int* piv_ptr = piv;
     #endif
-    blas_int rank_ = (blas_int) *rank;
-    blas_int info_ = 0;
+    lapack_int rank_ = (lapack_int) *rank;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< float > work( (2*n) );
@@ -60,22 +60,22 @@ int64_t pstrf(
     int64_t* rank, double tol )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > piv_( (n) );
-        blas_int* piv_ptr = &piv_[0];
+        std::vector< lapack_int > piv_( (n) );
+        lapack_int* piv_ptr = &piv_[0];
     #else
-        blas_int* piv_ptr = piv;
+        lapack_int* piv_ptr = piv;
     #endif
-    blas_int rank_ = (blas_int) *rank;
-    blas_int info_ = 0;
+    lapack_int rank_ = (lapack_int) *rank;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< double > work( (2*n) );
@@ -103,22 +103,22 @@ int64_t pstrf(
     int64_t* rank, float tol )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > piv_( (n) );
-        blas_int* piv_ptr = &piv_[0];
+        std::vector< lapack_int > piv_( (n) );
+        lapack_int* piv_ptr = &piv_[0];
     #else
-        blas_int* piv_ptr = piv;
+        lapack_int* piv_ptr = piv;
     #endif
-    blas_int rank_ = (blas_int) *rank;
-    blas_int info_ = 0;
+    lapack_int rank_ = (lapack_int) *rank;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< float > work( (2*n) );
@@ -146,22 +146,22 @@ int64_t pstrf(
     int64_t* rank, double tol )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int lda_ = (blas_int) lda;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int lda_ = (lapack_int) lda;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > piv_( (n) );
-        blas_int* piv_ptr = &piv_[0];
+        std::vector< lapack_int > piv_( (n) );
+        lapack_int* piv_ptr = &piv_[0];
     #else
-        blas_int* piv_ptr = piv;
+        lapack_int* piv_ptr = piv;
     #endif
-    blas_int rank_ = (blas_int) *rank;
-    blas_int info_ = 0;
+    lapack_int rank_ = (lapack_int) *rank;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< double > work( (2*n) );

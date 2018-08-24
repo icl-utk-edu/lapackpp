@@ -17,23 +17,23 @@ int64_t sbgst(
     float* X, int64_t ldx )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ka) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(kb) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldbb) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ka) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(kb) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldbb) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
     char jobz_ = job2char( jobz );
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int ka_ = (blas_int) ka;
-    blas_int kb_ = (blas_int) kb;
-    blas_int ldab_ = (blas_int) ldab;
-    blas_int ldbb_ = (blas_int) ldbb;
-    blas_int ldx_ = (blas_int) ldx;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ka_ = (lapack_int) ka;
+    lapack_int kb_ = (lapack_int) kb;
+    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int ldbb_ = (lapack_int) ldbb;
+    lapack_int ldx_ = (lapack_int) ldx;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< float > work( (2*n) );
@@ -58,23 +58,23 @@ int64_t sbgst(
     double* X, int64_t ldx )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ka) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(kb) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldbb) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ka) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(kb) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldbb) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
     char jobz_ = job2char( jobz );
     char uplo_ = uplo2char( uplo );
-    blas_int n_ = (blas_int) n;
-    blas_int ka_ = (blas_int) ka;
-    blas_int kb_ = (blas_int) kb;
-    blas_int ldab_ = (blas_int) ldab;
-    blas_int ldbb_ = (blas_int) ldbb;
-    blas_int ldx_ = (blas_int) ldx;
-    blas_int info_ = 0;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ka_ = (lapack_int) ka;
+    lapack_int kb_ = (lapack_int) kb;
+    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int ldbb_ = (lapack_int) ldbb;
+    lapack_int ldx_ = (lapack_int) ldx;
+    lapack_int info_ = 0;
 
     // allocate workspace
     std::vector< double > work( (2*n) );

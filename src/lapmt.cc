@@ -16,21 +16,21 @@ void lapmt(
     int64_t* K )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int forwrd_ = (blas_int) forwrd;
-    blas_int m_ = (blas_int) m;
-    blas_int n_ = (blas_int) n;
-    blas_int ldx_ = (blas_int) ldx;
+    lapack_int forwrd_ = (lapack_int) forwrd;
+    lapack_int m_ = (lapack_int) m;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ldx_ = (lapack_int) ldx;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > K_( &K[0], &K[(n)] );
-        blas_int* K_ptr = &K_[0];
+        std::vector< lapack_int > K_( &K[0], &K[(n)] );
+        lapack_int* K_ptr = &K_[0];
     #else
-        blas_int* K_ptr = K;
+        lapack_int* K_ptr = K;
     #endif
 
     LAPACK_slapmt(
@@ -49,21 +49,21 @@ void lapmt(
     int64_t* K )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int forwrd_ = (blas_int) forwrd;
-    blas_int m_ = (blas_int) m;
-    blas_int n_ = (blas_int) n;
-    blas_int ldx_ = (blas_int) ldx;
+    lapack_int forwrd_ = (lapack_int) forwrd;
+    lapack_int m_ = (lapack_int) m;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ldx_ = (lapack_int) ldx;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > K_( &K[0], &K[(n)] );
-        blas_int* K_ptr = &K_[0];
+        std::vector< lapack_int > K_( &K[0], &K[(n)] );
+        lapack_int* K_ptr = &K_[0];
     #else
-        blas_int* K_ptr = K;
+        lapack_int* K_ptr = K;
     #endif
 
     LAPACK_dlapmt(
@@ -82,21 +82,21 @@ void lapmt(
     int64_t* K )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int forwrd_ = (blas_int) forwrd;
-    blas_int m_ = (blas_int) m;
-    blas_int n_ = (blas_int) n;
-    blas_int ldx_ = (blas_int) ldx;
+    lapack_int forwrd_ = (lapack_int) forwrd;
+    lapack_int m_ = (lapack_int) m;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ldx_ = (lapack_int) ldx;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > K_( &K[0], &K[(n)] );
-        blas_int* K_ptr = &K_[0];
+        std::vector< lapack_int > K_( &K[0], &K[(n)] );
+        lapack_int* K_ptr = &K_[0];
     #else
-        blas_int* K_ptr = K;
+        lapack_int* K_ptr = K;
     #endif
 
     LAPACK_clapmt(
@@ -115,21 +115,21 @@ void lapmt(
     int64_t* K )
 {
     // check for overflow
-    if (sizeof(int64_t) > sizeof(blas_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<blas_int>::max() );
-        lapack_error_if( std::abs(ldx) > std::numeric_limits<blas_int>::max() );
+    if (sizeof(int64_t) > sizeof(lapack_int)) {
+        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
+        lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    blas_int forwrd_ = (blas_int) forwrd;
-    blas_int m_ = (blas_int) m;
-    blas_int n_ = (blas_int) n;
-    blas_int ldx_ = (blas_int) ldx;
+    lapack_int forwrd_ = (lapack_int) forwrd;
+    lapack_int m_ = (lapack_int) m;
+    lapack_int n_ = (lapack_int) n;
+    lapack_int ldx_ = (lapack_int) ldx;
     #if 1
         // 32-bit copy
-        std::vector< blas_int > K_( &K[0], &K[(n)] );
-        blas_int* K_ptr = &K_[0];
+        std::vector< lapack_int > K_( &K[0], &K[(n)] );
+        lapack_int* K_ptr = &K_[0];
     #else
-        blas_int* K_ptr = K;
+        lapack_int* K_ptr = K;
     #endif
 
     LAPACK_zlapmt(

@@ -628,99 +628,109 @@ void print_matrix_header(
 // -----------------------------------------------------------------------------
 int main( int argc, char** argv )
 {
+    using libtest::QuitException;
+
     // check that all sections have names
     assert( sizeof(section_names)/sizeof(*section_names) == Section::num_sections );
 
-    // Usage: test routine [params]
-    if (argc < 2 ||
-        strcmp( argv[1], "-h" ) == 0 ||
-        strcmp( argv[1], "--help" ) == 0)
-    {
-        usage( argc, argv, routines, section_names );
-        return 0;
-    }
-
-    if (strcmp( argv[1], "--help-matrix" ) == 0)
-    {
-        lapack::generate_matrix_usage();
-        return 0;
-    }
-
-    // find routine to test
-    const char* routine = argv[1];
-    libtest::test_func_ptr test_routine = find_tester( routine, routines );
-    if (test_routine == nullptr) {
-        fprintf( stderr, "%s%sError: routine %s not found%s\n\n",
-                 libtest::ansi_bold, libtest::ansi_red, routine,
-                 libtest::ansi_normal );
-        usage( argc, argv, routines, section_names );
-        return -1;
-    }
-
-    // mark fields that are used (run=false)
-    Params params;
-    test_routine( params, false );
-
-    // parse parameters after routine name
-    // (prints routine's help and exits for arg = "-h")
-    params.parse( routine, argc-2, argv+2 );
-
-    // print input so running `test [input] > out.txt` documents input
-    printf( "input: %s", argv[0] );
-    for (int i = 1; i < argc; ++i) {
-        printf( " %s", argv[i] );
-    }
-    printf( "\n" );
-
-    // show align column if it has non-default values
-    if (params.align.size() != 1 || params.align.value() != 1) {
-        params.align.width( 5 );
-    }
-
-    // run tests
     int status = 0;
-    int repeat = params.repeat.value();
-    libtest::DataType last = params.datatype.value();
-    std::string matrix, matrixB;
-    double cond = 0, condD = 0, condB = 0, condD_B = 0;
-    params.header();
+    try {
+        // print input so running `test [input] > out.txt` documents input
+        printf( "input: %s", argv[0] );
+        for (int i = 1; i < argc; ++i) {
+            printf( " %s", argv[i] );
+        }
+        printf( "\n" );
 
-    do {
-        if (params.datatype.value() != last) {
-            last = params.datatype.value();
-            printf( "\n" );
+        // Usage: test routine [params]
+        if (argc < 2 ||
+            strcmp( argv[1], "-h" ) == 0 ||
+            strcmp( argv[1], "--help" ) == 0)
+        {
+            usage( argc, argv, routines, section_names );
+            throw QuitException();
         }
-        for (int iter = 0; iter < repeat; ++iter) {
-            try {
-                test_routine( params, true );
-            }
-            catch (blas::Error& err) {
-                params.okay.value() = false;
-                printf( "BLAS error: %s\n", err.what() );
-            }
-            catch (...) {
-                // happens for assert_throw failures
-                params.okay.value() = false;
-                printf( "Caught error\n" );
-            }
-            if (iter == 0) {
-                print_matrix_header( params.matrix,  "test matrix A", &matrix,  &cond,  &condD   );
-                print_matrix_header( params.matrixB, "test matrix B", &matrixB, &condB, &condD_B );
-            }
-            params.print();
-            status += ! params.okay.value();
-            params.reset_output();
-        }
-        if (repeat > 1) {
-            printf( "\n" );
-        }
-    } while( params.next() );
 
-    if (status) {
-        printf( "%d tests FAILED.\n", status );
+        if (strcmp( argv[1], "--help-matrix" ) == 0) {
+            lapack::generate_matrix_usage();
+            throw QuitException();
+        }
+
+        // find routine to test
+        const char* routine = argv[1];
+        libtest::test_func_ptr test_routine = find_tester( routine, routines );
+        if (test_routine == nullptr) {
+            usage( argc, argv, routines, section_names );
+            throw std::runtime_error(
+                std::string("routine ") + routine + " not found" );
+        }
+
+        // mark fields that are used (run=false)
+        Params params;
+        test_routine( params, false );
+
+        // parse parameters after routine name
+        try {
+            params.parse( routine, argc-2, argv+2 );
+        }
+        catch (const std::exception& ex) {
+            params.help( routine );
+            throw;
+        }
+
+        // show align column if it has non-default values
+        if (params.align.size() != 1 || params.align.value() != 1) {
+            params.align.width( 5 );
+        }
+
+        // run tests
+        int repeat = params.repeat.value();
+        libtest::DataType last = params.datatype.value();
+        std::string matrix, matrixB;
+        double cond = 0, condD = 0, condB = 0, condD_B = 0;
+        params.header();
+        do {
+            if (params.datatype.value() != last) {
+                last = params.datatype.value();
+                printf( "\n" );
+            }
+            for (int iter = 0; iter < repeat; ++iter) {
+                try {
+                    test_routine( params, true );
+                }
+                catch (const std::exception& ex) {
+                    fprintf( stderr, "%s%sError: %s%s\n",
+                             ansi_bold, ansi_red, ex.what(), ansi_normal );
+                    params.okay.value() = false;
+                }
+                if (iter == 0) {
+                    print_matrix_header( params.matrix,  "test matrix A", &matrix,  &cond,  &condD   );
+                    print_matrix_header( params.matrixB, "test matrix B", &matrixB, &condB, &condD_B );
+                }
+                params.print();
+                status += ! params.okay.value();
+                params.reset_output();
+            }
+            if (repeat > 1) {
+                printf( "\n" );
+            }
+        } while( params.next() );
+
+        if (status) {
+            printf( "%d tests FAILED.\n", status );
+        }
+        else {
+            printf( "All tests passed.\n" );
+        }
     }
-    else {
-        printf( "All tests passed.\n" );
+    catch (const QuitException& ex) {
+        // pass: no error to print
     }
+    catch (const std::exception& ex) {
+        fprintf( stderr, "\n%s%sError: %s%s\n",
+                 ansi_bold, ansi_red, ex.what(), ansi_normal );
+        status = -1;
+    }
+
     return status;
 }

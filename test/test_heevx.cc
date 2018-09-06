@@ -42,7 +42,7 @@ void test_heevx_work( Params& params, bool run )
     int64_t lda = roundup( max( 1, n ), align );
     real_t abstol = 0;   // use default
     int64_t nfound_tst;  // i.e., "m" in LAPACK
-    int     nfound_ref;
+    lapack_int nfound_ref;
     int64_t ldz = roundup( max( 1, n ), align );
     size_t size_A = (size_t) lda * n;
     size_t size_W = (size_t) (n);

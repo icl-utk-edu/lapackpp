@@ -45,10 +45,10 @@ void LAPACK_zsyr(
 // -----------------------------------------------------------------------------
 inline void
 cblas_syr(
-    CBLAS_LAYOUT layout, CBLAS_UPLO uplo, int n,
+    CBLAS_LAYOUT layout, CBLAS_UPLO uplo, lapack_int n,
     std::complex<float> alpha,
-    std::complex<float> const *x, int incx,
-    std::complex<float>* A, int lda )
+    std::complex<float> const *x, lapack_int incx,
+    std::complex<float>* A, lapack_int lda )
 {
     char uplo_ = lapack_uplo_const( uplo );
     if (layout == CblasRowMajor) {
@@ -62,10 +62,10 @@ cblas_syr(
 
 inline void
 cblas_syr(
-    CBLAS_LAYOUT layout, CBLAS_UPLO uplo, int n,
+    CBLAS_LAYOUT layout, CBLAS_UPLO uplo, lapack_int n,
     std::complex<double> alpha,
-    std::complex<double> const *x, int incx,
-    std::complex<double>* A, int lda )
+    std::complex<double> const *x, lapack_int incx,
+    std::complex<double>* A, lapack_int lda )
 {
     char uplo_ = lapack_uplo_const( uplo );
     if (layout == CblasRowMajor) {

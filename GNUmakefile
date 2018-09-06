@@ -85,20 +85,41 @@ dep     += $(addsuffix .d, $(basename $(test_src)))
 
 test     = test/test
 
-libtest_dir = ../libtest
-libtest_src = $(wildcard $(libtest_dir)/*.cc $(libtest_dir)/*.hh)
-ifeq ($(static),1)
-	libtest = $(libtest_dir)/libtest.a
-else
-	libtest = $(libtest_dir)/libtest.so
+blaspp_dir = $(wildcard ../blaspp)
+ifeq ($(blaspp_dir),)
+	blaspp_dir = $(wildcard ./blaspp)
+endif
+ifeq ($(blaspp_dir),)
+    $(lib_obj):
+		$(error LAPACK++ requires BLAS++, which was not found. Run 'make config' \
+		        or download manually from https://bitbucket.org/icl/blaspp/)
 endif
 
-blaspp_dir = ../blaspp
 blaspp_src = $(wildcard $(blaspp_dir)/src/*.cc $(blaspp_dir)/include/*.hh)
 ifeq ($(static),1)
 	libblaspp  = $(blaspp_dir)/lib/libblaspp.a
 else
 	libblaspp  = $(blaspp_dir)/lib/libblaspp.so
+endif
+
+libtest_dir = $(wildcard ../libtest)
+ifeq ($(libtest_dir),)
+	libtest_dir = $(wildcard $(blaspp_dir)/libtest)
+endif
+ifeq ($(libtest_dir),)
+	libtest_dir = $(wildcard ./libtest)
+endif
+ifeq ($(libtest_dir),)
+    $(test_obj):
+		$(error Tester requires libtest, which was not found. Run 'make config' \
+		        or download manually from https://bitbucket.org/icl/libtest/)
+endif
+
+libtest_src = $(wildcard $(libtest_dir)/libtest.cc $(libtest_dir)/libtest.hh)
+ifeq ($(static),1)
+	libtest = $(libtest_dir)/libtest.a
+else
+	libtest = $(libtest_dir)/libtest.so
 endif
 
 lib_a  = ./lib/liblapackpp.a
@@ -126,9 +147,12 @@ TEST_LIBS    += -lblaspp -llapackpp -ltest
 
 #-------------------------------------------------------------------------------
 # Rules
+
+targets = all lib src test headers include docs clean distclean
+
 .DELETE_ON_ERROR:
 .SUFFIXES:
-.PHONY: all lib src test headers include docs clean distclean
+.PHONY: $(targets)
 .DEFAULT_GOAL = all
 
 all: lib test
@@ -142,6 +166,10 @@ install: lib
 uninstall:
 	$(RM) $(addprefix $(DESTDIR)$(prefix), $(headers))
 	$(RM) $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)/liblapackpp.*
+
+#-------------------------------------------------------------------------------
+# if re-configured, recompile everything
+$(lib_obj) $(test_obj): lapack_defines.h
 
 #-------------------------------------------------------------------------------
 # LAPACK++ library
@@ -163,13 +191,17 @@ lib/clean src/clean:
 
 #-------------------------------------------------------------------------------
 # BLAS++ library
-$(libblaspp): $(libblaspp_src)
-	cd $(blaspp_dir) && $(MAKE) lib
+ifneq ($(blaspp_dir),)
+    $(libblaspp): $(libblaspp_src)
+		cd $(blaspp_dir) && $(MAKE) lib CXX=$(CXX)
+endif
 
 #-------------------------------------------------------------------------------
 # libtest library
-$(libtest): $(libtest_src)
-	cd $(libtest_dir) && $(MAKE) lib
+ifneq ($(libtest_dir),)
+    $(libtest): $(libtest_src)
+		cd $(libtest_dir) && $(MAKE) lib CXX=$(CXX)
+endif
 
 #-------------------------------------------------------------------------------
 # tester

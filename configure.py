@@ -10,6 +10,7 @@ import config
 from   config import ansi_bold, ansi_red, ansi_blue, ansi_normal
 from   config import Error
 import config.lapack
+import os
 
 #-------------------------------------------------------------------------------
 # header
@@ -58,47 +59,62 @@ def main():
         #'-Werror',
     ])
     config.openmp()
-    
+
     config.lapack.blas()
     print()
     config.lapack.blas_float_return()
     config.lapack.blas_complex_return()
     config.lapack.vendor_version()
-    
+
     # Must test mkl_version before cblas and lapacke, to define HAVE_MKL.
     try:
         config.lapack.cblas()
     except Error:
-        print( ansi_red + 'LAPACK++ needs CBLAS only in test_syr.' + ansi_normal )
-        pass
-    
+        print( ansi_red + 'LAPACK++ needs CBLAS to compile testers.' + ansi_normal )
+
     # todo: can LAPACK++ be compiled without uncommon routines?
     config.lapack.lapack()
     config.lapack.lapack_uncommon()
     config.lapack.lapack_version()
-    
+
     # XBLAS and Matgen are optional
     try:
         config.lapack.lapack_xblas()
     except Error:
         print( ansi_red + 'LAPACK++ will exclude wrappers for XBLAS.' + ansi_normal )
-        pass
-    
+
     try:
         config.lapack.lapack_matgen()
     except Error:
         print( ansi_red + 'LAPACK++ will exclude wrappers for matgen.' + ansi_normal )
-        pass
-    
+
     try:
         config.lapack.lapacke()
         config.lapack.lapacke_uncommon()
     except Error:
         print( ansi_red + 'LAPACK++ needs LAPACKE only in testers.' + ansi_normal )
-        pass
-    
-    config.output_files( 'make.inc' )
-    
+
+    blaspp = config.get_package(
+        'BLAS++',
+        ['../blaspp', './blaspp'],
+        'https://bitbucket.org/icl/blaspp',
+        'https://bitbucket.org/icl/blaspp/get/tip.tar.gz',
+        'blaspp.tar.gz' )
+    if (not blaspp):
+        raise Exception( 'LAPACK++ requires BLAS++.' )
+
+    libtest = config.get_package(
+        'libtest',
+        ['../libtest', blaspp + '/libtest', './libtest'],
+        'https://bitbucket.org/icl/libtest',
+        'https://bitbucket.org/icl/libtest/get/tip.tar.gz',
+        'libtest.tar.gz' )
+    if (not libtest):
+        print( ansi_red + 'LAPACK++ needs libtest to compile testers.' + ansi_normal )
+
+    config.extract_defines_from_flags( 'CXXFLAGS' )
+    config.output_files( ['make.inc', 'lapack_defines.h'] )
+
     print( '-'*80 )
 # end
 

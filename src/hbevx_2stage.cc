@@ -42,7 +42,7 @@ int64_t hbevx_2stage(
     lapack_int iu_ = (lapack_int) iu;
     lapack_int m_ = (lapack_int) *m;
     lapack_int ldz_ = (lapack_int) ldz;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ifail_( (n) );
         lapack_int* ifail_ptr = &ifail_[0];
@@ -90,7 +90,7 @@ int64_t hbevx_2stage(
         throw Error();
     }
     *m = m_;
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ifail_.begin(), ifail_.end(), ifail );
     #endif
     return info_;
@@ -127,7 +127,7 @@ int64_t hbevx_2stage(
     lapack_int iu_ = (lapack_int) iu;
     lapack_int m_ = (lapack_int) *m;
     lapack_int ldz_ = (lapack_int) ldz;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ifail_( (n) );
         lapack_int* ifail_ptr = &ifail_[0];
@@ -175,7 +175,7 @@ int64_t hbevx_2stage(
         throw Error();
     }
     *m = m_;
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ifail_.begin(), ifail_.end(), ifail );
     #endif
     return info_;

@@ -26,7 +26,7 @@ int64_t hetrf_aa(
     char uplo_ = uplo2char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( (n) );
         lapack_int* ipiv_ptr = &ipiv_[0];
@@ -59,7 +59,7 @@ int64_t hetrf_aa(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
     #endif
     return info_;
@@ -128,7 +128,7 @@ int64_t hetrf_aa(
     char uplo_ = uplo2char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( (n) );
         lapack_int* ipiv_ptr = &ipiv_[0];
@@ -161,7 +161,7 @@ int64_t hetrf_aa(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
     #endif
     return info_;

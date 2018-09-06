@@ -31,7 +31,7 @@ int64_t gelsy(
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ldb_ = (lapack_int) ldb;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
         lapack_int* jpvt_ptr = &jpvt_[0];
@@ -67,7 +67,7 @@ int64_t gelsy(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( jpvt_.begin(), jpvt_.end(), jpvt );
     #endif
     *rank = rank_;
@@ -96,7 +96,7 @@ int64_t gelsy(
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ldb_ = (lapack_int) ldb;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
         lapack_int* jpvt_ptr = &jpvt_[0];
@@ -132,7 +132,7 @@ int64_t gelsy(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( jpvt_.begin(), jpvt_.end(), jpvt );
     #endif
     *rank = rank_;
@@ -161,7 +161,7 @@ int64_t gelsy(
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ldb_ = (lapack_int) ldb;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
         lapack_int* jpvt_ptr = &jpvt_[0];
@@ -201,7 +201,7 @@ int64_t gelsy(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( jpvt_.begin(), jpvt_.end(), jpvt );
     #endif
     *rank = rank_;
@@ -337,7 +337,7 @@ int64_t gelsy(
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ldb_ = (lapack_int) ldb;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
         lapack_int* jpvt_ptr = &jpvt_[0];
@@ -377,7 +377,7 @@ int64_t gelsy(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( jpvt_.begin(), jpvt_.end(), jpvt );
     #endif
     *rank = rank_;

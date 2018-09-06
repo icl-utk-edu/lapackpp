@@ -27,7 +27,7 @@ int64_t laghe(
     lapack_int n_ = (lapack_int) n;
     lapack_int k_ = (lapack_int) k;
     lapack_int lda_ = (lapack_int) lda;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
         lapack_int* iseed_ptr = &iseed_[0];
@@ -48,7 +48,7 @@ int64_t laghe(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( iseed_.begin(), iseed_.end(), iseed );
     #endif
     return info_;
@@ -70,7 +70,7 @@ int64_t laghe(
     lapack_int n_ = (lapack_int) n;
     lapack_int k_ = (lapack_int) k;
     lapack_int lda_ = (lapack_int) lda;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
         lapack_int* iseed_ptr = &iseed_[0];
@@ -91,7 +91,7 @@ int64_t laghe(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( iseed_.begin(), iseed_.end(), iseed );
     #endif
     return info_;

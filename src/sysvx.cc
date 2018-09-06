@@ -37,7 +37,7 @@ int64_t sysvx(
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ldaf_ = (lapack_int) ldaf;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int* ipiv_ptr = &ipiv_[0];
@@ -86,7 +86,7 @@ int64_t sysvx(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
     #endif
     return info_;
@@ -120,7 +120,7 @@ int64_t sysvx(
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ldaf_ = (lapack_int) ldaf;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int* ipiv_ptr = &ipiv_[0];
@@ -169,7 +169,7 @@ int64_t sysvx(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
     #endif
     return info_;
@@ -203,7 +203,7 @@ int64_t sysvx(
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ldaf_ = (lapack_int) ldaf;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int* ipiv_ptr = &ipiv_[0];
@@ -252,7 +252,7 @@ int64_t sysvx(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
     #endif
     return info_;
@@ -421,7 +421,7 @@ int64_t sysvx(
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ldaf_ = (lapack_int) ldaf;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int* ipiv_ptr = &ipiv_[0];
@@ -470,7 +470,7 @@ int64_t sysvx(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
     #endif
     return info_;

@@ -36,7 +36,7 @@ int64_t stemr(
     lapack_int m_ = (lapack_int) *m;
     lapack_int ldz_ = (lapack_int) ldz;
     lapack_int nzc_ = (lapack_int) nzc;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was m; n >= m
         lapack_int* isuppz_ptr = &isuppz_[0];
@@ -82,7 +82,7 @@ int64_t stemr(
         throw Error();
     }
     *m = m_;
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( &isuppz_[0], &isuppz_[m_], isuppz );  // was begin to end
     #endif
     *tryrac = tryrac_;
@@ -116,7 +116,7 @@ int64_t stemr(
     lapack_int m_ = (lapack_int) *m;
     lapack_int ldz_ = (lapack_int) ldz;
     lapack_int nzc_ = (lapack_int) nzc;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was m; n >= m
         lapack_int* isuppz_ptr = &isuppz_[0];
@@ -162,7 +162,7 @@ int64_t stemr(
         throw Error();
     }
     *m = m_;
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( &isuppz_[0], &isuppz_[m_], isuppz );  // was begin to end
     #endif
     *tryrac = tryrac_;
@@ -196,7 +196,7 @@ int64_t stemr(
     lapack_int m_ = (lapack_int) *m;
     lapack_int ldz_ = (lapack_int) ldz;
     lapack_int nzc_ = (lapack_int) nzc;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was m; n >= m
         lapack_int* isuppz_ptr = &isuppz_[0];
@@ -242,7 +242,7 @@ int64_t stemr(
         throw Error();
     }
     *m = m_;
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( &isuppz_[0], &isuppz_[m_], isuppz );  // was begin to end
     #endif
     *tryrac = tryrac_;
@@ -276,7 +276,7 @@ int64_t stemr(
     lapack_int m_ = (lapack_int) *m;
     lapack_int ldz_ = (lapack_int) ldz;
     lapack_int nzc_ = (lapack_int) nzc;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was m; n >= m
         lapack_int* isuppz_ptr = &isuppz_[0];
@@ -322,7 +322,7 @@ int64_t stemr(
         throw Error();
     }
     *m = m_;
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( &isuppz_[0], &isuppz_[m_], isuppz );  // was begin to end
     #endif
     *tryrac = tryrac_;

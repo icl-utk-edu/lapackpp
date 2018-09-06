@@ -23,13 +23,13 @@ int64_t getri(
     }
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( max( 1, (n) ) );
         std::copy( &ipiv[0], &ipiv[(n)], ipiv_.begin() );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int const* ipiv_ptr = ipiv_;
+        lapack_int const* ipiv_ptr = ipiv;
     #endif
     lapack_int info_ = 0;
 
@@ -74,13 +74,13 @@ int64_t getri(
     }
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( max( 1, (n) ) );
         std::copy( &ipiv[0], &ipiv[(n)], ipiv_.begin() );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int const* ipiv_ptr = ipiv_;
+        lapack_int const* ipiv_ptr = ipiv;
     #endif
     lapack_int info_ = 0;
 
@@ -125,13 +125,13 @@ int64_t getri(
     }
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( max( 1, (n) ) );
         std::copy( &ipiv[0], &ipiv[(n)], ipiv_.begin() );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int const* ipiv_ptr = ipiv_;
+        lapack_int const* ipiv_ptr = ipiv;
     #endif
     lapack_int info_ = 0;
 
@@ -206,13 +206,13 @@ int64_t getri(
     }
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( max( 1, (n) ) );
         std::copy( &ipiv[0], &ipiv[(n)], ipiv_.begin() );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int const* ipiv_ptr = ipiv_;
+        lapack_int const* ipiv_ptr = ipiv;
     #endif
     lapack_int info_ = 0;
 

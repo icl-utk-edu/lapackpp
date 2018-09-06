@@ -45,7 +45,7 @@ int64_t sbgvx(
     lapack_int iu_ = (lapack_int) iu;
     lapack_int m_ = (lapack_int) *m;
     lapack_int ldz_ = (lapack_int) ldz;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ifail_( n );  // was m; n >= m
         lapack_int* ifail_ptr = &ifail_[0];
@@ -72,7 +72,7 @@ int64_t sbgvx(
         throw Error();
     }
     *m = m_;
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( &ifail_[0], &ifail_[m_], ifail );  // was begin to end
     #endif
     return info_;
@@ -114,7 +114,7 @@ int64_t sbgvx(
     lapack_int iu_ = (lapack_int) iu;
     lapack_int m_ = (lapack_int) *m;
     lapack_int ldz_ = (lapack_int) ldz;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ifail_( n );  // was m; n >= m
         lapack_int* ifail_ptr = &ifail_[0];
@@ -141,7 +141,7 @@ int64_t sbgvx(
         throw Error();
     }
     *m = m_;
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( &ifail_[0], &ifail_[m_], ifail );  // was begin to end
     #endif
     return info_;

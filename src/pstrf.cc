@@ -24,7 +24,7 @@ int64_t pstrf(
     char uplo_ = uplo2char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > piv_( (n) );
         lapack_int* piv_ptr = &piv_[0];
@@ -45,7 +45,7 @@ int64_t pstrf(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( piv_.begin(), piv_.end(), piv );
     #endif
     *rank = rank_;
@@ -67,7 +67,7 @@ int64_t pstrf(
     char uplo_ = uplo2char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > piv_( (n) );
         lapack_int* piv_ptr = &piv_[0];
@@ -88,7 +88,7 @@ int64_t pstrf(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( piv_.begin(), piv_.end(), piv );
     #endif
     *rank = rank_;
@@ -110,7 +110,7 @@ int64_t pstrf(
     char uplo_ = uplo2char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > piv_( (n) );
         lapack_int* piv_ptr = &piv_[0];
@@ -131,7 +131,7 @@ int64_t pstrf(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( piv_.begin(), piv_.end(), piv );
     #endif
     *rank = rank_;
@@ -153,7 +153,7 @@ int64_t pstrf(
     char uplo_ = uplo2char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > piv_( (n) );
         lapack_int* piv_ptr = &piv_[0];
@@ -174,7 +174,7 @@ int64_t pstrf(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( piv_.begin(), piv_.end(), piv );
     #endif
     *rank = rank_;

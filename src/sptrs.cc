@@ -25,12 +25,12 @@ int64_t sptrs(
     char uplo_ = uplo2char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int const* ipiv_ptr = ipiv_;
+        lapack_int const* ipiv_ptr = ipiv;
     #endif
     lapack_int ldb_ = (lapack_int) ldb;
     lapack_int info_ = 0;
@@ -62,12 +62,12 @@ int64_t sptrs(
     char uplo_ = uplo2char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int const* ipiv_ptr = ipiv_;
+        lapack_int const* ipiv_ptr = ipiv;
     #endif
     lapack_int ldb_ = (lapack_int) ldb;
     lapack_int info_ = 0;
@@ -99,12 +99,12 @@ int64_t sptrs(
     char uplo_ = uplo2char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int const* ipiv_ptr = ipiv_;
+        lapack_int const* ipiv_ptr = ipiv;
     #endif
     lapack_int ldb_ = (lapack_int) ldb;
     lapack_int info_ = 0;
@@ -136,12 +136,12 @@ int64_t sptrs(
     char uplo_ = uplo2char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int const* ipiv_ptr = ipiv_;
+        lapack_int const* ipiv_ptr = ipiv;
     #endif
     lapack_int ldb_ = (lapack_int) ldb;
     lapack_int info_ = 0;

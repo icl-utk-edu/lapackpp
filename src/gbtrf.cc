@@ -29,7 +29,7 @@ int64_t gbtrf(
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;
     lapack_int ldab_ = (lapack_int) ldab;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( (min(m,n)) );
         lapack_int* ipiv_ptr = &ipiv_[0];
@@ -45,7 +45,7 @@ int64_t gbtrf(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
     #endif
     return info_;
@@ -71,7 +71,7 @@ int64_t gbtrf(
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;
     lapack_int ldab_ = (lapack_int) ldab;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( (min(m,n)) );
         lapack_int* ipiv_ptr = &ipiv_[0];
@@ -87,7 +87,7 @@ int64_t gbtrf(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
     #endif
     return info_;
@@ -113,7 +113,7 @@ int64_t gbtrf(
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;
     lapack_int ldab_ = (lapack_int) ldab;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( (min(m,n)) );
         lapack_int* ipiv_ptr = &ipiv_[0];
@@ -129,7 +129,7 @@ int64_t gbtrf(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
     #endif
     return info_;
@@ -223,7 +223,7 @@ int64_t gbtrf(
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;
     lapack_int ldab_ = (lapack_int) ldab;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( (min(m,n)) );
         lapack_int* ipiv_ptr = &ipiv_[0];
@@ -239,7 +239,7 @@ int64_t gbtrf(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
     #endif
     return info_;

@@ -25,7 +25,7 @@ int64_t hpsv(
     char uplo_ = uplo2char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( (n) );
         lapack_int* ipiv_ptr = &ipiv_[0];
@@ -43,7 +43,7 @@ int64_t hpsv(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
     #endif
     return info_;
@@ -65,7 +65,7 @@ int64_t hpsv(
     char uplo_ = uplo2char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( (n) );
         lapack_int* ipiv_ptr = &ipiv_[0];
@@ -83,7 +83,7 @@ int64_t hpsv(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
     #endif
     return info_;

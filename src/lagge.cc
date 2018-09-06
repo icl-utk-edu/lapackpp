@@ -31,7 +31,7 @@ int64_t lagge(
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;
     lapack_int lda_ = (lapack_int) lda;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
         lapack_int* iseed_ptr = &iseed_[0];
@@ -52,7 +52,7 @@ int64_t lagge(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( iseed_.begin(), iseed_.end(), iseed );
     #endif
     return info_;
@@ -78,7 +78,7 @@ int64_t lagge(
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;
     lapack_int lda_ = (lapack_int) lda;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
         lapack_int* iseed_ptr = &iseed_[0];
@@ -99,7 +99,7 @@ int64_t lagge(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( iseed_.begin(), iseed_.end(), iseed );
     #endif
     return info_;
@@ -125,7 +125,7 @@ int64_t lagge(
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;
     lapack_int lda_ = (lapack_int) lda;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
         lapack_int* iseed_ptr = &iseed_[0];
@@ -146,7 +146,7 @@ int64_t lagge(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( iseed_.begin(), iseed_.end(), iseed );
     #endif
     return info_;
@@ -172,7 +172,7 @@ int64_t lagge(
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;
     lapack_int lda_ = (lapack_int) lda;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
         lapack_int* iseed_ptr = &iseed_[0];
@@ -193,7 +193,7 @@ int64_t lagge(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( iseed_.begin(), iseed_.end(), iseed );
     #endif
     return info_;

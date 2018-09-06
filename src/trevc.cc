@@ -29,13 +29,11 @@ int64_t trevc(
     }
     char sides_ = sides2char( sides );
     char howmany_ = howmany2char( howmany );
-    #if 1
-        // 32-bit copy
-        std::vector< lapack_int > select_( &select[0], &select[(n)] );
-        lapack_int* select_ptr = &select_[0];
-    #else
-        lapack_int* select_ptr = select;
-    #endif
+
+    // lapack_logical (32 or 64-bit) copy
+    std::vector< lapack_logical > select_( &select[0], &select[(n)] );
+    lapack_logical* select_ptr = &select_[0];
+
     lapack_int n_ = (lapack_int) n;
     lapack_int ldt_ = (lapack_int) ldt;
     lapack_int ldvl_ = (lapack_int) ldvl;
@@ -57,9 +55,8 @@ int64_t trevc(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
-        std::copy( select_.begin(), select_.end(), select );
-    #endif
+    // [sd]trevc update select
+    std::copy( select_.begin(), select_.end(), select );
     *m = m_;
     return info_;
 }
@@ -84,13 +81,11 @@ int64_t trevc(
     }
     char sides_ = sides2char( sides );
     char howmany_ = howmany2char( howmany );
-    #if 1
-        // 32-bit copy
-        std::vector< lapack_int > select_( &select[0], &select[(n)] );
-        lapack_int* select_ptr = &select_[0];
-    #else
-        lapack_int* select_ptr = select;
-    #endif
+
+    // lapack_logical (32 or 64-bit) copy
+    std::vector< lapack_logical > select_( &select[0], &select[(n)] );
+    lapack_logical* select_ptr = &select_[0];
+
     lapack_int n_ = (lapack_int) n;
     lapack_int ldt_ = (lapack_int) ldt;
     lapack_int ldvl_ = (lapack_int) ldvl;
@@ -112,9 +107,8 @@ int64_t trevc(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
-        std::copy( select_.begin(), select_.end(), select );
-    #endif
+    // [sd]trevc update select
+    std::copy( select_.begin(), select_.end(), select );
     *m = m_;
     return info_;
 }
@@ -139,13 +133,11 @@ int64_t trevc(
     }
     char sides_ = sides2char( sides );
     char howmany_ = howmany2char( howmany );
-    #if 1
-        // 32-bit copy
-        std::vector< lapack_int > select_( &select[0], &select[(n)] );
-        lapack_int const* select_ptr = &select_[0];
-    #else
-        lapack_int const* select_ptr = select_;
-    #endif
+
+    // lapack_logical (32 or 64-bit) copy
+    std::vector< lapack_logical > select_( &select[0], &select[(n)] );
+    lapack_logical const* select_ptr = &select_[0];
+
     lapack_int n_ = (lapack_int) n;
     lapack_int ldt_ = (lapack_int) ldt;
     lapack_int ldvl_ = (lapack_int) ldvl;
@@ -221,6 +213,7 @@ int64_t trevc(
 ///     The eigenvector corresponding to the j-th eigenvalue is
 ///     computed if select(j) = true.
 ///     Not referenced if howmany = All or Backtransform.
+///     TODO: updated in real case. See [sd]trevc.
 ///
 /// @param[in] n
 ///     The order of the matrix T. n >= 0.
@@ -312,13 +305,11 @@ int64_t trevc(
     }
     char sides_ = sides2char( sides );
     char howmany_ = howmany2char( howmany );
-    #if 1
-        // 32-bit copy
-        std::vector< lapack_int > select_( &select[0], &select[(n)] );
-        lapack_int const* select_ptr = &select_[0];
-    #else
-        lapack_int const* select_ptr = select_;
-    #endif
+
+    // lapack_logical (32 or 64-bit) copy
+    std::vector< lapack_logical > select_( &select[0], &select[(n)] );
+    lapack_logical const* select_ptr = &select_[0];
+
     lapack_int n_ = (lapack_int) n;
     lapack_int ldt_ = (lapack_int) ldt;
     lapack_int ldvl_ = (lapack_int) ldvl;

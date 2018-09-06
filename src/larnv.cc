@@ -22,7 +22,7 @@ void larnv(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     lapack_int idist_ = (lapack_int) idist;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
         lapack_int* iseed_ptr = &iseed_[0];
@@ -35,7 +35,7 @@ void larnv(
         &idist_,
         iseed_ptr, &n_,
         X );
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( iseed_.begin(), iseed_.end(), iseed );
     #endif
 }
@@ -53,7 +53,7 @@ void larnv(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     lapack_int idist_ = (lapack_int) idist;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
         lapack_int* iseed_ptr = &iseed_[0];
@@ -66,7 +66,7 @@ void larnv(
         &idist_,
         iseed_ptr, &n_,
         X );
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( iseed_.begin(), iseed_.end(), iseed );
     #endif
 }
@@ -84,7 +84,7 @@ void larnv(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     lapack_int idist_ = (lapack_int) idist;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
         lapack_int* iseed_ptr = &iseed_[0];
@@ -97,7 +97,7 @@ void larnv(
         &idist_,
         iseed_ptr, &n_,
         (lapack_complex_float*) X );
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( iseed_.begin(), iseed_.end(), iseed );
     #endif
 }
@@ -151,7 +151,7 @@ void larnv(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     lapack_int idist_ = (lapack_int) idist;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
         lapack_int* iseed_ptr = &iseed_[0];
@@ -164,7 +164,7 @@ void larnv(
         &idist_,
         iseed_ptr, &n_,
         (lapack_complex_double*) X );
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( iseed_.begin(), iseed_.end(), iseed );
     #endif
 }

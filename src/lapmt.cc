@@ -25,7 +25,7 @@ void lapmt(
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int ldx_ = (lapack_int) ldx;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > K_( &K[0], &K[(n)] );
         lapack_int* K_ptr = &K_[0];
@@ -37,7 +37,7 @@ void lapmt(
         &forwrd_, &m_, &n_,
         X, &ldx_,
         K_ptr );
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( K_.begin(), K_.end(), K );
     #endif
 }
@@ -58,7 +58,7 @@ void lapmt(
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int ldx_ = (lapack_int) ldx;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > K_( &K[0], &K[(n)] );
         lapack_int* K_ptr = &K_[0];
@@ -70,7 +70,7 @@ void lapmt(
         &forwrd_, &m_, &n_,
         X, &ldx_,
         K_ptr );
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( K_.begin(), K_.end(), K );
     #endif
 }
@@ -91,7 +91,7 @@ void lapmt(
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int ldx_ = (lapack_int) ldx;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > K_( &K[0], &K[(n)] );
         lapack_int* K_ptr = &K_[0];
@@ -103,7 +103,7 @@ void lapmt(
         &forwrd_, &m_, &n_,
         (lapack_complex_float*) X, &ldx_,
         K_ptr );
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( K_.begin(), K_.end(), K );
     #endif
 }
@@ -124,7 +124,7 @@ void lapmt(
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int ldx_ = (lapack_int) ldx;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > K_( &K[0], &K[(n)] );
         lapack_int* K_ptr = &K_[0];
@@ -136,7 +136,7 @@ void lapmt(
         &forwrd_, &m_, &n_,
         (lapack_complex_double*) X, &ldx_,
         K_ptr );
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( K_.begin(), K_.end(), K );
     #endif
 }

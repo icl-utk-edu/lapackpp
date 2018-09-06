@@ -38,7 +38,7 @@ int64_t syevr_2stage(
     lapack_int iu_ = (lapack_int) iu;
     lapack_int nfound_;  // output
     lapack_int ldz_ = (lapack_int) ldz;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was max(1,m), n >= m
         lapack_int* isuppz_ptr = &isuppz_[0];
@@ -81,7 +81,7 @@ int64_t syevr_2stage(
         throw Error();
     }
     *nfound = nfound_;
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( isuppz_.begin(), isuppz_.end(), isuppz );
     #endif
     return info_;
@@ -115,7 +115,7 @@ int64_t syevr_2stage(
     lapack_int iu_ = (lapack_int) iu;
     lapack_int nfound_;  // output
     lapack_int ldz_ = (lapack_int) ldz;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was max(1,m), n >= m
         lapack_int* isuppz_ptr = &isuppz_[0];
@@ -158,7 +158,7 @@ int64_t syevr_2stage(
         throw Error();
     }
     *nfound = nfound_;
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( isuppz_.begin(), isuppz_.end(), isuppz );
     #endif
     return info_;

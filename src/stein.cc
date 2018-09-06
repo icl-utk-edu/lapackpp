@@ -28,22 +28,22 @@ int64_t stein(
     }
     lapack_int n_ = (lapack_int) n;
     lapack_int m_ = (lapack_int) m;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iblock_( &iblock[0], &iblock[(n)] );
         lapack_int const* iblock_ptr = &iblock_[0];
     #else
-        lapack_int const* iblock_ptr = iblock_;
+        lapack_int const* iblock_ptr = iblock;
     #endif
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > isplit_( &isplit[0], &isplit[(n)] );
         lapack_int const* isplit_ptr = &isplit_[0];
     #else
-        lapack_int const* isplit_ptr = isplit_;
+        lapack_int const* isplit_ptr = isplit;
     #endif
     lapack_int ldz_ = (lapack_int) ldz;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ifail_( (m) );
         lapack_int* ifail_ptr = &ifail_[0];
@@ -70,7 +70,7 @@ int64_t stein(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ifail_.begin(), ifail_.end(), ifail );
     #endif
     return info_;
@@ -95,22 +95,22 @@ int64_t stein(
     }
     lapack_int n_ = (lapack_int) n;
     lapack_int m_ = (lapack_int) m;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iblock_( &iblock[0], &iblock[(n)] );
         lapack_int const* iblock_ptr = &iblock_[0];
     #else
-        lapack_int const* iblock_ptr = iblock_;
+        lapack_int const* iblock_ptr = iblock;
     #endif
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > isplit_( &isplit[0], &isplit[(n)] );
         lapack_int const* isplit_ptr = &isplit_[0];
     #else
-        lapack_int const* isplit_ptr = isplit_;
+        lapack_int const* isplit_ptr = isplit;
     #endif
     lapack_int ldz_ = (lapack_int) ldz;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ifail_( (m) );
         lapack_int* ifail_ptr = &ifail_[0];
@@ -137,7 +137,7 @@ int64_t stein(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ifail_.begin(), ifail_.end(), ifail );
     #endif
     return info_;
@@ -162,22 +162,22 @@ int64_t stein(
     }
     lapack_int n_ = (lapack_int) n;
     lapack_int m_ = (lapack_int) m;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iblock_( &iblock[0], &iblock[(n)] );
         lapack_int const* iblock_ptr = &iblock_[0];
     #else
-        lapack_int const* iblock_ptr = iblock_;
+        lapack_int const* iblock_ptr = iblock;
     #endif
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > isplit_( &isplit[0], &isplit[(n)] );
         lapack_int const* isplit_ptr = &isplit_[0];
     #else
-        lapack_int const* isplit_ptr = isplit_;
+        lapack_int const* isplit_ptr = isplit;
     #endif
     lapack_int ldz_ = (lapack_int) ldz;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ifail_( (m) );
         lapack_int* ifail_ptr = &ifail_[0];
@@ -204,7 +204,7 @@ int64_t stein(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ifail_.begin(), ifail_.end(), ifail );
     #endif
     return info_;
@@ -229,22 +229,22 @@ int64_t stein(
     }
     lapack_int n_ = (lapack_int) n;
     lapack_int m_ = (lapack_int) m;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iblock_( &iblock[0], &iblock[(n)] );
         lapack_int const* iblock_ptr = &iblock_[0];
     #else
-        lapack_int const* iblock_ptr = iblock_;
+        lapack_int const* iblock_ptr = iblock;
     #endif
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > isplit_( &isplit[0], &isplit[(n)] );
         lapack_int const* isplit_ptr = &isplit_[0];
     #else
-        lapack_int const* isplit_ptr = isplit_;
+        lapack_int const* isplit_ptr = isplit;
     #endif
     lapack_int ldz_ = (lapack_int) ldz;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ifail_( (m) );
         lapack_int* ifail_ptr = &ifail_[0];
@@ -271,7 +271,7 @@ int64_t stein(
     if (info_ < 0) {
         throw Error();
     }
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ifail_.begin(), ifail_.end(), ifail );
     #endif
     return info_;

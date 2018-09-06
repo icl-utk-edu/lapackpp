@@ -36,7 +36,7 @@ int64_t heevx(
     lapack_int iu_ = (lapack_int) iu;
     lapack_int nfound_ = (lapack_int) *nfound;
     lapack_int ldz_ = (lapack_int) ldz;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ifail_( (n) );
         lapack_int* ifail_ptr = &ifail_[0];
@@ -82,7 +82,7 @@ int64_t heevx(
         throw Error();
     }
     *nfound = nfound_;
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ifail_.begin(), ifail_.end(), ifail );
     #endif
     return info_;
@@ -243,7 +243,7 @@ int64_t heevx(
     lapack_int iu_ = (lapack_int) iu;
     lapack_int nfound_ = (lapack_int) *nfound;
     lapack_int ldz_ = (lapack_int) ldz;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ifail_( (n) );
         lapack_int* ifail_ptr = &ifail_[0];
@@ -289,7 +289,7 @@ int64_t heevx(
         throw Error();
     }
     *nfound = nfound_;
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ifail_.begin(), ifail_.end(), ifail );
     #endif
     return info_;

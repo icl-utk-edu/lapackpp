@@ -28,12 +28,12 @@ void laswp(
     lapack_int lda_ = (lapack_int) lda;
     lapack_int k1_ = (lapack_int) k1;
     lapack_int k2_ = (lapack_int) k2;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(k1+(k2-k1)*std::abs(incx))] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int const* ipiv_ptr = ipiv_;
+        lapack_int const* ipiv_ptr = ipiv;
     #endif
     lapack_int incx_ = (lapack_int) incx;
 
@@ -62,12 +62,12 @@ void laswp(
     lapack_int lda_ = (lapack_int) lda;
     lapack_int k1_ = (lapack_int) k1;
     lapack_int k2_ = (lapack_int) k2;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(k1+(k2-k1)*std::abs(incx))] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int const* ipiv_ptr = ipiv_;
+        lapack_int const* ipiv_ptr = ipiv;
     #endif
     lapack_int incx_ = (lapack_int) incx;
 
@@ -96,12 +96,12 @@ void laswp(
     lapack_int lda_ = (lapack_int) lda;
     lapack_int k1_ = (lapack_int) k1;
     lapack_int k2_ = (lapack_int) k2;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(k1+(k2-k1)*std::abs(incx))] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int const* ipiv_ptr = ipiv_;
+        lapack_int const* ipiv_ptr = ipiv;
     #endif
     lapack_int incx_ = (lapack_int) incx;
 
@@ -168,12 +168,12 @@ void laswp(
     lapack_int lda_ = (lapack_int) lda;
     lapack_int k1_ = (lapack_int) k1;
     lapack_int k2_ = (lapack_int) k2;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(k1+(k2-k1)*std::abs(incx))] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int const* ipiv_ptr = ipiv_;
+        lapack_int const* ipiv_ptr = ipiv;
     #endif
     lapack_int incx_ = (lapack_int) incx;
 

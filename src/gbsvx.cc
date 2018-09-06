@@ -45,7 +45,7 @@ int64_t gbsvx(
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int ldab_ = (lapack_int) ldab;
     lapack_int ldafb_ = (lapack_int) ldafb;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int* ipiv_ptr = &ipiv_[0];
@@ -78,7 +78,7 @@ int64_t gbsvx(
         throw Error();
     }
     *equed = char2equed( equed_ );
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
     #endif
     return info_;
@@ -120,7 +120,7 @@ int64_t gbsvx(
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int ldab_ = (lapack_int) ldab;
     lapack_int ldafb_ = (lapack_int) ldafb;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int* ipiv_ptr = &ipiv_[0];
@@ -153,7 +153,7 @@ int64_t gbsvx(
         throw Error();
     }
     *equed = char2equed( equed_ );
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
     #endif
     return info_;
@@ -195,7 +195,7 @@ int64_t gbsvx(
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int ldab_ = (lapack_int) ldab;
     lapack_int ldafb_ = (lapack_int) ldafb;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int* ipiv_ptr = &ipiv_[0];
@@ -228,7 +228,7 @@ int64_t gbsvx(
         throw Error();
     }
     *equed = char2equed( equed_ );
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
     #endif
     return info_;
@@ -484,7 +484,7 @@ int64_t gbsvx(
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int ldab_ = (lapack_int) ldab;
     lapack_int ldafb_ = (lapack_int) ldafb;
-    #if 1
+    #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int* ipiv_ptr = &ipiv_[0];
@@ -517,7 +517,7 @@ int64_t gbsvx(
         throw Error();
     }
     *equed = char2equed( equed_ );
-    #if 1
+    #ifndef LAPACK_ILP64
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
     #endif
     return info_;

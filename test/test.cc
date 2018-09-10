@@ -190,7 +190,7 @@ std::vector< libtest::routines_t > routines = {
     { "",                   nullptr,                 Section::newline },
 
     // -----
-    // hermetian
+    // Hermitian indefinite
     { "hesv",               test_hesv,      Section::hesv }, // tested via LAPACKE
     { "hpsv",               test_hpsv,      Section::hesv }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },

@@ -19,14 +19,14 @@ namespace lapack {
 
 //------------------------------------------------------------ getrf
 // LAWN 41 omits (m < n) case
-static double fmuls_getrf(double m, double n)
+inline double fmuls_getrf(double m, double n)
 {
     return (m >= n)
         ? (0.5*m*n*n - 1./6*n*n*n + 0.5*m*n - 0.5*n*n + 2/3.*n)
         : (0.5*n*m*m - 1./6*m*m*m + 0.5*n*m - 0.5*m*m + 2/3.*m);
 }
 
-static double fadds_getrf(double m, double n)
+inline double fadds_getrf(double m, double n)
 {
     return (m >= n)
         ? (0.5*m*n*n - 1./6*n*n*n - 0.5*m*n + 1./6*n)
@@ -34,49 +34,49 @@ static double fadds_getrf(double m, double n)
 }
 
 //------------------------------------------------------------ getri
-static double fmuls_getri(double n)
+inline double fmuls_getri(double n)
     { return 2/3.*n*n*n + 0.5*n*n + 5./6*n; }
 
-static double fadds_getri(double n)
+inline double fadds_getri(double n)
     { return 2/3.*n*n*n - 1.5*n*n + 5./6*n; }
 
 //------------------------------------------------------------ getrs
-static double fmuls_getrs(double n, double nrhs)
+inline double fmuls_getrs(double n, double nrhs)
     { return nrhs*n*n; }
 
-static double fadds_getrs(double n, double nrhs)
+inline double fadds_getrs(double n, double nrhs)
     { return nrhs*n*(n - 1); }
 
 //------------------------------------------------------------ potrf
-static double fmuls_potrf(double n)
+inline double fmuls_potrf(double n)
     { return 1./6*n*n*n + 0.5*n*n + 1./3.*n; }
 
-static double fadds_potrf(double n)
+inline double fadds_potrf(double n)
     { return 1./6*n*n*n - 1./6*n; }
 
 //------------------------------------------------------------ potri
-static double fmuls_potri(double n)
+inline double fmuls_potri(double n)
     { return 1./3.*n*n*n + n*n + 2/3.*n; }
 
-static double fadds_potri(double n)
+inline double fadds_potri(double n)
     { return 1./3.*n*n*n - 0.5*n*n + 1./6*n; }
 
 //------------------------------------------------------------ potrs
-static double fmuls_potrs(double n, double nrhs)
+inline double fmuls_potrs(double n, double nrhs)
     { return nrhs*n*(n + 1); }
 
-static double fadds_potrs(double n, double nrhs)
+inline double fadds_potrs(double n, double nrhs)
     { return nrhs*n*(n - 1); }
 
 //------------------------------------------------------------ geqrf
-static double fmuls_geqrf(double m, double n)
+inline double fmuls_geqrf(double m, double n)
 {
     return (m > n)
         ? (m*n*n - 1./3.*n*n*n +   m*n + 0.5*n*n + 23./6*n)
         : (n*m*m - 1./3.*m*m*m + 2*n*m - 0.5*m*m + 23./6*m);
 }
 
-static double fadds_geqrf(double m, double n)
+inline double fadds_geqrf(double m, double n)
 {
     return (m > n)
         ? (m*n*n - 1./3.*n*n*n + 0.5*n*n       + 5./6*n)
@@ -84,28 +84,28 @@ static double fadds_geqrf(double m, double n)
 }
 
 //------------------------------------------------------------ geqrt
-static double fmuls_geqrt(double m, double n)
+inline double fmuls_geqrt(double m, double n)
     { return 0.5*m*n; }
 
-static double fadds_geqrt(double m, double n)
+inline double fadds_geqrt(double m, double n)
     { return 0.5*m*n; }
 
 //------------------------------------------------------------ geqlf
-static double fmuls_geqlf(double m, double n)
+inline double fmuls_geqlf(double m, double n)
     { return fmuls_geqrf(m, n); }
 
-static double fadds_geqlf(double m, double n)
+inline double fadds_geqlf(double m, double n)
     { return fadds_geqrf(m, n); }
 
 //------------------------------------------------------------ gerqf
-static double fmuls_gerqf(double m, double n)
+inline double fmuls_gerqf(double m, double n)
 {
     return (m > n)
         ? (m*n*n - 1./3.*n*n*n +   m*n + 0.5*n*n + 29./6*n)
         : (n*m*m - 1./3.*m*m*m + 2*n*m - 0.5*m*m + 29./6*m);
 }
 
-static double fadds_gerqf(double m, double n)
+inline double fadds_gerqf(double m, double n)
 {
     return (m > n)
         ? (m*n*n - 1./3.*n*n*n + m*n - 0.5*n*n + 5./6*n)
@@ -113,56 +113,56 @@ static double fadds_gerqf(double m, double n)
 }
 
 //------------------------------------------------------------ gelqf
-static double fmuls_gelqf(double m, double n)
+inline double fmuls_gelqf(double m, double n)
     { return  fmuls_gerqf(m, n); }
 
-static double fadds_gelqf(double m, double n)
+inline double fadds_gelqf(double m, double n)
     { return  fadds_gerqf(m, n); }
 
 //------------------------------------------------------------ ungqr
-static double fmuls_ungqr(double m, double n, double k)
+inline double fmuls_ungqr(double m, double n, double k)
     { return 2*m*n*k - (m + n)*k*k + 2/3.*k*k*k + 2*n*k - k*k - 5./3.*k; }
 
-static double fadds_ungqr(double m, double n, double k)
+inline double fadds_ungqr(double m, double n, double k)
     { return 2*m*n*k - (m + n)*k*k + 2/3.*k*k*k + n*k - m*k + 1./3.*k; }
 
 //------------------------------------------------------------ ungql
-static double fmuls_ungql(double m, double n, double k)
+inline double fmuls_ungql(double m, double n, double k)
     { return  fmuls_ungqr(m, n, k); }
 
-static double fadds_ungql(double m, double n, double k)
+inline double fadds_ungql(double m, double n, double k)
     { return fadds_ungqr(m, n, k); }
 
 //------------------------------------------------------------ ungrq
-static double fmuls_ungrq(double m, double n, double k)
+inline double fmuls_ungrq(double m, double n, double k)
     { return 2*m*n*k - (m + n)*k*k + 2/3.*k*k*k + m*k + n*k - k*k - 2/3.*k; }
 
-static double fadds_ungrq(double m, double n, double k)
+inline double fadds_ungrq(double m, double n, double k)
     { return 2*m*n*k - (m + n)*k*k + 2/3.*k*k*k + m*k - n*k + 1./3.*k; }
 
 //------------------------------------------------------------ unglq
-static double fmuls_unglq(double m, double n, double k)
+inline double fmuls_unglq(double m, double n, double k)
     { return fmuls_ungrq(m, n, k); }
 
-static double fadds_unglq(double m, double n, double k)
+inline double fadds_unglq(double m, double n, double k)
     { return fadds_ungrq(m, n, k); }
 
 //------------------------------------------------------------ geqrs
-static double fmuls_geqrs(double m, double n, double nrhs)
+inline double fmuls_geqrs(double m, double n, double nrhs)
     { return nrhs*(2*m*n - 0.5*n*n + 25*n); }
 
-static double fadds_geqrs(double m, double n, double nrhs)
+inline double fadds_geqrs(double m, double n, double nrhs)
     { return nrhs*(2*m*n - 0.5*n*n + 0.5*n); }
 
 //------------------------------------------------------------ unmqr
-static double fmuls_unmqr(lapack::Side side, double m, double n, double k)
+inline double fmuls_unmqr(lapack::Side side, double m, double n, double k)
 {
     return (side == lapack::Side::Left)
         ? (2*n*m*k - n*k*k + 2*n*k)
         : (2*n*m*k - m*k*k + m*k + n*k - 0.5*k*k + 0.5*k);
 }
 
-static double fadds_unmqr(lapack::Side side, double m, double n, double k)
+inline double fadds_unmqr(lapack::Side side, double m, double n, double k)
 {
     return (side == lapack::Side::Left)
         ? (2*n*m*k - n*k*k + n*k)
@@ -170,62 +170,62 @@ static double fadds_unmqr(lapack::Side side, double m, double n, double k)
 }
 
 //------------------------------------------------------------ unmql
-static double fmuls_unmql(lapack::Side side, double m, double n, double k)
+inline double fmuls_unmql(lapack::Side side, double m, double n, double k)
     { return fmuls_unmqr(side, m, n, k); }
 
-static double fadds_unmql(lapack::Side side, double m, double n, double k)
+inline double fadds_unmql(lapack::Side side, double m, double n, double k)
     { return fadds_unmqr(side, m, n, k); }
 
 //------------------------------------------------------------ unmrq
-static double fmuls_unmrq(lapack::Side side, double m, double n, double k)
+inline double fmuls_unmrq(lapack::Side side, double m, double n, double k)
     { return fmuls_unmqr(side, m, n, k); }
 
-static double fadds_unmrq(lapack::Side side, double m, double n, double k)
+inline double fadds_unmrq(lapack::Side side, double m, double n, double k)
     { return fadds_unmqr(side, m, n, k); }
 
 //------------------------------------------------------------ unmlq
-static double fmuls_unmlq(lapack::Side side, double m, double n, double k)
+inline double fmuls_unmlq(lapack::Side side, double m, double n, double k)
     { return fmuls_unmqr(side, m, n, k); }
 
-static double fadds_unmlq(lapack::Side side, double m, double n, double k)
+inline double fadds_unmlq(lapack::Side side, double m, double n, double k)
     { return fadds_unmqr(side, m, n, k); }
 
 //------------------------------------------------------------ trtri
-static double fmuls_trtri(double n)
+inline double fmuls_trtri(double n)
     { return 1./6*n*n*n + 0.5*n*n + 1./3.*n; }
 
-static double fadds_trtri(double n)
+inline double fadds_trtri(double n)
     { return 1./6*n*n*n - 0.5*n*n + 1./3.*n; }
 
 //------------------------------------------------------------ gehrd
-static double fmuls_gehrd(double n)
+inline double fmuls_gehrd(double n)
     { return 5./3.*n*n*n + 0.5*n*n - 7./6*n; }
 
-static double fadds_gehrd(double n)
+inline double fadds_gehrd(double n)
     { return 5./3.*n*n*n - n*n - 2/3.*n; }
 
 //------------------------------------------------------------ sytrd
-static double fmuls_sytrd(double n)
+inline double fmuls_sytrd(double n)
     { return 2/3.*n*n*n + 25*n*n - 1./6*n; }
 
-static double fadds_sytrd(double n)
+inline double fadds_sytrd(double n)
     { return 2/3.*n*n*n + n*n - 8./3.*n; }
 
-static double fmuls_hetrd(double n)
+inline double fmuls_hetrd(double n)
     { return fmuls_sytrd(n); }
 
-static double fadds_hetrd(double n)
+inline double fadds_hetrd(double n)
     { return fadds_sytrd(n); }
 
 //------------------------------------------------------------ gebrd
-static double fmuls_gebrd(double m, double n)
+inline double fmuls_gebrd(double m, double n)
 {
     return (m >= n)
         ? (2*m*n*n - 2/3.*n*n*n + 2*n*n + 20./3.*n)
         : (2*n*m*m - 2/3.*m*m*m + 2*m*m + 20./3.*m);
 }
 
-static double fadds_gebrd(double m, double n)
+inline double fadds_gebrd(double m, double n)
 {
     return (m >= n)
         ? (2*m*n*n - 2/3.*n*n*n + n*n - m*n +  5./3.*n)
@@ -233,31 +233,31 @@ static double fadds_gebrd(double m, double n)
 }
 
 //------------------------------------------------------------ larfg
-static double fmuls_larfg(double n)
+inline double fmuls_larfg(double n)
     { return 2*n; }
 
-static double fadds_larfg(double n)
+inline double fadds_larfg(double n)
     { return   n; }
 
 //------------------------------------------------------------ geadd
-static double fmuls_geadd(double m, double n)
+inline double fmuls_geadd(double m, double n)
     { return 2*m*n; }
 
-static double fadds_geadd(double m, double n)
+inline double fadds_geadd(double m, double n)
     { return   m*n; }
 
 //------------------------------------------------------------ lauum
-static double fmuls_lauum(double n)
+inline double fmuls_lauum(double n)
     { return fmuls_potri(n) - fmuls_trtri(n); }
 
-static double fadds_lauum(double n)
+inline double fadds_lauum(double n)
     { return fadds_potri(n) - fadds_trtri(n); }
 
 //------------------------------------------------------------ lange
-static double fmuls_lange(double m, double n, lapack::Norm norm)
+inline double fmuls_lange(double m, double n, lapack::Norm norm)
     { return norm == lapack::Norm::Fro ? m*n : 0; }
 
-static double fadds_lange(double m, double n, lapack::Norm norm)
+inline double fadds_lange(double m, double n, lapack::Norm norm)
 {
     switch (norm) {
     case lapack::Norm::One: return (m-1)*n;
@@ -268,10 +268,10 @@ static double fadds_lange(double m, double n, lapack::Norm norm)
 }
 
 //------------------------------------------------------------ lanhe
-static double fmuls_lanhe(double n, lapack::Norm norm)
+inline double fmuls_lanhe(double n, lapack::Norm norm)
     { return norm == lapack::Norm::Fro ? n*(n+1)/2 : 0; }
 
-static double fadds_lanhe(double n, lapack::Norm norm)
+inline double fadds_lanhe(double n, lapack::Norm norm)
 {
     switch (norm) {
     case lapack::Norm::One: return (n-1)*n;

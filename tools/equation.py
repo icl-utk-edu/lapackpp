@@ -12,6 +12,7 @@ from __future__ import print_function
 
 import sys
 import re
+import os
 
 debug = False
 
@@ -19,6 +20,13 @@ operators = {
     '<=': r'\le',
     '>=': r'\ge',
 }
+
+src = '../gen'
+assert( os.path.exists( src ))
+
+dst = '../eqn'
+if (not os.path.exists( dst )):
+    os.mkdir( dst )
 
 def equation( line, subexpr=False ):
     if (debug):
@@ -192,8 +200,8 @@ def equation( line, subexpr=False ):
 
 def process( arg ):
     filename = arg + '.cc'
-    f_out = '../eqn/' + filename
-    f_in  = '../gen/' + filename
+    f_out = os.path.join( dst, filename )
+    f_in  = os.path.join( src, filename )
     print( 'reading ' + f_in + '\nwriting ' + f_out )
     f_out = open( f_out, 'w' )
     f_in  = open( f_in )

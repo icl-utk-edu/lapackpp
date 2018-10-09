@@ -113,6 +113,10 @@ if (not (args.header or args.tester or args.wrapper)):
 
 debug = args.debug
 
+gen = '../gen'
+if (not os.path.exists( gen )):
+    os.mkdir( gen )
+
 # ------------------------------------------------------------------------------
 # configuration
 
@@ -998,9 +1002,9 @@ def parse_lapack( path ):
         elif (re.search( r'^(l|ld)[crsib]?work$', arg.name )):
             arg.is_lwork = True
 
-        # iwork, bwork needs blas_int, not int64
+        # iwork, bwork needs lapack_int, not int64
         if (arg.name in ('iwork', 'bwork')):
-            arg.dtype = 'blas_int'
+            arg.dtype = 'lapack_int'
 
         # extract array dimensions or scalar lower bounds
         if (arg.is_array):
@@ -1330,10 +1334,10 @@ def generate_wrapper( func, header=False ):
                     # integer input arrays: copy in input
                     local_vars += (tab + '#if 1\n'
                                +   tab*2 + '// 32-bit copy\n'
-                               +   tab*2 + 'std::vector< blas_int > ' + arg.lname + '( &' + arg.name + '[0], &' + arg.name + '[' + arg.dim + '] );\n'
-                               +   tab*2 + 'blas_int const* ' + arg.pname + ' = &' + arg.lname + '[0];\n'
+                               +   tab*2 + 'std::vector< lapack_int > ' + arg.lname + '( &' + arg.name + '[0], &' + arg.name + '[' + arg.dim + '] );\n'
+                               +   tab*2 + 'lapack_int const* ' + arg.pname + ' = &' + arg.lname + '[0];\n'
                                +   tab + '#else\n'
-                               +   tab*2 + 'blas_int const* ' + arg.pname + ' = ' + arg.lname + ';\n'
+                               +   tab*2 + 'lapack_int const* ' + arg.pname + ' = ' + arg.lname + ';\n'
                                +   tab + '#endif\n')
                 # end
             elif (arg.use_query):
@@ -1342,15 +1346,15 @@ def generate_wrapper( func, header=False ):
                 use_query = True
             elif (arg.is_lwork):
                 # lwork, etc. local variables; not in proto_args
-                local_vars += tab + 'blas_int ' + arg.lname + ' = (blas_int) ' + arg.lbound + ';\n'
+                local_vars += tab + 'lapack_int ' + arg.lname + ' = (lapack_int) ' + arg.lbound + ';\n'
             else:
                 proto_args.append( arg.dtype + ' ' + arg.name )
                 alias_args.append( arg.name )
                 query_args.append( prefix + cast + arg.pname )
                 if (arg.dtype in ('int64_t', 'bool')):
                     # local 32-bit copy of 64-bit int
-                    int_checks += tab*2 + 'lapack_error_if( std::abs(' + arg.name + ') > std::numeric_limits<blas_int>::max() );\n'
-                    local_vars += tab + 'blas_int ' + arg.lname + ' = (blas_int) ' + arg.name + ';\n'
+                    int_checks += tab*2 + 'lapack_error_if( std::abs(' + arg.name + ') > std::numeric_limits<lapack_int>::max() );\n'
+                    local_vars += tab + 'lapack_int ' + arg.lname + ' = (lapack_int) ' + arg.name + ';\n'
                 elif (arg.is_enum):
                     enum2char = enum_map[ arg.name ][1]
                     local_vars += tab + 'char ' + arg.lname + ' = ' + enum2char + '( ' + arg.name + ' );\n'
@@ -1375,7 +1379,7 @@ def generate_wrapper( func, header=False ):
                 query_args.append( prefix + cast + arg.pname )
                 if (arg.name == 'info'):
                     # info not in proto_args
-                    local_vars += tab + 'blas_int ' + arg.lname + ' = 0;\n'
+                    local_vars += tab + 'lapack_int ' + arg.lname + ' = 0;\n'
                     func.retval = 'int64_t'
                     info_throw = (tab + 'if (info_ < 0) {\n'
                                +  tab*2 + 'throw Error();\n'
@@ -1384,7 +1388,7 @@ def generate_wrapper( func, header=False ):
                 else:
                     proto_args.append( '\n    ' + arg.dtype + '* ' + arg.name )
                     alias_args.append( arg.name )
-                    local_vars += tab + 'blas_int ' + arg.lname + ' = (blas_int) *' + arg.name + ';\n'
+                    local_vars += tab + 'lapack_int ' + arg.lname + ' = (lapack_int) *' + arg.name + ';\n'
                     cleanup += tab + '*' + arg.name + ' = ' + arg.lname + ';\n'
             else:
                 # output array
@@ -1396,19 +1400,19 @@ def generate_wrapper( func, header=False ):
                         # copy in input, copy out in cleanup
                         local_vars += (tab + '#if 1\n'
                                    +   tab*2 + '// 32-bit copy\n'
-                                   +   tab*2 + 'std::vector< blas_int > ' + arg.lname + '( &' + arg.name + '[0], &' + arg.name + '[' + arg.dim + '] );\n'
-                                   +   tab*2 + 'blas_int* ' + arg.pname + ' = &' + arg.lname + '[0];\n'
+                                   +   tab*2 + 'std::vector< lapack_int > ' + arg.lname + '( &' + arg.name + '[0], &' + arg.name + '[' + arg.dim + '] );\n'
+                                   +   tab*2 + 'lapack_int* ' + arg.pname + ' = &' + arg.lname + '[0];\n'
                                    +   tab + '#else\n'
-                                   +   tab*2 + 'blas_int* ' + arg.pname + ' = ' + arg.name + ';\n'
+                                   +   tab*2 + 'lapack_int* ' + arg.pname + ' = ' + arg.name + ';\n'
                                    +   tab + '#endif\n')
                     else:
                         # allocate w/o copy, copy out in cleanup
                         local_vars += (tab + '#if 1\n'
                                    +   tab*2 + '// 32-bit copy\n'
-                                   +   tab*2 + 'std::vector< blas_int > ' + arg.lname + '( ' + arg.dim + ' );\n'
-                                   +   tab*2 + 'blas_int* ' + arg.pname + ' = &' + arg.lname + '[0];\n'
+                                   +   tab*2 + 'std::vector< lapack_int > ' + arg.lname + '( ' + arg.dim + ' );\n'
+                                   +   tab*2 + 'lapack_int* ' + arg.pname + ' = &' + arg.lname + '[0];\n'
                                    +   tab + '#else\n'
-                                   +   tab*2 + 'blas_int* ' + arg.pname + ' = ' + arg.name + ';\n'
+                                   +   tab*2 + 'lapack_int* ' + arg.pname + ' = ' + arg.name + ';\n'
                                    +   tab + '#endif\n')
                     # end
                     cleanup += (tab + '#if 1\n'
@@ -1425,7 +1429,7 @@ def generate_wrapper( func, header=False ):
         query =  ('\n'
               +   tab + '// query for workspace size\n'
               +   query
-              +   tab + 'blas_int ineg_one = -1;\n'
+              +   tab + 'lapack_int ineg_one = -1;\n'
               +   tab + 'LAPACK_' + func.xname + '(\n' + tab*2 + ', '.join( query_args ) + ' );\n'
               +   tab + 'if (info_ < 0) {\n'
               +   tab*2 + 'throw Error();\n'
@@ -1434,7 +1438,7 @@ def generate_wrapper( func, header=False ):
         last = None
         for arg in func.args:
             if (arg.use_query and not arg.is_array):
-                query += tab + 'blas_int ' + arg.name + '_ = real(qry_' + last.name + '[0]);\n'
+                query += tab + 'lapack_int ' + arg.name + '_ = real(qry_' + last.name + '[0]);\n'
             last = arg
         # end
     else:
@@ -1443,7 +1447,7 @@ def generate_wrapper( func, header=False ):
 
     if (int_checks):
         int_checks = (tab + '// check for overflow\n'
-                   +  tab + 'if (sizeof(int64_t) > sizeof(blas_int)) {\n'
+                   +  tab + 'if (sizeof(int64_t) > sizeof(lapack_int)) {\n'
                    +  int_checks
                    +  tab + '}\n')
     # end
@@ -1824,12 +1828,12 @@ def process_routine( arg ):
         print( '// ' + '-'*77, file=header )
 
     if (args.wrapper):
-        wrapper_file = '../gen/' + arg + '.cc'
+        wrapper_file = os.path.join( gen, arg + '.cc' )
         print( 'generating', wrapper_file )
         wrapper = open( wrapper_file, 'w' )
 
     if (args.tester):
-        tester_file = '../gen/test_' + arg + '.cc'
+        tester_file = os.path.join( gen, 'test_' + arg + '.cc' )
         print( 'generating', tester_file )
         tester = open( tester_file, 'w' )
         print( tester_top, file=tester, end='' )
@@ -1899,7 +1903,7 @@ def process_routine( arg ):
 lapack = os.environ['LAPACKDIR']
 
 if (args.header):
-    header_file = '../gen/lapack_wrappers.hh'
+    header_file = os.path.join( gen, 'lapack_wrappers.hh' )
     print( 'generating', header_file )
     header = open( header_file, 'w' )
     print( header_top, file=header, end='' )

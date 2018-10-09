@@ -301,7 +301,7 @@ void test_unmrq ( Params& params, bool run );
 
 // symmetric eigenvalues
 void test_heev  ( Params& params, bool run );
-void test_heevx  ( Params& params, bool run );
+void test_heevx ( Params& params, bool run );
 void test_heevd ( Params& params, bool run );
 void test_heevr ( Params& params, bool run );
 void test_hetrd ( Params& params, bool run );

@@ -84,6 +84,7 @@ inline double fadds_geqrf(double m, double n)
 }
 
 //------------------------------------------------------------ geqrt
+// TODO: this seems odd -- should it match geqrf? At least be O(mn^2)?
 inline double fmuls_geqrt(double m, double n)
     { return 0.5*m*n; }
 
@@ -148,6 +149,7 @@ inline double fadds_unglq(double m, double n, double k)
     { return fadds_ungrq(m, n, k); }
 
 //------------------------------------------------------------ geqrs
+// unmqr( left, m, nrhs, n ) + trsm( n, nrhs ); m >= n
 inline double fmuls_geqrs(double m, double n, double nrhs)
     { return nrhs*(2*m*n - 0.5*n*n + 2.5*n); }
 
@@ -254,10 +256,10 @@ inline double fadds_lauum(double n)
     { return fadds_potri(n) - fadds_trtri(n); }
 
 //------------------------------------------------------------ lange
-inline double fmuls_lange(double m, double n, lapack::Norm norm)
+inline double fmuls_lange(lapack::Norm norm, double m, double n)
     { return norm == lapack::Norm::Fro ? m*n : 0; }
 
-inline double fadds_lange(double m, double n, lapack::Norm norm)
+inline double fadds_lange(lapack::Norm norm, double m, double n)
 {
     switch (norm) {
     case lapack::Norm::One: return (m-1)*n;
@@ -268,10 +270,10 @@ inline double fadds_lange(double m, double n, lapack::Norm norm)
 }
 
 //------------------------------------------------------------ lanhe
-inline double fmuls_lanhe(double n, lapack::Norm norm)
+inline double fmuls_lanhe(lapack::Norm norm, double n)
     { return norm == lapack::Norm::Fro ? n*(n+1)/2 : 0; }
 
-inline double fadds_lanhe(double n, lapack::Norm norm)
+inline double fadds_lanhe(lapack::Norm norm, double n)
 {
     switch (norm) {
     case lapack::Norm::One: return (n-1)*n;
@@ -302,6 +304,7 @@ class Gflop:
     public blas::Gflop<T>
 {
 public:
+    // LU
     static double gesv(double n, double nrhs)
         { return getrf(n, n) + getrs(n, nrhs); }
 
@@ -314,6 +317,7 @@ public:
     static double getrs(double n, double nrhs)
         { return 1e-9 * (fmuls_getrs(n, nrhs) + fadds_getrs(n, nrhs)); }
 
+    // Cholesky
     static double posv(double n, double nrhs)
         { return potrf(n) + potrs(n, nrhs); }
 
@@ -326,6 +330,11 @@ public:
     static double potrs(double n, double nrhs)
         { return 1e-9 * (fmuls_potrs(n, nrhs) + fadds_potrs(n, nrhs)); }
 
+    // least squares
+    static double geqrs(double m, double n, double nrhs)
+        { return 1e-9 * (fmuls_geqrs(m, n, nrhs) + fadds_geqrs(m, n, nrhs)); }
+
+    // QR, QL, RQ, LQ
     static double geqrf(double m, double n)
         { return 1e-9 * (fmuls_geqrf(m, n) + fadds_geqrf(m, n)); }
 
@@ -341,6 +350,7 @@ public:
     static double gelqf(double m, double n)
         { return 1e-9 * (fmuls_gelqf(m, n) + fadds_gelqf(m, n)); }
 
+    // generate Q
     static double ungqr(double m, double n, double k)
         { return 1e-9 * (fmuls_ungqr(m, n, k) + fadds_ungqr(m, n, k)); }
 
@@ -365,9 +375,7 @@ public:
     static double orglq(double m, double n, double k)
         { return unglq(m, n, k); }
 
-    static double geqrs(double m, double n, double nrhs)
-        { return 1e-9 * (fmuls_geqrs(m, n, nrhs) + fadds_geqrs(m, n, nrhs)); }
-
+    // multiply by Q
     static double unmqr(lapack::Side side, double m, double n, double k)
         { return 1e-9 * (fmuls_unmqr(side, m, n, k) + fadds_unmqr(side, m, n, k)); }
 
@@ -392,38 +400,46 @@ public:
     static double ormlq(lapack::Side side, double m, double n, double k)
         { return unmlq(side, m, n, k); }
 
+    // triangle inverse
     static double trtri(double n)
         { return 1e-9 * (fmuls_trtri(n) + fadds_trtri(n)); }
 
+    // Hessenberg reduction (non-symmetric eigenvalue)
     static double gehrd(double n)
         { return 1e-9 * (fmuls_gehrd(n) + fadds_gehrd(n)); }
 
+    // tridiagonal reduction (symmetric eigenvalue)
     static double hetrd(double n)
         { return 1e-9 * (fmuls_sytrd(n) + fadds_sytrd(n)); }
 
     static double sytrd(double n)
         { return hetrd(n); }
 
+    // bidiagonal reduction (SVD)
     static double gebrd(double m, double n)
         { return 1e-9 * (fmuls_gebrd(m, n) + fadds_gebrd(m, n)); }
 
+    // Householder reflector generate
     static double larfg(double n)
         { return 1e-9 * (fmuls_larfg(n) + fadds_larfg(n)); }
 
+    // matrix add
     static double geadd(double m, double n)
         { return 1e-9 * (fmuls_geadd(m, n) + fadds_geadd(m, n)); }
 
+    // U^H*U or L*L^T
     static double lauum(double n)
         { return 1e-9 * (fmuls_lauum(n) + fadds_lauum(n)); }
 
-    static double lange(double m, double n, lapack::Norm norm)
-        { return 1e-9 * (fmuls_lange(m, n, norm) + fadds_lange(m, n, norm)); }
+    // norm
+    static double lange(lapack::Norm norm, double m, double n)
+        { return 1e-9 * (fmuls_lange(norm, m, n) + fadds_lange(norm, m, n)); }
 
-    static double lanhe(double n, lapack::Norm norm)
-        { return 1e-9 * (fmuls_lanhe(n, norm) + fadds_lanhe(n, norm)); }
+    static double lanhe(lapack::Norm norm, double n)
+        { return 1e-9 * (fmuls_lanhe(norm, n) + fadds_lanhe(norm, n)); }
 
-    static double lansy(double n, lapack::Norm norm)
-        { return lanhe(n, norm); }
+    static double lansy(lapack::Norm norm, double n)
+        { return lanhe(norm, n); }
 };
 
 //==============================================================================
@@ -435,6 +451,7 @@ class Gflop< std::complex<T> >:
     public blas::Gflop< std::complex<T> >
 {
 public:
+    // LU
     static double gesv(double n, double nrhs)
         { return getrf(n, n) + getrs(n, nrhs); }
 
@@ -447,6 +464,7 @@ public:
     static double getrs(double n, double nrhs)
         { return 1e-9 * (6*fmuls_getrs(n, nrhs) + 2*fadds_getrs(n, nrhs)); }
 
+    // Cholesky
     static double posv(double n, double nrhs)
         { return potrf(n) + potrs(n, nrhs); }
 
@@ -459,6 +477,11 @@ public:
     static double potrs(double n, double nrhs)
         { return 1e-9 * (6*fmuls_potrs(n, nrhs) + 2*fadds_potrs(n, nrhs)); }
 
+    // least squares
+    static double geqrs(double m, double n, double nrhs)
+        { return 1e-9 * (6*fmuls_geqrs(m, n, nrhs) + 2*fadds_geqrs(m, n, nrhs)); }
+
+    // QR, QL, RQ, LQ
     static double geqrf(double m, double n)
         { return 1e-9 * (6*fmuls_geqrf(m, n) + 2*fadds_geqrf(m, n)); }
 
@@ -474,6 +497,7 @@ public:
     static double gelqf(double m, double n)
         { return 1e-9 * (6*fmuls_gelqf(m, n) + 2*fadds_gelqf(m, n)); }
 
+    // generate Q
     static double ungqr(double m, double n, double k)
         { return 1e-9 * (6*fmuls_ungqr(m, n, k) + 2*fadds_ungqr(m, n, k)); }
 
@@ -486,9 +510,7 @@ public:
     static double unglq(double m, double n, double k)
         { return 1e-9 * (6*fmuls_unglq(m, n, k) + 2*fadds_unglq(m, n, k)); }
 
-    static double geqrs(double m, double n, double nrhs)
-        { return 1e-9 * (6*fmuls_geqrs(m, n, nrhs) + 2*fadds_geqrs(m, n, nrhs)); }
-
+    // multiply by Q
     static double unmqr(lapack::Side side, double m, double n, double k)
         { return 1e-9 * (6*fmuls_unmqr(side, m, n, k) + 2*fadds_unmqr(side, m, n, k)); }
 
@@ -501,32 +523,40 @@ public:
     static double unmlq(lapack::Side side, double m, double n, double k)
         { return 1e-9 * (6*fmuls_unmlq(side, m, n, k) + 2*fadds_unmlq(side, m, n, k)); }
 
+    // triangle inverse
     static double trtri(double n)
         { return 1e-9 * (6*fmuls_trtri(n) + 2*fadds_trtri(n)); }
 
+    // Hessenberg reduction (non-symmetric eigenvalue)
     static double gehrd(double n)
         { return 1e-9 * (6*fmuls_gehrd(n) + 2*fadds_gehrd(n)); }
 
+    // tridiagonal reduction (symmetric eigenvalue)
     static double hetrd(double n)
         { return 1e-9 * (6*fmuls_hetrd(n) + 2*fadds_hetrd(n)); }
 
+    // bidiagonal reduction (SVD)
     static double gebrd(double m, double n)
         { return 1e-9 * (6*fmuls_gebrd(m, n) + 2*fadds_gebrd(m, n)); }
 
+    // Householder reflector generate
     static double larfg(double n)
         { return 1e-9 * (6*fmuls_larfg(n) + 2*fadds_larfg(n)); }
 
+    // matrix add
     static double geadd(double m, double n)
         { return 1e-9 * (6*fmuls_geadd(m, n) + 2*fadds_geadd(m, n)); }
 
+    // U^H*U or L*L^T
     static double lauum(double n)
         { return 1e-9 * (6*fmuls_lauum(n) + 2*fadds_lauum(n)); }
 
-    static double lange(double m, double n, lapack::Norm norm)
-        { return 1e-9 * (6*fmuls_lange(m, n, norm) + 2*fadds_lange(m, n, norm)); }
+    // norm
+    static double lange(lapack::Norm norm, double m, double n)
+        { return 1e-9 * (6*fmuls_lange(norm, m, n) + 2*fadds_lange(norm, m, n)); }
 
-    static double lanhe(double n, lapack::Norm norm)
-        { return 1e-9 * (6*fmuls_lanhe(n, norm) + 2*fadds_lanhe(n, norm)); }
+    static double lanhe(lapack::Norm norm, double n)
+        { return 1e-9 * (6*fmuls_lanhe(norm, n) + 2*fadds_lanhe(norm, n)); }
 };
 
 }  // namespace lapack

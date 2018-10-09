@@ -8,6 +8,14 @@
 extern "C" {
 #endif /* __cplusplus */
 
+/* This is grouped by LAPACK version number -- so new routines are appended --
+*  then by functionality (factor, solve, cond, iterative refinement, ...).
+*  Perhaps simpler to sort in alphabetical order.
+*/
+
+/* =============================================================================
+*  LAPACK <= 3.2 */
+
 /* Callback logical functions of one, two, or three arguments are used
 *  to select eigenvalues to sort to the top left of the Schur form.
 *  The value is selected if function returns TRUE (non-zero). */
@@ -23,12 +31,6 @@ typedef lapack_logical (*LAPACK_C_SELECT2) ( lapack_complex_float const*, lapack
 
 typedef lapack_logical (*LAPACK_Z_SELECT1) ( lapack_complex_double const* );
 typedef lapack_logical (*LAPACK_Z_SELECT2) ( lapack_complex_double const*, lapack_complex_double const* );
-
-// this is totally non-portable!
-#define LAPACK_lsame LAPACK_GLOBAL(lsame,LSAME)
-lapack_logical LAPACK_lsame(
-    char const* ca,  char const* cb,
-    lapack_int lca, lapack_int lcb );
 
 /* -------------------------------------------------------------------------- */
 
@@ -5479,7 +5481,7 @@ void LAPACK_ddisna(
 /* -------------------------------------------------------------------------- */
 
 /* ----- symmetric-definite eigenvalues to standard form */
-// complex b modified, restored on exit
+/* complex b modified, restored on exit */
 #define LAPACK_ssygst LAPACK_GLOBAL(ssygst,SSYGST)
 void LAPACK_ssygst(
     lapack_int const* itype, char const* uplo,
@@ -6431,7 +6433,7 @@ void LAPACK_ztgevc(
     lapack_int* info );
 
 /* ----- reorder generalized Schur form */
-// weird that ifst is const for complex
+/* weird that ifst is const for complex */
 #define LAPACK_stgexc LAPACK_GLOBAL(stgexc,STGEXC)
 void LAPACK_stgexc(
     lapack_logical const* wantq, lapack_logical const* wantz,
@@ -10444,8 +10446,31 @@ void LAPACK_dlartgs(
     double const* x, double const* y, double const* sigma,
     double* cs, double* sn );
 
-// =============================================================================
-// LAPACK 3.3.0
+/* ----- symmetric rank-1 update, addition to BLAS */
+#define LAPACK_csyr LAPACK_GLOBAL(csyr,CSYR)
+void LAPACK_csyr(
+    char const* uplo,
+    lapack_int const* n,
+    lapack_complex_float const* alpha,
+    lapack_complex_float const* x, lapack_int const* incx,
+    lapack_complex_float* a, lapack_int const* lda );
+#define LAPACK_zsyr LAPACK_GLOBAL(zsyr,ZSYR)
+void LAPACK_zsyr(
+    char const* uplo,
+    lapack_int const* n,
+    lapack_complex_double const* alpha,
+    lapack_complex_double const* x, lapack_int const* incx,
+    lapack_complex_double* a, lapack_int const* lda );
+
+/* ----- LAPACK version number */
+#define LAPACK_ilaver LAPACK_GLOBAL(ilaver,ILAVER)
+void LAPACK_ilaver(
+    lapack_int* vers_major,
+    lapack_int* vers_minor,
+    lapack_int* vers_patch );
+
+/* =============================================================================
+*  LAPACK 3.3.0 */
 
 /* ----- CS decomposition of orthogonal matrix */
 #define LAPACK_sbbcsd LAPACK_GLOBAL(sbbcsd,SBBCSD)
@@ -10657,7 +10682,7 @@ void LAPACK_zhetri2x(
     lapack_int* info );
 
 /* ----- symmetric indefinite solve */
-// matrix A is modified, but restored on exit (not for [cz]hetrs2)
+/* matrix A is modified, but restored on exit (not for [cz]hetrs2) */
 #define LAPACK_ssytrs2 LAPACK_GLOBAL(ssytrs2,SSYTRS2)
 void LAPACK_ssytrs2(
     char const* uplo,
@@ -10955,8 +10980,8 @@ void LAPACK_zuncsd2by1(
     lapack_int* iwork,
     lapack_int* info );
 
-// =============================================================================
-// LAPACK 3.4.0
+/* =============================================================================
+*  LAPACK 3.4.0 */
 
 /* ----- QR panel factorization with T matrix */
 #define LAPACK_sgeqrt LAPACK_GLOBAL(sgeqrt,SGEQRT)
@@ -11118,6 +11143,7 @@ void LAPACK_ztpqrt(
     lapack_complex_double* work,
     lapack_int* info );
 
+/* ----- QR factorization of triangular A and pentagonal B */
 #define LAPACK_stpqrt2 LAPACK_GLOBAL(stpqrt2,STPQRT2)
 void LAPACK_stpqrt2(
     lapack_int const* m, lapack_int const* n, lapack_int const* l,
@@ -11237,8 +11263,8 @@ void LAPACK_ztprfb(
     lapack_complex_double* b, lapack_int const* ldb,
     lapack_complex_double* work, lapack_int const* ldwork );
 
-// =============================================================================
-// LAPACK 3.5.0
+/* =============================================================================
+*  LAPACK 3.5.0 */
 
 /* ----- symmetric indefinite solve, rook pivoting */
 #define LAPACK_ssysv_rook LAPACK_GLOBAL(ssysv_rook,SSYSV_ROOK)
@@ -11396,31 +11422,8 @@ void LAPACK_zhetrs_rook(
     lapack_complex_double* b, lapack_int const* ldb,
     lapack_int* info );
 
-/* ----- symmetric rank-1 update */
-#define LAPACK_csyr LAPACK_GLOBAL(csyr,CSYR)
-void LAPACK_csyr(
-    char const* uplo,
-    lapack_int const* n,
-    lapack_complex_float const* alpha,
-    lapack_complex_float const* x, lapack_int const* incx,
-    lapack_complex_float* a, lapack_int const* lda );
-#define LAPACK_zsyr LAPACK_GLOBAL(zsyr,ZSYR)
-void LAPACK_zsyr(
-    char const* uplo,
-    lapack_int const* n,
-    lapack_complex_double const* alpha,
-    lapack_complex_double const* x, lapack_int const* incx,
-    lapack_complex_double* a, lapack_int const* lda );
-
-/* ----- LAPACK version number */
-#define LAPACK_ilaver LAPACK_GLOBAL(ilaver,ILAVER)
-void LAPACK_ilaver(
-    lapack_int* vers_major,
-    lapack_int* vers_minor,
-    lapack_int* vers_patch );
-
-// =============================================================================
-// LAPACK 3.7.0
+/* =============================================================================
+*  LAPACK 3.7.0 */
 
 /* ----- symmetric indefinite solve, Aasen's */
 #define LAPACK_ssysv_aa LAPACK_GLOBAL(ssysv_aa,SSYSV_AA)

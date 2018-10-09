@@ -4533,7 +4533,7 @@ double LAPACK_zlangb(
 
 }  // extern "C"
 
-// -----------------------------------------------------------------------------
+// --------------------
 // wrappers around LAPACK (not in LAPACKE)
 inline float LAPACKE_langb(
     char norm, lapack_int n, lapack_int kl, lapack_int ku,
@@ -4655,7 +4655,7 @@ double LAPACK_zlangt(
 
 }  // extern "C"
 
-// -----------------------------------------------------------------------------
+// --------------------
 // wrappers around LAPACK (not in LAPACKE)
 inline float LAPACKE_langt(
     char norm, lapack_int n,
@@ -4752,7 +4752,7 @@ double LAPACK_zlanhb(
 
 }  // extern "C"
 
-// -----------------------------------------------------------------------------
+// --------------------
 // wrappers around LAPACK (not in LAPACKE)
 inline float LAPACKE_lanhb(
     char norm, char uplo, lapack_int n, lapack_int kd,
@@ -4870,7 +4870,7 @@ double LAPACK_zlanhp(
 
 }  // extern "C"
 
-// -----------------------------------------------------------------------------
+// --------------------
 // wrappers around LAPACK (not in LAPACKE)
 inline float LAPACKE_lanhp(
     char norm, char uplo, lapack_int n,
@@ -4951,7 +4951,7 @@ double LAPACK_zlanht(
 
 }  // extern "C"
 
-// -----------------------------------------------------------------------------
+// --------------------
 // wrappers around LAPACK (not in LAPACKE)
 inline float LAPACKE_lanht(
     char norm, lapack_int n,
@@ -5040,7 +5040,7 @@ double LAPACK_zlansb(
 
 }  // extern "C"
 
-// -----------------------------------------------------------------------------
+// --------------------
 // wrappers around LAPACK (not in LAPACKE)
 inline float LAPACKE_lansb(
     char norm, char uplo, lapack_int n, lapack_int kd,
@@ -5121,7 +5121,7 @@ double LAPACK_zlansp(
 
 }  // extern "C"
 
-// -----------------------------------------------------------------------------
+// --------------------
 // wrappers around LAPACK (not in LAPACKE)
 inline float LAPACKE_lansp(
     char norm, char uplo, lapack_int n,
@@ -5243,7 +5243,7 @@ double LAPACK_zlantb(
 
 }  // extern "C"
 
-// -----------------------------------------------------------------------------
+// --------------------
 // wrappers around LAPACK (not in LAPACKE)
 inline float LAPACKE_lantb(
     char norm, char uplo, char diag, lapack_int n, lapack_int k,
@@ -5325,9 +5325,10 @@ double LAPACK_zlantp(
     lapack_complex_double const* AP,
     double* work );
 #endif
+
 }  // extern "C"
 
-// -----------------------------------------------------------------------------
+// --------------------
 // wrappers around LAPACK (not in LAPACKE)
 inline float LAPACKE_lantp(
     char norm, char uplo, char diag, lapack_int n,
@@ -5458,7 +5459,7 @@ void LAPACK_zlarf(
 
 }  // extern "C"
 
-// -----------------------------------------------------------------------------
+// --------------------
 // wrappers around LAPACK (not in LAPACKE)
 // todo: LAPACK has no error checks for larf
 inline lapack_int LAPACKE_larf(

@@ -23,7 +23,6 @@ enum Section {
     gesv,
     posv,
     sysv,
-    sysv2,
     hesv,
     gels,
     qr,
@@ -44,7 +43,6 @@ const char* section_names[] = {
    "LU",
    "Cholesky",
    "symmetric indefinite",
-   "symmetric indefinite 2",
    "Hermitian indefinite",
    "least squares",
    "QR, LQ, QL, RQ",
@@ -167,26 +165,27 @@ std::vector< libtest::routines_t > routines = {
     { "sprfs",              test_sprfs,     Section::sysv }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },
 
-    // -----   requires LAPACK>=3.5
-    { "sysv_rook",          test_sysv_rook,          Section::sysv2 }, // tested via LAPACKE using gcc/MKL
-    { "sysv_rk",            test_sysv_rk,            Section::sysv2 }, // tested via LAPACKE using gcc/MKL
-    { "sysv_aa",            test_sysv_aa,            Section::sysv2 }, // tested via LAPACKE using gcc/MKL
-  //{ "sysv_aa_2stage",     test_sysv_aa_2stage,     Section::sysv2 }, // TODO No automagic generation.  No src. New call.
+    // -----   requires LAPACK >= 3.5
+    { "sysv_rook",          test_sysv_rook,          Section::sysv }, // tested via LAPACKE using gcc/MKL
+    { "sysv_rk",            test_sysv_rk,            Section::sysv }, // tested via LAPACKE using gcc/MKL
+    { "sysv_aa",            test_sysv_aa,            Section::sysv }, // tested via LAPACKE using gcc/MKL
+  //{ "sysv_aa_2stage",     test_sysv_aa_2stage,     Section::sysv }, // TODO No automagic generation.  No src. New call.
     { "",                   nullptr,                 Section::newline },
 
-    { "sytrf_rook",         test_sytrf_rook,         Section::sysv2 }, // tested via LAPACKE using gcc/MKL
-    { "sytrf_rk",           test_sytrf_rk,           Section::sysv2 }, // tested via LAPACKE using gcc/MKL
-    { "sytrf_aa",           test_sytrf_aa,           Section::sysv2 }, // TODO LAPACKE wrapper broken/bugreport. Call LAPACK. Passes.
-  //{ "sytrf_aa_2stage",    test_sytrf_aa_2stage,    Section::sysv2 }, // TODO No automagic generation.  No src. New call.
+    { "sytrf_rook",         test_sytrf_rook,         Section::sysv }, // tested via LAPACKE using gcc/MKL
+    { "sytrf_rk",           test_sytrf_rk,           Section::sysv }, // tested via LAPACKE using gcc/MKL
+    { "sytrf_aa",           test_sytrf_aa,           Section::sysv }, // TODO LAPACKE wrapper broken/bugreport. Call LAPACK. Passes.
+  //{ "sytrf_aa_2stage",    test_sytrf_aa_2stage,    Section::sysv }, // TODO No automagic generation.  No src. New call.
     { "",                   nullptr,                 Section::newline },
 
-    { "sytrs_rook",         test_sytrs_rook,         Section::sysv2 }, // tested via LAPACKE using gcc/MKL
-  //{ "sytrs_rk",           test_sytrs_rk,           Section::sysv2 }, // TODO the LAPACKE wrapper seems to be missing
-    { "sytrs_aa",           test_sytrs_aa,           Section::sysv2 }, // tested via LAPACKE using gcc/MKL
-  //{ "sytrs_aa_2stage",    test_sytrs_aa_2stage,    Section::sysv2 }, // TODO No automagic generation.  No src. New call.
+    { "sytrs_rook",         test_sytrs_rook,         Section::sysv }, // tested via LAPACKE using gcc/MKL
+  //{ "sytrs_rk",           test_sytrs_rk,           Section::sysv }, // TODO the LAPACKE wrapper seems to be missing
+    { "",                   nullptr,                 Section::sysv }, // space for sytrs_rk
+    { "sytrs_aa",           test_sytrs_aa,           Section::sysv }, // tested via LAPACKE using gcc/MKL
+  //{ "sytrs_aa_2stage",    test_sytrs_aa_2stage,    Section::sysv }, // TODO No automagic generation.  No src. New call.
     { "",                   nullptr,                 Section::newline },
 
-  //{ "sytri_rook",         test_sytri_rook,         Section::sysv2 }, // TODO lapack_fortran.h header missing
+  //{ "sytri_rook",         test_sytri_rook,         Section::sysv }, // TODO lapack_fortran.h header missing
     { "",                   nullptr,                 Section::newline },
 
     // -----
@@ -238,7 +237,9 @@ std::vector< libtest::routines_t > routines = {
 
     { "ggqrf",              test_ggqrf,     Section::qr }, // tested via LAPACKE using gcc/MKL, TODO for now use p=param.k
   //{ "gglqf",              test_gglqf,     Section::qr }, // TODO No automagic generation.  No src
+    { "",                   nullptr,        Section::qr }, // space for gglqf
   //{ "ggqlf",              test_ggqlf,     Section::qr }, // TODO No automagic generation.  No src
+    { "",                   nullptr,        Section::qr }, // space for ggqlf
     { "ggrqf",              test_ggrqf,     Section::qr }, // tested via LAPACKE using gcc/MKL, TODO for now use p=param.k
     { "",                   nullptr,        Section::newline },
 

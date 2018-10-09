@@ -22,7 +22,7 @@
 // This is in alphabetical order.
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gbcon(
+inline lapack_int LAPACKE_gbcon(
     char norm, lapack_int n, lapack_int kl, lapack_int ku,
     float* AB, lapack_int ldab,
     lapack_int* ipiv, float anorm,
@@ -35,7 +35,7 @@ static inline lapack_int LAPACKE_gbcon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_gbcon(
+inline lapack_int LAPACKE_gbcon(
     char norm, lapack_int n, lapack_int kl, lapack_int ku,
     double* AB, lapack_int ldab,
     lapack_int* ipiv, double anorm,
@@ -48,7 +48,7 @@ static inline lapack_int LAPACKE_gbcon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_gbcon(
+inline lapack_int LAPACKE_gbcon(
     char norm, lapack_int n, lapack_int kl, lapack_int ku,
     std::complex<float>* AB, lapack_int ldab,
     lapack_int* ipiv, float anorm,
@@ -61,7 +61,7 @@ static inline lapack_int LAPACKE_gbcon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_gbcon(
+inline lapack_int LAPACKE_gbcon(
     char norm, lapack_int n, lapack_int kl, lapack_int ku,
     std::complex<double>* AB, lapack_int ldab,
     lapack_int* ipiv, double anorm,
@@ -75,7 +75,7 @@ static inline lapack_int LAPACKE_gbcon(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gbequ(
+inline lapack_int LAPACKE_gbequ(
     lapack_int m, lapack_int n, lapack_int kl, lapack_int ku,
     float* AB, lapack_int ldab,
     float* R,
@@ -94,7 +94,7 @@ static inline lapack_int LAPACKE_gbequ(
         amax );
 }
 
-static inline lapack_int LAPACKE_gbequ(
+inline lapack_int LAPACKE_gbequ(
     lapack_int m, lapack_int n, lapack_int kl, lapack_int ku,
     double* AB, lapack_int ldab,
     double* R,
@@ -113,7 +113,7 @@ static inline lapack_int LAPACKE_gbequ(
         amax );
 }
 
-static inline lapack_int LAPACKE_gbequ(
+inline lapack_int LAPACKE_gbequ(
     lapack_int m, lapack_int n, lapack_int kl, lapack_int ku,
     std::complex<float>* AB, lapack_int ldab,
     float* R,
@@ -132,7 +132,7 @@ static inline lapack_int LAPACKE_gbequ(
         amax );
 }
 
-static inline lapack_int LAPACKE_gbequ(
+inline lapack_int LAPACKE_gbequ(
     lapack_int m, lapack_int n, lapack_int kl, lapack_int ku,
     std::complex<double>* AB, lapack_int ldab,
     double* R,
@@ -152,7 +152,7 @@ static inline lapack_int LAPACKE_gbequ(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gbrfs(
+inline lapack_int LAPACKE_gbrfs(
     char trans, lapack_int n, lapack_int kl, lapack_int ku, lapack_int nrhs,
     float* AB, lapack_int ldab,
     float* AFB, lapack_int ldafb,
@@ -173,7 +173,7 @@ static inline lapack_int LAPACKE_gbrfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_gbrfs(
+inline lapack_int LAPACKE_gbrfs(
     char trans, lapack_int n, lapack_int kl, lapack_int ku, lapack_int nrhs,
     double* AB, lapack_int ldab,
     double* AFB, lapack_int ldafb,
@@ -194,7 +194,7 @@ static inline lapack_int LAPACKE_gbrfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_gbrfs(
+inline lapack_int LAPACKE_gbrfs(
     char trans, lapack_int n, lapack_int kl, lapack_int ku, lapack_int nrhs,
     std::complex<float>* AB, lapack_int ldab,
     std::complex<float>* AFB, lapack_int ldafb,
@@ -215,7 +215,7 @@ static inline lapack_int LAPACKE_gbrfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_gbrfs(
+inline lapack_int LAPACKE_gbrfs(
     char trans, lapack_int n, lapack_int kl, lapack_int ku, lapack_int nrhs,
     std::complex<double>* AB, lapack_int ldab,
     std::complex<double>* AFB, lapack_int ldafb,
@@ -237,7 +237,7 @@ static inline lapack_int LAPACKE_gbrfs(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gbsv(
+inline lapack_int LAPACKE_gbsv(
     lapack_int n, lapack_int kl, lapack_int ku, lapack_int nrhs,
     float* AB, lapack_int ldab,
     lapack_int* ipiv,
@@ -250,7 +250,7 @@ static inline lapack_int LAPACKE_gbsv(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_gbsv(
+inline lapack_int LAPACKE_gbsv(
     lapack_int n, lapack_int kl, lapack_int ku, lapack_int nrhs,
     double* AB, lapack_int ldab,
     lapack_int* ipiv,
@@ -263,7 +263,7 @@ static inline lapack_int LAPACKE_gbsv(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_gbsv(
+inline lapack_int LAPACKE_gbsv(
     lapack_int n, lapack_int kl, lapack_int ku, lapack_int nrhs,
     std::complex<float>* AB, lapack_int ldab,
     lapack_int* ipiv,
@@ -276,7 +276,7 @@ static inline lapack_int LAPACKE_gbsv(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_gbsv(
+inline lapack_int LAPACKE_gbsv(
     lapack_int n, lapack_int kl, lapack_int ku, lapack_int nrhs,
     std::complex<double>* AB, lapack_int ldab,
     lapack_int* ipiv,
@@ -290,7 +290,7 @@ static inline lapack_int LAPACKE_gbsv(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gbtrf(
+inline lapack_int LAPACKE_gbtrf(
     lapack_int m, lapack_int n, lapack_int kl, lapack_int ku,
     float* AB, lapack_int ldab,
     lapack_int* ipiv )
@@ -301,7 +301,7 @@ static inline lapack_int LAPACKE_gbtrf(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_gbtrf(
+inline lapack_int LAPACKE_gbtrf(
     lapack_int m, lapack_int n, lapack_int kl, lapack_int ku,
     double* AB, lapack_int ldab,
     lapack_int* ipiv )
@@ -312,7 +312,7 @@ static inline lapack_int LAPACKE_gbtrf(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_gbtrf(
+inline lapack_int LAPACKE_gbtrf(
     lapack_int m, lapack_int n, lapack_int kl, lapack_int ku,
     std::complex<float>* AB, lapack_int ldab,
     lapack_int* ipiv )
@@ -323,7 +323,7 @@ static inline lapack_int LAPACKE_gbtrf(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_gbtrf(
+inline lapack_int LAPACKE_gbtrf(
     lapack_int m, lapack_int n, lapack_int kl, lapack_int ku,
     std::complex<double>* AB, lapack_int ldab,
     lapack_int* ipiv )
@@ -335,7 +335,7 @@ static inline lapack_int LAPACKE_gbtrf(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gbtrs(
+inline lapack_int LAPACKE_gbtrs(
     char trans, lapack_int n, lapack_int kl, lapack_int ku, lapack_int nrhs,
     float* AB, lapack_int ldab,
     lapack_int* ipiv,
@@ -348,7 +348,7 @@ static inline lapack_int LAPACKE_gbtrs(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_gbtrs(
+inline lapack_int LAPACKE_gbtrs(
     char trans, lapack_int n, lapack_int kl, lapack_int ku, lapack_int nrhs,
     double* AB, lapack_int ldab,
     lapack_int* ipiv,
@@ -361,7 +361,7 @@ static inline lapack_int LAPACKE_gbtrs(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_gbtrs(
+inline lapack_int LAPACKE_gbtrs(
     char trans, lapack_int n, lapack_int kl, lapack_int ku, lapack_int nrhs,
     std::complex<float>* AB, lapack_int ldab,
     lapack_int* ipiv,
@@ -374,7 +374,7 @@ static inline lapack_int LAPACKE_gbtrs(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_gbtrs(
+inline lapack_int LAPACKE_gbtrs(
     char trans, lapack_int n, lapack_int kl, lapack_int ku, lapack_int nrhs,
     std::complex<double>* AB, lapack_int ldab,
     lapack_int* ipiv,
@@ -388,7 +388,7 @@ static inline lapack_int LAPACKE_gbtrs(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gecon(
+inline lapack_int LAPACKE_gecon(
     char norm, lapack_int n,
     float* A, lapack_int lda, float anorm,
     float* rcond )
@@ -399,7 +399,7 @@ static inline lapack_int LAPACKE_gecon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_gecon(
+inline lapack_int LAPACKE_gecon(
     char norm, lapack_int n,
     double* A, lapack_int lda, double anorm,
     double* rcond )
@@ -410,7 +410,7 @@ static inline lapack_int LAPACKE_gecon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_gecon(
+inline lapack_int LAPACKE_gecon(
     char norm, lapack_int n,
     std::complex<float>* A, lapack_int lda, float anorm,
     float* rcond )
@@ -421,7 +421,7 @@ static inline lapack_int LAPACKE_gecon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_gecon(
+inline lapack_int LAPACKE_gecon(
     char norm, lapack_int n,
     std::complex<double>* A, lapack_int lda, double anorm,
     double* rcond )
@@ -433,7 +433,7 @@ static inline lapack_int LAPACKE_gecon(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_geequ(
+inline lapack_int LAPACKE_geequ(
     lapack_int m, lapack_int n,
     float* A, lapack_int lda,
     float* R,
@@ -452,7 +452,7 @@ static inline lapack_int LAPACKE_geequ(
         amax );
 }
 
-static inline lapack_int LAPACKE_geequ(
+inline lapack_int LAPACKE_geequ(
     lapack_int m, lapack_int n,
     double* A, lapack_int lda,
     double* R,
@@ -471,7 +471,7 @@ static inline lapack_int LAPACKE_geequ(
         amax );
 }
 
-static inline lapack_int LAPACKE_geequ(
+inline lapack_int LAPACKE_geequ(
     lapack_int m, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     float* R,
@@ -490,7 +490,7 @@ static inline lapack_int LAPACKE_geequ(
         amax );
 }
 
-static inline lapack_int LAPACKE_geequ(
+inline lapack_int LAPACKE_geequ(
     lapack_int m, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     double* R,
@@ -510,7 +510,7 @@ static inline lapack_int LAPACKE_geequ(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_geev(
+inline lapack_int LAPACKE_geev(
     char jobvl, char jobvr, lapack_int n,
     float* A, lapack_int lda,
     std::complex<float>* W,
@@ -530,7 +530,7 @@ static inline lapack_int LAPACKE_geev(
     return err;
 }
 
-static inline lapack_int LAPACKE_geev(
+inline lapack_int LAPACKE_geev(
     char jobvl, char jobvr, lapack_int n, double* A, lapack_int lda,
     std::complex<double>* W,
     double* VL, lapack_int ldvl,
@@ -549,7 +549,7 @@ static inline lapack_int LAPACKE_geev(
     return err;
 }
 
-static inline lapack_int LAPACKE_geev(
+inline lapack_int LAPACKE_geev(
     char jobvl, char jobvr, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* W,
@@ -564,7 +564,7 @@ static inline lapack_int LAPACKE_geev(
         (lapack_complex_float*) VR, ldvr );
 }
 
-static inline lapack_int LAPACKE_geev(
+inline lapack_int LAPACKE_geev(
     char jobvl, char jobvr, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* W,
@@ -580,7 +580,7 @@ static inline lapack_int LAPACKE_geev(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gehrd(
+inline lapack_int LAPACKE_gehrd(
     lapack_int n, lapack_int ilo, lapack_int ihi,
     float* A, lapack_int lda,
     float* tau )
@@ -591,7 +591,7 @@ static inline lapack_int LAPACKE_gehrd(
         tau );
 }
 
-static inline lapack_int LAPACKE_gehrd(
+inline lapack_int LAPACKE_gehrd(
     lapack_int n, lapack_int ilo, lapack_int ihi,
     double* A, lapack_int lda,
     double* tau )
@@ -602,7 +602,7 @@ static inline lapack_int LAPACKE_gehrd(
         tau );
 }
 
-static inline lapack_int LAPACKE_gehrd(
+inline lapack_int LAPACKE_gehrd(
     lapack_int n, lapack_int ilo, lapack_int ihi,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* tau )
@@ -613,7 +613,7 @@ static inline lapack_int LAPACKE_gehrd(
         (lapack_complex_float*) tau );
 }
 
-static inline lapack_int LAPACKE_gehrd(
+inline lapack_int LAPACKE_gehrd(
     lapack_int n, lapack_int ilo, lapack_int ihi,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* tau )
@@ -625,7 +625,7 @@ static inline lapack_int LAPACKE_gehrd(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gelqf(
+inline lapack_int LAPACKE_gelqf(
     lapack_int m, lapack_int n,
     float* A, lapack_int lda,
     float* tau )
@@ -636,7 +636,7 @@ static inline lapack_int LAPACKE_gelqf(
         tau );
 }
 
-static inline lapack_int LAPACKE_gelqf(
+inline lapack_int LAPACKE_gelqf(
     lapack_int m, lapack_int n,
     double* A, lapack_int lda,
     double* tau )
@@ -647,7 +647,7 @@ static inline lapack_int LAPACKE_gelqf(
         tau );
 }
 
-static inline lapack_int LAPACKE_gelqf(
+inline lapack_int LAPACKE_gelqf(
     lapack_int m, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* tau )
@@ -658,7 +658,7 @@ static inline lapack_int LAPACKE_gelqf(
         (lapack_complex_float*) tau );
 }
 
-static inline lapack_int LAPACKE_gelqf(
+inline lapack_int LAPACKE_gelqf(
     lapack_int m, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* tau )
@@ -670,7 +670,7 @@ static inline lapack_int LAPACKE_gelqf(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gels(
+inline lapack_int LAPACKE_gels(
     char trans, lapack_int m, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     float* B, lapack_int ldb )
@@ -682,7 +682,7 @@ static inline lapack_int LAPACKE_gels(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_gels(
+inline lapack_int LAPACKE_gels(
     char trans, lapack_int m, lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     double* B, lapack_int ldb )
@@ -694,7 +694,7 @@ static inline lapack_int LAPACKE_gels(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_gels(
+inline lapack_int LAPACKE_gels(
     char trans, lapack_int m, lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* B, lapack_int ldb )
@@ -705,7 +705,7 @@ static inline lapack_int LAPACKE_gels(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_gels(
+inline lapack_int LAPACKE_gels(
     char trans, lapack_int m, lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* B, lapack_int ldb )
@@ -717,7 +717,7 @@ static inline lapack_int LAPACKE_gels(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gelsd(
+inline lapack_int LAPACKE_gelsd(
     lapack_int m, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     float* B, lapack_int ldb,
@@ -731,7 +731,7 @@ static inline lapack_int LAPACKE_gelsd(
         rank );
 }
 
-static inline lapack_int LAPACKE_gelsd(
+inline lapack_int LAPACKE_gelsd(
     lapack_int m, lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     double* B, lapack_int ldb,
@@ -745,7 +745,7 @@ static inline lapack_int LAPACKE_gelsd(
         rank );
 }
 
-static inline lapack_int LAPACKE_gelsd(
+inline lapack_int LAPACKE_gelsd(
     lapack_int m, lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* B, lapack_int ldb,
@@ -759,7 +759,7 @@ static inline lapack_int LAPACKE_gelsd(
         rank );
 }
 
-static inline lapack_int LAPACKE_gelsd(
+inline lapack_int LAPACKE_gelsd(
     lapack_int m, lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* B, lapack_int ldb,
@@ -774,7 +774,7 @@ static inline lapack_int LAPACKE_gelsd(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gelss(
+inline lapack_int LAPACKE_gelss(
     lapack_int m, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     float* B, lapack_int ldb,
@@ -788,7 +788,7 @@ static inline lapack_int LAPACKE_gelss(
         rank );
 }
 
-static inline lapack_int LAPACKE_gelss(
+inline lapack_int LAPACKE_gelss(
     lapack_int m, lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     double* B, lapack_int ldb,
@@ -802,7 +802,7 @@ static inline lapack_int LAPACKE_gelss(
         rank );
 }
 
-static inline lapack_int LAPACKE_gelss(
+inline lapack_int LAPACKE_gelss(
     lapack_int m, lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* B, lapack_int ldb,
@@ -816,7 +816,7 @@ static inline lapack_int LAPACKE_gelss(
         rank );
 }
 
-static inline lapack_int LAPACKE_gelss(
+inline lapack_int LAPACKE_gelss(
     lapack_int m, lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* B, lapack_int ldb,
@@ -831,7 +831,7 @@ static inline lapack_int LAPACKE_gelss(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gelsy(
+inline lapack_int LAPACKE_gelsy(
     lapack_int m, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     float* B, lapack_int ldb,
@@ -845,7 +845,7 @@ static inline lapack_int LAPACKE_gelsy(
         rank );
 }
 
-static inline lapack_int LAPACKE_gelsy(
+inline lapack_int LAPACKE_gelsy(
     lapack_int m, lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     double* B, lapack_int ldb,
@@ -859,7 +859,7 @@ static inline lapack_int LAPACKE_gelsy(
         rank );
 }
 
-static inline lapack_int LAPACKE_gelsy(
+inline lapack_int LAPACKE_gelsy(
     lapack_int m, lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* B, lapack_int ldb,
@@ -873,7 +873,7 @@ static inline lapack_int LAPACKE_gelsy(
         rank );
 }
 
-static inline lapack_int LAPACKE_gelsy(
+inline lapack_int LAPACKE_gelsy(
     lapack_int m, lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* B, lapack_int ldb,
@@ -888,7 +888,7 @@ static inline lapack_int LAPACKE_gelsy(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_geqlf(
+inline lapack_int LAPACKE_geqlf(
     lapack_int m, lapack_int n,
     float* A, lapack_int lda,
     float* tau )
@@ -899,7 +899,7 @@ static inline lapack_int LAPACKE_geqlf(
         tau );
 }
 
-static inline lapack_int LAPACKE_geqlf(
+inline lapack_int LAPACKE_geqlf(
     lapack_int m, lapack_int n,
     double* A, lapack_int lda,
     double* tau )
@@ -910,7 +910,7 @@ static inline lapack_int LAPACKE_geqlf(
         tau );
 }
 
-static inline lapack_int LAPACKE_geqlf(
+inline lapack_int LAPACKE_geqlf(
     lapack_int m, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* tau )
@@ -921,7 +921,7 @@ static inline lapack_int LAPACKE_geqlf(
         (lapack_complex_float*) tau );
 }
 
-static inline lapack_int LAPACKE_geqlf(
+inline lapack_int LAPACKE_geqlf(
     lapack_int m, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* tau )
@@ -933,7 +933,7 @@ static inline lapack_int LAPACKE_geqlf(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_geqrf(
+inline lapack_int LAPACKE_geqrf(
     lapack_int m, lapack_int n,
     float* A, lapack_int lda,
     float* tau )
@@ -944,7 +944,7 @@ static inline lapack_int LAPACKE_geqrf(
         tau );
 }
 
-static inline lapack_int LAPACKE_geqrf(
+inline lapack_int LAPACKE_geqrf(
     lapack_int m, lapack_int n,
     double* A, lapack_int lda,
     double* tau )
@@ -955,7 +955,7 @@ static inline lapack_int LAPACKE_geqrf(
         tau );
 }
 
-static inline lapack_int LAPACKE_geqrf(
+inline lapack_int LAPACKE_geqrf(
     lapack_int m, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* tau )
@@ -966,7 +966,7 @@ static inline lapack_int LAPACKE_geqrf(
         (lapack_complex_float*) tau );
 }
 
-static inline lapack_int LAPACKE_geqrf(
+inline lapack_int LAPACKE_geqrf(
     lapack_int m, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* tau )
@@ -978,7 +978,7 @@ static inline lapack_int LAPACKE_geqrf(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gerfs(
+inline lapack_int LAPACKE_gerfs(
     char trans, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     float* AF, lapack_int ldaf,
@@ -999,7 +999,7 @@ static inline lapack_int LAPACKE_gerfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_gerfs(
+inline lapack_int LAPACKE_gerfs(
     char trans, lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     double* AF, lapack_int ldaf,
@@ -1020,7 +1020,7 @@ static inline lapack_int LAPACKE_gerfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_gerfs(
+inline lapack_int LAPACKE_gerfs(
     char trans, lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* AF, lapack_int ldaf,
@@ -1041,7 +1041,7 @@ static inline lapack_int LAPACKE_gerfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_gerfs(
+inline lapack_int LAPACKE_gerfs(
     char trans, lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* AF, lapack_int ldaf,
@@ -1063,7 +1063,7 @@ static inline lapack_int LAPACKE_gerfs(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gerqf(
+inline lapack_int LAPACKE_gerqf(
     lapack_int m, lapack_int n,
     float* A, lapack_int lda,
     float* tau )
@@ -1074,7 +1074,7 @@ static inline lapack_int LAPACKE_gerqf(
         tau );
 }
 
-static inline lapack_int LAPACKE_gerqf(
+inline lapack_int LAPACKE_gerqf(
     lapack_int m, lapack_int n,
     double* A, lapack_int lda,
     double* tau )
@@ -1085,7 +1085,7 @@ static inline lapack_int LAPACKE_gerqf(
         tau );
 }
 
-static inline lapack_int LAPACKE_gerqf(
+inline lapack_int LAPACKE_gerqf(
     lapack_int m, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* tau )
@@ -1096,7 +1096,7 @@ static inline lapack_int LAPACKE_gerqf(
         (lapack_complex_float*) tau );
 }
 
-static inline lapack_int LAPACKE_gerqf(
+inline lapack_int LAPACKE_gerqf(
     lapack_int m, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* tau )
@@ -1108,7 +1108,7 @@ static inline lapack_int LAPACKE_gerqf(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gesdd(
+inline lapack_int LAPACKE_gesdd(
     char jobz, lapack_int m, lapack_int n,
     float* A, lapack_int lda,
     float* S,
@@ -1123,7 +1123,7 @@ static inline lapack_int LAPACKE_gesdd(
         VT, ldvt );
 }
 
-static inline lapack_int LAPACKE_gesdd(
+inline lapack_int LAPACKE_gesdd(
     char jobz, lapack_int m, lapack_int n,
     double* A, lapack_int lda,
     double* S,
@@ -1138,7 +1138,7 @@ static inline lapack_int LAPACKE_gesdd(
         VT, ldvt );
 }
 
-static inline lapack_int LAPACKE_gesdd(
+inline lapack_int LAPACKE_gesdd(
     char jobz, lapack_int m, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     float* S,
@@ -1153,7 +1153,7 @@ static inline lapack_int LAPACKE_gesdd(
         (lapack_complex_float*) VT, ldvt );
 }
 
-static inline lapack_int LAPACKE_gesdd(
+inline lapack_int LAPACKE_gesdd(
     char jobz, lapack_int m, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     double* S,
@@ -1169,7 +1169,7 @@ static inline lapack_int LAPACKE_gesdd(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gesv(
+inline lapack_int LAPACKE_gesv(
     lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     lapack_int* ipiv,
@@ -1182,7 +1182,7 @@ static inline lapack_int LAPACKE_gesv(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_gesv(
+inline lapack_int LAPACKE_gesv(
     lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     lapack_int* ipiv,
@@ -1195,7 +1195,7 @@ static inline lapack_int LAPACKE_gesv(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_gesv(
+inline lapack_int LAPACKE_gesv(
     lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     lapack_int* ipiv,
@@ -1208,7 +1208,7 @@ static inline lapack_int LAPACKE_gesv(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_gesv(
+inline lapack_int LAPACKE_gesv(
     lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     lapack_int* ipiv,
@@ -1222,7 +1222,7 @@ static inline lapack_int LAPACKE_gesv(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gesvd(
+inline lapack_int LAPACKE_gesvd(
     char jobu, char jobvt, lapack_int m, lapack_int n,
     float* A, lapack_int lda,
     float* S,
@@ -1239,7 +1239,7 @@ static inline lapack_int LAPACKE_gesvd(
         &superdiag[0] );
 }
 
-static inline lapack_int LAPACKE_gesvd(
+inline lapack_int LAPACKE_gesvd(
     char jobu, char jobvt, lapack_int m, lapack_int n,
     double* A, lapack_int lda,
     double* S,
@@ -1256,7 +1256,7 @@ static inline lapack_int LAPACKE_gesvd(
         &superdiag[0] );
 }
 
-static inline lapack_int LAPACKE_gesvd(
+inline lapack_int LAPACKE_gesvd(
     char jobu, char jobvt, lapack_int m, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     float* S,
@@ -1273,7 +1273,7 @@ static inline lapack_int LAPACKE_gesvd(
         &superdiag[0] );
 }
 
-static inline lapack_int LAPACKE_gesvd(
+inline lapack_int LAPACKE_gesvd(
     char jobu, char jobvt, lapack_int m, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     double* S,
@@ -1292,7 +1292,7 @@ static inline lapack_int LAPACKE_gesvd(
 
 // -----------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30600
-static inline lapack_int LAPACKE_gesvdx(
+inline lapack_int LAPACKE_gesvdx(
     char jobu, char jobvt, char range, lapack_int m, lapack_int n,
     float* A, lapack_int lda,
     float vl, float vu, lapack_int il, lapack_int iu, lapack_int* nfound,
@@ -1312,7 +1312,7 @@ static inline lapack_int LAPACKE_gesvdx(
         &superb[0] );
 }
 
-static inline lapack_int LAPACKE_gesvdx(
+inline lapack_int LAPACKE_gesvdx(
     char jobu, char jobvt, char range, lapack_int m, lapack_int n,
     double* A, lapack_int lda,
     double vl, double vu, lapack_int il, lapack_int iu, lapack_int* nfound,
@@ -1332,7 +1332,7 @@ static inline lapack_int LAPACKE_gesvdx(
         &superb[0] );
 }
 
-static inline lapack_int LAPACKE_gesvdx(
+inline lapack_int LAPACKE_gesvdx(
     char jobu, char jobvt, char range, lapack_int m, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     float vl, float vu, lapack_int il, lapack_int iu, lapack_int* nfound,
@@ -1352,7 +1352,7 @@ static inline lapack_int LAPACKE_gesvdx(
         &superb[0] );
 }
 
-static inline lapack_int LAPACKE_gesvdx(
+inline lapack_int LAPACKE_gesvdx(
     char jobu, char jobvt, char range, lapack_int m, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     double vl, double vu, lapack_int il, lapack_int iu, lapack_int* nfound,
@@ -1374,7 +1374,7 @@ static inline lapack_int LAPACKE_gesvdx(
 #endif // 30600
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gesvx(
+inline lapack_int LAPACKE_gesvx(
     char fact, char trans, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     float* AF, lapack_int ldaf,
@@ -1400,7 +1400,7 @@ static inline lapack_int LAPACKE_gesvx(
         rpivot );
 }
 
-static inline lapack_int LAPACKE_gesvx(
+inline lapack_int LAPACKE_gesvx(
     char fact, char trans, lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     double* AF, lapack_int ldaf,
@@ -1426,7 +1426,7 @@ static inline lapack_int LAPACKE_gesvx(
         rpivot );
 }
 
-static inline lapack_int LAPACKE_gesvx(
+inline lapack_int LAPACKE_gesvx(
     char fact, char trans, lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* AF, lapack_int ldaf,
@@ -1452,7 +1452,7 @@ static inline lapack_int LAPACKE_gesvx(
         rpivot );
 }
 
-static inline lapack_int LAPACKE_gesvx(
+inline lapack_int LAPACKE_gesvx(
     char fact, char trans, lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* AF, lapack_int ldaf,
@@ -1481,7 +1481,7 @@ static inline lapack_int LAPACKE_gesvx(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_getrf(
+inline lapack_int LAPACKE_getrf(
     lapack_int m, lapack_int n,
     float* A, lapack_int lda,
     lapack_int* ipiv )
@@ -1492,7 +1492,7 @@ static inline lapack_int LAPACKE_getrf(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_getrf(
+inline lapack_int LAPACKE_getrf(
     lapack_int m, lapack_int n,
     double* A, lapack_int lda,
     lapack_int* ipiv )
@@ -1503,7 +1503,7 @@ static inline lapack_int LAPACKE_getrf(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_getrf(
+inline lapack_int LAPACKE_getrf(
     lapack_int m, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     lapack_int* ipiv )
@@ -1514,7 +1514,7 @@ static inline lapack_int LAPACKE_getrf(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_getrf(
+inline lapack_int LAPACKE_getrf(
     lapack_int m, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     lapack_int* ipiv )
@@ -1526,7 +1526,7 @@ static inline lapack_int LAPACKE_getrf(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_getri(
+inline lapack_int LAPACKE_getri(
     lapack_int n,
     float* A, lapack_int lda,
     lapack_int* ipiv )
@@ -1537,7 +1537,7 @@ static inline lapack_int LAPACKE_getri(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_getri(
+inline lapack_int LAPACKE_getri(
     lapack_int n,
     double* A, lapack_int lda,
     lapack_int* ipiv )
@@ -1548,7 +1548,7 @@ static inline lapack_int LAPACKE_getri(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_getri(
+inline lapack_int LAPACKE_getri(
     lapack_int n,
     std::complex<float>* A, lapack_int lda,
     lapack_int* ipiv )
@@ -1559,7 +1559,7 @@ static inline lapack_int LAPACKE_getri(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_getri(
+inline lapack_int LAPACKE_getri(
     lapack_int n,
     std::complex<double>* A, lapack_int lda,
     lapack_int* ipiv )
@@ -1571,7 +1571,7 @@ static inline lapack_int LAPACKE_getri(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_getrs(
+inline lapack_int LAPACKE_getrs(
     char trans, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     lapack_int* ipiv,
@@ -1584,7 +1584,7 @@ static inline lapack_int LAPACKE_getrs(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_getrs(
+inline lapack_int LAPACKE_getrs(
     char trans, lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     lapack_int* ipiv,
@@ -1597,7 +1597,7 @@ static inline lapack_int LAPACKE_getrs(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_getrs(
+inline lapack_int LAPACKE_getrs(
     char trans, lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     lapack_int* ipiv,
@@ -1610,7 +1610,7 @@ static inline lapack_int LAPACKE_getrs(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_getrs(
+inline lapack_int LAPACKE_getrs(
     char trans, lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     lapack_int* ipiv,
@@ -1625,7 +1625,7 @@ static inline lapack_int LAPACKE_getrs(
 
 // -----------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30700
-static inline lapack_int LAPACKE_getsls(
+inline lapack_int LAPACKE_getsls(
     char trans, lapack_int m, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     float* B, lapack_int ldb )
@@ -1637,7 +1637,7 @@ static inline lapack_int LAPACKE_getsls(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_getsls(
+inline lapack_int LAPACKE_getsls(
     char trans, lapack_int m, lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     double* B, lapack_int ldb )
@@ -1649,7 +1649,7 @@ static inline lapack_int LAPACKE_getsls(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_getsls(
+inline lapack_int LAPACKE_getsls(
     char trans, lapack_int m, lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* B, lapack_int ldb )
@@ -1661,7 +1661,7 @@ static inline lapack_int LAPACKE_getsls(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_getsls(
+inline lapack_int LAPACKE_getsls(
     char trans, lapack_int m, lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* B, lapack_int ldb )
@@ -1675,7 +1675,7 @@ static inline lapack_int LAPACKE_getsls(
 #endif // 30700
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_ggev(
+inline lapack_int LAPACKE_ggev(
     char jobvl, char jobvr, lapack_int n,
     float* A, lapack_int lda,
     float* B, lapack_int ldb,
@@ -1699,7 +1699,7 @@ static inline lapack_int LAPACKE_ggev(
     return err;
 }
 
-static inline lapack_int LAPACKE_ggev(
+inline lapack_int LAPACKE_ggev(
     char jobvl, char jobvr, lapack_int n,
     double* A, lapack_int lda,
     double* B, lapack_int ldb,
@@ -1723,7 +1723,7 @@ static inline lapack_int LAPACKE_ggev(
     return err;
 }
 
-static inline lapack_int LAPACKE_ggev(
+inline lapack_int LAPACKE_ggev(
     char jobvl, char jobvr, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* B, lapack_int ldb,
@@ -1742,7 +1742,7 @@ static inline lapack_int LAPACKE_ggev(
         (lapack_complex_float*) VR, ldvr );
 }
 
-static inline lapack_int LAPACKE_ggev(
+inline lapack_int LAPACKE_ggev(
     char jobvl, char jobvr, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* B, lapack_int ldb,
@@ -1762,7 +1762,7 @@ static inline lapack_int LAPACKE_ggev(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_ggglm(
+inline lapack_int LAPACKE_ggglm(
     lapack_int n, lapack_int m, lapack_int p,
     float* A, lapack_int lda,
     float* B, lapack_int ldb,
@@ -1779,7 +1779,7 @@ static inline lapack_int LAPACKE_ggglm(
         Y );
 }
 
-static inline lapack_int LAPACKE_ggglm(
+inline lapack_int LAPACKE_ggglm(
     lapack_int n, lapack_int m, lapack_int p,
     double* A, lapack_int lda,
     double* B, lapack_int ldb,
@@ -1796,7 +1796,7 @@ static inline lapack_int LAPACKE_ggglm(
         Y );
 }
 
-static inline lapack_int LAPACKE_ggglm(
+inline lapack_int LAPACKE_ggglm(
     lapack_int n, lapack_int m, lapack_int p,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* B, lapack_int ldb,
@@ -1813,7 +1813,7 @@ static inline lapack_int LAPACKE_ggglm(
         (lapack_complex_float*) Y );
 }
 
-static inline lapack_int LAPACKE_ggglm(
+inline lapack_int LAPACKE_ggglm(
     lapack_int n, lapack_int m, lapack_int p,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* B, lapack_int ldb,
@@ -1831,7 +1831,7 @@ static inline lapack_int LAPACKE_ggglm(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gglse(
+inline lapack_int LAPACKE_gglse(
     lapack_int m, lapack_int n, lapack_int p,
     float* A, lapack_int lda,
     float* B, lapack_int ldb,
@@ -1848,7 +1848,7 @@ static inline lapack_int LAPACKE_gglse(
         X );
 }
 
-static inline lapack_int LAPACKE_gglse(
+inline lapack_int LAPACKE_gglse(
     lapack_int m, lapack_int n, lapack_int p,
     double* A, lapack_int lda,
     double* B, lapack_int ldb,
@@ -1865,7 +1865,7 @@ static inline lapack_int LAPACKE_gglse(
         X );
 }
 
-static inline lapack_int LAPACKE_gglse(
+inline lapack_int LAPACKE_gglse(
     lapack_int m, lapack_int n, lapack_int p,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* B, lapack_int ldb,
@@ -1882,7 +1882,7 @@ static inline lapack_int LAPACKE_gglse(
         (lapack_complex_float*) X );
 }
 
-static inline lapack_int LAPACKE_gglse(
+inline lapack_int LAPACKE_gglse(
     lapack_int m, lapack_int n, lapack_int p,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* B, lapack_int ldb,
@@ -1900,7 +1900,7 @@ static inline lapack_int LAPACKE_gglse(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_ggqrf(
+inline lapack_int LAPACKE_ggqrf(
     lapack_int n, lapack_int m, lapack_int p,
     float* A, lapack_int lda,
     float* taua,
@@ -1915,7 +1915,7 @@ static inline lapack_int LAPACKE_ggqrf(
         taub );
 }
 
-static inline lapack_int LAPACKE_ggqrf(
+inline lapack_int LAPACKE_ggqrf(
     lapack_int n, lapack_int m, lapack_int p,
     double* A, lapack_int lda,
     double* taua,
@@ -1930,7 +1930,7 @@ static inline lapack_int LAPACKE_ggqrf(
         taub );
 }
 
-static inline lapack_int LAPACKE_ggqrf(
+inline lapack_int LAPACKE_ggqrf(
     lapack_int n, lapack_int m, lapack_int p,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* taua,
@@ -1945,7 +1945,7 @@ static inline lapack_int LAPACKE_ggqrf(
         (lapack_complex_float*) taub );
 }
 
-static inline lapack_int LAPACKE_ggqrf(
+inline lapack_int LAPACKE_ggqrf(
     lapack_int n, lapack_int m, lapack_int p,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* taua,
@@ -1961,7 +1961,7 @@ static inline lapack_int LAPACKE_ggqrf(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_ggrqf(
+inline lapack_int LAPACKE_ggrqf(
     lapack_int m, lapack_int p, lapack_int n,
     float* A, lapack_int lda,
     float* taua,
@@ -1976,7 +1976,7 @@ static inline lapack_int LAPACKE_ggrqf(
         taub );
 }
 
-static inline lapack_int LAPACKE_ggrqf(
+inline lapack_int LAPACKE_ggrqf(
     lapack_int m, lapack_int p, lapack_int n,
     double* A, lapack_int lda,
     double* taua,
@@ -1991,7 +1991,7 @@ static inline lapack_int LAPACKE_ggrqf(
         taub );
 }
 
-static inline lapack_int LAPACKE_ggrqf(
+inline lapack_int LAPACKE_ggrqf(
     lapack_int m, lapack_int p, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* taua,
@@ -2006,7 +2006,7 @@ static inline lapack_int LAPACKE_ggrqf(
         (lapack_complex_float*) taub );
 }
 
-static inline lapack_int LAPACKE_ggrqf(
+inline lapack_int LAPACKE_ggrqf(
     lapack_int m, lapack_int p, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* taua,
@@ -2022,7 +2022,7 @@ static inline lapack_int LAPACKE_ggrqf(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gtcon(
+inline lapack_int LAPACKE_gtcon(
     char norm, lapack_int n,
     float* DL,
     float* D,
@@ -2041,7 +2041,7 @@ static inline lapack_int LAPACKE_gtcon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_gtcon(
+inline lapack_int LAPACKE_gtcon(
     char norm, lapack_int n,
     double* DL,
     double* D,
@@ -2060,7 +2060,7 @@ static inline lapack_int LAPACKE_gtcon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_gtcon(
+inline lapack_int LAPACKE_gtcon(
     char norm, lapack_int n,
     std::complex<float>* DL,
     std::complex<float>* D,
@@ -2079,7 +2079,7 @@ static inline lapack_int LAPACKE_gtcon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_gtcon(
+inline lapack_int LAPACKE_gtcon(
     char norm, lapack_int n,
     std::complex<double>* DL,
     std::complex<double>* D,
@@ -2099,7 +2099,7 @@ static inline lapack_int LAPACKE_gtcon(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gtrfs(
+inline lapack_int LAPACKE_gtrfs(
     char trans, lapack_int n, lapack_int nrhs,
     float* DL,
     float* D,
@@ -2130,7 +2130,7 @@ static inline lapack_int LAPACKE_gtrfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_gtrfs(
+inline lapack_int LAPACKE_gtrfs(
     char trans, lapack_int n, lapack_int nrhs,
     double* DL,
     double* D,
@@ -2161,7 +2161,7 @@ static inline lapack_int LAPACKE_gtrfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_gtrfs(
+inline lapack_int LAPACKE_gtrfs(
     char trans, lapack_int n, lapack_int nrhs,
     std::complex<float>* DL,
     std::complex<float>* D,
@@ -2192,7 +2192,7 @@ static inline lapack_int LAPACKE_gtrfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_gtrfs(
+inline lapack_int LAPACKE_gtrfs(
     char trans, lapack_int n, lapack_int nrhs,
     std::complex<double>* DL,
     std::complex<double>* D,
@@ -2224,7 +2224,7 @@ static inline lapack_int LAPACKE_gtrfs(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gtsv(
+inline lapack_int LAPACKE_gtsv(
     lapack_int n, lapack_int nrhs,
     float* DL,
     float* D,
@@ -2239,7 +2239,7 @@ static inline lapack_int LAPACKE_gtsv(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_gtsv(
+inline lapack_int LAPACKE_gtsv(
     lapack_int n, lapack_int nrhs,
     double* DL,
     double* D,
@@ -2254,7 +2254,7 @@ static inline lapack_int LAPACKE_gtsv(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_gtsv(
+inline lapack_int LAPACKE_gtsv(
     lapack_int n, lapack_int nrhs,
     std::complex<float>* DL,
     std::complex<float>* D,
@@ -2269,7 +2269,7 @@ static inline lapack_int LAPACKE_gtsv(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_gtsv(
+inline lapack_int LAPACKE_gtsv(
     lapack_int n, lapack_int nrhs,
     std::complex<double>* DL,
     std::complex<double>* D,
@@ -2285,7 +2285,7 @@ static inline lapack_int LAPACKE_gtsv(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gttrf(
+inline lapack_int LAPACKE_gttrf(
     lapack_int n,
     float* DL,
     float* D,
@@ -2302,7 +2302,7 @@ static inline lapack_int LAPACKE_gttrf(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_gttrf(
+inline lapack_int LAPACKE_gttrf(
     lapack_int n,
     double* DL,
     double* D,
@@ -2319,7 +2319,7 @@ static inline lapack_int LAPACKE_gttrf(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_gttrf(
+inline lapack_int LAPACKE_gttrf(
     lapack_int n,
     std::complex<float>* DL,
     std::complex<float>* D,
@@ -2336,7 +2336,7 @@ static inline lapack_int LAPACKE_gttrf(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_gttrf(
+inline lapack_int LAPACKE_gttrf(
     lapack_int n,
     std::complex<double>* DL,
     std::complex<double>* D,
@@ -2354,7 +2354,7 @@ static inline lapack_int LAPACKE_gttrf(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_gttrs(
+inline lapack_int LAPACKE_gttrs(
     char trans, lapack_int n, lapack_int nrhs,
     float* DL,
     float* D,
@@ -2373,7 +2373,7 @@ static inline lapack_int LAPACKE_gttrs(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_gttrs(
+inline lapack_int LAPACKE_gttrs(
     char trans, lapack_int n, lapack_int nrhs,
     double* DL,
     double* D,
@@ -2392,7 +2392,7 @@ static inline lapack_int LAPACKE_gttrs(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_gttrs(
+inline lapack_int LAPACKE_gttrs(
     char trans, lapack_int n, lapack_int nrhs,
     std::complex<float>* DL,
     std::complex<float>* D,
@@ -2411,7 +2411,7 @@ static inline lapack_int LAPACKE_gttrs(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_gttrs(
+inline lapack_int LAPACKE_gttrs(
     char trans, lapack_int n, lapack_int nrhs,
     std::complex<double>* DL,
     std::complex<double>* D,
@@ -2431,7 +2431,7 @@ static inline lapack_int LAPACKE_gttrs(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hbev(
+inline lapack_int LAPACKE_hbev(
     char jobz, char uplo, lapack_int n, lapack_int kd,
     float* AB, lapack_int ldab,
     float* W,
@@ -2444,7 +2444,7 @@ static inline lapack_int LAPACKE_hbev(
         Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hbev(
+inline lapack_int LAPACKE_hbev(
     char jobz, char uplo, lapack_int n, lapack_int kd,
     double* AB, lapack_int ldab,
     double* W,
@@ -2457,7 +2457,7 @@ static inline lapack_int LAPACKE_hbev(
         Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hbev(
+inline lapack_int LAPACKE_hbev(
     char jobz, char uplo, lapack_int n, lapack_int kd,
     std::complex<float>* AB, lapack_int ldab,
     float* W,
@@ -2470,7 +2470,7 @@ static inline lapack_int LAPACKE_hbev(
         (lapack_complex_float*) Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hbev(
+inline lapack_int LAPACKE_hbev(
     char jobz, char uplo, lapack_int n, lapack_int kd,
     std::complex<double>* AB, lapack_int ldab,
     double* W,
@@ -2484,7 +2484,7 @@ static inline lapack_int LAPACKE_hbev(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hbevd(
+inline lapack_int LAPACKE_hbevd(
     char jobz, char uplo, lapack_int n, lapack_int kd,
     float* AB, lapack_int ldab,
     float* W,
@@ -2497,7 +2497,7 @@ static inline lapack_int LAPACKE_hbevd(
         Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hbevd(
+inline lapack_int LAPACKE_hbevd(
     char jobz, char uplo, lapack_int n, lapack_int kd,
     double* AB, lapack_int ldab,
     double* W,
@@ -2510,7 +2510,7 @@ static inline lapack_int LAPACKE_hbevd(
         Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hbevd(
+inline lapack_int LAPACKE_hbevd(
     char jobz, char uplo, lapack_int n, lapack_int kd,
     std::complex<float>* AB, lapack_int ldab,
     float* W,
@@ -2523,7 +2523,7 @@ static inline lapack_int LAPACKE_hbevd(
         (lapack_complex_float*) Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hbevd(
+inline lapack_int LAPACKE_hbevd(
     char jobz, char uplo, lapack_int n, lapack_int kd,
     std::complex<double>* AB, lapack_int ldab,
     double* W,
@@ -2537,7 +2537,7 @@ static inline lapack_int LAPACKE_hbevd(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hbevx(
+inline lapack_int LAPACKE_hbevx(
     char jobz, char range, char uplo, lapack_int n, lapack_int kd,
     float* AB, lapack_int ldab,
     float* Q, lapack_int ldq,
@@ -2555,7 +2555,7 @@ static inline lapack_int LAPACKE_hbevx(
         ifail );
 }
 
-static inline lapack_int LAPACKE_hbevx(
+inline lapack_int LAPACKE_hbevx(
     char jobz, char range, char uplo, lapack_int n, lapack_int kd,
     double* AB, lapack_int ldab,
     double* Q, lapack_int ldq,
@@ -2573,7 +2573,7 @@ static inline lapack_int LAPACKE_hbevx(
         ifail );
 }
 
-static inline lapack_int LAPACKE_hbevx(
+inline lapack_int LAPACKE_hbevx(
     char jobz, char range, char uplo, lapack_int n, lapack_int kd,
     std::complex<float>* AB, lapack_int ldab,
     std::complex<float>* Q, lapack_int ldq,
@@ -2591,7 +2591,7 @@ static inline lapack_int LAPACKE_hbevx(
         ifail );
 }
 
-static inline lapack_int LAPACKE_hbevx(
+inline lapack_int LAPACKE_hbevx(
     char jobz, char range, char uplo, lapack_int n, lapack_int kd,
     std::complex<double>* AB, lapack_int ldab,
     std::complex<double>* Q, lapack_int ldq,
@@ -2610,7 +2610,7 @@ static inline lapack_int LAPACKE_hbevx(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hbgv(
+inline lapack_int LAPACKE_hbgv(
     char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
     float* AB, lapack_int ldab,
     float* BB, lapack_int ldbb,
@@ -2625,7 +2625,7 @@ static inline lapack_int LAPACKE_hbgv(
         Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hbgv(
+inline lapack_int LAPACKE_hbgv(
     char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
     double* AB, lapack_int ldab,
     double* BB, lapack_int ldbb,
@@ -2640,7 +2640,7 @@ static inline lapack_int LAPACKE_hbgv(
         Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hbgv(
+inline lapack_int LAPACKE_hbgv(
     char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
     std::complex<float>* AB, lapack_int ldab,
     std::complex<float>* BB, lapack_int ldbb,
@@ -2655,7 +2655,7 @@ static inline lapack_int LAPACKE_hbgv(
         (lapack_complex_float*) Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hbgv(
+inline lapack_int LAPACKE_hbgv(
     char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
     std::complex<double>* AB, lapack_int ldab,
     std::complex<double>* BB, lapack_int ldbb,
@@ -2671,7 +2671,7 @@ static inline lapack_int LAPACKE_hbgv(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hbgvd(
+inline lapack_int LAPACKE_hbgvd(
     char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
     float* AB, lapack_int ldab,
     float* BB, lapack_int ldbb,
@@ -2686,7 +2686,7 @@ static inline lapack_int LAPACKE_hbgvd(
         Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hbgvd(
+inline lapack_int LAPACKE_hbgvd(
     char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
     double* AB, lapack_int ldab,
     double* BB, lapack_int ldbb,
@@ -2701,7 +2701,7 @@ static inline lapack_int LAPACKE_hbgvd(
         Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hbgvd(
+inline lapack_int LAPACKE_hbgvd(
     char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
     std::complex<float>* AB, lapack_int ldab,
     std::complex<float>* BB, lapack_int ldbb,
@@ -2716,7 +2716,7 @@ static inline lapack_int LAPACKE_hbgvd(
         (lapack_complex_float*) Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hbgvd(
+inline lapack_int LAPACKE_hbgvd(
     char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
     std::complex<double>* AB, lapack_int ldab,
     std::complex<double>* BB, lapack_int ldbb,
@@ -2732,7 +2732,7 @@ static inline lapack_int LAPACKE_hbgvd(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hbgvx(
+inline lapack_int LAPACKE_hbgvx(
     char jobz, char range, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
     float* AB, lapack_int ldab,
     float* BB, lapack_int ldbb,
@@ -2752,7 +2752,7 @@ static inline lapack_int LAPACKE_hbgvx(
         ifail );
 }
 
-static inline lapack_int LAPACKE_hbgvx(
+inline lapack_int LAPACKE_hbgvx(
     char jobz, char range, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
     double* AB, lapack_int ldab,
     double* BB, lapack_int ldbb,
@@ -2772,7 +2772,7 @@ static inline lapack_int LAPACKE_hbgvx(
         ifail );
 }
 
-static inline lapack_int LAPACKE_hbgvx(
+inline lapack_int LAPACKE_hbgvx(
     char jobz, char range, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
     std::complex<float>* AB, lapack_int ldab,
     std::complex<float>* BB, lapack_int ldbb,
@@ -2792,7 +2792,7 @@ static inline lapack_int LAPACKE_hbgvx(
         ifail );
 }
 
-static inline lapack_int LAPACKE_hbgvx(
+inline lapack_int LAPACKE_hbgvx(
     char jobz, char range, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
     std::complex<double>* AB, lapack_int ldab,
     std::complex<double>* BB, lapack_int ldbb,
@@ -2813,7 +2813,7 @@ static inline lapack_int LAPACKE_hbgvx(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hecon(
+inline lapack_int LAPACKE_hecon(
     char uplo, lapack_int n,
     float* A, lapack_int lda,
     lapack_int* ipiv, float anorm,
@@ -2826,7 +2826,7 @@ static inline lapack_int LAPACKE_hecon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_hecon(
+inline lapack_int LAPACKE_hecon(
     char uplo, lapack_int n,
     double* A, lapack_int lda,
     lapack_int* ipiv, double anorm,
@@ -2839,7 +2839,7 @@ static inline lapack_int LAPACKE_hecon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_hecon(
+inline lapack_int LAPACKE_hecon(
     char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     lapack_int* ipiv, float anorm,
@@ -2852,7 +2852,7 @@ static inline lapack_int LAPACKE_hecon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_hecon(
+inline lapack_int LAPACKE_hecon(
     char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     lapack_int* ipiv, double anorm,
@@ -2866,7 +2866,7 @@ static inline lapack_int LAPACKE_hecon(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_heev(
+inline lapack_int LAPACKE_heev(
     char jobz, char uplo, lapack_int n,
     float* A, lapack_int lda,
     float* W )
@@ -2877,7 +2877,7 @@ static inline lapack_int LAPACKE_heev(
         W );
 }
 
-static inline lapack_int LAPACKE_heev(
+inline lapack_int LAPACKE_heev(
     char jobz, char uplo, lapack_int n,
     double* A, lapack_int lda,
     double* W )
@@ -2888,7 +2888,7 @@ static inline lapack_int LAPACKE_heev(
         W );
 }
 
-static inline lapack_int LAPACKE_heev(
+inline lapack_int LAPACKE_heev(
     char jobz, char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     float* W )
@@ -2899,7 +2899,7 @@ static inline lapack_int LAPACKE_heev(
         W );
 }
 
-static inline lapack_int LAPACKE_heev(
+inline lapack_int LAPACKE_heev(
     char jobz, char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     double* W )
@@ -2911,7 +2911,7 @@ static inline lapack_int LAPACKE_heev(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_heevd(
+inline lapack_int LAPACKE_heevd(
     char jobz, char uplo, lapack_int n,
     float* A, lapack_int lda,
     float* W )
@@ -2922,7 +2922,7 @@ static inline lapack_int LAPACKE_heevd(
         W );
 }
 
-static inline lapack_int LAPACKE_heevd(
+inline lapack_int LAPACKE_heevd(
     char jobz, char uplo, lapack_int n,
     double* A, lapack_int lda,
     double* W )
@@ -2933,7 +2933,7 @@ static inline lapack_int LAPACKE_heevd(
         W );
 }
 
-static inline lapack_int LAPACKE_heevd(
+inline lapack_int LAPACKE_heevd(
     char jobz, char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     float* W )
@@ -2944,7 +2944,7 @@ static inline lapack_int LAPACKE_heevd(
         W );
 }
 
-static inline lapack_int LAPACKE_heevd(
+inline lapack_int LAPACKE_heevd(
     char jobz, char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     double* W )
@@ -2956,7 +2956,7 @@ static inline lapack_int LAPACKE_heevd(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_heevr(
+inline lapack_int LAPACKE_heevr(
     char jobz, char range, char uplo, lapack_int n,
     float* A, lapack_int lda,
     float vl, float vu, lapack_int il, lapack_int iu, float abstol,
@@ -2972,7 +2972,7 @@ static inline lapack_int LAPACKE_heevr(
         isuppz );
 }
 
-static inline lapack_int LAPACKE_heevr(
+inline lapack_int LAPACKE_heevr(
     char jobz, char range, char uplo, lapack_int n,
     double* A, lapack_int lda,
     double vl, double vu, lapack_int il, lapack_int iu, double abstol,
@@ -2988,7 +2988,7 @@ static inline lapack_int LAPACKE_heevr(
         isuppz );
 }
 
-static inline lapack_int LAPACKE_heevr(
+inline lapack_int LAPACKE_heevr(
     char jobz, char range, char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     float vl, float vu, lapack_int il, lapack_int iu, float abstol,
@@ -3004,7 +3004,7 @@ static inline lapack_int LAPACKE_heevr(
         isuppz );
 }
 
-static inline lapack_int LAPACKE_heevr(
+inline lapack_int LAPACKE_heevr(
     char jobz, char range, char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     double vl, double vu, lapack_int il, lapack_int iu, double abstol,
@@ -3021,7 +3021,7 @@ static inline lapack_int LAPACKE_heevr(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_heevx(
+inline lapack_int LAPACKE_heevx(
     char jobz, char range, char uplo, lapack_int n,
     float* A, lapack_int lda,
     float vl, float vu, lapack_int il, lapack_int iu, float abstol,
@@ -3037,7 +3037,7 @@ static inline lapack_int LAPACKE_heevx(
         ifail );
 }
 
-static inline lapack_int LAPACKE_heevx(
+inline lapack_int LAPACKE_heevx(
     char jobz, char range, char uplo, lapack_int n,
     double* A, lapack_int lda,
     double vl, double vu, lapack_int il, lapack_int iu, double abstol,
@@ -3053,7 +3053,7 @@ static inline lapack_int LAPACKE_heevx(
         ifail );
 }
 
-static inline lapack_int LAPACKE_heevx(
+inline lapack_int LAPACKE_heevx(
     char jobz, char range, char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     float vl, float vu, lapack_int il, lapack_int iu, float abstol,
@@ -3069,7 +3069,7 @@ static inline lapack_int LAPACKE_heevx(
         ifail );
 }
 
-static inline lapack_int LAPACKE_heevx(
+inline lapack_int LAPACKE_heevx(
     char jobz, char range, char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     double vl, double vu, lapack_int il, lapack_int iu, double abstol,
@@ -3086,7 +3086,7 @@ static inline lapack_int LAPACKE_heevx(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hegst(
+inline lapack_int LAPACKE_hegst(
     lapack_int itype, char uplo, lapack_int n,
     float* A, lapack_int lda,
     float* B, lapack_int ldb )
@@ -3097,7 +3097,7 @@ static inline lapack_int LAPACKE_hegst(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_hegst(
+inline lapack_int LAPACKE_hegst(
     lapack_int itype, char uplo, lapack_int n,
     double* A, lapack_int lda,
     double* B, lapack_int ldb )
@@ -3108,7 +3108,7 @@ static inline lapack_int LAPACKE_hegst(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_hegst(
+inline lapack_int LAPACKE_hegst(
     lapack_int itype, char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* B, lapack_int ldb )
@@ -3119,7 +3119,7 @@ static inline lapack_int LAPACKE_hegst(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_hegst(
+inline lapack_int LAPACKE_hegst(
     lapack_int itype, char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* B, lapack_int ldb )
@@ -3131,7 +3131,7 @@ static inline lapack_int LAPACKE_hegst(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hegv(
+inline lapack_int LAPACKE_hegv(
     lapack_int itype, char jobz, char uplo, lapack_int n,
     float* A, lapack_int lda,
     float* B, lapack_int ldb,
@@ -3144,7 +3144,7 @@ static inline lapack_int LAPACKE_hegv(
         W );
 }
 
-static inline lapack_int LAPACKE_hegv(
+inline lapack_int LAPACKE_hegv(
     lapack_int itype, char jobz, char uplo, lapack_int n,
     double* A, lapack_int lda,
     double* B, lapack_int ldb,
@@ -3157,7 +3157,7 @@ static inline lapack_int LAPACKE_hegv(
         W );
 }
 
-static inline lapack_int LAPACKE_hegv(
+inline lapack_int LAPACKE_hegv(
     lapack_int itype, char jobz, char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* B, lapack_int ldb,
@@ -3170,7 +3170,7 @@ static inline lapack_int LAPACKE_hegv(
         W );
 }
 
-static inline lapack_int LAPACKE_hegv(
+inline lapack_int LAPACKE_hegv(
     lapack_int itype, char jobz, char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* B, lapack_int ldb,
@@ -3184,7 +3184,7 @@ static inline lapack_int LAPACKE_hegv(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hegvd(
+inline lapack_int LAPACKE_hegvd(
     lapack_int itype, char jobz, char uplo, lapack_int n,
     float* A, lapack_int lda,
     float* B, lapack_int ldb,
@@ -3197,7 +3197,7 @@ static inline lapack_int LAPACKE_hegvd(
         W );
 }
 
-static inline lapack_int LAPACKE_hegvd(
+inline lapack_int LAPACKE_hegvd(
     lapack_int itype, char jobz, char uplo, lapack_int n,
     double* A, lapack_int lda,
     double* B, lapack_int ldb,
@@ -3210,7 +3210,7 @@ static inline lapack_int LAPACKE_hegvd(
         W );
 }
 
-static inline lapack_int LAPACKE_hegvd(
+inline lapack_int LAPACKE_hegvd(
     lapack_int itype, char jobz, char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* B, lapack_int ldb,
@@ -3223,7 +3223,7 @@ static inline lapack_int LAPACKE_hegvd(
         W );
 }
 
-static inline lapack_int LAPACKE_hegvd(
+inline lapack_int LAPACKE_hegvd(
     lapack_int itype, char jobz, char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* B, lapack_int ldb,
@@ -3237,7 +3237,7 @@ static inline lapack_int LAPACKE_hegvd(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hegvx(
+inline lapack_int LAPACKE_hegvx(
     lapack_int itype, char jobz, char range, char uplo, lapack_int n,
     float* A, lapack_int lda,
     float* B, lapack_int ldb,
@@ -3255,7 +3255,7 @@ static inline lapack_int LAPACKE_hegvx(
         ifail );
 }
 
-static inline lapack_int LAPACKE_hegvx(
+inline lapack_int LAPACKE_hegvx(
     lapack_int itype, char jobz, char range, char uplo, lapack_int n,
     double* A, lapack_int lda,
     double* B, lapack_int ldb,
@@ -3273,7 +3273,7 @@ static inline lapack_int LAPACKE_hegvx(
         ifail );
 }
 
-static inline lapack_int LAPACKE_hegvx(
+inline lapack_int LAPACKE_hegvx(
     lapack_int itype, char jobz, char range, char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* B, lapack_int ldb,
@@ -3291,7 +3291,7 @@ static inline lapack_int LAPACKE_hegvx(
         ifail );
 }
 
-static inline lapack_int LAPACKE_hegvx(
+inline lapack_int LAPACKE_hegvx(
     lapack_int itype, char jobz, char range, char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* B, lapack_int ldb,
@@ -3310,7 +3310,7 @@ static inline lapack_int LAPACKE_hegvx(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_herfs(
+inline lapack_int LAPACKE_herfs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     float* AF, lapack_int ldaf,
@@ -3331,7 +3331,7 @@ static inline lapack_int LAPACKE_herfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_herfs(
+inline lapack_int LAPACKE_herfs(
     char uplo, lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     double* AF, lapack_int ldaf,
@@ -3352,7 +3352,7 @@ static inline lapack_int LAPACKE_herfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_herfs(
+inline lapack_int LAPACKE_herfs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* AF, lapack_int ldaf,
@@ -3373,7 +3373,7 @@ static inline lapack_int LAPACKE_herfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_herfs(
+inline lapack_int LAPACKE_herfs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* AF, lapack_int ldaf,
@@ -3395,7 +3395,7 @@ static inline lapack_int LAPACKE_herfs(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hesv(
+inline lapack_int LAPACKE_hesv(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     lapack_int* ipiv,
@@ -3408,7 +3408,7 @@ static inline lapack_int LAPACKE_hesv(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_hesv(
+inline lapack_int LAPACKE_hesv(
     char uplo, lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     lapack_int* ipiv,
@@ -3421,7 +3421,7 @@ static inline lapack_int LAPACKE_hesv(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_hesv(
+inline lapack_int LAPACKE_hesv(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     lapack_int* ipiv,
@@ -3434,7 +3434,7 @@ static inline lapack_int LAPACKE_hesv(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_hesv(
+inline lapack_int LAPACKE_hesv(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     lapack_int* ipiv,
@@ -3448,7 +3448,7 @@ static inline lapack_int LAPACKE_hesv(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hetrd(
+inline lapack_int LAPACKE_hetrd(
     char uplo, lapack_int n,
     float* A, lapack_int lda,
     float* D,
@@ -3463,7 +3463,7 @@ static inline lapack_int LAPACKE_hetrd(
         tau );
 }
 
-static inline lapack_int LAPACKE_hetrd(
+inline lapack_int LAPACKE_hetrd(
     char uplo, lapack_int n,
     double* A, lapack_int lda,
     double* D,
@@ -3478,7 +3478,7 @@ static inline lapack_int LAPACKE_hetrd(
         tau );
 }
 
-static inline lapack_int LAPACKE_hetrd(
+inline lapack_int LAPACKE_hetrd(
     char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     float* D,
@@ -3493,7 +3493,7 @@ static inline lapack_int LAPACKE_hetrd(
         (lapack_complex_float*) tau );
 }
 
-static inline lapack_int LAPACKE_hetrd(
+inline lapack_int LAPACKE_hetrd(
     char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     double* D,
@@ -3509,7 +3509,7 @@ static inline lapack_int LAPACKE_hetrd(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hetrf(
+inline lapack_int LAPACKE_hetrf(
     char uplo, lapack_int n,
     float* A, lapack_int lda,
     lapack_int* ipiv )
@@ -3520,7 +3520,7 @@ static inline lapack_int LAPACKE_hetrf(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_hetrf(
+inline lapack_int LAPACKE_hetrf(
     char uplo, lapack_int n,
     double* A, lapack_int lda,
     lapack_int* ipiv )
@@ -3531,7 +3531,7 @@ static inline lapack_int LAPACKE_hetrf(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_hetrf(
+inline lapack_int LAPACKE_hetrf(
     char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     lapack_int* ipiv )
@@ -3542,7 +3542,7 @@ static inline lapack_int LAPACKE_hetrf(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_hetrf(
+inline lapack_int LAPACKE_hetrf(
     char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     lapack_int* ipiv )
@@ -3554,7 +3554,7 @@ static inline lapack_int LAPACKE_hetrf(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hetri(
+inline lapack_int LAPACKE_hetri(
     char uplo, lapack_int n,
     float* A, lapack_int lda,
     lapack_int* ipiv )
@@ -3565,7 +3565,7 @@ static inline lapack_int LAPACKE_hetri(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_hetri(
+inline lapack_int LAPACKE_hetri(
     char uplo, lapack_int n,
     double* A, lapack_int lda,
     lapack_int* ipiv )
@@ -3576,7 +3576,7 @@ static inline lapack_int LAPACKE_hetri(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_hetri(
+inline lapack_int LAPACKE_hetri(
     char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     lapack_int* ipiv )
@@ -3587,7 +3587,7 @@ static inline lapack_int LAPACKE_hetri(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_hetri(
+inline lapack_int LAPACKE_hetri(
     char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     lapack_int* ipiv )
@@ -3599,7 +3599,7 @@ static inline lapack_int LAPACKE_hetri(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hetrs(
+inline lapack_int LAPACKE_hetrs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     lapack_int* ipiv,
@@ -3612,7 +3612,7 @@ static inline lapack_int LAPACKE_hetrs(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_hetrs(
+inline lapack_int LAPACKE_hetrs(
     char uplo, lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     lapack_int* ipiv,
@@ -3625,7 +3625,7 @@ static inline lapack_int LAPACKE_hetrs(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_hetrs(
+inline lapack_int LAPACKE_hetrs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     lapack_int* ipiv,
@@ -3638,7 +3638,7 @@ static inline lapack_int LAPACKE_hetrs(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_hetrs(
+inline lapack_int LAPACKE_hetrs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     lapack_int* ipiv,
@@ -3652,7 +3652,7 @@ static inline lapack_int LAPACKE_hetrs(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hpcon(
+inline lapack_int LAPACKE_hpcon(
     char uplo, lapack_int n,
     float* AP,
     lapack_int* ipiv, float anorm,
@@ -3665,7 +3665,7 @@ static inline lapack_int LAPACKE_hpcon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_hpcon(
+inline lapack_int LAPACKE_hpcon(
     char uplo, lapack_int n,
     double* AP,
     lapack_int* ipiv, double anorm,
@@ -3678,7 +3678,7 @@ static inline lapack_int LAPACKE_hpcon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_hpcon(
+inline lapack_int LAPACKE_hpcon(
     char uplo, lapack_int n,
     std::complex<float>* AP,
     lapack_int* ipiv, float anorm,
@@ -3691,7 +3691,7 @@ static inline lapack_int LAPACKE_hpcon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_hpcon(
+inline lapack_int LAPACKE_hpcon(
     char uplo, lapack_int n,
     std::complex<double>* AP,
     lapack_int* ipiv, double anorm,
@@ -3705,7 +3705,7 @@ static inline lapack_int LAPACKE_hpcon(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hpev(
+inline lapack_int LAPACKE_hpev(
     char jobz, char uplo, lapack_int n,
     float* AP,
     float* W,
@@ -3718,7 +3718,7 @@ static inline lapack_int LAPACKE_hpev(
         Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hpev(
+inline lapack_int LAPACKE_hpev(
     char jobz, char uplo, lapack_int n,
     double* AP,
     double* W,
@@ -3731,7 +3731,7 @@ static inline lapack_int LAPACKE_hpev(
         Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hpev(
+inline lapack_int LAPACKE_hpev(
     char jobz, char uplo, lapack_int n,
     std::complex<float>* AP,
     float* W,
@@ -3744,7 +3744,7 @@ static inline lapack_int LAPACKE_hpev(
         (lapack_complex_float*) Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hpev(
+inline lapack_int LAPACKE_hpev(
     char jobz, char uplo, lapack_int n,
     std::complex<double>* AP,
     double* W,
@@ -3758,7 +3758,7 @@ static inline lapack_int LAPACKE_hpev(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hpevd(
+inline lapack_int LAPACKE_hpevd(
     char jobz, char uplo, lapack_int n,
     float* AP,
     float* W,
@@ -3771,7 +3771,7 @@ static inline lapack_int LAPACKE_hpevd(
         Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hpevd(
+inline lapack_int LAPACKE_hpevd(
     char jobz, char uplo, lapack_int n,
     double* AP,
     double* W,
@@ -3784,7 +3784,7 @@ static inline lapack_int LAPACKE_hpevd(
         Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hpevd(
+inline lapack_int LAPACKE_hpevd(
     char jobz, char uplo, lapack_int n,
     std::complex<float>* AP,
     float* W,
@@ -3797,7 +3797,7 @@ static inline lapack_int LAPACKE_hpevd(
         (lapack_complex_float*) Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hpevd(
+inline lapack_int LAPACKE_hpevd(
     char jobz, char uplo, lapack_int n,
     std::complex<double>* AP,
     double* W,
@@ -3811,7 +3811,7 @@ static inline lapack_int LAPACKE_hpevd(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hpevx(
+inline lapack_int LAPACKE_hpevx(
     char jobz, char range, char uplo, lapack_int n,
     float* AP,
     float vl, float vu, lapack_int il, lapack_int iu, float abstol,
@@ -3828,7 +3828,7 @@ static inline lapack_int LAPACKE_hpevx(
         ifail );
 }
 
-static inline lapack_int LAPACKE_hpevx(
+inline lapack_int LAPACKE_hpevx(
     char jobz, char range, char uplo, lapack_int n,
     double* AP,
     double vl, double vu, lapack_int il, lapack_int iu, double abstol,
@@ -3845,7 +3845,7 @@ static inline lapack_int LAPACKE_hpevx(
         ifail );
 }
 
-static inline lapack_int LAPACKE_hpevx(
+inline lapack_int LAPACKE_hpevx(
     char jobz, char range, char uplo, lapack_int n,
     std::complex<float>* AP,
     float vl, float vu, lapack_int il, lapack_int iu, float abstol,
@@ -3862,7 +3862,7 @@ static inline lapack_int LAPACKE_hpevx(
         ifail );
 }
 
-static inline lapack_int LAPACKE_hpevx(
+inline lapack_int LAPACKE_hpevx(
     char jobz, char range, char uplo, lapack_int n,
     std::complex<double>* AP,
     double vl, double vu, lapack_int il, lapack_int iu, double abstol,
@@ -3880,7 +3880,7 @@ static inline lapack_int LAPACKE_hpevx(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hpgst(
+inline lapack_int LAPACKE_hpgst(
     lapack_int itype, char uplo, lapack_int n,
     float* AP,
     float* BP )
@@ -3891,7 +3891,7 @@ static inline lapack_int LAPACKE_hpgst(
         BP );
 }
 
-static inline lapack_int LAPACKE_hpgst(
+inline lapack_int LAPACKE_hpgst(
     lapack_int itype, char uplo, lapack_int n,
     double* AP,
     double* BP )
@@ -3902,7 +3902,7 @@ static inline lapack_int LAPACKE_hpgst(
         BP );
 }
 
-static inline lapack_int LAPACKE_hpgst(
+inline lapack_int LAPACKE_hpgst(
     lapack_int itype, char uplo, lapack_int n,
     std::complex<float>* AP,
     std::complex<float>* BP )
@@ -3913,7 +3913,7 @@ static inline lapack_int LAPACKE_hpgst(
         (lapack_complex_float*) BP );
 }
 
-static inline lapack_int LAPACKE_hpgst(
+inline lapack_int LAPACKE_hpgst(
     lapack_int itype, char uplo, lapack_int n,
     std::complex<double>* AP,
     std::complex<double>* BP )
@@ -3925,7 +3925,7 @@ static inline lapack_int LAPACKE_hpgst(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hpgv(
+inline lapack_int LAPACKE_hpgv(
     lapack_int itype, char jobz, char uplo, lapack_int n,
     float* AP,
     float* BP,
@@ -3940,7 +3940,7 @@ static inline lapack_int LAPACKE_hpgv(
         Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hpgv(
+inline lapack_int LAPACKE_hpgv(
     lapack_int itype, char jobz, char uplo, lapack_int n,
     double* AP,
     double* BP,
@@ -3955,7 +3955,7 @@ static inline lapack_int LAPACKE_hpgv(
         Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hpgv(
+inline lapack_int LAPACKE_hpgv(
     lapack_int itype, char jobz, char uplo, lapack_int n,
     std::complex<float>* AP,
     std::complex<float>* BP,
@@ -3970,7 +3970,7 @@ static inline lapack_int LAPACKE_hpgv(
         (lapack_complex_float*) Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hpgv(
+inline lapack_int LAPACKE_hpgv(
     lapack_int itype, char jobz, char uplo, lapack_int n,
     std::complex<double>* AP,
     std::complex<double>* BP,
@@ -3986,7 +3986,7 @@ static inline lapack_int LAPACKE_hpgv(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hpgvd(
+inline lapack_int LAPACKE_hpgvd(
     lapack_int itype, char jobz, char uplo, lapack_int n,
     float* AP,
     float* BP,
@@ -4001,7 +4001,7 @@ static inline lapack_int LAPACKE_hpgvd(
         Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hpgvd(
+inline lapack_int LAPACKE_hpgvd(
     lapack_int itype, char jobz, char uplo, lapack_int n,
     double* AP,
     double* BP,
@@ -4016,7 +4016,7 @@ static inline lapack_int LAPACKE_hpgvd(
         Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hpgvd(
+inline lapack_int LAPACKE_hpgvd(
     lapack_int itype, char jobz, char uplo, lapack_int n,
     std::complex<float>* AP,
     std::complex<float>* BP,
@@ -4031,7 +4031,7 @@ static inline lapack_int LAPACKE_hpgvd(
         (lapack_complex_float*) Z, ldz );
 }
 
-static inline lapack_int LAPACKE_hpgvd(
+inline lapack_int LAPACKE_hpgvd(
     lapack_int itype, char jobz, char uplo, lapack_int n,
     std::complex<double>* AP,
     std::complex<double>* BP,
@@ -4047,7 +4047,7 @@ static inline lapack_int LAPACKE_hpgvd(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hpgvx(
+inline lapack_int LAPACKE_hpgvx(
     lapack_int itype, char jobz, char range, char uplo, lapack_int n,
     float* AP,
     float* BP,
@@ -4065,7 +4065,7 @@ static inline lapack_int LAPACKE_hpgvx(
         ifail );
 }
 
-static inline lapack_int LAPACKE_hpgvx(
+inline lapack_int LAPACKE_hpgvx(
     lapack_int itype, char jobz, char range, char uplo, lapack_int n,
     double* AP,
     double* BP,
@@ -4083,7 +4083,7 @@ static inline lapack_int LAPACKE_hpgvx(
         ifail );
 }
 
-static inline lapack_int LAPACKE_hpgvx(
+inline lapack_int LAPACKE_hpgvx(
     lapack_int itype, char jobz, char range, char uplo, lapack_int n,
     std::complex<float>* AP,
     std::complex<float>* BP,
@@ -4101,7 +4101,7 @@ static inline lapack_int LAPACKE_hpgvx(
         ifail );
 }
 
-static inline lapack_int LAPACKE_hpgvx(
+inline lapack_int LAPACKE_hpgvx(
     lapack_int itype, char jobz, char range, char uplo, lapack_int n,
     std::complex<double>* AP,
     std::complex<double>* BP,
@@ -4120,7 +4120,7 @@ static inline lapack_int LAPACKE_hpgvx(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hprfs(
+inline lapack_int LAPACKE_hprfs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* AP,
     float* AFP,
@@ -4139,7 +4139,7 @@ static inline lapack_int LAPACKE_hprfs(
         ferr, berr );
 }
 
-static inline lapack_int LAPACKE_hprfs(
+inline lapack_int LAPACKE_hprfs(
     char uplo, lapack_int n, lapack_int nrhs,
     double* AP,
     double* AFP,
@@ -4158,7 +4158,7 @@ static inline lapack_int LAPACKE_hprfs(
         ferr, berr );
 }
 
-static inline lapack_int LAPACKE_hprfs(
+inline lapack_int LAPACKE_hprfs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* AP,
     std::complex<float>* AFP,
@@ -4177,7 +4177,7 @@ static inline lapack_int LAPACKE_hprfs(
         ferr, berr );
 }
 
-static inline lapack_int LAPACKE_hprfs(
+inline lapack_int LAPACKE_hprfs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* AP,
     std::complex<double>* AFP,
@@ -4197,7 +4197,7 @@ static inline lapack_int LAPACKE_hprfs(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hpsv(
+inline lapack_int LAPACKE_hpsv(
     char uplo, lapack_int n, lapack_int nrhs,
     float* AP,
     lapack_int* ipiv,
@@ -4210,7 +4210,7 @@ static inline lapack_int LAPACKE_hpsv(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_hpsv(
+inline lapack_int LAPACKE_hpsv(
     char uplo, lapack_int n, lapack_int nrhs,
     double* AP,
     lapack_int* ipiv,
@@ -4223,7 +4223,7 @@ static inline lapack_int LAPACKE_hpsv(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_hpsv(
+inline lapack_int LAPACKE_hpsv(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* AP,
     lapack_int* ipiv,
@@ -4236,7 +4236,7 @@ static inline lapack_int LAPACKE_hpsv(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_hpsv(
+inline lapack_int LAPACKE_hpsv(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* AP,
     lapack_int* ipiv,
@@ -4250,7 +4250,7 @@ static inline lapack_int LAPACKE_hpsv(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hptrd(
+inline lapack_int LAPACKE_hptrd(
     char uplo, lapack_int n,
     float* AP,
     float* D, float* E,
@@ -4263,7 +4263,7 @@ static inline lapack_int LAPACKE_hptrd(
         tau );
 }
 
-static inline lapack_int LAPACKE_hptrd(
+inline lapack_int LAPACKE_hptrd(
     char uplo, lapack_int n,
     double* AP,
     double* D, double* E,
@@ -4276,7 +4276,7 @@ static inline lapack_int LAPACKE_hptrd(
         tau );
 }
 
-static inline lapack_int LAPACKE_hptrd(
+inline lapack_int LAPACKE_hptrd(
     char uplo, lapack_int n,
     std::complex<float>* AP,
     float* D, float* E,
@@ -4289,7 +4289,7 @@ static inline lapack_int LAPACKE_hptrd(
         (lapack_complex_float*) tau );
 }
 
-static inline lapack_int LAPACKE_hptrd(
+inline lapack_int LAPACKE_hptrd(
     char uplo, lapack_int n,
     std::complex<double>* AP,
     double* D, double* E,
@@ -4303,7 +4303,7 @@ static inline lapack_int LAPACKE_hptrd(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hptrf(
+inline lapack_int LAPACKE_hptrf(
     char uplo, lapack_int n,
     float* AP,
     lapack_int* ipiv )
@@ -4314,7 +4314,7 @@ static inline lapack_int LAPACKE_hptrf(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_hptrf(
+inline lapack_int LAPACKE_hptrf(
     char uplo, lapack_int n,
     double* AP,
     lapack_int* ipiv )
@@ -4325,7 +4325,7 @@ static inline lapack_int LAPACKE_hptrf(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_hptrf(
+inline lapack_int LAPACKE_hptrf(
     char uplo, lapack_int n,
     std::complex<float>* AP,
     lapack_int* ipiv )
@@ -4336,7 +4336,7 @@ static inline lapack_int LAPACKE_hptrf(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_hptrf(
+inline lapack_int LAPACKE_hptrf(
     char uplo, lapack_int n,
     std::complex<double>* AP,
     lapack_int* ipiv )
@@ -4348,7 +4348,7 @@ static inline lapack_int LAPACKE_hptrf(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hptri(
+inline lapack_int LAPACKE_hptri(
     char uplo, lapack_int n,
     float* AP,
     lapack_int* ipiv )
@@ -4359,7 +4359,7 @@ static inline lapack_int LAPACKE_hptri(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_hptri(
+inline lapack_int LAPACKE_hptri(
     char uplo, lapack_int n,
     double* AP,
     lapack_int* ipiv )
@@ -4370,7 +4370,7 @@ static inline lapack_int LAPACKE_hptri(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_hptri(
+inline lapack_int LAPACKE_hptri(
     char uplo, lapack_int n,
     std::complex<float>* AP,
     lapack_int* ipiv )
@@ -4381,7 +4381,7 @@ static inline lapack_int LAPACKE_hptri(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_hptri(
+inline lapack_int LAPACKE_hptri(
     char uplo, lapack_int n,
     std::complex<double>* AP,
     lapack_int* ipiv )
@@ -4393,7 +4393,7 @@ static inline lapack_int LAPACKE_hptri(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_hptrs(
+inline lapack_int LAPACKE_hptrs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* AP,
     lapack_int* ipiv,
@@ -4406,7 +4406,7 @@ static inline lapack_int LAPACKE_hptrs(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_hptrs(
+inline lapack_int LAPACKE_hptrs(
     char uplo, lapack_int n, lapack_int nrhs,
     double* AP,
     lapack_int* ipiv,
@@ -4419,7 +4419,7 @@ static inline lapack_int LAPACKE_hptrs(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_hptrs(
+inline lapack_int LAPACKE_hptrs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* AP,
     lapack_int* ipiv,
@@ -4432,7 +4432,7 @@ static inline lapack_int LAPACKE_hptrs(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_hptrs(
+inline lapack_int LAPACKE_hptrs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* AP,
     lapack_int* ipiv,
@@ -4446,7 +4446,7 @@ static inline lapack_int LAPACKE_hptrs(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_lacpy(
+inline lapack_int LAPACKE_lacpy(
     char uplo, lapack_int m, lapack_int n,
     float* A, lapack_int lda,
     float* B, lapack_int ldb )
@@ -4457,7 +4457,7 @@ static inline lapack_int LAPACKE_lacpy(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_lacpy(
+inline lapack_int LAPACKE_lacpy(
     char uplo, lapack_int m, lapack_int n,
     double* A, lapack_int lda,
     double* B, lapack_int ldb )
@@ -4468,7 +4468,7 @@ static inline lapack_int LAPACKE_lacpy(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_lacpy(
+inline lapack_int LAPACKE_lacpy(
     char uplo, lapack_int m, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* B, lapack_int ldb )
@@ -4479,7 +4479,7 @@ static inline lapack_int LAPACKE_lacpy(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_lacpy(
+inline lapack_int LAPACKE_lacpy(
     char uplo, lapack_int m, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* B, lapack_int ldb )
@@ -4535,7 +4535,7 @@ double LAPACK_zlangb(
 
 // -----------------------------------------------------------------------------
 // wrappers around LAPACK (not in LAPACKE)
-static inline float LAPACKE_langb(
+inline float LAPACKE_langb(
     char norm, lapack_int n, lapack_int kl, lapack_int ku,
     float* AB, lapack_int ldab )
 {
@@ -4545,7 +4545,7 @@ static inline float LAPACKE_langb(
         AB, &ldab, &work[0] );
 }
 
-static inline double LAPACKE_langb(
+inline double LAPACKE_langb(
     char norm, lapack_int n, lapack_int kl, lapack_int ku,
     double* AB, lapack_int ldab )
 {
@@ -4555,7 +4555,7 @@ static inline double LAPACKE_langb(
         AB, &ldab, &work[0] );
 }
 
-static inline float LAPACKE_langb(
+inline float LAPACKE_langb(
     char norm, lapack_int n, lapack_int kl, lapack_int ku,
     std::complex<float>* AB, lapack_int ldab )
 {
@@ -4565,7 +4565,7 @@ static inline float LAPACKE_langb(
         (lapack_complex_float*) AB, &ldab, &work[0] );
 }
 
-static inline double LAPACKE_langb(
+inline double LAPACKE_langb(
     char norm, lapack_int n, lapack_int kl, lapack_int ku,
     std::complex<double>* AB, lapack_int ldab )
 {
@@ -4576,7 +4576,7 @@ static inline double LAPACKE_langb(
 }
 
 // -----------------------------------------------------------------------------
-static inline float LAPACKE_lange(
+inline float LAPACKE_lange(
     char norm, lapack_int m, lapack_int n,
     float* A, lapack_int lda )
 {
@@ -4585,7 +4585,7 @@ static inline float LAPACKE_lange(
         A, lda );
 }
 
-static inline double LAPACKE_lange(
+inline double LAPACKE_lange(
     char norm, lapack_int m, lapack_int n,
     double* A, lapack_int lda )
 {
@@ -4594,7 +4594,7 @@ static inline double LAPACKE_lange(
         A, lda );
 }
 
-static inline float LAPACKE_lange(
+inline float LAPACKE_lange(
     char norm, lapack_int m, lapack_int n,
     std::complex<float>* A, lapack_int lda )
 {
@@ -4603,7 +4603,7 @@ static inline float LAPACKE_lange(
         (lapack_complex_float*) A, lda );
 }
 
-static inline double LAPACKE_lange(
+inline double LAPACKE_lange(
     char norm, lapack_int m, lapack_int n,
     std::complex<double>* A, lapack_int lda )
 {
@@ -4657,7 +4657,7 @@ double LAPACK_zlangt(
 
 // -----------------------------------------------------------------------------
 // wrappers around LAPACK (not in LAPACKE)
-static inline float LAPACKE_langt(
+inline float LAPACKE_langt(
     char norm, lapack_int n,
     float* DL,
     float* D,
@@ -4670,7 +4670,7 @@ static inline float LAPACKE_langt(
         DU );
 }
 
-static inline double LAPACKE_langt(
+inline double LAPACKE_langt(
     char norm, lapack_int n,
     double* DL,
     double* D,
@@ -4683,7 +4683,7 @@ static inline double LAPACKE_langt(
         DU );
 }
 
-static inline float LAPACKE_langt(
+inline float LAPACKE_langt(
     char norm, lapack_int n,
     std::complex<float>* DL,
     std::complex<float>* D,
@@ -4696,7 +4696,7 @@ static inline float LAPACKE_langt(
         (lapack_complex_float*) DU );
 }
 
-static inline double LAPACKE_langt(
+inline double LAPACKE_langt(
     char norm, lapack_int n,
     std::complex<double>* DL,
     std::complex<double>* D,
@@ -4754,7 +4754,7 @@ double LAPACK_zlanhb(
 
 // -----------------------------------------------------------------------------
 // wrappers around LAPACK (not in LAPACKE)
-static inline float LAPACKE_lanhb(
+inline float LAPACKE_lanhb(
     char norm, char uplo, lapack_int n, lapack_int kd,
     float* AB, lapack_int ldab )
 {
@@ -4764,7 +4764,7 @@ static inline float LAPACKE_lanhb(
         AB, &ldab, &work[0] );
 }
 
-static inline double LAPACKE_lanhb(
+inline double LAPACKE_lanhb(
     char norm, char uplo, lapack_int n, lapack_int kd,
     double* AB, lapack_int ldab )
 {
@@ -4774,7 +4774,7 @@ static inline double LAPACKE_lanhb(
         AB, &ldab, &work[0] );
 }
 
-static inline float LAPACKE_lanhb(
+inline float LAPACKE_lanhb(
     char norm, char uplo, lapack_int n, lapack_int kd,
     std::complex<float>* AB, lapack_int ldab )
 {
@@ -4784,7 +4784,7 @@ static inline float LAPACKE_lanhb(
         (lapack_complex_float*) AB, &ldab, &work[0] );
 }
 
-static inline double LAPACKE_lanhb(
+inline double LAPACKE_lanhb(
     char norm, char uplo, lapack_int n, lapack_int kd,
     std::complex<double>* AB, lapack_int ldab )
 {
@@ -4795,7 +4795,7 @@ static inline double LAPACKE_lanhb(
 }
 
 // -----------------------------------------------------------------------------
-static inline float LAPACKE_lanhe(
+inline float LAPACKE_lanhe(
     char norm, char uplo, lapack_int n,
     float* A, lapack_int lda )
 {
@@ -4804,7 +4804,7 @@ static inline float LAPACKE_lanhe(
         A, lda );
 }
 
-static inline double LAPACKE_lanhe(
+inline double LAPACKE_lanhe(
     char norm, char uplo, lapack_int n,
     double* A, lapack_int lda )
 {
@@ -4813,7 +4813,7 @@ static inline double LAPACKE_lanhe(
         A, lda );
 }
 
-static inline float LAPACKE_lanhe(
+inline float LAPACKE_lanhe(
     char norm, char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda )
 {
@@ -4822,7 +4822,7 @@ static inline float LAPACKE_lanhe(
         (lapack_complex_float*) A, lda );
 }
 
-static inline double LAPACKE_lanhe(
+inline double LAPACKE_lanhe(
     char norm, char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda )
 {
@@ -4872,7 +4872,7 @@ double LAPACK_zlanhp(
 
 // -----------------------------------------------------------------------------
 // wrappers around LAPACK (not in LAPACKE)
-static inline float LAPACKE_lanhp(
+inline float LAPACKE_lanhp(
     char norm, char uplo, lapack_int n,
     float* AP )
 {
@@ -4882,7 +4882,7 @@ static inline float LAPACKE_lanhp(
         AP, &work[0] );
 }
 
-static inline double LAPACKE_lanhp(
+inline double LAPACKE_lanhp(
     char norm, char uplo, lapack_int n,
     double* AP )
 {
@@ -4892,7 +4892,7 @@ static inline double LAPACKE_lanhp(
         AP, &work[0] );
 }
 
-static inline float LAPACKE_lanhp(
+inline float LAPACKE_lanhp(
     char norm, char uplo, lapack_int n,
     std::complex<float>* AP )
 {
@@ -4902,7 +4902,7 @@ static inline float LAPACKE_lanhp(
         (lapack_complex_float*) AP, &work[0] );
 }
 
-static inline double LAPACKE_lanhp(
+inline double LAPACKE_lanhp(
     char norm, char uplo, lapack_int n,
     std::complex<double>* AP )
 {
@@ -4953,7 +4953,7 @@ double LAPACK_zlanht(
 
 // -----------------------------------------------------------------------------
 // wrappers around LAPACK (not in LAPACKE)
-static inline float LAPACKE_lanht(
+inline float LAPACKE_lanht(
     char norm, lapack_int n,
     float* D,
     float* E )
@@ -4964,7 +4964,7 @@ static inline float LAPACKE_lanht(
         E );
 }
 
-static inline double LAPACKE_lanht(
+inline double LAPACKE_lanht(
     char norm, lapack_int n,
     double* D,
     double* E )
@@ -4975,7 +4975,7 @@ static inline double LAPACKE_lanht(
         E );
 }
 
-static inline float LAPACKE_lanht(
+inline float LAPACKE_lanht(
     char norm, lapack_int n,
     float* D,
     std::complex<float>* E )
@@ -4986,7 +4986,7 @@ static inline float LAPACKE_lanht(
         (lapack_complex_float*) E );
 }
 
-static inline double LAPACKE_lanht(
+inline double LAPACKE_lanht(
     char norm, lapack_int n,
     double* D,
     std::complex<double>* E )
@@ -5042,7 +5042,7 @@ double LAPACK_zlansb(
 
 // -----------------------------------------------------------------------------
 // wrappers around LAPACK (not in LAPACKE)
-static inline float LAPACKE_lansb(
+inline float LAPACKE_lansb(
     char norm, char uplo, lapack_int n, lapack_int kd,
     float* AB, lapack_int ldab )
 {
@@ -5052,7 +5052,7 @@ static inline float LAPACKE_lansb(
         AB, &ldab, &work[0] );
 }
 
-static inline double LAPACKE_lansb(
+inline double LAPACKE_lansb(
     char norm, char uplo, lapack_int n, lapack_int kd,
     double* AB, lapack_int ldab )
 {
@@ -5062,7 +5062,7 @@ static inline double LAPACKE_lansb(
         AB, &ldab, &work[0] );
 }
 
-static inline float LAPACKE_lansb(
+inline float LAPACKE_lansb(
     char norm, char uplo, lapack_int n, lapack_int kd,
     std::complex<float>* AB, lapack_int ldab )
 {
@@ -5072,7 +5072,7 @@ static inline float LAPACKE_lansb(
         (lapack_complex_float*) AB, &ldab, &work[0] );
 }
 
-static inline double LAPACKE_lansb(
+inline double LAPACKE_lansb(
     char norm, char uplo, lapack_int n, lapack_int kd,
     std::complex<double>* AB, lapack_int ldab )
 {
@@ -5123,7 +5123,7 @@ double LAPACK_zlansp(
 
 // -----------------------------------------------------------------------------
 // wrappers around LAPACK (not in LAPACKE)
-static inline float LAPACKE_lansp(
+inline float LAPACKE_lansp(
     char norm, char uplo, lapack_int n,
     float* AP )
 {
@@ -5133,7 +5133,7 @@ static inline float LAPACKE_lansp(
         AP, &work[0] );
 }
 
-static inline double LAPACKE_lansp(
+inline double LAPACKE_lansp(
     char norm, char uplo, lapack_int n,
     double* AP )
 {
@@ -5143,7 +5143,7 @@ static inline double LAPACKE_lansp(
         AP, &work[0] );
 }
 
-static inline float LAPACKE_lansp(
+inline float LAPACKE_lansp(
     char norm, char uplo, lapack_int n,
     std::complex<float>* AP )
 {
@@ -5153,7 +5153,7 @@ static inline float LAPACKE_lansp(
         (lapack_complex_float*) AP, &work[0] );
 }
 
-static inline double LAPACKE_lansp(
+inline double LAPACKE_lansp(
     char norm, char uplo, lapack_int n,
     std::complex<double>* AP )
 {
@@ -5164,7 +5164,7 @@ static inline double LAPACKE_lansp(
 }
 
 // -----------------------------------------------------------------------------
-static inline float LAPACKE_lansy(
+inline float LAPACKE_lansy(
     char norm, char uplo, lapack_int n,
     float* A, lapack_int lda )
 {
@@ -5173,7 +5173,7 @@ static inline float LAPACKE_lansy(
         A, lda );
 }
 
-static inline double LAPACKE_lansy(
+inline double LAPACKE_lansy(
     char norm, char uplo, lapack_int n,
     double* A, lapack_int lda )
 {
@@ -5182,7 +5182,7 @@ static inline double LAPACKE_lansy(
         A, lda );
 }
 
-static inline float LAPACKE_lansy(
+inline float LAPACKE_lansy(
     char norm, char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda )
 {
@@ -5191,7 +5191,7 @@ static inline float LAPACKE_lansy(
         (lapack_complex_float*) A, lda );
 }
 
-static inline double LAPACKE_lansy(
+inline double LAPACKE_lansy(
     char norm, char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda )
 {
@@ -5245,7 +5245,7 @@ double LAPACK_zlantb(
 
 // -----------------------------------------------------------------------------
 // wrappers around LAPACK (not in LAPACKE)
-static inline float LAPACKE_lantb(
+inline float LAPACKE_lantb(
     char norm, char uplo, char diag, lapack_int n, lapack_int k,
     float* AB, lapack_int ldab )
 {
@@ -5255,7 +5255,7 @@ static inline float LAPACKE_lantb(
         AB, &ldab, &work[0] );
 }
 
-static inline double LAPACKE_lantb(
+inline double LAPACKE_lantb(
     char norm, char uplo, char diag, lapack_int n, lapack_int k,
     double* AB, lapack_int ldab )
 {
@@ -5265,7 +5265,7 @@ static inline double LAPACKE_lantb(
         AB, &ldab, &work[0] );
 }
 
-static inline float LAPACKE_lantb(
+inline float LAPACKE_lantb(
     char norm, char uplo, char diag, lapack_int n, lapack_int k,
     std::complex<float>* AB, lapack_int ldab )
 {
@@ -5275,7 +5275,7 @@ static inline float LAPACKE_lantb(
         (lapack_complex_float*) AB, &ldab, &work[0] );
 }
 
-static inline double LAPACKE_lantb(
+inline double LAPACKE_lantb(
     char norm, char uplo, char diag, lapack_int n, lapack_int k,
     std::complex<double>* AB, lapack_int ldab )
 {
@@ -5329,7 +5329,7 @@ double LAPACK_zlantp(
 
 // -----------------------------------------------------------------------------
 // wrappers around LAPACK (not in LAPACKE)
-static inline float LAPACKE_lantp(
+inline float LAPACKE_lantp(
     char norm, char uplo, char diag, lapack_int n,
     float* AP )
 {
@@ -5339,7 +5339,7 @@ static inline float LAPACKE_lantp(
         AP, &work[0] );
 }
 
-static inline double LAPACKE_lantp(
+inline double LAPACKE_lantp(
     char norm, char uplo, char diag, lapack_int n,
     double* AP )
 {
@@ -5349,7 +5349,7 @@ static inline double LAPACKE_lantp(
         AP, &work[0] );
 }
 
-static inline float LAPACKE_lantp(
+inline float LAPACKE_lantp(
     char norm, char uplo, char diag, lapack_int n,
     std::complex<float>* AP )
 {
@@ -5359,7 +5359,7 @@ static inline float LAPACKE_lantp(
         (lapack_complex_float*) AP, &work[0] );
 }
 
-static inline double LAPACKE_lantp(
+inline double LAPACKE_lantp(
     char norm, char uplo, char diag, lapack_int n,
     std::complex<double>* AP )
 {
@@ -5370,7 +5370,7 @@ static inline double LAPACKE_lantp(
 }
 
 // -----------------------------------------------------------------------------
-static inline float LAPACKE_lantr(
+inline float LAPACKE_lantr(
     char norm, char uplo, char diag, lapack_int m, lapack_int n,
     float* A, lapack_int lda )
 {
@@ -5379,7 +5379,7 @@ static inline float LAPACKE_lantr(
         A, lda );
 }
 
-static inline double LAPACKE_lantr(
+inline double LAPACKE_lantr(
     char norm, char uplo, char diag, lapack_int m, lapack_int n,
     double* A, lapack_int lda )
 {
@@ -5388,7 +5388,7 @@ static inline double LAPACKE_lantr(
         A, lda );
 }
 
-static inline float LAPACKE_lantr(
+inline float LAPACKE_lantr(
     char norm, char uplo, char diag, lapack_int m, lapack_int n,
     std::complex<float>* A, lapack_int lda )
 {
@@ -5397,7 +5397,7 @@ static inline float LAPACKE_lantr(
         (lapack_complex_float*) A, lda );
 }
 
-static inline double LAPACKE_lantr(
+inline double LAPACKE_lantr(
     char norm, char uplo, char diag, lapack_int m, lapack_int n,
     std::complex<double>* A, lapack_int lda )
 {
@@ -5461,7 +5461,7 @@ void LAPACK_zlarf(
 // -----------------------------------------------------------------------------
 // wrappers around LAPACK (not in LAPACKE)
 // todo: LAPACK has no error checks for larf
-static inline lapack_int LAPACKE_larf(
+inline lapack_int LAPACKE_larf(
     char side, lapack_int m, lapack_int n,
     float* V, lapack_int incv, float tau,
     float* C, lapack_int ldc )
@@ -5475,7 +5475,7 @@ static inline lapack_int LAPACKE_larf(
     return 0;
 }
 
-static inline lapack_int LAPACKE_larf(
+inline lapack_int LAPACKE_larf(
     char side, lapack_int m, lapack_int n,
     double* V, lapack_int incv, double tau,
     double* C, lapack_int ldc )
@@ -5489,7 +5489,7 @@ static inline lapack_int LAPACKE_larf(
     return 0;
 }
 
-static inline lapack_int LAPACKE_larf(
+inline lapack_int LAPACKE_larf(
     char side, lapack_int m, lapack_int n,
     std::complex<float>* V, lapack_int incv, std::complex<float> tau,
     std::complex<float>* C, lapack_int ldc )
@@ -5503,7 +5503,7 @@ static inline lapack_int LAPACKE_larf(
     return 0;
 }
 
-static inline lapack_int LAPACKE_larf(
+inline lapack_int LAPACKE_larf(
     char side, lapack_int m, lapack_int n,
     std::complex<double>* V, lapack_int incv, std::complex<double> tau,
     std::complex<double>* C, lapack_int ldc )
@@ -5518,7 +5518,7 @@ static inline lapack_int LAPACKE_larf(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_larfb(
+inline lapack_int LAPACKE_larfb(
     char side, char trans, char direct, char storev, lapack_int m, lapack_int n, lapack_int k,
     float* V, lapack_int ldv,
     float* T, lapack_int ldt,
@@ -5531,7 +5531,7 @@ static inline lapack_int LAPACKE_larfb(
         C, ldc );
 }
 
-static inline lapack_int LAPACKE_larfb(
+inline lapack_int LAPACKE_larfb(
     char side, char trans, char direct, char storev, lapack_int m, lapack_int n, lapack_int k,
     double* V, lapack_int ldv,
     double* T, lapack_int ldt,
@@ -5544,7 +5544,7 @@ static inline lapack_int LAPACKE_larfb(
         C, ldc );
 }
 
-static inline lapack_int LAPACKE_larfb(
+inline lapack_int LAPACKE_larfb(
     char side, char trans, char direct, char storev, lapack_int m, lapack_int n, lapack_int k,
     std::complex<float>* V, lapack_int ldv,
     std::complex<float>* T, lapack_int ldt,
@@ -5557,7 +5557,7 @@ static inline lapack_int LAPACKE_larfb(
         (lapack_complex_float*) C, ldc );
 }
 
-static inline lapack_int LAPACKE_larfb(
+inline lapack_int LAPACKE_larfb(
     char side, char trans, char direct, char storev, lapack_int m, lapack_int n, lapack_int k,
     std::complex<double>* V, lapack_int ldv,
     std::complex<double>* T, lapack_int ldt,
@@ -5571,7 +5571,7 @@ static inline lapack_int LAPACKE_larfb(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_larfg(
+inline lapack_int LAPACKE_larfg(
     lapack_int n,
     float* alpha,
     float* X, lapack_int incx,
@@ -5584,7 +5584,7 @@ static inline lapack_int LAPACKE_larfg(
         tau );
 }
 
-static inline lapack_int LAPACKE_larfg(
+inline lapack_int LAPACKE_larfg(
     lapack_int n,
     double* alpha,
     double* X, lapack_int incx,
@@ -5597,7 +5597,7 @@ static inline lapack_int LAPACKE_larfg(
         tau );
 }
 
-static inline lapack_int LAPACKE_larfg(
+inline lapack_int LAPACKE_larfg(
     lapack_int n,
     std::complex<float>* alpha,
     std::complex<float>* X, lapack_int incx,
@@ -5610,7 +5610,7 @@ static inline lapack_int LAPACKE_larfg(
         (lapack_complex_float*) tau );
 }
 
-static inline lapack_int LAPACKE_larfg(
+inline lapack_int LAPACKE_larfg(
     lapack_int n,
     std::complex<double>* alpha,
     std::complex<double>* X, lapack_int incx,
@@ -5624,7 +5624,7 @@ static inline lapack_int LAPACKE_larfg(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_larft(
+inline lapack_int LAPACKE_larft(
     char direct, char storev, lapack_int n, lapack_int k,
     float* V, lapack_int ldv,
     float* tau,
@@ -5637,7 +5637,7 @@ static inline lapack_int LAPACKE_larft(
         T, ldt );
 }
 
-static inline lapack_int LAPACKE_larft(
+inline lapack_int LAPACKE_larft(
     char direct, char storev, lapack_int n, lapack_int k,
     double* V, lapack_int ldv,
     double* tau,
@@ -5650,7 +5650,7 @@ static inline lapack_int LAPACKE_larft(
         T, ldt );
 }
 
-static inline lapack_int LAPACKE_larft(
+inline lapack_int LAPACKE_larft(
     char direct, char storev, lapack_int n, lapack_int k,
     std::complex<float>* V, lapack_int ldv,
     std::complex<float>* tau,
@@ -5663,7 +5663,7 @@ static inline lapack_int LAPACKE_larft(
         (lapack_complex_float*) T, ldt );
 }
 
-static inline lapack_int LAPACKE_larft(
+inline lapack_int LAPACKE_larft(
     char direct, char storev, lapack_int n, lapack_int k,
     std::complex<double>* V, lapack_int ldv,
     std::complex<double>* tau,
@@ -5677,7 +5677,7 @@ static inline lapack_int LAPACKE_larft(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_larfx(
+inline lapack_int LAPACKE_larfx(
     char side, lapack_int m, lapack_int n,
     float* V, float tau,
     float* C, lapack_int ldc )
@@ -5689,7 +5689,7 @@ static inline lapack_int LAPACKE_larfx(
         C, ldc, &work[0] );
 }
 
-static inline lapack_int LAPACKE_larfx(
+inline lapack_int LAPACKE_larfx(
     char side, lapack_int m, lapack_int n,
     double* V, double tau,
     double* C, lapack_int ldc )
@@ -5701,7 +5701,7 @@ static inline lapack_int LAPACKE_larfx(
         C, ldc, &work[0] );
 }
 
-static inline lapack_int LAPACKE_larfx(
+inline lapack_int LAPACKE_larfx(
     char side, lapack_int m, lapack_int n,
     std::complex<float>* V, std::complex<float> tau,
     std::complex<float>* C, lapack_int ldc )
@@ -5714,7 +5714,7 @@ static inline lapack_int LAPACKE_larfx(
         (lapack_complex_float*) C, ldc, &work[0] );
 }
 
-static inline lapack_int LAPACKE_larfx(
+inline lapack_int LAPACKE_larfx(
     char side, lapack_int m, lapack_int n,
     std::complex<double>* V, std::complex<double> tau,
     std::complex<double>* C, lapack_int ldc )
@@ -5728,7 +5728,7 @@ static inline lapack_int LAPACKE_larfx(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_laset(
+inline lapack_int LAPACKE_laset(
     char uplo, lapack_int m, lapack_int n, float alpha, float beta,
     float* A, lapack_int lda )
 {
@@ -5737,7 +5737,7 @@ static inline lapack_int LAPACKE_laset(
         A, lda );
 }
 
-static inline lapack_int LAPACKE_laset(
+inline lapack_int LAPACKE_laset(
     char uplo, lapack_int m, lapack_int n, double alpha, double beta,
     double* A, lapack_int lda )
 {
@@ -5746,7 +5746,7 @@ static inline lapack_int LAPACKE_laset(
         A, lda );
 }
 
-static inline lapack_int LAPACKE_laset(
+inline lapack_int LAPACKE_laset(
     char uplo, lapack_int m, lapack_int n, std::complex<float> alpha, std::complex<float> beta,
     std::complex<float>* A, lapack_int lda )
 {
@@ -5757,7 +5757,7 @@ static inline lapack_int LAPACKE_laset(
         (lapack_complex_float*) A, lda );
 }
 
-static inline lapack_int LAPACKE_laset(
+inline lapack_int LAPACKE_laset(
     char uplo, lapack_int m, lapack_int n, std::complex<double> alpha, std::complex<double> beta,
     std::complex<double>* A, lapack_int lda )
 {
@@ -5769,7 +5769,7 @@ static inline lapack_int LAPACKE_laset(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_laswp(
+inline lapack_int LAPACKE_laswp(
     lapack_int n,
     float* A, lapack_int lda, lapack_int k1, lapack_int k2,
     lapack_int* ipiv, lapack_int incx )
@@ -5780,7 +5780,7 @@ static inline lapack_int LAPACKE_laswp(
         ipiv, incx );
 }
 
-static inline lapack_int LAPACKE_laswp(
+inline lapack_int LAPACKE_laswp(
     lapack_int n,
     double* A, lapack_int lda, lapack_int k1, lapack_int k2,
     lapack_int* ipiv, lapack_int incx )
@@ -5791,7 +5791,7 @@ static inline lapack_int LAPACKE_laswp(
         ipiv, incx );
 }
 
-static inline lapack_int LAPACKE_laswp(
+inline lapack_int LAPACKE_laswp(
     lapack_int n,
     std::complex<float>* A, lapack_int lda, lapack_int k1, lapack_int k2,
     lapack_int* ipiv, lapack_int incx )
@@ -5802,7 +5802,7 @@ static inline lapack_int LAPACKE_laswp(
         ipiv, incx );
 }
 
-static inline lapack_int LAPACKE_laswp(
+inline lapack_int LAPACKE_laswp(
     lapack_int n,
     std::complex<double>* A, lapack_int lda, lapack_int k1, lapack_int k2,
     lapack_int* ipiv, lapack_int incx )
@@ -5814,7 +5814,7 @@ static inline lapack_int LAPACKE_laswp(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_pbcon(
+inline lapack_int LAPACKE_pbcon(
     char uplo, lapack_int n, lapack_int kd,
     float* AB, lapack_int ldab, float anorm,
     float* rcond )
@@ -5825,7 +5825,7 @@ static inline lapack_int LAPACKE_pbcon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_pbcon(
+inline lapack_int LAPACKE_pbcon(
     char uplo, lapack_int n, lapack_int kd,
     double* AB, lapack_int ldab, double anorm,
     double* rcond )
@@ -5836,7 +5836,7 @@ static inline lapack_int LAPACKE_pbcon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_pbcon(
+inline lapack_int LAPACKE_pbcon(
     char uplo, lapack_int n, lapack_int kd,
     std::complex<float>* AB, lapack_int ldab, float anorm,
     float* rcond )
@@ -5847,7 +5847,7 @@ static inline lapack_int LAPACKE_pbcon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_pbcon(
+inline lapack_int LAPACKE_pbcon(
     char uplo, lapack_int n, lapack_int kd,
     std::complex<double>* AB, lapack_int ldab, double anorm,
     double* rcond )
@@ -5859,7 +5859,7 @@ static inline lapack_int LAPACKE_pbcon(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_pbequ(
+inline lapack_int LAPACKE_pbequ(
     char uplo, lapack_int n, lapack_int kd,
     float* AB, lapack_int ldab,
     float* S,
@@ -5874,7 +5874,7 @@ static inline lapack_int LAPACKE_pbequ(
         amax );
 }
 
-static inline lapack_int LAPACKE_pbequ(
+inline lapack_int LAPACKE_pbequ(
     char uplo, lapack_int n, lapack_int kd,
     double* AB, lapack_int ldab,
     double* S,
@@ -5889,7 +5889,7 @@ static inline lapack_int LAPACKE_pbequ(
         amax );
 }
 
-static inline lapack_int LAPACKE_pbequ(
+inline lapack_int LAPACKE_pbequ(
     char uplo, lapack_int n, lapack_int kd,
     std::complex<float>* AB, lapack_int ldab,
     float* S,
@@ -5904,7 +5904,7 @@ static inline lapack_int LAPACKE_pbequ(
         amax );
 }
 
-static inline lapack_int LAPACKE_pbequ(
+inline lapack_int LAPACKE_pbequ(
     char uplo, lapack_int n, lapack_int kd,
     std::complex<double>* AB, lapack_int ldab,
     double* S,
@@ -5920,7 +5920,7 @@ static inline lapack_int LAPACKE_pbequ(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_pbrfs(
+inline lapack_int LAPACKE_pbrfs(
     char uplo, lapack_int n, lapack_int kd, lapack_int nrhs,
     float* AB, lapack_int ldab,
     float* AFB, lapack_int ldafb,
@@ -5939,7 +5939,7 @@ static inline lapack_int LAPACKE_pbrfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_pbrfs(
+inline lapack_int LAPACKE_pbrfs(
     char uplo, lapack_int n, lapack_int kd, lapack_int nrhs,
     double* AB, lapack_int ldab,
     double* AFB, lapack_int ldafb,
@@ -5958,7 +5958,7 @@ static inline lapack_int LAPACKE_pbrfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_pbrfs(
+inline lapack_int LAPACKE_pbrfs(
     char uplo, lapack_int n, lapack_int kd, lapack_int nrhs,
     std::complex<float>* AB, lapack_int ldab,
     std::complex<float>* AFB, lapack_int ldafb,
@@ -5977,7 +5977,7 @@ static inline lapack_int LAPACKE_pbrfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_pbrfs(
+inline lapack_int LAPACKE_pbrfs(
     char uplo, lapack_int n, lapack_int kd, lapack_int nrhs,
     std::complex<double>* AB, lapack_int ldab,
     std::complex<double>* AFB, lapack_int ldafb,
@@ -5997,7 +5997,7 @@ static inline lapack_int LAPACKE_pbrfs(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_pbsv(
+inline lapack_int LAPACKE_pbsv(
     char uplo, lapack_int n, lapack_int kd, lapack_int nrhs,
     float* AB, lapack_int ldab,
     float* B, lapack_int ldb )
@@ -6008,7 +6008,7 @@ static inline lapack_int LAPACKE_pbsv(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_pbsv(
+inline lapack_int LAPACKE_pbsv(
     char uplo, lapack_int n, lapack_int kd, lapack_int nrhs,
     double* AB, lapack_int ldab,
     double* B, lapack_int ldb )
@@ -6019,7 +6019,7 @@ static inline lapack_int LAPACKE_pbsv(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_pbsv(
+inline lapack_int LAPACKE_pbsv(
     char uplo, lapack_int n, lapack_int kd, lapack_int nrhs,
     std::complex<float>* AB, lapack_int ldab,
     std::complex<float>* B, lapack_int ldb )
@@ -6030,7 +6030,7 @@ static inline lapack_int LAPACKE_pbsv(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_pbsv(
+inline lapack_int LAPACKE_pbsv(
     char uplo, lapack_int n, lapack_int kd, lapack_int nrhs,
     std::complex<double>* AB, lapack_int ldab,
     std::complex<double>* B, lapack_int ldb )
@@ -6042,7 +6042,7 @@ static inline lapack_int LAPACKE_pbsv(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_pbtrf(
+inline lapack_int LAPACKE_pbtrf(
     char uplo, lapack_int n, lapack_int kd,
     float* AB, lapack_int ldab )
 {
@@ -6051,7 +6051,7 @@ static inline lapack_int LAPACKE_pbtrf(
         AB, ldab );
 }
 
-static inline lapack_int LAPACKE_pbtrf(
+inline lapack_int LAPACKE_pbtrf(
     char uplo, lapack_int n, lapack_int kd,
     double* AB, lapack_int ldab )
 {
@@ -6060,7 +6060,7 @@ static inline lapack_int LAPACKE_pbtrf(
         AB, ldab );
 }
 
-static inline lapack_int LAPACKE_pbtrf(
+inline lapack_int LAPACKE_pbtrf(
     char uplo, lapack_int n, lapack_int kd,
     std::complex<float>* AB, lapack_int ldab )
 {
@@ -6069,7 +6069,7 @@ static inline lapack_int LAPACKE_pbtrf(
         (lapack_complex_float*) AB, ldab );
 }
 
-static inline lapack_int LAPACKE_pbtrf(
+inline lapack_int LAPACKE_pbtrf(
     char uplo, lapack_int n, lapack_int kd,
     std::complex<double>* AB, lapack_int ldab )
 {
@@ -6079,7 +6079,7 @@ static inline lapack_int LAPACKE_pbtrf(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_pbtrs(
+inline lapack_int LAPACKE_pbtrs(
     char uplo, lapack_int n, lapack_int kd, lapack_int nrhs,
     float* AB, lapack_int ldab,
     float* B, lapack_int ldb )
@@ -6090,7 +6090,7 @@ static inline lapack_int LAPACKE_pbtrs(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_pbtrs(
+inline lapack_int LAPACKE_pbtrs(
     char uplo, lapack_int n, lapack_int kd, lapack_int nrhs,
     double* AB, lapack_int ldab,
     double* B, lapack_int ldb )
@@ -6101,7 +6101,7 @@ static inline lapack_int LAPACKE_pbtrs(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_pbtrs(
+inline lapack_int LAPACKE_pbtrs(
     char uplo, lapack_int n, lapack_int kd, lapack_int nrhs,
     std::complex<float>* AB, lapack_int ldab,
     std::complex<float>* B, lapack_int ldb )
@@ -6112,7 +6112,7 @@ static inline lapack_int LAPACKE_pbtrs(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_pbtrs(
+inline lapack_int LAPACKE_pbtrs(
     char uplo, lapack_int n, lapack_int kd, lapack_int nrhs,
     std::complex<double>* AB, lapack_int ldab,
     std::complex<double>* B, lapack_int ldb )
@@ -6124,7 +6124,7 @@ static inline lapack_int LAPACKE_pbtrs(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_pocon(
+inline lapack_int LAPACKE_pocon(
     char uplo, lapack_int n,
     float* A, lapack_int lda, float anorm,
     float* rcond )
@@ -6135,7 +6135,7 @@ static inline lapack_int LAPACKE_pocon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_pocon(
+inline lapack_int LAPACKE_pocon(
     char uplo, lapack_int n,
     double* A, lapack_int lda, double anorm,
     double* rcond )
@@ -6146,7 +6146,7 @@ static inline lapack_int LAPACKE_pocon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_pocon(
+inline lapack_int LAPACKE_pocon(
     char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda, float anorm,
     float* rcond )
@@ -6157,7 +6157,7 @@ static inline lapack_int LAPACKE_pocon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_pocon(
+inline lapack_int LAPACKE_pocon(
     char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda, double anorm,
     double* rcond )
@@ -6169,7 +6169,7 @@ static inline lapack_int LAPACKE_pocon(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_poequ(
+inline lapack_int LAPACKE_poequ(
     lapack_int n,
     float* A, lapack_int lda,
     float* S,
@@ -6184,7 +6184,7 @@ static inline lapack_int LAPACKE_poequ(
         amax );
 }
 
-static inline lapack_int LAPACKE_poequ(
+inline lapack_int LAPACKE_poequ(
     lapack_int n,
     double* A, lapack_int lda,
     double* S,
@@ -6199,7 +6199,7 @@ static inline lapack_int LAPACKE_poequ(
         amax );
 }
 
-static inline lapack_int LAPACKE_poequ(
+inline lapack_int LAPACKE_poequ(
     lapack_int n,
     std::complex<float>* A, lapack_int lda,
     float* S,
@@ -6214,7 +6214,7 @@ static inline lapack_int LAPACKE_poequ(
         amax );
 }
 
-static inline lapack_int LAPACKE_poequ(
+inline lapack_int LAPACKE_poequ(
     lapack_int n,
     std::complex<double>* A, lapack_int lda,
     double* S,
@@ -6230,7 +6230,7 @@ static inline lapack_int LAPACKE_poequ(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_porfs(
+inline lapack_int LAPACKE_porfs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     float* AF, lapack_int ldaf,
@@ -6249,7 +6249,7 @@ static inline lapack_int LAPACKE_porfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_porfs(
+inline lapack_int LAPACKE_porfs(
     char uplo, lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     double* AF, lapack_int ldaf,
@@ -6268,7 +6268,7 @@ static inline lapack_int LAPACKE_porfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_porfs(
+inline lapack_int LAPACKE_porfs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* AF, lapack_int ldaf,
@@ -6287,7 +6287,7 @@ static inline lapack_int LAPACKE_porfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_porfs(
+inline lapack_int LAPACKE_porfs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* AF, lapack_int ldaf,
@@ -6307,7 +6307,7 @@ static inline lapack_int LAPACKE_porfs(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_posv(
+inline lapack_int LAPACKE_posv(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     float* B, lapack_int ldb )
@@ -6318,7 +6318,7 @@ static inline lapack_int LAPACKE_posv(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_posv(
+inline lapack_int LAPACKE_posv(
     char uplo, lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     double* B, lapack_int ldb )
@@ -6329,7 +6329,7 @@ static inline lapack_int LAPACKE_posv(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_posv(
+inline lapack_int LAPACKE_posv(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* B, lapack_int ldb )
@@ -6340,7 +6340,7 @@ static inline lapack_int LAPACKE_posv(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_posv(
+inline lapack_int LAPACKE_posv(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* B, lapack_int ldb )
@@ -6352,7 +6352,7 @@ static inline lapack_int LAPACKE_posv(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_potrf(
+inline lapack_int LAPACKE_potrf(
     char uplo, lapack_int n,
     float* A, lapack_int lda )
 {
@@ -6361,7 +6361,7 @@ static inline lapack_int LAPACKE_potrf(
         A, lda );
 }
 
-static inline lapack_int LAPACKE_potrf(
+inline lapack_int LAPACKE_potrf(
     char uplo, lapack_int n,
     double* A, lapack_int lda )
 {
@@ -6370,7 +6370,7 @@ static inline lapack_int LAPACKE_potrf(
         A, lda );
 }
 
-static inline lapack_int LAPACKE_potrf(
+inline lapack_int LAPACKE_potrf(
     char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda )
 {
@@ -6379,7 +6379,7 @@ static inline lapack_int LAPACKE_potrf(
         (lapack_complex_float*) A, lda );
 }
 
-static inline lapack_int LAPACKE_potrf(
+inline lapack_int LAPACKE_potrf(
     char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda )
 {
@@ -6389,7 +6389,7 @@ static inline lapack_int LAPACKE_potrf(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_potri(
+inline lapack_int LAPACKE_potri(
     char uplo, lapack_int n,
     float* A, lapack_int lda )
 {
@@ -6398,7 +6398,7 @@ static inline lapack_int LAPACKE_potri(
         A, lda );
 }
 
-static inline lapack_int LAPACKE_potri(
+inline lapack_int LAPACKE_potri(
     char uplo, lapack_int n,
     double* A, lapack_int lda )
 {
@@ -6407,7 +6407,7 @@ static inline lapack_int LAPACKE_potri(
         A, lda );
 }
 
-static inline lapack_int LAPACKE_potri(
+inline lapack_int LAPACKE_potri(
     char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda )
 {
@@ -6416,7 +6416,7 @@ static inline lapack_int LAPACKE_potri(
         (lapack_complex_float*) A, lda );
 }
 
-static inline lapack_int LAPACKE_potri(
+inline lapack_int LAPACKE_potri(
     char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda )
 {
@@ -6426,7 +6426,7 @@ static inline lapack_int LAPACKE_potri(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_potrs(
+inline lapack_int LAPACKE_potrs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     float* B, lapack_int ldb )
@@ -6437,7 +6437,7 @@ static inline lapack_int LAPACKE_potrs(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_potrs(
+inline lapack_int LAPACKE_potrs(
     char uplo, lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     double* B, lapack_int ldb )
@@ -6448,7 +6448,7 @@ static inline lapack_int LAPACKE_potrs(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_potrs(
+inline lapack_int LAPACKE_potrs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* B, lapack_int ldb )
@@ -6459,7 +6459,7 @@ static inline lapack_int LAPACKE_potrs(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_potrs(
+inline lapack_int LAPACKE_potrs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* B, lapack_int ldb )
@@ -6471,7 +6471,7 @@ static inline lapack_int LAPACKE_potrs(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_ppcon(
+inline lapack_int LAPACKE_ppcon(
     char uplo, lapack_int n,
     float* AP, float anorm,
     float* rcond )
@@ -6482,7 +6482,7 @@ static inline lapack_int LAPACKE_ppcon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_ppcon(
+inline lapack_int LAPACKE_ppcon(
     char uplo, lapack_int n,
     double* AP, double anorm,
     double* rcond )
@@ -6493,7 +6493,7 @@ static inline lapack_int LAPACKE_ppcon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_ppcon(
+inline lapack_int LAPACKE_ppcon(
     char uplo, lapack_int n,
     std::complex<float>* AP, float anorm,
     float* rcond )
@@ -6504,7 +6504,7 @@ static inline lapack_int LAPACKE_ppcon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_ppcon(
+inline lapack_int LAPACKE_ppcon(
     char uplo, lapack_int n,
     std::complex<double>* AP, double anorm,
     double* rcond )
@@ -6516,7 +6516,7 @@ static inline lapack_int LAPACKE_ppcon(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_ppequ(
+inline lapack_int LAPACKE_ppequ(
     char uplo, lapack_int n,
     float* AP,
     float* S,
@@ -6531,7 +6531,7 @@ static inline lapack_int LAPACKE_ppequ(
         amax );
 }
 
-static inline lapack_int LAPACKE_ppequ(
+inline lapack_int LAPACKE_ppequ(
     char uplo, lapack_int n,
     double* AP,
     double* S,
@@ -6546,7 +6546,7 @@ static inline lapack_int LAPACKE_ppequ(
         amax );
 }
 
-static inline lapack_int LAPACKE_ppequ(
+inline lapack_int LAPACKE_ppequ(
     char uplo, lapack_int n,
     std::complex<float>* AP,
     float* S,
@@ -6561,7 +6561,7 @@ static inline lapack_int LAPACKE_ppequ(
         amax );
 }
 
-static inline lapack_int LAPACKE_ppequ(
+inline lapack_int LAPACKE_ppequ(
     char uplo, lapack_int n,
     std::complex<double>* AP,
     double* S,
@@ -6577,7 +6577,7 @@ static inline lapack_int LAPACKE_ppequ(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_pprfs(
+inline lapack_int LAPACKE_pprfs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* AP,
     float* AFP,
@@ -6596,7 +6596,7 @@ static inline lapack_int LAPACKE_pprfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_pprfs(
+inline lapack_int LAPACKE_pprfs(
     char uplo, lapack_int n, lapack_int nrhs,
     double* AP,
     double* AFP,
@@ -6615,7 +6615,7 @@ static inline lapack_int LAPACKE_pprfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_pprfs(
+inline lapack_int LAPACKE_pprfs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* AP,
     std::complex<float>* AFP,
@@ -6634,7 +6634,7 @@ static inline lapack_int LAPACKE_pprfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_pprfs(
+inline lapack_int LAPACKE_pprfs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* AP,
     std::complex<double>* AFP,
@@ -6654,7 +6654,7 @@ static inline lapack_int LAPACKE_pprfs(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_ppsv(
+inline lapack_int LAPACKE_ppsv(
     char uplo, lapack_int n, lapack_int nrhs,
     float* AP,
     float* B, lapack_int ldb )
@@ -6665,7 +6665,7 @@ static inline lapack_int LAPACKE_ppsv(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_ppsv(
+inline lapack_int LAPACKE_ppsv(
     char uplo, lapack_int n, lapack_int nrhs,
     double* AP,
     double* B, lapack_int ldb )
@@ -6676,7 +6676,7 @@ static inline lapack_int LAPACKE_ppsv(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_ppsv(
+inline lapack_int LAPACKE_ppsv(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* AP,
     std::complex<float>* B, lapack_int ldb )
@@ -6687,7 +6687,7 @@ static inline lapack_int LAPACKE_ppsv(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_ppsv(
+inline lapack_int LAPACKE_ppsv(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* AP,
     std::complex<double>* B, lapack_int ldb )
@@ -6699,7 +6699,7 @@ static inline lapack_int LAPACKE_ppsv(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_pptrf(
+inline lapack_int LAPACKE_pptrf(
     char uplo, lapack_int n,
     float* AP )
 {
@@ -6708,7 +6708,7 @@ static inline lapack_int LAPACKE_pptrf(
         AP );
 }
 
-static inline lapack_int LAPACKE_pptrf(
+inline lapack_int LAPACKE_pptrf(
     char uplo, lapack_int n,
     double* AP )
 {
@@ -6717,7 +6717,7 @@ static inline lapack_int LAPACKE_pptrf(
         AP );
 }
 
-static inline lapack_int LAPACKE_pptrf(
+inline lapack_int LAPACKE_pptrf(
     char uplo, lapack_int n,
     std::complex<float>* AP )
 {
@@ -6726,7 +6726,7 @@ static inline lapack_int LAPACKE_pptrf(
         (lapack_complex_float*) AP );
 }
 
-static inline lapack_int LAPACKE_pptrf(
+inline lapack_int LAPACKE_pptrf(
     char uplo, lapack_int n,
     std::complex<double>* AP )
 {
@@ -6736,7 +6736,7 @@ static inline lapack_int LAPACKE_pptrf(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_pptri(
+inline lapack_int LAPACKE_pptri(
     char uplo, lapack_int n,
     float* AP )
 {
@@ -6745,7 +6745,7 @@ static inline lapack_int LAPACKE_pptri(
         AP );
 }
 
-static inline lapack_int LAPACKE_pptri(
+inline lapack_int LAPACKE_pptri(
     char uplo, lapack_int n,
     double* AP )
 {
@@ -6754,7 +6754,7 @@ static inline lapack_int LAPACKE_pptri(
         AP );
 }
 
-static inline lapack_int LAPACKE_pptri(
+inline lapack_int LAPACKE_pptri(
     char uplo, lapack_int n,
     std::complex<float>* AP )
 {
@@ -6763,7 +6763,7 @@ static inline lapack_int LAPACKE_pptri(
         (lapack_complex_float*) AP );
 }
 
-static inline lapack_int LAPACKE_pptri(
+inline lapack_int LAPACKE_pptri(
     char uplo, lapack_int n,
     std::complex<double>* AP )
 {
@@ -6773,7 +6773,7 @@ static inline lapack_int LAPACKE_pptri(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_pptrs(
+inline lapack_int LAPACKE_pptrs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* AP,
     float* B, lapack_int ldb )
@@ -6784,7 +6784,7 @@ static inline lapack_int LAPACKE_pptrs(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_pptrs(
+inline lapack_int LAPACKE_pptrs(
     char uplo, lapack_int n, lapack_int nrhs,
     double* AP,
     double* B, lapack_int ldb )
@@ -6795,7 +6795,7 @@ static inline lapack_int LAPACKE_pptrs(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_pptrs(
+inline lapack_int LAPACKE_pptrs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* AP,
     std::complex<float>* B, lapack_int ldb )
@@ -6806,7 +6806,7 @@ static inline lapack_int LAPACKE_pptrs(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_pptrs(
+inline lapack_int LAPACKE_pptrs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* AP,
     std::complex<double>* B, lapack_int ldb )
@@ -6818,7 +6818,7 @@ static inline lapack_int LAPACKE_pptrs(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_ptcon(
+inline lapack_int LAPACKE_ptcon(
     lapack_int n,
     float* D,
     float* E,
@@ -6831,7 +6831,7 @@ static inline lapack_int LAPACKE_ptcon(
         anorm, rcond );
 }
 
-static inline lapack_int LAPACKE_ptcon(
+inline lapack_int LAPACKE_ptcon(
     lapack_int n,
     double* D,
     double* E,
@@ -6844,7 +6844,7 @@ static inline lapack_int LAPACKE_ptcon(
         anorm, rcond );
 }
 
-static inline lapack_int LAPACKE_ptcon(
+inline lapack_int LAPACKE_ptcon(
     lapack_int n,
     float* D,
     std::complex<float>* E,
@@ -6857,7 +6857,7 @@ static inline lapack_int LAPACKE_ptcon(
         anorm, rcond );
 }
 
-static inline lapack_int LAPACKE_ptcon(
+inline lapack_int LAPACKE_ptcon(
     lapack_int n,
     double* D,
     std::complex<double>* E,
@@ -6872,7 +6872,7 @@ static inline lapack_int LAPACKE_ptcon(
 
 // -----------------------------------------------------------------------------
 // for [sd]ptrfs, uplo is ignored
-static inline lapack_int LAPACKE_ptrfs(
+inline lapack_int LAPACKE_ptrfs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* D,
     float* E,
@@ -6893,7 +6893,7 @@ static inline lapack_int LAPACKE_ptrfs(
         ferr, berr );
 }
 
-static inline lapack_int LAPACKE_ptrfs(
+inline lapack_int LAPACKE_ptrfs(
     char uplo, lapack_int n, lapack_int nrhs,
     double* D,
     double* E,
@@ -6914,7 +6914,7 @@ static inline lapack_int LAPACKE_ptrfs(
         ferr, berr );
 }
 
-static inline lapack_int LAPACKE_ptrfs(
+inline lapack_int LAPACKE_ptrfs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* D,
     std::complex<float>* E,
@@ -6935,7 +6935,7 @@ static inline lapack_int LAPACKE_ptrfs(
         ferr, berr );
 }
 
-static inline lapack_int LAPACKE_ptrfs(
+inline lapack_int LAPACKE_ptrfs(
     char uplo, lapack_int n, lapack_int nrhs,
     double* D,
     std::complex<double>* E,
@@ -6957,7 +6957,7 @@ static inline lapack_int LAPACKE_ptrfs(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_ptsv(
+inline lapack_int LAPACKE_ptsv(
     lapack_int n, lapack_int nrhs,
     float* D,
     float* E,
@@ -6970,7 +6970,7 @@ static inline lapack_int LAPACKE_ptsv(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_ptsv(
+inline lapack_int LAPACKE_ptsv(
     lapack_int n, lapack_int nrhs,
     double* D,
     double* E,
@@ -6983,7 +6983,7 @@ static inline lapack_int LAPACKE_ptsv(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_ptsv(
+inline lapack_int LAPACKE_ptsv(
     lapack_int n, lapack_int nrhs,
     float* D,
     std::complex<float>* E,
@@ -6996,7 +6996,7 @@ static inline lapack_int LAPACKE_ptsv(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_ptsv(
+inline lapack_int LAPACKE_ptsv(
     lapack_int n, lapack_int nrhs,
     double* D,
     std::complex<double>* E,
@@ -7010,7 +7010,7 @@ static inline lapack_int LAPACKE_ptsv(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_pttrf(
+inline lapack_int LAPACKE_pttrf(
     lapack_int n,
     float* D,
     float* E )
@@ -7021,7 +7021,7 @@ static inline lapack_int LAPACKE_pttrf(
         E );
 }
 
-static inline lapack_int LAPACKE_pttrf(
+inline lapack_int LAPACKE_pttrf(
     lapack_int n,
     double* D,
     double* E )
@@ -7032,7 +7032,7 @@ static inline lapack_int LAPACKE_pttrf(
         E );
 }
 
-static inline lapack_int LAPACKE_pttrf(
+inline lapack_int LAPACKE_pttrf(
     lapack_int n,
     float* D,
     std::complex<float>* E )
@@ -7043,7 +7043,7 @@ static inline lapack_int LAPACKE_pttrf(
         (lapack_complex_float*) E );
 }
 
-static inline lapack_int LAPACKE_pttrf(
+inline lapack_int LAPACKE_pttrf(
     lapack_int n,
     double* D,
     std::complex<double>* E )
@@ -7056,7 +7056,7 @@ static inline lapack_int LAPACKE_pttrf(
 
 // -----------------------------------------------------------------------------
 // for [sd]pttrs, uplo is ignored
-static inline lapack_int LAPACKE_pttrs(
+inline lapack_int LAPACKE_pttrs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* D,
     float* E,
@@ -7069,7 +7069,7 @@ static inline lapack_int LAPACKE_pttrs(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_pttrs(
+inline lapack_int LAPACKE_pttrs(
     char uplo, lapack_int n, lapack_int nrhs,
     double* D,
     double* E,
@@ -7082,7 +7082,7 @@ static inline lapack_int LAPACKE_pttrs(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_pttrs(
+inline lapack_int LAPACKE_pttrs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* D,
     std::complex<float>* E,
@@ -7095,7 +7095,7 @@ static inline lapack_int LAPACKE_pttrs(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_pttrs(
+inline lapack_int LAPACKE_pttrs(
     char uplo, lapack_int n, lapack_int nrhs,
     double* D,
     std::complex<double>* E,
@@ -7109,7 +7109,7 @@ static inline lapack_int LAPACKE_pttrs(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_spcon(
+inline lapack_int LAPACKE_spcon(
     char uplo, lapack_int n,
     float* AP,
     lapack_int* ipiv, float anorm,
@@ -7122,7 +7122,7 @@ static inline lapack_int LAPACKE_spcon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_spcon(
+inline lapack_int LAPACKE_spcon(
     char uplo, lapack_int n,
     double* AP,
     lapack_int* ipiv, double anorm,
@@ -7135,7 +7135,7 @@ static inline lapack_int LAPACKE_spcon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_spcon(
+inline lapack_int LAPACKE_spcon(
     char uplo, lapack_int n,
     std::complex<float>* AP,
     lapack_int* ipiv, float anorm,
@@ -7148,7 +7148,7 @@ static inline lapack_int LAPACKE_spcon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_spcon(
+inline lapack_int LAPACKE_spcon(
     char uplo, lapack_int n,
     std::complex<double>* AP,
     lapack_int* ipiv, double anorm,
@@ -7162,7 +7162,7 @@ static inline lapack_int LAPACKE_spcon(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_sprfs(
+inline lapack_int LAPACKE_sprfs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* AP,
     float* AFP,
@@ -7183,7 +7183,7 @@ static inline lapack_int LAPACKE_sprfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_sprfs(
+inline lapack_int LAPACKE_sprfs(
     char uplo, lapack_int n, lapack_int nrhs,
     double* AP,
     double* AFP,
@@ -7204,7 +7204,7 @@ static inline lapack_int LAPACKE_sprfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_sprfs(
+inline lapack_int LAPACKE_sprfs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* AP,
     std::complex<float>* AFP,
@@ -7225,7 +7225,7 @@ static inline lapack_int LAPACKE_sprfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_sprfs(
+inline lapack_int LAPACKE_sprfs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* AP,
     std::complex<double>* AFP,
@@ -7247,7 +7247,7 @@ static inline lapack_int LAPACKE_sprfs(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_spsv(
+inline lapack_int LAPACKE_spsv(
     char uplo, lapack_int n, lapack_int nrhs,
     float* AP,
     lapack_int* ipiv,
@@ -7260,7 +7260,7 @@ static inline lapack_int LAPACKE_spsv(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_spsv(
+inline lapack_int LAPACKE_spsv(
     char uplo, lapack_int n, lapack_int nrhs,
     double* AP,
     lapack_int* ipiv,
@@ -7273,7 +7273,7 @@ static inline lapack_int LAPACKE_spsv(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_spsv(
+inline lapack_int LAPACKE_spsv(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* AP,
     lapack_int* ipiv,
@@ -7286,7 +7286,7 @@ static inline lapack_int LAPACKE_spsv(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_spsv(
+inline lapack_int LAPACKE_spsv(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* AP,
     lapack_int* ipiv,
@@ -7300,7 +7300,7 @@ static inline lapack_int LAPACKE_spsv(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_sptrf(
+inline lapack_int LAPACKE_sptrf(
     char uplo, lapack_int n,
     float* AP,
     lapack_int* ipiv )
@@ -7311,7 +7311,7 @@ static inline lapack_int LAPACKE_sptrf(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_sptrf(
+inline lapack_int LAPACKE_sptrf(
     char uplo, lapack_int n,
     double* AP,
     lapack_int* ipiv )
@@ -7322,7 +7322,7 @@ static inline lapack_int LAPACKE_sptrf(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_sptrf(
+inline lapack_int LAPACKE_sptrf(
     char uplo, lapack_int n,
     std::complex<float>* AP,
     lapack_int* ipiv )
@@ -7333,7 +7333,7 @@ static inline lapack_int LAPACKE_sptrf(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_sptrf(
+inline lapack_int LAPACKE_sptrf(
     char uplo, lapack_int n,
     std::complex<double>* AP,
     lapack_int* ipiv )
@@ -7345,7 +7345,7 @@ static inline lapack_int LAPACKE_sptrf(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_sptri(
+inline lapack_int LAPACKE_sptri(
     char uplo, lapack_int n,
     float* AP,
     lapack_int* ipiv )
@@ -7356,7 +7356,7 @@ static inline lapack_int LAPACKE_sptri(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_sptri(
+inline lapack_int LAPACKE_sptri(
     char uplo, lapack_int n,
     double* AP,
     lapack_int* ipiv )
@@ -7367,7 +7367,7 @@ static inline lapack_int LAPACKE_sptri(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_sptri(
+inline lapack_int LAPACKE_sptri(
     char uplo, lapack_int n,
     std::complex<float>* AP,
     lapack_int* ipiv )
@@ -7378,7 +7378,7 @@ static inline lapack_int LAPACKE_sptri(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_sptri(
+inline lapack_int LAPACKE_sptri(
     char uplo, lapack_int n,
     std::complex<double>* AP,
     lapack_int* ipiv )
@@ -7390,7 +7390,7 @@ static inline lapack_int LAPACKE_sptri(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_sptrs(
+inline lapack_int LAPACKE_sptrs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* AP,
     lapack_int* ipiv,
@@ -7403,7 +7403,7 @@ static inline lapack_int LAPACKE_sptrs(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_sptrs(
+inline lapack_int LAPACKE_sptrs(
     char uplo, lapack_int n, lapack_int nrhs,
     double* AP,
     lapack_int* ipiv,
@@ -7416,7 +7416,7 @@ static inline lapack_int LAPACKE_sptrs(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_sptrs(
+inline lapack_int LAPACKE_sptrs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* AP,
     lapack_int* ipiv,
@@ -7429,7 +7429,7 @@ static inline lapack_int LAPACKE_sptrs(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_sptrs(
+inline lapack_int LAPACKE_sptrs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* AP,
     lapack_int* ipiv,
@@ -7443,7 +7443,7 @@ static inline lapack_int LAPACKE_sptrs(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_sycon(
+inline lapack_int LAPACKE_sycon(
     char uplo, lapack_int n,
     float* A, lapack_int lda,
     lapack_int* ipiv, float anorm,
@@ -7456,7 +7456,7 @@ static inline lapack_int LAPACKE_sycon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_sycon(
+inline lapack_int LAPACKE_sycon(
     char uplo, lapack_int n,
     double* A, lapack_int lda,
     lapack_int* ipiv, double anorm,
@@ -7469,7 +7469,7 @@ static inline lapack_int LAPACKE_sycon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_sycon(
+inline lapack_int LAPACKE_sycon(
     char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     lapack_int* ipiv, float anorm,
@@ -7482,7 +7482,7 @@ static inline lapack_int LAPACKE_sycon(
         rcond );
 }
 
-static inline lapack_int LAPACKE_sycon(
+inline lapack_int LAPACKE_sycon(
     char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     lapack_int* ipiv, double anorm,
@@ -7496,7 +7496,7 @@ static inline lapack_int LAPACKE_sycon(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_syrfs(
+inline lapack_int LAPACKE_syrfs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     float* AF, lapack_int ldaf,
@@ -7517,7 +7517,7 @@ static inline lapack_int LAPACKE_syrfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_syrfs(
+inline lapack_int LAPACKE_syrfs(
     char uplo, lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     double* AF, lapack_int ldaf,
@@ -7538,7 +7538,7 @@ static inline lapack_int LAPACKE_syrfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_syrfs(
+inline lapack_int LAPACKE_syrfs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* AF, lapack_int ldaf,
@@ -7559,7 +7559,7 @@ static inline lapack_int LAPACKE_syrfs(
         berr );
 }
 
-static inline lapack_int LAPACKE_syrfs(
+inline lapack_int LAPACKE_syrfs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* AF, lapack_int ldaf,
@@ -7581,7 +7581,7 @@ static inline lapack_int LAPACKE_syrfs(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_sysv(
+inline lapack_int LAPACKE_sysv(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     lapack_int* ipiv,
@@ -7594,7 +7594,7 @@ static inline lapack_int LAPACKE_sysv(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_sysv(
+inline lapack_int LAPACKE_sysv(
     char uplo, lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     lapack_int* ipiv,
@@ -7607,7 +7607,7 @@ static inline lapack_int LAPACKE_sysv(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_sysv(
+inline lapack_int LAPACKE_sysv(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     lapack_int* ipiv,
@@ -7620,7 +7620,7 @@ static inline lapack_int LAPACKE_sysv(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_sysv(
+inline lapack_int LAPACKE_sysv(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     lapack_int* ipiv,
@@ -7635,7 +7635,7 @@ static inline lapack_int LAPACKE_sysv(
 
 // -----------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30700
-static inline lapack_int LAPACKE_sysv_aa(
+inline lapack_int LAPACKE_sysv_aa(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     lapack_int* ipiv,
@@ -7648,7 +7648,7 @@ static inline lapack_int LAPACKE_sysv_aa(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_sysv_aa(
+inline lapack_int LAPACKE_sysv_aa(
     char uplo, lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     lapack_int* ipiv,
@@ -7661,7 +7661,7 @@ static inline lapack_int LAPACKE_sysv_aa(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_sysv_aa(
+inline lapack_int LAPACKE_sysv_aa(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     lapack_int* ipiv,
@@ -7674,7 +7674,7 @@ static inline lapack_int LAPACKE_sysv_aa(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_sysv_aa(
+inline lapack_int LAPACKE_sysv_aa(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     lapack_int* ipiv,
@@ -7690,7 +7690,7 @@ static inline lapack_int LAPACKE_sysv_aa(
 
 // -----------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30700
-static inline lapack_int LAPACKE_sysv_rk(
+inline lapack_int LAPACKE_sysv_rk(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     float* E,
@@ -7705,7 +7705,7 @@ static inline lapack_int LAPACKE_sysv_rk(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_sysv_rk(
+inline lapack_int LAPACKE_sysv_rk(
     char uplo, lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     double* E,
@@ -7720,7 +7720,7 @@ static inline lapack_int LAPACKE_sysv_rk(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_sysv_rk(
+inline lapack_int LAPACKE_sysv_rk(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* E,
@@ -7735,7 +7735,7 @@ static inline lapack_int LAPACKE_sysv_rk(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_sysv_rk(
+inline lapack_int LAPACKE_sysv_rk(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* E,
@@ -7753,7 +7753,7 @@ static inline lapack_int LAPACKE_sysv_rk(
 
 // -----------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30500
-static inline lapack_int LAPACKE_sysv_rook(
+inline lapack_int LAPACKE_sysv_rook(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     lapack_int* ipiv,
@@ -7766,7 +7766,7 @@ static inline lapack_int LAPACKE_sysv_rook(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_sysv_rook(
+inline lapack_int LAPACKE_sysv_rook(
     char uplo, lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     lapack_int* ipiv,
@@ -7779,7 +7779,7 @@ static inline lapack_int LAPACKE_sysv_rook(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_sysv_rook(
+inline lapack_int LAPACKE_sysv_rook(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     lapack_int* ipiv,
@@ -7792,7 +7792,7 @@ static inline lapack_int LAPACKE_sysv_rook(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_sysv_rook(
+inline lapack_int LAPACKE_sysv_rook(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     lapack_int* ipiv,
@@ -7807,7 +7807,7 @@ static inline lapack_int LAPACKE_sysv_rook(
 #endif // 30500
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_sytrf(
+inline lapack_int LAPACKE_sytrf(
     char uplo, lapack_int n,
     float* A, lapack_int lda,
     lapack_int* ipiv )
@@ -7818,7 +7818,7 @@ static inline lapack_int LAPACKE_sytrf(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_sytrf(
+inline lapack_int LAPACKE_sytrf(
     char uplo, lapack_int n,
     double* A, lapack_int lda,
     lapack_int* ipiv )
@@ -7829,7 +7829,7 @@ static inline lapack_int LAPACKE_sytrf(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_sytrf(
+inline lapack_int LAPACKE_sytrf(
     char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     lapack_int* ipiv )
@@ -7840,7 +7840,7 @@ static inline lapack_int LAPACKE_sytrf(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_sytrf(
+inline lapack_int LAPACKE_sytrf(
     char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     lapack_int* ipiv )
@@ -7927,7 +7927,7 @@ void LAPACK_zhetrf_aa(
 // -----------------------------------------------------------------------------
 // TODO: LAPACKE has a bug; use LAPACK for now
 #if LAPACK_VERSION >= 30700
-static inline lapack_int LAPACKE_sytrf_aa(
+inline lapack_int LAPACKE_sytrf_aa(
     char uplo, lapack_int n,
     float* A, lapack_int lda,
     lapack_int* ipiv )
@@ -7945,7 +7945,7 @@ static inline lapack_int LAPACKE_sytrf_aa(
     return info_;
 }
 
-static inline lapack_int LAPACKE_sytrf_aa(
+inline lapack_int LAPACKE_sytrf_aa(
     char uplo, lapack_int n,
     double* A, lapack_int lda,
     lapack_int* ipiv )
@@ -7963,7 +7963,7 @@ static inline lapack_int LAPACKE_sytrf_aa(
     return info_;
 }
 
-static inline lapack_int LAPACKE_sytrf_aa(
+inline lapack_int LAPACKE_sytrf_aa(
     char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     lapack_int* ipiv )
@@ -7981,7 +7981,7 @@ static inline lapack_int LAPACKE_sytrf_aa(
     return info_;
 }
 
-static inline lapack_int LAPACKE_sytrf_aa(
+inline lapack_int LAPACKE_sytrf_aa(
     char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     lapack_int* ipiv )
@@ -8002,7 +8002,7 @@ static inline lapack_int LAPACKE_sytrf_aa(
 
 // -----------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30700
-static inline lapack_int LAPACKE_sytrf_rk(
+inline lapack_int LAPACKE_sytrf_rk(
     char uplo, lapack_int n,
     float* A, lapack_int lda,
     float* E,
@@ -8015,7 +8015,7 @@ static inline lapack_int LAPACKE_sytrf_rk(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_sytrf_rk(
+inline lapack_int LAPACKE_sytrf_rk(
     char uplo, lapack_int n,
     double* A, lapack_int lda,
     double* E,
@@ -8028,7 +8028,7 @@ static inline lapack_int LAPACKE_sytrf_rk(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_sytrf_rk(
+inline lapack_int LAPACKE_sytrf_rk(
     char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* E,
@@ -8041,7 +8041,7 @@ static inline lapack_int LAPACKE_sytrf_rk(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_sytrf_rk(
+inline lapack_int LAPACKE_sytrf_rk(
     char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* E,
@@ -8057,7 +8057,7 @@ static inline lapack_int LAPACKE_sytrf_rk(
 
 // -----------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30500
-static inline lapack_int LAPACKE_sytrf_rook(
+inline lapack_int LAPACKE_sytrf_rook(
     char uplo, lapack_int n,
     float* A, lapack_int lda,
     lapack_int* ipiv )
@@ -8068,7 +8068,7 @@ static inline lapack_int LAPACKE_sytrf_rook(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_sytrf_rook(
+inline lapack_int LAPACKE_sytrf_rook(
     char uplo, lapack_int n,
     double* A, lapack_int lda,
     lapack_int* ipiv )
@@ -8079,7 +8079,7 @@ static inline lapack_int LAPACKE_sytrf_rook(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_sytrf_rook(
+inline lapack_int LAPACKE_sytrf_rook(
     char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     lapack_int* ipiv )
@@ -8090,7 +8090,7 @@ static inline lapack_int LAPACKE_sytrf_rook(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_sytrf_rook(
+inline lapack_int LAPACKE_sytrf_rook(
     char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     lapack_int* ipiv )
@@ -8103,7 +8103,7 @@ static inline lapack_int LAPACKE_sytrf_rook(
 #endif // 30500
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_sytri(
+inline lapack_int LAPACKE_sytri(
     char uplo, lapack_int n,
     float* A, lapack_int lda,
     lapack_int* ipiv )
@@ -8114,7 +8114,7 @@ static inline lapack_int LAPACKE_sytri(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_sytri(
+inline lapack_int LAPACKE_sytri(
     char uplo, lapack_int n,
     double* A, lapack_int lda,
     lapack_int* ipiv )
@@ -8125,7 +8125,7 @@ static inline lapack_int LAPACKE_sytri(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_sytri(
+inline lapack_int LAPACKE_sytri(
     char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     lapack_int* ipiv )
@@ -8136,7 +8136,7 @@ static inline lapack_int LAPACKE_sytri(
         ipiv );
 }
 
-static inline lapack_int LAPACKE_sytri(
+inline lapack_int LAPACKE_sytri(
     char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     lapack_int* ipiv )
@@ -8148,7 +8148,7 @@ static inline lapack_int LAPACKE_sytri(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_sytrs(
+inline lapack_int LAPACKE_sytrs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     lapack_int* ipiv,
@@ -8161,7 +8161,7 @@ static inline lapack_int LAPACKE_sytrs(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_sytrs(
+inline lapack_int LAPACKE_sytrs(
     char uplo, lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     lapack_int* ipiv,
@@ -8174,7 +8174,7 @@ static inline lapack_int LAPACKE_sytrs(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_sytrs(
+inline lapack_int LAPACKE_sytrs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     lapack_int* ipiv,
@@ -8187,7 +8187,7 @@ static inline lapack_int LAPACKE_sytrs(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_sytrs(
+inline lapack_int LAPACKE_sytrs(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     lapack_int* ipiv,
@@ -8202,7 +8202,7 @@ static inline lapack_int LAPACKE_sytrs(
 
 // -----------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30700
-static inline lapack_int LAPACKE_sytrs_aa(
+inline lapack_int LAPACKE_sytrs_aa(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     lapack_int* ipiv,
@@ -8215,7 +8215,7 @@ static inline lapack_int LAPACKE_sytrs_aa(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_sytrs_aa(
+inline lapack_int LAPACKE_sytrs_aa(
     char uplo, lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     lapack_int* ipiv,
@@ -8228,7 +8228,7 @@ static inline lapack_int LAPACKE_sytrs_aa(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_sytrs_aa(
+inline lapack_int LAPACKE_sytrs_aa(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     lapack_int* ipiv,
@@ -8241,7 +8241,7 @@ static inline lapack_int LAPACKE_sytrs_aa(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_sytrs_aa(
+inline lapack_int LAPACKE_sytrs_aa(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     lapack_int* ipiv,
@@ -8257,7 +8257,7 @@ static inline lapack_int LAPACKE_sytrs_aa(
 
 // -----------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30500
-static inline lapack_int LAPACKE_sytrs_rook(
+inline lapack_int LAPACKE_sytrs_rook(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
     lapack_int* ipiv,
@@ -8270,7 +8270,7 @@ static inline lapack_int LAPACKE_sytrs_rook(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_sytrs_rook(
+inline lapack_int LAPACKE_sytrs_rook(
     char uplo, lapack_int n, lapack_int nrhs,
     double* A, lapack_int lda,
     lapack_int* ipiv,
@@ -8283,7 +8283,7 @@ static inline lapack_int LAPACKE_sytrs_rook(
         B, ldb );
 }
 
-static inline lapack_int LAPACKE_sytrs_rook(
+inline lapack_int LAPACKE_sytrs_rook(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<float>* A, lapack_int lda,
     lapack_int* ipiv,
@@ -8296,7 +8296,7 @@ static inline lapack_int LAPACKE_sytrs_rook(
         (lapack_complex_float*) B, ldb );
 }
 
-static inline lapack_int LAPACKE_sytrs_rook(
+inline lapack_int LAPACKE_sytrs_rook(
     char uplo, lapack_int n, lapack_int nrhs,
     std::complex<double>* A, lapack_int lda,
     lapack_int* ipiv,
@@ -8311,7 +8311,7 @@ static inline lapack_int LAPACKE_sytrs_rook(
 #endif // 30500
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_unghr(
+inline lapack_int LAPACKE_unghr(
     lapack_int n, lapack_int ilo, lapack_int ihi,
     float* A, lapack_int lda,
     float* tau )
@@ -8322,7 +8322,7 @@ static inline lapack_int LAPACKE_unghr(
         tau );
 }
 
-static inline lapack_int LAPACKE_unghr(
+inline lapack_int LAPACKE_unghr(
     lapack_int n, lapack_int ilo, lapack_int ihi,
     double* A, lapack_int lda,
     double* tau )
@@ -8333,7 +8333,7 @@ static inline lapack_int LAPACKE_unghr(
         tau );
 }
 
-static inline lapack_int LAPACKE_unghr(
+inline lapack_int LAPACKE_unghr(
     lapack_int n, lapack_int ilo, lapack_int ihi,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* tau )
@@ -8344,7 +8344,7 @@ static inline lapack_int LAPACKE_unghr(
         (lapack_complex_float*) tau );
 }
 
-static inline lapack_int LAPACKE_unghr(
+inline lapack_int LAPACKE_unghr(
     lapack_int n, lapack_int ilo, lapack_int ihi,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* tau )
@@ -8356,7 +8356,7 @@ static inline lapack_int LAPACKE_unghr(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_unglq(
+inline lapack_int LAPACKE_unglq(
     lapack_int m, lapack_int n, lapack_int k,
     float* A, lapack_int lda,
     float* tau )
@@ -8367,7 +8367,7 @@ static inline lapack_int LAPACKE_unglq(
         tau );
 }
 
-static inline lapack_int LAPACKE_unglq(
+inline lapack_int LAPACKE_unglq(
     lapack_int m, lapack_int n, lapack_int k,
     double* A, lapack_int lda,
     double* tau )
@@ -8378,7 +8378,7 @@ static inline lapack_int LAPACKE_unglq(
         tau );
 }
 
-static inline lapack_int LAPACKE_unglq(
+inline lapack_int LAPACKE_unglq(
     lapack_int m, lapack_int n, lapack_int k,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* tau )
@@ -8389,7 +8389,7 @@ static inline lapack_int LAPACKE_unglq(
         (lapack_complex_float*) tau );
 }
 
-static inline lapack_int LAPACKE_unglq(
+inline lapack_int LAPACKE_unglq(
     lapack_int m, lapack_int n, lapack_int k,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* tau )
@@ -8401,7 +8401,7 @@ static inline lapack_int LAPACKE_unglq(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_ungql(
+inline lapack_int LAPACKE_ungql(
     lapack_int m, lapack_int n, lapack_int k,
     float* A, lapack_int lda,
     float* tau )
@@ -8412,7 +8412,7 @@ static inline lapack_int LAPACKE_ungql(
         tau );
 }
 
-static inline lapack_int LAPACKE_ungql(
+inline lapack_int LAPACKE_ungql(
     lapack_int m, lapack_int n, lapack_int k,
     double* A, lapack_int lda,
     double* tau )
@@ -8423,7 +8423,7 @@ static inline lapack_int LAPACKE_ungql(
         tau );
 }
 
-static inline lapack_int LAPACKE_ungql(
+inline lapack_int LAPACKE_ungql(
     lapack_int m, lapack_int n, lapack_int k,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* tau )
@@ -8434,7 +8434,7 @@ static inline lapack_int LAPACKE_ungql(
         (lapack_complex_float*) tau );
 }
 
-static inline lapack_int LAPACKE_ungql(
+inline lapack_int LAPACKE_ungql(
     lapack_int m, lapack_int n, lapack_int k,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* tau )
@@ -8446,7 +8446,7 @@ static inline lapack_int LAPACKE_ungql(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_ungqr(
+inline lapack_int LAPACKE_ungqr(
     lapack_int m, lapack_int n, lapack_int k,
     float* A, lapack_int lda,
     float* tau )
@@ -8457,7 +8457,7 @@ static inline lapack_int LAPACKE_ungqr(
         tau );
 }
 
-static inline lapack_int LAPACKE_ungqr(
+inline lapack_int LAPACKE_ungqr(
     lapack_int m, lapack_int n, lapack_int k,
     double* A, lapack_int lda,
     double* tau )
@@ -8468,7 +8468,7 @@ static inline lapack_int LAPACKE_ungqr(
         tau );
 }
 
-static inline lapack_int LAPACKE_ungqr(
+inline lapack_int LAPACKE_ungqr(
     lapack_int m, lapack_int n, lapack_int k,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* tau )
@@ -8479,7 +8479,7 @@ static inline lapack_int LAPACKE_ungqr(
         (lapack_complex_float*) tau );
 }
 
-static inline lapack_int LAPACKE_ungqr(
+inline lapack_int LAPACKE_ungqr(
     lapack_int m, lapack_int n, lapack_int k,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* tau )
@@ -8491,7 +8491,7 @@ static inline lapack_int LAPACKE_ungqr(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_ungrq(
+inline lapack_int LAPACKE_ungrq(
     lapack_int m, lapack_int n, lapack_int k,
     float* A, lapack_int lda,
     float* tau )
@@ -8502,7 +8502,7 @@ static inline lapack_int LAPACKE_ungrq(
         tau );
 }
 
-static inline lapack_int LAPACKE_ungrq(
+inline lapack_int LAPACKE_ungrq(
     lapack_int m, lapack_int n, lapack_int k,
     double* A, lapack_int lda,
     double* tau )
@@ -8513,7 +8513,7 @@ static inline lapack_int LAPACKE_ungrq(
         tau );
 }
 
-static inline lapack_int LAPACKE_ungrq(
+inline lapack_int LAPACKE_ungrq(
     lapack_int m, lapack_int n, lapack_int k,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* tau )
@@ -8524,7 +8524,7 @@ static inline lapack_int LAPACKE_ungrq(
         (lapack_complex_float*) tau );
 }
 
-static inline lapack_int LAPACKE_ungrq(
+inline lapack_int LAPACKE_ungrq(
     lapack_int m, lapack_int n, lapack_int k,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* tau )
@@ -8536,7 +8536,7 @@ static inline lapack_int LAPACKE_ungrq(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_ungtr(
+inline lapack_int LAPACKE_ungtr(
     char uplo, lapack_int n,
     float* A, lapack_int lda,
     float* tau )
@@ -8547,7 +8547,7 @@ static inline lapack_int LAPACKE_ungtr(
         tau );
 }
 
-static inline lapack_int LAPACKE_ungtr(
+inline lapack_int LAPACKE_ungtr(
     char uplo, lapack_int n,
     double* A, lapack_int lda,
     double* tau )
@@ -8558,7 +8558,7 @@ static inline lapack_int LAPACKE_ungtr(
         tau );
 }
 
-static inline lapack_int LAPACKE_ungtr(
+inline lapack_int LAPACKE_ungtr(
     char uplo, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* tau )
@@ -8569,7 +8569,7 @@ static inline lapack_int LAPACKE_ungtr(
         (lapack_complex_float*) tau );
 }
 
-static inline lapack_int LAPACKE_ungtr(
+inline lapack_int LAPACKE_ungtr(
     char uplo, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* tau )
@@ -8581,7 +8581,7 @@ static inline lapack_int LAPACKE_ungtr(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_unmhr(
+inline lapack_int LAPACKE_unmhr(
     char side, char trans, lapack_int m, lapack_int n, lapack_int ilo, lapack_int ihi,
     float* A, lapack_int lda,
     float* tau,
@@ -8594,7 +8594,7 @@ static inline lapack_int LAPACKE_unmhr(
         C, ldc );
 }
 
-static inline lapack_int LAPACKE_unmhr(
+inline lapack_int LAPACKE_unmhr(
     char side, char trans, lapack_int m, lapack_int n, lapack_int ilo, lapack_int ihi,
     double* A, lapack_int lda,
     double* tau,
@@ -8607,7 +8607,7 @@ static inline lapack_int LAPACKE_unmhr(
         C, ldc );
 }
 
-static inline lapack_int LAPACKE_unmhr(
+inline lapack_int LAPACKE_unmhr(
     char side, char trans, lapack_int m, lapack_int n, lapack_int ilo, lapack_int ihi,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* tau,
@@ -8620,7 +8620,7 @@ static inline lapack_int LAPACKE_unmhr(
         (lapack_complex_float*) C, ldc );
 }
 
-static inline lapack_int LAPACKE_unmhr(
+inline lapack_int LAPACKE_unmhr(
     char side, char trans, lapack_int m, lapack_int n, lapack_int ilo, lapack_int ihi,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* tau,
@@ -8634,7 +8634,7 @@ static inline lapack_int LAPACKE_unmhr(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_unmtr(
+inline lapack_int LAPACKE_unmtr(
     char side, char uplo, char trans, lapack_int m, lapack_int n,
     float* A, lapack_int lda,
     float* tau,
@@ -8647,7 +8647,7 @@ static inline lapack_int LAPACKE_unmtr(
         C, ldc );
 }
 
-static inline lapack_int LAPACKE_unmtr(
+inline lapack_int LAPACKE_unmtr(
     char side, char uplo, char trans, lapack_int m, lapack_int n,
     double* A, lapack_int lda,
     double* tau,
@@ -8660,7 +8660,7 @@ static inline lapack_int LAPACKE_unmtr(
         C, ldc );
 }
 
-static inline lapack_int LAPACKE_unmtr(
+inline lapack_int LAPACKE_unmtr(
     char side, char uplo, char trans, lapack_int m, lapack_int n,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* tau,
@@ -8673,7 +8673,7 @@ static inline lapack_int LAPACKE_unmtr(
         (lapack_complex_float*) C, ldc );
 }
 
-static inline lapack_int LAPACKE_unmtr(
+inline lapack_int LAPACKE_unmtr(
     char side, char uplo, char trans, lapack_int m, lapack_int n,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* tau,
@@ -8687,7 +8687,7 @@ static inline lapack_int LAPACKE_unmtr(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_upgtr(
+inline lapack_int LAPACKE_upgtr(
     char uplo, lapack_int n,
     float* AP,
     float* tau,
@@ -8700,7 +8700,7 @@ static inline lapack_int LAPACKE_upgtr(
         Q, ldq );
 }
 
-static inline lapack_int LAPACKE_upgtr(
+inline lapack_int LAPACKE_upgtr(
     char uplo, lapack_int n,
     double* AP,
     double* tau,
@@ -8713,7 +8713,7 @@ static inline lapack_int LAPACKE_upgtr(
         Q, ldq );
 }
 
-static inline lapack_int LAPACKE_upgtr(
+inline lapack_int LAPACKE_upgtr(
     char uplo, lapack_int n,
     std::complex<float>* AP,
     std::complex<float>* tau,
@@ -8726,7 +8726,7 @@ static inline lapack_int LAPACKE_upgtr(
         (lapack_complex_float*) Q, ldq );
 }
 
-static inline lapack_int LAPACKE_upgtr(
+inline lapack_int LAPACKE_upgtr(
     char uplo, lapack_int n,
     std::complex<double>* AP,
     std::complex<double>* tau,
@@ -8740,7 +8740,7 @@ static inline lapack_int LAPACKE_upgtr(
 }
 
 // -----------------------------------------------------------------------------
-static inline lapack_int LAPACKE_upmtr(
+inline lapack_int LAPACKE_upmtr(
     char side, char uplo, char trans, lapack_int m, lapack_int n,
     float* AP,
     float* tau,
@@ -8753,7 +8753,7 @@ static inline lapack_int LAPACKE_upmtr(
         C, ldc );
 }
 
-static inline lapack_int LAPACKE_upmtr(
+inline lapack_int LAPACKE_upmtr(
     char side, char uplo, char trans, lapack_int m, lapack_int n,
     double* AP,
     double* tau,
@@ -8766,7 +8766,7 @@ static inline lapack_int LAPACKE_upmtr(
         C, ldc );
 }
 
-static inline lapack_int LAPACKE_upmtr(
+inline lapack_int LAPACKE_upmtr(
     char side, char uplo, char trans, lapack_int m, lapack_int n,
     std::complex<float>* AP,
     std::complex<float>* tau,
@@ -8779,7 +8779,7 @@ static inline lapack_int LAPACKE_upmtr(
         (lapack_complex_float*) C, ldc );
 }
 
-static inline lapack_int LAPACKE_upmtr(
+inline lapack_int LAPACKE_upmtr(
     char side, char uplo, char trans, lapack_int m, lapack_int n,
     std::complex<double>* AP,
     std::complex<double>* tau,

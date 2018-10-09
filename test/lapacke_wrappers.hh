@@ -19,6 +19,8 @@
 // *after* lapacke.h, which may define LAPACK_GLOBAL macro
 #include "lapack_mangling.h"
 
+// This is in alphabetical order.
+
 // -----------------------------------------------------------------------------
 static inline lapack_int LAPACKE_gbcon(
     char norm, lapack_int n, lapack_int kl, lapack_int ku,

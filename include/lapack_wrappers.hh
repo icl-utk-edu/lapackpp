@@ -5,6 +5,8 @@
 
 namespace lapack {
 
+// This is in alphabetical order.
+
 // -----------------------------------------------------------------------------
 int64_t bbcsd(
     lapack::Job jobu1, lapack::Job jobu2, lapack::Job jobv1t, lapack::Job jobv2t, lapack::Op trans, int64_t m, int64_t p, int64_t q,
@@ -3216,6 +3218,19 @@ int64_t hetrs2(
     std::complex<double>* B, int64_t ldb );
 
 // -----------------------------------------------------------------------------
+int64_t hetrs_aa(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    std::complex<float> const* A, int64_t lda,
+    int64_t const* ipiv,
+    std::complex<float>* B, int64_t ldb );
+
+int64_t hetrs_aa(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    std::complex<double> const* A, int64_t lda,
+    int64_t const* ipiv,
+    std::complex<double>* B, int64_t ldb );
+
+// -----------------------------------------------------------------------------
 // hetrs_rk wraps hetrs_3
 int64_t hetrs_rk(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
@@ -3228,19 +3243,6 @@ int64_t hetrs_rk(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<double> const* A, int64_t lda,
     std::complex<double> const* E,
-    int64_t const* ipiv,
-    std::complex<double>* B, int64_t ldb );
-
-// -----------------------------------------------------------------------------
-int64_t hetrs_aa(
-    lapack::Uplo uplo, int64_t n, int64_t nrhs,
-    std::complex<float> const* A, int64_t lda,
-    int64_t const* ipiv,
-    std::complex<float>* B, int64_t ldb );
-
-int64_t hetrs_aa(
-    lapack::Uplo uplo, int64_t n, int64_t nrhs,
-    std::complex<double> const* A, int64_t lda,
     int64_t const* ipiv,
     std::complex<double>* B, int64_t ldb );
 
@@ -3693,23 +3695,6 @@ int64_t lagsy(
     int64_t* iseed );
 
 // -----------------------------------------------------------------------------
-float lange(
-    lapack::Norm norm, int64_t m, int64_t n,
-    float const* A, int64_t lda );
-
-double lange(
-    lapack::Norm norm, int64_t m, int64_t n,
-    double const* A, int64_t lda );
-
-float lange(
-    lapack::Norm norm, int64_t m, int64_t n,
-    std::complex<float> const* A, int64_t lda );
-
-double lange(
-    lapack::Norm norm, int64_t m, int64_t n,
-    std::complex<double> const* A, int64_t lda );
-
-// -----------------------------------------------------------------------------
 float langb(
     lapack::Norm norm, int64_t n, int64_t kl, int64_t ku,
     float const* AB, int64_t ldab );
@@ -3725,6 +3710,23 @@ float langb(
 double langb(
     lapack::Norm norm, int64_t n, int64_t kl, int64_t ku,
     std::complex<double> const* AB, int64_t ldab );
+
+// -----------------------------------------------------------------------------
+float lange(
+    lapack::Norm norm, int64_t m, int64_t n,
+    float const* A, int64_t lda );
+
+double lange(
+    lapack::Norm norm, int64_t m, int64_t n,
+    double const* A, int64_t lda );
+
+float lange(
+    lapack::Norm norm, int64_t m, int64_t n,
+    std::complex<float> const* A, int64_t lda );
+
+double lange(
+    lapack::Norm norm, int64_t m, int64_t n,
+    std::complex<double> const* A, int64_t lda );
 
 // -----------------------------------------------------------------------------
 float langt(
@@ -3752,21 +3754,13 @@ double langt(
     std::complex<double> const* DU );
 
 // -----------------------------------------------------------------------------
-float lanhs(
-    lapack::Norm norm, int64_t n,
-    float const* A, int64_t lda );
+float lanhb(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n, int64_t kd,
+    std::complex<float> const* AB, int64_t ldab );
 
-double lanhs(
-    lapack::Norm norm, int64_t n,
-    double const* A, int64_t lda );
-
-float lanhs(
-    lapack::Norm norm, int64_t n,
-    std::complex<float> const* A, int64_t lda );
-
-double lanhs(
-    lapack::Norm norm, int64_t n,
-    std::complex<double> const* A, int64_t lda );
+double lanhb(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n, int64_t kd,
+    std::complex<double> const* AB, int64_t ldab );
 
 // -----------------------------------------------------------------------------
 float lanhe(
@@ -3787,13 +3781,21 @@ double lanhp(
     std::complex<double> const* AP );
 
 // -----------------------------------------------------------------------------
-float lanhb(
-    lapack::Norm norm, lapack::Uplo uplo, int64_t n, int64_t kd,
-    std::complex<float> const* AB, int64_t ldab );
+float lanhs(
+    lapack::Norm norm, int64_t n,
+    float const* A, int64_t lda );
 
-double lanhb(
-    lapack::Norm norm, lapack::Uplo uplo, int64_t n, int64_t kd,
-    std::complex<double> const* AB, int64_t ldab );
+double lanhs(
+    lapack::Norm norm, int64_t n,
+    double const* A, int64_t lda );
+
+float lanhs(
+    lapack::Norm norm, int64_t n,
+    std::complex<float> const* A, int64_t lda );
+
+double lanhs(
+    lapack::Norm norm, int64_t n,
+    std::complex<double> const* A, int64_t lda );
 
 // -----------------------------------------------------------------------------
 float lanht(
@@ -3805,76 +3807,6 @@ double lanht(
     lapack::Norm norm, int64_t n,
     double const* D,
     std::complex<double> const* E );
-
-// -----------------------------------------------------------------------------
-float lansy(
-    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
-    float const* A, int64_t lda );
-
-// lanhe alias to lansy
-/// @ingroup norm
-inline float lanhe(
-    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
-    float const* A, int64_t lda )
-{
-    return lansy( norm, uplo, n, A, lda );
-}
-
-double lansy(
-    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
-    double const* A, int64_t lda );
-
-// lanhe alias to lansy
-/// @ingroup norm
-inline double lanhe(
-    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
-    double const* A, int64_t lda )
-{
-    return lansy( norm, uplo, n, A, lda );
-}
-
-float lansy(
-    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
-    std::complex<float> const* A, int64_t lda );
-
-double lansy(
-    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
-    std::complex<double> const* A, int64_t lda );
-
-// -----------------------------------------------------------------------------
-float lansp(
-    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
-    float const* AP );
-
-// lanhp alias to lansp
-/// @ingroup norm
-inline float lanhp(
-    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
-    float const* AP )
-{
-    return lansp( norm, uplo, n, AP );
-}
-
-double lansp(
-    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
-    double const* AP );
-
-// lanhp alias to lansp
-/// @ingroup norm
-inline double lanhp(
-    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
-    double const* AP )
-{
-    return lansp( norm, uplo, n, AP );
-}
-
-float lansp(
-    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
-    std::complex<float> const* AP );
-
-double lansp(
-    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
-    std::complex<double> const* AP );
 
 // -----------------------------------------------------------------------------
 float lansb(
@@ -3912,6 +3844,41 @@ double lansb(
     std::complex<double> const* AB, int64_t ldab );
 
 // -----------------------------------------------------------------------------
+float lansp(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    float const* AP );
+
+// lanhp alias to lansp
+/// @ingroup norm
+inline float lanhp(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    float const* AP )
+{
+    return lansp( norm, uplo, n, AP );
+}
+
+double lansp(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    double const* AP );
+
+// lanhp alias to lansp
+/// @ingroup norm
+inline double lanhp(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    double const* AP )
+{
+    return lansp( norm, uplo, n, AP );
+}
+
+float lansp(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    std::complex<float> const* AP );
+
+double lansp(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    std::complex<double> const* AP );
+
+// -----------------------------------------------------------------------------
 float lanst(
     lapack::Norm norm, int64_t n,
     float const* D,
@@ -3943,21 +3910,56 @@ inline double lanht(
 }
 
 // -----------------------------------------------------------------------------
-float lantr(
-    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t m, int64_t n,
+float lansy(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
     float const* A, int64_t lda );
 
-double lantr(
-    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t m, int64_t n,
+// lanhe alias to lansy
+/// @ingroup norm
+inline float lanhe(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    float const* A, int64_t lda )
+{
+    return lansy( norm, uplo, n, A, lda );
+}
+
+double lansy(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
     double const* A, int64_t lda );
 
-float lantr(
-    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t m, int64_t n,
+// lanhe alias to lansy
+/// @ingroup norm
+inline double lanhe(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
+    double const* A, int64_t lda )
+{
+    return lansy( norm, uplo, n, A, lda );
+}
+
+float lansy(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
     std::complex<float> const* A, int64_t lda );
 
-double lantr(
-    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t m, int64_t n,
+double lansy(
+    lapack::Norm norm, lapack::Uplo uplo, int64_t n,
     std::complex<double> const* A, int64_t lda );
+
+// -----------------------------------------------------------------------------
+float lantb(
+    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t n, int64_t k,
+    float const* AB, int64_t ldab );
+
+double lantb(
+    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t n, int64_t k,
+    double const* AB, int64_t ldab );
+
+float lantb(
+    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t n, int64_t k,
+    std::complex<float> const* AB, int64_t ldab );
+
+double lantb(
+    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t n, int64_t k,
+    std::complex<double> const* AB, int64_t ldab );
 
 // -----------------------------------------------------------------------------
 float lantp(
@@ -3977,21 +3979,21 @@ double lantp(
     std::complex<double> const* AP );
 
 // -----------------------------------------------------------------------------
-float lantb(
-    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t n, int64_t k,
-    float const* AB, int64_t ldab );
+float lantr(
+    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t m, int64_t n,
+    float const* A, int64_t lda );
 
-double lantb(
-    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t n, int64_t k,
-    double const* AB, int64_t ldab );
+double lantr(
+    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t m, int64_t n,
+    double const* A, int64_t lda );
 
-float lantb(
-    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t n, int64_t k,
-    std::complex<float> const* AB, int64_t ldab );
+float lantr(
+    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t m, int64_t n,
+    std::complex<float> const* A, int64_t lda );
 
-double lantb(
-    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t n, int64_t k,
-    std::complex<double> const* AB, int64_t ldab );
+double lantr(
+    lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t m, int64_t n,
+    std::complex<double> const* A, int64_t lda );
 
 // -----------------------------------------------------------------------------
 void lapmr(
@@ -8853,6 +8855,51 @@ int64_t sytrs2(
     std::complex<double>* B, int64_t ldb );
 
 // -----------------------------------------------------------------------------
+int64_t sytrs_aa(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    float const* A, int64_t lda,
+    int64_t const* ipiv,
+    float* B, int64_t ldb );
+
+// hetrs_aa alias to sytrs_aa
+inline int64_t hetrs_aa(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    float const* A, int64_t lda,
+    int64_t const* ipiv,
+    float* B, int64_t ldb )
+{
+    return sytrs_aa( uplo, n, nrhs, A, lda, ipiv, B, ldb );
+}
+
+int64_t sytrs_aa(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    double const* A, int64_t lda,
+    int64_t const* ipiv,
+    double* B, int64_t ldb );
+
+// hetrs_aa alias to sytrs_aa
+inline int64_t hetrs_aa(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    double const* A, int64_t lda,
+    int64_t const* ipiv,
+    double* B, int64_t ldb )
+{
+    return sytrs_aa( uplo, n, nrhs, A, lda, ipiv, B, ldb );
+}
+
+int64_t sytrs_aa(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    std::complex<float> const* A, int64_t lda,
+    int64_t const* ipiv,
+    std::complex<float>* B, int64_t ldb );
+
+int64_t sytrs_aa(
+    lapack::Uplo uplo, int64_t n, int64_t nrhs,
+    std::complex<double> const* A, int64_t lda,
+    int64_t const* ipiv,
+    std::complex<double>* B, int64_t ldb );
+
+// -----------------------------------------------------------------------------
 // sytrs_rk wraps sytrs_3
 int64_t sytrs_rk(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
@@ -8901,51 +8948,6 @@ int64_t sytrs_rk(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     std::complex<double> const* A, int64_t lda,
     std::complex<double> const* E,
-    int64_t const* ipiv,
-    std::complex<double>* B, int64_t ldb );
-
-// -----------------------------------------------------------------------------
-int64_t sytrs_aa(
-    lapack::Uplo uplo, int64_t n, int64_t nrhs,
-    float const* A, int64_t lda,
-    int64_t const* ipiv,
-    float* B, int64_t ldb );
-
-// hetrs_aa alias to sytrs_aa
-inline int64_t hetrs_aa(
-    lapack::Uplo uplo, int64_t n, int64_t nrhs,
-    float const* A, int64_t lda,
-    int64_t const* ipiv,
-    float* B, int64_t ldb )
-{
-    return sytrs_aa( uplo, n, nrhs, A, lda, ipiv, B, ldb );
-}
-
-int64_t sytrs_aa(
-    lapack::Uplo uplo, int64_t n, int64_t nrhs,
-    double const* A, int64_t lda,
-    int64_t const* ipiv,
-    double* B, int64_t ldb );
-
-// hetrs_aa alias to sytrs_aa
-inline int64_t hetrs_aa(
-    lapack::Uplo uplo, int64_t n, int64_t nrhs,
-    double const* A, int64_t lda,
-    int64_t const* ipiv,
-    double* B, int64_t ldb )
-{
-    return sytrs_aa( uplo, n, nrhs, A, lda, ipiv, B, ldb );
-}
-
-int64_t sytrs_aa(
-    lapack::Uplo uplo, int64_t n, int64_t nrhs,
-    std::complex<float> const* A, int64_t lda,
-    int64_t const* ipiv,
-    std::complex<float>* B, int64_t ldb );
-
-int64_t sytrs_aa(
-    lapack::Uplo uplo, int64_t n, int64_t nrhs,
-    std::complex<double> const* A, int64_t lda,
     int64_t const* ipiv,
     std::complex<double>* B, int64_t ldb );
 

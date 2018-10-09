@@ -149,7 +149,7 @@ inline double fadds_unglq(double m, double n, double k)
 
 //------------------------------------------------------------ geqrs
 inline double fmuls_geqrs(double m, double n, double nrhs)
-    { return nrhs*(2*m*n - 0.5*n*n + 25*n); }
+    { return nrhs*(2*m*n - 0.5*n*n + 2.5*n); }
 
 inline double fadds_geqrs(double m, double n, double nrhs)
     { return nrhs*(2*m*n - 0.5*n*n + 0.5*n); }
@@ -206,7 +206,7 @@ inline double fadds_gehrd(double n)
 
 //------------------------------------------------------------ sytrd
 inline double fmuls_sytrd(double n)
-    { return 2/3.*n*n*n + 25*n*n - 1./6*n; }
+    { return 2/3.*n*n*n + 2.5*n*n - 1./6*n; }
 
 inline double fadds_sytrd(double n)
     { return 2/3.*n*n*n + n*n - 8./3.*n; }

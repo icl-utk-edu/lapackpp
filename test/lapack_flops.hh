@@ -341,32 +341,56 @@ public:
     static double gelqf(double m, double n)
         { return 1e-9 * (fmuls_gelqf(m, n) + fadds_gelqf(m, n)); }
 
-    static double orgqr(double m, double n, double k)
+    static double ungqr(double m, double n, double k)
         { return 1e-9 * (fmuls_ungqr(m, n, k) + fadds_ungqr(m, n, k)); }
 
-    static double orgql(double m, double n, double k)
+    static double orgqr(double m, double n, double k)
+        { return ungqr(m, n, k); }
+
+    static double ungql(double m, double n, double k)
         { return 1e-9 * (fmuls_ungql(m, n, k) + fadds_ungql(m, n, k)); }
 
-    static double orgrq(double m, double n, double k)
+    static double orgql(double m, double n, double k)
+        { return ungql(m, n, k); }
+
+    static double ungrq(double m, double n, double k)
         { return 1e-9 * (fmuls_ungrq(m, n, k) + fadds_ungrq(m, n, k)); }
 
-    static double orglq(double m, double n, double k)
+    static double orgrq(double m, double n, double k)
+        { return ungrq(m, n, k); }
+
+    static double unglq(double m, double n, double k)
         { return 1e-9 * (fmuls_unglq(m, n, k) + fadds_unglq(m, n, k)); }
+
+    static double orglq(double m, double n, double k)
+        { return unglq(m, n, k); }
 
     static double geqrs(double m, double n, double nrhs)
         { return 1e-9 * (fmuls_geqrs(m, n, nrhs) + fadds_geqrs(m, n, nrhs)); }
 
-    static double ormqr(lapack::Side side, double m, double n, double k)
+    static double unmqr(lapack::Side side, double m, double n, double k)
         { return 1e-9 * (fmuls_unmqr(side, m, n, k) + fadds_unmqr(side, m, n, k)); }
 
-    static double ormql(lapack::Side side, double m, double n, double k)
+    static double ormqr(lapack::Side side, double m, double n, double k)
+        { return unmqr(side, m, n, k); }
+
+    static double unmql(lapack::Side side, double m, double n, double k)
         { return 1e-9 * (fmuls_unmql(side, m, n, k) + fadds_unmql(side, m, n, k)); }
 
-    static double ormrq(lapack::Side side, double m, double n, double k)
+    static double ormql(lapack::Side side, double m, double n, double k)
+        { return unmql(side, m, n, k); }
+
+    static double unmrq(lapack::Side side, double m, double n, double k)
         { return 1e-9 * (fmuls_unmrq(side, m, n, k) + fadds_unmrq(side, m, n, k)); }
 
-    static double ormlq(lapack::Side side, double m, double n, double k)
+    static double ormrq(lapack::Side side, double m, double n, double k)
+        { return unmrq(side, m, n, k); }
+
+    static double unmlq(lapack::Side side, double m, double n, double k)
         { return 1e-9 * (fmuls_unmlq(side, m, n, k) + fadds_unmlq(side, m, n, k)); }
+
+    static double ormlq(lapack::Side side, double m, double n, double k)
+        { return unmlq(side, m, n, k); }
 
     static double trtri(double n)
         { return 1e-9 * (fmuls_trtri(n) + fadds_trtri(n)); }
@@ -374,8 +398,11 @@ public:
     static double gehrd(double n)
         { return 1e-9 * (fmuls_gehrd(n) + fadds_gehrd(n)); }
 
-    static double sytrd(double n)
+    static double hetrd(double n)
         { return 1e-9 * (fmuls_sytrd(n) + fadds_sytrd(n)); }
+
+    static double sytrd(double n)
+        { return hetrd(n); }
 
     static double gebrd(double m, double n)
         { return 1e-9 * (fmuls_gebrd(m, n) + fadds_gebrd(m, n)); }
@@ -392,29 +419,11 @@ public:
     static double lange(double m, double n, lapack::Norm norm)
         { return 1e-9 * (fmuls_lange(m, n, norm) + fadds_lange(m, n, norm)); }
 
-    static double lansy(double n, lapack::Norm norm)
+    static double lanhe(double n, lapack::Norm norm)
         { return 1e-9 * (fmuls_lanhe(n, norm) + fadds_lanhe(n, norm)); }
 
-    // ------------------------------------------------------------------
-    // Make complex function names available for tests
-
-    static double ungqr(double m, double n, double k)
-        { return 1e-9 * (6*fmuls_ungqr(m, n, k) + 2*fadds_ungqr(m, n, k)); }
-
-    static double unglq(double m, double n, double k)
-        { return 1e-9 * (6*fmuls_unglq(m, n, k) + 2*fadds_unglq(m, n, k)); }
-
-    static double ungql(double m, double n, double k)
-        { return 1e-9 * (6*fmuls_ungql(m, n, k) + 2*fadds_ungql(m, n, k)); }
-
-    static double ungrq(double m, double n, double k)
-        { return 1e-9 * (6*fmuls_ungrq(m, n, k) + 2*fadds_ungrq(m, n, k)); }
-
-    static double unmqr(lapack::Side side, double m, double n, double k)
-        { return 1e-9 * (6*fmuls_unmqr(side, m, n, k) + 2*fadds_unmqr(side, m, n, k)); }
-
-    static double hetrd(double n)
-        { return 1e-9 * (6*fmuls_hetrd(n) + 2*fadds_hetrd(n)); }
+    static double lansy(double n, lapack::Norm norm)
+        { return lanhe(n, norm); }
 };
 
 //==============================================================================

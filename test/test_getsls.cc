@@ -36,7 +36,7 @@ void test_getsls_work( Params& params, bool run )
 
     // ---------- setup
     int64_t lda = roundup( max( 1, m ), align );
-    int64_t ldb = roundup( max( 1, max( m, n ) ), align );
+    int64_t ldb = roundup( max( 1, m, n ), align );
     size_t size_A = (size_t) lda * n;
     size_t size_B = (size_t) ldb * nrhs;
 

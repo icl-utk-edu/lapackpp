@@ -9263,6 +9263,122 @@ int64_t tpcon(
     double* rcond );
 
 // -----------------------------------------------------------------------------
+int64_t tplqt(
+    int64_t m, int64_t n, int64_t l, int64_t mb,
+    float* A, int64_t lda,
+    float* B, int64_t ldb,
+    float* T, int64_t ldt );
+
+int64_t tplqt(
+    int64_t m, int64_t n, int64_t l, int64_t mb,
+    double* A, int64_t lda,
+    double* B, int64_t ldb,
+    double* T, int64_t ldt );
+
+int64_t tplqt(
+    int64_t m, int64_t n, int64_t l, int64_t mb,
+    std::complex<float>* A, int64_t lda,
+    std::complex<float>* B, int64_t ldb,
+    std::complex<float>* T, int64_t ldt );
+
+int64_t tplqt(
+    int64_t m, int64_t n, int64_t l, int64_t mb,
+    std::complex<double>* A, int64_t lda,
+    std::complex<double>* B, int64_t ldb,
+    std::complex<double>* T, int64_t ldt );
+
+// -----------------------------------------------------------------------------
+int64_t tplqt2(
+    int64_t m, int64_t n, int64_t l,
+    float* A, int64_t lda,
+    float* B, int64_t ldb,
+    float* T, int64_t ldt );
+
+int64_t tplqt2(
+    int64_t m, int64_t n, int64_t l,
+    double* A, int64_t lda,
+    double* B, int64_t ldb,
+    double* T, int64_t ldt );
+
+int64_t tplqt2(
+    int64_t m, int64_t n, int64_t l,
+    std::complex<float>* A, int64_t lda,
+    std::complex<float>* B, int64_t ldb,
+    std::complex<float>* T, int64_t ldt );
+
+int64_t tplqt2(
+    int64_t m, int64_t n, int64_t l,
+    std::complex<double>* A, int64_t lda,
+    std::complex<double>* B, int64_t ldb,
+    std::complex<double>* T, int64_t ldt );
+
+// -----------------------------------------------------------------------------
+int64_t tpmlqt(
+    lapack::Side side, lapack::Op trans,
+    int64_t m, int64_t n, int64_t k, int64_t l, int64_t mb,
+    float const* V, int64_t ldv,
+    float const* T, int64_t ldt,
+    float* A, int64_t lda,
+    float* B, int64_t ldb );
+
+int64_t tpmlqt(
+    lapack::Side side, lapack::Op trans,
+    int64_t m, int64_t n, int64_t k, int64_t l, int64_t mb,
+    double const* V, int64_t ldv,
+    double const* T, int64_t ldt,
+    double* A, int64_t lda,
+    double* B, int64_t ldb );
+
+int64_t tpmlqt(
+    lapack::Side side, lapack::Op trans,
+    int64_t m, int64_t n, int64_t k, int64_t l, int64_t mb,
+    std::complex<float> const* V, int64_t ldv,
+    std::complex<float> const* T, int64_t ldt,
+    std::complex<float>* A, int64_t lda,
+    std::complex<float>* B, int64_t ldb );
+
+int64_t tpmlqt(
+    lapack::Side side, lapack::Op trans,
+    int64_t m, int64_t n, int64_t k, int64_t l, int64_t mb,
+    std::complex<double> const* V, int64_t ldv,
+    std::complex<double> const* T, int64_t ldt,
+    std::complex<double>* A, int64_t lda,
+    std::complex<double>* B, int64_t ldb );
+
+// -----------------------------------------------------------------------------
+int64_t tpmqrt(
+    lapack::Side side, lapack::Op trans,
+    int64_t m, int64_t n, int64_t k, int64_t l, int64_t nb,
+    float const* V, int64_t ldv,
+    float const* T, int64_t ldt,
+    float* A, int64_t lda,
+    float* B, int64_t ldb );
+
+int64_t tpmqrt(
+    lapack::Side side, lapack::Op trans,
+    int64_t m, int64_t n, int64_t k, int64_t l, int64_t nb,
+    double const* V, int64_t ldv,
+    double const* T, int64_t ldt,
+    double* A, int64_t lda,
+    double* B, int64_t ldb );
+
+int64_t tpmqrt(
+    lapack::Side side, lapack::Op trans,
+    int64_t m, int64_t n, int64_t k, int64_t l, int64_t nb,
+    std::complex<float> const* V, int64_t ldv,
+    std::complex<float> const* T, int64_t ldt,
+    std::complex<float>* A, int64_t lda,
+    std::complex<float>* B, int64_t ldb );
+
+int64_t tpmqrt(
+    lapack::Side side, lapack::Op trans,
+    int64_t m, int64_t n, int64_t k, int64_t l, int64_t nb,
+    std::complex<double> const* V, int64_t ldv,
+    std::complex<double> const* T, int64_t ldt,
+    std::complex<double>* A, int64_t lda,
+    std::complex<double>* B, int64_t ldb );
+
+// -----------------------------------------------------------------------------
 int64_t tpqrt(
     int64_t m, int64_t n, int64_t l, int64_t nb,
     float* A, int64_t lda,
@@ -9311,6 +9427,39 @@ int64_t tpqrt2(
     std::complex<double>* A, int64_t lda,
     std::complex<double>* B, int64_t ldb,
     std::complex<double>* T, int64_t ldt );
+
+// -----------------------------------------------------------------------------
+void tprfb(
+    lapack::Side side, lapack::Op trans, lapack::Direct direct, lapack::StoreV storev,
+    int64_t m, int64_t n, int64_t k, int64_t l,
+    float const* V, int64_t ldv,
+    float const* T, int64_t ldt,
+    float* A, int64_t lda,
+    float* B, int64_t ldb );
+
+void tprfb(
+    lapack::Side side, lapack::Op trans, lapack::Direct direct, lapack::StoreV storev,
+    int64_t m, int64_t n, int64_t k, int64_t l,
+    double const* V, int64_t ldv,
+    double const* T, int64_t ldt,
+    double* A, int64_t lda,
+    double* B, int64_t ldb );
+
+void tprfb(
+    lapack::Side side, lapack::Op trans, lapack::Direct direct, lapack::StoreV storev,
+    int64_t m, int64_t n, int64_t k, int64_t l,
+    std::complex<float> const* V, int64_t ldv,
+    std::complex<float> const* T, int64_t ldt,
+    std::complex<float>* A, int64_t lda,
+    std::complex<float>* B, int64_t ldb );
+
+void tprfb(
+    lapack::Side side, lapack::Op trans, lapack::Direct direct, lapack::StoreV storev,
+    int64_t m, int64_t n, int64_t k, int64_t l,
+    std::complex<double> const* V, int64_t ldv,
+    std::complex<double> const* T, int64_t ldt,
+    std::complex<double>* A, int64_t lda,
+    std::complex<double>* B, int64_t ldb );
 
 // -----------------------------------------------------------------------------
 int64_t tprfs(

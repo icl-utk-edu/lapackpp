@@ -12505,6 +12505,120 @@ void LAPACK_zhetrd_2stage(
     lapack_complex_double* work, lapack_int const* lwork,
     lapack_int* info );
 
+/* ----- LQ factorization of triangular A and pentagonal B */
+#define LAPACK_stplqt LAPACK_GLOBAL(stplqt,STPLQT)
+void LAPACK_stplqt(
+    lapack_int const* m, lapack_int const* n, lapack_int const* l,
+    lapack_int const* mb,
+    float* A, lapack_int const* lda,
+    float* B, lapack_int const* ldb,
+    float* T, lapack_int const* ldt,
+    float* work,
+    lapack_int* info );
+#define LAPACK_dtplqt LAPACK_GLOBAL(dtplqt,DTPLQT)
+void LAPACK_dtplqt(
+    lapack_int const* m, lapack_int const* n, lapack_int const* l,
+    lapack_int const* mb,
+    double* A, lapack_int const* lda,
+    double* B, lapack_int const* ldb,
+    double* T, lapack_int const* ldt,
+    double* work,
+    lapack_int* info );
+#define LAPACK_ctplqt LAPACK_GLOBAL(ctplqt,CTPLQT)
+void LAPACK_ctplqt(
+    lapack_int const* m, lapack_int const* n, lapack_int const* l,
+    lapack_int const* mb,
+    lapack_complex_float* A, lapack_int const* lda,
+    lapack_complex_float* B, lapack_int const* ldb,
+    lapack_complex_float* T, lapack_int const* ldt,
+    lapack_complex_float* work,
+    lapack_int* info );
+#define LAPACK_ztplqt LAPACK_GLOBAL(ztplqt,ZTPLQT)
+void LAPACK_ztplqt(
+    lapack_int const* m, lapack_int const* n, lapack_int const* l,
+    lapack_int const* mb,
+    lapack_complex_double* A, lapack_int const* lda,
+    lapack_complex_double* B, lapack_int const* ldb,
+    lapack_complex_double* T, lapack_int const* ldt,
+    lapack_complex_double* work,
+    lapack_int* info );
+
+/* ----- LQ factorization of triangular A and pentagonal B */
+#define LAPACK_stplqt2 LAPACK_GLOBAL(stplqt2,STPLQT2)
+void LAPACK_stplqt2(
+    lapack_int const* m, lapack_int const* n, lapack_int const* l,
+    float* A, lapack_int const* lda,
+    float* B, lapack_int const* ldb,
+    float* T, lapack_int const* ldt,
+    lapack_int* info );
+#define LAPACK_dtplqt2 LAPACK_GLOBAL(dtplqt2,DTPLQT2)
+void LAPACK_dtplqt2(
+    lapack_int const* m, lapack_int const* n, lapack_int const* l,
+    double* A, lapack_int const* lda,
+    double* B, lapack_int const* ldb,
+    double* T, lapack_int const* ldt,
+    lapack_int* info );
+#define LAPACK_ctplqt2 LAPACK_GLOBAL(ctplqt2,CTPLQT2)
+void LAPACK_ctplqt2(
+    lapack_int const* m, lapack_int const* n, lapack_int const* l,
+    lapack_complex_float* A, lapack_int const* lda,
+    lapack_complex_float* B, lapack_int const* ldb,
+    lapack_complex_float* T, lapack_int const* ldt,
+    lapack_int* info );
+#define LAPACK_ztplqt2 LAPACK_GLOBAL(ztplqt2,ZTPLQT2)
+void LAPACK_ztplqt2(
+    lapack_int const* m, lapack_int const* n, lapack_int const* l,
+    lapack_complex_double* A, lapack_int const* lda,
+    lapack_complex_double* B, lapack_int const* ldb,
+    lapack_complex_double* T, lapack_int const* ldt,
+    lapack_int* info );
+
+/* ----- multiply by Q from tplqt */
+#define LAPACK_stpmlqt LAPACK_GLOBAL(stpmlqt,STPMLQT)
+void LAPACK_stpmlqt(
+    char const* side, char const* trans,
+    lapack_int const* m, lapack_int const* n, lapack_int const* k,
+    lapack_int const* l, lapack_int const* mb,
+    float const* V, lapack_int const* ldv,
+    float const* T, lapack_int const* ldt,
+    float* A, lapack_int const* lda,
+    float* B, lapack_int const* ldb,
+    float* work,
+    lapack_int* info );
+#define LAPACK_dtpmlqt LAPACK_GLOBAL(dtpmlqt,DTPMLQT)
+void LAPACK_dtpmlqt(
+    char const* side, char const* trans,
+    lapack_int const* m, lapack_int const* n, lapack_int const* k,
+    lapack_int const* l, lapack_int const* mb,
+    double const* V, lapack_int const* ldv,
+    double const* T, lapack_int const* ldt,
+    double* A, lapack_int const* lda,
+    double* B, lapack_int const* ldb,
+    double* work,
+    lapack_int* info );
+#define LAPACK_ctpmlqt LAPACK_GLOBAL(ctpmlqt,CTPMLQT)
+void LAPACK_ctpmlqt(
+    char const* side, char const* trans,
+    lapack_int const* m, lapack_int const* n, lapack_int const* k,
+    lapack_int const* l, lapack_int const* mb,
+    lapack_complex_float const* V, lapack_int const* ldv,
+    lapack_complex_float const* T, lapack_int const* ldt,
+    lapack_complex_float* A, lapack_int const* lda,
+    lapack_complex_float* B, lapack_int const* ldb,
+    lapack_complex_float* work,
+    lapack_int* info );
+#define LAPACK_ztpmlqt LAPACK_GLOBAL(ztpmlqt,ZTPMLQT)
+void LAPACK_ztpmlqt(
+    char const* side, char const* trans,
+    lapack_int const* m, lapack_int const* n, lapack_int const* k,
+    lapack_int const* l, lapack_int const* mb,
+    lapack_complex_double const* V, lapack_int const* ldv,
+    lapack_complex_double const* T, lapack_int const* ldt,
+    lapack_complex_double* A, lapack_int const* lda,
+    lapack_complex_double* B, lapack_int const* ldb,
+    lapack_complex_double* work,
+    lapack_int* info );
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

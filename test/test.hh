@@ -67,10 +67,12 @@ public:
     libtest::ParamEnum< lapack::Equed >     equed;
 
     libtest::ParamInt3   dim;
+    libtest::ParamInt    l;
     libtest::ParamInt    kd;
     libtest::ParamInt    kl;
     libtest::ParamInt    ku;
     libtest::ParamInt    nrhs;
+    libtest::ParamInt    nb;
     libtest::ParamDouble vl;
     libtest::ParamDouble vu;
     libtest::ParamInt    il;
@@ -298,6 +300,18 @@ void test_unmqr ( Params& params, bool run );
 void test_unmlq ( Params& params, bool run );
 void test_unmql ( Params& params, bool run );
 void test_unmrq ( Params& params, bool run );
+
+// triangle-pentagon QR, LQ
+void test_tpqrt ( Params& params, bool run );
+void test_tplqt ( Params& params, bool run );
+
+void test_tpqrt2( Params& params, bool run );
+void test_tplqt2( Params& params, bool run );
+
+void test_tpmqrt( Params& params, bool run );
+void test_tpmlqt( Params& params, bool run );
+
+void test_tprfb ( Params& params, bool run );
 
 // symmetric eigenvalues
 void test_heev  ( Params& params, bool run );

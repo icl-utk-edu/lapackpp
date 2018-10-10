@@ -253,6 +253,21 @@ std::vector< libtest::routines_t > routines = {
   //{ "unmlq",              test_unmlq,     Section::qr },
   //{ "unmql",              test_unmql,     Section::qr },
   //{ "unmrq",              test_unmrq,     Section::qr },
+  //{ "",                   nullptr,        Section::newline },
+
+    { "tpqrt",              test_tpqrt,     Section::qr },
+    { "tplqt",              test_tplqt,     Section::qr },
+    { "",                   nullptr,        Section::newline },
+
+    { "tpqrt2",             test_tpqrt2,    Section::qr },
+    { "tplqt2",             test_tplqt2,    Section::qr },
+    { "",                   nullptr,        Section::newline },
+
+    { "tpmqrt",             test_tpmqrt,    Section::qr },
+    { "tpmlqt",             test_tpmlqt,    Section::qr },
+    { "",                   nullptr,        Section::newline },
+
+    { "tprfb",              test_tprfb,     Section::qr },
     { "",                   nullptr,        Section::newline },
 
     // -----
@@ -463,10 +478,12 @@ Params::Params():
 
     //          name,      w, p, type,            def,   min,     max, help
     dim       ( "dim",     6,    ParamType::List,          0, 1000000, "m by n by k dimensions" ),
+    l         ( "l",       6,    ParamType::List, 100,     0, 1000000, "l dimension (e.g., tpqrt)" ),
     kd        ( "kd",      6,    ParamType::List, 100,     0, 1000000, "bandwidth" ),
     kl        ( "kl",      6,    ParamType::List, 100,     0, 1000000, "lower bandwidth" ),
     ku        ( "ku",      6,    ParamType::List, 100,     0, 1000000, "upper bandwidth" ),
     nrhs      ( "nrhs",    6,    ParamType::List,  10,     0, 1000000, "number of right hand sides" ),
+    nb        ( "nb",      6,    ParamType::List, 100,     0, 1000000, "block size" ),
     vl        ( "vl",      7, 2, ParamType::List, -inf, -inf,     inf, "lower bound of eigen/singular values to find" ),
     vu        ( "vu",      7, 2, ParamType::List,  inf, -inf,     inf, "upper bound of eigen/singular values to find" ),
 

@@ -8312,6 +8312,648 @@ inline lapack_int LAPACKE_sytrs_rook(
 #endif // 30500
 
 // -----------------------------------------------------------------------------
+#if LAPACK_VERSION >= 30700
+
+// Fortran prototypes if not given via lapacke.h
+extern "C" {
+
+/* ----- LQ factorization of triangular A and pentagonal B */
+#ifndef LAPACK_stplqt
+#define LAPACK_stplqt LAPACK_GLOBAL(stplqt,STPLQT)
+void LAPACK_stplqt(
+    lapack_int const* m, lapack_int const* n, lapack_int const* l,
+    lapack_int const* mb,
+    float* A, lapack_int const* lda,
+    float* B, lapack_int const* ldb,
+    float* T, lapack_int const* ldt,
+    float* work,
+    lapack_int* info );
+#endif
+
+#ifndef LAPACK_dtplqt
+#define LAPACK_dtplqt LAPACK_GLOBAL(dtplqt,DTPLQT)
+void LAPACK_dtplqt(
+    lapack_int const* m, lapack_int const* n, lapack_int const* l,
+    lapack_int const* mb,
+    double* A, lapack_int const* lda,
+    double* B, lapack_int const* ldb,
+    double* T, lapack_int const* ldt,
+    double* work,
+    lapack_int* info );
+#endif
+
+#ifndef LAPACK_ctplqt
+#define LAPACK_ctplqt LAPACK_GLOBAL(ctplqt,CTPLQT)
+void LAPACK_ctplqt(
+    lapack_int const* m, lapack_int const* n, lapack_int const* l,
+    lapack_int const* mb,
+    lapack_complex_float* A, lapack_int const* lda,
+    lapack_complex_float* B, lapack_int const* ldb,
+    lapack_complex_float* T, lapack_int const* ldt,
+    lapack_complex_float* work,
+    lapack_int* info );
+#endif
+
+#ifndef LAPACK_ztplqt
+#define LAPACK_ztplqt LAPACK_GLOBAL(ztplqt,ZTPLQT)
+void LAPACK_ztplqt(
+    lapack_int const* m, lapack_int const* n, lapack_int const* l,
+    lapack_int const* mb,
+    lapack_complex_double* A, lapack_int const* lda,
+    lapack_complex_double* B, lapack_int const* ldb,
+    lapack_complex_double* T, lapack_int const* ldt,
+    lapack_complex_double* work,
+    lapack_int* info );
+#endif
+
+}  // extern "C"
+
+// --------------------
+// wrappers around LAPACK (not in LAPACKE)
+inline lapack_int LAPACKE_tplqt(
+    lapack_int m, lapack_int n, lapack_int l, lapack_int mb,
+    float* A, lapack_int lda,
+    float* B, lapack_int ldb,
+    float* T, lapack_int ldt )
+{
+    std::vector<float> work( mb*m );
+    lapack_int info = 0;
+    LAPACK_stplqt(
+        &m, &n, &l, &mb,
+        A, &lda,
+        B, &ldb,
+        T, &ldt,
+        work.data(),
+        &info );
+    return info;
+}
+
+inline lapack_int LAPACKE_tplqt(
+    lapack_int m, lapack_int n, lapack_int l, lapack_int mb,
+    double* A, lapack_int lda,
+    double* B, lapack_int ldb,
+    double* T, lapack_int ldt )
+{
+    std::vector<double> work( mb*m );
+    lapack_int info = 0;
+    LAPACK_dtplqt(
+        &m, &n, &l, &mb,
+        A, &lda,
+        B, &ldb,
+        T, &ldt,
+        work.data(),
+        &info );
+    return info;
+}
+
+inline lapack_int LAPACKE_tplqt(
+    lapack_int m, lapack_int n, lapack_int l, lapack_int mb,
+    std::complex<float>* A, lapack_int lda,
+    std::complex<float>* B, lapack_int ldb,
+    std::complex<float>* T, lapack_int ldt )
+{
+    std::vector<lapack_complex_float> work( mb*m );
+    lapack_int info = 0;
+    LAPACK_ctplqt(
+        &m, &n, &l, &mb,
+        (lapack_complex_float*) A, &lda,
+        (lapack_complex_float*) B, &ldb,
+        (lapack_complex_float*) T, &ldt,
+        work.data(),
+        &info );
+    return info;
+}
+
+inline lapack_int LAPACKE_tplqt(
+    lapack_int m, lapack_int n, lapack_int l, lapack_int mb,
+    std::complex<double>* A, lapack_int lda,
+    std::complex<double>* B, lapack_int ldb,
+    std::complex<double>* T, lapack_int ldt )
+{
+    std::vector<lapack_complex_double> work( mb*m );
+    lapack_int info = 0;
+    LAPACK_ztplqt(
+        &m, &n, &l, &mb,
+        (lapack_complex_double*) A, &lda,
+        (lapack_complex_double*) B, &ldb,
+        (lapack_complex_double*) T, &ldt,
+        work.data(),
+        &info );
+    return info;
+}
+#endif // 30700
+
+// -----------------------------------------------------------------------------
+// Fortran prototypes if not given via lapacke.h
+extern "C" {
+
+/* ----- LQ factorization of triangular A and pentagonal B */
+#ifndef LAPACK_stplqt2
+#define LAPACK_stplqt2 LAPACK_GLOBAL(stplqt2,STPLQT2)
+void LAPACK_stplqt2(
+    lapack_int const* m, lapack_int const* n, lapack_int const* l,
+    float* A, lapack_int const* lda,
+    float* B, lapack_int const* ldb,
+    float* T, lapack_int const* ldt,
+    lapack_int* info );
+#endif
+
+#ifndef LAPACK_dtplqt2
+#define LAPACK_dtplqt2 LAPACK_GLOBAL(dtplqt2,DTPLQT2)
+void LAPACK_dtplqt2(
+    lapack_int const* m, lapack_int const* n, lapack_int const* l,
+    double* A, lapack_int const* lda,
+    double* B, lapack_int const* ldb,
+    double* T, lapack_int const* ldt,
+    lapack_int* info );
+#endif
+
+#ifndef LAPACK_ctplqt2
+#define LAPACK_ctplqt2 LAPACK_GLOBAL(ctplqt2,CTPLQT2)
+void LAPACK_ctplqt2(
+    lapack_int const* m, lapack_int const* n, lapack_int const* l,
+    lapack_complex_float* A, lapack_int const* lda,
+    lapack_complex_float* B, lapack_int const* ldb,
+    lapack_complex_float* T, lapack_int const* ldt,
+    lapack_int* info );
+#endif
+
+#ifndef LAPACK_ztplqt2
+#define LAPACK_ztplqt2 LAPACK_GLOBAL(ztplqt2,ZTPLQT2)
+void LAPACK_ztplqt2(
+    lapack_int const* m, lapack_int const* n, lapack_int const* l,
+    lapack_complex_double* A, lapack_int const* lda,
+    lapack_complex_double* B, lapack_int const* ldb,
+    lapack_complex_double* T, lapack_int const* ldt,
+    lapack_int* info );
+#endif
+
+}  // extern "C"
+
+// --------------------
+// wrappers around LAPACK (not in LAPACKE)
+#if LAPACK_VERSION >= 30700
+inline lapack_int LAPACKE_tplqt2(
+    lapack_int m, lapack_int n, lapack_int l,
+    float* A, lapack_int lda,
+    float* B, lapack_int ldb,
+    float* T, lapack_int ldt )
+{
+    lapack_int info = 0;
+    LAPACK_stplqt2(
+        &m, &n, &l,
+        A, &lda,
+        B, &ldb,
+        T, &ldt,
+        &info );
+    return info;
+}
+
+inline lapack_int LAPACKE_tplqt2(
+    lapack_int m, lapack_int n, lapack_int l,
+    double* A, lapack_int lda,
+    double* B, lapack_int ldb,
+    double* T, lapack_int ldt )
+{
+    lapack_int info = 0;
+    LAPACK_dtplqt2(
+        &m, &n, &l,
+        A, &lda,
+        B, &ldb,
+        T, &ldt,
+        &info );
+    return info;
+}
+
+inline lapack_int LAPACKE_tplqt2(
+    lapack_int m, lapack_int n, lapack_int l,
+    std::complex<float>* A, lapack_int lda,
+    std::complex<float>* B, lapack_int ldb,
+    std::complex<float>* T, lapack_int ldt )
+{
+    lapack_int info = 0;
+    LAPACK_ctplqt2(
+        &m, &n, &l,
+        (lapack_complex_float*) A, &lda,
+        (lapack_complex_float*) B, &ldb,
+        (lapack_complex_float*) T, &ldt,
+        &info );
+    return info;
+}
+
+inline lapack_int LAPACKE_tplqt2(
+    lapack_int m, lapack_int n, lapack_int l,
+    std::complex<double>* A, lapack_int lda,
+    std::complex<double>* B, lapack_int ldb,
+    std::complex<double>* T, lapack_int ldt )
+{
+    lapack_int info = 0;
+    LAPACK_ztplqt2(
+        &m, &n, &l,
+        (lapack_complex_double*) A, &lda,
+        (lapack_complex_double*) B, &ldb,
+        (lapack_complex_double*) T, &ldt,
+        &info );
+    return info;
+}
+#endif // 30700
+
+// -----------------------------------------------------------------------------
+// Fortran prototypes if not given via lapacke.h
+extern "C" {
+
+/* ----- multiply by Q from tplqt */
+#ifndef LAPACK_stpmlqt
+#define LAPACK_stpmlqt LAPACK_GLOBAL(stpmlqt,STPMLQT)
+void LAPACK_stpmlqt(
+    char const* side, char const* trans,
+    lapack_int const* m, lapack_int const* n, lapack_int const* k,
+    lapack_int const* l, lapack_int const* mb,
+    float const* V, lapack_int const* ldv,
+    float const* T, lapack_int const* ldt,
+    float* A, lapack_int const* lda,
+    float* B, lapack_int const* ldb,
+    float* work,
+    lapack_int* info );
+#endif
+
+#ifndef LAPACK_dtpmlqt
+#define LAPACK_dtpmlqt LAPACK_GLOBAL(dtpmlqt,DTPMLQT)
+void LAPACK_dtpmlqt(
+    char const* side, char const* trans,
+    lapack_int const* m, lapack_int const* n, lapack_int const* k,
+    lapack_int const* l, lapack_int const* mb,
+    double const* V, lapack_int const* ldv,
+    double const* T, lapack_int const* ldt,
+    double* A, lapack_int const* lda,
+    double* B, lapack_int const* ldb,
+    double* work,
+    lapack_int* info );
+#endif
+
+#ifndef LAPACK_ctpmlqt
+#define LAPACK_ctpmlqt LAPACK_GLOBAL(ctpmlqt,CTPMLQT)
+void LAPACK_ctpmlqt(
+    char const* side, char const* trans,
+    lapack_int const* m, lapack_int const* n, lapack_int const* k,
+    lapack_int const* l, lapack_int const* mb,
+    lapack_complex_float const* V, lapack_int const* ldv,
+    lapack_complex_float const* T, lapack_int const* ldt,
+    lapack_complex_float* A, lapack_int const* lda,
+    lapack_complex_float* B, lapack_int const* ldb,
+    lapack_complex_float* work,
+    lapack_int* info );
+#endif
+
+#ifndef LAPACK_ztpmlqt
+#define LAPACK_ztpmlqt LAPACK_GLOBAL(ztpmlqt,ZTPMLQT)
+void LAPACK_ztpmlqt(
+    char const* side, char const* trans,
+    lapack_int const* m, lapack_int const* n, lapack_int const* k,
+    lapack_int const* l, lapack_int const* mb,
+    lapack_complex_double const* V, lapack_int const* ldv,
+    lapack_complex_double const* T, lapack_int const* ldt,
+    lapack_complex_double* A, lapack_int const* lda,
+    lapack_complex_double* B, lapack_int const* ldb,
+    lapack_complex_double* work,
+    lapack_int* info );
+#endif
+
+}  // extern "C"
+
+// --------------------
+// wrappers around LAPACK (not in LAPACKE)
+#if LAPACK_VERSION >= 30700
+inline lapack_int LAPACKE_tpmlqt(
+    char side, char trans,
+    lapack_int m, lapack_int n, lapack_int k, lapack_int l, lapack_int mb,
+    float* V, lapack_int ldv,
+    float* T, lapack_int ldt,
+    float* A, lapack_int lda,
+    float* B, lapack_int ldb )
+{
+    if (trans == 'C')
+        trans = 'T';
+    std::vector<float> work( side == 'L' ? n*mb : m*mb );
+    lapack_int info = 0;
+    LAPACK_stpmlqt(
+        &side, &trans, &m, &n, &k, &l, &mb,
+        V, &ldv,
+        T, &ldt,
+        A, &lda,
+        B, &ldb,
+        work.data(),
+        &info );
+    return info;
+}
+
+inline lapack_int LAPACKE_tpmlqt(
+    char side, char trans,
+    lapack_int m, lapack_int n, lapack_int k, lapack_int l, lapack_int mb,
+    double* V, lapack_int ldv,
+    double* T, lapack_int ldt,
+    double* A, lapack_int lda,
+    double* B, lapack_int ldb )
+{
+    if (trans == 'C')
+        trans = 'T';
+    std::vector<double> work( side == 'L' ? n*mb : m*mb );
+    lapack_int info = 0;
+    LAPACK_dtpmlqt(
+        &side, &trans, &m, &n, &k, &l, &mb,
+        V, &ldv,
+        T, &ldt,
+        A, &lda,
+        B, &ldb,
+        work.data(),
+        &info );
+    return info;
+}
+
+inline lapack_int LAPACKE_tpmlqt(
+    char side, char trans,
+    lapack_int m, lapack_int n, lapack_int k, lapack_int l, lapack_int mb,
+    std::complex<float>* V, lapack_int ldv,
+    std::complex<float>* T, lapack_int ldt,
+    std::complex<float>* A, lapack_int lda,
+    std::complex<float>* B, lapack_int ldb )
+{
+    std::vector<lapack_complex_float> work( side == 'L' ? n*mb : m*mb );
+    lapack_int info = 0;
+    LAPACK_ctpmlqt(
+        &side, &trans, &m, &n, &k, &l, &mb,
+        (lapack_complex_float*) V, &ldv,
+        (lapack_complex_float*) T, &ldt,
+        (lapack_complex_float*) A, &lda,
+        (lapack_complex_float*) B, &ldb,
+        work.data(),
+        &info );
+    return info;
+}
+
+inline lapack_int LAPACKE_tpmlqt(
+    char side, char trans,
+    lapack_int m, lapack_int n, lapack_int k, lapack_int l, lapack_int mb,
+    std::complex<double>* V, lapack_int ldv,
+    std::complex<double>* T, lapack_int ldt,
+    std::complex<double>* A, lapack_int lda,
+    std::complex<double>* B, lapack_int ldb )
+{
+    std::vector<lapack_complex_double> work( side == 'L' ? n*mb : m*mb );
+    lapack_int info = 0;
+    LAPACK_ztpmlqt(
+        &side, &trans, &m, &n, &k, &l, &mb,
+        (lapack_complex_double*) V, &ldv,
+        (lapack_complex_double*) T, &ldt,
+        (lapack_complex_double*) A, &lda,
+        (lapack_complex_double*) B, &ldb,
+        work.data(),
+        &info );
+    return info;
+}
+#endif // 30700
+
+// -----------------------------------------------------------------------------
+#if LAPACK_VERSION >= 30400
+inline lapack_int LAPACKE_tpmqrt(
+    char side, char trans, lapack_int m, lapack_int n, lapack_int k, lapack_int l, lapack_int nb,
+    float* V, lapack_int ldv,
+    float* T, lapack_int ldt,
+    float* A, lapack_int lda,
+    float* B, lapack_int ldb )
+{
+    if (trans == 'C')
+        trans = 'T';
+    return LAPACKE_stpmqrt(
+        LAPACK_COL_MAJOR, side, trans, m, n, k, l, nb,
+        V, ldv,
+        T, ldt,
+        A, lda,
+        B, ldb );
+}
+
+inline lapack_int LAPACKE_tpmqrt(
+    char side, char trans, lapack_int m, lapack_int n, lapack_int k, lapack_int l, lapack_int nb,
+    double* V, lapack_int ldv,
+    double* T, lapack_int ldt,
+    double* A, lapack_int lda,
+    double* B, lapack_int ldb )
+{
+    if (trans == 'C')
+        trans = 'T';
+    return LAPACKE_dtpmqrt(
+        LAPACK_COL_MAJOR, side, trans, m, n, k, l, nb,
+        V, ldv,
+        T, ldt,
+        A, lda,
+        B, ldb );
+}
+
+inline lapack_int LAPACKE_tpmqrt(
+    char side, char trans, lapack_int m, lapack_int n, lapack_int k, lapack_int l, lapack_int nb,
+    std::complex<float>* V, lapack_int ldv,
+    std::complex<float>* T, lapack_int ldt,
+    std::complex<float>* A, lapack_int lda,
+    std::complex<float>* B, lapack_int ldb )
+{
+    return LAPACKE_ctpmqrt(
+        LAPACK_COL_MAJOR, side, trans, m, n, k, l, nb,
+        (lapack_complex_float*) V, ldv,
+        (lapack_complex_float*) T, ldt,
+        (lapack_complex_float*) A, lda,
+        (lapack_complex_float*) B, ldb );
+}
+
+inline lapack_int LAPACKE_tpmqrt(
+    char side, char trans, lapack_int m, lapack_int n, lapack_int k, lapack_int l, lapack_int nb,
+    std::complex<double>* V, lapack_int ldv,
+    std::complex<double>* T, lapack_int ldt,
+    std::complex<double>* A, lapack_int lda,
+    std::complex<double>* B, lapack_int ldb )
+{
+    return LAPACKE_ztpmqrt(
+        LAPACK_COL_MAJOR, side, trans, m, n, k, l, nb,
+        (lapack_complex_double*) V, ldv,
+        (lapack_complex_double*) T, ldt,
+        (lapack_complex_double*) A, lda,
+        (lapack_complex_double*) B, ldb );
+}
+#endif // 30400
+
+// -----------------------------------------------------------------------------
+#if LAPACK_VERSION >= 30400
+inline lapack_int LAPACKE_tpqrt(
+    lapack_int m, lapack_int n, lapack_int l, lapack_int nb,
+    float* A, lapack_int lda,
+    float* B, lapack_int ldb,
+    float* T, lapack_int ldt )
+{
+    return LAPACKE_stpqrt(
+        LAPACK_COL_MAJOR, m, n, l, nb,
+        A, lda,
+        B, ldb,
+        T, ldt );
+}
+
+inline lapack_int LAPACKE_tpqrt(
+    lapack_int m, lapack_int n, lapack_int l, lapack_int nb,
+    double* A, lapack_int lda,
+    double* B, lapack_int ldb,
+    double* T, lapack_int ldt )
+{
+    return LAPACKE_dtpqrt(
+        LAPACK_COL_MAJOR, m, n, l, nb,
+        A, lda,
+        B, ldb,
+        T, ldt );
+}
+
+inline lapack_int LAPACKE_tpqrt(
+    lapack_int m, lapack_int n, lapack_int l, lapack_int nb,
+    std::complex<float>* A, lapack_int lda,
+    std::complex<float>* B, lapack_int ldb,
+    std::complex<float>* T, lapack_int ldt )
+{
+    return LAPACKE_ctpqrt(
+        LAPACK_COL_MAJOR, m, n, l, nb,
+        (lapack_complex_float*) A, lda,
+        (lapack_complex_float*) B, ldb,
+        (lapack_complex_float*) T, ldt );
+}
+
+inline lapack_int LAPACKE_tpqrt(
+    lapack_int m, lapack_int n, lapack_int l, lapack_int nb,
+    std::complex<double>* A, lapack_int lda,
+    std::complex<double>* B, lapack_int ldb,
+    std::complex<double>* T, lapack_int ldt )
+{
+    return LAPACKE_ztpqrt(
+        LAPACK_COL_MAJOR, m, n, l, nb,
+        (lapack_complex_double*) A, lda,
+        (lapack_complex_double*) B, ldb,
+        (lapack_complex_double*) T, ldt );
+}
+#endif // 30400
+
+// -----------------------------------------------------------------------------
+#if LAPACK_VERSION >= 30400
+inline lapack_int LAPACKE_tpqrt2(
+    lapack_int m, lapack_int n, lapack_int l,
+    float* A, lapack_int lda,
+    float* B, lapack_int ldb,
+    float* T, lapack_int ldt )
+{
+    return LAPACKE_stpqrt2(
+        LAPACK_COL_MAJOR, m, n, l,
+        A, lda,
+        B, ldb,
+        T, ldt );
+}
+
+inline lapack_int LAPACKE_tpqrt2(
+    lapack_int m, lapack_int n, lapack_int l,
+    double* A, lapack_int lda,
+    double* B, lapack_int ldb,
+    double* T, lapack_int ldt )
+{
+    return LAPACKE_dtpqrt2(
+        LAPACK_COL_MAJOR, m, n, l,
+        A, lda,
+        B, ldb,
+        T, ldt );
+}
+
+inline lapack_int LAPACKE_tpqrt2(
+    lapack_int m, lapack_int n, lapack_int l,
+    std::complex<float>* A, lapack_int lda,
+    std::complex<float>* B, lapack_int ldb,
+    std::complex<float>* T, lapack_int ldt )
+{
+    return LAPACKE_ctpqrt2(
+        LAPACK_COL_MAJOR, m, n, l,
+        (lapack_complex_float*) A, lda,
+        (lapack_complex_float*) B, ldb,
+        (lapack_complex_float*) T, ldt );
+}
+
+inline lapack_int LAPACKE_tpqrt2(
+    lapack_int m, lapack_int n, lapack_int l,
+    std::complex<double>* A, lapack_int lda,
+    std::complex<double>* B, lapack_int ldb,
+    std::complex<double>* T, lapack_int ldt )
+{
+    return LAPACKE_ztpqrt2(
+        LAPACK_COL_MAJOR, m, n, l,
+        (lapack_complex_double*) A, lda,
+        (lapack_complex_double*) B, ldb,
+        (lapack_complex_double*) T, ldt );
+}
+#endif // 30400
+
+// -----------------------------------------------------------------------------
+#if LAPACK_VERSION >= 30400
+inline lapack_int LAPACKE_tprfb(
+    char side, char trans, char direct, char storev, lapack_int m, lapack_int n, lapack_int k, lapack_int l,
+    float* V, lapack_int ldv,
+    float* T, lapack_int ldt,
+    float* A, lapack_int lda,
+    float* B, lapack_int ldb )
+{
+    return LAPACKE_stprfb(
+        LAPACK_COL_MAJOR, side, trans, direct, storev, m, n, k, l,
+        V, ldv,
+        T, ldt,
+        A, lda,
+        B, ldb );
+}
+
+inline lapack_int LAPACKE_tprfb(
+    char side, char trans, char direct, char storev, lapack_int m, lapack_int n, lapack_int k, lapack_int l,
+    double* V, lapack_int ldv,
+    double* T, lapack_int ldt,
+    double* A, lapack_int lda,
+    double* B, lapack_int ldb )
+{
+    return LAPACKE_dtprfb(
+        LAPACK_COL_MAJOR, side, trans, direct, storev, m, n, k, l,
+        V, ldv,
+        T, ldt,
+        A, lda,
+        B, ldb );
+}
+
+inline lapack_int LAPACKE_tprfb(
+    char side, char trans, char direct, char storev, lapack_int m, lapack_int n, lapack_int k, lapack_int l,
+    std::complex<float>* V, lapack_int ldv,
+    std::complex<float>* T, lapack_int ldt,
+    std::complex<float>* A, lapack_int lda,
+    std::complex<float>* B, lapack_int ldb )
+{
+    return LAPACKE_ctprfb(
+        LAPACK_COL_MAJOR, side, trans, direct, storev, m, n, k, l,
+        (lapack_complex_float*) V, ldv,
+        (lapack_complex_float*) T, ldt,
+        (lapack_complex_float*) A, lda,
+        (lapack_complex_float*) B, ldb );
+}
+
+inline lapack_int LAPACKE_tprfb(
+    char side, char trans, char direct, char storev, lapack_int m, lapack_int n, lapack_int k, lapack_int l,
+    std::complex<double>* V, lapack_int ldv,
+    std::complex<double>* T, lapack_int ldt,
+    std::complex<double>* A, lapack_int lda,
+    std::complex<double>* B, lapack_int ldb )
+{
+    return LAPACKE_ztprfb(
+        LAPACK_COL_MAJOR, side, trans, direct, storev, m, n, k, l,
+        (lapack_complex_double*) V, ldv,
+        (lapack_complex_double*) T, ldt,
+        (lapack_complex_double*) A, lda,
+        (lapack_complex_double*) B, ldb );
+}
+#endif // 30400
+
+// -----------------------------------------------------------------------------
 inline lapack_int LAPACKE_unghr(
     lapack_int n, lapack_int ilo, lapack_int ihi,
     float* A, lapack_int lda,

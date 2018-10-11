@@ -37,28 +37,38 @@ void test_tprfb_work( Params& params, bool run )
     if (! run)
         return;
 
+    if (k < l) {
+        printf( "skipping because tprfb requires k >= l\n" );
+        return;
+    }
+
     // ---------- setup
-    int64_t ldv;
-    size_t size_V;
+    // B is m-by-n
+    // V is m-by-k (left,  columnwise)
+    //   or n-by-k (right, columnwise)
+    //   or k-by-m (left,  rowwise)
+    //   or k-by-n (right, rowwise)
+    // T is k-by-k
+    // A is k-by-n (left)
+    //   or m-by-k (right)
+    int64_t Vm, Vn;
     if (storev == lapack::StoreV::Columnwise) {
-        if (side == Side::Left)
-            ldv = m;
-        else
-            ldv = n;
-        size_V = ldv*k;
+        Vm = (side == Side::Left ? m : n);
+        Vn = k;
     }
     else {
-        ldv = k;
-        if (side == Side::Left)
-            size_V = ldv*m;
-        else
-            size_V = ldv*n;
+        Vm = k;
+        Vn = (side == Side::Left ? m : n);
     }
-    int64_t ldt = roundup( k, align );
-    int64_t lda = roundup( side == Side::Left ? max( 1, k ) : max( 1, m ), align );
-    int64_t ldb = roundup( max( 1, m ), align );
+    int64_t Am = (side == Side::Left ? k : m);
+    int64_t An = (side == Side::Left ? n : k);
+    int64_t ldv = roundup( max( 1, Vm ), align );
+    int64_t ldt = roundup( max( 1, k  ), align );
+    int64_t lda = roundup( max( 1, Am ), align );
+    int64_t ldb = roundup( max( 1, m  ), align );
+    size_t size_V = (size_t) ldv * Vn;
     size_t size_T = (size_t) ldt * k;
-    size_t size_A = (size_t) (side == Side::Left ? lda*n : lda*k);
+    size_t size_A = (size_t) lda * An;
     size_t size_B = (size_t) ldb * n;
 
     std::vector< scalar_t > V( size_V );
@@ -82,7 +92,7 @@ void test_tprfb_work( Params& params, bool run )
     double time = get_wtime();
     lapack::tprfb( side, trans, direct, storev, m, n, k, l, &V[0], ldv, &T[0], ldt, &A_tst[0], lda, &B_tst[0], ldb );
     time = get_wtime() - time;
-    // internal routine: no argument chesk so no info.
+    // internal routine: no argument check so no info.
     //if (info_tst != 0) {
     //    fprintf( stderr, "lapack::tprfb returned error %lld\n", (lld) info_tst );
     //}

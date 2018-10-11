@@ -17,24 +17,24 @@ void test_hbgvx_work( Params& params, bool run )
     typedef long long lld;
 
     // get & mark input values
-    lapack::Job jobz = params.jobz.value();
-    lapack::Uplo uplo = params.uplo.value();
+    lapack::Job jobz = params.jobz();
+    lapack::Uplo uplo = params.uplo();
     int64_t n = params.dim.n();
-    int64_t ka = params.kd.value();
-    int64_t kb = params.kd.value();
-    int64_t align = params.align.value();
+    int64_t ka = params.kd();
+    int64_t kb = params.kd();
+    int64_t align = params.align();
 
-    real_t  vl;  // = params.vl.value();
-    real_t  vu;  // = params.vu.value();
-    int64_t il;  // = params.il.value();
-    int64_t iu;  // = params.iu.value();
+    real_t  vl;  // = params.vl();
+    real_t  vu;  // = params.vu();
+    int64_t il;  // = params.il();
+    int64_t iu;  // = params.iu();
     lapack::Range range;  // derived from vl,vu,il,iu
     params.get_range( n, &range, &vl, &vu, &il, &iu );
 
     // mark non-standard output values
-    params.ref_time.value();
-    // params.ref_gflops.value();
-    // params.gflops.value();
+    params.ref_time();
+    // params.ref_gflops();
+    // params.gflops();
 
     if (! run)
         return;
@@ -87,7 +87,7 @@ void test_hbgvx_work( Params& params, bool run )
     BB_ref = BB_tst;
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     int64_t info_tst = lapack::hbgvx( jobz, range, uplo, n, ka, kb, &AB_tst[0], ldab, &BB_tst[0], ldbb, &Q_tst[0], ldq, vl, vu, il, iu, abstol, &m_tst, &W_tst[0], &Z_tst[0], ldz, &ifail_tst[0] );
     time = get_wtime() - time;
@@ -95,13 +95,13 @@ void test_hbgvx_work( Params& params, bool run )
         fprintf( stderr, "lapack::hbgvx returned error %lld\n", (lld) info_tst );
     }
 
-    params.time.value() = time;
+    params.time() = time;
     // double gflop = lapack::Gflop< scalar_t >::hbgvx( jobz, range, n, ka, kb );
-    // params.gflops.value() = gflop / time;
+    // params.gflops() = gflop / time;
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         int64_t info_ref = LAPACKE_hbgvx( job2char(jobz), range2char(range), uplo2char(uplo), n, ka, kb, &AB_ref[0], ldab, &BB_ref[0], ldbb, &Q_ref[0], ldq, vl, vu, il, iu, abstol, &m_ref, &W_ref[0], &Z_ref[0], ldz, &ifail_ref[0] );
         time = get_wtime() - time;
@@ -109,8 +109,8 @@ void test_hbgvx_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_hbgvx returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value() = time;
-        // params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        // params.ref_gflops() = gflop / time;
 
         // ---------- check error compared to reference
         real_t error = 0;
@@ -128,15 +128,15 @@ void test_hbgvx_work( Params& params, bool run )
             for ( size_t i = 0; i < (size_t)(m_ref); i++ ) 
                 error += std::abs( ifail_tst[i] - ifail_ref[i] );
         }
-        params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
+        params.error() = error;
+        params.okay() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 
 // -----------------------------------------------------------------------------
 void test_hbgvx( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

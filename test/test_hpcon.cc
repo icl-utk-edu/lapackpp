@@ -17,14 +17,14 @@ void test_hpcon_work( Params& params, bool run )
     typedef long long lld;
 
     // get & mark input values
-    lapack::Uplo uplo = params.uplo.value();
+    lapack::Uplo uplo = params.uplo();
     int64_t n = params.dim.n();
-    // int64_t align = params.align.value();
+    // int64_t align = params.align();
 
     // mark non-standard output values
-    params.ref_time.value();
-    // params.ref_gflops.value();
-    // params.gflops.value();
+    params.ref_time();
+    // params.ref_gflops();
+    // params.gflops();
 
     if (! run)
         return;
@@ -55,7 +55,7 @@ void test_hpcon_work( Params& params, bool run )
     std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     int64_t info_tst = lapack::hpcon( uplo, n, &AP[0], &ipiv_tst[0], anorm, &rcond_tst );
     time = get_wtime() - time;
@@ -63,13 +63,13 @@ void test_hpcon_work( Params& params, bool run )
         fprintf( stderr, "lapack::hpcon returned error %lld\n", (lld) info_tst );
     }
 
-    params.time.value() = time;
+    params.time() = time;
     // double gflop = lapack::Gflop< scalar_t >::hpcon( n );
-    // params.gflops.value() = gflop / time;
+    // params.gflops() = gflop / time;
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         int64_t info_ref = LAPACKE_hpcon( uplo2char(uplo), n, &AP[0], &ipiv_ref[0], anorm, &rcond_ref );
         time = get_wtime() - time;
@@ -77,8 +77,8 @@ void test_hpcon_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_hpcon returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value() = time;
-        // params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        // params.ref_gflops() = gflop / time;
 
         // ---------- check error compared to reference
         real_t error = 0;
@@ -87,15 +87,15 @@ void test_hpcon_work( Params& params, bool run )
             error = 1;
         }
         error += std::abs( rcond_tst - rcond_ref );
-        params.error.value() = error;
-        params.okay.value() = (error < 3*eps);  // expect lapackpp == lapacke
+        params.error() = error;
+        params.okay() = (error < 3*eps);  // expect lapackpp == lapacke
     }
 }
 
 // -----------------------------------------------------------------------------
 void test_hpcon( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

@@ -17,18 +17,18 @@ void test_pbrfs_work( Params& params, bool run )
     typedef long long lld;
 
     // get & mark input values
-    lapack::Uplo uplo = params.uplo.value();
+    lapack::Uplo uplo = params.uplo();
     int64_t n = params.dim.n();
-    int64_t kd = params.kd.value();
-    int64_t nrhs = params.nrhs.value();
-    int64_t align = params.align.value();
+    int64_t kd = params.kd();
+    int64_t nrhs = params.nrhs();
+    int64_t align = params.align();
 
     real_t eps = std::numeric_limits< real_t >::epsilon();
 
     // mark non-standard output values
-    params.ref_time.value();
-    //params.ref_gflops.value();
-    //params.gflops.value();
+    params.ref_time();
+    //params.ref_gflops();
+    //params.gflops();
 
     if (! run)
         return;
@@ -90,7 +90,7 @@ void test_pbrfs_work( Params& params, bool run )
     }
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     int64_t info_tst = lapack::pbrfs( uplo, n, kd, nrhs, &AB[0], ldab, &AFB[0], ldafb, &B[0], ldb, &X_tst[0], ldx, &ferr_tst[0], &berr_tst[0] );
     time = get_wtime() - time;
@@ -98,13 +98,13 @@ void test_pbrfs_work( Params& params, bool run )
         fprintf( stderr, "lapack::pbrfs returned error %lld\n", (lld) info_tst );
     }
 
-    params.time.value() = time;
+    params.time() = time;
     //double gflop = lapack::Gflop< scalar_t >::pbrfs( n, kd, nrhs );
-    //params.gflops.value() = gflop / time;
+    //params.gflops() = gflop / time;
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         int64_t info_ref = LAPACKE_pbrfs( uplo2char(uplo), n, kd, nrhs, &AB[0], ldab, &AFB[0], ldafb, &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
         time = get_wtime() - time;
@@ -112,8 +112,8 @@ void test_pbrfs_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_pbrfs returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value() = time;
-        //params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        //params.ref_gflops() = gflop / time;
 
         // ---------- check error compared to reference
         real_t error = 0;
@@ -123,15 +123,15 @@ void test_pbrfs_work( Params& params, bool run )
         error += abs_error( X_tst, X_ref );
         error += abs_error( ferr_tst, ferr_ref );
         error += abs_error( berr_tst, berr_ref );
-        params.error.value() = error;
-        params.okay.value() = (error < 3*eps);
+        params.error() = error;
+        params.okay() = (error < 3*eps);
     }
 }
 
 // -----------------------------------------------------------------------------
 void test_pbrfs( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

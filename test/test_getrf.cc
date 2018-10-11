@@ -19,13 +19,13 @@ void test_getrf_work( Params& params, bool run )
     // get & mark input values
     int64_t m = params.dim.m();
     int64_t n = params.dim.n();
-    int64_t align = params.align.value();
-    int64_t verbose = params.verbose.value();
+    int64_t align = params.align();
+    int64_t verbose = params.verbose();
 
     // mark non-standard output values
-    params.ref_time.value();
-    params.ref_gflops.value();
-    params.gflops.value();
+    params.ref_time();
+    params.ref_gflops();
+    params.gflops();
     params.matrix.mark();
 
     if (! run)
@@ -54,14 +54,14 @@ void test_getrf_work( Params& params, bool run )
     }
 
     // test error exits
-    if (params.error_exit.value() == 'y') {
+    if (params.error_exit() == 'y') {
         assert_throw( lapack::getrf( -1,  n, &A_tst[0], lda, &ipiv_tst[0] ), lapack::Error );
         assert_throw( lapack::getrf(  m, -1, &A_tst[0], lda, &ipiv_tst[0] ), lapack::Error );
         assert_throw( lapack::getrf(  m,  n, &A_tst[0], m-1, &ipiv_tst[0] ), lapack::Error );
     }
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     int64_t info_tst = lapack::getrf( m, n, &A_tst[0], lda, &ipiv_tst[0] );
     time = get_wtime() - time;
@@ -69,17 +69,17 @@ void test_getrf_work( Params& params, bool run )
         fprintf( stderr, "lapack::getrf returned error %lld\n", (lld) info_tst );
     }
 
-    params.time.value() = time;
+    params.time() = time;
     double gflop = lapack::Gflop< scalar_t >::getrf( m, n );
-    params.gflops.value() = gflop / time;
+    params.gflops() = gflop / time;
 
     if (verbose >= 2) {
         printf( "A2 = " ); print_matrix( m, n, &A_tst[0], lda );
     }
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         int64_t info_ref = LAPACKE_getrf( m, n, &A_ref[0], lda, &ipiv_ref[0] );
         time = get_wtime() - time;
@@ -87,8 +87,8 @@ void test_getrf_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_getrf returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value() = time;
-        params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        params.ref_gflops() = gflop / time;
 
         if (verbose >= 2) {
             printf( "A2ref = " ); print_matrix( m, n, &A_ref[0], lda );
@@ -101,15 +101,15 @@ void test_getrf_work( Params& params, bool run )
         }
         error += abs_error( A_tst, A_ref );
         error += abs_error( ipiv_tst, ipiv_ref );
-        params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
+        params.error() = error;
+        params.okay() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 
 // -----------------------------------------------------------------------------
 void test_getrf( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

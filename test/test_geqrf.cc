@@ -19,14 +19,14 @@ void test_geqrf_work( Params& params, bool run )
     // get & mark input values
     int64_t m = params.dim.m();
     int64_t n = params.dim.n();
-    int64_t align = params.align.value();
+    int64_t align = params.align();
     params.matrix.mark();
 
     // mark non-standard output values
-    //params.ref_time.value();
-    //params.ref_gflops.value();
-    params.gflops.value();
-    params.ortho.value();
+    //params.ref_time();
+    //params.ref_gflops();
+    params.gflops();
+    params.ortho();
 
     if (! run)
         return;
@@ -46,7 +46,7 @@ void test_geqrf_work( Params& params, bool run )
     A_ref = A_tst;
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     int64_t info_tst = lapack::geqrf( m, n, &A_tst[0], lda, &tau_tst[0] );
     time = get_wtime() - time;
@@ -54,16 +54,16 @@ void test_geqrf_work( Params& params, bool run )
         fprintf( stderr, "lapack::geqrf returned error %lld\n", (lld) info_tst );
     }
 
-    params.time.value() = time;
+    params.time() = time;
     double gflop = lapack::Gflop< scalar_t >::geqrf( m, n );
-    params.gflops.value() = gflop / time;
+    params.gflops() = gflop / time;
 
-    if (params.check.value() == 'y') {
+    if (params.check() == 'y') {
         // ---------- check error
         // comparing to ref. solution doesn't work
         // Following lapack/TESTING/LIN/zqrt01.f but using smaller Q and R
         real_t eps = std::numeric_limits< real_t >::epsilon();
-        real_t tol = params.tol.value();
+        real_t tol = params.tol();
 
         int64_t ldq = m;
         std::vector< scalar_t > Q( m * minmn ); // m by k
@@ -104,14 +104,14 @@ void test_geqrf_work( Params& params, bool run )
         real_t resid2 = lapack::lanhe( lapack::Norm::One, lapack::Uplo::Upper, minmn, &R[0], ldr );
         real_t error2 = ( resid2 / n );
 
-        params.error.value() = error1;
-        params.ortho.value() = error2;
-        params.okay.value() = (error1 < tol*eps) && (error2 < tol*eps);
+        params.error() = error1;
+        params.ortho() = error2;
+        params.okay() = (error1 < tol*eps) && (error2 < tol*eps);
     }
 
-    if (params.ref.value() == 'y') {
+    if (params.ref() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         int64_t info_ref = LAPACKE_geqrf( m, n, &A_ref[0], lda, &tau_ref[0] );
         time = get_wtime() - time;
@@ -119,15 +119,15 @@ void test_geqrf_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_geqrf returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value() = time;
-        params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        params.ref_gflops() = gflop / time;
     }
 }
 
 // -----------------------------------------------------------------------------
 void test_geqrf( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

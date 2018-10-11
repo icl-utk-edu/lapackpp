@@ -17,18 +17,18 @@ void test_pocon_work( Params& params, bool run )
     typedef long long lld;
 
     // get & mark input values
-    lapack::Uplo uplo = params.uplo.value();
+    lapack::Uplo uplo = params.uplo();
     int64_t n = params.dim.n();
-    int64_t align = params.align.value();
-    int64_t verbose = params.verbose.value();
+    int64_t align = params.align();
+    int64_t verbose = params.verbose();
     params.matrix.mark();
 
     real_t eps = std::numeric_limits< real_t >::epsilon();
 
     // mark non-standard output values
-    params.ref_time.value();
-    //params.ref_gflops.value();
-    //params.gflops.value();
+    params.ref_time();
+    //params.ref_gflops();
+    //params.gflops();
 
     if (! run) {
         params.matrix.kind.set_default( "rand_dominant" );
@@ -61,7 +61,7 @@ void test_pocon_work( Params& params, bool run )
     }
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     int64_t info_tst = lapack::pocon( uplo, n, &A[0], lda, anorm, &rcond_tst );
     time = get_wtime() - time;
@@ -69,13 +69,13 @@ void test_pocon_work( Params& params, bool run )
         fprintf( stderr, "lapack::pocon returned error %lld\n", (lld) info_tst );
     }
 
-    params.time.value() = time;
+    params.time() = time;
     //double gflop = lapack::Gflop< scalar_t >::pocon( n );
-    //params.gflops.value() = gflop / time;
+    //params.gflops() = gflop / time;
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         int64_t info_ref = LAPACKE_pocon( uplo2char(uplo), n, &A[0], lda, anorm, &rcond_ref );
         time = get_wtime() - time;
@@ -83,8 +83,8 @@ void test_pocon_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_pocon returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value() = time;
-        //params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        //params.ref_gflops() = gflop / time;
 
         // ---------- check error compared to reference
         real_t error = 0;
@@ -92,15 +92,15 @@ void test_pocon_work( Params& params, bool run )
             error = 1;
         }
         error += std::abs( rcond_tst - rcond_ref );
-        params.error.value() = error;
-        params.okay.value() = (error < 3*eps);
+        params.error() = error;
+        params.okay() = (error < 3*eps);
     }
 }
 
 // -----------------------------------------------------------------------------
 void test_pocon( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

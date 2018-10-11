@@ -19,20 +19,20 @@ void test_tprfb_work( Params& params, bool run )
     typedef long long lld;
 
     // get & mark input values
-    lapack::Side side = params.side.value();
-    lapack::Op trans = params.trans.value();
-    lapack::Direct direct = params.direct.value();
-    lapack::StoreV storev = params.storev.value();
+    lapack::Side side = params.side();
+    lapack::Op trans = params.trans();
+    lapack::Direct direct = params.direct();
+    lapack::StoreV storev = params.storev();
     int64_t m = params.dim.m();
     int64_t n = params.dim.n();
     int64_t k = params.dim.k();
-    int64_t l = params.l.value();
-    int64_t align = params.align.value();
+    int64_t l = params.l();
+    int64_t align = params.align();
 
     // mark non-standard output values
-    params.ref_time.value();
-    //params.ref_gflops.value();
-    //params.gflops.value();
+    params.ref_time();
+    //params.ref_gflops();
+    //params.gflops();
 
     if (! run)
         return;
@@ -78,7 +78,7 @@ void test_tprfb_work( Params& params, bool run )
     B_ref = B_tst;
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     lapack::tprfb( side, trans, direct, storev, m, n, k, l, &V[0], ldv, &T[0], ldt, &A_tst[0], lda, &B_tst[0], ldb );
     time = get_wtime() - time;
@@ -87,13 +87,13 @@ void test_tprfb_work( Params& params, bool run )
     //    fprintf( stderr, "lapack::tprfb returned error %lld\n", (lld) info_tst );
     //}
 
-    params.time.value() = time;
+    params.time() = time;
     //double gflop = lapack::Gflop< scalar_t >::larfb( side, trans, direct, storev, m, n, k );
-    //params.gflops.value() = gflop / time;
+    //params.gflops() = gflop / time;
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         int64_t info_ref = LAPACKE_tprfb( side2char(side), op2char(trans), direct2char(direct), storev2char(storev), m, n, k, l, &V[0], ldv, &T[0], ldt, &A_ref[0], lda, &B_ref[0], ldb );
         time = get_wtime() - time;
@@ -101,8 +101,8 @@ void test_tprfb_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_tprfb returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value() = time;
-        //params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        //params.ref_gflops() = gflop / time;
 
         // ---------- check error compared to reference
         real_t error = 0;
@@ -111,15 +111,15 @@ void test_tprfb_work( Params& params, bool run )
         //}
         error += abs_error( A_tst, A_ref );
         error += abs_error( B_tst, B_ref );
-        params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
+        params.error() = error;
+        params.okay() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 
 // -----------------------------------------------------------------------------
 void test_tprfb( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

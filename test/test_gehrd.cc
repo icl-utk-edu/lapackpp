@@ -22,18 +22,18 @@ void test_gehrd_work( Params& params, bool run )
     int64_t n = params.dim.n();
     int64_t ilo = 1;
     int64_t ihi = n;
-    int64_t align = params.align.value();
-    int64_t verbose = params.verbose.value();
+    int64_t align = params.align();
+    int64_t verbose = params.verbose();
     params.matrix.mark();
 
     real_t eps = std::numeric_limits< real_t >::epsilon();
-    real_t tol = params.tol.value() * eps;
+    real_t tol = params.tol() * eps;
 
     // mark non-standard output values
-    params.ref_time.value();
-    params.ref_gflops.value();
-    params.gflops.value();
-    params.ortho.value();
+    params.ref_time();
+    params.ref_gflops();
+    params.gflops();
+    params.ortho();
 
     params.error.name( "A - U H U^H\nerror" );
     params.ortho.name( "I - U U^H\nerror" );
@@ -55,7 +55,7 @@ void test_gehrd_work( Params& params, bool run )
     A_ref = A_tst;
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     int64_t info_tst = lapack::gehrd( n, ilo, ihi, &A_tst[0], lda, &tau_tst[0] );
     time = get_wtime() - time;
@@ -63,23 +63,23 @@ void test_gehrd_work( Params& params, bool run )
         fprintf( stderr, "lapack::gehrd returned error %lld\n", (lld) info_tst );
     }
 
-    params.time.value() = time;
+    params.time() = time;
     double gflop = lapack::Gflop< scalar_t >::gehrd( n );
-    params.gflops.value() = gflop / time;
+    params.gflops() = gflop / time;
 
-    if (params.check.value() == 'y') {
+    if (params.check() == 'y') {
         // ---------- check numerical error
         real_t results[2];
         check_gehrd( n, &A_ref[0], lda, &A_tst[0], lda, &tau_tst[0],
                      verbose, results );
-        params.error.value() = results[0];
-        params.ortho.value() = results[1];
-        params.okay.value() = (results[0] < tol && results[1] < tol);
+        params.error() = results[0];
+        params.ortho() = results[1];
+        params.okay() = (results[0] < tol && results[1] < tol);
     }
 
-    if (params.ref.value() == 'y') {
+    if (params.ref() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         int64_t info_ref = LAPACKE_gehrd( n, ilo, ihi, &A_ref[0], lda, &tau_ref[0] );
         time = get_wtime() - time;
@@ -87,15 +87,15 @@ void test_gehrd_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_gehrd returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value() = time;
-        params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        params.ref_gflops() = gflop / time;
     }
 }
 
 // -----------------------------------------------------------------------------
 void test_gehrd( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

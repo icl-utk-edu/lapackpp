@@ -17,17 +17,17 @@ void test_larft_work( Params& params, bool run )
     typedef long long lld;
 
     // get & mark input values
-    lapack::Direct direct = params.direct.value();
-    lapack::StoreV storev = params.storev.value();
+    lapack::Direct direct = params.direct();
+    lapack::StoreV storev = params.storev();
     int64_t n = params.dim.n();
     int64_t k = params.dim.k();
-    int64_t align = params.align.value();
-    int64_t verbose = params.verbose.value();
+    int64_t align = params.align();
+    int64_t verbose = params.verbose();
 
     // mark non-standard output values
-    params.ref_time.value();
-    //params.ref_gflops.value();
-    //params.gflops.value();
+    params.ref_time();
+    //params.ref_gflops();
+    //params.gflops();
 
     if (! run)
         return;
@@ -108,22 +108,22 @@ void test_larft_work( Params& params, bool run )
     }
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     lapack::larft( direct, storev, n, k, &V[0], ldv, &tau[0], &T_tst[0], ldt );
     time = get_wtime() - time;
 
-    params.time.value() = time;
+    params.time() = time;
     //double gflop = lapack::Gflop< scalar_t >::larft( direct, storev, n, k );
-    //params.gflops.value() = gflop / time;
+    //params.gflops() = gflop / time;
 
     if (verbose >= 3) {
         printf( "T = " ); print_matrix( k, k, &T_tst[0], ldt );
     }
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         int64_t info_ref = LAPACKE_larft( direct2char(direct), storev2char(storev), n, k, &V[0], ldv, &tau[0], &T_ref[0], ldt );
         time = get_wtime() - time;
@@ -131,8 +131,8 @@ void test_larft_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_larft returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value() = time;
-        //params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        //params.ref_gflops() = gflop / time;
 
         if (verbose >= 3) {
             printf( "Tref = " ); print_matrix( k, k, &T_ref[0], ldt );
@@ -141,17 +141,17 @@ void test_larft_work( Params& params, bool run )
         // ---------- check error compared to reference
         real_t error = 0;
         error += abs_error( T_tst, T_ref );
-        params.error.value() = error;
+        params.error() = error;
         real_t tol = 100;
         real_t eps = std::numeric_limits< real_t >::epsilon();
-        params.okay.value() = (error < tol*eps);  // todo: what's a good error check?
+        params.okay() = (error < tol*eps);  // todo: what's a good error check?
     }
 }
 
 // -----------------------------------------------------------------------------
 void test_larft( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

@@ -18,15 +18,15 @@ void test_larfg_work( Params& params, bool run )
 
     // get & mark input values
     int64_t n = params.dim.n();
-    int64_t incx = params.incx.value();
-    scalar_t alpha_tst = params.alpha.value();
+    int64_t incx = params.incx();
+    scalar_t alpha_tst = params.alpha();
     scalar_t alpha_ref = alpha_tst;
-    int64_t verbose = params.verbose.value();
+    int64_t verbose = params.verbose();
 
     // mark non-standard output values
-    params.ref_time.value();
-    params.ref_gflops.value();
-    params.gflops.value();
+    params.ref_time();
+    params.ref_gflops();
+    params.gflops();
 
     if (! run)
         return;
@@ -54,14 +54,14 @@ void test_larfg_work( Params& params, bool run )
     }
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     lapack::larfg( n, &alpha_tst, &X_tst[0], incx, &tau_tst );
     time = get_wtime() - time;
 
-    params.time.value() = time;
+    params.time() = time;
     double gflop = lapack::Gflop< scalar_t >::larfg( n );
-    params.gflops.value() = gflop / time;
+    params.gflops() = gflop / time;
 
     if (verbose >= 2) {
         printf( "alpha2 = %.4e\n", real(alpha_tst) );
@@ -69,9 +69,9 @@ void test_larfg_work( Params& params, bool run )
         printf( "tau = %.4e\n", real(tau_tst) );
     }
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         int64_t info_ref = LAPACKE_larfg( n, &alpha_ref, &X_ref[0], incx, &tau_ref );
         time = get_wtime() - time;
@@ -79,8 +79,8 @@ void test_larfg_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_larfg returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value() = time;
-        params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        params.ref_gflops() = gflop / time;
 
         if (verbose >= 2) {
             printf( "alpha2ref = %.4e\n", real(alpha_ref) );
@@ -93,15 +93,15 @@ void test_larfg_work( Params& params, bool run )
         error += std::abs( alpha_tst - alpha_ref );
         error += abs_error( X_tst, X_ref );
         error += std::abs( tau_tst - tau_ref );
-        params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
+        params.error() = error;
+        params.okay() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 
 // -----------------------------------------------------------------------------
 void test_larfg( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

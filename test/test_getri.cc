@@ -18,14 +18,14 @@ void test_getri_work( Params& params, bool run )
 
     // get & mark input values
     int64_t n = params.dim.n();
-    int64_t align = params.align.value();
-    int64_t verbose = params.verbose.value();
+    int64_t align = params.align();
+    int64_t verbose = params.verbose();
     params.matrix.mark();
 
     // mark non-standard output values
-    params.ref_time.value();
-    params.ref_gflops.value();
-    params.gflops.value();
+    params.ref_time();
+    params.ref_gflops();
+    params.gflops();
 
     if (! run)
         return;
@@ -59,13 +59,13 @@ void test_getri_work( Params& params, bool run )
     }
 
     // test error exits
-    if (params.error_exit.value() == 'y') {
+    if (params.error_exit() == 'y') {
         assert_throw( lapack::getri( -1, &A_tst[0], lda, &ipiv_tst[0] ), lapack::Error );
         assert_throw( lapack::getri(  n, &A_tst[0], n-1, &ipiv_tst[0] ), lapack::Error );
     }
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     int64_t info_tst = lapack::getri( n, &A_tst[0], lda, &ipiv_tst[0] );
     time = get_wtime() - time;
@@ -73,19 +73,19 @@ void test_getri_work( Params& params, bool run )
         fprintf( stderr, "lapack::getri returned error %lld\n", (lld) info_tst );
     }
 
-    params.time.value() = time;
+    params.time() = time;
     double gflop = lapack::Gflop< scalar_t >::getri( n );
-    params.gflops.value() = gflop / time;
+    params.gflops() = gflop / time;
 
     if (verbose >= 2) {
         printf( "A2 = " ); print_matrix( n, n, &A_tst[0], lda );
     }
 
-    if (params.check.value() == 'y') {
+    if (params.check() == 'y') {
         // ---------- check error
         // comparing to ref. solution doesn't work due to roundoff errors
         real_t eps = std::numeric_limits< real_t >::epsilon();
-        real_t tol = params.tol.value();
+        real_t tol = params.tol();
 
         // R = I
         std::vector< scalar_t > R( size_A );
@@ -111,11 +111,11 @@ void test_getri_work( Params& params, bool run )
         real_t Anorm     = lapack::lange( lapack::Norm::Fro, n, n, &A_ref[0], lda );
         real_t Ainv_norm = lapack::lange( lapack::Norm::Fro, n, n, &A_tst[0], lda );
         real_t error = Rnorm / (n * Anorm * Ainv_norm);
-        params.error.value() = error;
-        params.okay.value() = (error < tol*eps);
+        params.error() = error;
+        params.okay() = (error < tol*eps);
     }
 
-    if (params.ref.value() == 'y') {
+    if (params.ref() == 'y') {
         // factor A into LU
         info = LAPACKE_getrf( n, n, &A_ref[0], lda, &ipiv_ref[0] );
         if (info != 0) {
@@ -123,7 +123,7 @@ void test_getri_work( Params& params, bool run )
         }
 
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         int64_t info_ref = LAPACKE_getri( n, &A_ref[0], lda, &ipiv_ref[0] );
         time = get_wtime() - time;
@@ -131,8 +131,8 @@ void test_getri_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_getri returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value() = time;
-        params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        params.ref_gflops() = gflop / time;
 
         if (verbose >= 2) {
             printf( "A2ref = " ); print_matrix( n, n, &A_ref[0], lda );
@@ -143,7 +143,7 @@ void test_getri_work( Params& params, bool run )
 // -----------------------------------------------------------------------------
 void test_getri( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

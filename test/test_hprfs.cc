@@ -17,15 +17,15 @@ void test_hprfs_work( Params& params, bool run )
     typedef long long lld;
 
     // get & mark input values
-    lapack::Uplo uplo = params.uplo.value();
+    lapack::Uplo uplo = params.uplo();
     int64_t n = params.dim.n();
-    int64_t nrhs = params.nrhs.value();
-    int64_t align = params.align.value();
+    int64_t nrhs = params.nrhs();
+    int64_t align = params.align();
 
     // mark non-standard output values
-    params.ref_time.value();
-    // params.ref_gflops.value();
-    // params.gflops.value();
+    params.ref_time();
+    // params.ref_gflops();
+    // params.gflops();
 
     if (! run)
         return;
@@ -77,7 +77,7 @@ void test_hprfs_work( Params& params, bool run )
     X_ref = X_tst;
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     int64_t info_tst = lapack::hprfs( uplo, n, nrhs, &AP[0], &AFP[0], &ipiv_tst[0], &B[0], ldb, &X_tst[0], ldx, &ferr_tst[0], &berr_tst[0] );
     time = get_wtime() - time;
@@ -85,13 +85,13 @@ void test_hprfs_work( Params& params, bool run )
         fprintf( stderr, "lapack::hprfs returned error %lld\n", (lld) info_tst );
     }
 
-    params.time.value() = time;
+    params.time() = time;
     // double gflop = lapack::Gflop< scalar_t >::hprfs( n, nrhs );
-    // params.gflops.value() = gflop / time;
+    // params.gflops() = gflop / time;
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         int64_t info_ref = LAPACKE_hprfs( uplo2char(uplo), n, nrhs, &AP[0], &AFP[0], &ipiv_ref[0], &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
         time = get_wtime() - time;
@@ -99,8 +99,8 @@ void test_hprfs_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_hprfs returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value() = time;
-        // params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        // params.ref_gflops() = gflop / time;
 
         // ---------- check error compared to reference
         real_t error = 0;
@@ -111,15 +111,15 @@ void test_hprfs_work( Params& params, bool run )
         error += abs_error( X_tst, X_ref );
         error += abs_error( ferr_tst, ferr_ref );
         error += abs_error( berr_tst, berr_ref );
-        params.error.value() = error;
-        params.okay.value() = (error < 3*eps);  // expect lapackpp == lapacke
+        params.error() = error;
+        params.okay() = (error < 3*eps);  // expect lapackpp == lapacke
     }
 }
 
 // -----------------------------------------------------------------------------
 void test_hprfs( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

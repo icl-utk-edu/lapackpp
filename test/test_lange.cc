@@ -17,17 +17,17 @@ void test_lange_work( Params& params, bool run )
     typedef long long lld;
 
     // get & mark input values
-    lapack::Norm norm = params.norm.value();
+    lapack::Norm norm = params.norm();
     int64_t m = params.dim.m();
     int64_t n = params.dim.n();
-    int64_t align = params.align.value();
-    int64_t verbose = params.verbose.value();
+    int64_t align = params.align();
+    int64_t verbose = params.verbose();
     params.matrix.mark();
 
     // mark non-standard output values
-    params.ref_time.value();
-    //params.ref_gflops.value();
-    //params.gflops.value();
+    params.ref_time();
+    //params.ref_gflops();
+    //params.gflops();
 
     if (! run)
         return;
@@ -50,28 +50,28 @@ void test_lange_work( Params& params, bool run )
     }
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     real_t norm_tst = lapack::lange( norm, m, n, &A[0], lda );
     time = get_wtime() - time;
 
-    params.time.value() = time;
+    params.time() = time;
     //double gflop = lapack::Gflop< scalar_t >::lange( norm, m, n );
-    //params.gflops.value() = gflop / time;
+    //params.gflops() = gflop / time;
 
     if (verbose >= 1) {
         printf( "norm_tst %.8e\n", norm_tst );
     }
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         real_t norm_ref = LAPACKE_lange( norm2char(norm), m, n, &A[0], lda );
         time = get_wtime() - time;
 
-        params.ref_time.value() = time;
-        //params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        //params.ref_gflops() = gflop / time;
 
         if (verbose >= 1) {
             printf( "norm_ref %.8e\n", norm_ref );
@@ -80,15 +80,15 @@ void test_lange_work( Params& params, bool run )
         // ---------- check error compared to reference
         real_t error = 0;
         error += std::abs( norm_tst - norm_ref );
-        params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
+        params.error() = error;
+        params.okay() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 
 // -----------------------------------------------------------------------------
 void test_lange( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

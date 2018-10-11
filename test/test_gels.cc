@@ -17,16 +17,16 @@ void test_gels_work( Params& params, bool run )
     typedef long long lld;
 
     // get & mark input values
-    lapack::Op trans = params.trans.value();
+    lapack::Op trans = params.trans();
     int64_t m = params.dim.m();
     int64_t n = params.dim.n();
-    int64_t nrhs = params.nrhs.value();
-    int64_t align = params.align.value();
+    int64_t nrhs = params.nrhs();
+    int64_t align = params.align();
     params.matrix.mark();
 
     // mark non-standard output values
-    params.ref_time.value();
-    // params.ref_gflops.value();
+    params.ref_time();
+    // params.ref_gflops();
 
     if (! run)
         return;
@@ -51,7 +51,7 @@ void test_gels_work( Params& params, bool run )
     B_ref = B_tst;
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     int64_t info_tst = lapack::gels( trans, m, n, nrhs, &A_tst[0], lda, &B_tst[0], ldb );
     time = get_wtime() - time;
@@ -60,12 +60,12 @@ void test_gels_work( Params& params, bool run )
     }
 
     // double gflop = lapack::Gflop< scalar_t >::gels( trans, m, n, nrhs );
-    params.time.value()   = time;
-    // params.gflops.value() = gflop / time;
+    params.time()   = time;
+    // params.gflops() = gflop / time;
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         int64_t info_ref = LAPACKE_gels( op2char(trans), m, n, nrhs, &A_ref[0], lda, &B_ref[0], ldb );
         time = get_wtime() - time;
@@ -73,8 +73,8 @@ void test_gels_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_gels returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value()   = time;
-        // params.ref_gflops.value() = gflop / time;
+        params.ref_time()   = time;
+        // params.ref_gflops() = gflop / time;
 
         // ---------- check error compared to reference
         real_t error = 0;
@@ -84,15 +84,15 @@ void test_gels_work( Params& params, bool run )
         }
         error += abs_error( A_tst, A_ref );
         error += abs_error( B_tst, B_ref );
-        params.error.value() = error;
-        params.okay.value() = (error < 3*eps);  // expect lapackpp == lapacke
+        params.error() = error;
+        params.okay() = (error < 3*eps);  // expect lapackpp == lapacke
     }
 }
 
 // -----------------------------------------------------------------------------
 void test_gels( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

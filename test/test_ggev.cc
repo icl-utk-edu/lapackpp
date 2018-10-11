@@ -18,17 +18,17 @@ void test_ggev_work( Params& params, bool run )
     typedef long long lld;
 
     // get & mark input values
-    lapack::Job jobvl = params.jobvl.value();
-    lapack::Job jobvr = params.jobvr.value();
+    lapack::Job jobvl = params.jobvl();
+    lapack::Job jobvr = params.jobvr();
     int64_t n = params.dim.n();
-    int64_t align = params.align.value();
+    int64_t align = params.align();
     params.matrix.mark();
     params.matrixB.mark();
 
     // mark non-standard output values
-    params.ref_time.value();
-    // params.ref_gflops.value();
-    // params.gflops.value();
+    params.ref_time();
+    // params.ref_gflops();
+    // params.gflops();
 
     if (! run)
         return;
@@ -66,7 +66,7 @@ void test_ggev_work( Params& params, bool run )
     std::copy( alpha_tst.begin(), alpha_tst.end(), alpha_ref.begin() );
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     int64_t info_tst = lapack::ggev( jobvl, jobvr, n, &A_tst[0], lda, &B_tst[0], ldb, &alpha_tst[0], &beta_tst[0], &VL_tst[0], ldvl, &VR_tst[0], ldvr );
     time = get_wtime() - time;
@@ -74,13 +74,13 @@ void test_ggev_work( Params& params, bool run )
         fprintf( stderr, "lapack::ggev returned error %lld\n", (lld) info_tst );
     }
 
-    params.time.value() = time;
+    params.time() = time;
     // double gflop = lapack::Gflop< scalar_t >::ggev( jobvl, jobvr, n );
-    // params.gflops.value() = gflop / time;
+    // params.gflops() = gflop / time;
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         int64_t info_ref = LAPACKE_ggev( job2char(jobvl), job2char(jobvr), n, &A_ref[0], lda, &B_ref[0], ldb, &alpha_ref[0], &beta_ref[0], &VL_ref[0], ldvl, &VR_ref[0], ldvr );
         time = get_wtime() - time;
@@ -88,8 +88,8 @@ void test_ggev_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_ggev returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value() = time;
-        // params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        // params.ref_gflops() = gflop / time;
 
         // ---------- check error compared to reference
         real_t error = 0;
@@ -102,15 +102,15 @@ void test_ggev_work( Params& params, bool run )
         error += abs_error( beta_tst, beta_ref );
         error += abs_error( VL_tst, VL_ref );
         error += abs_error( VR_tst, VR_ref );
-        params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
+        params.error() = error;
+        params.okay() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 
 // -----------------------------------------------------------------------------
 void test_ggev( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

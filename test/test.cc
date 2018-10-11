@@ -533,18 +533,18 @@ Params::Params():
     matrixB.condD.name( "condD_B" );
 
     // mark standard set of output fields as used
-    okay  .value();
-    error .value();
-    time  .value();
+    okay();
+    error();
+    time();
 
     // mark framework parameters as used, so they will be accepted on the command line
-    check  .value();
-    error_exit.value();
-    ref    .value();
-    tol    .value();
-    repeat .value();
-    verbose.value();
-    cache  .value();
+    check();
+    error_exit();
+    ref();
+    tol();
+    repeat();
+    verbose();
+    cache();
 
     // routine's parameters are marked by the test routine; see main
 }
@@ -559,14 +559,14 @@ void Params::get_range(
     typedef long long lld;
 
     // default assume All
-    *vl_arg = this->vl.value();
-    *vu_arg = this->vu.value();
-    *il_arg = std::min( this->il.value(), n );
-    *iu_arg = std::min( this->iu.value(), n );
+    *vl_arg = this->vl();
+    *vu_arg = this->vu();
+    *il_arg = std::min( this->il(), n );
+    *iu_arg = std::min( this->iu(), n );
     if (*iu_arg == -1)
         *iu_arg = n;
-    double frac_start = this->fraction_start.value();
-    double frac = this->fraction.value();
+    double frac_start = this->fraction_start();
+    double frac = this->fraction();
     if (frac_start + frac > 1)
         throw lapack::Error( "Error: fraction_start + fraction > 1" );
 
@@ -586,9 +586,9 @@ void Params::get_range(
         *range_arg = lapack::Range::All;
     }
 
-    this->range.value() = *range_arg;
-    this->il.value() = *il_arg;
-    this->iu.value() = *iu_arg;
+    this->range() = *range_arg;
+    this->il() = *il_arg;
+    this->iu() = *iu_arg;
 }
 
 // -----------------------------------------------------------------------------
@@ -625,13 +625,13 @@ void print_matrix_header(
     std::string* matrix, double* cond, double* condD )
 {
     if (params.kind.used() &&
-        (*matrix != params.kind.value() ||
-         ! same( *cond,  params.cond_used.value() ) ||
-         ! same( *condD, params.condD.value() )))
+        (*matrix != params.kind() ||
+         ! same( *cond,  params.cond_used() ) ||
+         ! same( *condD, params.condD() )))
     {
-        *matrix = params.kind.value();
-        *cond   = params.cond_used.value();
-        *condD  = params.condD.value();
+        *matrix = params.kind();
+        *cond   = params.cond_used();
+        *condD  = params.condD();
         printf( "%s: %s, cond(S) = ", caption, matrix->c_str() );
         if (std::isnan( *cond ))
             printf( "NA" );
@@ -697,19 +697,19 @@ int main( int argc, char** argv )
         }
 
         // show align column if it has non-default values
-        if (params.align.size() != 1 || params.align.value() != 1) {
+        if (params.align.size() != 1 || params.align() != 1) {
             params.align.width( 5 );
         }
 
         // run tests
-        int repeat = params.repeat.value();
-        libtest::DataType last = params.datatype.value();
+        int repeat = params.repeat();
+        libtest::DataType last = params.datatype();
         std::string matrix, matrixB;
         double cond = 0, condD = 0, condB = 0, condD_B = 0;
         params.header();
         do {
-            if (params.datatype.value() != last) {
-                last = params.datatype.value();
+            if (params.datatype() != last) {
+                last = params.datatype();
                 printf( "\n" );
             }
             for (int iter = 0; iter < repeat; ++iter) {
@@ -719,7 +719,7 @@ int main( int argc, char** argv )
                 catch (const std::exception& ex) {
                     fprintf( stderr, "%s%sError: %s%s\n",
                              ansi_bold, ansi_red, ex.what(), ansi_normal );
-                    params.okay.value() = false;
+                    params.okay() = false;
                 }
                 if (iter == 0) {
                     print_matrix_header( params.matrix,  "test matrix A", &matrix,  &cond,  &condD   );

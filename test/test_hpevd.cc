@@ -17,15 +17,15 @@ void test_hpevd_work( Params& params, bool run )
     typedef long long lld;
 
     // get & mark input values
-    lapack::Job jobz = params.jobz.value();
-    lapack::Uplo uplo = params.uplo.value();
+    lapack::Job jobz = params.jobz();
+    lapack::Uplo uplo = params.uplo();
     int64_t n = params.dim.n();
-    int64_t align = params.align.value();
+    int64_t align = params.align();
 
     // mark non-standard output values
-    params.ref_time.value();
-    // params.ref_gflops.value();
-    // params.gflops.value();
+    params.ref_time();
+    // params.ref_gflops();
+    // params.gflops();
 
     if (! run)
         return;
@@ -49,7 +49,7 @@ void test_hpevd_work( Params& params, bool run )
     AP_ref = AP_tst;
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     int64_t info_tst = lapack::hpevd( jobz, uplo, n, &AP_tst[0], &W_tst[0], &Z_tst[0], ldz );
     time = get_wtime() - time;
@@ -57,13 +57,13 @@ void test_hpevd_work( Params& params, bool run )
         fprintf( stderr, "lapack::hpevd returned error %lld\n", (lld) info_tst );
     }
 
-    params.time.value() = time;
+    params.time() = time;
     // double gflop = lapack::Gflop< scalar_t >::hpevd( jobz, n );
-    // params.gflops.value() = gflop / time;
+    // params.gflops() = gflop / time;
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         int64_t info_ref = LAPACKE_hpevd( job2char(jobz), uplo2char(uplo), n, &AP_ref[0], &W_ref[0], &Z_ref[0], ldz );
         time = get_wtime() - time;
@@ -71,8 +71,8 @@ void test_hpevd_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_hpevd returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value() = time;
-        // params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        // params.ref_gflops() = gflop / time;
 
         // ---------- check error compared to reference
         real_t error = 0;
@@ -82,15 +82,15 @@ void test_hpevd_work( Params& params, bool run )
         error += abs_error( AP_tst, AP_ref );
         error += abs_error( W_tst, W_ref );
         error += abs_error( Z_tst, Z_ref );
-        params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
+        params.error() = error;
+        params.okay() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 
 // -----------------------------------------------------------------------------
 void test_hpevd( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

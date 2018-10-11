@@ -18,13 +18,13 @@ void test_gtsv_work( Params& params, bool run )
 
     // get & mark input values
     int64_t n = params.dim.n();
-    int64_t nrhs = params.nrhs.value();
-    int64_t align = params.align.value();
+    int64_t nrhs = params.nrhs();
+    int64_t align = params.align();
 
     // mark non-standard output values
-    params.ref_time.value();
-    //params.ref_gflops.value();
-    //params.gflops.value();
+    params.ref_time();
+    //params.ref_gflops();
+    //params.gflops();
 
     if (! run)
         return;
@@ -57,7 +57,7 @@ void test_gtsv_work( Params& params, bool run )
     B_ref = B_tst;
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     int64_t info_tst = lapack::gtsv( n, nrhs, &DL_tst[0], &D_tst[0], &DU_tst[0], &B_tst[0], ldb );
     time = get_wtime() - time;
@@ -65,13 +65,13 @@ void test_gtsv_work( Params& params, bool run )
         fprintf( stderr, "lapack::gtsv returned error %lld\n", (lld) info_tst );
     }
 
-    params.time.value() = time;
+    params.time() = time;
     //double gflop = lapack::Gflop< scalar_t >::gtsv( n, nrhs );
-    //params.gflops.value() = gflop / time;
+    //params.gflops() = gflop / time;
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         int64_t info_ref = LAPACKE_gtsv( n, nrhs, &DL_ref[0], &D_ref[0], &DU_ref[0], &B_ref[0], ldb );
         time = get_wtime() - time;
@@ -79,8 +79,8 @@ void test_gtsv_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_gtsv returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value() = time;
-        //params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        //params.ref_gflops() = gflop / time;
 
         // ---------- check error compared to reference
         real_t error = 0;
@@ -91,15 +91,15 @@ void test_gtsv_work( Params& params, bool run )
         error += abs_error( D_tst, D_ref );
         error += abs_error( DU_tst, DU_ref );
         error += abs_error( B_tst, B_ref );
-        params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
+        params.error() = error;
+        params.okay() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 
 // -----------------------------------------------------------------------------
 void test_gtsv( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

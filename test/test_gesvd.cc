@@ -19,21 +19,21 @@ void test_gesvd_work( Params& params, bool run )
     typedef long long lld;
 
     // get & mark input values
-    lapack::Job jobu = params.jobu.value();
-    lapack::Job jobvt = params.jobvt.value();
+    lapack::Job jobu = params.jobu();
+    lapack::Job jobvt = params.jobvt();
     int64_t m = params.dim.m();
     int64_t n = params.dim.n();
-    int64_t align = params.align.value();
-    int64_t verbose = params.verbose.value();
+    int64_t align = params.align();
+    int64_t verbose = params.verbose();
     params.matrix.mark();
 
     // mark non-standard output values
-    params.ref_time.value();
-    //params.ref_gflops.value();
-    //params.gflops.value();
-    params.ortho_U.value();
-    params.ortho_V.value();
-    params.error_sigma.value();
+    params.ref_time();
+    //params.ref_gflops();
+    //params.gflops();
+    params.ortho_U();
+    params.ortho_V();
+    params.error_sigma();
 
     if (! run)
         return;
@@ -74,7 +74,7 @@ void test_gesvd_work( Params& params, bool run )
 
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     int64_t info_tst = lapack::gesvd( jobu, jobvt, m, n, &A_tst[0], lda, &S_tst[0], &U_tst[0], ldu, &VT_tst[0], ldvt );
     time = get_wtime() - time;
@@ -82,9 +82,9 @@ void test_gesvd_work( Params& params, bool run )
         fprintf( stderr, "lapack::gesvd returned error %lld\n", (lld) info_tst );
     }
 
-    params.time.value() = time;
+    params.time() = time;
     //double gflop = lapack::Gflop< scalar_t >::gesvd( jobu, jobvt, m, n );
-    //params.gflops.value() = gflop / time;
+    //params.gflops() = gflop / time;
 
     // ---------- check numerical error
     // errors[0] = || A - U diag(S) VT || / (||A|| max(m,n)),
@@ -96,7 +96,7 @@ void test_gesvd_work( Params& params, bool run )
                          (real_t) libtest::no_data_flag,
                          (real_t) libtest::no_data_flag,
                          (real_t) libtest::no_data_flag };
-    if (params.check.value() == 'y') {
+    if (params.check() == 'y') {
         // U2 or VT2 points to A if overwriting
         scalar_t* U2    = &U_tst[0];
         int64_t   ldu2  = ldu;
@@ -114,9 +114,9 @@ void test_gesvd_work( Params& params, bool run )
                    &S_tst[0], U2, ldu2, VT2, ldvt2, errors );
     }
 
-    if (params.ref.value() == 'y') {
+    if (params.ref() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         int64_t info_ref = LAPACKE_gesvd( job2char(jobu), job2char(jobvt), m, n, &A_ref[0], lda, &S_ref[0], &U_ref[0], ldu, &VT_ref[0], ldvt );
         time = get_wtime() - time;
@@ -124,8 +124,8 @@ void test_gesvd_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_gesvd returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value() = time;
-        //params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        //params.ref_gflops() = gflop / time;
 
         // ---------- check error compared to reference
         if (info_tst != info_ref) {
@@ -134,12 +134,12 @@ void test_gesvd_work( Params& params, bool run )
         errors[3] += rel_error( S_tst, S_ref );
     }
     real_t eps = std::numeric_limits< real_t >::epsilon();
-    real_t tol = params.tol.value() * eps;
-    params.error.value()       = errors[0];
-    params.ortho_U.value()     = errors[1];
-    params.ortho_V.value()     = errors[2];
-    params.error_sigma.value() = errors[3];
-    params.okay.value() = (
+    real_t tol = params.tol() * eps;
+    params.error()       = errors[0];
+    params.ortho_U()     = errors[1];
+    params.ortho_V()     = errors[2];
+    params.error_sigma() = errors[3];
+    params.okay() = (
         (jobu  == Job::NoVec || jobvt == Job::NoVec || errors[0] < tol) &&
         (jobu  == Job::NoVec || errors[1] < tol) &&
         (jobvt == Job::NoVec || errors[2] < tol) &&
@@ -149,7 +149,7 @@ void test_gesvd_work( Params& params, bool run )
 // -----------------------------------------------------------------------------
 void test_gesvd( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

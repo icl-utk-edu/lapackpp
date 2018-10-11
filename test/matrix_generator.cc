@@ -684,16 +684,16 @@ void generate_matrix(
     const scalar_t c_one  = 1;
 
     // locals
-    std::string kind = params.kind.value();
+    std::string kind = params.kind();
     std::vector< std::string > tokens = split( kind, "-_" );
 
-    real_t cond = params.cond.value();
+    real_t cond = params.cond();
     bool cond_default = std::isnan( cond );
     if (cond_default) {
         cond = 1 / sqrt( eps );
     }
 
-    real_t condD = params.condD.value();
+    real_t condD = params.condD();
     bool condD_default = std::isnan( condD );
     if (condD_default) {
         condD = 1;
@@ -865,9 +865,9 @@ void generate_matrix(
         if (! cond_default && last != kind) {
             last = kind;
             fprintf( stderr, "%sWarning: matrix '%s' ignores cond %.2e.%s\n",
-                     ansi_red, kind.c_str(), params.cond.value(), ansi_normal );
+                     ansi_red, kind.c_str(), params.cond(), ansi_normal );
         }
-        params.cond_used.value() = libtest::no_data_flag;
+        params.cond_used() = libtest::no_data_flag;
     }
     else if (dist == Dist::randn ||
              dist == Dist::randu ||
@@ -879,12 +879,12 @@ void generate_matrix(
             last = kind;
             fprintf( stderr, "%sWarning: matrix '%s': rand, randn, and randu "
                      "singular/eigenvalue distributions ignore cond %.2e.%s\n",
-                     ansi_red, kind.c_str(), params.cond.value(), ansi_normal );
+                     ansi_red, kind.c_str(), params.cond(), ansi_normal );
         }
-        params.cond_used.value() = libtest::no_data_flag;
+        params.cond_used() = libtest::no_data_flag;
     }
     else {
-        params.cond_used.value() = cond;
+        params.cond_used() = cond;
     }
 
     if (! (type == TestMatrixType::svd ||
@@ -896,7 +896,7 @@ void generate_matrix(
         if (! condD_default && last != kind) {
             last = kind;
             fprintf( stderr, "%sWarning: matrix '%s' ignores condD %.2e.%s\n",
-                     ansi_red, kind.c_str(), params.condD.value(), ansi_normal );
+                     ansi_red, kind.c_str(), params.condD(), ansi_normal );
         }
     }
 

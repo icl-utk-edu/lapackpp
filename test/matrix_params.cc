@@ -21,7 +21,7 @@ MatrixParams::MatrixParams():
 /// Marks matrix params as used.
 void MatrixParams::mark()
 {
-    kind.value();
-    cond.value();
-    condD.value();
+    kind();
+    cond();
+    condD();
 }

@@ -27,25 +27,25 @@ void test_geev_work( Params& params, bool run )
     typedef long long lld;
 
     // get & mark input values
-    lapack::Job jobvl = params.jobvl.value();
-    lapack::Job jobvr = params.jobvr.value();
+    lapack::Job jobvl = params.jobvl();
+    lapack::Job jobvr = params.jobvr();
     int64_t n = params.dim.n();
-    int64_t align = params.align.value();
-    int64_t verbose = params.verbose.value();
+    int64_t align = params.align();
+    int64_t verbose = params.verbose();
     params.matrix.mark();
 
     real_t eps = std::numeric_limits< real_t >::epsilon();
-    real_t tol = params.tol.value() * eps;
-    //printf( "eps %.2e, tol %.2e, tol*eps %.2e\n", eps, params.tol.value(), tol );
+    real_t tol = params.tol() * eps;
+    //printf( "eps %.2e, tol %.2e, tol*eps %.2e\n", eps, params.tol(), tol );
 
     // mark non-standard output values
-    params.error2.value();
-    params.error3.value();
-    params.error4.value();
-    params.error5.value();
-    params.ref_time.value();
-    //params.ref_gflops.value();
-    //params.gflops.value();
+    params.error2();
+    params.error3();
+    params.error4();
+    params.error5();
+    params.ref_time();
+    //params.ref_gflops();
+    //params.gflops();
 
     params.error .name( "A' Vl-Vl W'\nerror" );
     params.error2.name( "Vl(j) norm\nerror" );
@@ -89,7 +89,7 @@ void test_geev_work( Params& params, bool run )
     }
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     //printf (" test start\n");
     int64_t info_tst = lapack::geev( jobvl, jobvr, n, &A_tst[0], lda, &W_tst[0], &VL_tst[0], ldvl, &VR_tst[0], ldvr );
@@ -99,9 +99,9 @@ void test_geev_work( Params& params, bool run )
         fprintf( stderr, "lapack::geev returned error %lld\n", (lld) info_tst );
     }
 
-    params.time.value() = time;
+    params.time() = time;
     //double gflop = lapack::Gflop< scalar_t >::geev( jobvl, jobvr, n );
-    //params.gflops.value() = gflop / time;
+    //params.gflops() = gflop / time;
 
     if (verbose >= 2) {
         printf( "W = " ); print_vector( n, &W_tst[0], 1 );
@@ -114,7 +114,7 @@ void test_geev_work( Params& params, bool run )
     }
 
     bool okay = true;
-    if (params.check.value() == 'y') {
+    if (params.check() == 'y') {
         // ---------- check numerical error
         // formula from get22; differs from LAWN 41, usess ||V||_1 instead of n
         // 1. || A^H Vl - Vl W^H ||_1 / (||V||_1 ||A||_1)
@@ -129,21 +129,21 @@ void test_geev_work( Params& params, bool run )
             check_geev( Op::ConjTrans, n, &A_ref[0], lda, &W_tst[0],
                         &VL_tst[0], ldvl, verbose, &results[0] );
             okay = (okay && results[0] < tol && results[1] < tol);
-            params.error .value() = results[0];
-            params.error2.value() = results[1];
+            params.error () = results[0];
+            params.error2() = results[1];
         }
         if (jobvr == lapack::Job::Vec) {
             check_geev( Op::NoTrans,   n, &A_ref[0], lda, &W_tst[0],
                         &VR_tst[0], ldvr, verbose, &results[2] );
             okay = (okay && results[2] < tol && results[3] < tol);
-            params.error3.value() = results[2];
-            params.error4.value() = results[3];
+            params.error3() = results[2];
+            params.error4() = results[3];
         }
     }
 
-    if (params.ref.value() == 'y') {
+    if (params.ref() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
     //printf (" ref start\n");
         int64_t info_ref = LAPACKE_geev( job2char(jobvl), job2char(jobvr), n, &A_ref[0], lda, &W_ref[0], &VL_ref[0], ldvl, &VR_ref[0], ldvr );
@@ -153,8 +153,8 @@ void test_geev_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_geev returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value() = time;
-        //params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        //params.ref_gflops() = gflop / time;
 
         if (verbose >= 2) {
             printf( "// note: may be sorted differently than results above\n" );
@@ -174,17 +174,17 @@ void test_geev_work( Params& params, bool run )
         std::sort( W_ref.begin(), W_ref.end(), lessthan< std::complex<real_t> > );
         error = rel_error( W_tst, W_ref );
         okay = (okay && error < tol);
-        params.error5.value() = error;
+        params.error5() = error;
     }
 
     // okay from error ... error5
-    params.okay.value() = okay;
+    params.okay() = okay;
 }
 
 // -----------------------------------------------------------------------------
 void test_geev( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

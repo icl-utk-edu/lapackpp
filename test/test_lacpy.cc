@@ -17,16 +17,16 @@ void test_lacpy_work( Params& params, bool run )
     typedef long long lld;
 
     // get & mark input values
-    lapack::MatrixType matrixtype = params.matrixtype.value();
+    lapack::MatrixType matrixtype = params.matrixtype();
     int64_t m = params.dim.m();
     int64_t n = params.dim.n();
-    int64_t align = params.align.value();
+    int64_t align = params.align();
     params.matrix.mark();
 
     // mark non-standard output values
-    params.ref_time.value();
-    //params.ref_gflops.value();
-    //params.gflops.value();
+    params.ref_time();
+    //params.ref_gflops();
+    //params.gflops();
 
     if (! run)
         return;
@@ -46,18 +46,18 @@ void test_lacpy_work( Params& params, bool run )
     B_ref = B_tst;
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     lapack::lacpy( matrixtype, m, n, &A[0], lda, &B_tst[0], ldb );
     time = get_wtime() - time;
 
-    params.time.value() = time;
+    params.time() = time;
     //double gflop = lapack::Gflop< scalar_t >::lacpy( m, n );
-    //params.gflops.value() = gflop / time;
+    //params.gflops() = gflop / time;
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         int64_t info_ref = LAPACKE_lacpy( matrixtype2char(matrixtype), m, n, &A[0], lda, &B_ref[0], ldb );
         time = get_wtime() - time;
@@ -65,21 +65,21 @@ void test_lacpy_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_lacpy returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value() = time;
-        //params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        //params.ref_gflops() = gflop / time;
 
         // ---------- check error compared to reference
         real_t error = 0;
         error += abs_error( B_tst, B_ref );
-        params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
+        params.error() = error;
+        params.okay() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 
 // -----------------------------------------------------------------------------
 void test_lacpy( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

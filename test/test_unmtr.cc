@@ -17,18 +17,18 @@ void test_unmtr_work( Params& params, bool run )
     typedef long long lld;
 
     // get & mark input values
-    lapack::Side side = params.side.value();
-    lapack::Uplo uplo = params.uplo.value();
-    lapack::Op trans = params.trans.value();
+    lapack::Side side = params.side();
+    lapack::Uplo uplo = params.uplo();
+    lapack::Op trans = params.trans();
     int64_t m = params.dim.m();
     int64_t n = params.dim.n();
-    int64_t align = params.align.value();
+    int64_t align = params.align();
     params.matrix.mark();
 
     // mark non-standard output values
-    params.ref_time.value();
-    // params.ref_gflops.value();
-    // params.gflops.value();
+    params.ref_time();
+    // params.ref_gflops();
+    // params.gflops();
 
     if (! run)
         return;
@@ -63,7 +63,7 @@ void test_unmtr_work( Params& params, bool run )
     }
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     int64_t info_tst = lapack::unmtr( side, uplo, trans, m, n, &A[0], lda, &tau[0], &C_tst[0], ldc );
     time = get_wtime() - time;
@@ -71,13 +71,13 @@ void test_unmtr_work( Params& params, bool run )
         fprintf( stderr, "lapack::unmtr returned error %lld\n", (lld) info_tst );
     }
 
-    params.time.value() = time;
+    params.time() = time;
     // double gflop = lapack::Gflop< scalar_t >::unmtr( side, trans, m, n );
-    // params.gflops.value() = gflop / time;
+    // params.gflops() = gflop / time;
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         int64_t info_ref = LAPACKE_unmtr( side2char(side), uplo2char(uplo), op2char(trans), m, n, &A[0], lda, &tau[0], &C_ref[0], ldc );
         time = get_wtime() - time;
@@ -85,8 +85,8 @@ void test_unmtr_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_unmtr returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value() = time;
-        // params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        // params.ref_gflops() = gflop / time;
 
         // ---------- check error compared to reference
         real_t error = 0;
@@ -94,15 +94,15 @@ void test_unmtr_work( Params& params, bool run )
             error = 1;
         }
         error += abs_error( C_tst, C_ref );
-        params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
+        params.error() = error;
+        params.okay() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 
 // -----------------------------------------------------------------------------
 void test_unmtr( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

@@ -17,18 +17,18 @@ void test_gesvx_work( Params& params, bool run )
     typedef long long lld;
 
     // get & mark input values
-    lapack::Factored fact = params.factored.value();
-    lapack::Op trans = params.trans.value();
-    lapack::Equed equed = params.equed.value();
+    lapack::Factored fact = params.factored();
+    lapack::Op trans = params.trans();
+    lapack::Equed equed = params.equed();
     int64_t n = params.dim.n();
-    int64_t nrhs = params.nrhs.value();
-    int64_t align = params.align.value();
+    int64_t nrhs = params.nrhs();
+    int64_t align = params.align();
     params.matrix.mark();
 
     // mark non-standard output values
-    params.ref_time.value();
-    // params.ref_gflops.value();
-    // params.gflops.value();
+    params.ref_time();
+    // params.ref_gflops();
+    // params.gflops();
 
     if (! run)
         return;
@@ -95,7 +95,7 @@ void test_gesvx_work( Params& params, bool run )
     B_ref = B_tst;
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     int64_t info_tst = lapack::gesvx( fact, trans, n, nrhs, &A_tst[0], lda, &AF_tst[0], ldaf, &ipiv_tst[0], &equed_tst, &R_tst[0], &C_tst[0], &B_tst[0], ldb, &X_tst[0], ldx, &rcond_tst, &ferr_tst[0], &berr_tst[0], &rpivot_tst );
     time = get_wtime() - time;
@@ -103,13 +103,13 @@ void test_gesvx_work( Params& params, bool run )
         fprintf( stderr, "lapack::gesvx returned error %lld\n", (lld) info_tst );
     }
 
-    params.time.value() = time;
+    params.time() = time;
     // double gflop = lapack::Gflop< scalar_t >::gesvx( fact, trans, n, nrhs );
-    // params.gflops.value() = gflop / time;
+    // params.gflops() = gflop / time;
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         char equed_ref_char = lapack::equed2char( equed_ref );
         time = get_wtime();
         int64_t info_ref = LAPACKE_gesvx( factored2char(fact), op2char(trans), n, nrhs, &A_ref[0], lda, &AF_ref[0], ldaf, &ipiv_ref[0], &equed_ref_char, &R_ref[0], &C_ref[0], &B_ref[0], ldb, &X_ref[0], ldx, &rcond_ref, &ferr_ref[0], &berr_ref[0], &rpivot_ref );
@@ -119,8 +119,8 @@ void test_gesvx_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_gesvx returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value() = time;
-        // params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        // params.ref_gflops() = gflop / time;
 
         // ---------- check error compared to reference
         real_t error = 0;
@@ -139,15 +139,15 @@ void test_gesvx_work( Params& params, bool run )
         error += abs_error( ferr_tst, ferr_ref );
         error += abs_error( berr_tst, berr_ref );
         error += std::abs( rpivot_tst - rpivot_ref );
-        params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
+        params.error() = error;
+        params.okay() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 
 // -----------------------------------------------------------------------------
 void test_gesvx( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

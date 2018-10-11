@@ -19,14 +19,14 @@ void test_laswp_work( Params& params, bool run )
     // get & mark input values
     int64_t m = params.dim.m();
     int64_t n = params.dim.n();
-    int64_t incx = params.incx.value();
-    int64_t align = params.align.value();
+    int64_t incx = params.incx();
+    int64_t align = params.align();
     params.matrix.mark();
 
     // mark non-standard output values
-    params.ref_time.value();
-    //params.ref_gflops.value();
-    //params.gflops.value();
+    params.ref_time();
+    //params.ref_gflops();
+    //params.gflops();
 
     if (! run)
         return;
@@ -55,18 +55,18 @@ void test_laswp_work( Params& params, bool run )
     std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     lapack::laswp( n, &A_tst[0], lda, k1, k2, &ipiv_tst[0], incx );
     time = get_wtime() - time;
 
-    params.time.value() = time;
+    params.time() = time;
     //double gflop = lapack::Gflop< scalar_t >::laswp( n );
-    //params.gflops.value() = gflop / time;
+    //params.gflops() = gflop / time;
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         int64_t info_ref = LAPACKE_laswp( n, &A_ref[0], lda, k1, k2, &ipiv_ref[0], incx );
         time = get_wtime() - time;
@@ -74,21 +74,21 @@ void test_laswp_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_laswp returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value() = time;
-        //params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        //params.ref_gflops() = gflop / time;
 
         // ---------- check error compared to reference
         real_t error = 0;
         error += abs_error( A_tst, A_ref );
-        params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
+        params.error() = error;
+        params.okay() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 
 // -----------------------------------------------------------------------------
 void test_laswp( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

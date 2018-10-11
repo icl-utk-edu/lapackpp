@@ -17,17 +17,17 @@ void test_lantb_work( Params& params, bool run )
     typedef long long lld;
 
     // get & mark input values
-    lapack::Norm norm = params.norm.value();
-    lapack::Uplo uplo = params.uplo.value();
-    lapack::Diag diag = params.diag.value();
+    lapack::Norm norm = params.norm();
+    lapack::Uplo uplo = params.uplo();
+    lapack::Diag diag = params.diag();
     int64_t n = params.dim.n();
-    int64_t k = params.kd.value();
-    int64_t align = params.align.value();
+    int64_t k = params.kd();
+    int64_t align = params.align();
 
     // mark non-standard output values
-    params.ref_time.value();
-    // params.ref_gflops.value();
-    // params.gflops.value();
+    params.ref_time();
+    // params.ref_gflops();
+    // params.gflops();
 
     if (! run)
         return;
@@ -43,39 +43,39 @@ void test_lantb_work( Params& params, bool run )
     lapack::larnv( idist, iseed, AB.size(), &AB[0] );
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     int64_t norm_tst = lapack::lantb( norm, uplo, diag, n, k, &AB[0], ldab );
     time = get_wtime() - time;
 
-    params.time.value() = time;
+    params.time() = time;
     // double gflop = lapack::Gflop< scalar_t >::lantb( norm, diag, n, k );
-    // params.gflops.value() = gflop / time;
+    // params.gflops() = gflop / time;
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         int64_t norm_ref = LAPACKE_lantb( norm2char(norm), uplo2char(uplo), diag2char(diag), n, k, &AB[0], ldab );
         time = get_wtime() - time;
 
-        params.ref_time.value() = time;
-        // params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        // params.ref_gflops() = gflop / time;
 
         // ---------- check error compared to reference
         real_t error = 0;
         if (norm_tst != norm_ref) {
             error = 1;
         }
-        params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
+        params.error() = error;
+        params.okay() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 
 // -----------------------------------------------------------------------------
 void test_lantb( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

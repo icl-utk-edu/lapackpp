@@ -19,14 +19,14 @@ void test_gbequ_work( Params& params, bool run )
     // get & mark input values
     int64_t m = params.dim.m();
     int64_t n = params.dim.n();
-    int64_t kl = params.kl.value();
-    int64_t ku = params.ku.value();
-    int64_t align = params.align.value();
+    int64_t kl = params.kl();
+    int64_t ku = params.ku();
+    int64_t align = params.align();
 
     // mark non-standard output values
-    params.ref_time.value();
-    //params.ref_gflops.value();
-    //params.gflops.value();
+    params.ref_time();
+    //params.ref_gflops();
+    //params.gflops();
 
     if (! run)
         return;
@@ -54,7 +54,7 @@ void test_gbequ_work( Params& params, bool run )
     lapack::larnv( idist, iseed, AB.size(), &AB[0] );
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
+    libtest::flush_cache( params.cache() );
     double time = get_wtime();
     int64_t info_tst = lapack::gbequ( m, n, kl, ku, &AB[0], ldab, &R_tst[0], &C_tst[0], &rowcnd_tst, &colcnd_tst, &amax_tst );
     time = get_wtime() - time;
@@ -62,13 +62,13 @@ void test_gbequ_work( Params& params, bool run )
         fprintf( stderr, "lapack::gbequ returned error %lld\n", (lld) info_tst );
     }
 
-    params.time.value() = time;
+    params.time() = time;
     //double gflop = lapack::Gflop< scalar_t >::gbequ( m, n, kl, ku );
-    //params.gflops.value() = gflop / time;
+    //params.gflops() = gflop / time;
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
+        libtest::flush_cache( params.cache() );
         time = get_wtime();
         int64_t info_ref = LAPACKE_gbequ( m, n, kl, ku, &AB[0], ldab, &R_ref[0], &C_ref[0], &rowcnd_ref, &colcnd_ref, &amax_ref );
         time = get_wtime() - time;
@@ -76,8 +76,8 @@ void test_gbequ_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_gbequ returned error %lld\n", (lld) info_ref );
         }
 
-        params.ref_time.value() = time;
-        //params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        //params.ref_gflops() = gflop / time;
 
         // ---------- check error compared to reference
         real_t error = 0;
@@ -89,15 +89,15 @@ void test_gbequ_work( Params& params, bool run )
         error += std::abs( rowcnd_tst - rowcnd_ref );
         error += std::abs( colcnd_tst - colcnd_ref );
         error += std::abs( amax_tst - amax_ref );
-        params.error.value() = error;
-        params.okay.value() = (error == 0);  // expect lapackpp == lapacke
+        params.error() = error;
+        params.okay() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 
 // -----------------------------------------------------------------------------
 void test_gbequ( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case libtest::DataType::Integer:
             throw std::exception();
             break;

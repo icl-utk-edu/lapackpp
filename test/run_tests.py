@@ -21,6 +21,7 @@ import sys
 import os
 import re
 import argparse
+import subprocess
 
 # ------------------------------------------------------------------------------
 # command line arguments
@@ -560,19 +561,17 @@ output_redirected = not sys.stdout.isatty()
 def run_test( cmd ):
     cmd = './test %-6s%s' % tuple(cmd)
     print( cmd, file=sys.stderr )
-    err = os.system( cmd )
-    if (err):
-        hi = (err & 0xff00) >> 8
-        lo = (err & 0x00ff)
-        if (lo == 2):
-            print( '\nCancelled', file=sys.stderr )
-            exit(1)
-        elif (lo != 0):
-            print( 'FAILED: abnormal exit, signal =', lo, file=sys.stderr )
-        elif (output_redirected):
-            print( hi, 'tests FAILED.', file=sys.stderr )
-    # end
-    return err
+    output = ''
+    p = subprocess.Popen( cmd.split(), stdout=subprocess.PIPE,
+                                       stderr=subprocess.STDOUT )
+    # Read unbuffered ("for line in p.stdout" will buffer).
+    for line in iter(p.stdout.readline, b''):
+        print( line, end='' )
+        output += line
+    err = p.wait()
+    if (err < 0):
+        print( 'FAILED: exit with signal', -err )
+    return (err, output)
 # end
 
 # ------------------------------------------------------------------------------

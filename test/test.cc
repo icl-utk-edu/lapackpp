@@ -726,7 +726,8 @@ int main( int argc, char** argv )
                     print_matrix_header( params.matrixB, "test matrix B", &matrixB, &condB, &condD_B );
                 }
                 params.print();
-                status += ! params.okay.value();
+                fflush( stdout );
+                status += ! params.okay();
                 params.reset_output();
             }
             if (repeat > 1) {

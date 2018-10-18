@@ -49,7 +49,7 @@ void test_upgtr_work( Params& params, bool run )
     lapack::larnv( idist, iseed, AP.size(), &AP[0] );
     lapack::larnv( idist, iseed, tau.size(), &tau[0] );
 
-    // reduce to tridiagonal form to use the tau later    
+    // reduce to tridiagonal form to use the tau later
     int64_t info = lapack::hptrd( uplo, n, &AP[0], &D[0], &E[0], &tau[0] );
     if (info != 0) {
         fprintf( stderr, "lapack::upgtr returned error %lld\n", (lld) info );

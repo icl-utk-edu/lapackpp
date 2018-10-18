@@ -41,7 +41,7 @@ void test_ptcon_work( Params& params, bool run )
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, D.size(), &D[0] );
     lapack::larnv( idist, iseed, E.size(), &E[0] );
-    
+
     // diagonally dominant -> positive definite
     for (int64_t i = 0; i < n; ++i) {
         D[ i ] += n;

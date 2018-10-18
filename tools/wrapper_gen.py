@@ -1311,19 +1311,19 @@ def generate_wrapper( func, header=False ):
         # arg.lname is local name, like "m_"
         # arg.pname is pointer name to pass to Fortran, like "&m_" or "A"
         ##print( 'arg ' + arg.name + ', pname ' + arg.pname + ', dtype ' + arg.dtype )
-        
+
         # arrays start new line
         prefix = ''
         if (arg.is_array):
             prefix = '\n' + tab*2
-        
+
         # cast complex pointers
         cast = ''
         m = re.search( '^std::complex<(\w+)>$', arg.dtype )
         if (m):
             cast = '(lapack_complex_' + m.group(1) + '*) '
         call_args.append( prefix + cast + arg.pname )
-        
+
         if (arg.intent == 'in'):
             if (arg.is_array):
                 # input arrays
@@ -1603,7 +1603,7 @@ def generate_tester( funcs ):
                     if (arg.is_enum):
                         # convert enum to char, e.g., uplo2char(uplo)
                         enum2char = enum_map[ arg.name ][1]
-                        #s.group(1).lower() + 
+                        #s.group(1).lower() +
                         ref_args.append( enum2char + '(' + arg.name + ')' )
                     else:
                         ref_args.append( arg.name )
@@ -1649,7 +1649,7 @@ def generate_tester( funcs ):
                 else:
                     lapacke_proto.append( arg.dtype + ' ' + arg.name )
             # end
-            
+
             pre = ''
             if (arg.is_array or ('out' in arg.intent)):
                 pre = '\n' + tab*2

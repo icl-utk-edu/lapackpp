@@ -54,7 +54,7 @@ void test_gbcon_work( Params& params, bool run )
     if (info != 0) {
         fprintf( stderr, "lapack::gbtrf returned error %lld\n", (lld) info );
     }
-    
+
     std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
 
     // ---------- run test

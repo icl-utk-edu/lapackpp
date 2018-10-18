@@ -39,7 +39,7 @@ void test_gesvx_work( Params& params, bool run )
     int64_t ldb = roundup( max( 1, n ), align );
     int64_t ldx = roundup( max( 1, n ), align );
     real_t rcond_tst = 0;
-    real_t rcond_ref = 0; 
+    real_t rcond_ref = 0;
     real_t rpivot_tst = 0;
     real_t rpivot_ref = 0;
     lapack::Equed equed_tst = ( fact==lapack::Factored::Factored ? equed : lapack::Equed::None );

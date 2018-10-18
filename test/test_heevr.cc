@@ -100,9 +100,9 @@ void test_heevr_work( Params& params, bool run )
         // ifail is referenced only if eigenvectors are needed (jobz =
         // 'V') and all eigenvalues are needed, that is, range = 'A'
         // or range = 'I' and il = 1 and iu = n.
-        for ( size_t i = 0; i < (size_t)(2*m_ref); i++ ) 
+        for ( size_t i = 0; i < (size_t)(2*m_ref); i++ )
             if ( ( jobz==lapack::Job::Vec ) &&
-                 ( ( range==lapack::Range::All ) || 
+                 ( ( range==lapack::Range::All ) ||
                    ( range==lapack::Range::Index && il==1 && iu==n ) ) )  {
                 error += std::abs( isuppz_tst[i] - isuppz_ref[i] );
             }

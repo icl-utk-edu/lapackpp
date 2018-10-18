@@ -115,7 +115,7 @@ void test_hpgvx_work( Params& params, bool run )
         error += abs_error( Z_tst, Z_ref );
         // Check first m elements of ifail
         if ( jobz==lapack::Job::Vec ) {
-            for ( size_t i = 0; i < (size_t)(m_ref); i++ ) 
+            for ( size_t i = 0; i < (size_t)(m_ref); i++ )
                 error += std::abs( ifail_tst[i] - ifail_ref[i] );
         }
         params.error() = error;

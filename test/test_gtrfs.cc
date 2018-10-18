@@ -86,7 +86,7 @@ void test_gtrfs_work( Params& params, bool run )
     if (info != 0) {
         fprintf( stderr, "lapack::gttrf returned error %lld\n", (lld) info );
     }
-    
+
     // solve using gttrf
     info = lapack::gttrf( n, &DL[0], &D[0], &DU[0], &DU2[0], &ipiv_tst[0] );
     if (info != 0) {

@@ -33,7 +33,7 @@ void test_gelsy_work( Params& params, bool run )
     // ---------- setup
     int64_t lda = roundup( max( 1, m ), align );
     int64_t ldb = roundup( max( max( 1, m), n ), align );
-    real_t rcond;  
+    real_t rcond;
     int64_t rank_tst;
     lapack_int rank_ref;
     size_t size_A = (size_t) lda * n;
@@ -54,9 +54,9 @@ void test_gelsy_work( Params& params, bool run )
 
     A_ref = A_tst;
     B_ref = B_tst;
-        
+
     // TODO: Initializing jpvt[i] at i
-    for (int64_t i = 0; i < n; ++i) 
+    for (int64_t i = 0; i < n; ++i)
         jpvt_tst[i] = i;
     std::copy( jpvt_tst.begin(), jpvt_tst.end(), jpvt_ref.begin() );
 

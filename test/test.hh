@@ -109,7 +109,6 @@ public:
     libtest::ParamOkay       okay;
 };
 
-
 // -----------------------------------------------------------------------------
 template< typename T >
 inline T roundup( T x, T y )
@@ -130,7 +129,6 @@ inline T roundup( T x, T y )
             printf( "Caught expected exception: %s\n", err.what() ); \
         } \
     }
-
 
 // -----------------------------------------------------------------------------
 // LAPACK

@@ -37,7 +37,7 @@
 #include <stdlib.h>
 
 #ifndef lapack_int
-    #if defined(LAPACK_ILP64)
+    #if defined(LAPACK_ILP64) || defined(BLAS_ILP64)
         #define lapack_int              long long  /* or int64_t */
     #else
         #define lapack_int              int

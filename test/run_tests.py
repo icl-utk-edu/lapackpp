@@ -454,7 +454,7 @@ if (opts.qr):
     [ 'tpqrt2', gen + dtype + align + mn + l ],
     [ 'tpmqrt', gen + dtype_real    + align + mn + l + side + trans    ],  # real does trans = N, T, C
     [ 'tpmqrt', gen + dtype_complex + align + mn + l + side + trans_nc ],  # complex does trans = N, C, not T
-    [ 'tprfb',  gen + dtype + align + mn + l ],
+    #[ 'tprfb',  gen + dtype + align + mn + l ],  # TODO: bug in LAPACKE crashes tester
     ]
 
 # LQ

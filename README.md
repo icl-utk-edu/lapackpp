@@ -1,6 +1,6 @@
-     |      \   _ \  \   __| |  /    |     |  
+     |      \   _ \  \   __| |  /    |     |
      |     _ \  __/ _ \ (      <  __ __|__ __|
-    ____|_/  _\_| _/  _\___|_|\_\   _|    _|  
+    ____|_/  _\_| _/  _\___|_|\_\   _|    _|
 
 **C++ API for the Linear Algebra PACKage**
 
@@ -54,7 +54,7 @@ Getting Help
 ============
 
 For assistance with SLATE, email *slate-user@icl.utk.edu*.
-You can also join the *SLATE User* Google group by going to 
+You can also join the *SLATE User* Google group by going to
 https://groups.google.com/a/icl.utk.edu/forum/#!forum/slate-user,
 signing in with your Google credentials, and then clicking `Join group`.
 
@@ -67,6 +67,21 @@ Resources
 * Visit the [ECP website](https://exascaleproject.org) to find out more about the DOE Exascale Computing Initiative.
 * Visit the [SLATE website](http://icl.utk.edu/slate/) for more information about the SLATE project.
 * Visit the [SLATE Working Notes](http://www.icl.utk.edu/publications/series/swans) to find out more about ongoing SLATE developments.
+
+* * *
+
+Contributing
+============
+
+The SLATE project welcomes contributions from new developers.
+Contributions can be offered through the standard Bitbucket pull request model.
+We strongly encourage you to coordinate large contributions with the SLATE development team early in the process.
+
+We ask that you complete and submit a contributor agreement.
+There are two versions of the agreement,
+one for [individuals](https://bitbucket.org/icl/slate/downloads/slate-individual-contributor-agreement-v02.doc),
+and one for [organizations](https://bitbucket.org/icl/slate/downloads/slate-corporate-contributor-agreement-v02.doc).
+Please look at both to determine which is right for you.
 
 * * *
 

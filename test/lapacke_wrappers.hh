@@ -4916,6 +4916,87 @@ inline double LAPACKE_lanhp(
 // Fortran prototypes if not given via lapacke.h
 extern "C" {
 
+/* ----- matrix norm - symmetric packed */
+#ifndef LAPACK_slanhs
+#define LAPACK_slanhs LAPACK_GLOBAL(slanhs,SLANHS)
+lapack_float_return LAPACK_slanhs(
+    char const* norm,
+    lapack_int const* n,
+    float const* A, lapack_int const* lda, float* work );
+#endif
+
+#ifndef LAPACK_dlanhs
+#define LAPACK_dlanhs LAPACK_GLOBAL(dlanhs,DLANHS)
+double LAPACK_dlanhs(
+    char const* norm,
+    lapack_int const* n,
+    double const* A, lapack_int const* lda, double* work );
+#endif
+
+#ifndef LAPACK_clanhs
+#define LAPACK_clanhs LAPACK_GLOBAL(clanhs,CLANHS)
+lapack_float_return LAPACK_clanhs(
+    char const* norm,
+    lapack_int const* n,
+    lapack_complex_float const* A, lapack_int const* lda, float* work );
+#endif
+
+#ifndef LAPACK_zlanhs
+#define LAPACK_zlanhs LAPACK_GLOBAL(zlanhs,ZLANHS)
+double LAPACK_zlanhs(
+    char const* norm,
+    lapack_int const* n,
+    lapack_complex_double const* A, lapack_int const* lda, double* work );
+#endif
+
+}  // extern "C"
+
+// --------------------
+// wrappers around LAPACK (not in LAPACKE)
+static float LAPACKE_lanhs(
+    char norm, lapack_int n,
+    float* A, lapack_int lda )
+{
+    std::vector< float > work( n );
+    return LAPACK_slanhs(
+        &norm, &n,
+        A, &lda, &work[0] );
+}
+
+static double LAPACKE_lanhs(
+    char norm, lapack_int n,
+    double* A, lapack_int lda )
+{
+    std::vector< double > work( n );
+    return LAPACK_dlanhs(
+        &norm, &n,
+        A, &lda, &work[0] );
+}
+
+static float LAPACKE_lanhs(
+    char norm, lapack_int n,
+    std::complex<float>* A, lapack_int lda )
+{
+    std::vector< float > work( n );
+    return LAPACK_clanhs(
+        &norm, &n,
+        (lapack_complex_float*) A, &lda, &work[0] );
+}
+
+static double LAPACKE_lanhs(
+    char norm, lapack_int n,
+    std::complex<double>* A, lapack_int lda )
+{
+    std::vector< double > work( n );
+    return LAPACK_zlanhs(
+        &norm, &n,
+        (lapack_complex_double*) A, &lda, &work[0] );
+}
+
+// -----------------------------------------------------------------------------
+// Fortran prototypes if not given via lapacke.h
+extern "C" {
+
 /* ----- matrix norm - symmetric tridiagonal */
 #ifndef LAPACK_slanst
 #define LAPACK_slanst LAPACK_GLOBAL(slanst,SLANST)

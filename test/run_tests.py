@@ -611,6 +611,7 @@ if (opts.aux_norm):
     [ 'lanhe', gen + dtype + align + n  + norm + uplo ],
     [ 'lansy', gen + dtype + align + n  + norm + uplo ],
     [ 'lantr', gen + dtype + align + mn + norm + uplo + diag ],
+    [ 'lanhs', gen + dtype + align + n  + norm ],
 
     # Packed
     [ 'lanhp', gen + dtype + n + norm + uplo ],

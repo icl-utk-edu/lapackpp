@@ -392,20 +392,24 @@ std::vector< libtest::routines_t > routines = {
     { "lanhe",              test_lanhe,     Section::aux_norm },
     { "lansy",              test_lansy,     Section::aux_norm },
     { "lantr",              test_lantr,     Section::aux_norm },
+    { "lanhs",              test_lanhs,     Section::aux_norm },
     { "",                   nullptr,        Section::newline },
 
+    // auxiliary: norms - packed
     { "",                   nullptr,        Section::aux_norm },
     { "lanhp",              test_lanhp,     Section::aux_norm },
     { "lansp",              test_lansp,     Section::aux_norm },
     { "lantp",              test_lantp,     Section::aux_norm }, // Tested using direct LAPACK call to xlantp (not in LAPACKE)
     { "",                   nullptr,        Section::newline },
 
+    // auxiliary: norms - banded
     { "langb",              test_langb,     Section::aux_norm }, // Tested using direct LAPACK call to xlantp (not in LAPACKE)
     { "lanhb",              test_lanhb,     Section::aux_norm },
     { "lansb",              test_lansb,     Section::aux_norm },
     { "lantb",              test_lantb,     Section::aux_norm }, // Tested using direct LAPACK call to xlantp (not in LAPACKE)
     { "",                   nullptr,        Section::newline },
 
+    // auxiliary: norms - tridiagonal
     { "langt",              test_langt,     Section::aux_norm }, // Tested using direct LAPACK call to xlantp (not in LAPACKE)
     { "lanht",              test_lanht,     Section::aux_norm }, // Tested using direct LAPACK call to xlantp (not in LAPACKE)
     { "",                   nullptr,        Section::newline },

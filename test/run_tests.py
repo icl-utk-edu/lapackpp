@@ -627,6 +627,7 @@ if (opts.aux_norm):
     # Tri-diagonal
     [ 'langt', gen + dtype + n + norm ],
     [ 'lanht', gen + dtype + n + norm ],
+    [ 'lanst', gen + dtype + n + norm ],
     ]
 
 # additional blas

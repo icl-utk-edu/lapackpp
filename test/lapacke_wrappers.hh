@@ -5034,6 +5034,28 @@ double LAPACK_zlanht(
 
 // --------------------
 // wrappers around LAPACK (not in LAPACKE)
+inline float LAPACKE_lanst(
+    char norm, lapack_int n,
+    float* D,
+    float* E )
+{
+    return LAPACK_slanst(
+        &norm, &n,
+        D,
+        E );
+}
+
+inline double LAPACKE_lanst(
+    char norm, lapack_int n,
+    double* D,
+    double* E )
+{
+    return LAPACK_dlanst(
+        &norm, &n,
+        D,
+        E );
+}
+
 inline float LAPACKE_lanht(
     char norm, lapack_int n,
     float* D,

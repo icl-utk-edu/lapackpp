@@ -19,6 +19,7 @@ void test_lanht_work( Params& params, bool run )
     // get & mark input values
     lapack::Norm norm = params.norm();
     int64_t n = params.dim.n();
+    int64_t verbose = params.verbose();
 
     // mark non-standard output values
     params.ref_time();
@@ -43,30 +44,43 @@ void test_lanht_work( Params& params, bool run )
     // ---------- run test
     libtest::flush_cache( params.cache() );
     double time = get_wtime();
-    int64_t norm_tst = lapack::lanht( norm, n, &D[0], &E[0] );
+    real_t norm_tst = lapack::lanht( norm, n, &D[0], &E[0] );
     time = get_wtime() - time;
 
     params.time() = time;
     // double gflop = lapack::Gflop< scalar_t >::lanht( norm, n );
     // params.gflops() = gflop / time;
 
+    if (verbose >= 1) {
+        printf( "norm_tst = %.8e\n", norm_tst );
+    }
+
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
         time = get_wtime();
-        int64_t norm_ref = LAPACKE_lanht( norm2char(norm), n, &D[0], &E[0] );
+        real_t norm_ref = LAPACKE_lanht( norm2char(norm), n, &D[0], &E[0] );
         time = get_wtime() - time;
 
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
-        real_t error = 0;
-        if (norm_tst != norm_ref) {
-            error = 1;
+        if (verbose >= 1) {
+            printf( "norm_ref = %.8e\n", norm_ref );
         }
+
+        // ---------- check error compared to reference
+        real_t tol = 3 * std::numeric_limits< real_t >::epsilon();
+        if (norm == lapack::Norm::Max && ! blas::is_complex< scalar_t >::value) {
+            // max-norm depends on only one element, so in real there should be
+            // zero error, but in complex there's error in abs().
+            tol = 0;
+        }
+        real_t error = std::abs( norm_tst - norm_ref );
+        if (norm_ref != 0)
+            error /= norm_ref;
         params.error() = error;
-        params.okay() = (error == 0);  // expect lapackpp == lapacke
+        params.okay() = (error <= tol);
     }
 }
 

@@ -72,10 +72,24 @@ void test_lanhp_work( Params& params, bool run )
         }
 
         // ---------- check error compared to reference
-        real_t error = 0;
-        error += std::abs( norm_tst - norm_ref );
+        real_t tol = 3 * std::numeric_limits< real_t >::epsilon();
+        real_t normalize = 1;
+        if (norm == lapack::Norm::Max && ! blas::is_complex< scalar_t >::value) {
+            // max-norm depends on only one element, so in real there should be
+            // zero error, but in complex there's error in abs().
+            tol = 0;
+        }
+        else if (norm == lapack::Norm::One)
+            normalize = sqrt( real_t(n) );
+        else if (norm == lapack::Norm::Inf)
+            normalize = sqrt( real_t(n) );
+        else if (norm == lapack::Norm::Fro)
+            normalize = sqrt( real_t(n)*n );
+        real_t error = std::abs( norm_tst - norm_ref ) / normalize;
+        if (norm_ref != 0)
+            error /= norm_ref;
         params.error() = error;
-        params.okay() = (error == 0);  // expect lapackpp == lapacke
+        params.okay() = (error <= tol);
     }
 }
 

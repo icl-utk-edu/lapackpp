@@ -52,7 +52,7 @@ void test_lanst_work( Params& params, bool run )
     // params.gflops() = gflop / time;
 
     if (verbose >= 1) {
-        printf( "norm_tst = %.16e\n", norm_tst );
+        printf( "norm_tst = %.8e\n", norm_tst );
     }
 
     if (params.ref() == 'y' || params.check() == 'y') {
@@ -66,7 +66,7 @@ void test_lanst_work( Params& params, bool run )
         // params.ref_gflops() = gflop / time;
 
         if (verbose >= 1) {
-            printf( "norm_ref = %.16e\n", norm_ref );
+            printf( "norm_ref = %.8e\n", norm_ref );
         }
 
         // ---------- check error compared to reference

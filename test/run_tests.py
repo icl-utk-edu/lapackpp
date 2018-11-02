@@ -88,6 +88,7 @@ group_opt.add_argument( '--incy',   action='store', help='default=%(default)s', 
 group_opt.add_argument( '--align',  action='store', help='default=%(default)s', default='32' )
 group_opt.add_argument( '--check',  action='store', help='default=y', default='' )  # default in test.cc
 group_opt.add_argument( '--ref',    action='store', help='default=y', default='' )  # default in test.cc
+group_opt.add_argument( '--verbose', action='store', help='default=0', default='' )  # default in test.cc
 
 # LAPACK only
 group_opt.add_argument( '--itype',  action='store', help='default=%(default)s', default='1,2,3' )
@@ -232,6 +233,7 @@ incy   = ' --incy '   + opts.incy   if (opts.incy)   else ''
 align  = ' --align '  + opts.align  if (opts.align)  else ''
 check  = ' --check '  + opts.check  if (opts.check)  else ''
 ref    = ' --ref '    + opts.ref    if (opts.ref)    else ''
+verbose = ' --verbose ' + opts.verbose if (opts.verbose) else ''
 
 # LAPACK only
 itype  = ' --itype '  + opts.itype  if (opts.itype)  else ''
@@ -261,7 +263,7 @@ iu     = ' --iu '     + opts.iu     if (opts.iu)     else ''
 mtype  = ' --matrixtype ' + opts.matrixtype if (opts.matrixtype) else ''
 
 # general options for all routines
-gen = check + ref
+gen = check + ref + verbose
 
 # ------------------------------------------------------------------------------
 # filters a comma separated list csv based on items in list values.

@@ -4,13 +4,55 @@
 
 
 #include "test.hh"
-#include "cblas.hh"
 #include "lapack.hh"
 #include "blas_flops.hh"
 #include "print_matrix.hh"
 #include "check_gemm2.hh"  // uses lapack++ instead of Fortran lapack
 
 #include "syr.hh"  // from blaspp
+
+// -----------------------------------------------------------------------------
+// some of this is copied from blaspp/test/cblas.hh
+#ifdef HAVE_MKL
+    #include <mkl_cblas.h>
+#else
+    #include <cblas.h>
+
+    // Original cblas.h used CBLAS_ORDER; new uses CBLAS_LAYOUT and makes
+    // CBLAS_ORDER a typedef. Make sure CBLAS_LAYOUT is defined.
+    typedef CBLAS_ORDER CBLAS_LAYOUT;
+#endif
+
+// -----------------------------------------------------------------------------
+inline CBLAS_LAYOUT cblas_layout_const( blas::Layout layout )
+{
+    switch (layout) {
+        case blas::Layout::RowMajor:  return CblasRowMajor;
+        case blas::Layout::ColMajor:  return CblasColMajor;
+        default: assert( false );
+    }
+}
+
+// -----------------------------------------------------------------------------
+inline CBLAS_UPLO cblas_uplo_const( blas::Uplo uplo )
+{
+    switch (uplo) {
+        case blas::Uplo::Lower: return CblasLower;
+        case blas::Uplo::Upper: return CblasUpper;
+        default: assert( false );
+    }
+}
+
+inline char lapack_uplo_const( CBLAS_UPLO uplo )
+{
+    switch (uplo) {
+        case CblasLower: return 'l';
+        case CblasUpper: return 'u';
+        default:
+            printf( "%s( %c )\n", __func__, uplo );
+            assert( false );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // give Fortran prototypes if not given via lapacke.h
@@ -43,6 +85,26 @@ void LAPACK_zsyr(
 }  // extern "C"
 
 // -----------------------------------------------------------------------------
+inline void
+cblas_syr(
+    CBLAS_LAYOUT layout, CBLAS_UPLO uplo, int n,
+    float alpha,
+    float const *x, int incx,
+    float* A, int lda )
+{
+    cblas_ssyr( layout, uplo, n, alpha, x, incx, A, lda );
+}
+
+inline void
+cblas_syr(
+    CBLAS_LAYOUT layout, CBLAS_UPLO uplo, int n,
+    double alpha,
+    double const *x, int incx,
+    double* A, int lda )
+{
+    cblas_dsyr( layout, uplo, n, alpha, x, incx, A, lda );
+}
+
 inline void
 cblas_syr(
     CBLAS_LAYOUT layout, CBLAS_UPLO uplo, lapack_int n,
@@ -126,7 +188,7 @@ void test_syr_work( Params& params, bool run )
 
     // norms for error check
     real_t Anorm = lapack::lansy( lapack::Norm::Fro, uplo, n, A, lda );
-    real_t Xnorm = cblas_nrm2( n, x, std::abs(incx) );
+    real_t Xnorm = blas::nrm2( n, x, std::abs(incx) );
 
     // test error exits
     assert_throw( blas::syr( Layout(0), uplo,     n, alpha, x, incx, A, lda ), blas::Error );

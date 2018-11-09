@@ -137,7 +137,6 @@ CXXFLAGS += -I./include
 CXXFLAGS += -I$(blaspp_dir)/include
 
 # additional flags and libraries for testers
-$(test_obj): CXXFLAGS += -I$(blaspp_dir)/test    # for blas_flops.hh
 $(test_obj): CXXFLAGS += -I$(libtest_dir)
 
 TEST_LDFLAGS += -L./lib -Wl,-rpath,$(abspath ./lib)

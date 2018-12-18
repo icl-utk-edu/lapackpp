@@ -148,14 +148,6 @@ inline double fmuls_unglq(double m, double n, double k)
 inline double fadds_unglq(double m, double n, double k)
     { return fadds_ungrq(m, n, k); }
 
-//------------------------------------------------------------ geqrs
-// unmqr( left, m, nrhs, n ) + trsm( n, nrhs ); m >= n
-inline double fmuls_geqrs(double m, double n, double nrhs)
-    { return nrhs*(2*m*n - 0.5*n*n + 2.5*n); }
-
-inline double fadds_geqrs(double m, double n, double nrhs)
-    { return nrhs*(2*m*n - 0.5*n*n + 0.5*n); }
-
 //------------------------------------------------------------ unmqr
 inline double fmuls_unmqr(lapack::Side side, double m, double n, double k)
 {
@@ -333,10 +325,6 @@ public:
     static double potrs(double n, double nrhs)
         { return 1e-9 * (mul_ops*fmuls_potrs(n, nrhs) + add_ops*fadds_potrs(n, nrhs)); }
 
-    // least squares
-    static double geqrs(double m, double n, double nrhs)
-        { return 1e-9 * (mul_ops*fmuls_geqrs(m, n, nrhs) + add_ops*fadds_geqrs(m, n, nrhs)); }
-
     // QR, QL, RQ, LQ
     static double geqrf(double m, double n)
         { return 1e-9 * (mul_ops*fmuls_geqrf(m, n) + add_ops*fadds_geqrf(m, n)); }
@@ -402,6 +390,15 @@ public:
 
     static double ormlq(lapack::Side side, double m, double n, double k)
         { return unmlq(side, m, n, k); }
+
+    // least squares
+    static double gels(double m, double n, double nrhs)
+    {
+        blas::Side left = blas::Side::Left;
+        return (m >= n
+            ? geqrf(m, n) + unmqr(left, m, nrhs, n) + blas::Gflop<T>::trsm(left, n, nrhs)
+            : gelqf(m, n) + unmlq(left, n, nrhs, m) + blas::Gflop<T>::trsm(left, m, nrhs));
+    }
 
     // triangle inverse
     static double trtri(double n)

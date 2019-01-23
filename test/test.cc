@@ -34,7 +34,9 @@ enum Section {
     aux_norm,
     aux_householder,
     aux_gen,
-    blas_section,
+    blas1,
+    blas2,
+    blas3,
     num_sections,  // last
 };
 
@@ -54,7 +56,9 @@ const char* section_names[] = {
    "auxiliary - norms",
    "auxiliary - Householder",
    "auxiliary - matrix generation",
-   "additional BLAS",
+   "Level 1 BLAS (additional)",
+   "Level 2 BLAS (additional)",
+   "Level 3 BLAS (additional)",
 };
 
 // { "", nullptr, Section::newline } entries force newline in help
@@ -423,7 +427,7 @@ std::vector< libtest::routines_t > routines = {
     { "",                   nullptr,        Section::newline },
 
     // additional BLAS
-    { "syr",                test_syr,       Section::blas_section },
+    { "syr",                test_syr,       Section::blas2 },
     { "",                   nullptr,        Section::newline },
 };
 

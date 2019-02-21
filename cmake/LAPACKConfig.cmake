@@ -38,7 +38,7 @@ try_run(run_res1 compile_res1 ${CMAKE_CURRENT_BINARY_DIR}
         compile_OUTPUT1
     RUN_OUTPUT_VARIABLE
         run_output1
-    )
+)
 
 #message("compile_output: ${compile_OUTPUT1}")
 
@@ -48,7 +48,34 @@ if (compile_res1 AND NOT ${run_res1} MATCHES "FAILED_TO_RUN")
     set(LAPACK_DEFINES "HAVE_LAPACK")
 else()
     message("${Red}  LAPACK not found${ColourReset}")
-    set(LAPACK_DEFINES "")
+    message(STATUS "Checking for separate LAPACK library...")
+
+    try_run(run_res1 compile_res1 ${CMAKE_CURRENT_BINARY_DIR}
+        SOURCES
+            ${CMAKE_CURRENT_SOURCE_DIR}/config/lapack_potrf.cc
+        LINK_LIBRARIES
+            "-llapack"
+            ${BLAS_links}
+            ${BLAS_cxx_flags}
+        COMPILE_DEFINITIONS
+            ${local_mkl_defines}
+            ${local_blas_defines}
+            ${local_int}
+        COMPILE_OUTPUT_VARIABLE
+            compile_OUTPUT1
+        RUN_OUTPUT_VARIABLE
+            run_output1
+        )
+
+    if (compile_res1 AND NOT ${run_res1} MATCHES "FAILED_TO_RUN")
+        message("${Blue}  Found LAPACK${ColourReset}")
+        set(LAPACK_DEFINES "HAVE_LAPACK")
+        # Append '-llapack' to BLAS_links
+        string(APPEND BLAS_links " -llapack")
+    else()
+        message("${Red}  LAPACK not found${ColourReset}")
+        set(LAPACK_DEFINES "")
+    endif()
 endif()
 
 set(run_res1 "")
@@ -72,13 +99,13 @@ try_run(run_res1 compile_res1
         compile_OUTPUT1
     RUN_OUTPUT_VARIABLE
         run_output1
-    )
+)
 
 if (compile_res1 AND NOT ${run_res1} MATCHES "FAILED_TO_RUN")
     message("${Blue}  Found LAPACKE${ColourReset}")
     set(LAPACKE_DEFINES "HAVE_LAPACKE")
 else()
-    message("${Red}  FAIL${ColourReset} at (${j},${i})")
+    message("${Red}  LAPACKE was not found${ColourReset}")
     set(LAPACKE_DEFINES "")
 endif()
 set(run_res1 "")
@@ -102,7 +129,7 @@ try_run(run_res1 compile_res1
         compile_OUTPUT1
     RUN_OUTPUT_VARIABLE
         run_output1
-    )
+)
 
 if (compile_res1 AND NOT ${run_res1} MATCHES "FAILED_TO_RUN")
     message("${Blue}  Found XBLAS${ColourReset}")
@@ -131,14 +158,20 @@ try_run(run_res1 compile_res1 ${CMAKE_CURRENT_BINARY_DIR}
         compile_OUTPUT1
     RUN_OUTPUT_VARIABLE
         run_output1
-    )
+)
 
 if (compile_res1 AND NOT ${run_res1} MATCHES "FAILED_TO_RUN")
     message("${Blue}  Found LAPACK version number.${ColourReset}")
 
+    #message("run_output1: " ${run_output1})
     string(REPLACE "=" ";" run_out_list ${run_output1})
+    #message("run_out_list: " ${run_out_list})
+    list(LENGTH run_out_list len)
+    #message("len = ${len}")
     list(GET run_out_list 1 version_number)
+    #message("version_number: " ${version_number})
     string(REPLACE "." ";" version_list ${version_number})
+    #message("version_list: " ${version_list})
 
     list(GET version_list 0 major_ver)
     list(GET version_list 1 minor_ver)
@@ -159,6 +192,7 @@ if (compile_res1 AND NOT ${run_res1} MATCHES "FAILED_TO_RUN")
     endif()
 
     set(LAPACK_VER_DEFINE "LAPACK_VERSION=${major_ver}${minor_ver}${rev_ver}")
+    message("${Blue}  ${LAPACK_VER_DEFINE}${ColourReset}")
 else()
     message("${Red}  Failed to determine LAPACK version.${ColourReset}")
     set(LAPACK_VER_DEFINE "")

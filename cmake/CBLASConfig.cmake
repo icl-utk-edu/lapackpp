@@ -26,7 +26,7 @@ try_run(run_res1 compile_res1 ${CMAKE_CURRENT_BINARY_DIR}
         compile_OUTPUT1
     RUN_OUTPUT_VARIABLE
         run_output1
-    )
+)
 
 if (compile_res1 AND NOT ${run_res1} MATCHES "FAILED_TO_RUN")
     message("${Blue}  Found CBLAS${ColourReset}")

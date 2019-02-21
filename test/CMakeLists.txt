@@ -167,23 +167,35 @@ add_executable(lapackpp_test
     test_tprfb.cc
 )
 
+# Check if user supplied LIBTEST_DIR on the command line
+# Set -Dlibtest_DIR=/path/to/libtest
+if(libtest_DIR)
+    message("Found libtest_DIR")
+else()
+    find_path(libtest_DIR libtestConfig.cmake
+        PATHS
+        ${CMAKE_INSTALL_PREFIX}/test
+        )
+    message("libtest_DIR: " ${libtest_DIR})
+endif()
+
 # Check if user supplied BLASPP_DIR on the command line
-if(LIBTEST_DIR)
-    message("using user supplied BLASPP_DIR: ${LIBTEST_DIR}")
-    set(blaspp_DIR "${LIBTEST_DIR}")
+if(BLASPP_DIR)
+    message("using user supplied BLASPP_DIR: ${BLASPP_DIR}")
+    set(blaspp_DIR "${BLASPP_DIR}")
 endif()
 
 find_package(libtest)
 find_package(blaspp)
 
-message("blaspp_include_dir: " ${blaspp_INCLUDE_DIR})
-message("libtest_include_dir: " ${Libtest_INCLUDE_DIR})
+#message("blaspp_include_dir: " ${blaspp_INCLUDE_DIR})
+#message("libtest_include_dir: " ${Libtest_INCLUDE_DIR})
 
 target_link_libraries(lapackpp_test
     libtest
     gfortran
-    lapackpp
     blaspp
+    lapackpp
 )
 
 target_include_directories(lapackpp_test
@@ -195,7 +207,7 @@ target_include_directories(lapackpp_test
 # Some debug
 if(LAPACKPP_TEST_DEBUG)
     message("LAPACKPP tester compilation definitions:")
-    message("MKL INTS defines: " ${MKL_INT_DEFINES})
+    message("MKL INTS defines: ${BLAS_int}")
     message("FORTRAN MANGLING defines: " ${FORTRAN_MANGLING_DEFINES})
     message("BLAS DEFINES: " ${BLAS_DEFINES})
     message("CBLAS DEFINES: " ${CBLAS_DEFINES})
@@ -210,16 +222,16 @@ endif()
 #target_compile_definitions(lapackpp_test PRIVATE
     # Example definition set:
     # -DFORTRAN_ADD_ -DADD_ -DHAVE_BLAS -DBLAS_COMPLEX_RETURN_ARGUMENT -DHAVE_MKL -DHAVE_CBLAS -DHAVE_LAPACK -DLAPACK_VERSION=30700 -DHAVE_XBLAS -DHAVE_LAPACKE
-    #${FORTRAN_MANGLING_DEFINES}
-    #${BLAS_DEFINES}
-    #${BLAS_RETURN}
-    #${MKL_DEFINES}
-    #${CBLAS_DEFINES}
-    #${LAPACK_DEFINES}
-    #${MKL_INT_DEFINES}
-    #${LAPACK_VER_DEFINE}
-    #${XBLAS_DEFINES}
-    #${LAPACKE_DEFINES}
+#    ${FORTRAN_MANGLING_DEFINES}
+#    ${BLAS_DEFINES}
+#    ${BLAS_RETURN}
+#    ${MKL_DEFINES}
+#    ${CBLAS_DEFINES}
+#    ${LAPACK_DEFINES}
+#    ${BLAS_INT_DEFINES}
+#    ${LAPACK_VER_DEFINE}
+#    ${XBLAS_DEFINES}
+#    ${LAPACKE_DEFINES}
 #)
 
 # Move test script to build directory

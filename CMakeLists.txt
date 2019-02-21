@@ -15,7 +15,30 @@ cmake_minimum_required(VERSION 3.2)
 
 project(LAPACKPP CXX)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/modules)
+# BLAS options
+# todo: Goto, BLIS, FLAME, others?
+set(BLAS_LIBRARY "auto" CACHE STRING
+    "Choose BLAS & LAPACK library: AMD, Apple, Cray, IBM, Intel, OpenBLAS" )
+set_property(CACHE BLAS_LIBRARY PROPERTY STRINGS
+    "auto" "AMD ACML" "Apple Accelerate" "Cray LibSci" "IBM ESSL"
+    "Intel MKL" "OpenBLAS" )
+
+set(BLAS_LIBRARY_MKL "auto" CACHE STRING
+    "For Intel MKL: use Intel ifort or GNU gfortran conventions?" )
+set_property(CACHE BLAS_LIBRARY_MKL PROPERTY STRINGS
+    "auto" "GNU gfortran conventions" "Intel ifort conventions" )
+
+set(BLAS_LIBRARY_INTEGER "auto" CACHE STRING
+    "BLAS integer size: int (LP64) or int64_t (ILP64)" )
+set_property(CACHE BLAS_LIBRARY_INTEGER PROPERTY STRINGS
+    "auto" "int (LP64)" "int64_t (ILP64)" )
+
+set(BLAS_LIBRARY_THREADING "auto" CACHE STRING
+    "BLAS threaded or sequential" )
+set_property(CACHE BLAS_LIBRARY_THREADING PROPERTY STRINGS
+    "auto" "threaded" "sequential" )
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/modules")
 
 # Build the testers by default
 option(BUILD_LAPACKPP_TESTS "Build LAPACK++ tests - has more reqs" ON)
@@ -412,14 +435,86 @@ add_library(lapackpp
     src/tprfb.cc
 )
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/config/BLASConfig.cmake)
-include(${CMAKE_CURRENT_SOURCE_DIR}/config/CBLASConfig.cmake)
-include(${CMAKE_CURRENT_SOURCE_DIR}/config/LAPACKConfig.cmake)
+# Check user supplied BLAS libraries
+if(BLAS_LIBRARIES)
+    message("BLAS_LIBRARIES FOUND: " ${BLAS_LIBRARIES})
+    include(CheckFortranFunctionExists)
+    set(CMAKE_REQUIRED_LIBRARIES ${BLAS_LIBRARIES})
+    CHECK_FORTRAN_FUNCTION_EXISTS("dgemm" BLAS_FOUND)
+    unset(CMAKE_REQUIRED_LIBRARIES)
+    if(BLAS_FOUND)
+        message(STATUS "--> BLAS supplied by user is WORKING, will use ${BLAS_LIBRARIES}.")
+        target_link_libraries(blaspp ${BLAS_LIBRARIES})
+    else()
+        message(ERROR "--> BLAS supplied by user is not WORKING, CANNOT USE ${BLAS_LIBRARIES}.")
+        message(ERROR "-->     Will use REFERENCE BLAS (by default)")
+        message(ERROR "-->     Or Correct your BLAS_LIBRARIES entry ")
+        message(ERROR "-->     Or Consider checking USE_OPTIMIZED_BLAS")
+    endif()
+    # Search for system installed BLAS
+elseif(USE_OPTIMIZED_BLAS)
+    find_package(BLAS)
+    if(BLAS_FOUND)
+        message("BLAS_FOUND: " ${BLAS_LIBRARIES})
+        target_link_libraries(blaspp ${BLAS_LIBRARIES})
+    endif()
+else()
+    message("BLAS_LIBRARIES not found, using custom search: " ${BLAS_LIBRARIES})
+
+    # Custom BLAS library locator, if all else fails
+    include ("cmake/BLASFinder.cmake")
+endif()
+
+message("blas_config_found: " ${blas_config_found})
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/BLASConfig.cmake)
+if("${blas_config_found}" STREQUAL "TRUE")
+    message("setting blas config found to true!!!!!!!!!!!")
+    # set blas_config so it the config script isn't run each time
+    set (blas_config_found "TRUE" CACHE STRING "Set TRUE if BLAS config is found")
+endif()
+
+message("1234 blas_config_found: " ${blas_config_found})
+
+if(NOT CBLAS_DEFINES STREQUAL "")
+    include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CBLASConfig.cmake)
+endif()
+
+
+# User did not provide a LAPACK Library but specified to search for one
+if(USE_OPTIMIZED_LAPACK)
+    find_package(LAPACK)
+endif()
+
+# Check the usage of the user provided or automatically found LAPACK libraries
+if(LAPACK_LIBRARIES)
+    include(CheckFortranFunctionExists)
+    set(CMAKE_REQUIRED_LIBRARIES ${LAPACK_LIBRARIES})
+    # Check if new routine of 3.4.0 is in LAPACK_LIBRARIES
+    CHECK_FORTRAN_FUNCTION_EXISTS("dgeqrt" LATESTLAPACK_FOUND)
+    unset(CMAKE_REQUIRED_LIBRARIES)
+    if(LATESTLAPACK_FOUND)
+        message(STATUS "--> LAPACK supplied by user is WORKING, will use ${LAPACK_LIBRARIES}.")
+    else()
+        message(ERROR "--> LAPACK supplied by user is not WORKING or is older than LAPACK 3.4.0, CANNOT USE ${LAPACK_LIBRARIES}.")
+        message(ERROR "-->     Will use REFERENCE LAPACK (by default)")
+        message(ERROR "-->     Or Correct your LAPACK_LIBRARIES entry ")
+        message(ERROR "-->     Or Consider checking USE_OPTIMIZED_LAPACK")
+    endif()
+endif()
+
+include(cmake/LAPACKConfig.cmake)
 
 # Set -Dblaspp_DIR=/path/to/blaspp or -DBLASPP_DIR=/path/to/blaspp
 if(BLASPP_DIR)
     message("using user supplied BLASPP_DIR: ${BLASPP_DIR}")
-    set(blaspp_DIR "${BLASPP_DIR}")
+    #set(blaspp_DIR "${BLASPP_DIR}")
+else()
+    find_path(blaspp_DIR blasppConfig.cmake
+        PATHS
+            ${CMAKE_INSTALL_PREFIX}/blaspp
+    )
+    message("blaspp_DIR: " ${blaspp_DIR})
 endif()
 
 find_package(blaspp)
@@ -451,7 +546,7 @@ endif()
 # Some debug
 if(LAPACKPP_QUIET)
     message("MKL defines: " ${MKL_DEFINES})
-    message("MKL INTS defines: " ${MKL_INT_DEFINES})
+    message("BLAS int defines: " ${BLAS_int})
     message("FORTRAN MANGLING defines: " ${FORTRAN_MANGLING_DEFINES})
     message("BLAS DEFINES: " ${BLAS_DEFINES})
     message("CBLAS DEFINES: " ${CBLAS_DEFINES})

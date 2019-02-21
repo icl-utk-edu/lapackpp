@@ -25,6 +25,19 @@ import subprocess
 import xml.etree.ElementTree as ET
 
 # ------------------------------------------------------------------------------
+# found at: https://stackoverflow.com/questions/15203829/python-argparse-file-extension-checking
+def check_file_ext(choices):
+    class Act(argparse.Action):
+        def __call__(self, parser, namespace, fname, option_string=None):
+            ext = os.path.splitext(fname[0])[1][1:]
+            if ext not in choices:
+                option_string = '({})'.format( option_string ) if option_string else ''
+                parser.error( "file doesn't end with {}{}".format( choices, option_string ) )
+            else:
+                setattr(namespace, self.dest, fname)
+    return Act
+
+# ------------------------------------------------------------------------------
 # command line arguments
 parser = argparse.ArgumentParser()
 
@@ -32,7 +45,9 @@ group_test = parser.add_argument_group( 'test' )
 group_test.add_argument( '-t', '--test', action='store',
     help='test command to run, e.g., --test "mpirun -np 4 ./test"; default "%(default)s"',
     default='./test' )
-group_test.add_argument( '--xml', action='store_true', help='generate report.xml for jenkins' )
+group_test.add_argument( '--xml', action=check_file_ext( {'xml'} ),
+    help='generate report.xml for jenkins',
+    nargs=1 )
 
 group_size = parser.add_argument_group( 'matrix dimensions (default is medium)' )
 group_size.add_argument( '-x', '--xsmall', action='store_true', help='run x-small tests' )
@@ -373,7 +388,7 @@ if (opts.sysv):
     [ 'sptrf', gen + dtype         + n + uplo ],
     [ 'sptrs', gen + dtype + align + n + uplo ],
     [ 'sptri', gen + dtype         + n + uplo ],
-    [ 'spcon', gen + dtype + align + n + uplo ],
+    [ 'spcon', gen + dtype +         n + uplo ],
     [ 'sprfs', gen + dtype + align + n + uplo ],
     ]
 
@@ -446,8 +461,8 @@ if (opts.qr):
     [ 'geqrf', gen + dtype + align + n + wide + tall ],
     [ 'ggqrf', gen + dtype + align + mnk ],
     [ 'ungqr', gen + dtype + align + mn ],  # m >= n
-    [ 'unmqr', gen + dtype_real    + align + mnk + side + trans    ],  # real does trans = N, T, C
-    [ 'unmqr', gen + dtype_complex + align + mnk + side + trans_nc ],  # complex does trans = N, C, not T
+    #[ 'unmqr', gen + dtype_real    + align + mnk + side + trans    ],  # real does trans = N, T, C
+    #[ 'unmqr', gen + dtype_complex + align + mnk + side + trans_nc ],  # complex does trans = N, C, not T
 
     # Triangle-pentagon
     [ 'tpqrt',  gen + dtype + align + mn + l ],
@@ -553,7 +568,7 @@ if (opts.sygv):
     [ 'hbgv',  gen + dtype + align + n + jobz + uplo + kd ],
     [ 'hbgvx', gen + dtype + align + n + jobz + uplo + kd + vl + vu ],
     [ 'hbgvx', gen + dtype + align + n + jobz + uplo + kd + il + iu ],
-    [ 'hbgvd',  gen + dtype + align + n + jobz + uplo + kd ],
+    #[ 'hbgvd',  gen + dtype + align + n + jobz + uplo + kd ],
     #[ 'hbgvr', gen + dtype + align + n + uplo ],
     [ 'hbgst', gen + dtype + align + n + vect + uplo + kd ],
     ]
@@ -685,6 +700,7 @@ if (nfailed > 0):
 
 # generate jUnit compatible test report
 if opts.xml:
+    report_file_name = opts.xml[0]
     root = ET.Element("testsuites")
     doc = ET.SubElement(root, "testsuite",
                         name="lapackpp_suite",
@@ -710,7 +726,7 @@ if opts.xml:
         testcase.text = 'PASSED'
 
     tree = ET.ElementTree(root)
-    tree.write("report.xml")
+    tree.write(report_file_name)
 # end
 
 exit( nfailed )

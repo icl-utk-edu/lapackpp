@@ -176,29 +176,29 @@ void test_syr_work( Params& params, bool run )
     int64_t lda = roundup( n, align );
     size_t size_A = size_t(lda)*n;
     size_t size_x = (n - 1) * std::abs(incx) + 1;
-    TA* A    = new TA[ size_A ];
-    TA* Aref = new TA[ size_A ];
-    TX* x    = new TX[ size_x ];
+    std::vector<TA> A   ( size_A );
+    std::vector<TA> Aref( size_A );
+    std::vector<TX> x   ( size_x );
 
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 0, 0, 1 };
     lapack::generate_matrix( params.matrix, n, n, &A[0], lda );
-    lapack::larnv( idist, iseed, size_x, x );
+    lapack::larnv( idist, iseed, size_x, &x[0] );
     Aref = A;
 
     // norms for error check
-    real_t Anorm = lapack::lansy( lapack::Norm::Fro, uplo, n, A, lda );
-    real_t Xnorm = blas::nrm2( n, x, std::abs(incx) );
+    real_t Anorm = lapack::lansy( lapack::Norm::Fro, uplo, n, &A[0], lda );
+    real_t Xnorm = blas::nrm2( n, &x[0], std::abs(incx) );
 
     // test error exits
     if (params.error_exit() == 'y') {
         using blas::Layout;
         using blas::Uplo;
-        assert_throw( blas::syr( Layout(0), uplo,     n, alpha, x, incx, A, lda ), blas::Error );
-        assert_throw( blas::syr( layout,    Uplo(0),  n, alpha, x, incx, A, lda ), blas::Error );
-        assert_throw( blas::syr( layout,    uplo,    -1, alpha, x, incx, A, lda ), blas::Error );
-        assert_throw( blas::syr( layout,    uplo,     n, alpha, x,    0, A, lda ), blas::Error );
-        assert_throw( blas::syr( layout,    uplo,     n, alpha, x, incx, A, n-1 ), blas::Error );
+        assert_throw( blas::syr( Layout(0), uplo,     n, alpha, &x[0], incx, &A[0], lda ), blas::Error );
+        assert_throw( blas::syr( layout,    Uplo(0),  n, alpha, &x[0], incx, &A[0], lda ), blas::Error );
+        assert_throw( blas::syr( layout,    uplo,    -1, alpha, &x[0], incx, &A[0], lda ), blas::Error );
+        assert_throw( blas::syr( layout,    uplo,     n, alpha, &x[0],    0, &A[0], lda ), blas::Error );
+        assert_throw( blas::syr( layout,    uplo,     n, alpha, &x[0], incx, &A[0], n-1 ), blas::Error );
     }
 
     if (verbose >= 1) {
@@ -211,14 +211,14 @@ void test_syr_work( Params& params, bool run )
     if (verbose >= 2) {
         printf( "alpha = %.4e + %.4ei;\n",
                 real(alpha), imag(alpha) );
-        printf( "A = " ); print_matrix( n, n, A, lda );
-        printf( "x = " ); print_vector( n, x, incx );
+        printf( "A = " ); print_matrix( n, n, &A[0], lda );
+        printf( "x = " ); print_vector( n, &x[0], incx );
     }
 
     // run test
     libtest::flush_cache( params.cache() );
     double time = libtest::get_wtime();
-    blas::syr( layout, uplo, n, alpha, x, incx, A, lda );
+    blas::syr( layout, uplo, n, alpha, &x[0], incx, &A[0], lda );
     time = libtest::get_wtime() - time;
 
     params.time() = time * 1000;  // msec
@@ -226,7 +226,7 @@ void test_syr_work( Params& params, bool run )
     params.gflops() = gflop / time;
 
     if (verbose >= 2) {
-        printf( "A2 = " ); print_matrix( n, n, A, lda );
+        printf( "A2 = " ); print_matrix( n, n, &A[0], lda );
     }
 
     if (params.check() == 'y') {
@@ -234,14 +234,14 @@ void test_syr_work( Params& params, bool run )
         libtest::flush_cache( params.cache() );
         time = libtest::get_wtime();
         cblas_syr( cblas_layout_const(layout), cblas_uplo_const(uplo),
-                   n, alpha, x, incx, Aref, lda );
+                   n, alpha, &x[0], incx, &Aref[0], lda );
         time = libtest::get_wtime() - time;
 
         params.ref_time() = time * 1000;  // msec
         params.ref_gflops() = gflop / time;
 
         if (verbose >= 2) {
-            printf( "Aref = " ); print_matrix( n, n, Aref, lda );
+            printf( "Aref = " ); print_matrix( n, n, &Aref[0], lda );
         }
 
         // check error compared to reference
@@ -249,7 +249,7 @@ void test_syr_work( Params& params, bool run )
         real_t error;
         int64_t okay;
         check_herk( uplo, n, 1, alpha, scalar_t(1), Xnorm, Xnorm, Anorm,
-                    Aref, lda, A, lda, &error, &okay );
+                    &Aref[0], lda, &A[0], lda, &error, &okay );
         params.error() = error;
         params.okay() = okay;
     }

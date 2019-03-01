@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_larft_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -34,9 +33,9 @@ void test_larft_work( Params& params, bool run )
     // ---------- setup
     int64_t ldv;
     if (storev == lapack::StoreV::Columnwise)
-        ldv = roundup( max( 1, n ), align );
+        ldv = roundup( blas::max( 1, n ), align );
     else
-        ldv = roundup( max( 1, k ), align );
+        ldv = roundup( blas::max( 1, k ), align );
 
     int64_t ldt = roundup( k, align );
 

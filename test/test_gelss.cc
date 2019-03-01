@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_gelss_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -31,14 +30,14 @@ void test_gelss_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, m ), align );
-    int64_t ldb = roundup( max( max( 1, m ), n ), align );
+    int64_t lda = roundup( blas::max( 1, m ), align );
+    int64_t ldb = roundup( blas::max( 1, m, n ), align );
     real_t rcond;
     int64_t rank_tst;
     lapack_int rank_ref;
     size_t size_A = (size_t) lda * n;
     size_t size_B = (size_t) ldb * nrhs;
-    size_t size_S = (size_t) (min(m,n));
+    size_t size_S = (size_t) (blas::min(m,n));
 
     std::vector< scalar_t > A_tst( size_A );
     std::vector< scalar_t > A_ref( size_A );

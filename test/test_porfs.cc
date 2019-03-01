@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_porfs_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -36,9 +35,9 @@ void test_porfs_work( Params& params, bool run )
 
     // ---------- setup
     // make A and AF, B and X, the same size
-    int64_t lda = roundup( max( 1, n ), align );
+    int64_t lda = roundup( blas::max( 1, n ), align );
     int64_t ldaf = lda;
-    int64_t ldb = roundup( max( 1, n ), align );
+    int64_t ldb = roundup( blas::max( 1, n ), align );
     int64_t ldx = ldb;
     size_t size_A = (size_t) lda * n;
     size_t size_AF = (size_t) ldaf * n;

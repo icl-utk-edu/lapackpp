@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_posv_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -34,8 +33,8 @@ void test_posv_work( Params& params, bool run )
     }
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, n ), align );
-    int64_t ldb = roundup( max( 1, n ), align );
+    int64_t lda = roundup( blas::max( 1, n ), align );
+    int64_t ldb = roundup( blas::max( 1, n ), align );
     size_t size_A = (size_t) lda * n;
     size_t size_B = (size_t) ldb * nrhs;
 
@@ -66,6 +65,7 @@ void test_posv_work( Params& params, bool run )
 
     // test error exits
     if (params.error_exit() == 'y') {
+        using lapack::Uplo;
         assert_throw( lapack::posv( Uplo(0),  n, nrhs, &A_tst[0], lda, &B_tst[0], ldb ), lapack::Error );
         assert_throw( lapack::posv( uplo,    -1, nrhs, &A_tst[0], lda, &B_tst[0], ldb ), lapack::Error );
         assert_throw( lapack::posv( uplo,     n,   -1, &A_tst[0], lda, &B_tst[0], ldb ), lapack::Error );

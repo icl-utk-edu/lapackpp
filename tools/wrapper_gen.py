@@ -1728,7 +1728,6 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  'template< typename scalar_t >\n'
         +  'void test_' + func.name + '_work( Params& params, bool run )\n'
         +  '{\n'
-        +  tab + 'using namespace blas;\n'
         +  tab + 'using real_t = blas::real_type< scalar_t >;\n'
         +  tab + 'typedef long long lld;\n'
         +  '\n'

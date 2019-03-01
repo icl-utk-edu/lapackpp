@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_hpgvd_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -31,7 +30,7 @@ void test_hpgvd_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t ldz = roundup( max( 1, n ), align );
+    int64_t ldz = roundup( blas::max( 1, n ), align );
     size_t size_AP = (size_t) (n*(n+1)/2);
     size_t size_BP = (size_t) (n*(n+1)/2);
     size_t size_W = (size_t) (n);

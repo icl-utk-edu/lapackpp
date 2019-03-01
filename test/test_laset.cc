@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_laset_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -33,7 +32,7 @@ void test_laset_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, m ), align );
+    int64_t lda = roundup( blas::max( 1, m ), align );
     size_t size_A = (size_t) lda * n;
 
     std::vector< scalar_t > A_tst( size_A );

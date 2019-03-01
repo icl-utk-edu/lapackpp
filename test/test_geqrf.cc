@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_geqrf_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -31,10 +30,10 @@ void test_geqrf_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, m ), align );
+    int64_t lda = roundup( blas::max( 1, m ), align );
     size_t size_A = (size_t)( lda * n );
-    size_t size_tau = (size_t)( min( m, n ) );
-    int64_t minmn = min( m, n );
+    size_t size_tau = (size_t)( blas::min( m, n ) );
+    int64_t minmn = blas::min( m, n );
 
     std::vector< scalar_t > A_tst( size_A );
     std::vector< scalar_t > A_ref( size_A );
@@ -85,7 +84,8 @@ void test_geqrf_work( Params& params, bool run )
         lapack::lacpy( lapack::MatrixType::Upper, minmn, n, &A_tst[0], lda, &R[0], ldr );
 
         // Compute R - Q'*A
-        blas::gemm( Layout::ColMajor, Op::ConjTrans, Op::NoTrans, minmn, n, m,
+        blas::gemm( blas::Layout::ColMajor,
+                    blas::Op::ConjTrans, blas::Op::NoTrans, minmn, n, m,
                     -1.0, &Q[0], ldq, &A_ref[0], lda, 1.0, &R[0], ldr );
 
         // Compute norm( R - Q'*A ) / ( M * norm(A) * EPS )
@@ -97,7 +97,8 @@ void test_geqrf_work( Params& params, bool run )
 
         // Compute I - Q'*Q
         lapack::laset( lapack::MatrixType::Upper, minmn, minmn, 0.0, 1.0, &R[0], ldr );
-        blas::herk( Layout::ColMajor, Uplo::Upper, Op::ConjTrans, minmn, m, -1.0, &Q[0], ldq, 1.0, &R[0], ldr );
+        blas::herk( blas::Layout::ColMajor, blas::Uplo::Upper, blas::Op::ConjTrans,
+                    minmn, m, -1.0, &Q[0], ldq, 1.0, &R[0], ldr );
 
         // Compute norm( I - Q'*Q ) / ( M * EPS ) .
         real_t resid2 = lapack::lanhe( lapack::Norm::One, lapack::Uplo::Upper, minmn, &R[0], ldr );

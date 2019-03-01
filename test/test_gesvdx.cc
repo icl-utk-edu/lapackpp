@@ -13,7 +13,6 @@
 template< typename scalar_t >
 void test_gesvdx_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -41,20 +40,20 @@ void test_gesvdx_work( Params& params, bool run )
         return;
 
     if ( ( range==lapack::Range::Index ) &&
-         ! ( ( 1 <= il ) && ( il < iu ) && ( iu < min( m, n ) ) ) ) {
+         ! ( ( 1 <= il ) && ( il < iu ) && ( iu < blas::min( m, n ) ) ) ) {
         printf( "skipping because gesvdx requires 1 <= il <= iu <= min(m,n)\n" );
         return;
     }
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, m ), align );
+    int64_t lda = roundup( blas::max( 1, m ), align );
     int64_t ns_tst;
     lapack_int ns_ref;
     int64_t ldu = ( jobu==lapack::Job::Vec ? roundup( m, align ) : 1 );
-    int64_t ldvt = ( jobvt==lapack::Job::Vec ? roundup( min( m, n ), align ) : 1 );
+    int64_t ldvt = ( jobvt==lapack::Job::Vec ? roundup( blas::min( m, n ), align ) : 1 );
     size_t size_A = (size_t) ( lda * n );
-    size_t size_S = (size_t) ( min( m, n) );
-    size_t size_U = (size_t) ( ldu * min( m, n ) );
+    size_t size_S = (size_t) ( blas::min( m, n) );
+    size_t size_U = (size_t) ( ldu * blas::min( m, n ) );
     size_t size_VT = (size_t) ( ldvt * n );
 
     std::vector< scalar_t > A_tst( size_A );

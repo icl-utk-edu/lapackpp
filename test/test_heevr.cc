@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_heevr_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -38,15 +37,15 @@ void test_heevr_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, n ), align );
+    int64_t lda = roundup( blas::max( 1, n ), align );
     real_t abstol = 0;  // default value
     int64_t m_tst;
     lapack_int m_ref;
-    int64_t ldz = roundup( max( 1, n ), align );
+    int64_t ldz = roundup( blas::max( 1, n ), align );
     size_t size_A = (size_t) ( lda * n );
     size_t size_W = (size_t) ( n );
-    size_t size_Z = (size_t) ( ldz * max( 1, n ) );
-    size_t size_isuppz = (size_t) ( 2 * max( 1, n ) );
+    size_t size_Z = (size_t) ( ldz * blas::max( 1, n ) );
+    size_t size_isuppz = (size_t) ( 2 * blas::max( 1, n ) );
 
     std::vector< scalar_t > A_tst( size_A );
     std::vector< scalar_t > A_ref( size_A );

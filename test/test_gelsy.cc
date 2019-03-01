@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_gelsy_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -30,8 +29,8 @@ void test_gelsy_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, m ), align );
-    int64_t ldb = roundup( max( max( 1, m), n ), align );
+    int64_t lda = roundup( blas::max( 1, m ), align );
+    int64_t ldb = roundup( blas::max( 1, m, n ), align );
     real_t rcond;
     int64_t rank_tst;
     lapack_int rank_ref;

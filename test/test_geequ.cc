@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_geequ_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -30,7 +29,7 @@ void test_geequ_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, m ), align );
+    int64_t lda = roundup( blas::max( 1, m ), align );
     real_t rowcnd_tst = 0;
     real_t rowcnd_ref = 0;
     real_t colcnd_tst = 0;

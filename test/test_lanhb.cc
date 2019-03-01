@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_lanhb_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -19,7 +18,7 @@ void test_lanhb_work( Params& params, bool run )
     lapack::Norm norm = params.norm();
     lapack::Uplo uplo = params.uplo();
     int64_t n = params.dim.n();
-    int64_t kd = min( params.kd(), n-1 );
+    int64_t kd = blas::min( params.kd(), n-1 );
     int64_t align = params.align();
     int64_t verbose = params.verbose();
 

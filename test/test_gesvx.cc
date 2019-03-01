@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_gesvx_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -33,10 +32,10 @@ void test_gesvx_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, n ), align );
-    int64_t ldaf = roundup( max( 1, n ), align );
-    int64_t ldb = roundup( max( 1, n ), align );
-    int64_t ldx = roundup( max( 1, n ), align );
+    int64_t lda  = roundup( blas::max( 1, n ), align );
+    int64_t ldaf = roundup( blas::max( 1, n ), align );
+    int64_t ldb  = roundup( blas::max( 1, n ), align );
+    int64_t ldx  = roundup( blas::max( 1, n ), align );
     real_t rcond_tst = 0;
     real_t rcond_ref = 0;
     real_t rpivot_tst = 0;

@@ -13,7 +13,6 @@
 template< typename scalar_t >
 void test_tprfb_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -52,19 +51,19 @@ void test_tprfb_work( Params& params, bool run )
     //   or m-by-k (right)
     int64_t Vm, Vn;
     if (storev == lapack::StoreV::Columnwise) {
-        Vm = (side == Side::Left ? m : n);
+        Vm = (side == blas::Side::Left ? m : n);
         Vn = k;
     }
     else {
         Vm = k;
-        Vn = (side == Side::Left ? m : n);
+        Vn = (side == blas::Side::Left ? m : n);
     }
-    int64_t Am = (side == Side::Left ? k : m);
-    int64_t An = (side == Side::Left ? n : k);
-    int64_t ldv = roundup( max( 1, Vm ), align );
-    int64_t ldt = roundup( max( 1, k  ), align );
-    int64_t lda = roundup( max( 1, Am ), align );
-    int64_t ldb = roundup( max( 1, m  ), align );
+    int64_t Am = (side == blas::Side::Left ? k : m);
+    int64_t An = (side == blas::Side::Left ? n : k);
+    int64_t ldv = roundup( blas::max( 1, Vm ), align );
+    int64_t ldt = roundup( blas::max( 1, k  ), align );
+    int64_t lda = roundup( blas::max( 1, Am ), align );
+    int64_t ldb = roundup( blas::max( 1, m  ), align );
     size_t size_V = (size_t) ldv * Vn;
     size_t size_T = (size_t) ldt * k;
     size_t size_A = (size_t) lda * An;

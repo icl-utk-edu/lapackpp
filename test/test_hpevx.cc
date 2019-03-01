@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_hpevx_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -40,10 +39,10 @@ void test_hpevx_work( Params& params, bool run )
     real_t abstol = 0;  // use default
     int64_t m_tst;
     lapack_int m_ref;
-    int64_t ldz = ( jobz==lapack::Job::NoVec ? 1: roundup( max( 1, n ), align ) );
+    int64_t ldz = ( jobz==lapack::Job::NoVec ? 1: roundup( blas::max( 1, n ), align ) );
     size_t size_AP = (size_t) (n*(n+1)/2);
     size_t size_W = (size_t) (n);
-    size_t size_Z = (size_t) ldz * max(1,n);
+    size_t size_Z = (size_t) ldz * blas::max(1,n);
     size_t size_ifail = (size_t) (n);
 
     std::vector< scalar_t > AP_tst( size_AP );

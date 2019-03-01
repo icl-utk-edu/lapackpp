@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_lanhe_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -32,7 +31,7 @@ void test_lanhe_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t lda = roundup( max( n, 1 ), align );
+    int64_t lda = roundup( blas::max( n, 1 ), align );
     size_t size_A = (size_t) lda * n;
 
     std::vector< scalar_t > A( size_A );

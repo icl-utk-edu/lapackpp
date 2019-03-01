@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_laswp_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -31,8 +30,8 @@ void test_laswp_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t nb = min( 32, n );
-    int64_t lda = roundup( max( 1, m ), align );
+    int64_t nb = blas::min( 32, n );
+    int64_t lda = roundup( blas::max( 1, m ), align );
     int64_t k1 = 1;
     int64_t k2 = nb;
     size_t size_A = (size_t) lda * n;

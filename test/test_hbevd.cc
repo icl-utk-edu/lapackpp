@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_hbevd_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -32,7 +31,7 @@ void test_hbevd_work( Params& params, bool run )
 
     // ---------- setup
     int64_t ldab = roundup( kd + 1, align );
-    int64_t ldz = roundup( max( 1, n ), align );
+    int64_t ldz = roundup( blas::max( 1, n ), align );
     size_t size_AB = (size_t) ldab * n;
     size_t size_W = (size_t) (n);
     size_t size_Z = (size_t) ldz * n;

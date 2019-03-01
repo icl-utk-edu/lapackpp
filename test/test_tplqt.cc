@@ -13,7 +13,6 @@
 template< typename scalar_t >
 void test_tplqt_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -32,14 +31,14 @@ void test_tplqt_work( Params& params, bool run )
     if (! run)
         return;
 
-    if (min(m, n) < l || m < mb || mb < 1) {
+    if (blas::min(m, n) < l || m < mb || mb < 1) {
         printf( "skipping because tplqt requires min(m, n) >= l and m >= mb >= 1\n" );
         return;
     }
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, m ), align );
-    int64_t ldb = roundup( max( 1, m ), align );
+    int64_t lda = roundup( blas::max( 1, m ), align );
+    int64_t ldb = roundup( blas::max( 1, m ), align );
     int64_t ldt = roundup( mb, align );
     size_t size_A = (size_t) lda * m;  // m-by-m
     size_t size_B = (size_t) ldb * n;  // m-by-n

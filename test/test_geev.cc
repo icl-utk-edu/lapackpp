@@ -21,7 +21,6 @@ bool lessthan( T a, T b )
 template< typename scalar_t >
 void test_geev_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -56,7 +55,7 @@ void test_geev_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, n ), align );
+    int64_t lda = roundup( blas::max( 1, n ), align );
     int64_t ldvl = roundup( n, align );
     int64_t ldvr = roundup( n, align );
     size_t size_A = (size_t) lda * n;
@@ -125,14 +124,14 @@ void test_geev_work( Params& params, bool run )
                               real_t( libtest::no_data_flag ),
                               real_t( libtest::no_data_flag ) };
         if (jobvl == lapack::Job::Vec) {
-            check_geev( Op::ConjTrans, n, &A_ref[0], lda, &W_tst[0],
+            check_geev( blas::Op::ConjTrans, n, &A_ref[0], lda, &W_tst[0],
                         &VL_tst[0], ldvl, verbose, &results[0] );
             okay = (okay && results[0] < tol && results[1] < tol);
             params.error () = results[0];
             params.error2() = results[1];
         }
         if (jobvr == lapack::Job::Vec) {
-            check_geev( Op::NoTrans,   n, &A_ref[0], lda, &W_tst[0],
+            check_geev( blas::Op::NoTrans, n, &A_ref[0], lda, &W_tst[0],
                         &VR_tst[0], ldvr, verbose, &results[2] );
             okay = (okay && results[2] < tol && results[3] < tol);
             params.error3() = results[2];

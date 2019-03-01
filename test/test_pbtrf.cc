@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_pbtrf_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 

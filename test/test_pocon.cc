@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_pocon_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -35,7 +34,7 @@ void test_pocon_work( Params& params, bool run )
     }
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, n ), align );
+    int64_t lda = roundup( blas::max( 1, n ), align );
     real_t anorm;
     real_t rcond_tst;
     real_t rcond_ref;

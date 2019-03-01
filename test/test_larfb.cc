@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_larfb_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -44,9 +43,9 @@ void test_larfb_work( Params& params, bool run )
     int64_t ldv;
     if (storev == lapack::StoreV::Columnwise) {
         if (side == lapack::Side::Left)
-            ldv = roundup( max( 1, m ), align );
+            ldv = roundup( blas::max( 1, m ), align );
         else
-            ldv = roundup( max( 1, n ), align );
+            ldv = roundup( blas::max( 1, n ), align );
     }
     else {
         // rowwise
@@ -54,7 +53,7 @@ void test_larfb_work( Params& params, bool run )
     }
 
     int64_t ldt = roundup( k, align );
-    int64_t ldc = roundup( max( 1, m ), align );
+    int64_t ldc = roundup( blas::max( 1, m ), align );
 
     size_t size_V;
     if (storev == lapack::StoreV::Columnwise) {

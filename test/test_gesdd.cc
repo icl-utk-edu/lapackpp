@@ -12,8 +12,6 @@
 template< typename scalar_t >
 void test_gesdd_work( Params& params, bool run )
 {
-    using namespace blas;
-    using namespace lapack;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -36,12 +34,12 @@ void test_gesdd_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t ucol = (jobu == lapack::Job::AllVec ? m : min( m, n ));
-    int64_t lda = roundup( max( 1, m ), align );
+    int64_t ucol = (jobu == lapack::Job::AllVec ? m : blas::min( m, n ));
+    int64_t lda = roundup( blas::max( 1, m ), align );
     int64_t ldu = roundup( m, align );
-    int64_t ldvt = roundup( (jobu == lapack::Job::AllVec ? n : min( m, n )), align );
+    int64_t ldvt = roundup( (jobu == lapack::Job::AllVec ? n : blas::min( m, n )), align );
     size_t size_A = (size_t) lda * n;
-    size_t size_S = (size_t) (min(m,n));
+    size_t size_S = (size_t) (blas::min(m,n));
     size_t size_U = (size_t) ldu * ucol;
     size_t size_VT = (size_t) ldvt * n;
 
@@ -126,9 +124,9 @@ void test_gesdd_work( Params& params, bool run )
     params.ortho_V()     = errors[2];
     params.error_sigma() = errors[3];
     params.okay() = (
-        (jobu == Job::NoVec || errors[0] < tol) &&
-        (jobu == Job::NoVec || errors[1] < tol) &&
-        (jobu == Job::NoVec || errors[2] < tol) &&
+        (jobu == lapack::Job::NoVec || errors[0] < tol) &&
+        (jobu == lapack::Job::NoVec || errors[1] < tol) &&
+        (jobu == lapack::Job::NoVec || errors[2] < tol) &&
         errors[3] < tol);
 }
 

@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_getri_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -30,7 +29,7 @@ void test_getri_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, n ), align );
+    int64_t lda = roundup( blas::max( 1, n ), align );
     size_t size_A = (size_t) lda * n;
     size_t size_ipiv = (size_t) (n);
 
@@ -97,7 +96,8 @@ void test_getri_work( Params& params, bool run )
         }
 
         // R = I - A A^{-1}
-        blas::gemm( Layout::ColMajor, Op::NoTrans, Op::NoTrans, n, n, n,
+        blas::gemm( blas::Layout::ColMajor,
+                    blas::Op::NoTrans, blas::Op::NoTrans, n, n, n,
                     -1.0, &A_ref[0], lda,
                           &A_tst[0], lda,
                      1.0, &R[0], lda );

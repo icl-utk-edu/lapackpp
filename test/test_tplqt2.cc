@@ -13,7 +13,6 @@
 template< typename scalar_t >
 void test_tplqt2_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -32,9 +31,9 @@ void test_tplqt2_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, m ), align );
-    int64_t ldb = roundup( max( 1, m ), align );
-    int64_t ldt = roundup( max( 1, m ), align );
+    int64_t lda = roundup( blas::max( 1, m ), align );
+    int64_t ldb = roundup( blas::max( 1, m ), align );
+    int64_t ldt = roundup( blas::max( 1, m ), align );
     size_t size_A = (size_t) lda * m;
     size_t size_B = (size_t) ldb * n;
     size_t size_T = (size_t) ldt * m;

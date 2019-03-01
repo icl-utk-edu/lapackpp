@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_unmtr_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -34,11 +33,11 @@ void test_unmtr_work( Params& params, bool run )
 
     // ---------- setup
     int64_t r = (side == lapack::Side::Left) ? m : n;
-    int64_t lda = roundup( max( 1, r ), align );
-    int64_t ldc = roundup( max( 1, m ), align );
-    size_t size_A = (size_t) ( max( 1, lda*r ) );
-    size_t size_tau = (size_t) ( max( 1, r-1 ) );
-    size_t size_C = (size_t) max( 1, ldc * n );
+    int64_t lda = roundup( blas::max( 1, r ), align );
+    int64_t ldc = roundup( blas::max( 1, m ), align );
+    size_t size_A = (size_t) ( blas::max( 1, lda*r ) );
+    size_t size_tau = (size_t) ( blas::max( 1, r-1 ) );
+    size_t size_C = (size_t) blas::max( 1, ldc * n );
     size_t size_D = (size_t) (r);
     size_t size_E = (size_t) (r-1);
 

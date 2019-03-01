@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_ungql_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -40,7 +39,7 @@ void test_ungql_work( Params& params, bool run )
     }
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, m ), align );
+    int64_t lda = roundup( blas::max( 1, m ), align );
     size_t size_A = (size_t) lda * n;
     size_t size_tau = (size_t) (k);
 
@@ -107,7 +106,8 @@ void test_ungql_work( Params& params, bool run )
         lapack::lacpy( lapack::MatrixType::Lower, k, k, &A_factorized[(m-k)+(n-k)*lda], lda, &L[(m-k)+(n-k)*ldl], ldl );
 
         // Compute L(m-n+1:m,n-k+1:n) - Q(1:m,m-n+1:m)' * A(1:m,n-k+1:n)
-        blas::gemm( Layout::ColMajor, Op::ConjTrans, Op::NoTrans, n, k, m,
+        blas::gemm( blas::Layout::ColMajor,
+                    blas::Op::ConjTrans, blas::Op::NoTrans, n, k, m,
                     -1.0, &Q[0], ldq, &A_ref[(n-k)*lda], lda, 1.0, &L[(m-n)+(n-k)*ldl], ldl );
 
         // Compute norm( L - Q'*A ) / ( M * norm(A) * EPS ) .
@@ -119,7 +119,8 @@ void test_ungql_work( Params& params, bool run )
 
         // Compute I - Q'*Q
         lapack::laset( lapack::MatrixType::General, n, n, 0.0, 1.0, &L[0], ldl );
-        blas::herk( Layout::ColMajor, Uplo::Upper, Op::ConjTrans, n, m, -1.0, &Q[0], ldq, 1.0, &L[0], ldl );
+        blas::herk( blas::Layout::ColMajor, blas::Uplo::Upper, blas::Op::ConjTrans,
+                    n, m, -1.0, &Q[0], ldq, 1.0, &L[0], ldl );
 
         // Compute norm( I - Q*Q' ) / ( N * EPS )
         real_t resid2 = lapack::lansy( lapack::Norm::One, lapack::Uplo::Upper, n, &L[0], ldl );

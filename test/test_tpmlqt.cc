@@ -14,7 +14,6 @@
 template< typename scalar_t >
 void test_tpmlqt_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -43,14 +42,14 @@ void test_tpmlqt_work( Params& params, bool run )
     }
 
     // ---------- setup
-    int64_t Vn = (side == Side::Left ? m : n);
-    int64_t Am = (side == Side::Left ? k : m);
-    int64_t An = (side == Side::Left ? n : k);
-    int64_t ldv = roundup( max( 1, k  ), align );
-    int64_t ldt = roundup( max( 1, nb ), align );
-    int64_t lda = roundup( max( 1, Am ), align );
-    int64_t ldb = roundup( max( 1, m  ), align );
-    int64_t ldw = roundup( max( 1, k  ), align );
+    int64_t Vn = (side == blas::Side::Left ? m : n);
+    int64_t Am = (side == blas::Side::Left ? k : m);
+    int64_t An = (side == blas::Side::Left ? n : k);
+    int64_t ldv = roundup( blas::max( 1, k  ), align );
+    int64_t ldt = roundup( blas::max( 1, nb ), align );
+    int64_t lda = roundup( blas::max( 1, Am ), align );
+    int64_t ldb = roundup( blas::max( 1, m  ), align );
+    int64_t ldw = roundup( blas::max( 1, k  ), align );
     size_t size_V  = (size_t) ldv * Vn;  // k-by-m (Left) or k-by-n (Right)
     size_t size_T  = (size_t) ldt * k;   // nb-by-k
     size_t size_A  = (size_t) lda * An;  // k-by-n (Left) or m-by-k (Right)

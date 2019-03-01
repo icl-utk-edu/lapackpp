@@ -149,7 +149,8 @@ cblas_syr(
 template< typename TA, typename TX >
 void test_syr_work( Params& params, bool run )
 {
-    using namespace blas;
+    using blas::real;
+    using blas::imag;
     using scalar_t = blas::scalar_type< TA, TX >;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
@@ -190,11 +191,15 @@ void test_syr_work( Params& params, bool run )
     real_t Xnorm = blas::nrm2( n, x, std::abs(incx) );
 
     // test error exits
-    assert_throw( blas::syr( Layout(0), uplo,     n, alpha, x, incx, A, lda ), blas::Error );
-    assert_throw( blas::syr( layout,    Uplo(0),  n, alpha, x, incx, A, lda ), blas::Error );
-    assert_throw( blas::syr( layout,    uplo,    -1, alpha, x, incx, A, lda ), blas::Error );
-    assert_throw( blas::syr( layout,    uplo,     n, alpha, x,    0, A, lda ), blas::Error );
-    assert_throw( blas::syr( layout,    uplo,     n, alpha, x, incx, A, n-1 ), blas::Error );
+    if (params.error_exit() == 'y') {
+        using blas::Layout;
+        using blas::Uplo;
+        assert_throw( blas::syr( Layout(0), uplo,     n, alpha, x, incx, A, lda ), blas::Error );
+        assert_throw( blas::syr( layout,    Uplo(0),  n, alpha, x, incx, A, lda ), blas::Error );
+        assert_throw( blas::syr( layout,    uplo,    -1, alpha, x, incx, A, lda ), blas::Error );
+        assert_throw( blas::syr( layout,    uplo,     n, alpha, x,    0, A, lda ), blas::Error );
+        assert_throw( blas::syr( layout,    uplo,     n, alpha, x, incx, A, n-1 ), blas::Error );
+    }
 
     if (verbose >= 1) {
         printf( "\n"
@@ -217,7 +222,7 @@ void test_syr_work( Params& params, bool run )
     time = libtest::get_wtime() - time;
 
     params.time() = time * 1000;  // msec
-    double gflop = Gflop< scalar_t >::syr( n );
+    double gflop = blas::Gflop< scalar_t >::syr( n );
     params.gflops() = gflop / time;
 
     if (verbose >= 2) {

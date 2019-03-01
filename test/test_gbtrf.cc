@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_gbtrf_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -33,7 +32,7 @@ void test_gbtrf_work( Params& params, bool run )
     // ---------- setup
     int64_t ldab = roundup( 2*kl+ku+1, align );
     size_t size_AB = (size_t) ldab * n;
-    size_t size_ipiv = (size_t) (min(m,n));
+    size_t size_ipiv = (size_t) (blas::min(m,n));
 
     std::vector< scalar_t > AB_tst( size_AB );
     std::vector< scalar_t > AB_ref( size_AB );

@@ -11,7 +11,8 @@
 template< typename scalar_t >
 void test_larfg_work( Params& params, bool run )
 {
-    using namespace blas;
+    using blas::real;
+    using blas::imag;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -47,7 +48,7 @@ void test_larfg_work( Params& params, bool run )
         printf( "x incx %lld, size %lld\n", (lld) incx, (lld) size_X );
     }
     if (verbose >= 2) {
-        printf( "alpha = %.4e\n", real(alpha_tst) );
+        printf( "alpha = %.4e + %.4ei\n", real(alpha_tst), imag(alpha_tst) );
         printf( "x = " ); print_vector( n-1, &X_tst[0], incx );
         printf( "xref = " ); print_vector( n-1, &X_ref[0], incx );
     }

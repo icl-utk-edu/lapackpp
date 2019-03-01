@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_larfx_work( Params& params, bool run )
 {
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -31,7 +30,7 @@ void test_larfx_work( Params& params, bool run )
 
     // ---------- setup
     scalar_t tau;
-    int64_t ldc = roundup( max( 1, m ), align );
+    int64_t ldc = roundup( blas::max( 1, m ), align );
     size_t size_V;
     if (side == lapack::Side::Left)
         size_V = m;

@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_hbgvx_work( Params& params, bool run )
 {
-    using namespace libtest;
     using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
@@ -88,9 +87,9 @@ void test_hbgvx_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::hbgvx( jobz, range, uplo, n, ka, kb, &AB_tst[0], ldab, &BB_tst[0], ldbb, &Q_tst[0], ldq, vl, vu, il, iu, abstol, &m_tst, &W_tst[0], &Z_tst[0], ldz, &ifail_tst[0] );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::hbgvx returned error %lld\n", (lld) info_tst );
     }
@@ -102,9 +101,9 @@ void test_hbgvx_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_hbgvx( job2char(jobz), range2char(range), uplo2char(uplo), n, ka, kb, &AB_ref[0], ldab, &BB_ref[0], ldbb, &Q_ref[0], ldq, vl, vu, il, iu, abstol, &m_ref, &W_ref[0], &Z_ref[0], ldz, &ifail_ref[0] );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_hbgvx returned error %lld\n", (lld) info_ref );
         }

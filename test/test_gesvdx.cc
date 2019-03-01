@@ -13,7 +13,6 @@
 template< typename scalar_t >
 void test_gesvdx_work( Params& params, bool run )
 {
-    using namespace libtest;
     using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
@@ -72,9 +71,9 @@ void test_gesvdx_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::gesvdx( jobu, jobvt, range, m, n, &A_tst[0], lda, vl, vu, il, iu, &ns_tst, &S_tst[0], &U_tst[0], ldu, &VT_tst[0], ldvt );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::gesvdx returned error %lld\n", (lld) info_tst );
     }
@@ -86,9 +85,9 @@ void test_gesvdx_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_gesvdx( job2char(jobu), job2char(jobvt), range2char(range), m, n, &A_ref[0], lda, vl, vu, il, iu, &ns_ref, &S_ref[0], &U_ref[0], ldu, &VT_ref[0], ldvt );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gesvdx returned error %lld\n", (lld) info_ref );
         }

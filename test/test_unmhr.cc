@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_unmhr_work( Params& params, bool run )
 {
-    using namespace libtest;
     using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
@@ -63,9 +62,9 @@ void test_unmhr_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::unmhr( side, trans, m, n, ilo, ihi, &A[0], lda, &tau[0], &C_tst[0], ldc );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::unmhr returned error %lld\n", (lld) info_tst );
     }
@@ -77,9 +76,9 @@ void test_unmhr_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_unmhr( side2char(side), op2char(trans), m, n, ilo, ihi, &A[0], lda, &tau[0], &C_ref[0], ldc );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_unmhr returned error %lld\n", (lld) info_ref );
         }

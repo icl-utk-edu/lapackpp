@@ -149,7 +149,6 @@ cblas_syr(
 template< typename TA, typename TX >
 void test_syr_work( Params& params, bool run )
 {
-    using namespace libtest;
     using namespace blas;
     using scalar_t = blas::scalar_type< TA, TX >;
     using real_t = blas::real_type< scalar_t >;
@@ -213,9 +212,9 @@ void test_syr_work( Params& params, bool run )
 
     // run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     blas::syr( layout, uplo, n, alpha, x, incx, A, lda );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
 
     params.time() = time * 1000;  // msec
     double gflop = Gflop< scalar_t >::syr( n );
@@ -228,10 +227,10 @@ void test_syr_work( Params& params, bool run )
     if (params.check() == 'y') {
         // run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         cblas_syr( cblas_layout_const(layout), cblas_uplo_const(uplo),
                    n, alpha, x, incx, Aref, lda );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
 
         params.ref_time() = time * 1000;  // msec
         params.ref_gflops() = gflop / time;

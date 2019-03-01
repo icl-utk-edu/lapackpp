@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_ggglm_work( Params& params, bool run )
 {
-    using namespace libtest;
     using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
@@ -73,9 +72,9 @@ void test_ggglm_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::ggglm( n, m, p, &A_tst[0], lda, &B_tst[0], ldb, &D_tst[0], &X_tst[0], &Y_tst[0] );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::ggglm returned error %lld\n", (lld) info_tst );
     }
@@ -87,9 +86,9 @@ void test_ggglm_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_ggglm( n, m, p, &A_ref[0], lda, &B_ref[0], ldb, &D_ref[0], &X_ref[0], &Y_ref[0] );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_ggglm returned error %lld\n", (lld) info_ref );
         }

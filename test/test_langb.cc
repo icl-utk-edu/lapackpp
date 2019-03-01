@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_langb_work( Params& params, bool run )
 {
-    using namespace libtest;
     using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
@@ -44,9 +43,9 @@ void test_langb_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     real_t norm_tst = lapack::langb( norm, n, kl, ku, &AB[0], ldab );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
 
     params.time() = time;
     // double gflop = lapack::Gflop< scalar_t >::langb( norm, n, kl, ku );
@@ -59,9 +58,9 @@ void test_langb_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         real_t norm_ref = LAPACKE_langb( norm2char(norm), n, kl, ku, &AB[0], ldab );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
 
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;

@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_larft_work( Params& params, bool run )
 {
-    using namespace libtest;
     using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
@@ -109,9 +108,9 @@ void test_larft_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     lapack::larft( direct, storev, n, k, &V[0], ldv, &tau[0], &T_tst[0], ldt );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
 
     params.time() = time;
     //double gflop = lapack::Gflop< scalar_t >::larft( direct, storev, n, k );
@@ -124,9 +123,9 @@ void test_larft_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_larft( direct2char(direct), storev2char(storev), n, k, &V[0], ldv, &tau[0], &T_ref[0], ldt );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_larft returned error %lld\n", (lld) info_ref );
         }

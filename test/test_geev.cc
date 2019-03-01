@@ -21,7 +21,6 @@ bool lessthan( T a, T b )
 template< typename scalar_t >
 void test_geev_work( Params& params, bool run )
 {
-    using namespace libtest;
     using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
@@ -90,11 +89,11 @@ void test_geev_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     //printf (" test start\n");
     int64_t info_tst = lapack::geev( jobvl, jobvr, n, &A_tst[0], lda, &W_tst[0], &VL_tst[0], ldvl, &VR_tst[0], ldvr );
     //printf (" test done\n");
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::geev returned error %lld\n", (lld) info_tst );
     }
@@ -144,11 +143,11 @@ void test_geev_work( Params& params, bool run )
     if (params.ref() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
     //printf (" ref start\n");
         int64_t info_ref = LAPACKE_geev( job2char(jobvl), job2char(jobvr), n, &A_ref[0], lda, &W_ref[0], &VL_ref[0], ldvl, &VR_ref[0], ldvr );
     //printf (" ref done\n");
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_geev returned error %lld\n", (lld) info_ref );
         }

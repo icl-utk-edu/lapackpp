@@ -11,7 +11,6 @@
 template< typename scalar_t >
 void test_lanhs_work( Params& params, bool run )
 {
-    using namespace libtest;
     using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
@@ -49,9 +48,9 @@ void test_lanhs_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache.value() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     real_t norm_tst = lapack::lanhs( norm, n, &A[0], lda );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
 
     params.time.value() = time;
     //double gflop = lapack::Gflop< scalar_t >::lanhs( norm, n );
@@ -64,9 +63,9 @@ void test_lanhs_work( Params& params, bool run )
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache.value() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         real_t norm_ref = LAPACKE_lanhs( norm2char(norm), n, &A[0], lda );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
 
         params.ref_time.value() = time;
         //params.ref_gflops.value() = gflop / time;

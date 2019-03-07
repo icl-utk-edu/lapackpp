@@ -514,7 +514,7 @@ else()
         PATHS
             ${CMAKE_INSTALL_PREFIX}/blaspp
     )
-    message("blaspp_DIR: " ${blaspp_DIR})
+    #message("blaspp_DIR: " ${blaspp_DIR})
 endif()
 
 find_package(blaspp)

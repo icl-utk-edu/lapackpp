@@ -188,9 +188,6 @@ endif()
 find_package(libtest)
 find_package(blaspp)
 
-#message("blaspp_include_dir: " ${blaspp_INCLUDE_DIR})
-#message("libtest_include_dir: " ${Libtest_INCLUDE_DIR})
-
 target_link_libraries(lapackpp_test
     libtest
     gfortran
@@ -239,4 +236,11 @@ add_custom_command(TARGET lapackpp_test POST_BUILD
     COMMAND
         cp ${CMAKE_CURRENT_SOURCE_DIR}/run_tests.py
            ${CMAKE_CURRENT_BINARY_DIR}/run_tests.py
+)
+
+#Move test script to build directory
+add_custom_command(TARGET lapackpp_test POST_BUILD
+    COMMAND
+        cp ${CMAKE_CURRENT_BINARY_DIR}/lapackpp_test
+           ${CMAKE_CURRENT_BINARY_DIR}/test
 )

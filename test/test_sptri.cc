@@ -20,8 +20,8 @@ void test_sptri_work( Params& params, bool run )
 
     // mark non-standard output values
     params.ref_time();
-    // params.ref_gflops();
-    // params.gflops();
+    params.ref_gflops();
+    params.gflops();
 
     if (! run)
         return;
@@ -57,8 +57,8 @@ void test_sptri_work( Params& params, bool run )
     }
 
     params.time() = time;
-    // double gflop = lapack::Gflop< scalar_t >::sptri( n );
-    // params.gflops() = gflop / time;
+    double gflop = lapack::Gflop< scalar_t >::sytri( n );
+    params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
@@ -71,7 +71,7 @@ void test_sptri_work( Params& params, bool run )
         }
 
         params.ref_time() = time;
-        // params.ref_gflops() = gflop / time;
+        params.ref_gflops() = gflop / time;
 
         // ---------- check error compared to reference
         real_t error = 0;

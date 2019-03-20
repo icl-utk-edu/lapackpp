@@ -23,18 +23,17 @@ void test_ungqr_work( Params& params, bool run )
 
     // mark non-standard output values
     params.ortho();
-    params.time();
     params.gflops();
     params.ref_time();
     params.ref_gflops();
-    params.okay();
+    params.msg();
 
     if (! run)
         return;
 
-    // Check for problems in testing
-    if (! ( n <= m && k <= n ) ) {
-        printf( "skipping because ungqr requires n <= m and k <= n\n" );
+    // skip invalid sizes
+    if (! (n <= m && k <= n)) {
+        params.msg() = "skipping: requires n <= m and k <= n";
         return;
     }
 

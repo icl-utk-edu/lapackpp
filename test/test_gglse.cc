@@ -27,12 +27,14 @@ void test_gglse_work( Params& params, bool run )
     params.ref_time();
     // params.ref_gflops();
     // params.gflops();
+    params.msg();
 
     if (! run)
         return;
 
-    if (! ((0 <= p) && (p <= n) && ( n <= m+p ))) {
-        printf( "skipping because gglse requires 0 <= p <= n <= m+p\n" );
+    // skip invalid sizes
+    if (! ((0 <= p) && (p <= n) && (n <= m+p))) {
+        params.msg() = "skipping: requires 0 <= p <= n <= m+p";
         return;
     }
 

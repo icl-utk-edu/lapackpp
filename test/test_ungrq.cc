@@ -23,18 +23,17 @@ void test_ungrq_work( Params& params, bool run )
 
     // mark non-standard output values
     params.ortho();
-    params.time();
     params.gflops();
     params.ref_time();
     params.ref_gflops();
-    params.okay();
+    params.msg();
 
     if (! run)
         return;
 
-    // Check for problems in testing
-    if (! ( n >= m && m >= k ) ) {
-        printf( "skipping because ungrq requires n >= m and m >= k\n" );
+    // skip invalid sizes
+    if (! (n >= m && m >= k)) {
+        params.msg() = "skipping: requires n >= m and m >= k";
         return;
     }
 

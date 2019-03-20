@@ -28,19 +28,16 @@ void test_lantr_work( Params& params, bool run )
     params.ref_time();
     //params.ref_gflops();
     //params.gflops();
+    params.msg();
 
     if (! run)
         return;
 
     // skip invalid sizes
-    if (uplo == blas::Uplo::Lower && m < n) {
-        printf( "skipping because lower and m = %lld < n = %lld\n",
-                (lld) m, (lld) n );
-        return;
-    }
-    if (uplo == blas::Uplo::Upper && m > n) {
-        printf( "skipping because upper and m = %lld > n = %lld\n",
-                (lld) m, (lld) n );
+    if ((uplo == blas::Uplo::Lower && m < n) ||
+        (uplo == blas::Uplo::Upper && m > n))
+    {
+        params.msg() = "skipping: requires m >= n (lower) or m <= n (upper)";
         return;
     }
 

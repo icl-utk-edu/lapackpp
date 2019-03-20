@@ -26,19 +26,20 @@ void test_ggglm_work( Params& params, bool run )
     params.ref_time();
     // params.ref_gflops();
     // params.gflops();
+    params.msg();
 
     if (! run)
         return;
 
-    if (! ( p >= n-m ) ) {
-        printf( "skipping because ggglm requires p >= n-m\n" );
+    // skip invalid sizes
+    if (! (p >= n-m)) {
+        params.msg() = "skipping: requires p >= n-m";
         return;
     }
-    if (! ( m <= n ) ) {
-        printf( "skipping because ggglm requires m <= n\n" );
+    if (! (m <= n)) {
+        params.msg() = "skipping: requires m <= n";
         return;
     }
-
 
     // ---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );

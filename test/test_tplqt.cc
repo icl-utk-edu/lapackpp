@@ -27,12 +27,14 @@ void test_tplqt_work( Params& params, bool run )
     params.ref_time();
     params.ref_gflops();
     params.gflops();
+    params.msg();
 
     if (! run)
         return;
 
+    // skip invalid sizes
     if (blas::min(m, n) < l || m < mb || mb < 1) {
-        printf( "skipping because tplqt requires min(m, n) >= l and m >= mb >= 1\n" );
+        params.msg() = "skipping: requires min(m, n) >= l and m >= mb >= 1";
         return;
     }
 

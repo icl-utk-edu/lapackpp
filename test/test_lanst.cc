@@ -23,6 +23,7 @@ void test_lanst_work( Params& params, bool run )
     params.ref_time();
     // params.ref_gflops();
     // params.gflops();
+    params.msg();
 
     if (! run)
         return;
@@ -100,7 +101,7 @@ void test_lanst( Params& params, bool run )
 
         case libtest::DataType::SingleComplex:
         case libtest::DataType::DoubleComplex:
-            printf( "skipping: no complex version\n" );
+            params.msg() = "skipping: no complex version";
             break;
     }
 }

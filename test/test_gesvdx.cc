@@ -35,13 +35,15 @@ void test_gesvdx_work( Params& params, bool run )
     params.ref_time();
     // params.ref_gflops();
     // params.gflops();
+    params.msg();
 
     if (! run)
         return;
 
+    // skip invalid sizes
     if ( ( range==lapack::Range::Index ) &&
          ! ( ( 1 <= il ) && ( il < iu ) && ( iu < blas::min( m, n ) ) ) ) {
-        printf( "skipping because gesvdx requires 1 <= il <= iu <= min(m,n)\n" );
+        params.msg() = "skipping: requires 1 <= il <= iu <= min(m,n)";
         return;
     }
 

@@ -31,14 +31,16 @@ void test_gesvd_work( Params& params, bool run )
     params.ortho_U();
     params.ortho_V();
     params.error_sigma();
+    params.msg();
 
     if (! run)
         return;
 
+    // skip invalid options
     if (jobu  == lapack::Job::OverwriteVec &&
         jobvt == lapack::Job::OverwriteVec)
     {
-        printf( "skipping because jobu and jobvt cannot both be overwrite.\n" );
+        params.msg() = "skipping: jobu and jobvt cannot both be overwrite.";
         return;
     }
 

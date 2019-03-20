@@ -28,14 +28,16 @@ void test_larfb_work( Params& params, bool run )
     params.ref_time();
     //params.ref_gflops();
     //params.gflops();
+    params.msg();
 
     if (! run)
         return;
 
+    // skip invalid sizes
     if ((side == lapack::Side::Left  && m < k) ||
         (side == lapack::Side::Right && n < k))
     {
-        printf( "skipping because larfb requires m >= k >= 0 (left) or n >= k >= 0 (right)\n" );
+        params.msg() = "skipping: requires m >= k >= 0 (left) or n >= k >= 0 (right)";
         return;
     }
 

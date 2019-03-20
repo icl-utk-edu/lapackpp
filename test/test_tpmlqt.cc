@@ -32,12 +32,14 @@ void test_tpmlqt_work( Params& params, bool run )
     params.ref_time();
     params.ref_gflops();
     params.gflops();
+    params.msg();
 
     if (! run)
         return;
 
+    // skip invalid sizes
     if (k < l || k < nb || nb < 1) {
-        printf( "skipping because tpmlqt requires k >= l >= 0 and k >= nb >= 1\n" );
+        params.msg() = "skipping: requires k >= l >= 0 and k >= nb >= 1";
         return;
     }
 

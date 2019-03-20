@@ -107,6 +107,7 @@ public:
     libtest::ParamInt        ref_iters;
 
     libtest::ParamOkay       okay;
+    libtest::ParamString     msg;
 };
 
 // -----------------------------------------------------------------------------

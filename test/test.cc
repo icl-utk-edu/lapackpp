@@ -534,7 +534,8 @@ Params::Params():
 
     // default -1 means "no check"
     //          name,     w, type,              def, min, max, help
-    okay      ( "status", 6, ParamType::Output,  -1,   0,   0, "success indicator" )
+    okay      ( "status", 6, ParamType::Output,  -1,   0,   0, "success indicator" ),
+    msg       ( "",       1, ParamType::Output,  "",           "error message" )
 {
     // change names of matrix B's params
     matrixB.kind.name( "matrixB" );

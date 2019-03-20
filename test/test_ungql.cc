@@ -23,18 +23,17 @@ void test_ungql_work( Params& params, bool run )
 
     // mark non-standard output values
     params.ortho();
-    params.time();
     params.gflops();
     params.ref_time();
     params.ref_gflops();
-    params.okay();
+    params.msg();
 
     if (! run)
         return;
 
-    // Check for problems in testing
-    if (! ( m >= n && n >= k ) ) {
-        printf( "skipping because ungql requires m >= n and n >= k\n" );
+    // skip invalid sizes
+    if (! (m >= n && n >= k)) {
+        params.msg() = "skipping: requires m >= n and n >= k";
         return;
     }
 

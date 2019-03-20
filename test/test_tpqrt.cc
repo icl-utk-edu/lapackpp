@@ -27,13 +27,14 @@ void test_tpqrt_work( Params& params, bool run )
     params.ref_time();
     params.ref_gflops();
     params.gflops();
+    params.msg();
 
     if (! run)
         return;
 
-    // skip invalid sizes and options
+    // skip invalid sizes
     if (blas::min(m, n) < l || n < nb || nb < 1) {
-        printf( "skipping because tpqrt requires min(m, n) >= l and n >= nb >= 1\n" );
+        params.msg() = "skipping: requires min(m, n) >= l and n >= nb >= 1";
         return;
     }
 

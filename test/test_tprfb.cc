@@ -31,12 +31,14 @@ void test_tprfb_work( Params& params, bool run )
     params.ref_time();
     //params.ref_gflops();
     //params.gflops();
+    params.msg();
 
     if (! run)
         return;
 
+    // skip invalid sizes
     if (k < l) {
-        printf( "skipping because tprfb requires k >= l\n" );
+        params.msg() = "skipping: requires k >= l";
         return;
     }
 

@@ -26,9 +26,16 @@ void test_tpqrt2_work( Params& params, bool run )
     params.ref_time();
     params.ref_gflops();
     params.gflops();
+    params.msg();
 
     if (! run)
         return;
+
+    // skip invalid sizes
+    if (blas::min(m, n) < l) {
+        params.msg() = "skipping: requires min(m, n) >= l";
+        return;
+    }
 
     // ---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );

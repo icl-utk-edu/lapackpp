@@ -19,6 +19,7 @@ void test_spsv_work( Params& params, bool run )
     int64_t n = params.dim.n();
     int64_t nrhs = params.nrhs();
     int64_t align = params.align();
+    int64_t verbose = params.verbose();
 
     // mark non-standard output values
     params.ref_time();
@@ -48,6 +49,11 @@ void test_spsv_work( Params& params, bool run )
     AP_ref = AP_tst;
     B_ref = B_tst;
 
+    if (verbose >= 2) {
+        printf( "AP = " ); print_matrix( 1, size_AP, &AP_tst[0], 1 );
+        printf( "B = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
+    }
+
     // ---------- run test
     libtest::flush_cache( params.cache() );
     double time = libtest::get_wtime();
@@ -73,6 +79,11 @@ void test_spsv_work( Params& params, bool run )
 
         params.ref_time() = time;
         params.ref_gflops() = gflop / time;
+
+        if (verbose >= 2) {
+            printf( "B_tst = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
+            printf( "B_ref = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
+        }
 
         // ---------- check error compared to reference
         real_t error = 0;

@@ -19,6 +19,7 @@ void test_sptrs_work( Params& params, bool run )
     int64_t n = params.dim.n();
     int64_t nrhs = params.nrhs();
     int64_t align = params.align();
+    int64_t verbose = params.verbose();
 
     // mark non-standard output values
     params.ref_time();
@@ -46,7 +47,11 @@ void test_sptrs_work( Params& params, bool run )
     lapack::larnv( idist, iseed, B_tst.size(), &B_tst[0] );
     B_ref = B_tst;
 
-    // todo: initialize ipiv_tst and ipiv_ref
+    if (verbose >= 2) {
+        printf( "AP = " ); print_matrix( 1, size_AP, &AP[0], 1 );
+        printf( "B = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
+    }
+
     int64_t info = lapack::sptrf( uplo, n, &AP[0], &ipiv_tst[0] );
     if (info != 0) {
         fprintf( stderr, "lapack::sptrf returned error %lld\n", (lld) info );
@@ -78,6 +83,11 @@ void test_sptrs_work( Params& params, bool run )
 
         params.ref_time() = time;
         params.ref_gflops() = gflop / time;
+
+        if (verbose >= 2) {
+            printf( "B_tst = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
+            printf( "B_ref = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
+        }
 
         // ---------- check error compared to reference
         real_t error = 0;

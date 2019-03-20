@@ -116,6 +116,7 @@ group_opt.add_argument( '--vl',     action='store', help='default=%(default)s', 
 group_opt.add_argument( '--vu',     action='store', help='default=%(default)s', default='inf' )
 group_opt.add_argument( '--il',     action='store', help='default=%(default)s', default='10' )
 group_opt.add_argument( '--iu',     action='store', help='default=%(default)s', default='-1,100' )
+group_opt.add_argument( '--nb',     action='store', help='default=%(default)s', default='64' )
 group_opt.add_argument( '--matrixtype', action='store', help='default=%(default)s', default='g,l,u' )
 
 parser.add_argument( 'tests', nargs=argparse.REMAINDER )
@@ -169,6 +170,11 @@ if (not opts.dim):
                 +  ' --dim 20x10x15 --dim 20x15x10'
         nk_tall += ' --dim 1x20x10'
         nk_wide += ' --dim 1x10x20'
+        # tpqrt, tplqt needs small l, nb <= min( m, n )
+        if (opts.l == parser.get_default('l')):
+            opts.l = '0,5,100'
+        if (opts.nb == parser.get_default('nb')):
+            opts.nb = '8,64'
 
     if (opts.small):
         n       += ' --dim 25:100:25'
@@ -253,6 +259,7 @@ sort   = ' --sort '   + opts.sort   if (opts.sort)   else ''
 sense  = ' --sense '  + opts.sense  if (opts.sense)   else ''
 vect   = ' --vect '   + opts.vect   if (opts.vect)   else ''
 l      = ' --l '      + opts.l      if (opts.l)      else ''
+nb     = ' --nb '     + opts.nb     if (opts.nb)     else ''
 kd     = ' --kd '     + opts.kd     if (opts.kd)     else ''
 kl     = ' --kl '     + opts.kl     if (opts.kl)     else ''
 ku     = ' --ku '     + opts.ku     if (opts.ku)     else ''
@@ -452,10 +459,10 @@ if (opts.qr):
     [ 'unmqr', gen + dtype_complex + align + mnk + side + trans_nc ],  # complex does trans = N, C, not T
 
     # Triangle-pentagon
-    [ 'tpqrt',  gen + dtype + align + mn + l ],
+    [ 'tpqrt',  gen + dtype + align + mn + l + nb ],
     [ 'tpqrt2', gen + dtype + align + mn + l ],
-    [ 'tpmqrt', gen + dtype_real    + align + mn + l + side + trans    ],  # real does trans = N, T, C
-    [ 'tpmqrt', gen + dtype_complex + align + mn + l + side + trans_nc ],  # complex does trans = N, C, not T
+    [ 'tpmqrt', gen + dtype_real    + align + mn + l + nb + side + trans    ],  # real does trans = N, T, C
+    [ 'tpmqrt', gen + dtype_complex + align + mn + l + nb + side + trans_nc ],  # complex does trans = N, C, not T
     #[ 'tprfb',  gen + dtype + align + mn + l ],  # TODO: bug in LAPACKE crashes tester
     ]
 
@@ -469,10 +476,10 @@ if (opts.lq):
     #[ 'unmlq', gen + dtype_complex + align + mnk + side + trans_nc ],  # complex does trans = N, C, not T
 
     # Triangle-pentagon
-    [ 'tplqt',  gen + dtype + align + mn + l ],
+    [ 'tplqt',  gen + dtype + align + mn + l + nb ],
     [ 'tplqt2', gen + dtype + align + mn + l ],
-    [ 'tpmlqt', gen + dtype_real    + align + mn + l + side + trans    ],  # real does trans = N, T, C
-    [ 'tpmlqt', gen + dtype_complex + align + mn + l + side + trans_nc ],  # complex does trans = N, C, not T
+    [ 'tpmlqt', gen + dtype_real    + align + mn + l + nb + side + trans    ],  # real does trans = N, T, C
+    [ 'tpmlqt', gen + dtype_complex + align + mn + l + nb + side + trans_nc ],  # complex does trans = N, C, not T
     ]
 
 # QL

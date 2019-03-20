@@ -492,7 +492,7 @@ Params::Params():
     kl        ( "kl",      6,    ParamType::List, 100,     0, 1000000, "lower bandwidth" ),
     ku        ( "ku",      6,    ParamType::List, 100,     0, 1000000, "upper bandwidth" ),
     nrhs      ( "nrhs",    6,    ParamType::List,  10,     0, 1000000, "number of right hand sides" ),
-    nb        ( "nb",      6,    ParamType::List, 100,     0, 1000000, "block size" ),
+    nb        ( "nb",      4,    ParamType::List,  64,     0, 1000000, "block size" ),
     vl        ( "vl",      7, 2, ParamType::List, -inf, -inf,     inf, "lower bound of eigen/singular values to find" ),
     vu        ( "vu",      7, 2, ParamType::List,  inf, -inf,     inf, "upper bound of eigen/singular values to find" ),
 

@@ -44,6 +44,25 @@ void test_tpmqrt_work( Params& params, bool run )
     }
 
     // ---------- setup
+    // Householder vectors W, Q = \product_i (I - Wi Ti Wi^T)
+    // V1, Bhat1 are rectangular
+    // V2, Bhat2 are upper trapezoidal
+    // left, C = op(Q)*C:
+    //      tpmqrt                                  tpqrt
+    //      C = [ A ] } k       W = [ I  ] } k      [ What0 ] } k
+    //          [ B ] } m           [ V1 ] } m-l    [ Vhat1 ] } m-l
+    //                              [ V2 ] } l      [ Vhat2 ] } l
+    //            n cols              k cols          k cols
+    //
+    // right, C = C * op(Q):
+    //      tpmqrt                                  tpqrt
+    //      C = [ A, B ] } m    W = [ I  ] } k      [ What0 ] } k
+    //            k, n cols         [ V1 ] } n-l    [ Vhat1 ] } n-l
+    //                              [ V2 ] } l      [ Vhat2 ] } l
+    //                                k cols          k cols
+    //
+    // In tpqrt, What is A, Vhat is B.
+    //
     int64_t Vm = (side == blas::Side::Left ? m : n);
     int64_t Am = (side == blas::Side::Left ? k : m);
     int64_t An = (side == blas::Side::Left ? n : k);
@@ -77,8 +96,8 @@ void test_tpmqrt_work( Params& params, bool run )
     B_ref = B_tst;
 
     // Get data for Householder reflectors in V and T by factoring matrix
-    //     D = [ W0 ] = QR.
-    //         [ V  ]
+    //     D = [ What0 ] = QR.
+    //         [ Vhat  ]
     // When applying Q = I - W T W^H with
     //     W = [ I ],
     //         [ V ]

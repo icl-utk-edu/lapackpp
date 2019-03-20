@@ -254,9 +254,9 @@ jobvt  = ' --jobvt '  + opts.jobvt  if (opts.jobvt)  else ''
 jobvl  = ' --jobvl '  + opts.jobvl  if (opts.jobvl)  else ''
 jobvr  = ' --jobvr '  + opts.jobvr  if (opts.jobvr)  else ''
 jobvs  = ' --jobvs '  + opts.jobvs  if (opts.jobvs)  else ''
-balanc = ' --balanc ' + opts.balanc if (opts.balanc)   else ''
+balanc = ' --balanc ' + opts.balanc if (opts.balanc) else ''
 sort   = ' --sort '   + opts.sort   if (opts.sort)   else ''
-sense  = ' --sense '  + opts.sense  if (opts.sense)   else ''
+sense  = ' --sense '  + opts.sense  if (opts.sense)  else ''
 vect   = ' --vect '   + opts.vect   if (opts.vect)   else ''
 l      = ' --l '      + opts.l      if (opts.l)      else ''
 nb     = ' --nb '     + opts.nb     if (opts.nb)     else ''
@@ -382,7 +382,7 @@ if (opts.sysv):
     [ 'sptrf', gen + dtype         + n + uplo ],
     [ 'sptrs', gen + dtype + align + n + uplo ],
     [ 'sptri', gen + dtype         + n + uplo ],
-    [ 'spcon', gen + dtype + align + n + uplo ],
+    [ 'spcon', gen + dtype         + n + uplo ],
     [ 'sprfs', gen + dtype + align + n + uplo ],
     ]
 
@@ -455,8 +455,8 @@ if (opts.qr):
     [ 'geqrf', gen + dtype + align + n + wide + tall ],
     [ 'ggqrf', gen + dtype + align + mnk ],
     [ 'ungqr', gen + dtype + align + mn ],  # m >= n
-    [ 'unmqr', gen + dtype_real    + align + mnk + side + trans    ],  # real does trans = N, T, C
-    [ 'unmqr', gen + dtype_complex + align + mnk + side + trans_nc ],  # complex does trans = N, C, not T
+    #[ 'unmqr', gen + dtype_real    + align + mnk + side + trans    ],  # real does trans = N, T, C
+    #[ 'unmqr', gen + dtype_complex + align + mnk + side + trans_nc ],  # complex does trans = N, C, not T
 
     # Triangle-pentagon
     [ 'tpqrt',  gen + dtype + align + mn + l + nb ],

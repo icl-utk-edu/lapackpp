@@ -32,7 +32,7 @@ group_test = parser.add_argument_group( 'test' )
 group_test.add_argument( '-t', '--test', action='store',
     help='test command to run, e.g., --test "mpirun -np 4 ./test"; default "%(default)s"',
     default='./test' )
-group_test.add_argument( '--xml', action='store_true', help='generate report.xml for jenkins' )
+group_test.add_argument( '--xml', help='generate report.xml for jenkins' )
 
 group_size = parser.add_argument_group( 'matrix dimensions (default is medium)' )
 group_size.add_argument( '-x', '--xsmall', action='store_true', help='run x-small tests' )
@@ -644,11 +644,21 @@ if (opts.blas):
 output_redirected = not sys.stdout.isatty()
 
 # ------------------------------------------------------------------------------
+# if output is redirected, prints to both stderr and stdout;
+# otherwise prints to just stdout.
+def print_tee( *args ):
+    global output_redirected
+    print( *args )
+    if (output_redirected):
+        print( *args, file=sys.stderr )
+# end
+
+# ------------------------------------------------------------------------------
 # cmd is a pair of strings: (function, args)
 
 def run_test( cmd ):
     cmd = opts.test +' '+ cmd[0] +' '+ cmd[1]
-    print( cmd, file=sys.stderr )
+    print_tee( cmd )
     output = ''
     p = subprocess.Popen( cmd.split(), stdout=subprocess.PIPE,
                                        stderr=subprocess.STDOUT )
@@ -657,38 +667,42 @@ def run_test( cmd ):
         print( line, end='' )
         output += line
     err = p.wait()
-    if (err < 0):
-        print( 'FAILED: exit with signal', -err )
+    if (err != 0):
+        print_tee( 'FAILED: exit code', err )
+    else:
+        print_tee( 'pass' )
     return (err, output)
 # end
 
 # ------------------------------------------------------------------------------
+# run each test
 failed_tests = []
 passed_tests = []
 ntests = len(opts.tests)
 run_all = (ntests == 0)
 
+seen = set()
 for cmd in cmds:
     if (run_all or cmd[0] in opts.tests):
-        if (not run_all):
-            opts.tests.remove( cmd[0] )
+        seen.add( cmd[0] )
         (err, output) = run_test( cmd )
         if (err):
             failed_tests.append( (cmd[0], err, output) )
         else:
             passed_tests.append( cmd[0] )
-if (opts.tests):
-    print( 'Warning: unknown routines:', ' '.join( opts.tests ))
+not_seen = filter( lambda x: x not in seen, opts.tests )
+if (not_seen):
+    print_tee( 'Warning: unknown routines:', ' '.join( not_seen ))
 
 # print summary of failures
 nfailed = len( failed_tests )
 if (nfailed > 0):
-    print( '\n' + str(nfailed) + ' routines FAILED:',
-           ', '.join( [x[0] for x in failed_tests] ),
-           file=sys.stderr )
+    print_tee( '\n' + str(nfailed) + ' routines FAILED:',
+               ', '.join( [x[0] for x in failed_tests] ) )
 
 # generate jUnit compatible test report
 if opts.xml:
+    print( 'writing XML file', opts.xml )
     root = ET.Element("testsuites")
     doc = ET.SubElement(root, "testsuite",
                         name="lapackpp_suite",
@@ -714,7 +728,7 @@ if opts.xml:
         testcase.text = 'PASSED'
 
     tree = ET.ElementTree(root)
-    tree.write("report.xml")
+    tree.write( opts.xml )
 # end
 
 exit( nfailed )

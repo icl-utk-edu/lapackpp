@@ -30,28 +30,27 @@ void test_larft_work( Params& params, bool run )
     if (! run)
         return;
 
+    // skip invalid sizes
+    if (! (n >= k)) {
+        params.msg() = "skipping: requires n >= k (not documented)";
+        return;
+    }
+
     // ---------- setup
-    int64_t ldv;
-    if (storev == lapack::StoreV::Columnwise)
-        ldv = roundup( blas::max( 1, n ), align );
-    else
-        ldv = roundup( blas::max( 1, k ), align );
-
-    int64_t ldt = roundup( k, align );
-
-    int lcv;
-    size_t size_V;
+    int64_t Vm, Vn;
     if (storev == lapack::StoreV::Columnwise) {
-        lcv = k;
-        size_V = (size_t) ldv * k;
+        Vm = n;
+        Vn = k;
     }
     else {
-        lcv = n;
-        size_V = (size_t) ldv * n;
+        Vm = k;
+        Vn = n;
     }
-
+    int64_t ldv = roundup( blas::max( 1, Vm ), align );
+    int64_t ldt = roundup( blas::max( 1, k ), align );
+    size_t size_V   = (size_t) ldv * Vn;
     size_t size_tau = (size_t) (k);
-    size_t size_T = (size_t) ldt * k;
+    size_t size_T   = (size_t) ldt * k;
 
     std::vector< scalar_t > V( size_V );
     std::vector< scalar_t > tau( size_tau );
@@ -101,7 +100,7 @@ void test_larft_work( Params& params, bool run )
     }
 
     if (verbose >= 2) {
-        printf( "V = " ); print_matrix( ldv, lcv, &V[0], ldv );
+        printf( "V = " ); print_matrix( Vm, Vn, &V[0], ldv );
         printf( "tau = " ); print_vector( k, &tau[0], 1 );
     }
 

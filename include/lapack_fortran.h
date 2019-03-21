@@ -11861,7 +11861,7 @@ void LAPACK_csycon_3(
     lapack_int const* ipiv,
     float const* anorm,
     float* rcond,
-    lapack_complex_float* work, lapack_int* iwork,
+    lapack_complex_float* work,
     lapack_int* info );
 #define LAPACK_zsycon_3 LAPACK_GLOBAL(zsycon_3,ZSYCON_3)
 void LAPACK_zsycon_3(
@@ -11872,7 +11872,7 @@ void LAPACK_zsycon_3(
     lapack_int const* ipiv,
     double const* anorm,
     double* rcond,
-    lapack_complex_double* work, lapack_int* iwork,
+    lapack_complex_double* work,
     lapack_int* info );
 #define LAPACK_checon_3 LAPACK_GLOBAL(checon_3,CHECON_3)
 void LAPACK_checon_3(
@@ -11883,7 +11883,7 @@ void LAPACK_checon_3(
     lapack_int const* ipiv,
     float const* anorm,
     float* rcond,
-    lapack_complex_float* work, lapack_int* iwork,
+    lapack_complex_float* work,
     lapack_int* info );
 #define LAPACK_zhecon_3 LAPACK_GLOBAL(zhecon_3,ZHECON_3)
 void LAPACK_zhecon_3(
@@ -11894,7 +11894,7 @@ void LAPACK_zhecon_3(
     lapack_int const* ipiv,
     double const* anorm,
     double* rcond,
-    lapack_complex_double* work, lapack_int* iwork,
+    lapack_complex_double* work,
     lapack_int* info );
 
 /* ----- LQ factorization, opaque structures (for short-wide LQ) */

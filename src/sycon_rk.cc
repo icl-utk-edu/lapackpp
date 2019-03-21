@@ -125,7 +125,6 @@ int64_t sycon_rk(
 
     // allocate workspace
     std::vector< std::complex<float> > work( (2*n) );
-    std::vector< lapack_int > iwork( (n) );
 
     LAPACK_csycon_3(
         &uplo_, &n_,
@@ -133,7 +132,7 @@ int64_t sycon_rk(
         (lapack_complex_float*) E,
         ipiv_ptr, &anorm, rcond,
         (lapack_complex_float*) &work[0],
-        &iwork[0], &info_ );
+        &info_ );
     if (info_ < 0) {
         throw Error();
     }
@@ -241,7 +240,6 @@ int64_t sycon_rk(
 
     // allocate workspace
     std::vector< std::complex<double> > work( (2*n) );
-    std::vector< lapack_int > iwork( (n) );
 
     LAPACK_zsycon_3(
         &uplo_, &n_,
@@ -249,7 +247,7 @@ int64_t sycon_rk(
         (lapack_complex_double*) E,
         ipiv_ptr, &anorm, rcond,
         (lapack_complex_double*) &work[0],
-        &iwork[0], &info_ );
+        &info_ );
     if (info_ < 0) {
         throw Error();
     }

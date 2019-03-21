@@ -519,10 +519,10 @@ Params::Params():
     error3     ( "error3",                9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
     error4     ( "error4",                9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
     error5     ( "error5",                9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
-    ortho      ( "orth. error",           9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "orthogonality error" ),
+    ortho      ( "ortho.\nerror",         9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "orthogonality error" ),
     ortho_U    ( "U orth.",               9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "U orthogonality error" ),
     ortho_V    ( "V orth.",               9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "V orthogonality error" ),
-    error_sigma( "Sigma error",           9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "Sigma error" ),
+    error_sigma( "Sigma\nerror",          9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "Sigma error" ),
 
     time      ( "LAPACK++\ntime (s)",    10, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "time to solution" ),
     gflops    ( "LAPACK++\nGflop/s",     11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "Gflop/s rate" ),

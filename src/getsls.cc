@@ -17,6 +17,10 @@ int64_t getsls(
     float* A, int64_t lda,
     float* B, int64_t ldb )
 {
+    // for real, map ConjTrans to Trans
+    if (trans == Op::ConjTrans)
+        trans = Op::Trans;
+
     // check for overflow
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
@@ -32,10 +36,6 @@ int64_t getsls(
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ldb_ = (lapack_int) ldb;
     lapack_int info_ = 0;
-
-    // for real, map ConjTrans to Trans
-    if (trans_ == 'C')
-        trans_ = 'T';
 
     // query for workspace size
     float qry_work[1];
@@ -70,6 +70,10 @@ int64_t getsls(
     double* A, int64_t lda,
     double* B, int64_t ldb )
 {
+    // for real, map ConjTrans to Trans
+    if (trans == Op::ConjTrans)
+        trans = Op::Trans;
+
     // check for overflow
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
@@ -85,10 +89,6 @@ int64_t getsls(
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ldb_ = (lapack_int) ldb;
     lapack_int info_ = 0;
-
-    // for real, map ConjTrans to Trans
-    if (trans_ == 'C')
-        trans_ = 'T';
 
     // query for workspace size
     double qry_work[1];

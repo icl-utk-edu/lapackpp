@@ -675,7 +675,8 @@ inline lapack_int LAPACKE_gels(
     float* A, lapack_int lda,
     float* B, lapack_int ldb )
 {
-    if ( trans == 'C' ) trans = 'T';
+    if (trans == 'C')
+        trans = 'T';
     return LAPACKE_sgels(
         LAPACK_COL_MAJOR, trans, m, n, nrhs,
         A, lda,
@@ -687,7 +688,8 @@ inline lapack_int LAPACKE_gels(
     double* A, lapack_int lda,
     double* B, lapack_int ldb )
 {
-    if ( trans == 'C' ) trans = 'T';
+    if (trans == 'C')
+        trans = 'T';
     return LAPACKE_dgels(
         LAPACK_COL_MAJOR, trans, m, n, nrhs,
         A, lda,
@@ -1630,7 +1632,8 @@ inline lapack_int LAPACKE_getsls(
     float* A, lapack_int lda,
     float* B, lapack_int ldb )
 {
-    if ( trans == 'C' ) trans = 'T';
+    if (trans == 'C')
+        trans = 'T';
     return LAPACKE_sgetsls(
         LAPACK_COL_MAJOR, trans, m, n, nrhs,
         A, lda,
@@ -1642,7 +1645,8 @@ inline lapack_int LAPACKE_getsls(
     double* A, lapack_int lda,
     double* B, lapack_int ldb )
 {
-    if ( trans == 'C' ) trans = 'T';
+    if (trans == 'C')
+        trans = 'T';
     return LAPACKE_dgetsls(
         LAPACK_COL_MAJOR, trans, m, n, nrhs,
         A, lda,
@@ -9333,6 +9337,8 @@ inline lapack_int LAPACKE_unmhr(
     float* tau,
     float* C, lapack_int ldc )
 {
+    if (trans == 'C')
+        trans = 'T';
     return LAPACKE_sormhr(
         LAPACK_COL_MAJOR, side, trans, m, n, ilo, ihi,
         A, lda,
@@ -9346,6 +9352,8 @@ inline lapack_int LAPACKE_unmhr(
     double* tau,
     double* C, lapack_int ldc )
 {
+    if (trans == 'C')
+        trans = 'T';
     return LAPACKE_dormhr(
         LAPACK_COL_MAJOR, side, trans, m, n, ilo, ihi,
         A, lda,
@@ -9386,6 +9394,8 @@ inline lapack_int LAPACKE_unmtr(
     float* tau,
     float* C, lapack_int ldc )
 {
+    if (trans == 'C')
+        trans = 'T';
     return LAPACKE_sormtr(
         LAPACK_COL_MAJOR, side, uplo, trans, m, n,
         A, lda,
@@ -9399,6 +9409,8 @@ inline lapack_int LAPACKE_unmtr(
     double* tau,
     double* C, lapack_int ldc )
 {
+    if (trans == 'C')
+        trans = 'T';
     return LAPACKE_dormtr(
         LAPACK_COL_MAJOR, side, uplo, trans, m, n,
         A, lda,
@@ -9492,6 +9504,8 @@ inline lapack_int LAPACKE_upmtr(
     float* tau,
     float* C, lapack_int ldc )
 {
+    if (trans == 'C')
+        trans = 'T';
     return LAPACKE_sopmtr(
         LAPACK_COL_MAJOR, side, uplo, trans, m, n,
         AP,
@@ -9505,6 +9519,8 @@ inline lapack_int LAPACKE_upmtr(
     double* tau,
     double* C, lapack_int ldc )
 {
+    if (trans == 'C')
+        trans = 'T';
     return LAPACKE_dopmtr(
         LAPACK_COL_MAJOR, side, uplo, trans, m, n,
         AP,

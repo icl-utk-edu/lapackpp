@@ -17,6 +17,10 @@ int64_t ormtr(
     float const* tau,
     float* C, int64_t ldc )
 {
+    // for real, map ConjTrans to Trans
+    if (trans == Op::ConjTrans)
+        trans = Op::Trans;
+
     // check for overflow
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
@@ -32,10 +36,6 @@ int64_t ormtr(
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ldc_ = (lapack_int) ldc;
     lapack_int info_ = 0;
-
-    // for real, map ConjTrans to Trans
-    if (trans_ == 'C')
-        trans_ = 'T';
 
     // query for workspace size
     float qry_work[1];
@@ -75,6 +75,10 @@ int64_t ormtr(
     double const* tau,
     double* C, int64_t ldc )
 {
+    // for real, map ConjTrans to Trans
+    if (trans == Op::ConjTrans)
+        trans = Op::Trans;
+
     // check for overflow
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
@@ -90,10 +94,6 @@ int64_t ormtr(
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ldc_ = (lapack_int) ldc;
     lapack_int info_ = 0;
-
-    // for real, map ConjTrans to Trans
-    if (trans_ == 'C')
-        trans_ = 'T';
 
     // query for workspace size
     double qry_work[1];

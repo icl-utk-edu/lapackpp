@@ -18,15 +18,13 @@ void test_hbgvx_work( Params& params, bool run )
     lapack::Job jobz = params.jobz();
     lapack::Uplo uplo = params.uplo();
     int64_t n = params.dim.n();
-    int64_t ka = params.kd();
-    int64_t kb = params.kd();
+    int64_t ka = params.ka();
+    int64_t kb = params.kb();
     int64_t align = params.align();
 
-    real_t  vl;  // = params.vl();
-    real_t  vu;  // = params.vu();
-    int64_t il;  // = params.il();
-    int64_t iu;  // = params.iu();
-    lapack::Range range;  // derived from vl,vu,il,iu
+    real_t  vl, vu;
+    int64_t il, iu;
+    lapack::Range range;
     params.get_range( n, &range, &vl, &vu, &il, &iu );
 
     // mark non-standard output values
@@ -36,6 +34,12 @@ void test_hbgvx_work( Params& params, bool run )
 
     if (! run)
         return;
+
+    // skip invalid sizes
+    if (! (n >= ka && ka >= kb)) {
+        params.msg() = "skipping: requires n >= ka >= kb (not documented)";
+        return;
+    }
 
     // ---------- setup
     int64_t ldab = roundup( ka+1, align );
@@ -75,7 +79,8 @@ void test_hbgvx_work( Params& params, bool run )
         for (int64_t j = 0; j < n; ++j) {
             BB_tst[ kb + j*ldbb ] += n;
         }
-    } else { // lower
+    }
+    else { // lower
        for (int64_t j = 0; j < n; ++j) {
            BB_tst[ j*ldbb ] += n;
        }

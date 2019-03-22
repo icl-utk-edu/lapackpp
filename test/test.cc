@@ -301,12 +301,10 @@ std::vector< libtest::routines_t > routines = {
 
     { "ungtr",              test_ungtr,     Section::heev }, // tested via LAPACKE using gcc/MKL
     { "upgtr",              test_upgtr,     Section::heev }, // tested via LAPACKE using gcc/MKL
-  //{ "obgtr",              test_obgtr,     Section::heev }, // TODO does this exist
     { "",                   nullptr,        Section::newline },
 
     { "unmtr",              test_unmtr,     Section::heev }, // tested via LAPACKE using gcc/MKL
     { "upmtr",              test_upmtr,     Section::heev },
-  //{ "obmtr",              test_obmtr,     Section::heev }, // does this exist
     { "",                   nullptr,        Section::newline },
 
     // -----
@@ -488,6 +486,8 @@ Params::Params():
     //          name,      w, p, type,            def,   min,     max, help
     dim       ( "dim",     6,    ParamType::List,          0, 1000000, "m by n by k dimensions" ),
     l         ( "l",       6,    ParamType::List, 100,     0, 1000000, "l dimension (e.g., tpqrt)" ),
+    ka        ( "ka",      6,    ParamType::List, 100,     0, 1000000, "bandwidth of A" ),
+    kb        ( "kb",      6,    ParamType::List, 100,     0, 1000000, "bandwidth of B" ),
     kd        ( "kd",      6,    ParamType::List, 100,     0, 1000000, "bandwidth" ),
     kl        ( "kl",      6,    ParamType::List, 100,     0, 1000000, "lower bandwidth" ),
     ku        ( "ku",      6,    ParamType::List, 100,     0, 1000000, "upper bandwidth" ),

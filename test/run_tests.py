@@ -109,6 +109,8 @@ group_opt.add_argument( '--select', action='store', help='default=%(default)s', 
 group_opt.add_argument( '--sense',  action='store', help='default=%(default)s', default='n,e,v,b' )
 group_opt.add_argument( '--vect',   action='store', help='default=%(default)s', default='n,v' )
 group_opt.add_argument( '--l',      action='store', help='default=%(default)s', default='0,100' )
+group_opt.add_argument( '--ka',     action='store', help='default=%(default)s', default='20,100' )
+group_opt.add_argument( '--kb',     action='store', help='default=%(default)s', default='20,100' )
 group_opt.add_argument( '--kd',     action='store', help='default=%(default)s', default='20,100' )
 group_opt.add_argument( '--kl',     action='store', help='default=%(default)s', default='20,100' )
 group_opt.add_argument( '--ku',     action='store', help='default=%(default)s', default='20,100' )
@@ -175,6 +177,12 @@ if (not opts.dim):
             opts.l = '0,5,100'
         if (opts.nb == parser.get_default('nb')):
             opts.nb = '8,64'
+        if (opts.ka == parser.get_default('ka')):
+            opts.ka = '5'
+        if (opts.kb == parser.get_default('kb')):
+            opts.kb = '5'
+        if (opts.kd == parser.get_default('kd')):
+            opts.kd = '5'
 
     if (opts.small):
         n       += ' --dim 25:100:25'
@@ -260,6 +268,8 @@ sense  = ' --sense '  + opts.sense  if (opts.sense)  else ''
 vect   = ' --vect '   + opts.vect   if (opts.vect)   else ''
 l      = ' --l '      + opts.l      if (opts.l)      else ''
 nb     = ' --nb '     + opts.nb     if (opts.nb)     else ''
+ka     = ' --ka '     + opts.ka     if (opts.ka)     else ''
+kb     = ' --kb '     + opts.kb     if (opts.kb)     else ''
 kd     = ' --kd '     + opts.kd     if (opts.kd)     else ''
 kl     = ' --kl '     + opts.kl     if (opts.kl)     else ''
 ku     = ' --ku '     + opts.ku     if (opts.ku)     else ''
@@ -559,12 +569,12 @@ if (opts.sygv):
     [ 'hpgst', gen + dtype + n + itype + uplo ],
 
     # Banded
-    [ 'hbgv',  gen + dtype + align + n + jobz + uplo + kd ],
-    [ 'hbgvx', gen + dtype + align + n + jobz + uplo + kd + vl + vu ],
-    [ 'hbgvx', gen + dtype + align + n + jobz + uplo + kd + il + iu ],
-    [ 'hbgvd',  gen + dtype + align + n + jobz + uplo + kd ],
-    #[ 'hbgvr', gen + dtype + align + n + uplo ],
-    [ 'hbgst', gen + dtype + align + n + vect + uplo + kd ],
+    [ 'hbgv',  gen + dtype + align + n + jobz + uplo + ka + kb ],
+    [ 'hbgvx', gen + dtype + align + n + jobz + uplo + ka + kb + vl + vu ],
+    [ 'hbgvx', gen + dtype + align + n + jobz + uplo + ka + kb + il + iu ],
+    [ 'hbgvd', gen + dtype + align + n + jobz + uplo + ka + kb ],
+    #[ 'hbgvr', gen + dtype + align + n + uplo + ka + kb ],
+    #[ 'hbgst', gen + dtype + align + n + vect + uplo + ka + kb ],
     ]
 
 # non-symmetric eigenvalues

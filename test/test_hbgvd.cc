@@ -18,8 +18,8 @@ void test_hbgvd_work( Params& params, bool run )
     lapack::Job jobz = params.jobz();
     lapack::Uplo uplo = params.uplo();
     int64_t n = params.dim.n();
-    int64_t ka = params.kd();
-    int64_t kb = params.kd();
+    int64_t ka = params.ka();
+    int64_t kb = params.kb();
     int64_t align = params.align();
 
     // mark non-standard output values
@@ -29,6 +29,12 @@ void test_hbgvd_work( Params& params, bool run )
 
     if (! run)
         return;
+
+    // skip invalid sizes
+    if (! (n >= ka && ka >= kb)) {
+        params.msg() = "skipping: requires n >= ka >= kb (not documented)";
+        return;
+    }
 
     // ---------- setup
     int64_t ldab = roundup( ka+1, align );
@@ -58,7 +64,8 @@ void test_hbgvd_work( Params& params, bool run )
         for (int64_t j = 0; j < n; ++j) {
             BB_tst[ kb + j*ldbb ] += n;
         }
-    } else { // lower
+    }
+    else { // lower
        for (int64_t j = 0; j < n; ++j) {
            BB_tst[ j*ldbb ] += n;
        }

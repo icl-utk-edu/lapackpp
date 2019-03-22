@@ -18,9 +18,10 @@ void test_hbgv_work( Params& params, bool run )
     lapack::Job jobz = params.jobz();
     lapack::Uplo uplo = params.uplo();
     int64_t n = params.dim.n();
-    int64_t ka = params.kd();
-    int64_t kb = params.kd();
+    int64_t ka = params.ka();
+    int64_t kb = params.kb();
     int64_t align = params.align();
+    int64_t verbose = params.verbose();
 
     // mark non-standard output values
     params.ref_time();
@@ -29,6 +30,12 @@ void test_hbgv_work( Params& params, bool run )
 
     if (! run)
         return;
+
+    // skip invalid sizes
+    if (! (n >= ka && ka >= kb)) {
+        params.msg() = "skipping: requires n >= ka >= kb (not documented)";
+        return;
+    }
 
     // ---------- setup
     int64_t ldab = roundup( ka+1, align );
@@ -64,6 +71,10 @@ void test_hbgv_work( Params& params, bool run )
            BB_tst[ j*ldbb ] += n;
        }
     }
+    if (verbose >= 2) {
+        printf( "Aband" ); print_matrix( ka+1, n, &AB_tst[0], ldab );
+        printf( "Bband" ); print_matrix( kb+1, n, &BB_tst[0], ldab );
+    }
 
     AB_ref = AB_tst;
     BB_ref = BB_tst;
@@ -81,6 +92,13 @@ void test_hbgv_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::hbgv( jobz, n, ka, kb );
     // params.gflops() = gflop / time;
 
+    if (verbose >= 2) {
+        printf( "W_tst" ); print_vector( n, &W_tst[0], 1 );
+        if (jobz == lapack::Job::Vec) {
+            printf( "Z_tst" ); print_matrix( n, n, &Z_tst[0], ldz );
+        }
+    }
+
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
@@ -93,6 +111,13 @@ void test_hbgv_work( Params& params, bool run )
 
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
+
+        if (verbose >= 2) {
+            printf( "W_ref" ); print_vector( n, &W_ref[0], 1 );
+            if (jobz == lapack::Job::Vec) {
+                printf( "Z_ref" ); print_matrix( n, n, &Z_ref[0], ldz );
+            }
+        }
 
         // ---------- check error compared to reference
         real_t error = 0;

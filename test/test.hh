@@ -68,6 +68,8 @@ public:
 
     libtest::ParamInt3   dim;
     libtest::ParamInt    l;
+    libtest::ParamInt    ka;
+    libtest::ParamInt    kb;
     libtest::ParamInt    kd;
     libtest::ParamInt    kl;
     libtest::ParamInt    ku;

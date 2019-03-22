@@ -321,7 +321,7 @@ std::vector< libtest::routines_t > routines = {
 
     { "hegvd",              test_hegvd,     Section::sygv }, // tested via LAPACKE using gcc/MKL
     { "hpgvd",              test_hpgvd,     Section::sygv }, // tested via LAPACKE using gcc/MKL
-  //{ "hbgvd",              test_hbgvd,     Section::sygv }, // TODO Segfaults.. is the src correct?
+    { "hbgvd",              test_hbgvd,     Section::sygv }, // TODO Segfaults.. is the src correct?
     { "",                   nullptr,        Section::newline },
 
     { "hegst",              test_hegst,     Section::sygv }, // tested via LAPACKE using gcc/MKL

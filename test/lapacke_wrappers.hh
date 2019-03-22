@@ -2675,6 +2675,7 @@ inline lapack_int LAPACKE_hbgv(
 }
 
 // -----------------------------------------------------------------------------
+// see custom version below
 inline lapack_int LAPACKE_hbgvd(
     char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
     float* AB, lapack_int ldab,
@@ -2733,6 +2734,149 @@ inline lapack_int LAPACKE_hbgvd(
         (lapack_complex_double*) BB, ldbb,
         W,
         (lapack_complex_double*) Z, ldz );
+}
+
+// -----------------------------------------------------------------------------
+// Note: LAPACKE_hbgvd does workspace query that may be wrong
+// (e.g., in LAPACK <= 3.6.0, MKL 2018), so custom version fixes it.
+inline lapack_int LAPACKE_hbgvd_custom(
+    char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
+    float* AB, lapack_int ldab,
+    float* BB, lapack_int ldbb,
+    float* W,
+    float* Z, lapack_int ldz )
+{
+    float query;
+    lapack_int liwork;
+    lapack_int info = LAPACKE_ssbgvd_work(
+        LAPACK_COL_MAJOR, jobz, uplo, n, ka, kb,
+        AB, ldab,
+        BB, ldbb,
+        W,
+        Z, ldz,
+        &query, -1, &liwork, -1 );
+    if (info < 0)
+        return info;
+    lapack_int lwork = query;
+    // override potentially wrong query for LAPACK <= 3.6.0
+    if (lwork < 3*n)
+        lwork = 3*n;
+    std::vector< float > work( lwork );
+    std::vector< lapack_int > iwork( liwork );
+    return LAPACKE_ssbgvd_work(
+        LAPACK_COL_MAJOR, jobz, uplo, n, ka, kb,
+        AB, ldab,
+        BB, ldbb,
+        W,
+        Z, ldz,
+        &work[0], lwork, &iwork[0], liwork );
+}
+
+inline lapack_int LAPACKE_hbgvd_custom(
+    char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
+    double* AB, lapack_int ldab,
+    double* BB, lapack_int ldbb,
+    double* W,
+    double* Z, lapack_int ldz )
+{
+    double query;
+    lapack_int liwork;
+    lapack_int info = LAPACKE_dsbgvd_work(
+        LAPACK_COL_MAJOR, jobz, uplo, n, ka, kb,
+        AB, ldab,
+        BB, ldbb,
+        W,
+        Z, ldz,
+        &query, -1, &liwork, -1 );
+    if (info < 0)
+        return info;
+    lapack_int lwork = query;
+    // override potentially wrong query for LAPACK <= 3.6.0
+    if (lwork < 3*n)
+        lwork = 3*n;
+    std::vector< double > work( lwork );
+    std::vector< lapack_int > iwork( liwork );
+    return LAPACKE_dsbgvd_work(
+        LAPACK_COL_MAJOR, jobz, uplo, n, ka, kb,
+        AB, ldab,
+        BB, ldbb,
+        W,
+        Z, ldz,
+        &work[0], lwork, &iwork[0], liwork );
+}
+
+inline lapack_int LAPACKE_hbgvd_custom(
+    char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
+    std::complex<float>* AB, lapack_int ldab,
+    std::complex<float>* BB, lapack_int ldbb,
+    float* W,
+    std::complex<float>* Z, lapack_int ldz )
+{
+    std::complex<float> query;
+    float rquery;
+    lapack_int liwork;
+    lapack_int info = LAPACKE_chbgvd_work(
+        LAPACK_COL_MAJOR, jobz, uplo, n, ka, kb,
+        (lapack_complex_float*) AB, ldab,
+        (lapack_complex_float*) BB, ldbb,
+        W,
+        (lapack_complex_float*) Z, ldz,
+        &query, -1, &rquery, -1, &liwork, -1 );
+    if (info < 0)
+        return info;
+    lapack_int lwork = real(query);
+    lapack_int lrwork = rquery;
+    // override potentially wrong query for LAPACK <= 3.6.0
+    if (lrwork < 2*n)
+        lrwork = 2*n;
+    std::vector< std::complex<float> > work( lwork );
+    std::vector< float > rwork( lrwork );
+    std::vector< lapack_int > iwork( liwork );
+    return LAPACKE_chbgvd_work(
+        LAPACK_COL_MAJOR, jobz, uplo, n, ka, kb,
+        (lapack_complex_float*) AB, ldab,
+        (lapack_complex_float*) BB, ldbb,
+        W,
+        (lapack_complex_float*) Z, ldz,
+        (lapack_complex_float*) &work[0], lwork,
+        &rwork[0], lrwork, &iwork[0], liwork );
+}
+
+inline lapack_int LAPACKE_hbgvd_custom(
+    char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
+    std::complex<double>* AB, lapack_int ldab,
+    std::complex<double>* BB, lapack_int ldbb,
+    double* W,
+    std::complex<double>* Z, lapack_int ldz )
+{
+    std::complex<double> query;
+    double rquery;
+    lapack_int liwork;
+    lapack_int info = LAPACKE_zhbgvd_work(
+        LAPACK_COL_MAJOR, jobz, uplo, n, ka, kb,
+        (lapack_complex_double*) AB, ldab,
+        (lapack_complex_double*) BB, ldbb,
+        W,
+        (lapack_complex_double*) Z, ldz,
+        &query, -1, &rquery, -1, &liwork, -1 );
+    if (info < 0)
+        return info;
+    lapack_int lwork = real(query);
+    lapack_int lrwork = rquery;
+    // override potentially wrong query for LAPACK <= 3.6.0
+    if (lrwork < 2*n)
+        lrwork = 2*n;
+    std::vector< std::complex<double> > work( lwork );
+    std::vector< double > rwork( lrwork );
+    std::vector< lapack_int > iwork( liwork );
+    return LAPACKE_zhbgvd_work(
+        LAPACK_COL_MAJOR, jobz, uplo, n, ka, kb,
+        (lapack_complex_double*) AB, ldab,
+        (lapack_complex_double*) BB, ldbb,
+        W,
+        (lapack_complex_double*) Z, ldz,
+        (lapack_complex_double*) &work[0], lwork,
+        &rwork[0], lrwork, &iwork[0], liwork );
 }
 
 // -----------------------------------------------------------------------------

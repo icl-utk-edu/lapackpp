@@ -91,7 +91,9 @@ void test_hbgvd_work( Params& params, bool run )
         // ---------- run reference
         libtest::flush_cache( params.cache() );
         time = libtest::get_wtime();
-        int64_t info_ref = LAPACKE_hbgvd( job2char(jobz), uplo2char(uplo), n, ka, kb, &AB_ref[0], ldab, &BB_ref[0], ldbb, &W_ref[0], &Z_ref[0], ldz );
+        // Note: LAPACKE_hbgvd does workspace query that may be wrong
+        // (e.g., in LAPACK <= 3.6.0, MKL 2018), so custom version fixes it.
+        int64_t info_ref = LAPACKE_hbgvd_custom( job2char(jobz), uplo2char(uplo), n, ka, kb, &AB_ref[0], ldab, &BB_ref[0], ldbb, &W_ref[0], &Z_ref[0], ldz );
         time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_hbgvd returned error %lld\n", (lld) info_ref );

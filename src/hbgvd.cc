@@ -57,6 +57,9 @@ int64_t hbgvd(
     lapack_int lrwork_ = real(qry_rwork[0]);
     lapack_int liwork_ = real(qry_iwork[0]);
 
+    // LAPACK <= 3.6.0 needed 2*n, but query returned n. Be safe.
+    lrwork_ = max( lrwork_, 2*n_ );
+
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
     std::vector< float > rwork( lrwork_ );
@@ -124,6 +127,9 @@ int64_t hbgvd(
     lapack_int lwork_ = real(qry_work[0]);
     lapack_int lrwork_ = real(qry_rwork[0]);
     lapack_int liwork_ = real(qry_iwork[0]);
+
+    // LAPACK <= 3.6.0 needed 2*n, but query returned n. Be safe.
+    lrwork_ = max( lrwork_, 2*n_ );
 
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );

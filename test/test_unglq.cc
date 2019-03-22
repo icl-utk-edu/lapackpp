@@ -21,6 +21,9 @@ void test_unglq_work( Params& params, bool run )
     int64_t align = params.align();
     params.matrix.mark();
 
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+    real_t tol = params.tol() * eps;
+
     // mark non-standard output values
     params.ortho();
     params.gflops();
@@ -78,9 +81,6 @@ void test_unglq_work( Params& params, bool run )
         // ---------- check error
         // comparing to ref. solution doesn't work
         // Following lapack/TESTING/LIN/zlqt02.f
-        real_t eps = std::numeric_limits< real_t >::epsilon();
-        real_t tol = params.tol();
-
         int64_t ldq = lda;
         int64_t ldl = lda;
         std::vector< scalar_t > Q( lda * n );
@@ -124,7 +124,7 @@ void test_unglq_work( Params& params, bool run )
 
         params.error() = error1;
         params.ortho() = error2;
-        params.okay() = (error1 < tol*eps) && (error2 < tol*eps);
+        params.okay() = (error1 < tol) && (error2 < tol);
     }
 
     if (params.ref() == 'y') {

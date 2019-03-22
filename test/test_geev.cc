@@ -34,7 +34,6 @@ void test_geev_work( Params& params, bool run )
 
     real_t eps = std::numeric_limits< real_t >::epsilon();
     real_t tol = params.tol() * eps;
-    //printf( "eps %.2e, tol %.2e, tol*eps %.2e\n", eps, params.tol(), tol );
 
     // mark non-standard output values
     params.error2();

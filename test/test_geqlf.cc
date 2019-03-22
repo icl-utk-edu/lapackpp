@@ -20,6 +20,9 @@ void test_geqlf_work( Params& params, bool run )
     int64_t align = params.align();
     params.matrix.mark();
 
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+    real_t tol = params.tol() * eps;
+
     // mark non-standard output values
     params.ortho();
     params.time();
@@ -60,8 +63,6 @@ void test_geqlf_work( Params& params, bool run )
         // ---------- check error
         // comparing to ref. solution doesn't work
         // Following magma/testing/testing_zgeqlf.cpp
-        real_t eps = std::numeric_limits< real_t >::epsilon();
-        real_t tol = params.tol();
         int64_t minmn = blas::min( m, n );
 
         int64_t ldq = m;
@@ -115,7 +116,7 @@ void test_geqlf_work( Params& params, bool run )
 
         params.error() = error1;
         params.ortho() = error2;
-        params.okay() = (error1 < tol*eps) && (error2 < tol*eps);
+        params.okay() = (error1 < tol) && (error2 < tol);
     }
 
     if (params.ref() == 'y') {

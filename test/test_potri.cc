@@ -22,6 +22,9 @@ void test_potri_work( Params& params, bool run )
     int64_t verbose = params.verbose();
     params.matrix.mark();
 
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+    real_t tol = params.tol() * eps;
+
     // mark non-standard output values
     params.ref_time();
     params.ref_gflops();
@@ -84,9 +87,6 @@ void test_potri_work( Params& params, bool run )
     if (params.check() == 'y') {
         // ---------- check error
         // comparing to ref. solution doesn't work due to roundoff errors
-        real_t eps = std::numeric_limits< real_t >::epsilon();
-        real_t tol = params.tol();
-
         // symmetrize A^{-1}, in order to use hemm
         if (uplo == blas::Uplo::Lower) {
             for (int64_t j = 0; j < n; ++j)
@@ -127,7 +127,7 @@ void test_potri_work( Params& params, bool run )
         real_t Ainv_norm = lapack::lanhe( lapack::Norm::Fro, uplo, n, &A_tst[0], lda );
         real_t error = Rnorm / (n * Anorm * Ainv_norm);
         params.error() = error;
-        params.okay() = (error < tol*eps);
+        params.okay() = (error < tol);
     }
 
     if (params.ref() == 'y') {

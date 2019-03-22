@@ -20,6 +20,9 @@ void test_getri_work( Params& params, bool run )
     int64_t verbose = params.verbose();
     params.matrix.mark();
 
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+    real_t tol = params.tol() * eps;
+
     // mark non-standard output values
     params.ref_time();
     params.ref_gflops();
@@ -82,9 +85,6 @@ void test_getri_work( Params& params, bool run )
     if (params.check() == 'y') {
         // ---------- check error
         // comparing to ref. solution doesn't work due to roundoff errors
-        real_t eps = std::numeric_limits< real_t >::epsilon();
-        real_t tol = params.tol();
-
         // R = I
         std::vector< scalar_t > R( size_A );
         // todo: laset; needs uplo=general
@@ -111,7 +111,7 @@ void test_getri_work( Params& params, bool run )
         real_t Ainv_norm = lapack::lange( lapack::Norm::Fro, n, n, &A_tst[0], lda );
         real_t error = Rnorm / (n * Anorm * Ainv_norm);
         params.error() = error;
-        params.okay() = (error < tol*eps);
+        params.okay() = (error < tol);
     }
 
     if (params.ref() == 'y') {

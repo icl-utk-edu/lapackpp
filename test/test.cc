@@ -551,7 +551,6 @@ Params::Params():
     check();
     error_exit();
     ref();
-    tol();
     repeat();
     verbose();
     cache();

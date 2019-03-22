@@ -24,6 +24,9 @@ void test_gesvd_work( Params& params, bool run )
     int64_t verbose = params.verbose();
     params.matrix.mark();
 
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+    real_t tol = params.tol() * eps;
+
     // mark non-standard output values
     params.ref_time();
     //params.ref_gflops();
@@ -132,8 +135,6 @@ void test_gesvd_work( Params& params, bool run )
         }
         errors[3] += rel_error( S_tst, S_ref );
     }
-    real_t eps = std::numeric_limits< real_t >::epsilon();
-    real_t tol = params.tol() * eps;
     params.error()       = errors[0];
     params.ortho_U()     = errors[1];
     params.ortho_V()     = errors[2];

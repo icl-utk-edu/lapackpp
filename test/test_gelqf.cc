@@ -20,6 +20,9 @@ void test_gelqf_work( Params& params, bool run )
     int64_t align = params.align();
     params.matrix.mark();
 
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+    real_t tol = params.tol() * eps;
+
     // mark non-standard output values
     params.ortho();
     params.time();
@@ -61,9 +64,6 @@ void test_gelqf_work( Params& params, bool run )
         // ---------- check error
         // comparing to ref. solution doesn't work
         // Taken from lapack/TESTING/LIN/zlqt01.f but using smaller Q and L
-        real_t eps = std::numeric_limits< real_t >::epsilon();
-        real_t tol = params.tol();
-
         int64_t ldq = minmn;
         std::vector< scalar_t > Q( minmn * n );
         int64_t ldl = m;
@@ -108,7 +108,7 @@ void test_gelqf_work( Params& params, bool run )
 
         params.error() = error1;
         params.ortho() = error2;
-        params.okay() = ( error1 < tol*eps ) && ( error2 < tol*eps );
+        params.okay() = (error1 < tol) && (error2 < tol);
     }
 
     if (params.ref() == 'y') {

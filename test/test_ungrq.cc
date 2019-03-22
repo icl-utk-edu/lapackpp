@@ -21,6 +21,9 @@ void test_ungrq_work( Params& params, bool run )
     int64_t align = params.align();
     params.matrix.mark();
 
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+    real_t tol = params.tol() * eps;
+
     // mark non-standard output values
     params.ortho();
     params.gflops();
@@ -90,8 +93,6 @@ void test_ungrq_work( Params& params, bool run )
         // comparing to ref. solution doesn't work
         // Following lapack/TESTING/LIN/zrqt02.f
         // Note: n >= m;  m >= k; lda >= m
-        real_t eps = std::numeric_limits< real_t >::epsilon();
-        real_t tol = params.tol();
 
         // Compute R(m-k+1:m, 1:n) - A(m-k+1:m, 1:n) * Q(n-m+1:n, 1:n)^H
         blas::gemm( blas::Layout::ColMajor,
@@ -120,7 +121,7 @@ void test_ungrq_work( Params& params, bool run )
 
         params.error() = error;
         params.ortho() = ortho;
-        params.okay() = (error < tol*eps) && (ortho < tol*eps);
+        params.okay() = (error < tol) && (ortho < tol);
     }
 
     if (params.ref() == 'y') {

@@ -19,8 +19,6 @@ void test_unmhr_work( Params& params, bool run )
     lapack::Op trans = params.trans();
     int64_t m = params.dim.m();
     int64_t n = params.dim.n();
-    int64_t ilo = 1; // TODO params.ilo();
-    int64_t ihi = n; // TODO params.ihi();
     int64_t align = params.align();
     params.matrix.mark();
 
@@ -33,12 +31,19 @@ void test_unmhr_work( Params& params, bool run )
         return;
 
     // ---------- setup
+    // C is m-by-n
+    // if left,  A is m-by-m (r-by-r)
+    // if right, A is n-by-n (r-by-r)
     int64_t r = ( side == lapack::Side::Left ? m : n );
     int64_t lda = roundup( blas::max( 1, r ), align );
     int64_t ldc = roundup( blas::max( 1, m ), align );
     size_t size_A = (size_t) ( lda * r );
     size_t size_tau = (size_t) ( r - 1 );
     size_t size_C = (size_t) ( ldc * n );
+
+    // r >= ihi >= ilo >= 1
+    int64_t ilo = 1;
+    int64_t ihi = r;
 
     std::vector< scalar_t > A( size_A );
     std::vector< scalar_t > tau( size_tau );

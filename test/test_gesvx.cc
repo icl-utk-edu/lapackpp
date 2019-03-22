@@ -40,7 +40,7 @@ void test_gesvx_work( Params& params, bool run )
     real_t rcond_ref = 0;
     real_t rpivot_tst = 0;
     real_t rpivot_ref = 0;
-    lapack::Equed equed_tst = ( fact==lapack::Factored::Factored ? equed : lapack::Equed::None );
+    lapack::Equed equed_tst = ( fact == lapack::Factored::Factored ? equed : lapack::Equed::None );
     lapack::Equed equed_ref = equed_tst;
     size_t size_A = (size_t) lda * n;
     size_t size_AF = (size_t) ldaf * n;

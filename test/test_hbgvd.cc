@@ -39,7 +39,7 @@ void test_hbgvd_work( Params& params, bool run )
     // ---------- setup
     int64_t ldab = roundup( ka+1, align );
     int64_t ldbb = roundup( kb+1, align );
-    int64_t ldz = ( jobz==lapack::Job::Vec ? roundup( blas::max( 1, n ), align ) : align );
+    int64_t ldz = ( jobz == lapack::Job::Vec ? roundup( blas::max( 1, n ), align ) : align );
     size_t size_AB = (size_t) (ldab * n);
     size_t size_BB = (size_t) (ldbb * n);
     size_t size_W = (size_t) (n);

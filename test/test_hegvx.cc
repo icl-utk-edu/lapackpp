@@ -46,7 +46,7 @@ void test_hegvx_work( Params& params, bool run )
     real_t abstol = 0;  // default value
     int64_t m_tst;
     lapack_int m_ref;
-    int64_t ldz = ( jobz==lapack::Job::NoVec ? 1 : roundup( blas::max( 1, n ), align ) );
+    int64_t ldz = ( jobz == lapack::Job::NoVec ? 1 : roundup( blas::max( 1, n ), align ) );
     size_t size_A = (size_t) ( lda * n );
     size_t size_B = (size_t) ( ldb * n );
     size_t size_W = (size_t) ( n );
@@ -106,7 +106,7 @@ void test_hegvx_work( Params& params, bool run )
         error += abs_error( W_tst, W_ref );
         error += abs_error( Z_tst, Z_ref );
         // Check first m elements of ifail
-        if ( jobz==lapack::Job::Vec ) {
+        if ( jobz == lapack::Job::Vec ) {
             for ( size_t i = 0; i < (size_t)(m_ref); i++ )
                 error += std::abs( ifail_tst[i] - ifail_ref[i] );
         }

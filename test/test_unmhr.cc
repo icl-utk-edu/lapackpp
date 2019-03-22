@@ -33,7 +33,7 @@ void test_unmhr_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t r = ( side==lapack::Side::Left ? m : n );
+    int64_t r = ( side == lapack::Side::Left ? m : n );
     int64_t lda = roundup( blas::max( 1, r ), align );
     int64_t ldc = roundup( blas::max( 1, m ), align );
     size_t size_A = (size_t) ( lda * r );

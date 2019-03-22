@@ -32,7 +32,7 @@ void test_upmtr_work( Params& params, bool run )
 
     // ---------- setup
     int64_t ldc = roundup( blas::max( 1, m ), align );
-    int64_t r = ( side==lapack::Side::Left ) ? m : n;
+    int64_t r = ( side == lapack::Side::Left ) ? m : n;
     size_t size_AP = (size_t) (r*(r+1)/2);
     size_t size_tau = (size_t) blas::max( 1, r-1 );
     size_t size_C = (size_t) ldc * n;

@@ -41,7 +41,7 @@ void test_gesvdx_work( Params& params, bool run )
         return;
 
     // skip invalid sizes
-    if ( ( range==lapack::Range::Index ) &&
+    if ( ( range == lapack::Range::Index ) &&
          ! ( ( 1 <= il ) && ( il < iu ) && ( iu < blas::min( m, n ) ) ) ) {
         params.msg() = "skipping: requires 1 <= il <= iu <= min(m,n)";
         return;
@@ -51,8 +51,8 @@ void test_gesvdx_work( Params& params, bool run )
     int64_t lda = roundup( blas::max( 1, m ), align );
     int64_t ns_tst;
     lapack_int ns_ref;
-    int64_t ldu = ( jobu==lapack::Job::Vec ? roundup( m, align ) : 1 );
-    int64_t ldvt = ( jobvt==lapack::Job::Vec ? roundup( blas::min( m, n ), align ) : 1 );
+    int64_t ldu = ( jobu == lapack::Job::Vec ? roundup( m, align ) : 1 );
+    int64_t ldvt = ( jobvt == lapack::Job::Vec ? roundup( blas::min( m, n ), align ) : 1 );
     size_t size_A = (size_t) ( lda * n );
     size_t size_S = (size_t) ( blas::min( m, n) );
     size_t size_U = (size_t) ( ldu * blas::min( m, n ) );

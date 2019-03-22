@@ -48,7 +48,7 @@ void test_hbgvx_work( Params& params, bool run )
     real_t abstol = 0;  // default value
     int64_t m_tst;
     lapack_int m_ref;
-    int64_t ldz = ( jobz==lapack::Job::Vec ? roundup( blas::max( 1, n ), align ) : 1 );
+    int64_t ldz = ( jobz == lapack::Job::Vec ? roundup( blas::max( 1, n ), align ) : 1 );
     size_t size_AB = (size_t) ( ldab * n );
     size_t size_BB = (size_t) ( ldbb * n );
     size_t size_Q = (size_t) ( ldq * n );
@@ -127,7 +127,7 @@ void test_hbgvx_work( Params& params, bool run )
         error += abs_error( W_tst, W_ref );
         error += abs_error( Z_tst, Z_ref );
         // Check first m elements of ifail
-        if ( jobz==lapack::Job::Vec ) {
+        if ( jobz == lapack::Job::Vec ) {
             for ( size_t i = 0; i < (size_t)(m_ref); i++ )
                 error += std::abs( ifail_tst[i] - ifail_ref[i] );
         }

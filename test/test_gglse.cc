@@ -100,11 +100,19 @@ void test_gglse_work( Params& params, bool run )
         if (info_tst != info_ref) {
             error = 1;
         }
-        error += abs_error( A_tst, A_ref );
-        error += abs_error( B_tst, B_ref );
-        error += abs_error( C_tst, C_ref );
-        error += abs_error( D_tst, D_ref );
-        error += abs_error( X_tst, X_ref );
+        // Ignore differences in C and D.
+        // C is partly destroyed, partly residuals.
+        // D is destroyed.
+        real_t error1 = abs_error( A_tst, A_ref );
+        real_t error2 = abs_error( B_tst, B_ref );
+        real_t error3 = abs_error( C_tst, C_ref );
+        real_t error4 = abs_error( D_tst, D_ref );
+        real_t error5 = abs_error( X_tst, X_ref );
+        error = error1 + error2 /* + error3 + error4 */ + error5;
+        if (error > 0) {
+            printf( "error A %.2e, B %.2e, C %.2e, D %.2e, X %.2e\n",
+                    error1, error2, error3, error4, error5 );
+        }
         params.error() = error;
         params.okay() = (error == 0);  // expect lapackpp == lapacke
     }

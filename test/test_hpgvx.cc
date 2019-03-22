@@ -67,7 +67,8 @@ void test_hpgvx_work( Params& params, bool run )
         for (int64_t i = 0; i < n; ++i) {
             BP_tst[ i + 0.5*(i+1)*i ] += n;
         }
-    } else { // lower
+    }
+    else { // lower
         for (int64_t i = 0; i < n; ++i) {
             BP_tst[ i + n*i - 0.5*i*(i+1) ] += n;
         }

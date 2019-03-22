@@ -77,7 +77,8 @@ void test_geqlf_work( Params& params, bool run )
             lapack::lacpy( lapack::MatrixType::General, m_n, minmn, &A_tst[0], lda, &Q[0], ldq );
             lapack::lacpy( lapack::MatrixType::Upper, n, minmn, &A_tst[m_n], lda, &Q[m_n], ldq );
             lapack::lacpy( lapack::MatrixType::Lower, minmn, n, &A_tst[m_n], lda, &L[0], ldl );
-        } else {
+        }
+        else {
             int64_t n_m = n - m;
             lapack::lacpy( lapack::MatrixType::Upper, m, minmn, &A_tst[n_m*lda], lda, &Q[0], ldq );
             lapack::lacpy( lapack::MatrixType::General, minmn, n_m, &A_tst[0], lda, &L[0], ldl );

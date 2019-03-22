@@ -78,7 +78,8 @@ void test_gerqf_work( Params& params, bool run )
             if (m < n)
                 lapack::lacpy( lapack::MatrixType::General, m, n_m, &A_tst[0], lda, &Q[n_m], ldq );
             lapack::lacpy( lapack::MatrixType::Lower, m-1, m-1, &A_tst[1+(n_m*lda)], lda, &Q[n_m+1+(n_m*ldq)], ldq );
-        } else {
+        }
+        else {
             lapack::lacpy( lapack::MatrixType::Lower, n-1, n-1, &A_tst[m_n+1], lda, &Q[1], ldq );
         }
 
@@ -92,7 +93,8 @@ void test_gerqf_work( Params& params, bool run )
         lapack::laset( lapack::MatrixType::General, m, n, 0, 0, &R[0], ldr );
         if ( m <= n ) {
             lapack::lacpy( lapack::MatrixType::Upper, m, m, &A_tst[n_m*lda], lda, &R[n_m*ldr], ldr );
-        } else {
+        }
+        else {
             lapack::lacpy( lapack::MatrixType::General, m_n, n, &A_tst[0], lda, &R[0], ldr );
             lapack::lacpy( lapack::MatrixType::Upper, n, n, &A_tst[m_n], lda, &R[m_n], ldr );
         }

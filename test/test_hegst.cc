@@ -28,7 +28,7 @@ void test_hegst_work( Params& params, bool run )
     // params.gflops();
 
     if (! run) {
-        params.matrix.kind.set_default( "rand_dominant" );
+        params.matrixB.kind.set_default( "rand_dominant" );
         return;
     }
 
@@ -43,7 +43,6 @@ void test_hegst_work( Params& params, bool run )
     std::vector< scalar_t > B_tst( size_B );
     std::vector< scalar_t > B_ref( size_B );
 
-    // todo: how to specify A and B separately?
     lapack::generate_matrix( params.matrix,  n, n, &A_tst[0], lda );
     lapack::generate_matrix( params.matrixB, n, n, &B_tst[0], lda );
 

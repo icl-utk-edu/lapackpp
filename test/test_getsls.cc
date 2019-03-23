@@ -4,6 +4,7 @@
 #include "print_matrix.hh"
 #include "error.hh"
 #include "lapacke_wrappers.hh"
+#include "check_gels.hh"
 
 #include <vector>
 
@@ -24,10 +25,14 @@ void test_getsls_work( Params& params, bool run )
     int64_t align = params.align();
     params.matrix.mark();
 
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+    real_t tol = params.tol() * eps;
+
     // mark non-standard output values
     params.ref_time();
     // params.ref_gflops();
     // params.gflops();
+    params.error2();
 
     if (! run)
         return;
@@ -47,6 +52,7 @@ void test_getsls_work( Params& params, bool run )
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, B_tst.size(), &B_tst[0] );
+
     A_ref = A_tst;
     B_ref = B_tst;
 
@@ -63,7 +69,20 @@ void test_getsls_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::getsls( trans, m, n, nrhs );
     // params.gflops() = gflop / time;
 
-    if (params.ref() == 'y' || params.check() == 'y') {
+    if (params.check() == 'y') {
+        // ---------- check error
+        real_t error[2];
+        check_gels( false, trans, m, n, nrhs,
+                    &A_ref[0], lda, // original A
+                    &B_tst[0], ldb, // X
+                    &B_ref[0], ldb, // original B
+                    error );
+        params.error()  = error[0];
+        params.error2() = error[1];
+        params.okay() = (error[0] < tol) && (error[1] < tol);
+    }
+
+    if (params.ref() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
         time = libtest::get_wtime();
@@ -75,16 +94,6 @@ void test_getsls_work( Params& params, bool run )
 
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
-
-        // ---------- check error compared to reference
-        real_t error = 0;
-        if (info_tst != info_ref) {
-            error = 1;
-        }
-        error += abs_error( A_tst, A_ref );
-        error += abs_error( B_tst, B_ref );
-        params.error() = error;
-        params.okay() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 

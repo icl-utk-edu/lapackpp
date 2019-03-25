@@ -15,7 +15,11 @@ MatrixParams::MatrixParams():
     cond      ("cond",   0, 1, ParamType::List, libtest::no_data_flag, 0, inf, "matrix condition number" ),
     cond_used ("cond",   0, 1, ParamType::List, libtest::no_data_flag, 0, inf, "actual condition number used" ),
     condD     ("condD",  0, 1, ParamType::List, libtest::no_data_flag, 0, inf, "matrix D condition number" )
-{}
+{
+    // Make different MatrixParams generate different matrices
+    // (e.g., params.matrix and params.matrixB).
+    iseed[0] = rand() % 256;
+}
 
 // -----------------------------------------------------------------------------
 /// Marks matrix params as used.

@@ -269,7 +269,7 @@ void generate_svd(
     lapack::unmqr( lapack::Side::Left, lapack::Op::NoTrans, A.m, A.n, minmn,
                    U(0,0), U.ld, tau(0), A(0,0), A.ld );
     assert( info == 0 );
-    lapack::unmqr( lapack::Side::Right, lapack::Op::Trans, A.m, A.n, minmn,
+    lapack::unmqr( lapack::Side::Right, lapack::Op::ConjTrans, A.m, A.n, minmn,
                    U(0,0), U.ld, tau(0), A(0,0), A.ld );
     assert( info == 0 );
 
@@ -311,7 +311,7 @@ void generate_svd(
     }
 
     // A = A*V^H
-    lapack::unmqr( lapack::Side::Right, lapack::Op::Trans, A.m, A.n, minmn,
+    lapack::unmqr( lapack::Side::Right, lapack::Op::ConjTrans, A.m, A.n, minmn,
                    U(0,0), U.ld, tau(0), A(0,0), A.ld );
     assert( info == 0 );
 

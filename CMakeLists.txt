@@ -592,9 +592,17 @@ export(EXPORT lapackppTargets
     FILE ${CMAKE_INSTALL_PREFIX}/lapackpp/lapackppTargets.cmake
 )
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/lapackppConfig.cmake.in
-    ${CMAKE_INSTALL_PREFIX}/lapackpp/lapackppConfig.cmake
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/lapackppConfig.cmake.in
+    ${CMAKE_CURRENT_SOURCE_DIR}/lapackppConfig.cmake
     COPYONLY
+)
+
+install (
+    FILES
+        ${CMAKE_CURRENT_SOURCE_DIR}/lapackppConfig.cmake
+    DESTINATION
+        ${CMAKE_INSTALL_PREFIX}/lapackpp/lapackppConfig.cmake
 )
 
 install(

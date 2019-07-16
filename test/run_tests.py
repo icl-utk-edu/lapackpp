@@ -45,9 +45,10 @@ group_test = parser.add_argument_group( 'test' )
 group_test.add_argument( '-t', '--test', action='store',
     help='test command to run, e.g., --test "mpirun -np 4 ./test"; default "%(default)s"',
     default='./test' )
-group_test.add_argument( '--xml', action=check_file_ext( {'xml'} ),
-    help='generate report.xml for jenkins',
-    nargs=1 )
+group_test.add_argument( '--xml', help='generate report.xml for jenkins' )
+#group_test.add_argument( '--xml', action=check_file_ext( {'xml'} ),
+#    help='generate report.xml for jenkins',
+#    nargs=1 )
 
 group_size = parser.add_argument_group( 'matrix dimensions (default is medium)' )
 group_size.add_argument( '-x', '--xsmall', action='store_true', help='run x-small tests' )
@@ -388,7 +389,7 @@ if (opts.sysv):
     [ 'sptrf', gen + dtype         + n + uplo ],
     [ 'sptrs', gen + dtype + align + n + uplo ],
     [ 'sptri', gen + dtype         + n + uplo ],
-    [ 'spcon', gen + dtype +         n + uplo ],
+    [ 'spcon', gen + dtype         + n + uplo ],
     [ 'sprfs', gen + dtype + align + n + uplo ],
     ]
 
@@ -568,9 +569,9 @@ if (opts.sygv):
     [ 'hbgv',  gen + dtype + align + n + jobz + uplo + kd ],
     [ 'hbgvx', gen + dtype + align + n + jobz + uplo + kd + vl + vu ],
     [ 'hbgvx', gen + dtype + align + n + jobz + uplo + kd + il + iu ],
-    #[ 'hbgvd',  gen + dtype + align + n + jobz + uplo + kd ],
+    [ 'hbgvd', gen + dtype + align + n + jobz + uplo + kd ],
     #[ 'hbgvr', gen + dtype + align + n + uplo ],
-    [ 'hbgst', gen + dtype + align + n + vect + uplo + kd ],
+    #[ 'hbgst', gen + dtype + align + n + vect + uplo + kd ],
     ]
 
 # non-symmetric eigenvalues
@@ -700,7 +701,8 @@ if (nfailed > 0):
 
 # generate jUnit compatible test report
 if opts.xml:
-    report_file_name = opts.xml[0]
+    #report_file_name = opts.xml[0]
+    print( 'writing XML file', opts.xml )
     root = ET.Element("testsuites")
     doc = ET.SubElement(root, "testsuite",
                         name="lapackpp_suite",
@@ -726,7 +728,7 @@ if opts.xml:
         testcase.text = 'PASSED'
 
     tree = ET.ElementTree(root)
-    tree.write(report_file_name)
+    tree.write( opts.xml )
 # end
 
 exit( nfailed )

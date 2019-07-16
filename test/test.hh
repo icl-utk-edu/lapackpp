@@ -68,6 +68,8 @@ public:
 
     libtest::ParamInt3   dim;
     libtest::ParamInt    l;
+    libtest::ParamInt    ka;
+    libtest::ParamInt    kb;
     libtest::ParamInt    kd;
     libtest::ParamInt    kl;
     libtest::ParamInt    ku;
@@ -107,6 +109,7 @@ public:
     libtest::ParamInt        ref_iters;
 
     libtest::ParamOkay       okay;
+    libtest::ParamString     msg;
 };
 
 // -----------------------------------------------------------------------------
@@ -250,25 +253,6 @@ void test_hptri ( Params& params, bool run );
 void test_hpcon ( Params& params, bool run );
 void test_hprfs ( Params& params, bool run );
 
-// matrix norms
-void test_lange ( Params& params, bool run );
-void test_lanhe ( Params& params, bool run );
-void test_lansy ( Params& params, bool run );
-void test_lantr ( Params& params, bool run );
-
-void test_lanhp ( Params& params, bool run );
-void test_lansp ( Params& params, bool run );
-void test_lantp ( Params& params, bool run );
-
-void test_langb ( Params& params, bool run );
-void test_lanhb ( Params& params, bool run );
-void test_lansb ( Params& params, bool run );
-void test_lantb ( Params& params, bool run );
-
-void test_langt ( Params& params, bool run );
-void test_lanht ( Params& params, bool run );
-void test_lanst ( Params& params, bool run );
-
 // least squares
 void test_gels  ( Params& params, bool run );
 void test_gelsy ( Params& params, bool run );
@@ -402,6 +386,23 @@ void test_lange ( Params& params, bool run );
 void test_lanhe ( Params& params, bool run );
 void test_lansy ( Params& params, bool run );
 void test_lantr ( Params& params, bool run );
+void test_lanhs ( Params& params, bool run );
+
+// auxiliary - norms - packed
+void test_lanhp ( Params& params, bool run );
+void test_lansp ( Params& params, bool run );
+void test_lantp ( Params& params, bool run );
+
+// auxiliary - norms - banded
+void test_langb ( Params& params, bool run );
+void test_lanhb ( Params& params, bool run );
+void test_lansb ( Params& params, bool run );
+void test_lantb ( Params& params, bool run );
+
+// auxiliary - norms - tridiagonal
+void test_langt ( Params& params, bool run );
+void test_lanht ( Params& params, bool run );
+void test_lanst ( Params& params, bool run );
 
 // auxiliary - matrix generation
 void test_lagge ( Params& params, bool run );

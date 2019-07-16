@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_gtrfs_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -31,8 +29,8 @@ void test_gtrfs_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t ldb = roundup( max( 1, n ), align );
-    int64_t ldx = roundup( max( 1, n ), align );
+    int64_t ldb = roundup( blas::max( 1, n ), align );
+    int64_t ldx = roundup( blas::max( 1, n ), align );
     size_t size_DL = (size_t) (n-1);
     size_t size_D = (size_t) (n);
     size_t size_DU = (size_t) (n-1);
@@ -97,9 +95,9 @@ void test_gtrfs_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::gtrfs( trans, n, nrhs, &DL[0], &D[0], &DU[0], &DLF[0], &DF[0], &DUF[0], &DU2[0], &ipiv_tst[0], &B[0], ldb, &X_tst[0], ldx, &ferr_tst[0], &berr_tst[0] );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::gtrfs returned error %lld\n", (lld) info_tst );
     }
@@ -111,9 +109,9 @@ void test_gtrfs_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_gtrfs( op2char(trans), n, nrhs, &DL[0], &D[0], &DU[0], &DLF[0], &DF[0], &DUF[0], &DU2[0], &ipiv_ref[0], &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gtrfs returned error %lld\n", (lld) info_ref );
         }

@@ -675,7 +675,8 @@ inline lapack_int LAPACKE_gels(
     float* A, lapack_int lda,
     float* B, lapack_int ldb )
 {
-    if ( trans == 'C' ) trans = 'T';
+    if (trans == 'C')
+        trans = 'T';
     return LAPACKE_sgels(
         LAPACK_COL_MAJOR, trans, m, n, nrhs,
         A, lda,
@@ -687,7 +688,8 @@ inline lapack_int LAPACKE_gels(
     double* A, lapack_int lda,
     double* B, lapack_int ldb )
 {
-    if ( trans == 'C' ) trans = 'T';
+    if (trans == 'C')
+        trans = 'T';
     return LAPACKE_dgels(
         LAPACK_COL_MAJOR, trans, m, n, nrhs,
         A, lda,
@@ -1630,7 +1632,8 @@ inline lapack_int LAPACKE_getsls(
     float* A, lapack_int lda,
     float* B, lapack_int ldb )
 {
-    if ( trans == 'C' ) trans = 'T';
+    if (trans == 'C')
+        trans = 'T';
     return LAPACKE_sgetsls(
         LAPACK_COL_MAJOR, trans, m, n, nrhs,
         A, lda,
@@ -1642,7 +1645,8 @@ inline lapack_int LAPACKE_getsls(
     double* A, lapack_int lda,
     double* B, lapack_int ldb )
 {
-    if ( trans == 'C' ) trans = 'T';
+    if (trans == 'C')
+        trans = 'T';
     return LAPACKE_dgetsls(
         LAPACK_COL_MAJOR, trans, m, n, nrhs,
         A, lda,
@@ -2671,6 +2675,7 @@ inline lapack_int LAPACKE_hbgv(
 }
 
 // -----------------------------------------------------------------------------
+// see custom version below
 inline lapack_int LAPACKE_hbgvd(
     char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
     float* AB, lapack_int ldab,
@@ -2729,6 +2734,149 @@ inline lapack_int LAPACKE_hbgvd(
         (lapack_complex_double*) BB, ldbb,
         W,
         (lapack_complex_double*) Z, ldz );
+}
+
+// -----------------------------------------------------------------------------
+// Note: LAPACKE_hbgvd does workspace query that may be wrong
+// (e.g., in LAPACK <= 3.6.0, MKL 2018), so custom version fixes it.
+inline lapack_int LAPACKE_hbgvd_custom(
+    char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
+    float* AB, lapack_int ldab,
+    float* BB, lapack_int ldbb,
+    float* W,
+    float* Z, lapack_int ldz )
+{
+    float query;
+    lapack_int liwork;
+    lapack_int info = LAPACKE_ssbgvd_work(
+        LAPACK_COL_MAJOR, jobz, uplo, n, ka, kb,
+        AB, ldab,
+        BB, ldbb,
+        W,
+        Z, ldz,
+        &query, -1, &liwork, -1 );
+    if (info < 0)
+        return info;
+    lapack_int lwork = query;
+    // override potentially wrong query for LAPACK <= 3.6.0
+    if (lwork < 3*n)
+        lwork = 3*n;
+    std::vector< float > work( lwork );
+    std::vector< lapack_int > iwork( liwork );
+    return LAPACKE_ssbgvd_work(
+        LAPACK_COL_MAJOR, jobz, uplo, n, ka, kb,
+        AB, ldab,
+        BB, ldbb,
+        W,
+        Z, ldz,
+        &work[0], lwork, &iwork[0], liwork );
+}
+
+inline lapack_int LAPACKE_hbgvd_custom(
+    char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
+    double* AB, lapack_int ldab,
+    double* BB, lapack_int ldbb,
+    double* W,
+    double* Z, lapack_int ldz )
+{
+    double query;
+    lapack_int liwork;
+    lapack_int info = LAPACKE_dsbgvd_work(
+        LAPACK_COL_MAJOR, jobz, uplo, n, ka, kb,
+        AB, ldab,
+        BB, ldbb,
+        W,
+        Z, ldz,
+        &query, -1, &liwork, -1 );
+    if (info < 0)
+        return info;
+    lapack_int lwork = query;
+    // override potentially wrong query for LAPACK <= 3.6.0
+    if (lwork < 3*n)
+        lwork = 3*n;
+    std::vector< double > work( lwork );
+    std::vector< lapack_int > iwork( liwork );
+    return LAPACKE_dsbgvd_work(
+        LAPACK_COL_MAJOR, jobz, uplo, n, ka, kb,
+        AB, ldab,
+        BB, ldbb,
+        W,
+        Z, ldz,
+        &work[0], lwork, &iwork[0], liwork );
+}
+
+inline lapack_int LAPACKE_hbgvd_custom(
+    char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
+    std::complex<float>* AB, lapack_int ldab,
+    std::complex<float>* BB, lapack_int ldbb,
+    float* W,
+    std::complex<float>* Z, lapack_int ldz )
+{
+    std::complex<float> query;
+    float rquery;
+    lapack_int liwork;
+    lapack_int info = LAPACKE_chbgvd_work(
+        LAPACK_COL_MAJOR, jobz, uplo, n, ka, kb,
+        (lapack_complex_float*) AB, ldab,
+        (lapack_complex_float*) BB, ldbb,
+        W,
+        (lapack_complex_float*) Z, ldz,
+        &query, -1, &rquery, -1, &liwork, -1 );
+    if (info < 0)
+        return info;
+    lapack_int lwork = real(query);
+    lapack_int lrwork = rquery;
+    // override potentially wrong query for LAPACK <= 3.6.0
+    if (lrwork < 2*n)
+        lrwork = 2*n;
+    std::vector< std::complex<float> > work( lwork );
+    std::vector< float > rwork( lrwork );
+    std::vector< lapack_int > iwork( liwork );
+    return LAPACKE_chbgvd_work(
+        LAPACK_COL_MAJOR, jobz, uplo, n, ka, kb,
+        (lapack_complex_float*) AB, ldab,
+        (lapack_complex_float*) BB, ldbb,
+        W,
+        (lapack_complex_float*) Z, ldz,
+        (lapack_complex_float*) &work[0], lwork,
+        &rwork[0], lrwork, &iwork[0], liwork );
+}
+
+inline lapack_int LAPACKE_hbgvd_custom(
+    char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
+    std::complex<double>* AB, lapack_int ldab,
+    std::complex<double>* BB, lapack_int ldbb,
+    double* W,
+    std::complex<double>* Z, lapack_int ldz )
+{
+    std::complex<double> query;
+    double rquery;
+    lapack_int liwork;
+    lapack_int info = LAPACKE_zhbgvd_work(
+        LAPACK_COL_MAJOR, jobz, uplo, n, ka, kb,
+        (lapack_complex_double*) AB, ldab,
+        (lapack_complex_double*) BB, ldbb,
+        W,
+        (lapack_complex_double*) Z, ldz,
+        &query, -1, &rquery, -1, &liwork, -1 );
+    if (info < 0)
+        return info;
+    lapack_int lwork = real(query);
+    lapack_int lrwork = rquery;
+    // override potentially wrong query for LAPACK <= 3.6.0
+    if (lrwork < 2*n)
+        lrwork = 2*n;
+    std::vector< std::complex<double> > work( lwork );
+    std::vector< double > rwork( lrwork );
+    std::vector< lapack_int > iwork( liwork );
+    return LAPACKE_zhbgvd_work(
+        LAPACK_COL_MAJOR, jobz, uplo, n, ka, kb,
+        (lapack_complex_double*) AB, ldab,
+        (lapack_complex_double*) BB, ldbb,
+        W,
+        (lapack_complex_double*) Z, ldz,
+        (lapack_complex_double*) &work[0], lwork,
+        &rwork[0], lrwork, &iwork[0], liwork );
 }
 
 // -----------------------------------------------------------------------------
@@ -4916,6 +5064,87 @@ inline double LAPACKE_lanhp(
 // Fortran prototypes if not given via lapacke.h
 extern "C" {
 
+/* ----- matrix norm - symmetric packed */
+#ifndef LAPACK_slanhs
+#define LAPACK_slanhs LAPACK_GLOBAL(slanhs,SLANHS)
+lapack_float_return LAPACK_slanhs(
+    char const* norm,
+    lapack_int const* n,
+    float const* A, lapack_int const* lda, float* work );
+#endif
+
+#ifndef LAPACK_dlanhs
+#define LAPACK_dlanhs LAPACK_GLOBAL(dlanhs,DLANHS)
+double LAPACK_dlanhs(
+    char const* norm,
+    lapack_int const* n,
+    double const* A, lapack_int const* lda, double* work );
+#endif
+
+#ifndef LAPACK_clanhs
+#define LAPACK_clanhs LAPACK_GLOBAL(clanhs,CLANHS)
+lapack_float_return LAPACK_clanhs(
+    char const* norm,
+    lapack_int const* n,
+    lapack_complex_float const* A, lapack_int const* lda, float* work );
+#endif
+
+#ifndef LAPACK_zlanhs
+#define LAPACK_zlanhs LAPACK_GLOBAL(zlanhs,ZLANHS)
+double LAPACK_zlanhs(
+    char const* norm,
+    lapack_int const* n,
+    lapack_complex_double const* A, lapack_int const* lda, double* work );
+#endif
+
+}  // extern "C"
+
+// --------------------
+// wrappers around LAPACK (not in LAPACKE)
+static float LAPACKE_lanhs(
+    char norm, lapack_int n,
+    float* A, lapack_int lda )
+{
+    std::vector< float > work( n );
+    return LAPACK_slanhs(
+        &norm, &n,
+        A, &lda, &work[0] );
+}
+
+static double LAPACKE_lanhs(
+    char norm, lapack_int n,
+    double* A, lapack_int lda )
+{
+    std::vector< double > work( n );
+    return LAPACK_dlanhs(
+        &norm, &n,
+        A, &lda, &work[0] );
+}
+
+static float LAPACKE_lanhs(
+    char norm, lapack_int n,
+    std::complex<float>* A, lapack_int lda )
+{
+    std::vector< float > work( n );
+    return LAPACK_clanhs(
+        &norm, &n,
+        (lapack_complex_float*) A, &lda, &work[0] );
+}
+
+static double LAPACKE_lanhs(
+    char norm, lapack_int n,
+    std::complex<double>* A, lapack_int lda )
+{
+    std::vector< double > work( n );
+    return LAPACK_zlanhs(
+        &norm, &n,
+        (lapack_complex_double*) A, &lda, &work[0] );
+}
+
+// -----------------------------------------------------------------------------
+// Fortran prototypes if not given via lapacke.h
+extern "C" {
+
 /* ----- matrix norm - symmetric tridiagonal */
 #ifndef LAPACK_slanst
 #define LAPACK_slanst LAPACK_GLOBAL(slanst,SLANST)
@@ -4953,6 +5182,28 @@ double LAPACK_zlanht(
 
 // --------------------
 // wrappers around LAPACK (not in LAPACKE)
+inline float LAPACKE_lanst(
+    char norm, lapack_int n,
+    float* D,
+    float* E )
+{
+    return LAPACK_slanst(
+        &norm, &n,
+        D,
+        E );
+}
+
+inline double LAPACKE_lanst(
+    char norm, lapack_int n,
+    double* D,
+    double* E )
+{
+    return LAPACK_dlanst(
+        &norm, &n,
+        D,
+        E );
+}
+
 inline float LAPACKE_lanht(
     char norm, lapack_int n,
     float* D,
@@ -9230,6 +9481,8 @@ inline lapack_int LAPACKE_unmhr(
     float* tau,
     float* C, lapack_int ldc )
 {
+    if (trans == 'C')
+        trans = 'T';
     return LAPACKE_sormhr(
         LAPACK_COL_MAJOR, side, trans, m, n, ilo, ihi,
         A, lda,
@@ -9243,6 +9496,8 @@ inline lapack_int LAPACKE_unmhr(
     double* tau,
     double* C, lapack_int ldc )
 {
+    if (trans == 'C')
+        trans = 'T';
     return LAPACKE_dormhr(
         LAPACK_COL_MAJOR, side, trans, m, n, ilo, ihi,
         A, lda,
@@ -9283,6 +9538,8 @@ inline lapack_int LAPACKE_unmtr(
     float* tau,
     float* C, lapack_int ldc )
 {
+    if (trans == 'C')
+        trans = 'T';
     return LAPACKE_sormtr(
         LAPACK_COL_MAJOR, side, uplo, trans, m, n,
         A, lda,
@@ -9296,6 +9553,8 @@ inline lapack_int LAPACKE_unmtr(
     double* tau,
     double* C, lapack_int ldc )
 {
+    if (trans == 'C')
+        trans = 'T';
     return LAPACKE_dormtr(
         LAPACK_COL_MAJOR, side, uplo, trans, m, n,
         A, lda,
@@ -9389,6 +9648,8 @@ inline lapack_int LAPACKE_upmtr(
     float* tau,
     float* C, lapack_int ldc )
 {
+    if (trans == 'C')
+        trans = 'T';
     return LAPACKE_sopmtr(
         LAPACK_COL_MAJOR, side, uplo, trans, m, n,
         AP,
@@ -9402,6 +9663,8 @@ inline lapack_int LAPACKE_upmtr(
     double* tau,
     double* C, lapack_int ldc )
 {
+    if (trans == 'C')
+        trans = 'T';
     return LAPACKE_dopmtr(
         LAPACK_COL_MAJOR, side, uplo, trans, m, n,
         AP,

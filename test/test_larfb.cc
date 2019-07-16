@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_larfb_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -30,14 +28,16 @@ void test_larfb_work( Params& params, bool run )
     params.ref_time();
     //params.ref_gflops();
     //params.gflops();
+    params.msg();
 
     if (! run)
         return;
 
+    // skip invalid sizes
     if ((side == lapack::Side::Left  && m < k) ||
         (side == lapack::Side::Right && n < k))
     {
-        printf( "skipping because larfb requires m >= k >= 0 (left) or n >= k >= 0 (right)\n" );
+        params.msg() = "skipping: requires m >= k >= 0 (left) or n >= k >= 0 (right)";
         return;
     }
 
@@ -45,9 +45,9 @@ void test_larfb_work( Params& params, bool run )
     int64_t ldv;
     if (storev == lapack::StoreV::Columnwise) {
         if (side == lapack::Side::Left)
-            ldv = roundup( max( 1, m ), align );
+            ldv = roundup( blas::max( 1, m ), align );
         else
-            ldv = roundup( max( 1, n ), align );
+            ldv = roundup( blas::max( 1, n ), align );
     }
     else {
         // rowwise
@@ -55,7 +55,7 @@ void test_larfb_work( Params& params, bool run )
     }
 
     int64_t ldt = roundup( k, align );
-    int64_t ldc = roundup( max( 1, m ), align );
+    int64_t ldc = roundup( blas::max( 1, m ), align );
 
     size_t size_V;
     if (storev == lapack::StoreV::Columnwise) {
@@ -86,9 +86,9 @@ void test_larfb_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     lapack::larfb( side, trans, direct, storev, m, n, k, &V[0], ldv, &T[0], ldt, &C_tst[0], ldc );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
 
     params.time() = time;
     //double gflop = lapack::Gflop< scalar_t >::larfb( side, trans, direct, storev, m, n, k );
@@ -97,9 +97,9 @@ void test_larfb_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_larfb( side2char(side), op2char(trans), direct2char(direct), storev2char(storev), m, n, k, &V[0], ldv, &T[0], ldt, &C_ref[0], ldc );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_larfb returned error %lld\n", (lld) info_ref );
         }

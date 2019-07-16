@@ -13,8 +13,6 @@
 template< typename scalar_t >
 void test_tplqt2_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -28,14 +26,21 @@ void test_tplqt2_work( Params& params, bool run )
     params.ref_time();
     params.ref_gflops();
     params.gflops();
+    params.msg();
 
     if (! run)
         return;
 
+    // skip invalid sizes
+    if (blas::min(m, n) < l) {
+        params.msg() = "skipping: requires min(m, n) >= l";
+        return;
+    }
+
     // ---------- setup
-    int64_t lda = roundup( max( 1, m ), align );
-    int64_t ldb = roundup( max( 1, m ), align );
-    int64_t ldt = roundup( max( 1, m ), align );
+    int64_t lda = roundup( blas::max( 1, m ), align );
+    int64_t ldb = roundup( blas::max( 1, m ), align );
+    int64_t ldt = roundup( blas::max( 1, m ), align );
     size_t size_A = (size_t) lda * m;
     size_t size_B = (size_t) ldb * n;
     size_t size_T = (size_t) ldt * m;
@@ -56,9 +61,9 @@ void test_tplqt2_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::tplqt2( m, n, l, &A_tst[0], lda, &B_tst[0], ldb, &T_tst[0], ldt );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::tplqt2 returned error %lld\n", (lld) info_tst );
     }
@@ -70,9 +75,9 @@ void test_tplqt2_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_tplqt2( m, n, l, &A_ref[0], lda, &B_ref[0], ldb, &T_ref[0], ldt );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_tplqt2 returned error %lld\n", (lld) info_ref );
         }

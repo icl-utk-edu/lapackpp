@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_hegst_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -30,13 +28,13 @@ void test_hegst_work( Params& params, bool run )
     // params.gflops();
 
     if (! run) {
-        params.matrix.kind.set_default( "rand_dominant" );
+        params.matrixB.kind.set_default( "rand_dominant" );
         return;
     }
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, n ), align );
-    int64_t ldb = roundup( max( 1, n ), align );
+    int64_t lda = roundup( blas::max( 1, n ), align );
+    int64_t ldb = roundup( blas::max( 1, n ), align );
     size_t size_A = (size_t) lda * n;
     size_t size_B = (size_t) ldb * n;
 
@@ -45,7 +43,6 @@ void test_hegst_work( Params& params, bool run )
     std::vector< scalar_t > B_tst( size_B );
     std::vector< scalar_t > B_ref( size_B );
 
-    // todo: how to specify A and B separately?
     lapack::generate_matrix( params.matrix,  n, n, &A_tst[0], lda );
     lapack::generate_matrix( params.matrixB, n, n, &B_tst[0], lda );
 
@@ -60,9 +57,9 @@ void test_hegst_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::hegst( itype, uplo, n, &A_tst[0], lda, &B_tst[0], ldb );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::hegst returned error %lld\n", (lld) info_tst );
     }
@@ -74,9 +71,9 @@ void test_hegst_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_hegst( itype, uplo2char(uplo), n, &A_ref[0], lda, &B_ref[0], ldb );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_hegst returned error %lld\n", (lld) info_ref );
         }

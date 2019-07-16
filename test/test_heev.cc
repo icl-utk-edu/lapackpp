@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_heev_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -32,7 +30,7 @@ void test_heev_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, n ), align );
+    int64_t lda = roundup( blas::max( 1, n ), align );
     size_t size_A = (size_t) lda * n;
     size_t size_W = (size_t) (n);
 
@@ -46,9 +44,9 @@ void test_heev_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::heev( jobz, uplo, n, &A_tst[0], lda, &W_tst[0] );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::heev returned error %lld\n", (lld) info_tst );
     }
@@ -60,9 +58,9 @@ void test_heev_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_heev( job2char(jobz), uplo2char(uplo), n, &A_ref[0], lda, &W_ref[0] );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_heev returned error %lld\n", (lld) info_ref );
         }

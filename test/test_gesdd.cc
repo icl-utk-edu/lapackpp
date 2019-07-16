@@ -12,9 +12,6 @@
 template< typename scalar_t >
 void test_gesdd_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
-    using namespace lapack;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -24,6 +21,9 @@ void test_gesdd_work( Params& params, bool run )
     int64_t n = params.dim.n();
     int64_t align = params.align();
     params.matrix.mark();
+
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+    real_t tol = params.tol() * eps;
 
     // mark non-standard output values
     params.ref_time();
@@ -37,12 +37,12 @@ void test_gesdd_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t ucol = (jobu == lapack::Job::AllVec ? m : min( m, n ));
-    int64_t lda = roundup( max( 1, m ), align );
+    int64_t ucol = (jobu == lapack::Job::AllVec ? m : blas::min( m, n ));
+    int64_t lda = roundup( blas::max( 1, m ), align );
     int64_t ldu = roundup( m, align );
-    int64_t ldvt = roundup( (jobu == lapack::Job::AllVec ? n : min( m, n )), align );
+    int64_t ldvt = roundup( (jobu == lapack::Job::AllVec ? n : blas::min( m, n )), align );
     size_t size_A = (size_t) lda * n;
-    size_t size_S = (size_t) (min(m,n));
+    size_t size_S = (size_t) (blas::min(m,n));
     size_t size_U = (size_t) ldu * ucol;
     size_t size_VT = (size_t) ldvt * n;
 
@@ -60,9 +60,9 @@ void test_gesdd_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::gesdd( jobu, m, n, &A_tst[0], lda, &S_tst[0], &U_tst[0], ldu, &VT_tst[0], ldvt );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::gesdd returned error %lld\n", (lld) info_tst );
     }
@@ -104,9 +104,9 @@ void test_gesdd_work( Params& params, bool run )
     if (params.ref() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_gesdd( job2char(jobu), m, n, &A_ref[0], lda, &S_ref[0], &U_ref[0], ldu, &VT_ref[0], ldvt );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gesdd returned error %lld\n", (lld) info_ref );
         }
@@ -120,16 +120,14 @@ void test_gesdd_work( Params& params, bool run )
         }
         errors[3] += rel_error( S_tst, S_ref );
     }
-    real_t eps = std::numeric_limits< real_t >::epsilon();
-    real_t tol = params.tol() * eps;
     params.error()       = errors[0];
     params.ortho_U()     = errors[1];
     params.ortho_V()     = errors[2];
     params.error_sigma() = errors[3];
     params.okay() = (
-        (jobu == Job::NoVec || errors[0] < tol) &&
-        (jobu == Job::NoVec || errors[1] < tol) &&
-        (jobu == Job::NoVec || errors[2] < tol) &&
+        (jobu == lapack::Job::NoVec || errors[0] < tol) &&
+        (jobu == lapack::Job::NoVec || errors[1] < tol) &&
+        (jobu == lapack::Job::NoVec || errors[2] < tol) &&
         errors[3] < tol);
 }
 

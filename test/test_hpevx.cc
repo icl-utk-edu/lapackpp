@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_hpevx_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -41,10 +39,10 @@ void test_hpevx_work( Params& params, bool run )
     real_t abstol = 0;  // use default
     int64_t m_tst;
     lapack_int m_ref;
-    int64_t ldz = ( jobz==lapack::Job::NoVec ? 1: roundup( max( 1, n ), align ) );
+    int64_t ldz = ( jobz == lapack::Job::NoVec ? 1: roundup( blas::max( 1, n ), align ) );
     size_t size_AP = (size_t) (n*(n+1)/2);
     size_t size_W = (size_t) (n);
-    size_t size_Z = (size_t) ldz * max(1,n);
+    size_t size_Z = (size_t) ldz * blas::max(1,n);
     size_t size_ifail = (size_t) (n);
 
     std::vector< scalar_t > AP_tst( size_AP );
@@ -63,9 +61,9 @@ void test_hpevx_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::hpevx( jobz, range, uplo, n, &AP_tst[0], vl, vu, il, iu, abstol, &m_tst, &W_tst[0], &Z_tst[0], ldz, &ifail_tst[0] );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::hpevx returned error %lld\n", (lld) info_tst );
     }
@@ -77,9 +75,9 @@ void test_hpevx_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_hpevx( job2char(jobz), range2char(range), uplo2char(uplo), n, &AP_ref[0], vl, vu, il, iu, abstol, &m_ref, &W_ref[0], &Z_ref[0], ldz, &ifail_ref[0] );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_hpevx returned error %lld\n", (lld) info_ref );
         }

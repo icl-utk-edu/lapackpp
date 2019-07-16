@@ -13,8 +13,6 @@
 template< typename scalar_t >
 void test_tprfb_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -33,12 +31,14 @@ void test_tprfb_work( Params& params, bool run )
     params.ref_time();
     //params.ref_gflops();
     //params.gflops();
+    params.msg();
 
     if (! run)
         return;
 
+    // skip invalid sizes
     if (k < l) {
-        printf( "skipping because tprfb requires k >= l\n" );
+        params.msg() = "skipping: requires k >= l";
         return;
     }
 
@@ -53,19 +53,19 @@ void test_tprfb_work( Params& params, bool run )
     //   or m-by-k (right)
     int64_t Vm, Vn;
     if (storev == lapack::StoreV::Columnwise) {
-        Vm = (side == Side::Left ? m : n);
+        Vm = (side == blas::Side::Left ? m : n);
         Vn = k;
     }
     else {
         Vm = k;
-        Vn = (side == Side::Left ? m : n);
+        Vn = (side == blas::Side::Left ? m : n);
     }
-    int64_t Am = (side == Side::Left ? k : m);
-    int64_t An = (side == Side::Left ? n : k);
-    int64_t ldv = roundup( max( 1, Vm ), align );
-    int64_t ldt = roundup( max( 1, k  ), align );
-    int64_t lda = roundup( max( 1, Am ), align );
-    int64_t ldb = roundup( max( 1, m  ), align );
+    int64_t Am = (side == blas::Side::Left ? k : m);
+    int64_t An = (side == blas::Side::Left ? n : k);
+    int64_t ldv = roundup( blas::max( 1, Vm ), align );
+    int64_t ldt = roundup( blas::max( 1, k  ), align );
+    int64_t lda = roundup( blas::max( 1, Am ), align );
+    int64_t ldb = roundup( blas::max( 1, m  ), align );
     size_t size_V = (size_t) ldv * Vn;
     size_t size_T = (size_t) ldt * k;
     size_t size_A = (size_t) lda * An;
@@ -89,9 +89,9 @@ void test_tprfb_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     lapack::tprfb( side, trans, direct, storev, m, n, k, l, &V[0], ldv, &T[0], ldt, &A_tst[0], lda, &B_tst[0], ldb );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     // internal routine: no argument check so no info.
     //if (info_tst != 0) {
     //    fprintf( stderr, "lapack::tprfb returned error %lld\n", (lld) info_tst );
@@ -104,9 +104,9 @@ void test_tprfb_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_tprfb( side2char(side), op2char(trans), direct2char(direct), storev2char(storev), m, n, k, l, &V[0], ldv, &T[0], ldt, &A_ref[0], lda, &B_ref[0], ldb );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_tprfb returned error %lld\n", (lld) info_ref );
         }

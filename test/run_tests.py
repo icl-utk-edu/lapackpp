@@ -104,6 +104,7 @@ group_opt.add_argument( '--incy',   action='store', help='default=%(default)s', 
 group_opt.add_argument( '--align',  action='store', help='default=%(default)s', default='32' )
 group_opt.add_argument( '--check',  action='store', help='default=y', default='' )  # default in test.cc
 group_opt.add_argument( '--ref',    action='store', help='default=y', default='' )  # default in test.cc
+group_opt.add_argument( '--verbose', action='store', help='default=0', default='' )  # default in test.cc
 
 # LAPACK only
 group_opt.add_argument( '--itype',  action='store', help='default=%(default)s', default='1,2,3' )
@@ -124,6 +125,8 @@ group_opt.add_argument( '--select', action='store', help='default=%(default)s', 
 group_opt.add_argument( '--sense',  action='store', help='default=%(default)s', default='n,e,v,b' )
 group_opt.add_argument( '--vect',   action='store', help='default=%(default)s', default='n,v' )
 group_opt.add_argument( '--l',      action='store', help='default=%(default)s', default='0,100' )
+group_opt.add_argument( '--ka',     action='store', help='default=%(default)s', default='20,100' )
+group_opt.add_argument( '--kb',     action='store', help='default=%(default)s', default='20,100' )
 group_opt.add_argument( '--kd',     action='store', help='default=%(default)s', default='20,100' )
 group_opt.add_argument( '--kl',     action='store', help='default=%(default)s', default='20,100' )
 group_opt.add_argument( '--ku',     action='store', help='default=%(default)s', default='20,100' )
@@ -131,6 +134,7 @@ group_opt.add_argument( '--vl',     action='store', help='default=%(default)s', 
 group_opt.add_argument( '--vu',     action='store', help='default=%(default)s', default='inf' )
 group_opt.add_argument( '--il',     action='store', help='default=%(default)s', default='10' )
 group_opt.add_argument( '--iu',     action='store', help='default=%(default)s', default='-1,100' )
+group_opt.add_argument( '--nb',     action='store', help='default=%(default)s', default='64' )
 group_opt.add_argument( '--matrixtype', action='store', help='default=%(default)s', default='g,l,u' )
 
 parser.add_argument( 'tests', nargs=argparse.REMAINDER )
@@ -184,6 +188,17 @@ if (not opts.dim):
                 +  ' --dim 20x10x15 --dim 20x15x10'
         nk_tall += ' --dim 1x20x10'
         nk_wide += ' --dim 1x10x20'
+        # tpqrt, tplqt needs small l, nb <= min( m, n )
+        if (opts.l == parser.get_default('l')):
+            opts.l = '0,5,100'
+        if (opts.nb == parser.get_default('nb')):
+            opts.nb = '8,64'
+        if (opts.ka == parser.get_default('ka')):
+            opts.ka = '5'
+        if (opts.kb == parser.get_default('kb')):
+            opts.kb = '5'
+        if (opts.kd == parser.get_default('kd')):
+            opts.kd = '5'
 
     if (opts.small):
         n       += ' --dim 25:100:25'
@@ -248,6 +263,7 @@ incy   = ' --incy '   + opts.incy   if (opts.incy)   else ''
 align  = ' --align '  + opts.align  if (opts.align)  else ''
 check  = ' --check '  + opts.check  if (opts.check)  else ''
 ref    = ' --ref '    + opts.ref    if (opts.ref)    else ''
+verbose = ' --verbose ' + opts.verbose if (opts.verbose) else ''
 
 # LAPACK only
 itype  = ' --itype '  + opts.itype  if (opts.itype)  else ''
@@ -262,11 +278,14 @@ jobvt  = ' --jobvt '  + opts.jobvt  if (opts.jobvt)  else ''
 jobvl  = ' --jobvl '  + opts.jobvl  if (opts.jobvl)  else ''
 jobvr  = ' --jobvr '  + opts.jobvr  if (opts.jobvr)  else ''
 jobvs  = ' --jobvs '  + opts.jobvs  if (opts.jobvs)  else ''
-balanc = ' --balanc ' + opts.balanc if (opts.balanc)   else ''
+balanc = ' --balanc ' + opts.balanc if (opts.balanc) else ''
 sort   = ' --sort '   + opts.sort   if (opts.sort)   else ''
-sense  = ' --sense '  + opts.sense  if (opts.sense)   else ''
+sense  = ' --sense '  + opts.sense  if (opts.sense)  else ''
 vect   = ' --vect '   + opts.vect   if (opts.vect)   else ''
 l      = ' --l '      + opts.l      if (opts.l)      else ''
+nb     = ' --nb '     + opts.nb     if (opts.nb)     else ''
+ka     = ' --ka '     + opts.ka     if (opts.ka)     else ''
+kb     = ' --kb '     + opts.kb     if (opts.kb)     else ''
 kd     = ' --kd '     + opts.kd     if (opts.kd)     else ''
 kl     = ' --kl '     + opts.kl     if (opts.kl)     else ''
 ku     = ' --ku '     + opts.ku     if (opts.ku)     else ''
@@ -277,7 +296,7 @@ iu     = ' --iu '     + opts.iu     if (opts.iu)     else ''
 mtype  = ' --matrixtype ' + opts.matrixtype if (opts.matrixtype) else ''
 
 # general options for all routines
-gen = check + ref
+gen = check + ref + verbose
 
 # ------------------------------------------------------------------------------
 # filters a comma separated list csv based on items in list values.
@@ -466,10 +485,10 @@ if (opts.qr):
     #[ 'unmqr', gen + dtype_complex + align + mnk + side + trans_nc ],  # complex does trans = N, C, not T
 
     # Triangle-pentagon
-    [ 'tpqrt',  gen + dtype + align + mn + l ],
+    [ 'tpqrt',  gen + dtype + align + mn + l + nb ],
     [ 'tpqrt2', gen + dtype + align + mn + l ],
-    [ 'tpmqrt', gen + dtype_real    + align + mn + l + side + trans    ],  # real does trans = N, T, C
-    [ 'tpmqrt', gen + dtype_complex + align + mn + l + side + trans_nc ],  # complex does trans = N, C, not T
+    [ 'tpmqrt', gen + dtype_real    + align + mn + l + nb + side + trans    ],  # real does trans = N, T, C
+    [ 'tpmqrt', gen + dtype_complex + align + mn + l + nb + side + trans_nc ],  # complex does trans = N, C, not T
     #[ 'tprfb',  gen + dtype + align + mn + l ],  # TODO: bug in LAPACKE crashes tester
     ]
 
@@ -483,10 +502,10 @@ if (opts.lq):
     #[ 'unmlq', gen + dtype_complex + align + mnk + side + trans_nc ],  # complex does trans = N, C, not T
 
     # Triangle-pentagon
-    [ 'tplqt',  gen + dtype + align + mn + l ],
+    [ 'tplqt',  gen + dtype + align + mn + l + nb ],
     [ 'tplqt2', gen + dtype + align + mn + l ],
-    [ 'tpmlqt', gen + dtype_real    + align + mn + l + side + trans    ],  # real does trans = N, T, C
-    [ 'tpmlqt', gen + dtype_complex + align + mn + l + side + trans_nc ],  # complex does trans = N, C, not T
+    [ 'tpmlqt', gen + dtype_real    + align + mn + l + nb + side + trans    ],  # real does trans = N, T, C
+    [ 'tpmlqt', gen + dtype_complex + align + mn + l + nb + side + trans_nc ],  # complex does trans = N, C, not T
     ]
 
 # QL
@@ -566,12 +585,12 @@ if (opts.sygv):
     [ 'hpgst', gen + dtype + n + itype + uplo ],
 
     # Banded
-    [ 'hbgv',  gen + dtype + align + n + jobz + uplo + kd ],
-    [ 'hbgvx', gen + dtype + align + n + jobz + uplo + kd + vl + vu ],
-    [ 'hbgvx', gen + dtype + align + n + jobz + uplo + kd + il + iu ],
-    [ 'hbgvd', gen + dtype + align + n + jobz + uplo + kd ],
-    #[ 'hbgvr', gen + dtype + align + n + uplo ],
-    #[ 'hbgst', gen + dtype + align + n + vect + uplo + kd ],
+    [ 'hbgv',  gen + dtype + align + n + jobz + uplo + ka + kb ],
+    [ 'hbgvx', gen + dtype + align + n + jobz + uplo + ka + kb + vl + vu ],
+    [ 'hbgvx', gen + dtype + align + n + jobz + uplo + ka + kb + il + iu ],
+    [ 'hbgvd', gen + dtype + align + n + jobz + uplo + ka + kb ],
+    #[ 'hbgvr', gen + dtype + align + n + uplo + ka + kb ],
+    #[ 'hbgst', gen + dtype + align + n + vect + uplo + ka + kb ],
     ]
 
 # non-symmetric eigenvalues
@@ -627,6 +646,7 @@ if (opts.aux_norm):
     [ 'lanhe', gen + dtype + align + n  + norm + uplo ],
     [ 'lansy', gen + dtype + align + n  + norm + uplo ],
     [ 'lantr', gen + dtype + align + mn + norm + uplo + diag ],
+    [ 'lanhs', gen + dtype + align + n  + norm ],
 
     # Packed
     [ 'lanhp', gen + dtype + n + norm + uplo ],
@@ -642,6 +662,7 @@ if (opts.aux_norm):
     # Tri-diagonal
     [ 'langt', gen + dtype + n + norm ],
     [ 'lanht', gen + dtype + n + norm ],
+    [ 'lanst', gen + dtype + n + norm ],
     ]
 
 # additional blas
@@ -656,11 +677,21 @@ if (opts.blas):
 output_redirected = not sys.stdout.isatty()
 
 # ------------------------------------------------------------------------------
+# if output is redirected, prints to both stderr and stdout;
+# otherwise prints to just stdout.
+def print_tee( *args ):
+    global output_redirected
+    print( *args )
+    if (output_redirected):
+        print( *args, file=sys.stderr )
+# end
+
+# ------------------------------------------------------------------------------
 # cmd is a pair of strings: (function, args)
 
 def run_test( cmd ):
     cmd = opts.test +' '+ cmd[0] +' '+ cmd[1]
-    print( cmd, file=sys.stderr )
+    print_tee( cmd )
     output = ''
     p = subprocess.Popen( cmd.split(), stdout=subprocess.PIPE,
                                        stderr=subprocess.STDOUT )
@@ -669,39 +700,41 @@ def run_test( cmd ):
         print( line, end='' )
         output += line
     err = p.wait()
-    if (err < 0):
-        print( 'FAILED: exit with signal', -err )
+    if (err != 0):
+        print_tee( 'FAILED: exit code', err )
+    else:
+        print_tee( 'pass' )
     return (err, output)
 # end
 
 # ------------------------------------------------------------------------------
+# run each test
 failed_tests = []
 passed_tests = []
 ntests = len(opts.tests)
 run_all = (ntests == 0)
 
+seen = set()
 for cmd in cmds:
     if (run_all or cmd[0] in opts.tests):
-        if (not run_all):
-            opts.tests.remove( cmd[0] )
+        seen.add( cmd[0] )
         (err, output) = run_test( cmd )
         if (err):
             failed_tests.append( (cmd[0], err, output) )
         else:
             passed_tests.append( cmd[0] )
-if (opts.tests):
-    print( 'Warning: unknown routines:', ' '.join( opts.tests ))
+not_seen = filter( lambda x: x not in seen, opts.tests )
+if (not_seen):
+    print_tee( 'Warning: unknown routines:', ' '.join( not_seen ))
 
 # print summary of failures
 nfailed = len( failed_tests )
 if (nfailed > 0):
-    print( '\n' + str(nfailed) + ' routines FAILED:',
-           ', '.join( [x[0] for x in failed_tests] ),
-           file=sys.stderr )
+    print_tee( '\n' + str(nfailed) + ' routines FAILED:',
+               ', '.join( [x[0] for x in failed_tests] ) )
 
 # generate jUnit compatible test report
 if opts.xml:
-    #report_file_name = opts.xml[0]
     print( 'writing XML file', opts.xml )
     root = ET.Element("testsuites")
     doc = ET.SubElement(root, "testsuite",

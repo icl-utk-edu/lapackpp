@@ -4,6 +4,7 @@
 #include "print_matrix.hh"
 #include "error.hh"
 #include "lapacke_wrappers.hh"
+#include "check_gels.hh"
 
 #include <vector>
 
@@ -11,8 +12,6 @@
 template< typename scalar_t >
 void test_gelsd_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -23,23 +22,27 @@ void test_gelsd_work( Params& params, bool run )
     int64_t align = params.align();
     params.matrix.mark();
 
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+    real_t tol = params.tol() * eps;
+
     // mark non-standard output values
     params.ref_time();
     // params.ref_gflops();
     // params.gflops();
+    params.error2();
 
     if (! run)
         return;
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, m ), align );
-    int64_t ldb = roundup( max( max( 1, m ), n ), align );
-    real_t rcond;
-    int64_t rank_tst = 0;
+    int64_t lda = roundup( blas::max( 1, m ), align );
+    int64_t ldb = roundup( blas::max( 1, m, n ), align );
+    real_t rcond = -1;  // use machine epsilon
+    int64_t rank_tst;
     lapack_int rank_ref;
     size_t size_A = (size_t) ( lda *  n);
     size_t size_B = (size_t) ( ldb * nrhs );
-    size_t size_S = (size_t) min( m, n );
+    size_t size_S = (size_t) blas::min( m, n );
 
     std::vector< scalar_t > A_tst( size_A );
     std::vector< scalar_t > A_ref( size_A );
@@ -56,14 +59,11 @@ void test_gelsd_work( Params& params, bool run )
     A_ref = A_tst;
     B_ref = B_tst;
 
-    // TODO: rcond value is set to a meaningless value, fix this
-    rcond = n;
-
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::gelsd( m, n, nrhs, &A_tst[0], lda, &B_tst[0], ldb, &S_tst[0], rcond, &rank_tst );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::gelsd returned error %lld\n", (lld) info_tst );
     }
@@ -72,30 +72,31 @@ void test_gelsd_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::gelsd( m, n, nrhs );
     // params.gflops() = gflop / time;
 
-    if (params.ref() == 'y' || params.check() == 'y') {
+    if (params.check() == 'y') {
+        // ---------- check error
+        real_t error[2];
+        check_gels( false, blas::Op::NoTrans, m, n, nrhs,
+                    &A_ref[0], lda, // original A
+                    &B_tst[0], ldb, // X
+                    &B_ref[0], ldb, // original B
+                    error );
+        params.error()  = error[0];
+        params.error2() = error[1];
+        params.okay() = (error[0] < tol) && (error[1] < tol);
+    }
+
+    if (params.ref() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_gelsd( m, n, nrhs, &A_ref[0], lda, &B_ref[0], ldb, &S_ref[0], rcond, &rank_ref );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gelsd returned error %lld\n", (lld) info_ref );
         }
 
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
-
-        // ---------- check error compared to reference
-        real_t error = 0;
-        if (info_tst != info_ref) {
-            error = 1;
-        }
-        error += abs_error( A_tst, A_ref );
-        error += abs_error( B_tst, B_ref );
-        error += abs_error( S_tst, S_ref );
-        error += std::abs( rank_tst - rank_ref );
-        params.error() = error;
-        params.okay() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 

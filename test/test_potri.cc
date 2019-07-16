@@ -11,8 +11,7 @@
 template< typename scalar_t >
 void test_potri_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
+    using blas::conj;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -22,6 +21,9 @@ void test_potri_work( Params& params, bool run )
     int64_t align = params.align();
     int64_t verbose = params.verbose();
     params.matrix.mark();
+
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+    real_t tol = params.tol() * eps;
 
     // mark non-standard output values
     params.ref_time();
@@ -34,7 +36,7 @@ void test_potri_work( Params& params, bool run )
     }
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, n ), align );
+    int64_t lda = roundup( blas::max( 1, n ), align );
     size_t size_A = (size_t) lda * n;
 
     std::vector< scalar_t > A_tst( size_A );
@@ -59,6 +61,7 @@ void test_potri_work( Params& params, bool run )
 
     // test error exits
     if (params.error_exit() == 'y') {
+        using lapack::Uplo;
         assert_throw( lapack::potri( Uplo(0),  n, &A_tst[0], lda ), lapack::Error );
         assert_throw( lapack::potri( uplo,    -1, &A_tst[0], lda ), lapack::Error );
         assert_throw( lapack::potri( uplo,     n, &A_tst[0], n-1 ), lapack::Error );
@@ -66,9 +69,9 @@ void test_potri_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::potri( uplo, n, &A_tst[0], lda );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::potri returned error %lld\n", (lld) info_tst );
     }
@@ -84,11 +87,8 @@ void test_potri_work( Params& params, bool run )
     if (params.check() == 'y') {
         // ---------- check error
         // comparing to ref. solution doesn't work due to roundoff errors
-        real_t eps = std::numeric_limits< real_t >::epsilon();
-        real_t tol = params.tol();
-
         // symmetrize A^{-1}, in order to use hemm
-        if (uplo == Uplo::Lower) {
+        if (uplo == blas::Uplo::Lower) {
             for (int64_t j = 0; j < n; ++j)
                 for (int64_t i = 0; i < j; ++i)
                     A_tst[ i + j*lda ] = conj( A_tst[ j + i*lda ] );
@@ -113,7 +113,7 @@ void test_potri_work( Params& params, bool run )
         }
 
         // R = I - A A^{-1}, A is Hermitian, A^{-1} is treated as general
-        blas::hemm( Layout::ColMajor, Side::Left, uplo, n, n,
+        blas::hemm( blas::Layout::ColMajor, blas::Side::Left, uplo, n, n,
                     -1.0, &A_ref[0], lda,
                           &A_tst[0], lda,
                      1.0, &R[0], lda );
@@ -127,7 +127,7 @@ void test_potri_work( Params& params, bool run )
         real_t Ainv_norm = lapack::lanhe( lapack::Norm::Fro, uplo, n, &A_tst[0], lda );
         real_t error = Rnorm / (n * Anorm * Ainv_norm);
         params.error() = error;
-        params.okay() = (error < tol*eps);
+        params.okay() = (error < tol);
     }
 
     if (params.ref() == 'y') {
@@ -139,9 +139,9 @@ void test_potri_work( Params& params, bool run )
 
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_potri( uplo2char(uplo), n, &A_ref[0], lda );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_potri returned error %lld\n", (lld) info_ref );
         }

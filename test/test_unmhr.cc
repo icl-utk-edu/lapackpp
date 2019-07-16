@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_unmhr_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -21,8 +19,6 @@ void test_unmhr_work( Params& params, bool run )
     lapack::Op trans = params.trans();
     int64_t m = params.dim.m();
     int64_t n = params.dim.n();
-    int64_t ilo = 1; // TODO params.ilo();
-    int64_t ihi = n; // TODO params.ihi();
     int64_t align = params.align();
     params.matrix.mark();
 
@@ -35,12 +31,19 @@ void test_unmhr_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t r = ( side==lapack::Side::Left ? m : n );
-    int64_t lda = roundup( max( 1, r ), align );
-    int64_t ldc = roundup( max( 1, m ), align );
+    // C is m-by-n
+    // if left,  A is m-by-m (r-by-r)
+    // if right, A is n-by-n (r-by-r)
+    int64_t r = ( side == lapack::Side::Left ? m : n );
+    int64_t lda = roundup( blas::max( 1, r ), align );
+    int64_t ldc = roundup( blas::max( 1, m ), align );
     size_t size_A = (size_t) ( lda * r );
     size_t size_tau = (size_t) ( r - 1 );
     size_t size_C = (size_t) ( ldc * n );
+
+    // r >= ihi >= ilo >= 1
+    int64_t ilo = 1;
+    int64_t ihi = r;
 
     std::vector< scalar_t > A( size_A );
     std::vector< scalar_t > tau( size_tau );
@@ -63,9 +66,9 @@ void test_unmhr_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::unmhr( side, trans, m, n, ilo, ihi, &A[0], lda, &tau[0], &C_tst[0], ldc );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::unmhr returned error %lld\n", (lld) info_tst );
     }
@@ -77,9 +80,9 @@ void test_unmhr_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_unmhr( side2char(side), op2char(trans), m, n, ilo, ihi, &A[0], lda, &tau[0], &C_ref[0], ldc );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_unmhr returned error %lld\n", (lld) info_ref );
         }

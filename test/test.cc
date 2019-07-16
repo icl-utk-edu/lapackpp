@@ -34,7 +34,9 @@ enum Section {
     aux_norm,
     aux_householder,
     aux_gen,
-    blas_section,
+    blas1,
+    blas2,
+    blas3,
     num_sections,  // last
 };
 
@@ -54,7 +56,9 @@ const char* section_names[] = {
    "auxiliary - norms",
    "auxiliary - Householder",
    "auxiliary - matrix generation",
-   "additional BLAS",
+   "Level 1 BLAS (additional)",
+   "Level 2 BLAS (additional)",
+   "Level 3 BLAS (additional)",
 };
 
 // { "", nullptr, Section::newline } entries force newline in help
@@ -297,12 +301,10 @@ std::vector< libtest::routines_t > routines = {
 
     { "ungtr",              test_ungtr,     Section::heev }, // tested via LAPACKE using gcc/MKL
     { "upgtr",              test_upgtr,     Section::heev }, // tested via LAPACKE using gcc/MKL
-  //{ "obgtr",              test_obgtr,     Section::heev }, // TODO does this exist
     { "",                   nullptr,        Section::newline },
 
     { "unmtr",              test_unmtr,     Section::heev }, // tested via LAPACKE using gcc/MKL
     { "upmtr",              test_upmtr,     Section::heev },
-  //{ "obmtr",              test_obmtr,     Section::heev }, // does this exist
     { "",                   nullptr,        Section::newline },
 
     // -----
@@ -319,7 +321,7 @@ std::vector< libtest::routines_t > routines = {
 
     { "hegvd",              test_hegvd,     Section::sygv }, // tested via LAPACKE using gcc/MKL
     { "hpgvd",              test_hpgvd,     Section::sygv }, // tested via LAPACKE using gcc/MKL
-  //{ "hbgvd",              test_hbgvd,     Section::sygv }, // TODO Segfaults.. is the src correct?
+    { "hbgvd",              test_hbgvd,     Section::sygv }, // TODO Segfaults.. is the src correct?
     { "",                   nullptr,        Section::newline },
 
     { "hegst",              test_hegst,     Section::sygv }, // tested via LAPACKE using gcc/MKL
@@ -392,22 +394,27 @@ std::vector< libtest::routines_t > routines = {
     { "lanhe",              test_lanhe,     Section::aux_norm },
     { "lansy",              test_lansy,     Section::aux_norm },
     { "lantr",              test_lantr,     Section::aux_norm },
+    { "lanhs",              test_lanhs,     Section::aux_norm },
     { "",                   nullptr,        Section::newline },
 
+    // auxiliary: norms - packed
     { "",                   nullptr,        Section::aux_norm },
     { "lanhp",              test_lanhp,     Section::aux_norm },
     { "lansp",              test_lansp,     Section::aux_norm },
-    { "lantp",              test_lantp,     Section::aux_norm }, // Tested using direct LAPACK call to xlantp (not in LAPACKE)
+    { "lantp",              test_lantp,     Section::aux_norm },
     { "",                   nullptr,        Section::newline },
 
-    { "langb",              test_langb,     Section::aux_norm }, // Tested using direct LAPACK call to xlantp (not in LAPACKE)
+    // auxiliary: norms - banded
+    { "langb",              test_langb,     Section::aux_norm },
     { "lanhb",              test_lanhb,     Section::aux_norm },
     { "lansb",              test_lansb,     Section::aux_norm },
-    { "lantb",              test_lantb,     Section::aux_norm }, // Tested using direct LAPACK call to xlantp (not in LAPACKE)
+    { "lantb",              test_lantb,     Section::aux_norm },
     { "",                   nullptr,        Section::newline },
 
-    { "langt",              test_langt,     Section::aux_norm }, // Tested using direct LAPACK call to xlantp (not in LAPACKE)
-    { "lanht",              test_lanht,     Section::aux_norm }, // Tested using direct LAPACK call to xlantp (not in LAPACKE)
+    // auxiliary: norms - tridiagonal
+    { "langt",              test_langt,     Section::aux_norm },
+    { "lanht",              test_lanht,     Section::aux_norm },
+    { "lanst",              test_lanst,     Section::aux_norm },
     { "",                   nullptr,        Section::newline },
 
     // auxiliary: matrix generation
@@ -418,7 +425,7 @@ std::vector< libtest::routines_t > routines = {
     { "",                   nullptr,        Section::newline },
 
     // additional BLAS
-    { "syr",                test_syr,       Section::blas_section },
+    { "syr",                test_syr,       Section::blas2 },
     { "",                   nullptr,        Section::newline },
 };
 
@@ -479,11 +486,13 @@ Params::Params():
     //          name,      w, p, type,            def,   min,     max, help
     dim       ( "dim",     6,    ParamType::List,          0, 1000000, "m by n by k dimensions" ),
     l         ( "l",       6,    ParamType::List, 100,     0, 1000000, "l dimension (e.g., tpqrt)" ),
+    ka        ( "ka",      6,    ParamType::List, 100,     0, 1000000, "bandwidth of A" ),
+    kb        ( "kb",      6,    ParamType::List, 100,     0, 1000000, "bandwidth of B" ),
     kd        ( "kd",      6,    ParamType::List, 100,     0, 1000000, "bandwidth" ),
     kl        ( "kl",      6,    ParamType::List, 100,     0, 1000000, "lower bandwidth" ),
     ku        ( "ku",      6,    ParamType::List, 100,     0, 1000000, "upper bandwidth" ),
     nrhs      ( "nrhs",    6,    ParamType::List,  10,     0, 1000000, "number of right hand sides" ),
-    nb        ( "nb",      6,    ParamType::List, 100,     0, 1000000, "block size" ),
+    nb        ( "nb",      4,    ParamType::List,  64,     0, 1000000, "block size" ),
     vl        ( "vl",      7, 2, ParamType::List, -inf, -inf,     inf, "lower bound of eigen/singular values to find" ),
     vu        ( "vu",      7, 2, ParamType::List,  inf, -inf,     inf, "upper bound of eigen/singular values to find" ),
 
@@ -510,10 +519,10 @@ Params::Params():
     error3     ( "error3",                9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
     error4     ( "error4",                9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
     error5     ( "error5",                9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
-    ortho      ( "orth. error",           9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "orthogonality error" ),
+    ortho      ( "ortho.\nerror",         9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "orthogonality error" ),
     ortho_U    ( "U orth.",               9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "U orthogonality error" ),
     ortho_V    ( "V orth.",               9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "V orthogonality error" ),
-    error_sigma( "Sigma error",           9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "Sigma error" ),
+    error_sigma( "Sigma\nerror",          9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "Sigma error" ),
 
     time      ( "LAPACK++\ntime (s)",    10, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "time to solution" ),
     gflops    ( "LAPACK++\nGflop/s",     11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "Gflop/s rate" ),
@@ -525,7 +534,8 @@ Params::Params():
 
     // default -1 means "no check"
     //          name,     w, type,              def, min, max, help
-    okay      ( "status", 6, ParamType::Output,  -1,   0,   0, "success indicator" )
+    okay      ( "status", 6, ParamType::Output,  -1,   0,   0, "success indicator" ),
+    msg       ( "",       1, ParamType::Output,  "",           "error message" )
 {
     // change names of matrix B's params
     matrixB.kind.name( "matrixB" );
@@ -541,7 +551,6 @@ Params::Params():
     check();
     error_exit();
     ref();
-    tol();
     repeat();
     verbose();
     cache();

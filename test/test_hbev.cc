@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_hbev_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -33,7 +31,7 @@ void test_hbev_work( Params& params, bool run )
 
     // ---------- setup
     int64_t ldab = roundup( kd + 1, align );
-    int64_t ldz = roundup( max( 1, n ), align );
+    int64_t ldz = roundup( blas::max( 1, n ), align );
     size_t size_AB = (size_t) ldab * n;
     size_t size_W = (size_t) (n);
     size_t size_Z = (size_t) ldz * n;
@@ -52,9 +50,9 @@ void test_hbev_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::hbev( jobz, uplo, n, kd, &AB_tst[0], ldab, &W_tst[0], &Z_tst[0], ldz );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::hbev returned error %lld\n", (lld) info_tst );
     }
@@ -66,9 +64,9 @@ void test_hbev_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_hbev( job2char(jobz), uplo2char(uplo), n, kd, &AB_ref[0], ldab, &W_ref[0], &Z_ref[0], ldz );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_hbev returned error %lld\n", (lld) info_ref );
         }

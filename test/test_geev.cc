@@ -21,8 +21,6 @@ bool lessthan( T a, T b )
 template< typename scalar_t >
 void test_geev_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -36,7 +34,6 @@ void test_geev_work( Params& params, bool run )
 
     real_t eps = std::numeric_limits< real_t >::epsilon();
     real_t tol = params.tol() * eps;
-    //printf( "eps %.2e, tol %.2e, tol*eps %.2e\n", eps, params.tol(), tol );
 
     // mark non-standard output values
     params.error2();
@@ -57,7 +54,7 @@ void test_geev_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, n ), align );
+    int64_t lda = roundup( blas::max( 1, n ), align );
     int64_t ldvl = roundup( n, align );
     int64_t ldvr = roundup( n, align );
     size_t size_A = (size_t) lda * n;
@@ -90,11 +87,11 @@ void test_geev_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     //printf (" test start\n");
     int64_t info_tst = lapack::geev( jobvl, jobvr, n, &A_tst[0], lda, &W_tst[0], &VL_tst[0], ldvl, &VR_tst[0], ldvr );
     //printf (" test done\n");
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::geev returned error %lld\n", (lld) info_tst );
     }
@@ -126,14 +123,14 @@ void test_geev_work( Params& params, bool run )
                               real_t( libtest::no_data_flag ),
                               real_t( libtest::no_data_flag ) };
         if (jobvl == lapack::Job::Vec) {
-            check_geev( Op::ConjTrans, n, &A_ref[0], lda, &W_tst[0],
+            check_geev( blas::Op::ConjTrans, n, &A_ref[0], lda, &W_tst[0],
                         &VL_tst[0], ldvl, verbose, &results[0] );
             okay = (okay && results[0] < tol && results[1] < tol);
             params.error () = results[0];
             params.error2() = results[1];
         }
         if (jobvr == lapack::Job::Vec) {
-            check_geev( Op::NoTrans,   n, &A_ref[0], lda, &W_tst[0],
+            check_geev( blas::Op::NoTrans, n, &A_ref[0], lda, &W_tst[0],
                         &VR_tst[0], ldvr, verbose, &results[2] );
             okay = (okay && results[2] < tol && results[3] < tol);
             params.error3() = results[2];
@@ -144,11 +141,11 @@ void test_geev_work( Params& params, bool run )
     if (params.ref() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
     //printf (" ref start\n");
         int64_t info_ref = LAPACKE_geev( job2char(jobvl), job2char(jobvr), n, &A_ref[0], lda, &W_ref[0], &VL_ref[0], ldvl, &VR_ref[0], ldvr );
     //printf (" ref done\n");
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_geev returned error %lld\n", (lld) info_ref );
         }

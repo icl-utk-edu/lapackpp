@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_ggqrf_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -34,12 +32,12 @@ void test_ggqrf_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, n ), align );
-    int64_t ldb = roundup( max( 1, n ), align );
+    int64_t lda = roundup( blas::max( 1, n ), align );
+    int64_t ldb = roundup( blas::max( 1, n ), align );
     size_t size_A = (size_t) lda * m;
-    size_t size_taua = (size_t) (min(n,m));
+    size_t size_taua = (size_t) (blas::min(n,m));
     size_t size_B = (size_t) ldb * p;
-    size_t size_taub = (size_t) (min(n,p));
+    size_t size_taub = (size_t) (blas::min(n,p));
 
     std::vector< scalar_t > A_tst( size_A );
     std::vector< scalar_t > A_ref( size_A );
@@ -57,9 +55,9 @@ void test_ggqrf_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::ggqrf( n, m, p, &A_tst[0], lda, &taua_tst[0], &B_tst[0], ldb, &taub_tst[0] );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::ggqrf returned error %lld\n", (lld) info_tst );
     }
@@ -71,9 +69,9 @@ void test_ggqrf_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_ggqrf( n, m, p, &A_ref[0], lda, &taua_ref[0], &B_ref[0], ldb, &taub_ref[0] );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_ggqrf returned error %lld\n", (lld) info_ref );
         }

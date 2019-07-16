@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_ungqr_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -23,25 +21,27 @@ void test_ungqr_work( Params& params, bool run )
     int64_t align = params.align();
     params.matrix.mark();
 
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+    real_t tol = params.tol() * eps;
+
     // mark non-standard output values
     params.ortho();
-    params.time();
     params.gflops();
     params.ref_time();
     params.ref_gflops();
-    params.okay();
+    params.msg();
 
     if (! run)
         return;
 
-    // Check for problems in testing
-    if (! ( n <= m && k <= n ) ) {
-        printf( "skipping because ungqr requires n <= m and k <= n\n" );
+    // skip invalid sizes
+    if (! (n <= m && k <= n)) {
+        params.msg() = "skipping: requires n <= m and k <= n";
         return;
     }
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, m ), align );
+    int64_t lda = roundup( blas::max( 1, m ), align );
     size_t size_A = (size_t) lda * n;
     size_t size_tau = (size_t) (k);
 
@@ -67,9 +67,9 @@ void test_ungqr_work( Params& params, bool run )
 
     // // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::ungqr( m, n, k, &A_tst[0], lda, &tau[0] );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::ungqr returned error %lld\n", (lld) info_tst );
     }
@@ -83,11 +83,9 @@ void test_ungqr_work( Params& params, bool run )
         // comparing to ref. solution doesn't work
         // Following lapack/TESTING/LIN/zqrt02.f
         // Note (0 <= n <= m)  (0 <= k <= n).
-        real_t eps = std::numeric_limits< real_t >::epsilon();
-        real_t tol = params.tol();
 
-        int64_t ldq = max( m, n );
-        int64_t ldr = max( m, n );
+        int64_t ldq = blas::max( m, n );
+        int64_t ldr = blas::max( m, n );
         std::vector< scalar_t > Q( ldq * n );
         std::vector< scalar_t > R( ldr * n );
 
@@ -107,7 +105,8 @@ void test_ungqr_work( Params& params, bool run )
         lapack::lacpy( lapack::MatrixType::Upper, n, k, &A_factored[0], lda, &R[0], ldr );
 
         // Compute R - Q'*A
-        blas::gemm( Layout::ColMajor, Op::ConjTrans, Op::NoTrans, n, k, m,
+        blas::gemm( blas::Layout::ColMajor,
+                    blas::Op::ConjTrans, blas::Op::NoTrans, n, k, m,
                     -1.0, &Q[0], ldq, &A_ref[0], lda, 1.0, &R[0], ldr );
 
         // Compute norm( R - Q'*A ) / ( M * norm(A) * EPS ) .
@@ -119,7 +118,8 @@ void test_ungqr_work( Params& params, bool run )
 
         // Compute I - Q'*Q
         lapack::laset( lapack::MatrixType::General, n, n, 0.0, 1.0, &R[0], ldr );
-        blas::herk( Layout::ColMajor, Uplo::Upper, Op::ConjTrans, n, m, -1.0, &Q[0], ldq, 1.0, &R[0], ldr );
+        blas::herk( blas::Layout::ColMajor, blas::Uplo::Upper, blas::Op::ConjTrans,
+                    n, m, -1.0, &Q[0], ldq, 1.0, &R[0], ldr );
 
         // Compute norm( I - Q'*Q ) / ( M * EPS ) .
         real_t resid2 = lapack::lansy( lapack::Norm::One, lapack::Uplo::Upper, n, &R[0], ldr );
@@ -127,15 +127,15 @@ void test_ungqr_work( Params& params, bool run )
 
         params.error() = error1;
         params.ortho() = error2;
-        params.okay() = (error1 < tol*eps) && (error2 < tol*eps);
+        params.okay() = (error1 < tol) && (error2 < tol);
     }
 
     if (params.ref() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_ungqr( m, n, k, &A_ref[0], lda, &tau[0] );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_ungqr returned error %lld\n", (lld) info_ref );
         }

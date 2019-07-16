@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_gbtrs_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -34,7 +32,7 @@ void test_gbtrs_work( Params& params, bool run )
 
     // ---------- setup
     int64_t ldab = roundup( 2*kl+ku+1, align );
-    int64_t ldb = roundup( max( 1, n ), align );
+    int64_t ldb = roundup( blas::max( 1, n ), align );
     size_t size_AB = (size_t) ldab * n;
     size_t size_ipiv = (size_t) (n);
     size_t size_B = (size_t) ldb * nrhs;
@@ -62,9 +60,9 @@ void test_gbtrs_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::gbtrs( trans, n, kl, ku, nrhs, &AB[0], ldab, &ipiv_tst[0], &B_tst[0], ldb );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::gbtrs returned error %lld\n", (lld) info_tst );
     }
@@ -76,9 +74,9 @@ void test_gbtrs_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_gbtrs( op2char(trans), n, kl, ku, nrhs, &AB[0], ldab, &ipiv_ref[0], &B_ref[0], ldb );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gbtrs returned error %lld\n", (lld) info_ref );
         }

@@ -68,6 +68,27 @@ inline double fmuls_potrs(double n, double nrhs)
 inline double fadds_potrs(double n, double nrhs)
     { return nrhs*n*(n - 1); }
 
+//------------------------------------------------------------ sytrf
+inline double fmuls_sytrf(double n)
+    { return 1/6.*n*n*n + 0.5*n*n + 10/3.*n; }
+
+inline double fadds_sytrf(double n)
+    { return 1/6.*n*n*n - 1/6.*n; }
+
+//------------------------------------------------------------ sytri
+inline double fmuls_sytri(double n)
+    { return 1/3.*n*n*n + n*n + 2/3.*n; }
+
+inline double fadds_sytri(double n)
+    { return 1/3.*n*n*n - 1/3.*n; }
+
+//------------------------------------------------------------ sytrs
+inline double fmuls_sytrs(double n, double nrhs)
+    { return nrhs*n*(n + 1); }
+
+inline double fadds_sytrs(double n, double nrhs)
+    { return nrhs*n*(n - 1); }
+
 //------------------------------------------------------------ geqrf
 inline double fmuls_geqrf(double m, double n)
 {
@@ -324,6 +345,31 @@ public:
 
     static double potrs(double n, double nrhs)
         { return 1e-9 * (mul_ops*fmuls_potrs(n, nrhs) + add_ops*fadds_potrs(n, nrhs)); }
+
+    // LDL^T
+    static double sysv(double n, double nrhs)
+        { return sytrf(n) + sytrs(n, nrhs); }
+
+    static double sytrf(double n)
+        { return 1e-9 * (mul_ops*fmuls_sytrf(n) + add_ops*fadds_sytrf(n)); }
+
+    static double sytri(double n)
+        { return 1e-9 * (mul_ops*fmuls_sytri(n) + add_ops*fadds_sytri(n)); }
+
+    static double sytrs(double n, double nrhs)
+        { return 1e-9 * (mul_ops*fmuls_sytrs(n, nrhs) + add_ops*fadds_sytrs(n, nrhs)); }
+
+    static double hesv(double n, double nrhs)
+        { return sysv(n, nrhs); }
+
+    static double hetrf(double n)
+        { return sytrf(n); }
+
+    static double hetri(double n)
+        { return sytri(n); }
+
+    static double hetrs(double n, double nrhs)
+        { return sytrs(n, nrhs); }
 
     // QR, QL, RQ, LQ
     static double geqrf(double m, double n)

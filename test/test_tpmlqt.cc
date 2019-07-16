@@ -14,8 +14,6 @@
 template< typename scalar_t >
 void test_tpmlqt_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -34,24 +32,26 @@ void test_tpmlqt_work( Params& params, bool run )
     params.ref_time();
     params.ref_gflops();
     params.gflops();
+    params.msg();
 
     if (! run)
         return;
 
+    // skip invalid sizes
     if (k < l || k < nb || nb < 1) {
-        printf( "skipping because tpmlqt requires k >= l >= 0 and k >= nb >= 1\n" );
+        params.msg() = "skipping: requires k >= l >= 0 and k >= nb >= 1";
         return;
     }
 
     // ---------- setup
-    int64_t Vn = (side == Side::Left ? m : n);
-    int64_t Am = (side == Side::Left ? k : m);
-    int64_t An = (side == Side::Left ? n : k);
-    int64_t ldv = roundup( max( 1, k  ), align );
-    int64_t ldt = roundup( max( 1, nb ), align );
-    int64_t lda = roundup( max( 1, Am ), align );
-    int64_t ldb = roundup( max( 1, m  ), align );
-    int64_t ldw = roundup( max( 1, k  ), align );
+    int64_t Vn = (side == blas::Side::Left ? m : n);
+    int64_t Am = (side == blas::Side::Left ? k : m);
+    int64_t An = (side == blas::Side::Left ? n : k);
+    int64_t ldv = roundup( blas::max( 1, k  ), align );
+    int64_t ldt = roundup( blas::max( 1, nb ), align );
+    int64_t lda = roundup( blas::max( 1, Am ), align );
+    int64_t ldb = roundup( blas::max( 1, m  ), align );
+    int64_t ldw = roundup( blas::max( 1, k  ), align );
     size_t size_V  = (size_t) ldv * Vn;  // k-by-m (Left) or k-by-n (Right)
     size_t size_T  = (size_t) ldt * k;   // nb-by-k
     size_t size_A  = (size_t) lda * An;  // k-by-n (Left) or m-by-k (Right)
@@ -96,9 +96,9 @@ void test_tpmlqt_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::tpmlqt( side, trans, m, n, k, l, nb, &V[0], ldv, &T[0], ldt, &A_tst[0], lda, &B_tst[0], ldb );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::tpmlqt returned error %lld\n", (lld) info_tst );
     }
@@ -115,9 +115,9 @@ void test_tpmlqt_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_tpmlqt( side2char(side), op2char(trans), m, n, k, l, nb, &V[0], ldv, &T[0], ldt, &A_ref[0], lda, &B_ref[0], ldb );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_tpmlqt returned error %lld\n", (lld) info_ref );
         }

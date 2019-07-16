@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_langb_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -22,6 +20,7 @@ void test_langb_work( Params& params, bool run )
     int64_t kl = params.kl();
     int64_t ku = params.ku();
     int64_t align = params.align();
+    int64_t verbose = params.verbose();
 
     // mark non-standard output values
     params.ref_time();
@@ -43,31 +42,52 @@ void test_langb_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
-    int64_t norm_tst = lapack::langb( norm, n, kl, ku, &AB[0], ldab );
-    time = get_wtime() - time;
+    double time = libtest::get_wtime();
+    real_t norm_tst = lapack::langb( norm, n, kl, ku, &AB[0], ldab );
+    time = libtest::get_wtime() - time;
 
     params.time() = time;
     // double gflop = lapack::Gflop< scalar_t >::langb( norm, n, kl, ku );
     // params.gflops() = gflop / time;
 
+    if (verbose >= 1) {
+        printf( "norm_tst = %.8e\n", norm_tst );
+    }
+
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
-        int64_t norm_ref = LAPACKE_langb( norm2char(norm), n, kl, ku, &AB[0], ldab );
-        time = get_wtime() - time;
+        time = libtest::get_wtime();
+        real_t norm_ref = LAPACKE_langb( norm2char(norm), n, kl, ku, &AB[0], ldab );
+        time = libtest::get_wtime() - time;
 
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
-        real_t error = 0;
-        if (norm_tst != norm_ref) {
-            error = 1;
+        if (verbose >= 1) {
+            printf( "norm_ref = %.8e\n", norm_ref );
         }
+
+        // ---------- check error compared to reference
+        // todo: adjust normalize for band
+        real_t tol = 3 * std::numeric_limits< real_t >::epsilon();
+        real_t normalize = 1;
+        if (norm == lapack::Norm::Max && ! blas::is_complex< scalar_t >::value) {
+            // max-norm depends on only one element, so in real there should be
+            // zero error, but in complex there's error in abs().
+            tol = 0;
+        }
+        else if (norm == lapack::Norm::One)
+            normalize = sqrt( real_t(n) );
+        else if (norm == lapack::Norm::Inf)
+            normalize = sqrt( real_t(n) );
+        else if (norm == lapack::Norm::Fro)
+            normalize = sqrt( real_t(n)*n );
+        real_t error = std::abs( norm_tst - norm_ref ) / normalize;
+        if (norm_ref != 0)
+            error /= norm_ref;
         params.error() = error;
-        params.okay() = (error == 0);  // expect lapackpp == lapacke
+        params.okay() = (error <= tol);
     }
 }
 

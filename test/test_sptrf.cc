@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_sptrf_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -22,8 +20,8 @@ void test_sptrf_work( Params& params, bool run )
 
     // mark non-standard output values
     params.ref_time();
-    // params.ref_gflops();
-    // params.gflops();
+    params.ref_gflops();
+    params.gflops();
 
     if (! run)
         return;
@@ -44,29 +42,29 @@ void test_sptrf_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::sptrf( uplo, n, &AP_tst[0], &ipiv_tst[0] );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::sptrf returned error %lld\n", (lld) info_tst );
     }
 
     params.time() = time;
-    // double gflop = lapack::Gflop< scalar_t >::sptrf( n );
-    // params.gflops() = gflop / time;
+    double gflop = lapack::Gflop< scalar_t >::sytrf( n );
+    params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_sptrf( uplo2char(uplo), n, &AP_ref[0], &ipiv_ref[0] );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_sptrf returned error %lld\n", (lld) info_ref );
         }
 
         params.ref_time() = time;
-        // params.ref_gflops() = gflop / time;
+        params.ref_gflops() = gflop / time;
 
         // ---------- check error compared to reference
         real_t error = 0;

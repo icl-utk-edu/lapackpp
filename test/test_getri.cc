@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_getri_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -21,6 +19,9 @@ void test_getri_work( Params& params, bool run )
     int64_t align = params.align();
     int64_t verbose = params.verbose();
     params.matrix.mark();
+
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+    real_t tol = params.tol() * eps;
 
     // mark non-standard output values
     params.ref_time();
@@ -31,7 +32,7 @@ void test_getri_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, n ), align );
+    int64_t lda = roundup( blas::max( 1, n ), align );
     size_t size_A = (size_t) lda * n;
     size_t size_ipiv = (size_t) (n);
 
@@ -66,9 +67,9 @@ void test_getri_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::getri( n, &A_tst[0], lda, &ipiv_tst[0] );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::getri returned error %lld\n", (lld) info_tst );
     }
@@ -84,9 +85,6 @@ void test_getri_work( Params& params, bool run )
     if (params.check() == 'y') {
         // ---------- check error
         // comparing to ref. solution doesn't work due to roundoff errors
-        real_t eps = std::numeric_limits< real_t >::epsilon();
-        real_t tol = params.tol();
-
         // R = I
         std::vector< scalar_t > R( size_A );
         // todo: laset; needs uplo=general
@@ -98,7 +96,8 @@ void test_getri_work( Params& params, bool run )
         }
 
         // R = I - A A^{-1}
-        blas::gemm( Layout::ColMajor, Op::NoTrans, Op::NoTrans, n, n, n,
+        blas::gemm( blas::Layout::ColMajor,
+                    blas::Op::NoTrans, blas::Op::NoTrans, n, n, n,
                     -1.0, &A_ref[0], lda,
                           &A_tst[0], lda,
                      1.0, &R[0], lda );
@@ -112,7 +111,7 @@ void test_getri_work( Params& params, bool run )
         real_t Ainv_norm = lapack::lange( lapack::Norm::Fro, n, n, &A_tst[0], lda );
         real_t error = Rnorm / (n * Anorm * Ainv_norm);
         params.error() = error;
-        params.okay() = (error < tol*eps);
+        params.okay() = (error < tol);
     }
 
     if (params.ref() == 'y') {
@@ -124,9 +123,9 @@ void test_getri_work( Params& params, bool run )
 
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_getri( n, &A_ref[0], lda, &ipiv_ref[0] );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_getri returned error %lld\n", (lld) info_ref );
         }

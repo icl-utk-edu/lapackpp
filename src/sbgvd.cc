@@ -54,6 +54,9 @@ int64_t sbgvd(
     lapack_int lwork_ = real(qry_work[0]);
     lapack_int liwork_ = real(qry_iwork[0]);
 
+    // LAPACK <= 3.6.0 needed 3*n, but query returned 2*n. Be safe.
+    lwork_ = max( lwork_, 3*n_ );
+
     // allocate workspace
     std::vector< float > work( lwork_ );
     std::vector< lapack_int > iwork( liwork_ );
@@ -116,6 +119,9 @@ int64_t sbgvd(
     }
     lapack_int lwork_ = real(qry_work[0]);
     lapack_int liwork_ = real(qry_iwork[0]);
+
+    // LAPACK <= 3.6.0 needed 3*n, but query returned 2*n. Be safe.
+    lwork_ = max( lwork_, 3*n_ );
 
     // allocate workspace
     std::vector< double > work( lwork_ );

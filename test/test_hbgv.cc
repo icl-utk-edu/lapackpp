@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_hbgv_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -20,9 +18,10 @@ void test_hbgv_work( Params& params, bool run )
     lapack::Job jobz = params.jobz();
     lapack::Uplo uplo = params.uplo();
     int64_t n = params.dim.n();
-    int64_t ka = params.kd();
-    int64_t kb = params.kd();
+    int64_t ka = params.ka();
+    int64_t kb = params.kb();
     int64_t align = params.align();
+    int64_t verbose = params.verbose();
 
     // mark non-standard output values
     params.ref_time();
@@ -32,10 +31,16 @@ void test_hbgv_work( Params& params, bool run )
     if (! run)
         return;
 
+    // skip invalid sizes
+    if (! (n >= ka && ka >= kb)) {
+        params.msg() = "skipping: requires n >= ka >= kb (not documented)";
+        return;
+    }
+
     // ---------- setup
     int64_t ldab = roundup( ka+1, align );
     int64_t ldbb = roundup( kb+1, align );
-    int64_t ldz = ( jobz==lapack::Job::Vec ? roundup( max( 1, n ), align ) : 1 );
+    int64_t ldz = ( jobz == lapack::Job::Vec ? roundup( blas::max( 1, n ), align ) : 1 );
     size_t size_AB = (size_t) ldab * n;
     size_t size_BB = (size_t) ldbb * n;
     size_t size_W = (size_t) (n);
@@ -66,15 +71,19 @@ void test_hbgv_work( Params& params, bool run )
            BB_tst[ j*ldbb ] += n;
        }
     }
+    if (verbose >= 2) {
+        printf( "Aband" ); print_matrix( ka+1, n, &AB_tst[0], ldab );
+        printf( "Bband" ); print_matrix( kb+1, n, &BB_tst[0], ldab );
+    }
 
     AB_ref = AB_tst;
     BB_ref = BB_tst;
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::hbgv( jobz, uplo, n, ka, kb, &AB_tst[0], ldab, &BB_tst[0], ldbb, &W_tst[0], &Z_tst[0], ldz );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::hbgv returned error %lld\n", (lld) info_tst );
     }
@@ -83,18 +92,32 @@ void test_hbgv_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::hbgv( jobz, n, ka, kb );
     // params.gflops() = gflop / time;
 
+    if (verbose >= 2) {
+        printf( "W_tst" ); print_vector( n, &W_tst[0], 1 );
+        if (jobz == lapack::Job::Vec) {
+            printf( "Z_tst" ); print_matrix( n, n, &Z_tst[0], ldz );
+        }
+    }
+
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_hbgv( job2char(jobz), uplo2char(uplo), n, ka, kb, &AB_ref[0], ldab, &BB_ref[0], ldbb, &W_ref[0], &Z_ref[0], ldz );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_hbgv returned error %lld\n", (lld) info_ref );
         }
 
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
+
+        if (verbose >= 2) {
+            printf( "W_ref" ); print_vector( n, &W_ref[0], 1 );
+            if (jobz == lapack::Job::Vec) {
+                printf( "Z_ref" ); print_matrix( n, n, &Z_ref[0], ldz );
+            }
+        }
 
         // ---------- check error compared to reference
         real_t error = 0;

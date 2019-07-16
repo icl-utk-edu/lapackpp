@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_sptrs_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -21,17 +19,18 @@ void test_sptrs_work( Params& params, bool run )
     int64_t n = params.dim.n();
     int64_t nrhs = params.nrhs();
     int64_t align = params.align();
+    int64_t verbose = params.verbose();
 
     // mark non-standard output values
     params.ref_time();
-    // params.ref_gflops();
-    // params.gflops();
+    params.ref_gflops();
+    params.gflops();
 
     if (! run)
         return;
 
     // ---------- setup
-    int64_t ldb = roundup( max( 1, n ), align );
+    int64_t ldb = roundup( blas::max( 1, n ), align );
     size_t size_AP = (size_t) (n*(n+1)/2);
     size_t size_ipiv = (size_t) (n);
     size_t size_B = (size_t) ldb * nrhs;
@@ -48,7 +47,11 @@ void test_sptrs_work( Params& params, bool run )
     lapack::larnv( idist, iseed, B_tst.size(), &B_tst[0] );
     B_ref = B_tst;
 
-    // todo: initialize ipiv_tst and ipiv_ref
+    if (verbose >= 2) {
+        printf( "AP = " ); print_matrix( 1, size_AP, &AP[0], 1 );
+        printf( "B = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
+    }
+
     int64_t info = lapack::sptrf( uplo, n, &AP[0], &ipiv_tst[0] );
     if (info != 0) {
         fprintf( stderr, "lapack::sptrf returned error %lld\n", (lld) info );
@@ -57,29 +60,34 @@ void test_sptrs_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::sptrs( uplo, n, nrhs, &AP[0], &ipiv_tst[0], &B_tst[0], ldb );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::sptrs returned error %lld\n", (lld) info_tst );
     }
 
     params.time() = time;
-    // double gflop = lapack::Gflop< scalar_t >::sptrs( n, nrhs );
-    // params.gflops() = gflop / time;
+    double gflop = lapack::Gflop< scalar_t >::sytrs( n, nrhs );
+    params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_sptrs( uplo2char(uplo), n, nrhs, &AP[0], &ipiv_ref[0], &B_ref[0], ldb );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_sptrs returned error %lld\n", (lld) info_ref );
         }
 
         params.ref_time() = time;
-        // params.ref_gflops() = gflop / time;
+        params.ref_gflops() = gflop / time;
+
+        if (verbose >= 2) {
+            printf( "B_tst = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
+            printf( "B_ref = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
+        }
 
         // ---------- check error compared to reference
         real_t error = 0;

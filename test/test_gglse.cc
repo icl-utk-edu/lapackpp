@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_gglse_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -24,23 +22,37 @@ void test_gglse_work( Params& params, bool run )
     int64_t align = params.align();
     params.matrix.mark();
     params.matrixB.mark();
+    int64_t verbose = params.verbose();
+
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+    real_t tol = params.tol() * eps;
 
     // mark non-standard output values
+    params.error2();
     params.ref_time();
     // params.ref_gflops();
     // params.gflops();
+    params.msg();
 
-    if (! run)
+    if (! run) {
+        // Use well-conditioned matrices per LAWN 41.
+        params.matrix .kind.set_default( "svd" );
+        params.matrixB.kind.set_default( "svd" );
+        params.matrix .cond() = 100;
+        params.matrixB.cond() = 10;
         return;
+    }
 
-    if (! ((0 <= p) && (p <= n) && ( n <= m+p ))) {
-        printf( "skipping because gglse requires 0 <= p <= n <= m+p\n" );
+    // skip invalid sizes
+    if (! ((0 <= p) && (p <= n) && (n <= m+p))) {
+        params.msg() = "skipping: requires 0 <= p <= n <= m+p";
         return;
     }
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, m ), align );
-    int64_t ldb = roundup( max( 1, p ), align );
+    bool consistent = true;
+    int64_t lda = roundup( blas::max( 1, m ), align );
+    int64_t ldb = roundup( blas::max( 1, p ), align );
     size_t size_A = (size_t) ( lda * n );
     size_t size_B = (size_t) ( ldb * n );
     size_t size_C = (size_t) (m);
@@ -62,18 +74,41 @@ void test_gglse_work( Params& params, bool run )
     lapack::generate_matrix( params.matrixB, p, n, &B_tst[0], ldb );
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
-    lapack::larnv( idist, iseed, C_tst.size(), &C_tst[0] );
-    lapack::larnv( idist, iseed, D_tst.size(), &D_tst[0] );
+    if (consistent) {
+        // Generate random X, then set C = A*X and D = B*X.
+        lapack::larnv( idist, iseed, X_ref.size(), &X_ref[0] );
+        blas::gemv( blas::Layout::ColMajor, blas::Op::NoTrans, m, n,
+                    1.0, &A_tst[0], lda, &X_ref[0], 1,
+                    0.0, &C_tst[0], 1 );
+        blas::gemv( blas::Layout::ColMajor, blas::Op::NoTrans, p, n,
+                    1.0, &B_tst[0], ldb, &X_ref[0], 1,
+                    0.0, &D_tst[0], 1 );
+    }
+    else {
+        // Generate random C, D.
+        lapack::larnv( idist, iseed, C_tst.size(), &C_tst[0] );
+        lapack::larnv( idist, iseed, D_tst.size(), &D_tst[0] );
+    }
+
     A_ref = A_tst;
     B_ref = B_tst;
     C_ref = C_tst;
     D_ref = D_tst;
 
+    if (verbose >= 2) {
+        printf( "A = " ); print_matrix( m, n, &A_tst[0], lda );
+        printf( "B = " ); print_matrix( p, n, &B_tst[0], ldb );
+        printf( "c = " ); print_vector( m, &C_tst[0], 1 );
+        printf( "d = " ); print_vector( p, &D_tst[0], 1 );
+    }
+
     // ---------- run test
+    // minimize || c - A*x ||_2   subject to   B*x = d
+    // A is M-by-N matrix, B is P-by-N matrix, c is M-vector, and d is P-vector
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::gglse( m, n, p, &A_tst[0], lda, &B_tst[0], ldb, &C_tst[0], &D_tst[0], &X_tst[0] );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::gglse returned error %lld\n", (lld) info_tst );
     }
@@ -82,31 +117,64 @@ void test_gglse_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::gglse( m, n );
     // params.gflops() = gflop / time;
 
-    if (params.ref() == 'y' || params.check() == 'y') {
+    if (verbose >= 2) {
+        printf( "x_tst = " ); print_vector( n, &X_tst[0], 1 );
+    }
+
+    if (params.check() == 'y') {
+        // ---------- check error
+        real_t x_norm = blas::asum( n, &X_tst[0], 1 );
+
+        // r1 = Ax - c is small only for a consistent system.
+        if (consistent) {
+            C_tst = C_ref;
+            blas::gemv( blas::Layout::ColMajor, blas::Op::NoTrans, m, n,
+                         1.0, &A_ref[0], lda, &X_tst[0], 1,
+                        -1.0, &C_tst[0], 1 );
+            real_t error1 = blas::asum( m, &C_tst[0], 1 );
+            real_t A_norm = lapack::lange( lapack::Norm::One, m, n, &A_ref[0], lda );
+            if (A_norm != 0)
+                error1 /= A_norm;
+            if (x_norm != 0)
+                error1 /= x_norm;
+
+            params.error() = error1;
+            params.okay() = (error1 < tol);
+        }
+
+        // r2 = Bx - d should always be small.
+        D_tst = D_ref;
+        blas::gemv( blas::Layout::ColMajor, blas::Op::NoTrans, p, n,
+                     1.0, &B_ref[0], ldb, &X_tst[0], 1,
+                    -1.0, &D_tst[0], 1 );
+        real_t error2 = blas::asum( p, &D_tst[0], 1 );
+        real_t B_norm = lapack::lange( lapack::Norm::One, p, n, &B_ref[0], ldb );
+        error2 /= n;
+        if (B_norm != 0)
+            error2 /= B_norm;
+        if (x_norm != 0)
+            error2 /= x_norm;
+
+        params.error2() = error2;
+        params.okay() = params.okay() && (error2 < tol);
+    }
+
+    if (params.ref() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_gglse( m, n, p, &A_ref[0], lda, &B_ref[0], ldb, &C_ref[0], &D_ref[0], &X_ref[0] );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gglse returned error %lld\n", (lld) info_ref );
         }
 
+        if (verbose >= 2) {
+            printf( "x_ref = " ); print_vector( n, &X_ref[0], 1 );
+        }
+
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
-
-        // ---------- check error compared to reference
-        real_t error = 0;
-        if (info_tst != info_ref) {
-            error = 1;
-        }
-        error += abs_error( A_tst, A_ref );
-        error += abs_error( B_tst, B_ref );
-        error += abs_error( C_tst, C_ref );
-        error += abs_error( D_tst, D_ref );
-        error += abs_error( X_tst, X_ref );
-        params.error() = error;
-        params.okay() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 

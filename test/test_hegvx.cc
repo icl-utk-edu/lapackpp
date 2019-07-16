@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_hegvx_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -43,16 +41,16 @@ void test_hegvx_work( Params& params, bool run )
     }
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, n ), align );
-    int64_t ldb = roundup( max( 1, n ), align );
+    int64_t lda = roundup( blas::max( 1, n ), align );
+    int64_t ldb = roundup( blas::max( 1, n ), align );
     real_t abstol = 0;  // default value
     int64_t m_tst;
     lapack_int m_ref;
-    int64_t ldz = ( jobz==lapack::Job::NoVec ? 1 : roundup( max( 1, n ), align ) );
+    int64_t ldz = ( jobz == lapack::Job::NoVec ? 1 : roundup( blas::max( 1, n ), align ) );
     size_t size_A = (size_t) ( lda * n );
     size_t size_B = (size_t) ( ldb * n );
     size_t size_W = (size_t) ( n );
-    size_t size_Z = (size_t) max( 1, ldz * n );
+    size_t size_Z = (size_t) blas::max( 1, ldz * n );
     size_t size_ifail = (size_t) ( n );
 
     std::vector< scalar_t > A_tst( size_A );
@@ -73,9 +71,9 @@ void test_hegvx_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::hegvx( itype, jobz, range, uplo, n, &A_tst[0], lda, &B_tst[0], ldb, vl, vu, il, iu, abstol, &m_tst, &W_tst[0], &Z_tst[0], ldz, &ifail_tst[0] );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::hegvx returned error %lld\n", (lld) info_tst );
     }
@@ -87,9 +85,9 @@ void test_hegvx_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_hegvx( itype, job2char(jobz), range2char(range), uplo2char(uplo), n, &A_ref[0], lda, &B_ref[0], ldb, vl, vu, il, iu, abstol, &m_ref, &W_ref[0], &Z_ref[0], ldz, &ifail_ref[0] );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_hegvx returned error %lld\n", (lld) info_ref );
         }
@@ -108,7 +106,7 @@ void test_hegvx_work( Params& params, bool run )
         error += abs_error( W_tst, W_ref );
         error += abs_error( Z_tst, Z_ref );
         // Check first m elements of ifail
-        if ( jobz==lapack::Job::Vec ) {
+        if ( jobz == lapack::Job::Vec ) {
             for ( size_t i = 0; i < (size_t)(m_ref); i++ )
                 error += std::abs( ifail_tst[i] - ifail_ref[i] );
         }

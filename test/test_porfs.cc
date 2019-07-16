@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_porfs_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -37,9 +35,9 @@ void test_porfs_work( Params& params, bool run )
 
     // ---------- setup
     // make A and AF, B and X, the same size
-    int64_t lda = roundup( max( 1, n ), align );
+    int64_t lda = roundup( blas::max( 1, n ), align );
     int64_t ldaf = lda;
-    int64_t ldb = roundup( max( 1, n ), align );
+    int64_t ldb = roundup( blas::max( 1, n ), align );
     int64_t ldx = ldb;
     size_t size_A = (size_t) lda * n;
     size_t size_AF = (size_t) ldaf * n;
@@ -80,9 +78,9 @@ void test_porfs_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::porfs( uplo, n, nrhs, &A[0], lda, &AF[0], ldaf, &B[0], ldb, &X_tst[0], ldx, &ferr_tst[0], &berr_tst[0] );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::porfs returned error %lld\n", (lld) info_tst );
     }
@@ -94,9 +92,9 @@ void test_porfs_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_porfs( uplo2char(uplo), n, nrhs, &A[0], lda, &AF[0], ldaf, &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_porfs returned error %lld\n", (lld) info_ref );
         }

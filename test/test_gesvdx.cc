@@ -13,8 +13,6 @@
 template< typename scalar_t >
 void test_gesvdx_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -37,25 +35,27 @@ void test_gesvdx_work( Params& params, bool run )
     params.ref_time();
     // params.ref_gflops();
     // params.gflops();
+    params.msg();
 
     if (! run)
         return;
 
-    if ( ( range==lapack::Range::Index ) &&
-         ! ( ( 1 <= il ) && ( il < iu ) && ( iu < min( m, n ) ) ) ) {
-        printf( "skipping because gesvdx requires 1 <= il <= iu <= min(m,n)\n" );
+    // skip invalid sizes
+    if ( ( range == lapack::Range::Index ) &&
+         ! ( ( 1 <= il ) && ( il < iu ) && ( iu < blas::min( m, n ) ) ) ) {
+        params.msg() = "skipping: requires 1 <= il <= iu <= min(m,n)";
         return;
     }
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, m ), align );
+    int64_t lda = roundup( blas::max( 1, m ), align );
     int64_t ns_tst;
     lapack_int ns_ref;
-    int64_t ldu = ( jobu==lapack::Job::Vec ? roundup( m, align ) : 1 );
-    int64_t ldvt = ( jobvt==lapack::Job::Vec ? roundup( min( m, n ), align ) : 1 );
+    int64_t ldu = ( jobu == lapack::Job::Vec ? roundup( m, align ) : 1 );
+    int64_t ldvt = ( jobvt == lapack::Job::Vec ? roundup( blas::min( m, n ), align ) : 1 );
     size_t size_A = (size_t) ( lda * n );
-    size_t size_S = (size_t) ( min( m, n) );
-    size_t size_U = (size_t) ( ldu * min( m, n ) );
+    size_t size_S = (size_t) ( blas::min( m, n) );
+    size_t size_U = (size_t) ( ldu * blas::min( m, n ) );
     size_t size_VT = (size_t) ( ldvt * n );
 
     std::vector< scalar_t > A_tst( size_A );
@@ -72,9 +72,9 @@ void test_gesvdx_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::gesvdx( jobu, jobvt, range, m, n, &A_tst[0], lda, vl, vu, il, iu, &ns_tst, &S_tst[0], &U_tst[0], ldu, &VT_tst[0], ldvt );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::gesvdx returned error %lld\n", (lld) info_tst );
     }
@@ -86,9 +86,9 @@ void test_gesvdx_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_gesvdx( job2char(jobu), job2char(jobvt), range2char(range), m, n, &A_ref[0], lda, vl, vu, il, iu, &ns_ref, &S_ref[0], &U_ref[0], ldu, &VT_ref[0], ldvt );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gesvdx returned error %lld\n", (lld) info_ref );
         }

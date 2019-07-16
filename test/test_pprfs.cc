@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_pprfs_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -33,8 +31,8 @@ void test_pprfs_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t ldb = roundup( max( 1, n ), align );
-    int64_t ldx = roundup( max( 1, n ), align );
+    int64_t ldb = roundup( blas::max( 1, n ), align );
+    int64_t ldx = roundup( blas::max( 1, n ), align );
     size_t size_AP = (size_t) (n*(n+1)/2);
     size_t size_AFP = (size_t) (n*(n+1)/2);
     size_t size_B = (size_t) ldb * nrhs;
@@ -88,9 +86,9 @@ void test_pprfs_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::pprfs( uplo, n, nrhs, &AP[0], &AFP[0], &B[0], ldb, &X_tst[0], ldx, &ferr_tst[0], &berr_tst[0] );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::pprfs returned error %lld\n", (lld) info_tst );
     }
@@ -102,9 +100,9 @@ void test_pprfs_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_pprfs( uplo2char(uplo), n, nrhs, &AP[0], &AFP[0], &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_pprfs returned error %lld\n", (lld) info_ref );
         }

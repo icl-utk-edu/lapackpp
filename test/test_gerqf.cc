@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_gerqf_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -21,6 +19,9 @@ void test_gerqf_work( Params& params, bool run )
     int64_t n = params.dim.n();
     int64_t align = params.align();
     params.matrix.mark();
+
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+    real_t tol = params.tol() * eps;
 
     // mark non-standard output values
     params.ortho();
@@ -33,9 +34,9 @@ void test_gerqf_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, m ), align );
+    int64_t lda = roundup( blas::max( 1, m ), align );
     size_t size_A = (size_t) lda * n;
-    size_t size_tau = (size_t) ( min( m, n ) );
+    size_t size_tau = (size_t) ( blas::min( m, n ) );
 
     std::vector< scalar_t > A_tst( size_A );
     std::vector< scalar_t > A_ref( size_A );
@@ -47,9 +48,9 @@ void test_gerqf_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::gerqf( m, n, &A_tst[0], lda, &tau_tst[0] );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::gerqf returned error %lld\n", (lld) info_tst );
     }
@@ -62,10 +63,8 @@ void test_gerqf_work( Params& params, bool run )
         // ---------- check error
         // comparing to ref. solution doesn't work
         // Following lapack/TESTING/LIN/crqt01.f
-        real_t eps = std::numeric_limits< real_t >::epsilon();
-        real_t tol = params.tol();
-        int64_t minmn = min( m, n );
-        int64_t maxmn = max( m, n );
+        int64_t minmn = blas::min( m, n );
+        int64_t maxmn = blas::max( m, n );
         int64_t m_n = m - n;
         int64_t n_m = n - m;
 
@@ -80,7 +79,8 @@ void test_gerqf_work( Params& params, bool run )
             if (m < n)
                 lapack::lacpy( lapack::MatrixType::General, m, n_m, &A_tst[0], lda, &Q[n_m], ldq );
             lapack::lacpy( lapack::MatrixType::Lower, m-1, m-1, &A_tst[1+(n_m*lda)], lda, &Q[n_m+1+(n_m*ldq)], ldq );
-        } else {
+        }
+        else {
             lapack::lacpy( lapack::MatrixType::Lower, n-1, n-1, &A_tst[m_n+1], lda, &Q[1], ldq );
         }
 
@@ -94,13 +94,15 @@ void test_gerqf_work( Params& params, bool run )
         lapack::laset( lapack::MatrixType::General, m, n, 0, 0, &R[0], ldr );
         if ( m <= n ) {
             lapack::lacpy( lapack::MatrixType::Upper, m, m, &A_tst[n_m*lda], lda, &R[n_m*ldr], ldr );
-        } else {
+        }
+        else {
             lapack::lacpy( lapack::MatrixType::General, m_n, n, &A_tst[0], lda, &R[0], ldr );
             lapack::lacpy( lapack::MatrixType::Upper, n, n, &A_tst[m_n], lda, &R[m_n], ldr );
         }
 
         // Compute R - A*Q'
-        blas::gemm( Layout::ColMajor, Op::NoTrans, Op::ConjTrans, m, n, n,
+        blas::gemm( blas::Layout::ColMajor,
+                    blas::Op::NoTrans, blas::Op::ConjTrans, m, n, n,
                     -1.0, &A_ref[0], lda, &Q[0], ldq, 1.0, &R[0], ldr );
 
         // error = || L - Q^H*A || / (N * ||A||)
@@ -112,7 +114,8 @@ void test_gerqf_work( Params& params, bool run )
 
         // Compute I - Q*Q'
         lapack::laset( lapack::MatrixType::General, n, n, 0.0, 1.0, &R[0], ldr );
-        blas::herk( Layout::ColMajor, Uplo::Upper, Op::NoTrans, n, n, -1.0, &Q[0], ldq, 1.0, &R[0], ldr );
+        blas::herk( blas::Layout::ColMajor, blas::Uplo::Upper, blas::Op::NoTrans,
+                    n, n, -1.0, &Q[0], ldq, 1.0, &R[0], ldr );
 
         // error = || I - Q^H*Q || / N
         real_t resid2 = lapack::lanhe( lapack::Norm::One, lapack::Uplo::Upper, n, &R[0], ldr );
@@ -120,15 +123,15 @@ void test_gerqf_work( Params& params, bool run )
 
         params.error() = error1;
         params.ortho() = error2;
-        params.okay() = (error1 < tol*eps) && (error2 < tol*eps);
+        params.okay() = (error1 < tol) && (error2 < tol);
     }
 
     if (params.ref() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_gerqf( m, n, &A_ref[0], lda, &tau_ref[0] );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gerqf returned error %lld\n", (lld) info_ref );
         }

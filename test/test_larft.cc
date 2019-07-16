@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_larft_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -32,28 +30,27 @@ void test_larft_work( Params& params, bool run )
     if (! run)
         return;
 
+    // skip invalid sizes
+    if (! (n >= k)) {
+        params.msg() = "skipping: requires n >= k (not documented)";
+        return;
+    }
+
     // ---------- setup
-    int64_t ldv;
-    if (storev == lapack::StoreV::Columnwise)
-        ldv = roundup( max( 1, n ), align );
-    else
-        ldv = roundup( max( 1, k ), align );
-
-    int64_t ldt = roundup( k, align );
-
-    int lcv;
-    size_t size_V;
+    int64_t Vm, Vn;
     if (storev == lapack::StoreV::Columnwise) {
-        lcv = k;
-        size_V = (size_t) ldv * k;
+        Vm = n;
+        Vn = k;
     }
     else {
-        lcv = n;
-        size_V = (size_t) ldv * n;
+        Vm = k;
+        Vn = n;
     }
-
+    int64_t ldv = roundup( blas::max( 1, Vm ), align );
+    int64_t ldt = roundup( blas::max( 1, k ), align );
+    size_t size_V   = (size_t) ldv * Vn;
     size_t size_tau = (size_t) (k);
-    size_t size_T = (size_t) ldt * k;
+    size_t size_T   = (size_t) ldt * k;
 
     std::vector< scalar_t > V( size_V );
     std::vector< scalar_t > tau( size_tau );
@@ -103,15 +100,15 @@ void test_larft_work( Params& params, bool run )
     }
 
     if (verbose >= 2) {
-        printf( "V = " ); print_matrix( ldv, lcv, &V[0], ldv );
+        printf( "V = " ); print_matrix( Vm, Vn, &V[0], ldv );
         printf( "tau = " ); print_vector( k, &tau[0], 1 );
     }
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     lapack::larft( direct, storev, n, k, &V[0], ldv, &tau[0], &T_tst[0], ldt );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
 
     params.time() = time;
     //double gflop = lapack::Gflop< scalar_t >::larft( direct, storev, n, k );
@@ -124,9 +121,9 @@ void test_larft_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_larft( direct2char(direct), storev2char(storev), n, k, &V[0], ldv, &tau[0], &T_ref[0], ldt );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_larft returned error %lld\n", (lld) info_ref );
         }

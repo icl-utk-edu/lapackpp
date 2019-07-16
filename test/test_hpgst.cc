@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_hpgst_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -47,7 +45,8 @@ void test_hpgst_work( Params& params, bool run )
         for (int64_t i = 0; i < n; ++i) {
             BP[ i + 0.5*(i+1)*i ] += n;
         }
-    } else { // lower
+    }
+    else { // lower
         for (int64_t i = 0; i < n; ++i) {
             BP[ i + n*i - 0.5*i*(i+1) ] += n;
         }
@@ -63,9 +62,9 @@ void test_hpgst_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::hpgst( itype, uplo, n, &AP_tst[0], &BP[0] );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::hpgst returned error %lld\n", (lld) info_tst );
     }
@@ -77,9 +76,9 @@ void test_hpgst_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_hpgst( itype, uplo2char(uplo), n, &AP_ref[0], &BP[0] );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_hpgst returned error %lld\n", (lld) info_ref );
         }

@@ -14,8 +14,6 @@
 template< typename scalar_t >
 void test_tpmqrt_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -34,24 +32,45 @@ void test_tpmqrt_work( Params& params, bool run )
     params.ref_time();
     params.ref_gflops();
     params.gflops();
+    params.msg();
 
     if (! run)
         return;
 
+    // skip invalid sizes
     if (k < l || k < nb || nb < 1) {
-        printf( "skipping because tpmqrt requires k >= l >= 0 and k >= nb >= 1\n" );
+        params.msg() = "skipping: requires k >= l >= 0 and k >= nb >= 1";
         return;
     }
 
     // ---------- setup
-    int64_t Vm = (side == Side::Left ? m : n);
-    int64_t Am = (side == Side::Left ? k : m);
-    int64_t An = (side == Side::Left ? n : k);
-    int64_t ldv = roundup( max( 1, Vm ), align );
-    int64_t ldt = roundup( max( 1, nb ), align );
-    int64_t lda = roundup( max( 1, Am ), align );
-    int64_t ldb = roundup( max( 1, m  ), align );
-    int64_t ldw = roundup( max( 1, k  ), align );
+    // Householder vectors W, Q = \product_i (I - Wi Ti Wi^T)
+    // V1, Bhat1 are rectangular
+    // V2, Bhat2 are upper trapezoidal
+    // left, C = op(Q)*C:
+    //      tpmqrt                                  tpqrt
+    //      C = [ A ] } k       W = [ I  ] } k      [ What0 ] } k
+    //          [ B ] } m           [ V1 ] } m-l    [ Vhat1 ] } m-l
+    //                              [ V2 ] } l      [ Vhat2 ] } l
+    //            n cols              k cols          k cols
+    //
+    // right, C = C * op(Q):
+    //      tpmqrt                                  tpqrt
+    //      C = [ A, B ] } m    W = [ I  ] } k      [ What0 ] } k
+    //            k, n cols         [ V1 ] } n-l    [ Vhat1 ] } n-l
+    //                              [ V2 ] } l      [ Vhat2 ] } l
+    //                                k cols          k cols
+    //
+    // In tpqrt, What is A, Vhat is B.
+    //
+    int64_t Vm = (side == blas::Side::Left ? m : n);
+    int64_t Am = (side == blas::Side::Left ? k : m);
+    int64_t An = (side == blas::Side::Left ? n : k);
+    int64_t ldv = roundup( blas::max( 1, Vm ), align );
+    int64_t ldt = roundup( blas::max( 1, nb ), align );
+    int64_t lda = roundup( blas::max( 1, Am ), align );
+    int64_t ldb = roundup( blas::max( 1, m  ), align );
+    int64_t ldw = roundup( blas::max( 1, k  ), align );
     size_t size_V  = (size_t) ldv * k;   // m-by-k (Left) or n-by-k (Right)
     size_t size_T  = (size_t) ldt * k;   // nb-by-k
     size_t size_A  = (size_t) lda * An;  // k-by-n (Left) or m-by-k (Right)
@@ -77,8 +96,8 @@ void test_tpmqrt_work( Params& params, bool run )
     B_ref = B_tst;
 
     // Get data for Householder reflectors in V and T by factoring matrix
-    //     D = [ W0 ] = QR.
-    //         [ V  ]
+    //     D = [ What0 ] = QR.
+    //         [ Vhat  ]
     // When applying Q = I - W T W^H with
     //     W = [ I ],
     //         [ V ]
@@ -98,9 +117,9 @@ void test_tpmqrt_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::tpmqrt( side, trans, m, n, k, l, nb, &V[0], ldv, &T[0], ldt, &A_tst[0], lda, &B_tst[0], ldb );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::tpmqrt returned error %lld\n", (lld) info_tst );
     }
@@ -117,9 +136,9 @@ void test_tpmqrt_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_tpmqrt( side2char(side), op2char(trans), m, n, k, l, nb, &V[0], ldv, &T[0], ldt, &A_ref[0], lda, &B_ref[0], ldb );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_tpmqrt returned error %lld\n", (lld) info_ref );
         }

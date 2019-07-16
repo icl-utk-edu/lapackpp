@@ -11,8 +11,6 @@
 template< typename scalar_t >
 void test_geqrf_work( Params& params, bool run )
 {
-    using namespace libtest;
-    using namespace blas;
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
@@ -21,6 +19,9 @@ void test_geqrf_work( Params& params, bool run )
     int64_t n = params.dim.n();
     int64_t align = params.align();
     params.matrix.mark();
+
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+    real_t tol = params.tol() * eps;
 
     // mark non-standard output values
     //params.ref_time();
@@ -32,10 +33,10 @@ void test_geqrf_work( Params& params, bool run )
         return;
 
     // ---------- setup
-    int64_t lda = roundup( max( 1, m ), align );
+    int64_t lda = roundup( blas::max( 1, m ), align );
     size_t size_A = (size_t)( lda * n );
-    size_t size_tau = (size_t)( min( m, n ) );
-    int64_t minmn = min( m, n );
+    size_t size_tau = (size_t)( blas::min( m, n ) );
+    int64_t minmn = blas::min( m, n );
 
     std::vector< scalar_t > A_tst( size_A );
     std::vector< scalar_t > A_ref( size_A );
@@ -47,9 +48,9 @@ void test_geqrf_work( Params& params, bool run )
 
     // ---------- run test
     libtest::flush_cache( params.cache() );
-    double time = get_wtime();
+    double time = libtest::get_wtime();
     int64_t info_tst = lapack::geqrf( m, n, &A_tst[0], lda, &tau_tst[0] );
-    time = get_wtime() - time;
+    time = libtest::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::geqrf returned error %lld\n", (lld) info_tst );
     }
@@ -62,9 +63,6 @@ void test_geqrf_work( Params& params, bool run )
         // ---------- check error
         // comparing to ref. solution doesn't work
         // Following lapack/TESTING/LIN/zqrt01.f but using smaller Q and R
-        real_t eps = std::numeric_limits< real_t >::epsilon();
-        real_t tol = params.tol();
-
         int64_t ldq = m;
         std::vector< scalar_t > Q( m * minmn ); // m by k
         int64_t ldr = minmn;
@@ -86,7 +84,8 @@ void test_geqrf_work( Params& params, bool run )
         lapack::lacpy( lapack::MatrixType::Upper, minmn, n, &A_tst[0], lda, &R[0], ldr );
 
         // Compute R - Q'*A
-        blas::gemm( Layout::ColMajor, Op::ConjTrans, Op::NoTrans, minmn, n, m,
+        blas::gemm( blas::Layout::ColMajor,
+                    blas::Op::ConjTrans, blas::Op::NoTrans, minmn, n, m,
                     -1.0, &Q[0], ldq, &A_ref[0], lda, 1.0, &R[0], ldr );
 
         // Compute norm( R - Q'*A ) / ( M * norm(A) * EPS )
@@ -98,7 +97,8 @@ void test_geqrf_work( Params& params, bool run )
 
         // Compute I - Q'*Q
         lapack::laset( lapack::MatrixType::Upper, minmn, minmn, 0.0, 1.0, &R[0], ldr );
-        blas::herk( Layout::ColMajor, Uplo::Upper, Op::ConjTrans, minmn, m, -1.0, &Q[0], ldq, 1.0, &R[0], ldr );
+        blas::herk( blas::Layout::ColMajor, blas::Uplo::Upper, blas::Op::ConjTrans,
+                    minmn, m, -1.0, &Q[0], ldq, 1.0, &R[0], ldr );
 
         // Compute norm( I - Q'*Q ) / ( M * EPS ) .
         real_t resid2 = lapack::lanhe( lapack::Norm::One, lapack::Uplo::Upper, minmn, &R[0], ldr );
@@ -106,15 +106,15 @@ void test_geqrf_work( Params& params, bool run )
 
         params.error() = error1;
         params.ortho() = error2;
-        params.okay() = (error1 < tol*eps) && (error2 < tol*eps);
+        params.okay() = (error1 < tol) && (error2 < tol);
     }
 
     if (params.ref() == 'y') {
         // ---------- run reference
         libtest::flush_cache( params.cache() );
-        time = get_wtime();
+        time = libtest::get_wtime();
         int64_t info_ref = LAPACKE_geqrf( m, n, &A_ref[0], lda, &tau_ref[0] );
-        time = get_wtime() - time;
+        time = libtest::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_geqrf returned error %lld\n", (lld) info_ref );
         }

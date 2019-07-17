@@ -71,7 +71,7 @@ else()
         message("${Blue}  Found LAPACK${ColourReset}")
         set(LAPACK_DEFINES "HAVE_LAPACK")
         # Append '-llapack' to BLAS_links
-        string(APPEND BLAS_links " -llapack")
+        string(APPEND BLAS_links "-llapack")
     else()
         message("${Red}  LAPACK not found${ColourReset}")
         set(LAPACK_DEFINES "")

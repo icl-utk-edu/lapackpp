@@ -87,6 +87,8 @@ add_executable(lapackpp_test
     test_lanhb.cc
     test_lanhe.cc
     test_lanhp.cc
+    test_lanhs.cc
+    test_lanst.cc
     test_lanht.cc
     test_lansb.cc
     test_lansp.cc

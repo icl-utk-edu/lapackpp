@@ -15,6 +15,11 @@ cmake_minimum_required(VERSION 3.2)
 
 project(LAPACKPP CXX)
 
+add_library(OpenMP::OpenMP_CXX INTERFACE IMPORTED)
+set_target_properties(OpenMP::OpenMP_CXX PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES "${OpenMP_INCLUDE_DIR}"
+)
+
 # BLAS options
 # todo: Goto, BLIS, FLAME, others?
 set(BLAS_LIBRARY "auto" CACHE STRING
@@ -436,6 +441,7 @@ add_library(lapackpp
 )
 
 # Check user supplied BLAS libraries
+if (0)
 if(BLAS_LIBRARIES)
     message("BLAS_LIBRARIES FOUND: " ${BLAS_LIBRARIES})
     include(CheckFortranFunctionExists)
@@ -479,7 +485,7 @@ message("1234 blas_config_found: " ${blas_config_found})
 if(NOT CBLAS_DEFINES STREQUAL "")
     include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CBLASConfig.cmake)
 endif()
-
+endif()
 
 # User did not provide a LAPACK Library but specified to search for one
 if(USE_OPTIMIZED_LAPACK)

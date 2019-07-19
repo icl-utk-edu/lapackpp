@@ -582,7 +582,7 @@ try_run(run_res1 compile_res1 ${CMAKE_CURRENT_BINARY_DIR}
         run_output1
 )
 
-if (compile_res1 AND ${run_output1} MATCHES "ok")
+if (compile_res1 AND "${run_output1}" MATCHES "ok")
     message("${Blue}  BLAS (sdot) returns float as float (standard)${ColourReset}")
 else()
     try_run(run_res1 compile_res1 ${CMAKE_CURRENT_BINARY_DIR}
@@ -599,7 +599,7 @@ else()
             run_output1
     )
 
-    if (compile_res1 AND ${run_output1} MATCHES "ok")
+    if (compile_res1 AND "${run_output1}" MATCHES "ok")
         message("${Blue}  BLAS (sdot) returns float as double (f2c convention)${ColourReset}")
         set(BLAS_FLOAT_RETURN "HAVE_F2C")
     endif()

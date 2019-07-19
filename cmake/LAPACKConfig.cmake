@@ -22,6 +22,9 @@ else()
     set(local_int "")
 endif()
 
+message ("blas_links: ${BLAS_links}")
+message ("blas_cxx_flags: ${BLAS_cxx_flags}")
+
 message(STATUS "Checking for LAPACK POTRF...")
 
 try_run(run_res1 compile_res1 ${CMAKE_CURRENT_BINARY_DIR}
@@ -35,12 +38,15 @@ try_run(run_res1 compile_res1 ${CMAKE_CURRENT_BINARY_DIR}
         ${local_blas_defines}
         ${local_int}
     COMPILE_OUTPUT_VARIABLE
-        compile_OUTPUT1
+        compile_output1
     RUN_OUTPUT_VARIABLE
         run_output1
 )
 
-#message("compile_output: ${compile_OUTPUT1}")
+#message ("compile result: ${compile_res1}")
+#message ("run result: ${run_res1}")
+#message ("compile output: ${compile_output1}")
+#message ("run output: ${run_output1}")
 
 # if it compiled and ran, then LAPACK is available
 if (compile_res1 AND NOT ${run_res1} MATCHES "FAILED_TO_RUN")

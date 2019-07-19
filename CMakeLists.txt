@@ -15,6 +15,7 @@ cmake_minimum_required(VERSION 3.2)
 
 project(LAPACKPP CXX)
 
+
 add_library(OpenMP::OpenMP_CXX INTERFACE IMPORTED)
 set_target_properties(OpenMP::OpenMP_CXX PROPERTIES
     INTERFACE_INCLUDE_DIRECTORIES "${OpenMP_INCLUDE_DIR}"
@@ -471,6 +472,53 @@ else()
     include ("cmake/BLASFinder.cmake")
 endif()
 
+endif() #check blas libs
+
+# Set -Dblaspp_DIR=/path/to/blaspp or -DBLASPP_DIR=/path/to/blaspp
+if(BLASPP_DIR)
+    message("using user supplied BLASPP_DIR: ${BLASPP_DIR}")
+    #set(blaspp_DIR "${BLASPP_DIR}")
+else()
+    find_path(blaspp_DIR blasppConfig.cmake
+        PATHS
+        ${CMAKE_INSTALL_PREFIX}/blaspp
+        )
+    #message("blaspp_DIR: " ${blaspp_DIR})
+endif()
+
+message ("blaspp_FOUND: ${blaspp_FOUND}")
+find_package(blaspp)
+message ("blaspp_FOUND: ${blaspp_FOUND}")
+
+include(CMakePrintHelpers)
+cmake_print_properties(TARGETS blaspp PROPERTIES
+    LOCATION INTERFACE_INCLUDE_DIRS INTERFACE_LINK_LIBRARIES COMPILE_DEFINITIONS INTERFACE_COMPILE_DEFINITIONS)
+
+get_target_property(blaspp_links blaspp INTERFACE_LINK_LIBRARIES)
+message ("blaspp_links: ${blaspp_links}")
+get_target_property(blaspp_compile_definitions blaspp COMPILE_DEFINITIONS)
+message ("blaspp_compile_definitions: ${blaspp_compile_definitions}")
+get_target_property(blaspp_interface_compile_definitions blaspp INTERFACE_COMPILE_DEFINITIONS)
+message ("blaspp_interface_compile_definitions: ${blaspp_interface_compile_definitions}")
+
+get_target_property(BLAS_links blaspp INTERFACE_LINK_LIBRARIES)
+get_target_property(BLAS_defines blaspp INTERFACE_COMPILE_DEFINITIONS)
+
+if ("${BLAS_defines}" MATCHES "HAVE_MKL")
+    message (" yes mkl")
+    set (MKL_DEFINES "HAVE_MKL")
+endif()
+
+set_target_properties(lapackpp
+    PROPERTIES
+    INTERFACE_LINK_LIBRARIES blaspp
+    )
+
+#add_library(blaspp INTERFACE IMPORTED)
+#set_target_properties(lapackpp PROPERTIES
+#    INTERFACE_INCLUDE_DIRECTORIES "${blaspp_INCLUDE_DIR}"
+#)
+
 message("blas_config_found: " ${blas_config_found})
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/BLASConfig.cmake)
@@ -484,7 +532,6 @@ message("1234 blas_config_found: " ${blas_config_found})
 
 if(NOT CBLAS_DEFINES STREQUAL "")
     include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CBLASConfig.cmake)
-endif()
 endif()
 
 # User did not provide a LAPACK Library but specified to search for one
@@ -522,8 +569,35 @@ else()
     )
     #message("blaspp_DIR: " ${blaspp_DIR})
 endif()
-
+if (0)
+message ("blaspp_FOUND: ${blaspp_FOUND}")
 find_package(blaspp)
+message ("blaspp_FOUND: ${blaspp_FOUND}")
+
+include(CMakePrintHelpers)
+cmake_print_properties(TARGETS blaspp PROPERTIES
+    LOCATION INTERFACE_INCLUDE_DIRS INTERFACE_LINK_LIBRARIES COMPILE_DEFINITIONS INTERFACE_COMPILE_DEFINITIONS)
+
+get_target_property(blaspp_links blaspp INTERFACE_LINK_LIBRARIES)
+message ("blaspp_links: ${blaspp_links}")
+get_target_property(blaspp_compile_definitions blaspp COMPILE_DEFINITIONS)
+message ("blaspp_compile_definitions: ${blaspp_compile_definitions}")
+get_target_property(blaspp_interface_compile_definitions blaspp INTERFACE_COMPILE_DEFINITIONS)
+message ("blaspp_interface_compile_definitions: ${blaspp_interface_compile_definitions}")
+
+get_target_property(BLAS_links blaspp INTERFACE_LINK_LIBRARIES)
+get_target_property(BLAS_defines blaspp INTERFACE_COMPILE_DEFINITIONS)
+
+set_target_properties(lapackpp
+    PROPERTIES
+        INTERFACE_LINK_LIBRARIES blaspp
+)
+endif()
+
+#add_library(blaspp INTERFACE IMPORTED)
+set_target_properties(lapackpp PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES "${blaspp_INCLUDE_DIR}"
+)
 
 target_include_directories(lapackpp
     PUBLIC
@@ -535,7 +609,7 @@ target_link_libraries(lapackpp
     PUBLIC
         blaspp
         ${BLAS_links}
-        ${BLAS_cxx_flags}
+        #${BLAS_cxx_flags}
 )
 
 set_target_properties(lapackpp
@@ -550,24 +624,24 @@ if("${MKL_DEFINES}" STREQUAL "HAVE_MKL")
 endif()
 
 # Some debug
-if(LAPACKPP_QUIET)
+#if(LAPACKPP_QUIET)
     message("MKL defines: " ${MKL_DEFINES})
     message("BLAS int defines: " ${BLAS_int})
     message("FORTRAN MANGLING defines: " ${FORTRAN_MANGLING_DEFINES})
-    message("BLAS DEFINES: " ${BLAS_DEFINES})
+    message("BLAS defines: " ${BLAS_defines})
     message("CBLAS DEFINES: " ${CBLAS_DEFINES})
     message("BLAS RETURN: " ${BLAS_RETURN})
     message("LAPACK DEFINES: " ${LAPACK_DEFINES})
     message("LAPACKE DEFINES: " ${LAPACKE_DEFINES})
     message("XBLAS DEFINES: " ${XBLAS_DEFINES})
     message("LAPACK version define: " ${LAPACK_VER_DEFINE})
-endif()
+#endif()
 
 target_compile_definitions(lapackpp PUBLIC
     # Example definition set:
     # -DFORTRAN_ADD_ -DADD_ -DHAVE_BLAS -DBLAS_COMPLEX_RETURN_ARGUMENT -DHAVE_MKL -DHAVE_CBLAS -DHAVE_LAPACK -DLAPACK_VERSION=30700 -DHAVE_XBLAS -DHAVE_LAPACKE
     ${FORTRAN_MANGLING_DEFINES}
-    ${BLAS_DEFINES}
+    ${BLAS_defines}
     ${BLAS_RETURN}
     ${MKL_DEFINES}
     ${CBLAS_DEFINES}
@@ -625,3 +699,6 @@ if(BUILD_LAPACKPP_TESTS)
     message(STATUS "LAPACKPP testers will be built.")
     add_subdirectory(test)
 endif(BUILD_LAPACKPP_TESTS)
+
+cmake_print_properties(TARGETS lapackpp PROPERTIES
+    INTERFACE_LINK_LIBRARIES COMPILE_DEFINITIONS INTERFACE_INCLUDE_DIRS)

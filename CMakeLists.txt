@@ -486,49 +486,50 @@ else()
     #message("blaspp_DIR: " ${blaspp_DIR})
 endif()
 
-message ("blaspp_FOUND: ${blaspp_FOUND}")
 find_package(blaspp)
-message ("blaspp_FOUND: ${blaspp_FOUND}")
 
+if(LAPACKPP_QUIET)
 include(CMakePrintHelpers)
 cmake_print_properties(TARGETS blaspp PROPERTIES
-    LOCATION INTERFACE_INCLUDE_DIRS INTERFACE_LINK_LIBRARIES COMPILE_DEFINITIONS INTERFACE_COMPILE_DEFINITIONS)
+    #LOCATION
+    INTERFACE_INCLUDE_DIRS INTERFACE_LINK_LIBRARIES COMPILE_DEFINITIONS INTERFACE_COMPILE_DEFINITIONS)
+endif()
+
+target_link_libraries(lapackpp PUBLIC blaspp)
 
 get_target_property(blaspp_links blaspp INTERFACE_LINK_LIBRARIES)
-message ("blaspp_links: ${blaspp_links}")
+#message ("blaspp_links: ${blaspp_links}")
 get_target_property(blaspp_compile_definitions blaspp COMPILE_DEFINITIONS)
-message ("blaspp_compile_definitions: ${blaspp_compile_definitions}")
+#message ("blaspp_compile_definitions: ${blaspp_compile_definitions}")
 get_target_property(blaspp_interface_compile_definitions blaspp INTERFACE_COMPILE_DEFINITIONS)
-message ("blaspp_interface_compile_definitions: ${blaspp_interface_compile_definitions}")
+#message ("blaspp_interface_compile_definitions: ${blaspp_interface_compile_definitions}")
 
 get_target_property(BLAS_links blaspp INTERFACE_LINK_LIBRARIES)
 get_target_property(BLAS_defines blaspp INTERFACE_COMPILE_DEFINITIONS)
 
-if ("${BLAS_defines}" MATCHES "HAVE_MKL")
-    message (" yes mkl")
-    set (MKL_DEFINES "HAVE_MKL")
-endif()
+#if ("${BLAS_defines}" MATCHES "HAVE_MKL")
+#    message (" yes mkl")
+#    set (MKL_DEFINES "HAVE_MKL")
+#endif()
 
-set_target_properties(lapackpp
-    PROPERTIES
-    INTERFACE_LINK_LIBRARIES blaspp
-    )
+#set_target_properties(lapackpp
+#    PROPERTIES
+#    INTERFACE_LINK_LIBRARIES blaspp
+#    )
 
 #add_library(blaspp INTERFACE IMPORTED)
 #set_target_properties(lapackpp PROPERTIES
 #    INTERFACE_INCLUDE_DIRECTORIES "${blaspp_INCLUDE_DIR}"
 #)
 
-message("blas_config_found: " ${blas_config_found})
+#message("blas_config_found: " ${blas_config_found})
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/BLASConfig.cmake)
 if("${blas_config_found}" STREQUAL "TRUE")
-    message("setting blas config found to true!!!!!!!!!!!")
+    #message("setting blas config found to true!!!!!!!!!!!")
     # set blas_config so it the config script isn't run each time
     set (blas_config_found "TRUE" CACHE STRING "Set TRUE if BLAS config is found")
 endif()
-
-message("1234 blas_config_found: " ${blas_config_found})
 
 if(NOT CBLAS_DEFINES STREQUAL "")
     include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CBLASConfig.cmake)
@@ -557,59 +558,22 @@ if(LAPACK_LIBRARIES)
 endif()
 
 include(cmake/LAPACKConfig.cmake)
-
-# Set -Dblaspp_DIR=/path/to/blaspp or -DBLASPP_DIR=/path/to/blaspp
-if(BLASPP_DIR)
-    message("using user supplied BLASPP_DIR: ${BLASPP_DIR}")
-    #set(blaspp_DIR "${BLASPP_DIR}")
-else()
-    find_path(blaspp_DIR blasppConfig.cmake
-        PATHS
-            ${CMAKE_INSTALL_PREFIX}/blaspp
-    )
-    #message("blaspp_DIR: " ${blaspp_DIR})
-endif()
-if (0)
-message ("blaspp_FOUND: ${blaspp_FOUND}")
-find_package(blaspp)
-message ("blaspp_FOUND: ${blaspp_FOUND}")
-
-include(CMakePrintHelpers)
-cmake_print_properties(TARGETS blaspp PROPERTIES
-    LOCATION INTERFACE_INCLUDE_DIRS INTERFACE_LINK_LIBRARIES COMPILE_DEFINITIONS INTERFACE_COMPILE_DEFINITIONS)
-
-get_target_property(blaspp_links blaspp INTERFACE_LINK_LIBRARIES)
-message ("blaspp_links: ${blaspp_links}")
-get_target_property(blaspp_compile_definitions blaspp COMPILE_DEFINITIONS)
-message ("blaspp_compile_definitions: ${blaspp_compile_definitions}")
-get_target_property(blaspp_interface_compile_definitions blaspp INTERFACE_COMPILE_DEFINITIONS)
-message ("blaspp_interface_compile_definitions: ${blaspp_interface_compile_definitions}")
-
-get_target_property(BLAS_links blaspp INTERFACE_LINK_LIBRARIES)
-get_target_property(BLAS_defines blaspp INTERFACE_COMPILE_DEFINITIONS)
-
-set_target_properties(lapackpp
-    PROPERTIES
-        INTERFACE_LINK_LIBRARIES blaspp
-)
-endif()
-
-#add_library(blaspp INTERFACE IMPORTED)
-set_target_properties(lapackpp PROPERTIES
-    INTERFACE_INCLUDE_DIRECTORIES "${blaspp_INCLUDE_DIR}"
-)
+#if ("${LAPACKE_DEFINES}" MATCHES "HAVE_LAPACKE")
+#    message (" yes lapacke")
+#    message ("lapacke include dirs: ${LAPACKE_INCLUDE_DIRS}")
+#    target_link_libraries(lapackpp
+#        PUBLIC
+#            LAPACKE
+#    )
+#    target_include_directories(lapackpp
+#        PUBLIC ${LAPACKE_INCLUDE_DIRS}
+#        )
+#endif()
 
 target_include_directories(lapackpp
     PUBLIC
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-)
-
-target_link_libraries(lapackpp
-    PUBLIC
-        blaspp
-        ${BLAS_links}
-        #${BLAS_cxx_flags}
 )
 
 set_target_properties(lapackpp
@@ -619,12 +583,8 @@ set_target_properties(lapackpp
         CXX_EXTENSIONS OFF
 )
 
-if("${MKL_DEFINES}" STREQUAL "HAVE_MKL")
-    message(STATUS "Using MKL as backend")
-endif()
-
 # Some debug
-#if(LAPACKPP_QUIET)
+if(LAPACKPP_QUIET)
     message("MKL defines: " ${MKL_DEFINES})
     message("BLAS int defines: " ${BLAS_int})
     message("FORTRAN MANGLING defines: " ${FORTRAN_MANGLING_DEFINES})
@@ -635,7 +595,7 @@ endif()
     message("LAPACKE DEFINES: " ${LAPACKE_DEFINES})
     message("XBLAS DEFINES: " ${XBLAS_DEFINES})
     message("LAPACK version define: " ${LAPACK_VER_DEFINE})
-#endif()
+endif()
 
 target_compile_definitions(lapackpp PUBLIC
     # Example definition set:
@@ -649,8 +609,12 @@ target_compile_definitions(lapackpp PUBLIC
     ${BLAS_int}
     ${LAPACK_VER_DEFINE}
     ${XBLAS_DEFINES}
-    ${LAPACKE_DEFINES}
+    #${LAPACKE_DEFINES}
 )
+
+#cmake_print_properties(TARGETS lapackpp PROPERTIES
+#    INTERFACE_LINK_LIBRARIES INTERFACE_COMPILE_DEFINITIONS INTERFACE_INCLUDE_DIRS
+#    LINK_LIBRARIES COMPILE_DEFINITIONS INCLUDE_DIRS)
 
 # Set default install directory
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -700,5 +664,4 @@ if(BUILD_LAPACKPP_TESTS)
     add_subdirectory(test)
 endif(BUILD_LAPACKPP_TESTS)
 
-cmake_print_properties(TARGETS lapackpp PROPERTIES
-    INTERFACE_LINK_LIBRARIES COMPILE_DEFINITIONS INTERFACE_INCLUDE_DIRS)
+

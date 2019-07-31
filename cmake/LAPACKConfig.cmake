@@ -111,8 +111,47 @@ if (compile_res1 AND NOT ${run_res1} MATCHES "FAILED_TO_RUN")
     message("${Blue}  Found LAPACKE${ColourReset}")
     set(LAPACKE_DEFINES "HAVE_LAPACKE")
 else()
-    message("${Red}  LAPACKE was not found${ColourReset}")
+    #message("${Red}  LAPACKE was not found${ColourReset}")
+    set(run_res1 "")
+    set(compile_res1 "")
+    set(run_output1 "")
     set(LAPACKE_DEFINES "")
+
+    find_package (LAPACKE)
+    #message ("lapacke_found:        ${LAPACKE_FOUND}")
+    #message ("lapacke_libraries:    ${LAPACKE_LIBRARIES}")
+    #message ("lapacke_include_dirs: ${LAPACKE_INCLUDE_DIRS}")
+
+    try_run(run_res1 compile_res1
+        ${CMAKE_CURRENT_BINARY_DIR}
+        SOURCES
+            ${CMAKE_CURRENT_SOURCE_DIR}/config/lapacke_potrf.cc
+        LINK_LIBRARIES
+            "-l${LAPACKE_LIBRARIES}"
+            ${BLAS_links}
+            ${BLAS_cxx_flags}
+        COMPILE_DEFINITIONS
+            ${local_mkl_defines}
+            ${local_blas_defines}
+            ${local_int}
+            "-I${LAPACKE_INCLUDE_DIRS}"
+        COMPILE_OUTPUT_VARIABLE
+            compile_output1
+        RUN_OUTPUT_VARIABLE
+            run_output1
+        )
+
+    #message ('compile result: ' ${compile_res1})
+    #message ('run result: ' ${run_res1})
+    #message ('compile output: ' ${compile_output1})
+    #message ('run output: ' ${run_output1})
+
+    if (compile_res1 AND NOT ${run_res1} MATCHES "FAILED_TO_RUN")
+        message("${Blue}  Found LAPACKE${ColourReset}")
+        set(LAPACKE_DEFINES "HAVE_LAPACKE")
+    else()
+        message("${Red}  LAPACKE was not found${ColourReset}")
+    endif()
 endif()
 set(run_res1 "")
 set(compile_res1 "")

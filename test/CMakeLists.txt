@@ -189,18 +189,22 @@ endif()
 
 find_package(libtest)
 find_package(blaspp)
+find_package(LAPACKE REQUIRED)
 
 target_link_libraries(lapackpp_test
+    PUBLIC
     libtest
     gfortran
-    blaspp
+    #blaspp
     lapackpp
+    LAPACKE
 )
 
 target_include_directories(lapackpp_test
     PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}../include
+    ${LAPACKE_INCLUDE_DIRS}
 )
 
 # Some debug
@@ -246,3 +250,9 @@ add_custom_command(TARGET lapackpp_test POST_BUILD
         cp ${CMAKE_CURRENT_BINARY_DIR}/lapackpp_test
            ${CMAKE_CURRENT_BINARY_DIR}/test
 )
+
+if(LAPACKPP_TEST_DEBUG)
+include(CMakePrintHelpers)
+cmake_print_properties(TARGETS lapackpp_test PROPERTIES
+    INTERFACE_INCLUDE_DIRS INTERFACE_LINK_LIBRARIES COMPILE_DEFINITIONS INTERFACE_COMPILE_DEFINITIONS)
+endif()

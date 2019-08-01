@@ -189,7 +189,21 @@ endif()
 
 find_package(libtest)
 find_package(blaspp)
-find_package(LAPACKE REQUIRED)
+#find_package(LAPACKE REQUIRED)
+
+cmake_policy(SET CMP0079 NEW)
+
+if ("${LAPACKE_DEFINES}" MATCHES "HAVE_LAPACKE")
+    #message (" yes lapacke")
+    #message ("lapacke include dirs: ${LAPACKE_INCLUDE_DIRS}")
+    target_link_libraries(lapackpp
+        PUBLIC
+            ${LAPACKE_LIBRARIES}
+    )
+    target_include_directories(lapackpp
+        PUBLIC ${LAPACKE_INCLUDE_DIRS}
+        )
+endif()
 
 target_link_libraries(lapackpp_test
     PUBLIC
@@ -197,7 +211,7 @@ target_link_libraries(lapackpp_test
     gfortran
     #blaspp
     lapackpp
-    LAPACKE
+    #LAPACKE
 )
 
 target_include_directories(lapackpp_test

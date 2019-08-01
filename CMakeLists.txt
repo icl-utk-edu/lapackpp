@@ -507,10 +507,10 @@ get_target_property(blaspp_interface_compile_definitions blaspp INTERFACE_COMPIL
 get_target_property(BLAS_links blaspp INTERFACE_LINK_LIBRARIES)
 get_target_property(BLAS_defines blaspp INTERFACE_COMPILE_DEFINITIONS)
 
-#if ("${BLAS_defines}" MATCHES "HAVE_MKL")
+if ("${BLAS_defines}" MATCHES "HAVE_MKL")
 #    message (" yes mkl")
-#    set (MKL_DEFINES "HAVE_MKL")
-#endif()
+    set (MKL_DEFINES "HAVE_MKL")
+endif()
 
 #set_target_properties(lapackpp
 #    PROPERTIES

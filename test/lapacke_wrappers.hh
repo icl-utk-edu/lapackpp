@@ -2821,7 +2821,7 @@ inline lapack_int LAPACKE_hbgvd_custom(
         (lapack_complex_float*) BB, ldbb,
         W,
         (lapack_complex_float*) Z, ldz,
-        &query, -1, &rquery, -1, &liwork, -1 );
+        (lapack_complex_float*) &query, -1, &rquery, -1, &liwork, -1 );
     if (info < 0)
         return info;
     lapack_int lwork = real(query);
@@ -2858,7 +2858,7 @@ inline lapack_int LAPACKE_hbgvd_custom(
         (lapack_complex_double*) BB, ldbb,
         W,
         (lapack_complex_double*) Z, ldz,
-        &query, -1, &rquery, -1, &liwork, -1 );
+        (lapack_complex_double*) &query, -1, &rquery, -1, &liwork, -1 );
     if (info < 0)
         return info;
     lapack_int lwork = real(query);

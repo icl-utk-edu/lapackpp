@@ -16,10 +16,6 @@ cmake_minimum_required(VERSION 3.2)
 project(LAPACKPP CXX)
 
 
-add_library(OpenMP::OpenMP_CXX INTERFACE IMPORTED)
-set_target_properties(OpenMP::OpenMP_CXX PROPERTIES
-    INTERFACE_INCLUDE_DIRECTORIES "${OpenMP_INCLUDE_DIR}"
-)
 
 # BLAS options
 # todo: Goto, BLIS, FLAME, others?
@@ -44,7 +40,7 @@ set(BLAS_LIBRARY_THREADING "auto" CACHE STRING
 set_property(CACHE BLAS_LIBRARY_THREADING PROPERTY STRINGS
     "auto" "threaded" "sequential" )
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/modules")
+#list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/modules")
 
 # Build the testers by default
 option(BUILD_LAPACKPP_TESTS "Build LAPACK++ tests - has more reqs" ON)
@@ -488,12 +484,15 @@ endif()
 
 find_package(blaspp)
 
-if(LAPACKPP_QUIET)
+#if(LAPACKPP_QUIET)
 include(CMakePrintHelpers)
 cmake_print_properties(TARGETS blaspp PROPERTIES
     #LOCATION
     INTERFACE_INCLUDE_DIRS INTERFACE_LINK_LIBRARIES COMPILE_DEFINITIONS INTERFACE_COMPILE_DEFINITIONS)
-endif()
+cmake_print_properties(TARGETS lapackpp PROPERTIES
+    #LOCATION
+    INTERFACE_INCLUDE_DIRS INTERFACE_LINK_LIBRARIES COMPILE_DEFINITIONS INTERFACE_COMPILE_DEFINITIONS)
+#endif()
 
 target_link_libraries(lapackpp PUBLIC blaspp)
 
@@ -501,16 +500,23 @@ get_target_property(blaspp_links blaspp INTERFACE_LINK_LIBRARIES)
 #message ("blaspp_links: ${blaspp_links}")
 get_target_property(blaspp_compile_definitions blaspp COMPILE_DEFINITIONS)
 #message ("blaspp_compile_definitions: ${blaspp_compile_definitions}")
-get_target_property(blaspp_interface_compile_definitions blaspp INTERFACE_COMPILE_DEFINITIONS)
+#get_target_property(blaspp_interface_compile_definitions blaspp INTERFACE_COMPILE_DEFINITIONS)
 #message ("blaspp_interface_compile_definitions: ${blaspp_interface_compile_definitions}")
 
 #get_target_property(BLAS_links blaspp INTERFACE_LINK_LIBRARIES)
 #get_target_property(BLAS_defines blaspp INTERFACE_COMPILE_DEFINITIONS)
 
-if ("${BLAS_defines}" MATCHES "HAVE_MKL")
-#    message (" yes mkl")
-    set (MKL_DEFINES "HAVE_MKL")
+if ("${blaspp_links}" MATCHES "OpenMP")
+add_library(OpenMP::OpenMP_CXX INTERFACE IMPORTED)
+set_target_properties(OpenMP::OpenMP_CXX PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES "${OpenMP_INCLUDE_DIR}"
+)
 endif()
+
+#if ("${blaspp_compile_definitions}" MATCHES "HAVE_MKL")
+#    message (" yes mkl")
+#    set (MKL_DEFINES "HAVE_MKL")
+#endif()
 
 #set_target_properties(lapackpp
 #    PROPERTIES

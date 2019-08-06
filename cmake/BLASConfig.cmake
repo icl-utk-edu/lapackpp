@@ -539,7 +539,7 @@ if(${BLAS_DEFINES} MATCHES "HAVE_BLAS" AND
         set(LIB_DEFINES "" CACHE INTERNAL "")
     endif()
 endif()
-
+if (0)
 message(STATUS "Checking BLAS complex return type...")
 
 try_run(run_res1
@@ -603,6 +603,7 @@ else()
         message("${Blue}  BLAS (sdot) returns float as double (f2c convention)${ColourReset}")
         set(BLAS_FLOAT_RETURN "HAVE_F2C")
     endif()
+endif()
 endif()
 
 if(DEBUG)

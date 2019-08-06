@@ -22,8 +22,8 @@ else()
     set(local_int "")
 endif()
 
-message ("blas_links: ${BLAS_links}")
-message ("blas_cxx_flags: ${BLAS_cxx_flags}")
+#message ("blas_links: ${BLAS_links}")
+#message ("blas_cxx_flags: ${BLAS_cxx_flags}")
 
 message(STATUS "Checking for LAPACK POTRF...")
 
@@ -31,6 +31,7 @@ try_run(run_res1 compile_res1 ${CMAKE_CURRENT_BINARY_DIR}
     SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/config/lapack_potrf.cc
     LINK_LIBRARIES
+        blaspp
         ${BLAS_links}
         ${BLAS_cxx_flags}
     COMPILE_DEFINITIONS
@@ -61,6 +62,7 @@ else()
             ${CMAKE_CURRENT_SOURCE_DIR}/config/lapack_potrf.cc
         LINK_LIBRARIES
             "-llapack"
+            blaspp
             ${BLAS_links}
             ${BLAS_cxx_flags}
         COMPILE_DEFINITIONS
@@ -95,8 +97,9 @@ try_run(run_res1 compile_res1
     SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/config/lapacke_potrf.cc
     LINK_LIBRARIES
-        ${BLAS_links}
-        ${BLAS_cxx_flags}
+        blaspp
+        #${BLAS_links}
+        #${BLAS_cxx_flags}
     COMPILE_DEFINITIONS
         ${local_mkl_defines}
         ${local_blas_defines}
@@ -112,29 +115,25 @@ if (compile_res1 AND NOT ${run_res1} MATCHES "FAILED_TO_RUN")
     set(LAPACKE_DEFINES "HAVE_LAPACKE")
 else()
     #message("${Red}  LAPACKE was not found${ColourReset}")
+    message("  LAPACKE second attempt")
     set(run_res1 "")
     set(compile_res1 "")
     set(run_output1 "")
     set(LAPACKE_DEFINES "")
-
-    find_package (LAPACKE)
-    #message ("lapacke_found:        ${LAPACKE_FOUND}")
-    #message ("lapacke_libraries:    ${LAPACKE_LIBRARIES}")
-    #message ("lapacke_include_dirs: ${LAPACKE_INCLUDE_DIRS}")
 
     try_run(run_res1 compile_res1
         ${CMAKE_CURRENT_BINARY_DIR}
         SOURCES
             ${CMAKE_CURRENT_SOURCE_DIR}/config/lapacke_potrf.cc
         LINK_LIBRARIES
-            "-l${LAPACKE_LIBRARIES}"
+            "-llapacke"
+            blaspp
             ${BLAS_links}
             ${BLAS_cxx_flags}
         COMPILE_DEFINITIONS
             ${local_mkl_defines}
             ${local_blas_defines}
             ${local_int}
-            "-I${LAPACKE_INCLUDE_DIRS}"
         COMPILE_OUTPUT_VARIABLE
             compile_output1
         RUN_OUTPUT_VARIABLE
@@ -149,8 +148,55 @@ else()
     if (compile_res1 AND NOT ${run_res1} MATCHES "FAILED_TO_RUN")
         message("${Blue}  Found LAPACKE${ColourReset}")
         set(LAPACKE_DEFINES "HAVE_LAPACKE")
+        # Append '-llapacke' to BLAS_links
+        string(APPEND BLAS_links "-llapacke")
     else()
-        message("${Red}  LAPACKE was not found${ColourReset}")
+        message("${Red}  LAPACKE was not found 2 ${ColourReset}")
+        message("  LAPACKE third attempt")
+        set(run_res1 "")
+        set(compile_res1 "")
+        set(run_output1 "")
+        set(LAPACKE_DEFINES "")
+
+        find_package (LAPACKE)
+        #message ("lapacke_found:        ${LAPACKE_FOUND}")
+        #message ("lapacke_libraries:    ${LAPACKE_LIBRARIES}")
+        #message ("lapacke_include_dirs: ${LAPACKE_INCLUDE_DIRS}")
+
+        try_run(run_res1 compile_res1
+            ${CMAKE_CURRENT_BINARY_DIR}
+            SOURCES
+                ${CMAKE_CURRENT_SOURCE_DIR}/config/lapacke_potrf.cc
+            LINK_LIBRARIES
+                "-l${LAPACKE_LIBRARIES}"
+                blaspp
+                ${BLAS_links}
+                ${BLAS_cxx_flags}
+            COMPILE_DEFINITIONS
+                ${local_mkl_defines}
+                ${local_blas_defines}
+                ${local_int}
+                "-I${LAPACKE_INCLUDE_DIRS}"
+            COMPILE_OUTPUT_VARIABLE
+                compile_output1
+            RUN_OUTPUT_VARIABLE
+                run_output1
+            )
+
+        #message ('compile result: ' ${compile_res1})
+        #message ('run result: ' ${run_res1})
+        #message ('compile output: ' ${compile_output1})
+        #message ('run output: ' ${run_output1})
+
+        if (compile_res1 AND NOT ${run_res1} MATCHES "FAILED_TO_RUN")
+            message("${Blue}  Found LAPACKE${ColourReset}")
+            set(LAPACKE_DEFINES "HAVE_LAPACKE")
+            # Append '-llapacke' to BLAS_links
+            string(APPEND BLAS_links "-l${LAPACKE_LIBRARIES}")
+            string(APPEND BLAS_cxx_flags "-I${LAPACKE_INCLUDE_DIRS}")
+        else()
+            message("${Red}  LAPACKE was not found${ColourReset}")
+        endif()
     endif()
 endif()
 set(run_res1 "")
@@ -164,6 +210,7 @@ try_run(run_res1 compile_res1
     SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/config/lapack_xblas.cc
     LINK_LIBRARIES
+        blaspp
         ${BLAS_links}
         ${BLAS_cxx_flags}
     COMPILE_DEFINITIONS
@@ -193,6 +240,7 @@ try_run(run_res1 compile_res1 ${CMAKE_CURRENT_BINARY_DIR}
     SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/config/lapack_version.cc
     LINK_LIBRARIES
+        blaspp
         ${BLAS_links}
         ${BLAS_cxx_flags}
     COMPILE_DEFINITIONS
@@ -247,7 +295,9 @@ set(run_res1 "")
 set(compile_res1 "")
 set(run_output1 "")
 
-#message("lapack defines: " ${LAPACK_DEFINES})
-#message("lapacke defines: " ${LAPACKE_DEFINES})
-#message("xblas defines: " ${XBLAS_DEFINES})
-#message("lapack version define: " ${LAPACK_VER_DEFINE})
+if(LAPACKPP_QUIET)
+message("lapack defines: " ${LAPACK_DEFINES})
+message("lapacke defines: " ${LAPACKE_DEFINES})
+message("xblas defines: " ${XBLAS_DEFINES})
+message("lapack version define: " ${LAPACK_VER_DEFINE})
+endif()

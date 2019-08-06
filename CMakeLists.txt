@@ -504,8 +504,8 @@ get_target_property(blaspp_compile_definitions blaspp COMPILE_DEFINITIONS)
 get_target_property(blaspp_interface_compile_definitions blaspp INTERFACE_COMPILE_DEFINITIONS)
 #message ("blaspp_interface_compile_definitions: ${blaspp_interface_compile_definitions}")
 
-get_target_property(BLAS_links blaspp INTERFACE_LINK_LIBRARIES)
-get_target_property(BLAS_defines blaspp INTERFACE_COMPILE_DEFINITIONS)
+#get_target_property(BLAS_links blaspp INTERFACE_LINK_LIBRARIES)
+#get_target_property(BLAS_defines blaspp INTERFACE_COMPILE_DEFINITIONS)
 
 if ("${BLAS_defines}" MATCHES "HAVE_MKL")
 #    message (" yes mkl")
@@ -524,16 +524,16 @@ endif()
 
 #message("blas_config_found: " ${blas_config_found})
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/BLASConfig.cmake)
-if("${blas_config_found}" STREQUAL "TRUE")
+#include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/BLASConfig.cmake)
+#if("${blas_config_found}" STREQUAL "TRUE")
     #message("setting blas config found to true!!!!!!!!!!!")
     # set blas_config so it the config script isn't run each time
-    set (blas_config_found "TRUE" CACHE STRING "Set TRUE if BLAS config is found")
-endif()
+#    set (blas_config_found "TRUE" CACHE STRING "Set TRUE if BLAS config is found")
+#endif()
 
-if(NOT CBLAS_DEFINES STREQUAL "")
-    include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CBLASConfig.cmake)
-endif()
+#if(NOT CBLAS_DEFINES STREQUAL "")
+#    include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CBLASConfig.cmake)
+#endif()
 
 # User did not provide a LAPACK Library but specified to search for one
 if(USE_OPTIMIZED_LAPACK)
@@ -633,7 +633,12 @@ install (TARGETS lapackpp
 )
 
 export(EXPORT lapackppTargets
-    FILE ${CMAKE_INSTALL_PREFIX}/lapackpp/lapackppTargets.cmake
+    FILE lapackppTargets.cmake
+)
+
+install (EXPORT lapackppTargets
+    FILE lapackppTargets.cmake
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/lapackpp
 )
 
 configure_file(
@@ -659,9 +664,9 @@ install(
         EXCLUDE
 )
 
-if(BUILD_LAPACKPP_TESTS)
+add_custom_target(lib DEPENDS lapackpp)
+
+if ("${LAPACKE_DEFINES}" MATCHES "HAVE_LAPACKE" AND BUILD_LAPACKPP_TESTS)
     message(STATUS "LAPACKPP testers will be built.")
     add_subdirectory(test)
-endif(BUILD_LAPACKPP_TESTS)
-
-
+endif()

@@ -196,11 +196,11 @@ cmake_policy(SET CMP0079 NEW)
 if ("${LAPACKE_DEFINES}" MATCHES "HAVE_LAPACKE")
     #message (" yes lapacke")
     #message ("lapacke include dirs: ${LAPACKE_INCLUDE_DIRS}")
-    target_link_libraries(lapackpp
+    target_link_libraries(lapackpp_test
         PUBLIC
             ${LAPACKE_LIBRARIES}
     )
-    target_include_directories(lapackpp
+    target_include_directories(lapackpp_test
         PUBLIC ${LAPACKE_INCLUDE_DIRS}
         )
 endif()
@@ -270,3 +270,20 @@ include(CMakePrintHelpers)
 cmake_print_properties(TARGETS lapackpp_test PROPERTIES
     INTERFACE_INCLUDE_DIRS INTERFACE_LINK_LIBRARIES COMPILE_DEFINITIONS INTERFACE_COMPILE_DEFINITIONS)
 endif()
+
+# Since we can't do 'make test'...
+add_custom_target(testing DEPENDS lapackpp_test)
+
+# Move test script to build directory
+add_custom_command(TARGET lapackpp_test POST_BUILD
+    COMMAND
+        cp ${CMAKE_CURRENT_SOURCE_DIR}/run_tests.py
+           ${CMAKE_CURRENT_BINARY_DIR}/run_tests.py
+)
+
+#Move test script to build directory
+add_custom_command(TARGET lapackpp_test POST_BUILD
+    COMMAND
+        cp ${CMAKE_CURRENT_BINARY_DIR}/lapackpp_test
+           ${CMAKE_CURRENT_BINARY_DIR}/test
+)

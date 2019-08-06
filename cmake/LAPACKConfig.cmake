@@ -32,12 +32,12 @@ try_run(run_res1 compile_res1 ${CMAKE_CURRENT_BINARY_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/config/lapack_potrf.cc
     LINK_LIBRARIES
         blaspp
-        ${BLAS_links}
-        ${BLAS_cxx_flags}
-    COMPILE_DEFINITIONS
-        ${local_mkl_defines}
-        ${local_blas_defines}
-        ${local_int}
+        #${BLAS_links}
+        #${BLAS_cxx_flags}
+    #COMPILE_DEFINITIONS
+        #${local_mkl_defines}
+        #${local_blas_defines}
+        #${local_int}
     COMPILE_OUTPUT_VARIABLE
         compile_output1
     RUN_OUTPUT_VARIABLE
@@ -149,7 +149,7 @@ else()
         message("${Blue}  Found LAPACKE${ColourReset}")
         set(LAPACKE_DEFINES "HAVE_LAPACKE")
         # Append '-llapacke' to BLAS_links
-        string(APPEND BLAS_links "-llapacke")
+        string(APPEND BLAS_links "-llapacke") # TODO fix
     else()
         message("${Red}  LAPACKE was not found 2 ${ColourReset}")
         message("  LAPACKE third attempt")

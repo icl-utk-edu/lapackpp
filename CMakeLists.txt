@@ -484,62 +484,27 @@ endif()
 
 find_package(blaspp)
 
-#if(LAPACKPP_QUIET)
+if(LAPACKPP_QUIET)
 include(CMakePrintHelpers)
 cmake_print_properties(TARGETS blaspp PROPERTIES
-    #LOCATION
     INTERFACE_INCLUDE_DIRS INTERFACE_LINK_LIBRARIES COMPILE_DEFINITIONS INTERFACE_COMPILE_DEFINITIONS)
 cmake_print_properties(TARGETS lapackpp PROPERTIES
-    #LOCATION
     INTERFACE_INCLUDE_DIRS INTERFACE_LINK_LIBRARIES COMPILE_DEFINITIONS INTERFACE_COMPILE_DEFINITIONS)
-#endif()
+endif()
 
 target_link_libraries(lapackpp PUBLIC blaspp)
 
 get_target_property(blaspp_links blaspp INTERFACE_LINK_LIBRARIES)
-#message ("blaspp_links: ${blaspp_links}")
 get_target_property(blaspp_compile_definitions blaspp COMPILE_DEFINITIONS)
-#message ("blaspp_compile_definitions: ${blaspp_compile_definitions}")
 #get_target_property(blaspp_interface_compile_definitions blaspp INTERFACE_COMPILE_DEFINITIONS)
-#message ("blaspp_interface_compile_definitions: ${blaspp_interface_compile_definitions}")
-
-#get_target_property(BLAS_links blaspp INTERFACE_LINK_LIBRARIES)
-#get_target_property(BLAS_defines blaspp INTERFACE_COMPILE_DEFINITIONS)
 
 if ("${blaspp_links}" MATCHES "OpenMP")
-add_library(OpenMP::OpenMP_CXX INTERFACE IMPORTED)
-set_target_properties(OpenMP::OpenMP_CXX PROPERTIES
-    INTERFACE_INCLUDE_DIRECTORIES "${OpenMP_INCLUDE_DIR}"
-)
+    message ("  OpenMP found and linking")
+    find_package(OpenMP)
+    if(OpenMP_CXX_FOUND)
+        target_link_libraries(lapackpp PUBLIC OpenMP::OpenMP_CXX)
+    endif()
 endif()
-
-#if ("${blaspp_compile_definitions}" MATCHES "HAVE_MKL")
-#    message (" yes mkl")
-#    set (MKL_DEFINES "HAVE_MKL")
-#endif()
-
-#set_target_properties(lapackpp
-#    PROPERTIES
-#    INTERFACE_LINK_LIBRARIES blaspp
-#    )
-
-#add_library(blaspp INTERFACE IMPORTED)
-#set_target_properties(lapackpp PROPERTIES
-#    INTERFACE_INCLUDE_DIRECTORIES "${blaspp_INCLUDE_DIR}"
-#)
-
-#message("blas_config_found: " ${blas_config_found})
-
-#include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/BLASConfig.cmake)
-#if("${blas_config_found}" STREQUAL "TRUE")
-    #message("setting blas config found to true!!!!!!!!!!!")
-    # set blas_config so it the config script isn't run each time
-#    set (blas_config_found "TRUE" CACHE STRING "Set TRUE if BLAS config is found")
-#endif()
-
-#if(NOT CBLAS_DEFINES STREQUAL "")
-#    include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CBLASConfig.cmake)
-#endif()
 
 # User did not provide a LAPACK Library but specified to search for one
 if(USE_OPTIMIZED_LAPACK)
@@ -564,17 +529,6 @@ if(LAPACK_LIBRARIES)
 endif()
 
 include(cmake/LAPACKConfig.cmake)
-#if ("${LAPACKE_DEFINES}" MATCHES "HAVE_LAPACKE")
-#    message (" yes lapacke")
-#    message ("lapacke include dirs: ${LAPACKE_INCLUDE_DIRS}")
-#    target_link_libraries(lapackpp
-#        PUBLIC
-#            LAPACKE
-#    )
-#    target_include_directories(lapackpp
-#        PUBLIC ${LAPACKE_INCLUDE_DIRS}
-#        )
-#endif()
 
 target_include_directories(lapackpp
     PUBLIC
@@ -617,10 +571,6 @@ target_compile_definitions(lapackpp PUBLIC
     ${XBLAS_DEFINES}
     #${LAPACKE_DEFINES}
 )
-
-#cmake_print_properties(TARGETS lapackpp PROPERTIES
-#    INTERFACE_LINK_LIBRARIES INTERFACE_COMPILE_DEFINITIONS INTERFACE_INCLUDE_DIRS
-#    LINK_LIBRARIES COMPILE_DEFINITIONS INCLUDE_DIRS)
 
 # Set default install directory
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -670,6 +620,7 @@ install(
         EXCLUDE
 )
 
+# Custom target to mimic makefile target
 add_custom_target(lib DEPENDS lapackpp)
 
 if ("${LAPACKE_DEFINES}" MATCHES "HAVE_LAPACKE" AND BUILD_LAPACKPP_TESTS)

@@ -102,10 +102,12 @@ public:
 
     libtest::ParamDouble     time;
     libtest::ParamDouble     gflops;
+    libtest::ParamDouble     gbytes;
     libtest::ParamInt        iters;
 
     libtest::ParamDouble     ref_time;
     libtest::ParamDouble     ref_gflops;
+    libtest::ParamDouble     ref_gbytes;
     libtest::ParamInt        ref_iters;
 
     libtest::ParamOkay       okay;
@@ -412,5 +414,6 @@ void test_lagtr ( Params& params, bool run );
 
 // additional BLAS
 void test_syr   ( Params& params, bool run );
+void test_symv  ( Params& params, bool run );
 
 #endif  //  #ifndef TEST_HH

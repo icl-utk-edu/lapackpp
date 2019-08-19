@@ -15,8 +15,6 @@ cmake_minimum_required(VERSION 3.2)
 
 project(LAPACKPP CXX)
 
-
-
 # BLAS options
 # todo: Goto, BLIS, FLAME, others?
 set(BLAS_LIBRARY "auto" CACHE STRING
@@ -435,6 +433,8 @@ add_library(lapackpp
     src/tpmlqt.cc
     src/tpmqrt.cc
     src/tprfb.cc
+    # Moved from BLAS++
+    src/symv.cc
 )
 
 # Check user supplied BLAS libraries
@@ -607,7 +607,7 @@ install (
     FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/lapackppConfig.cmake
     DESTINATION
-        ${CMAKE_INSTALL_PREFIX}/lapackpp/lapackppConfig.cmake
+        ${CMAKE_INSTALL_PREFIX}/lapackpp
 )
 
 install(

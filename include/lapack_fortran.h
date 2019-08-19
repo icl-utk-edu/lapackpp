@@ -10462,6 +10462,27 @@ void LAPACK_zsyr(
     lapack_complex_double const* x, lapack_int const* incx,
     lapack_complex_double* a, lapack_int const* lda );
 
+/* symv, moved from BLAS++ */
+#define LAPACK_csymv LAPACK_GLOBAL(csymv, CSYMV)
+void LAPACK_csymv(
+    char const* uplo,
+    lapack_int const* n,
+    lapack_complex_float const* alpha,
+    lapack_complex_float const* A, lapack_int const* lda,
+    lapack_complex_float const* x, lapack_int const* incx,
+    lapack_complex_float const* beta,
+    lapack_complex_float* y, lapack_int const* incy );
+
+#define LAPACK_zsymv LAPACK_GLOBAL(zsymv, ZSYMV)
+void LAPACK_zsymv(
+    char const* uplo,
+    lapack_int const* n,
+    lapack_complex_double const* alpha,
+    lapack_complex_double const* A, lapack_int const* lda,
+    lapack_complex_double const* x, lapack_int const* incx,
+    lapack_complex_double const* beta,
+    lapack_complex_double* y, lapack_int const* incy );
+
 /* ----- LAPACK version number */
 #define LAPACK_ilaver LAPACK_GLOBAL(ilaver,ILAVER)
 void LAPACK_ilaver(

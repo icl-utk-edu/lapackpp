@@ -669,6 +669,7 @@ if (opts.aux_norm):
 if (opts.blas):
     cmds += [
     [ 'syr',   gen + dtype + align + n + uplo ],
+    [ 'symv',  gen + dtype + layout + align + uplo + n + incx + incy ],
     ]
 
 # ------------------------------------------------------------------------------

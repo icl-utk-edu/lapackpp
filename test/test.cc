@@ -426,6 +426,7 @@ std::vector< libtest::routines_t > routines = {
 
     // additional BLAS
     { "syr",                test_syr,       Section::blas2 },
+    { "symv",               test_symv,      Section::blas2 },
     { "",                   nullptr,        Section::newline },
 };
 
@@ -526,10 +527,12 @@ Params::Params():
 
     time      ( "LAPACK++\ntime (s)",    10, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "time to solution" ),
     gflops    ( "LAPACK++\nGflop/s",     11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "Gflop/s rate" ),
+    gbytes    ( "LAPACK++\nGbyte/s",     11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "Gbyte/s rate" ),
     iters     ( "LAPACK++\niters",        6,    ParamType::Output,                     0,   0,   0, "iterations to solution" ),
 
     ref_time  ( "Ref.\ntime (s)",        10, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "reference time to solution" ),
     ref_gflops( "Ref.\nGflop/s",         11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "reference Gflop/s rate" ),
+    ref_gbytes( "Ref.\nGbyte/s",         11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "reference Gbyte/s rate" ),
     ref_iters ( "Ref.\niters",            6,    ParamType::Output,                     0,   0,   0, "reference iterations to solution" ),
 
     // default -1 means "no check"

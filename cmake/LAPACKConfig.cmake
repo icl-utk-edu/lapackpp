@@ -210,6 +210,7 @@ set(run_res1 "")
 set(compile_res1 "")
 set(run_output1 "")
 
+if (0)
 message(STATUS "Checking for XBLAS...")
 
 try_run(run_res1 compile_res1
@@ -236,6 +237,7 @@ if (compile_res1 AND NOT ${run_res1} MATCHES "FAILED_TO_RUN")
 else()
     message("${Red}  XBLAS not found.${ColourReset}")
     set(XBLAS_DEFINES "")
+endif()
 endif()
 set(run_res1 "")
 set(compile_res1 "")

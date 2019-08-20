@@ -1,8 +1,4 @@
-//
-
 #include "test.hh"
-//#include "cblas.hh"
-//#include "lapack_tmp.hh"
 #include "blas_flops.hh"
 #include "print_matrix.hh"
 #include "check_gemm2.hh"
@@ -88,43 +84,6 @@ void LAPACK_zsymv(
 
 }  // extern "C"
 
-// -----------------------------------------------------------------------------
-inline void
-cblas_copy(
-        int n,
-        float const *x, int incx,
-        float*       y, int incy )
-{
-    cblas_scopy( n, x, incx, y, incy );
-}
-
-inline void
-cblas_copy(
-        int n,
-        double const *x, int incx,
-        double*       y, int incy )
-{
-    cblas_dcopy( n, x, incx, y, incy );
-}
-
-inline void
-cblas_copy(
-        int n,
-        std::complex<float> const *x, int incx,
-        std::complex<float>*       y, int incy )
-{
-    cblas_ccopy( n, x, incx, y, incy );
-}
-
-inline void
-cblas_copy(
-        int n,
-        std::complex<double> const *x, int incx,
-        std::complex<double>*       y, int incy )
-{
-    cblas_zcopy( n, x, incx, y, incy );
-}
-
 inline void
 lapack_symv(
         CBLAS_LAYOUT layout,
@@ -136,7 +95,7 @@ lapack_symv(
         float beta,
         float* yref, lapack_int incy )
 {
-    cblas_ssymv( (layout), (uplo), n, alpha, A, lda, x, incx, beta, yref, incy );
+    cblas_ssymv( layout, uplo, n, alpha, A, lda, x, incx, beta, yref, incy );
 }
 
 inline void
@@ -150,7 +109,7 @@ lapack_symv(
         double beta,
         double* yref, lapack_int incy )
 {
-    cblas_dsymv( (layout), (uplo), n, alpha, A, lda, x, incx, beta, yref, incy );
+    cblas_dsymv( layout, uplo, n, alpha, A, lda, x, incx, beta, yref, incy );
 }
 
 inline void
@@ -176,12 +135,7 @@ lapack_symv(
     LAPACK_csymv( &uplo_, &n_,
                   (lapack_complex_float*) &alpha,
                   (lapack_complex_float*) A,
-                  &lda_,
-                  x,
-                  &incx_,
-                  &beta,
-                  yref,
-                  &incy_ );
+                  &lda_, x, &incx_, &beta, yref, &incy_ );
 }
 
 inline void
@@ -219,9 +173,7 @@ void test_symv_work( Params& params, bool run )
     using blas::real;
     using blas::imag;
     using scalar_t = blas::scalar_type<TA, TX, TY>;
-    //typedef scalar_type<TA, TX, TY> scalar_t;
     using real_t = blas::real_type<scalar_t>;
-    //typedef real_type<scalar_t> real_t;
     typedef long long lld;
 
     // get & mark input values
@@ -264,14 +216,13 @@ void test_symv_work( Params& params, bool run )
     lapack::generate_matrix( params.matrix, n, n, &A[0], lda );
     lapack::larnv( idist, iseed, x.size(), &x[0] );
     lapack::larnv( idist, iseed, y.size(), &y[0] );
-
     yref = y;
 
     // norms for error check
     real_t work[1];
     real_t Anorm = lapack::lansy( lapack::Norm::Fro, uplo, n, &A[0], lda );
     real_t Xnorm = blas::nrm2( n, &x[0], std::abs(incx) );
-    real_t Ynorm = blas::nrm2( size_y, &y[0], std::abs(incy) );
+    real_t Ynorm = blas::nrm2( n, &y[0], std::abs(incy) );
 
     // test error exits
     if (params.error_exit() == 'y') {
@@ -340,13 +291,11 @@ void test_symv_work( Params& params, bool run )
         real_t error;
         int64_t okay;
         check_gemm( 1, n, n,
-                alpha,
-                beta,
+                alpha, beta,
                 Anorm, Xnorm, Ynorm,
                 &yref[0], std::abs(incy),
                 &y[0], std::abs(incy),
-                &error,
-                &okay );
+                &error, &okay );
         params.error() = error;
         params.okay() = okay;
     }

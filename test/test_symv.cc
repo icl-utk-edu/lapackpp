@@ -134,8 +134,10 @@ lapack_symv(
     }
     LAPACK_csymv( &uplo_, &n_,
                   (lapack_complex_float*) &alpha,
-                  (lapack_complex_float*) A,
-                  &lda_, x, &incx_, &beta, yref, &incy_ );
+                  (lapack_complex_float*) A, &lda_,
+                  (lapack_complex_float*) x, &incx_,
+                  (lapack_complex_float*) &beta,
+                  (lapack_complex_float*) yref, &incy_ );
 }
 
 inline void
@@ -160,8 +162,10 @@ lapack_symv(
     }
     LAPACK_zsymv( &uplo_, &n_,
                   (lapack_complex_double*) &alpha,
-                  (lapack_complex_double*) A,
-                  &lda_, x, &incx_, &beta, yref, &incy_ );
+                  (lapack_complex_double*) A, &lda_,
+                  (lapack_complex_double*) x, &incx_,
+                  (lapack_complex_double*) &beta,
+                  (lapack_complex_double*) yref, &incy_ );
 }
 
 // -----------------------------------------------------------------------------

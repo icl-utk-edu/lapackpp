@@ -7942,7 +7942,7 @@ void syr(
     std::complex<double>* A, int64_t lda );
 
 void symv(
-    //blas::Layout layout,
+    blas::Layout layout,
     blas::Uplo uplo,
     int64_t n,
     std::complex<float> alpha,
@@ -7952,7 +7952,7 @@ void symv(
     std::complex<float> *y, int64_t incy );
 
 void symv(
-    //blas::Layout layout,
+    blas::Layout layout,
     blas::Uplo uplo,
     int64_t n,
     std::complex<double> alpha,

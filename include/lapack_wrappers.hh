@@ -4169,6 +4169,27 @@ void larfx(
     std::complex<double>* C, int64_t ldc );
 
 // -----------------------------------------------------------------------------
+void larfy(
+    lapack::Uplo uplo, int64_t n,
+    float const* V, int64_t incv, float tau,
+    float* C, int64_t ldc );
+
+void larfy(
+    lapack::Uplo uplo, int64_t n,
+    double const* V, int64_t incv, double tau,
+    double* C, int64_t ldc );
+
+void larfy(
+    lapack::Uplo uplo, int64_t n,
+    std::complex<float> const* V, int64_t incv, std::complex<float> tau,
+    std::complex<float>* C, int64_t ldc );
+
+void larfy(
+    lapack::Uplo uplo, int64_t n,
+    std::complex<double> const* V, int64_t incv, std::complex<double> tau,
+    std::complex<double>* C, int64_t ldc );
+
+// -----------------------------------------------------------------------------
 void larnv(
     int64_t idist,
     int64_t* iseed, int64_t n,

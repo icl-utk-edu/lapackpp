@@ -10091,6 +10091,43 @@ void LAPACK_zlarfx(
     lapack_complex_double* c, lapack_int const* ldc,
     lapack_complex_double* work );
 
+/* ----- apply Householder reflector on both left and right. */
+#define LAPACK_slarfy LAPACK_GLOBAL(slarfy,SLARFY)
+void LAPACK_slarfy(
+    char const* uplo,
+    lapack_int const* n,
+    float const* v, lapack_int const* incv,
+    float const* tau,
+    float* C, lapack_int const* ldc,
+    float* work );
+
+#define LAPACK_dlarfy LAPACK_GLOBAL(dlarfy,DLARFY)
+void LAPACK_dlarfy(
+    char const* uplo,
+    lapack_int const* n,
+    double const* v, lapack_int const* incv,
+    double const* tau,
+    double* C, lapack_int const* ldc,
+    double* work );
+
+#define LAPACK_clarfy LAPACK_GLOBAL(clarfy,CLARFY)
+void LAPACK_clarfy(
+    char const* uplo,
+    lapack_int const* n,
+    lapack_complex_float const* v, lapack_int const* incv,
+    lapack_complex_float const* tau,
+    lapack_complex_float* C, lapack_int const* ldc,
+    lapack_complex_float* work );
+
+#define LAPACK_zlarfy LAPACK_GLOBAL(zlarfy,ZLARFY)
+void LAPACK_zlarfy(
+    char const* uplo,
+    lapack_int const* n,
+    lapack_complex_double const* v, lapack_int const* incv,
+    lapack_complex_double const* tau,
+    lapack_complex_double* C, lapack_int const* ldc,
+    lapack_complex_double* work );
+
 /* ----- generate test matrix with singular values */
 #define LAPACK_slatms LAPACK_GLOBAL(slatms,SLATMS)
 void LAPACK_slatms(

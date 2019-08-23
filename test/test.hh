@@ -380,6 +380,7 @@ void test_laswp ( Params& params, bool run );
 void test_larfg ( Params& params, bool run );
 void test_larf  ( Params& params, bool run );
 void test_larfx ( Params& params, bool run );
+void test_larfy ( Params& params, bool run );
 void test_larfb ( Params& params, bool run );
 void test_larft ( Params& params, bool run );
 

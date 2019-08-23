@@ -5980,6 +5980,113 @@ inline lapack_int LAPACKE_larfx(
 }
 
 // -----------------------------------------------------------------------------
+#if LAPACK_VERSION >= 30700  // >= 3.7.0
+
+// Fortran prototypes not given via lapacke.h
+extern "C" {
+
+#ifndef LAPACK_slarfy
+#define LAPACK_slarfy LAPACK_GLOBAL(slarfy,SLARFY)
+void LAPACK_slarfy(
+    char const* uplo,
+    lapack_int const* n,
+    float const* V, lapack_int const* incv,
+    float const* tau,
+    float* C, lapack_int const* ldc,
+    float* work );
+#endif
+
+#ifndef LAPACK_dlarfy
+#define LAPACK_dlarfy LAPACK_GLOBAL(dlarfy,DLARFY)
+void LAPACK_dlarfy(
+    char const* uplo,
+    lapack_int const* n,
+    double const* V, lapack_int const* incv,
+    double const* tau,
+    double* C, lapack_int const* ldc,
+    double* work );
+#endif
+
+#ifndef LAPACK_clarfy
+#define LAPACK_clarfy LAPACK_GLOBAL(clarfy,CLARFY)
+void LAPACK_clarfy(
+    char const* uplo,
+    lapack_int const* n,
+    lapack_complex_float const* V, lapack_int const* incv,
+    lapack_complex_float const* tau,
+    lapack_complex_float* C, lapack_int const* ldc,
+    lapack_complex_float* work );
+#endif
+
+#ifndef LAPACK_zlarfy
+#define LAPACK_zlarfy LAPACK_GLOBAL(zlarfy,ZLARFY)
+void LAPACK_zlarfy(
+    char const* uplo,
+    lapack_int const* n,
+    lapack_complex_double const* V, lapack_int const* incv,
+    lapack_complex_double const* tau,
+    lapack_complex_double* C, lapack_int const* ldc,
+    lapack_complex_double* work );
+#endif
+
+}  // extern "C"
+
+// --------------------
+// wrappers around LAPACK (not in LAPACKE)
+inline lapack_int LAPACKE_larfy(
+    char uplo, lapack_int n,
+    float* v, lapack_int incv, float tau,
+    float* C, lapack_int ldc )
+{
+    std::vector<float> work( n );
+    LAPACK_slarfy(
+        &uplo, &n,
+        v, &incv, &tau,
+        C, &ldc, &work[0] );
+    return 0;
+}
+
+inline lapack_int LAPACKE_larfy(
+    char uplo, lapack_int n,
+    double* v, lapack_int incv, double tau,
+    double* C, lapack_int ldc )
+{
+    std::vector<double> work( n );
+    LAPACK_dlarfy(
+        &uplo, &n,
+        v, &incv, &tau,
+        C, &ldc, &work[0] );
+    return 0;
+}
+
+inline lapack_int LAPACKE_larfy(
+    char uplo, lapack_int n,
+    std::complex<float>* v, lapack_int incv, std::complex<float> tau,
+    std::complex<float>* C, lapack_int ldc )
+{
+    std::vector<lapack_complex_float> work( n );
+    LAPACK_clarfy(
+        &uplo, &n,
+        (lapack_complex_float*) v, &incv, (lapack_complex_float*) &tau,
+        (lapack_complex_float*) C, &ldc, &work[0] );
+    return 0;
+}
+
+inline lapack_int LAPACKE_larfy(
+    char uplo, lapack_int n,
+    std::complex<double>* v, lapack_int incv, std::complex<double> tau,
+    std::complex<double>* C, lapack_int ldc )
+{
+    std::vector<lapack_complex_double> work( n );
+    LAPACK_zlarfy(
+        &uplo, &n,
+        (lapack_complex_double*) v, &incv, (lapack_complex_double*) &tau,
+        (lapack_complex_double*) C, &ldc, &work[0] );
+    return 0;
+}
+#endif // 30700
+
+// -----------------------------------------------------------------------------
 inline lapack_int LAPACKE_laset(
     char uplo, lapack_int m, lapack_int n, float alpha, float beta,
     float* A, lapack_int lda )

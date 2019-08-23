@@ -635,6 +635,7 @@ if (opts.aux_house):
     [ 'larfg', dtype         + n   + incx_pos ],
     [ 'larf',  gen + dtype + align + mn  + incx + side ],
     [ 'larfx', gen + dtype + align + mn  + side ],
+    [ 'larfy', gen + dtype + align + n   + incx ],
     [ 'larfb', gen + dtype + align + mnk + side + trans + direct + storev ],
     [ 'larft', gen + dtype + align + nk  + direct + storev ],
     ]

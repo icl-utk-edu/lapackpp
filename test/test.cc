@@ -385,6 +385,7 @@ std::vector< libtest::routines_t > routines = {
     { "larfg",              test_larfg,     Section::aux_householder },
     { "larf",               test_larf,      Section::aux_householder },
     { "larfx",              test_larfx,     Section::aux_householder },
+    { "larfy",              test_larfy,     Section::aux_householder },
     { "larfb",              test_larfb,     Section::aux_householder },
     { "larft",              test_larft,     Section::aux_householder },
     { "",                   nullptr,        Section::newline },

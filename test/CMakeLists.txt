@@ -177,6 +177,7 @@ if(libtest_DIR)
 else()
     find_path(libtest_DIR libtestConfig.cmake
         PATHS
+        ${CMAKE_INSTALL_PREFIX}
         ${CMAKE_INSTALL_PREFIX}/test
         )
     message("libtest_DIR: " ${libtest_DIR})

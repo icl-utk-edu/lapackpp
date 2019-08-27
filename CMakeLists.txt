@@ -478,6 +478,7 @@ else()
     find_path(blaspp_DIR blasppConfig.cmake
         PATHS
         ${CMAKE_INSTALL_PREFIX}/blaspp
+        ${CMAKE_INSTALL_PREFIX}
         )
     #message("blaspp_DIR: " ${blaspp_DIR})
 endif()

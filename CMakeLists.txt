@@ -478,6 +478,7 @@ else()
     find_path(blaspp_DIR blasppConfig.cmake
         PATHS
         ${CMAKE_INSTALL_PREFIX}/blaspp
+        ${CMAKE_INSTALL_PREFIX}
         )
     #message("blaspp_DIR: " ${blaspp_DIR})
 endif()
@@ -583,9 +584,9 @@ endif()
 
 install (TARGETS lapackpp
     EXPORT lapackppTargets
-    LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lapackpp/lib
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lapackpp/lib
-    INCLUDES DESTINATION ${CMAKE_INSTALL_PREFIX}/lapackpp/include
+    LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+    INCLUDES DESTINATION ${CMAKE_INSTALL_PREFIX}/include
 )
 
 export(EXPORT lapackppTargets
@@ -594,7 +595,7 @@ export(EXPORT lapackppTargets
 
 install (EXPORT lapackppTargets
     FILE lapackppTargets.cmake
-    DESTINATION ${CMAKE_INSTALL_PREFIX}/lapackpp
+    DESTINATION ${CMAKE_INSTALL_PREFIX}
 )
 
 configure_file(
@@ -607,14 +608,14 @@ install (
     FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/lapackppConfig.cmake
     DESTINATION
-        ${CMAKE_INSTALL_PREFIX}/lapackpp
+        ${CMAKE_INSTALL_PREFIX}
 )
 
 install(
     DIRECTORY
         ${CMAKE_CURRENT_SOURCE_DIR}/include
     DESTINATION
-        ${CMAKE_INSTALL_PREFIX}/lapackpp
+        ${CMAKE_INSTALL_PREFIX}
     PATTERN
         GNUmakefile
         EXCLUDE

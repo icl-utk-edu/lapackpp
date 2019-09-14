@@ -17,6 +17,10 @@ int64_t ormlq(
     float const* tau,
     float* C, int64_t ldc )
 {
+    // for real, map ConjTrans to Trans
+    if (trans == Op::ConjTrans)
+        trans = Op::Trans;
+
     // check for overflow
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
@@ -72,6 +76,10 @@ int64_t ormlq(
     double const* tau,
     double* C, int64_t ldc )
 {
+    // for real, map ConjTrans to Trans
+    if (trans == Op::ConjTrans)
+        trans = Op::Trans;
+
     // check for overflow
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );

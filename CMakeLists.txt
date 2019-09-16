@@ -584,9 +584,15 @@ endif()
 
 install (TARGETS lapackpp
     EXPORT lapackppTargets
-    LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
-    INCLUDES DESTINATION ${CMAKE_INSTALL_PREFIX}/include
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    INCLUDES DESTINATION include
+)
+
+configure_file(
+    lapackppConfig.cmake.in
+    lapackppConfig.cmake
+    COPYONLY
 )
 
 export(EXPORT lapackppTargets
@@ -595,30 +601,17 @@ export(EXPORT lapackppTargets
 
 install (EXPORT lapackppTargets
     FILE lapackppTargets.cmake
-    DESTINATION ${CMAKE_INSTALL_PREFIX}
-)
-
-configure_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/lapackppConfig.cmake.in
-    ${CMAKE_CURRENT_SOURCE_DIR}/lapackppConfig.cmake
-    COPYONLY
+    DESTINATION lib/lapackpp
 )
 
 install (
-    FILES
-        ${CMAKE_CURRENT_SOURCE_DIR}/lapackppConfig.cmake
-    DESTINATION
-        ${CMAKE_INSTALL_PREFIX}
+    FILES ${CMAKE_CURRENT_SOURCE_DIR}/lapackppConfig.cmake
+    DESTINATION lib/lapackpp
 )
 
 install(
-    DIRECTORY
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-    DESTINATION
-        ${CMAKE_INSTALL_PREFIX}
-    PATTERN
-        GNUmakefile
-        EXCLUDE
+    DIRECTORY include/
+    DESTINATION include
 )
 
 # Custom target to mimic makefile target

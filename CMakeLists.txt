@@ -435,6 +435,7 @@ add_library(lapackpp
     src/tprfb.cc
     # Moved from BLAS++
     src/symv.cc
+    src/larfy.cc
 )
 
 # Check user supplied BLAS libraries

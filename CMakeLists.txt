@@ -591,8 +591,8 @@ install (TARGETS lapackpp
 )
 
 configure_file(
-    lapackppConfig.cmake.in
-    lapackppConfig.cmake
+    ${CMAKE_CURRENT_SOURCE_DIR}/lapackppConfig.cmake.in
+    ${CMAKE_CURRENT_SOURCE_DIR}/lapackppConfig.cmake
     COPYONLY
 )
 

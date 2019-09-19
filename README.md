@@ -8,8 +8,6 @@
 
 **University of Tennessee**
 
-![SLATE](http://icl.bitbucket.io/slate/artwork/Bitbucket/lapackpp_stack.png)
-
 [TOC]
 
 * * *
@@ -39,6 +37,8 @@ as part of its [Exascale Computing Initiative](https://exascaleproject.org)
 Closely related to LAPACK++ is the
 [BLAS++](https://bitbucket.org/icl/blaspp) project,
 which provides a C++ API for BLAS and Batch BLAS.
+
+![LAPACKPP](http://icl.bitbucket.io/slate/artwork/Bitbucket/lapackpp_stack.png)
 
 * * *
 

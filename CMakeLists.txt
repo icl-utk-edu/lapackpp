@@ -241,6 +241,7 @@ add_library(lapackpp
     src/larfg.cc
     src/larft.cc
     src/larfx.cc
+    src/larfy.cc
     src/larnv.cc
     src/lartgp.cc
     src/lartgs.cc

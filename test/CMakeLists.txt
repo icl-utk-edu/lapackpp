@@ -101,6 +101,7 @@ add_executable(lapackpp_test
     test_larfg.cc
     test_larft.cc
     test_larfx.cc
+    test_larfy.cc
     test_laset.cc
     test_laswp.cc
     test_pbcon.cc

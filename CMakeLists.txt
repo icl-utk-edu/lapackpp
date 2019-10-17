@@ -436,6 +436,7 @@ add_library(lapackpp
     src/tprfb.cc
     # Moved from BLAS++
     src/symv.cc
+    src/larfy.cc
 )
 
 # Check user supplied BLAS libraries
@@ -585,18 +586,9 @@ endif()
 
 install (TARGETS lapackpp
     EXPORT lapackppTargets
-    LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
-    INCLUDES DESTINATION ${CMAKE_INSTALL_PREFIX}/include
-)
-
-export(EXPORT lapackppTargets
-    FILE lapackppTargets.cmake
-)
-
-install (EXPORT lapackppTargets
-    FILE lapackppTargets.cmake
-    DESTINATION ${CMAKE_INSTALL_PREFIX}
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    INCLUDES DESTINATION include
 )
 
 configure_file(
@@ -605,21 +597,23 @@ configure_file(
     COPYONLY
 )
 
+export(EXPORT lapackppTargets
+    FILE lapackppTargets.cmake
+)
+
+install (EXPORT lapackppTargets
+    FILE lapackppTargets.cmake
+    DESTINATION lib/lapackpp
+)
+
 install (
-    FILES
-        ${CMAKE_CURRENT_SOURCE_DIR}/lapackppConfig.cmake
-    DESTINATION
-        ${CMAKE_INSTALL_PREFIX}
+    FILES ${CMAKE_CURRENT_SOURCE_DIR}/lapackppConfig.cmake
+    DESTINATION lib/lapackpp
 )
 
 install(
-    DIRECTORY
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-    DESTINATION
-        ${CMAKE_INSTALL_PREFIX}
-    PATTERN
-        GNUmakefile
-        EXCLUDE
+    DIRECTORY include/
+    DESTINATION include
 )
 
 # Custom target to mimic makefile target

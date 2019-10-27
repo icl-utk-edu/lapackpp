@@ -101,6 +101,7 @@ add_executable(lapackpp_test
     test_larfg.cc
     test_larft.cc
     test_larfx.cc
+    test_larfy.cc
     test_laset.cc
     test_laswp.cc
     test_pbcon.cc
@@ -168,6 +169,7 @@ add_executable(lapackpp_test
     test_tpqrt2.cc
     test_tprfb.cc
     test_symv.cc
+    test_larfy.cc
 )
 
 # Check if user supplied LIBTEST_DIR on the command line

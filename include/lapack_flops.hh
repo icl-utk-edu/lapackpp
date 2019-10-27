@@ -68,6 +68,13 @@ inline double fmuls_potrs(double n, double nrhs)
 inline double fadds_potrs(double n, double nrhs)
     { return nrhs*n*(n - 1); }
 
+//------------------------------------------------------------ pbtrf
+inline double fmuls_pbtrf(double n, double k)
+    { return n*(1./2.*k*k + 3./2.*k + 1) - 1./3.*k*k*k - k*k - 2./3.*k; }
+
+inline double fadds_pbtrf(double n, double k)
+    { return n*(1./2.*k*k + 1./2.*k) - 1./3.*k*k*k - 1./2.*k*k - 1./6.*k; }
+
 //------------------------------------------------------------ sytrf
 inline double fmuls_sytrf(double n)
     { return 1/6.*n*n*n + 0.5*n*n + 10/3.*n; }
@@ -345,6 +352,10 @@ public:
 
     static double potrs(double n, double nrhs)
         { return 1e-9 * (mul_ops*fmuls_potrs(n, nrhs) + add_ops*fadds_potrs(n, nrhs)); }
+
+    // Band Cholesky
+    static double pbtrf(double n, double k)
+        { return 1e-9 * (mul_ops*fmuls_pbtrf(n, k) + add_ops*fadds_pbtrf(n, k)); }
 
     // LDL^T
     static double sysv(double n, double nrhs)

@@ -75,6 +75,13 @@ inline double fmuls_pbtrf(double n, double k)
 inline double fadds_pbtrf(double n, double k)
     { return n*(1./2.*k*k + 1./2.*k) - 1./3.*k*k*k - 1./2.*k*k - 1./6.*k; }
 
+//------------------------------------------------------------ pbtrs
+inline double fmuls_pbtrs(double n, double nrhs, double k)
+    { return nrhs*(2*n*k + 2*n - k*k - k); }
+
+inline double fadds_pbtrs(double n, double nrhs, double k)
+    { return nrhs*(2*n*k - k*k - k); }
+
 //------------------------------------------------------------ sytrf
 inline double fmuls_sytrf(double n)
     { return 1/6.*n*n*n + 0.5*n*n + 10/3.*n; }
@@ -354,8 +361,14 @@ public:
         { return 1e-9 * (mul_ops*fmuls_potrs(n, nrhs) + add_ops*fadds_potrs(n, nrhs)); }
 
     // Band Cholesky
+    static double pbsv(double n, double nrhs, double k)
+        { return pbtrf(n, k) + pbtrs(n, nrhs, k); }
+
     static double pbtrf(double n, double k)
         { return 1e-9 * (mul_ops*fmuls_pbtrf(n, k) + add_ops*fadds_pbtrf(n, k)); }
+
+    static double pbtrs(double n, double nrhs, double k)
+        { return 1e-9 * (mul_ops*fmuls_pbtrs(n, nrhs, k) + add_ops*fadds_pbtrs(n, nrhs, k)); }
 
     // LDL^T
     static double sysv(double n, double nrhs)

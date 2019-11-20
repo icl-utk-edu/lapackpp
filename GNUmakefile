@@ -2,11 +2,11 @@
 # make by default:
 #    - Runs configure.py to create make.inc, if it doesn't exist.
 #    - Compiles lib/liblapackpp.so, or lib/liblapackpp.a (if static=1).
-#    - Compiles the tester, test/test.
+#    - Compiles the tester, test/tester.
 #
 # make config    - Runs configure.py to create make.inc.
 # make lib       - Compiles lib/liblapackpp.so, or liblapackpp.a (if static=1).
-# make test      - Compiles the tester, test/test.
+# make tester      - Compiles the tester, test/tester.
 # make docs      - Compiles Doxygen documentation.
 # make install   - Installs the library and headers to $prefix.
 # make clean     - Deletes all objects, libraries, and the tester.
@@ -79,11 +79,11 @@ lib_src  = $(wildcard src/*.cc)
 lib_obj  = $(addsuffix .o, $(basename $(lib_src)))
 dep     += $(addsuffix .d, $(basename $(lib_src)))
 
-test_src = $(wildcard test/*.cc)
-test_obj = $(addsuffix .o, $(basename $(test_src)))
-dep     += $(addsuffix .d, $(basename $(test_src)))
+tester_src = $(wildcard test/*.cc)
+tester_obj = $(addsuffix .o, $(basename $(tester_src)))
+dep       += $(addsuffix .d, $(basename $(tester_src)))
 
-test     = test/test
+tester     = test/tester
 
 blaspp_dir = $(wildcard ../blaspp)
 ifeq ($(blaspp_dir),)
@@ -110,7 +110,7 @@ ifeq ($(libtest_dir),)
 	libtest_dir = $(wildcard ./libtest)
 endif
 ifeq ($(libtest_dir),)
-    $(test_obj):
+    $(tester_obj):
 		$(error Tester requires libtest, which was not found. Run 'make config' \
 		        or download manually from https://bitbucket.org/icl/libtest/)
 endif
@@ -137,7 +137,7 @@ CXXFLAGS += -I./include
 CXXFLAGS += -I$(blaspp_dir)/include
 
 # additional flags and libraries for testers
-$(test_obj): CXXFLAGS += -I$(libtest_dir)
+$(tester_obj): CXXFLAGS += -I$(libtest_dir)
 
 TEST_LDFLAGS += -L./lib -Wl,-rpath,$(abspath ./lib)
 TEST_LDFLAGS += -L$(blaspp_dir)/lib -Wl,-rpath,$(abspath $(blaspp_dir)/lib)
@@ -147,14 +147,14 @@ TEST_LIBS    += -lblaspp -llapackpp -ltest
 #-------------------------------------------------------------------------------
 # Rules
 
-targets = all lib src test headers include docs clean distclean
+targets = all lib src tester headers include docs clean distclean
 
 .DELETE_ON_ERROR:
 .SUFFIXES:
 .PHONY: $(targets)
 .DEFAULT_GOAL = all
 
-all: lib test
+all: lib tester
 
 install: lib
 	mkdir -p $(DESTDIR)$(prefix)/include
@@ -168,7 +168,7 @@ uninstall:
 
 #-------------------------------------------------------------------------------
 # if re-configured, recompile everything
-$(lib_obj) $(test_obj): lapack_defines.h
+$(lib_obj) $(tester_obj): lapack_defines.h
 
 #-------------------------------------------------------------------------------
 # LAPACK++ library
@@ -204,15 +204,15 @@ endif
 
 #-------------------------------------------------------------------------------
 # tester
-$(test): $(test_obj) $(lib) $(libtest) $(libblaspp)
-	$(CXX) $(TEST_LDFLAGS) $(LDFLAGS) $(test_obj) \
+$(tester): $(tester_obj) $(lib) $(libtest) $(libblaspp)
+	$(CXX) $(TEST_LDFLAGS) $(LDFLAGS) $(tester_obj) \
 		$(TEST_LIBS) $(LIBS) -o $@
 
 # sub-directory rules
-test: $(test)
+tester: $(tester)
 
-test/clean:
-	$(RM) $(test) test/*.o
+tester/clean:
+	$(RM) $(tester) test/*.o
 
 #-------------------------------------------------------------------------------
 # headers
@@ -246,7 +246,7 @@ test/docs: docs
 
 #-------------------------------------------------------------------------------
 # general rules
-clean: lib/clean test/clean headers/clean
+clean: lib/clean tester/clean headers/clean
 
 distclean: clean
 	$(RM) make.inc src/*.d test/*.d
@@ -280,11 +280,11 @@ echo:
 	@echo
 	@echo "lib_obj       = $(lib_obj)"
 	@echo
-	@echo "test_src      = $(test_src)"
+	@echo "tester_src      = $(tester_src)"
 	@echo
-	@echo "test_obj      = $(test_obj)"
+	@echo "tester_obj      = $(tester_obj)"
 	@echo
-	@echo "test          = $(test)"
+	@echo "tester          = $(tester)"
 	@echo
 	@echo "dep           = $(dep)"
 	@echo

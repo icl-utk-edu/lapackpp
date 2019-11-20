@@ -195,10 +195,9 @@ find_package(libtest)
 find_package(blaspp)
 #find_package(LAPACKE REQUIRED)
 
-cmake_policy(SET CMP0079 NEW)
+#cmake_policy(SET CMP0079 NEW)
 
 if ("${LAPACKE_DEFINES}" MATCHES "HAVE_LAPACKE")
-    #message (" yes lapacke")
     #message ("lapacke include dirs: ${LAPACKE_INCLUDE_DIRS}")
     target_link_libraries(lapackpp_test
         PUBLIC
@@ -266,7 +265,7 @@ add_custom_command(TARGET lapackpp_test POST_BUILD
 add_custom_command(TARGET lapackpp_test POST_BUILD
     COMMAND
         cp ${CMAKE_CURRENT_BINARY_DIR}/lapackpp_test
-           ${CMAKE_CURRENT_BINARY_DIR}/test
+           ${CMAKE_CURRENT_BINARY_DIR}/tester
 )
 
 if(LAPACKPP_TEST_DEBUG)
@@ -289,5 +288,5 @@ add_custom_command(TARGET lapackpp_test POST_BUILD
 add_custom_command(TARGET lapackpp_test POST_BUILD
     COMMAND
         cp ${CMAKE_CURRENT_BINARY_DIR}/lapackpp_test
-           ${CMAKE_CURRENT_BINARY_DIR}/test
+           ${CMAKE_CURRENT_BINARY_DIR}/tester
 )

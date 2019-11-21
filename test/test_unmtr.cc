@@ -61,10 +61,10 @@ void test_unmtr_work( Params& params, bool run )
     }
 
     // ---------- run test
-    libtest::flush_cache( params.cache() );
-    double time = libtest::get_wtime();
+    testsweeper::flush_cache( params.cache() );
+    double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::unmtr( side, uplo, trans, m, n, &A[0], lda, &tau[0], &C_tst[0], ldc );
-    time = libtest::get_wtime() - time;
+    time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::unmtr returned error %lld\n", (lld) info_tst );
     }
@@ -75,10 +75,10 @@ void test_unmtr_work( Params& params, bool run )
 
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache() );
-        time = libtest::get_wtime();
+        testsweeper::flush_cache( params.cache() );
+        time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_unmtr( side2char(side), uplo2char(uplo), op2char(trans), m, n, &A[0], lda, &tau[0], &C_ref[0], ldc );
-        time = libtest::get_wtime() - time;
+        time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_unmtr returned error %lld\n", (lld) info_ref );
         }
@@ -101,23 +101,23 @@ void test_unmtr_work( Params& params, bool run )
 void test_unmtr( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case libtest::DataType::Integer:
+        case testsweeper::DataType::Integer:
             throw std::exception();
             break;
 
-        case libtest::DataType::Single:
+        case testsweeper::DataType::Single:
             test_unmtr_work< float >( params, run );
             break;
 
-        case libtest::DataType::Double:
+        case testsweeper::DataType::Double:
             test_unmtr_work< double >( params, run );
             break;
 
-        case libtest::DataType::SingleComplex:
+        case testsweeper::DataType::SingleComplex:
             test_unmtr_work< std::complex<float> >( params, run );
             break;
 
-        case libtest::DataType::DoubleComplex:
+        case testsweeper::DataType::DoubleComplex:
             test_unmtr_work< std::complex<double> >( params, run );
             break;
     }

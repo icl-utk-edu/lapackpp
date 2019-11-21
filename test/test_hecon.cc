@@ -53,10 +53,10 @@ void test_hecon_work( Params& params, bool run )
     std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
 
     // ---------- run test
-    libtest::flush_cache( params.cache() );
-    double time = libtest::get_wtime();
+    testsweeper::flush_cache( params.cache() );
+    double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::hecon( uplo, n, &A[0], lda, &ipiv_tst[0], anorm, &rcond_tst );
-    time = libtest::get_wtime() - time;
+    time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::hecon returned error %lld\n", (lld) info_tst );
     }
@@ -67,10 +67,10 @@ void test_hecon_work( Params& params, bool run )
 
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache() );
-        time = libtest::get_wtime();
+        testsweeper::flush_cache( params.cache() );
+        time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_hecon( uplo2char(uplo), n, &A[0], lda, &ipiv_ref[0], anorm, &rcond_ref );
-        time = libtest::get_wtime() - time;
+        time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_hecon returned error %lld\n", (lld) info_ref );
         }
@@ -93,23 +93,23 @@ void test_hecon_work( Params& params, bool run )
 void test_hecon( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case libtest::DataType::Integer:
+        case testsweeper::DataType::Integer:
             throw std::exception();
             break;
 
-        case libtest::DataType::Single:
+        case testsweeper::DataType::Single:
             test_hecon_work< float >( params, run );
             break;
 
-        case libtest::DataType::Double:
+        case testsweeper::DataType::Double:
             test_hecon_work< double >( params, run );
             break;
 
-        case libtest::DataType::SingleComplex:
+        case testsweeper::DataType::SingleComplex:
             test_hecon_work< std::complex<float> >( params, run );
             break;
 
-        case libtest::DataType::DoubleComplex:
+        case testsweeper::DataType::DoubleComplex:
             test_hecon_work< std::complex<double> >( params, run );
             break;
     }

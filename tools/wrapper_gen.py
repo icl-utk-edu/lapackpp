@@ -1678,23 +1678,23 @@ def generate_tester( funcs ):
 void test_''' + func.name + '''( Params& params, bool run )
 {
     switch (params.datatype.value()) {
-        case libtest::DataType::Integer:
+        case testsweeper::DataType::Integer:
             throw std::exception();
             break;
 
-        case libtest::DataType::Single:
+        case testsweeper::DataType::Single:
             test_''' + func.name + '''_work< float >( params, run );
             break;
 
-        case libtest::DataType::Double:
+        case testsweeper::DataType::Double:
             test_''' + func.name + '''_work< double >( params, run );
             break;
 
-        case libtest::DataType::SingleComplex:
+        case testsweeper::DataType::SingleComplex:
             test_''' + func.name + '''_work< std::complex<float> >( params, run );
             break;
 
-        case libtest::DataType::DoubleComplex:
+        case testsweeper::DataType::DoubleComplex:
             test_''' + func.name + '''_work< std::complex<double> >( params, run );
             break;
     }
@@ -1754,10 +1754,10 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  copy
         +  '\n'
         +  tab + '// ---------- run test\n'
-        +  tab + 'libtest::flush_cache( params.cache.value() );\n'
-        +  tab + 'double time = libtest::get_wtime();\n'
+        +  tab + 'testsweeper::flush_cache( params.cache.value() );\n'
+        +  tab + 'double time = testsweeper::get_wtime();\n'
         +  tab + 'int64_t info_tst = lapack::' + func.name + '( ' + tst_args + ' );\n'
-        +  tab + 'time = libtest::get_wtime() - time;\n'
+        +  tab + 'time = testsweeper::get_wtime() - time;\n'
         +  tab + 'if (info_tst != 0) {\n'
         +  tab + '    fprintf( stderr, "lapack::' + func.name + ' returned error %lld\\n", (lld) info_tst );\n'
         +  tab + '}\n'
@@ -1768,10 +1768,10 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  '\n'
         +  tab + "if (params.ref.value() == 'y' || params.check.value() == 'y') {\n"
         +  tab*2 + '// ---------- run reference\n'
-        +  tab*2 + 'libtest::flush_cache( params.cache.value() );\n'
-        +  tab*2 + 'time = libtest::get_wtime();\n'
+        +  tab*2 + 'testsweeper::flush_cache( params.cache.value() );\n'
+        +  tab*2 + 'time = testsweeper::get_wtime();\n'
         +  tab*2 + 'int64_t info_ref = LAPACKE_'  + func.name + '( ' + ref_args + ' );\n'
-        +  tab*2 + 'time = libtest::get_wtime() - time;\n'
+        +  tab*2 + 'time = testsweeper::get_wtime() - time;\n'
         +  tab*2 + 'if (info_ref != 0) {\n'
         +  tab*2 + '    fprintf( stderr, "LAPACKE_' + func.name + ' returned error %lld\\n", (lld) info_ref );\n'
         +  tab*2 + '}\n'

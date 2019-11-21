@@ -60,10 +60,10 @@ void test_gelsd_work( Params& params, bool run )
     B_ref = B_tst;
 
     // ---------- run test
-    libtest::flush_cache( params.cache() );
-    double time = libtest::get_wtime();
+    testsweeper::flush_cache( params.cache() );
+    double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::gelsd( m, n, nrhs, &A_tst[0], lda, &B_tst[0], ldb, &S_tst[0], rcond, &rank_tst );
-    time = libtest::get_wtime() - time;
+    time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::gelsd returned error %lld\n", (lld) info_tst );
     }
@@ -87,10 +87,10 @@ void test_gelsd_work( Params& params, bool run )
 
     if (params.ref() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache() );
-        time = libtest::get_wtime();
+        testsweeper::flush_cache( params.cache() );
+        time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_gelsd( m, n, nrhs, &A_ref[0], lda, &B_ref[0], ldb, &S_ref[0], rcond, &rank_ref );
-        time = libtest::get_wtime() - time;
+        time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gelsd returned error %lld\n", (lld) info_ref );
         }
@@ -104,23 +104,23 @@ void test_gelsd_work( Params& params, bool run )
 void test_gelsd( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case libtest::DataType::Integer:
+        case testsweeper::DataType::Integer:
             throw std::exception();
             break;
 
-        case libtest::DataType::Single:
+        case testsweeper::DataType::Single:
             test_gelsd_work< float >( params, run );
             break;
 
-        case libtest::DataType::Double:
+        case testsweeper::DataType::Double:
             test_gelsd_work< double >( params, run );
             break;
 
-        case libtest::DataType::SingleComplex:
+        case testsweeper::DataType::SingleComplex:
             test_gelsd_work< std::complex<float> >( params, run );
             break;
 
-        case libtest::DataType::DoubleComplex:
+        case testsweeper::DataType::DoubleComplex:
             test_gelsd_work< std::complex<double> >( params, run );
             break;
     }

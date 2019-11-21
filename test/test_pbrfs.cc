@@ -88,10 +88,10 @@ void test_pbrfs_work( Params& params, bool run )
     }
 
     // ---------- run test
-    libtest::flush_cache( params.cache() );
-    double time = libtest::get_wtime();
+    testsweeper::flush_cache( params.cache() );
+    double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::pbrfs( uplo, n, kd, nrhs, &AB[0], ldab, &AFB[0], ldafb, &B[0], ldb, &X_tst[0], ldx, &ferr_tst[0], &berr_tst[0] );
-    time = libtest::get_wtime() - time;
+    time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::pbrfs returned error %lld\n", (lld) info_tst );
     }
@@ -102,10 +102,10 @@ void test_pbrfs_work( Params& params, bool run )
 
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache() );
-        time = libtest::get_wtime();
+        testsweeper::flush_cache( params.cache() );
+        time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_pbrfs( uplo2char(uplo), n, kd, nrhs, &AB[0], ldab, &AFB[0], ldafb, &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
-        time = libtest::get_wtime() - time;
+        time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_pbrfs returned error %lld\n", (lld) info_ref );
         }
@@ -130,23 +130,23 @@ void test_pbrfs_work( Params& params, bool run )
 void test_pbrfs( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case libtest::DataType::Integer:
+        case testsweeper::DataType::Integer:
             throw std::exception();
             break;
 
-        case libtest::DataType::Single:
+        case testsweeper::DataType::Single:
             test_pbrfs_work< float >( params, run );
             break;
 
-        case libtest::DataType::Double:
+        case testsweeper::DataType::Double:
             test_pbrfs_work< double >( params, run );
             break;
 
-        case libtest::DataType::SingleComplex:
+        case testsweeper::DataType::SingleComplex:
             test_pbrfs_work< std::complex<float> >( params, run );
             break;
 
-        case libtest::DataType::DoubleComplex:
+        case testsweeper::DataType::DoubleComplex:
             test_pbrfs_work< std::complex<double> >( params, run );
             break;
     }

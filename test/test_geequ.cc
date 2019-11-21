@@ -49,10 +49,10 @@ void test_geequ_work( Params& params, bool run )
     lapack::generate_matrix( params.matrix, m, n, &A[0], lda );
 
     // ---------- run test
-    libtest::flush_cache( params.cache() );
-    double time = libtest::get_wtime();
+    testsweeper::flush_cache( params.cache() );
+    double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::geequ( m, n, &A[0], lda, &R_tst[0], &C_tst[0], &rowcnd_tst, &colcnd_tst, &amax_tst );
-    time = libtest::get_wtime() - time;
+    time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::geequ returned error %lld\n", (lld) info_tst );
     }
@@ -63,10 +63,10 @@ void test_geequ_work( Params& params, bool run )
 
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache() );
-        time = libtest::get_wtime();
+        testsweeper::flush_cache( params.cache() );
+        time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_geequ( m, n, &A[0], lda, &R_ref[0], &C_ref[0], &rowcnd_ref, &colcnd_ref, &amax_ref );
-        time = libtest::get_wtime() - time;
+        time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_geequ returned error %lld\n", (lld) info_ref );
         }
@@ -93,23 +93,23 @@ void test_geequ_work( Params& params, bool run )
 void test_geequ( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case libtest::DataType::Integer:
+        case testsweeper::DataType::Integer:
             throw std::exception();
             break;
 
-        case libtest::DataType::Single:
+        case testsweeper::DataType::Single:
             test_geequ_work< float >( params, run );
             break;
 
-        case libtest::DataType::Double:
+        case testsweeper::DataType::Double:
             test_geequ_work< double >( params, run );
             break;
 
-        case libtest::DataType::SingleComplex:
+        case testsweeper::DataType::SingleComplex:
             test_geequ_work< std::complex<float> >( params, run );
             break;
 
-        case libtest::DataType::DoubleComplex:
+        case testsweeper::DataType::DoubleComplex:
             test_geequ_work< std::complex<double> >( params, run );
             break;
     }

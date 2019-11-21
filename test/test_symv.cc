@@ -172,7 +172,7 @@ lapack_symv(
 template< typename TA, typename TX, typename TY >
 void test_symv_work( Params& params, bool run )
 {
-    using namespace libtest;
+    using namespace testsweeper;
     using namespace blas;
     using blas::real;
     using blas::imag;
@@ -259,7 +259,7 @@ void test_symv_work( Params& params, bool run )
     }
 
     // run test
-    libtest::flush_cache( params.cache() );
+    testsweeper::flush_cache( params.cache() );
     double time = get_wtime();
     blas::symv( layout, uplo, n, alpha, &A[0], lda, &x[0], incx, beta, &y[0], incy );
     time = get_wtime() - time;
@@ -276,7 +276,7 @@ void test_symv_work( Params& params, bool run )
 
     if (params.check() == 'y') {
         // run reference
-        libtest::flush_cache( params.cache() );
+        testsweeper::flush_cache( params.cache() );
         time = get_wtime();
         lapack_symv( cblas_layout_const(layout), cblas_uplo_const(uplo), n,
                     alpha, &A[0], lda, &x[0], incx, beta, &yref[0], incy );
@@ -309,23 +309,23 @@ void test_symv_work( Params& params, bool run )
 void test_symv( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case libtest::DataType::Integer:
+        case testsweeper::DataType::Integer:
             throw std::exception();
 
-        case libtest::DataType::Single:
+        case testsweeper::DataType::Single:
             test_symv_work< float, float, float >( params, run );
             break;
 
-        case libtest::DataType::Double:
+        case testsweeper::DataType::Double:
             test_symv_work< double, double, double >( params, run );
             break;
 
-        case libtest::DataType::SingleComplex:
+        case testsweeper::DataType::SingleComplex:
             test_symv_work< std::complex<float>, std::complex<float>,
                             std::complex<float> >( params, run );
             break;
 
-        case libtest::DataType::DoubleComplex:
+        case testsweeper::DataType::DoubleComplex:
             test_symv_work< std::complex<double>, std::complex<double>,
                             std::complex<double> >( params, run );
             break;

@@ -93,10 +93,10 @@ void test_gesvx_work( Params& params, bool run )
     B_ref = B_tst;
 
     // ---------- run test
-    libtest::flush_cache( params.cache() );
-    double time = libtest::get_wtime();
+    testsweeper::flush_cache( params.cache() );
+    double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::gesvx( fact, trans, n, nrhs, &A_tst[0], lda, &AF_tst[0], ldaf, &ipiv_tst[0], &equed_tst, &R_tst[0], &C_tst[0], &B_tst[0], ldb, &X_tst[0], ldx, &rcond_tst, &ferr_tst[0], &berr_tst[0], &rpivot_tst );
-    time = libtest::get_wtime() - time;
+    time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::gesvx returned error %lld\n", (lld) info_tst );
     }
@@ -107,11 +107,11 @@ void test_gesvx_work( Params& params, bool run )
 
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache() );
+        testsweeper::flush_cache( params.cache() );
         char equed_ref_char = lapack::equed2char( equed_ref );
-        time = libtest::get_wtime();
+        time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_gesvx( factored2char(fact), op2char(trans), n, nrhs, &A_ref[0], lda, &AF_ref[0], ldaf, &ipiv_ref[0], &equed_ref_char, &R_ref[0], &C_ref[0], &B_ref[0], ldb, &X_ref[0], ldx, &rcond_ref, &ferr_ref[0], &berr_ref[0], &rpivot_ref );
-        time = libtest::get_wtime() - time;
+        time = testsweeper::get_wtime() - time;
         equed_ref = lapack::char2equed( equed_ref_char );
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gesvx returned error %lld\n", (lld) info_ref );
@@ -146,23 +146,23 @@ void test_gesvx_work( Params& params, bool run )
 void test_gesvx( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case libtest::DataType::Integer:
+        case testsweeper::DataType::Integer:
             throw std::exception();
             break;
 
-        case libtest::DataType::Single:
+        case testsweeper::DataType::Single:
             test_gesvx_work< float >( params, run );
             break;
 
-        case libtest::DataType::Double:
+        case testsweeper::DataType::Double:
             test_gesvx_work< double >( params, run );
             break;
 
-        case libtest::DataType::SingleComplex:
+        case testsweeper::DataType::SingleComplex:
             test_gesvx_work< std::complex<float> >( params, run );
             break;
 
-        case libtest::DataType::DoubleComplex:
+        case testsweeper::DataType::DoubleComplex:
             test_gesvx_work< std::complex<double> >( params, run );
             break;
     }

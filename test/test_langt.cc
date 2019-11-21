@@ -43,10 +43,10 @@ void test_langt_work( Params& params, bool run )
     lapack::larnv( idist, iseed, DU.size(), &DU[0] );
 
     // ---------- run test
-    libtest::flush_cache( params.cache() );
-    double time = libtest::get_wtime();
+    testsweeper::flush_cache( params.cache() );
+    double time = testsweeper::get_wtime();
     real_t norm_tst = lapack::langt( norm, n, &DL[0], &D[0], &DU[0] );
-    time = libtest::get_wtime() - time;
+    time = testsweeper::get_wtime() - time;
 
     params.time() = time;
     // double gflop = lapack::Gflop< scalar_t >::langt( norm, n );
@@ -58,10 +58,10 @@ void test_langt_work( Params& params, bool run )
 
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache() );
-        time = libtest::get_wtime();
+        testsweeper::flush_cache( params.cache() );
+        time = testsweeper::get_wtime();
         real_t norm_ref = LAPACKE_langt( norm2char(norm), n, &DL[0], &D[0], &DU[0] );
-        time = libtest::get_wtime() - time;
+        time = testsweeper::get_wtime() - time;
 
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
@@ -89,23 +89,23 @@ void test_langt_work( Params& params, bool run )
 void test_langt( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case libtest::DataType::Integer:
+        case testsweeper::DataType::Integer:
             throw std::exception();
             break;
 
-        case libtest::DataType::Single:
+        case testsweeper::DataType::Single:
             test_langt_work< float >( params, run );
             break;
 
-        case libtest::DataType::Double:
+        case testsweeper::DataType::Double:
             test_langt_work< double >( params, run );
             break;
 
-        case libtest::DataType::SingleComplex:
+        case testsweeper::DataType::SingleComplex:
             test_langt_work< std::complex<float> >( params, run );
             break;
 
-        case libtest::DataType::DoubleComplex:
+        case testsweeper::DataType::DoubleComplex:
             test_langt_work< std::complex<double> >( params, run );
             break;
     }

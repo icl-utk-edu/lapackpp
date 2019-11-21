@@ -86,12 +86,12 @@ void test_geev_work( Params& params, bool run )
     }
 
     // ---------- run test
-    libtest::flush_cache( params.cache() );
-    double time = libtest::get_wtime();
+    testsweeper::flush_cache( params.cache() );
+    double time = testsweeper::get_wtime();
     //printf (" test start\n");
     int64_t info_tst = lapack::geev( jobvl, jobvr, n, &A_tst[0], lda, &W_tst[0], &VL_tst[0], ldvl, &VR_tst[0], ldvr );
     //printf (" test done\n");
-    time = libtest::get_wtime() - time;
+    time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::geev returned error %lld\n", (lld) info_tst );
     }
@@ -118,10 +118,10 @@ void test_geev_work( Params& params, bool run )
         // 2. max_{j=1, ..., n} | || Vl(j) ||_2 - 1 |
         // 3. || A Vr - Vr W || / (||V||_1 ||A||_1)
         // 4. max_{j=1, ..., n} | || Vr(j) ||_2 - 1 |
-        real_t results[4] = { real_t( libtest::no_data_flag ),
-                              real_t( libtest::no_data_flag ),
-                              real_t( libtest::no_data_flag ),
-                              real_t( libtest::no_data_flag ) };
+        real_t results[4] = { real_t( testsweeper::no_data_flag ),
+                              real_t( testsweeper::no_data_flag ),
+                              real_t( testsweeper::no_data_flag ),
+                              real_t( testsweeper::no_data_flag ) };
         if (jobvl == lapack::Job::Vec) {
             check_geev( blas::Op::ConjTrans, n, &A_ref[0], lda, &W_tst[0],
                         &VL_tst[0], ldvl, verbose, &results[0] );
@@ -140,12 +140,12 @@ void test_geev_work( Params& params, bool run )
 
     if (params.ref() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache() );
-        time = libtest::get_wtime();
+        testsweeper::flush_cache( params.cache() );
+        time = testsweeper::get_wtime();
     //printf (" ref start\n");
         int64_t info_ref = LAPACKE_geev( job2char(jobvl), job2char(jobvr), n, &A_ref[0], lda, &W_ref[0], &VL_ref[0], ldvl, &VR_ref[0], ldvr );
     //printf (" ref done\n");
-        time = libtest::get_wtime() - time;
+        time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_geev returned error %lld\n", (lld) info_ref );
         }
@@ -182,23 +182,23 @@ void test_geev_work( Params& params, bool run )
 void test_geev( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case libtest::DataType::Integer:
+        case testsweeper::DataType::Integer:
             throw std::exception();
             break;
 
-        case libtest::DataType::Single:
+        case testsweeper::DataType::Single:
             test_geev_work< float >( params, run );
             break;
 
-        case libtest::DataType::Double:
+        case testsweeper::DataType::Double:
             test_geev_work< double >( params, run );
             break;
 
-        case libtest::DataType::SingleComplex:
+        case testsweeper::DataType::SingleComplex:
             test_geev_work< std::complex<float> >( params, run );
             break;
 
-        case libtest::DataType::DoubleComplex:
+        case testsweeper::DataType::DoubleComplex:
             test_geev_work< std::complex<double> >( params, run );
             break;
     }

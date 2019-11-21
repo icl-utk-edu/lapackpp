@@ -75,10 +75,10 @@ void test_hbgvd_work( Params& params, bool run )
     BB_ref = BB_tst;
 
     // ---------- run test
-    libtest::flush_cache( params.cache() );
-    double time = libtest::get_wtime();
+    testsweeper::flush_cache( params.cache() );
+    double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::hbgvd( jobz, uplo, n, ka, kb, &AB_tst[0], ldab, &BB_tst[0], ldbb, &W_tst[0], &Z_tst[0], ldz );
-    time = libtest::get_wtime() - time;
+    time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::hbgvd returned error %lld\n", (lld) info_tst );
     }
@@ -89,12 +89,12 @@ void test_hbgvd_work( Params& params, bool run )
 
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache() );
-        time = libtest::get_wtime();
+        testsweeper::flush_cache( params.cache() );
+        time = testsweeper::get_wtime();
         // Note: LAPACKE_hbgvd does workspace query that may be wrong
         // (e.g., in LAPACK <= 3.6.0, MKL 2018), so custom version fixes it.
         int64_t info_ref = LAPACKE_hbgvd_custom( job2char(jobz), uplo2char(uplo), n, ka, kb, &AB_ref[0], ldab, &BB_ref[0], ldbb, &W_ref[0], &Z_ref[0], ldz );
-        time = libtest::get_wtime() - time;
+        time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_hbgvd returned error %lld\n", (lld) info_ref );
         }
@@ -120,23 +120,23 @@ void test_hbgvd_work( Params& params, bool run )
 void test_hbgvd( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case libtest::DataType::Integer:
+        case testsweeper::DataType::Integer:
             throw std::exception();
             break;
 
-        case libtest::DataType::Single:
+        case testsweeper::DataType::Single:
             test_hbgvd_work< float >( params, run );
             break;
 
-        case libtest::DataType::Double:
+        case testsweeper::DataType::Double:
             test_hbgvd_work< double >( params, run );
             break;
 
-        case libtest::DataType::SingleComplex:
+        case testsweeper::DataType::SingleComplex:
             test_hbgvd_work< std::complex<float> >( params, run );
             break;
 
-        case libtest::DataType::DoubleComplex:
+        case testsweeper::DataType::DoubleComplex:
             test_hbgvd_work< std::complex<double> >( params, run );
             break;
     }

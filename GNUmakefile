@@ -102,24 +102,24 @@ else
 	libblaspp  = $(blaspp_dir)/lib/libblaspp.so
 endif
 
-libtest_dir = $(wildcard ../libtest)
-ifeq ($(libtest_dir),)
-	libtest_dir = $(wildcard $(blaspp_dir)/libtest)
+testsweeper_dir = $(wildcard ../testsweeper)
+ifeq ($(testsweeper_dir),)
+	testsweeper_dir = $(wildcard $(blaspp_dir)/testsweeper)
 endif
-ifeq ($(libtest_dir),)
-	libtest_dir = $(wildcard ./libtest)
+ifeq ($(testsweeper_dir),)
+	testsweeper_dir = $(wildcard ./testsweeper)
 endif
-ifeq ($(libtest_dir),)
+ifeq ($(testsweeper_dir),)
     $(tester_obj):
-		$(error Tester requires libtest, which was not found. Run 'make config' \
-		        or download manually from https://bitbucket.org/icl/libtest/)
+		$(error Tester requires testsweeper, which was not found. Run 'make config' \
+		        or download manually from https://bitbucket.org/icl/testsweeper/)
 endif
 
-libtest_src = $(wildcard $(libtest_dir)/libtest.cc $(libtest_dir)/libtest.hh)
+testsweeper_src = $(wildcard $(testsweeper_dir)/testsweeper.cc $(testsweeper_dir)/testsweeper.hh)
 ifeq ($(static),1)
-	libtest = $(libtest_dir)/libtest.a
+	testsweeper = $(testsweeper_dir)/testsweeper.a
 else
-	libtest = $(libtest_dir)/libtest.so
+	testsweeper = $(testsweeper_dir)/testsweeper.so
 endif
 
 lib_a  = ./lib/liblapackpp.a
@@ -137,12 +137,12 @@ CXXFLAGS += -I./include
 CXXFLAGS += -I$(blaspp_dir)/include
 
 # additional flags and libraries for testers
-$(tester_obj): CXXFLAGS += -I$(libtest_dir)
+$(tester_obj): CXXFLAGS += -I$(testsweeper_dir)
 
 TEST_LDFLAGS += -L./lib -Wl,-rpath,$(abspath ./lib)
 TEST_LDFLAGS += -L$(blaspp_dir)/lib -Wl,-rpath,$(abspath $(blaspp_dir)/lib)
-TEST_LDFLAGS += -L$(libtest_dir) -Wl,-rpath,$(abspath $(libtest_dir))
-TEST_LIBS    += -lblaspp -llapackpp -ltest
+TEST_LDFLAGS += -L$(testsweeper_dir) -Wl,-rpath,$(abspath $(testsweeper_dir))
+TEST_LIBS    += -lblaspp -llapackpp -ltestsweeper
 
 #-------------------------------------------------------------------------------
 # Rules
@@ -196,15 +196,15 @@ ifneq ($(blaspp_dir),)
 endif
 
 #-------------------------------------------------------------------------------
-# libtest library
-ifneq ($(libtest_dir),)
-    $(libtest): $(libtest_src)
-		cd $(libtest_dir) && $(MAKE) lib CXX=$(CXX)
+# testsweeper library
+ifneq ($(testsweeper_dir),)
+    $(testsweeper): $(testsweeper_src)
+		cd $(testsweeper_dir) && $(MAKE) lib CXX=$(CXX)
 endif
 
 #-------------------------------------------------------------------------------
 # tester
-$(tester): $(tester_obj) $(lib) $(libtest) $(libblaspp)
+$(tester): $(tester_obj) $(lib) $(testsweeper) $(libblaspp)
 	$(CXX) $(TEST_LDFLAGS) $(LDFLAGS) $(tester_obj) \
 		$(TEST_LIBS) $(LIBS) -o $@
 
@@ -256,14 +256,14 @@ distclean: clean
 
 # preprocess source
 %.i: %.cc
-	$(CXX) $(CXXFLAGS) -I$(blaspp_dir)/test -I$(libtest_dir) -E $< -o $@
+	$(CXX) $(CXXFLAGS) -I$(blaspp_dir)/test -I$(testsweeper_dir) -E $< -o $@
 
 # precompile header to check for errors
 %.h.gch: %.h
-	$(CXX) $(CXXFLAGS) -I$(blaspp_dir)/test -I$(libtest_dir) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -I$(blaspp_dir)/test -I$(testsweeper_dir) -c $< -o $@
 
 %.hh.gch: %.hh
-	$(CXX) $(CXXFLAGS) -I$(blaspp_dir)/test -I$(libtest_dir) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -I$(blaspp_dir)/test -I$(testsweeper_dir) -c $< -o $@
 
 -include $(dep)
 
@@ -288,9 +288,9 @@ echo:
 	@echo
 	@echo "dep           = $(dep)"
 	@echo
-	@echo "libtest_dir   = $(libtest_dir)"
-	@echo "libtest_src   = $(libtest_src)"
-	@echo "libtest       = $(libtest)"
+	@echo "testsweeper_dir   = $(testsweeper_dir)"
+	@echo "testsweeper_src   = $(testsweeper_src)"
+	@echo "testsweeper       = $(testsweeper)"
 	@echo
 	@echo "blaspp_dir    = $(blaspp_dir)"
 	@echo "blaspp_src    = $(blaspp_src)"

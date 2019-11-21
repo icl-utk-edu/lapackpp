@@ -867,7 +867,7 @@ void generate_matrix(
             fprintf( stderr, "%sWarning: matrix '%s' ignores cond %.2e.%s\n",
                      ansi_red, kind.c_str(), params.cond(), ansi_normal );
         }
-        params.cond_used() = libtest::no_data_flag;
+        params.cond_used() = testsweeper::no_data_flag;
     }
     else if (dist == Dist::randn ||
              dist == Dist::randu ||
@@ -881,7 +881,7 @@ void generate_matrix(
                      "singular/eigenvalue distributions ignore cond %.2e.%s\n",
                      ansi_red, kind.c_str(), params.cond(), ansi_normal );
         }
-        params.cond_used() = libtest::no_data_flag;
+        params.cond_used() = testsweeper::no_data_flag;
     }
     else {
         params.cond_used() = cond;

@@ -60,10 +60,10 @@ void test_heevr_work( Params& params, bool run )
     A_ref = A_tst;
 
     // ---------- run test
-    libtest::flush_cache( params.cache() );
-    double time = libtest::get_wtime();
+    testsweeper::flush_cache( params.cache() );
+    double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::heevr( jobz, range, uplo, n, &A_tst[0], lda, vl, vu, il, iu, abstol, &m_tst, &W_tst[0], &Z_tst[0], ldz, &isuppz_tst[0] );
-    time = libtest::get_wtime() - time;
+    time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::heevr returned error %lld\n", (lld) info_tst );
     }
@@ -74,10 +74,10 @@ void test_heevr_work( Params& params, bool run )
 
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache() );
-        time = libtest::get_wtime();
+        testsweeper::flush_cache( params.cache() );
+        time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_heevr( job2char(jobz), range2char(range), uplo2char(uplo), n, &A_ref[0], lda, vl, vu, il, iu, abstol, &m_ref, &W_ref[0], &Z_ref[0], ldz, &isuppz_ref[0] );
-        time = libtest::get_wtime() - time;
+        time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_heevr returned error %lld\n", (lld) info_ref );
         }
@@ -113,23 +113,23 @@ void test_heevr_work( Params& params, bool run )
 void test_heevr( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case libtest::DataType::Integer:
+        case testsweeper::DataType::Integer:
             throw std::exception();
             break;
 
-        case libtest::DataType::Single:
+        case testsweeper::DataType::Single:
             test_heevr_work< float >( params, run );
             break;
 
-        case libtest::DataType::Double:
+        case testsweeper::DataType::Double:
             test_heevr_work< double >( params, run );
             break;
 
-        case libtest::DataType::SingleComplex:
+        case testsweeper::DataType::SingleComplex:
             test_heevr_work< std::complex<float> >( params, run );
             break;
 
-        case libtest::DataType::DoubleComplex:
+        case testsweeper::DataType::DoubleComplex:
             test_heevr_work< std::complex<double> >( params, run );
             break;
     }

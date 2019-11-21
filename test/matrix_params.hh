@@ -1,7 +1,7 @@
 #ifndef MATRIX_PARAMS_HH
 #define MATRIX_PARAMS_HH
 
-#include "libtest.hh"
+#include "testsweeper.hh"
 
 // =============================================================================
 class MatrixParams
@@ -15,9 +15,9 @@ public:
     int64_t iseed[4];
 
     // ---- test matrix generation parameters
-    libtest::ParamString kind;
-    libtest::ParamScientific cond, cond_used;
-    libtest::ParamScientific condD;
+    testsweeper::ParamString kind;
+    testsweeper::ParamScientific cond, cond_used;
+    testsweeper::ParamScientific condD;
 };
 
 #endif  // #ifndef MATRIX_PARAMS_HH

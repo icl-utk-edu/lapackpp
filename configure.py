@@ -103,14 +103,14 @@ def main():
     if (not blaspp):
         raise Exception( 'LAPACK++ requires BLAS++.' )
 
-    libtest = config.get_package(
-        'libtest',
-        ['../libtest', blaspp + '/libtest', './libtest'],
-        'https://bitbucket.org/icl/libtest',
-        'https://bitbucket.org/icl/libtest/get/tip.tar.gz',
-        'libtest.tar.gz' )
-    if (not libtest):
-        print( ansi_red + 'LAPACK++ needs libtest to compile testers.' + ansi_normal )
+    testsweeper = config.get_package(
+        'testsweeper',
+        ['../testsweeper', blaspp + '/testsweeper', './testsweeper'],
+        'https://bitbucket.org/icl/testsweeper',
+        'https://bitbucket.org/icl/testsweeper/get/tip.tar.gz',
+        'testsweeper.tar.gz' )
+    if (not testsweeper):
+        print( ansi_red + 'LAPACK++ needs testsweeper to compile testers.' + ansi_normal )
 
     config.extract_defines_from_flags( 'CXXFLAGS' )
     config.output_files( ['make.inc', 'lapack_defines.h'] )

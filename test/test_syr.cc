@@ -216,10 +216,10 @@ void test_syr_work( Params& params, bool run )
     }
 
     // run test
-    libtest::flush_cache( params.cache() );
-    double time = libtest::get_wtime();
+    testsweeper::flush_cache( params.cache() );
+    double time = testsweeper::get_wtime();
     blas::syr( layout, uplo, n, alpha, &x[0], incx, &A[0], lda );
-    time = libtest::get_wtime() - time;
+    time = testsweeper::get_wtime() - time;
 
     params.time() = time * 1000;  // msec
     double gflop = blas::Gflop< scalar_t >::syr( n );
@@ -231,11 +231,11 @@ void test_syr_work( Params& params, bool run )
 
     if (params.check() == 'y') {
         // run reference
-        libtest::flush_cache( params.cache() );
-        time = libtest::get_wtime();
+        testsweeper::flush_cache( params.cache() );
+        time = testsweeper::get_wtime();
         cblas_syr( cblas_layout_const(layout), cblas_uplo_const(uplo),
                    n, alpha, &x[0], incx, &Aref[0], lda );
-        time = libtest::get_wtime() - time;
+        time = testsweeper::get_wtime() - time;
 
         params.ref_time() = time * 1000;  // msec
         params.ref_gflops() = gflop / time;
@@ -259,25 +259,25 @@ void test_syr_work( Params& params, bool run )
 void test_syr( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case libtest::DataType::Integer:
+        case testsweeper::DataType::Integer:
             //test_syr_work< int64_t >( params, run );
             throw std::exception();
             break;
 
-        case libtest::DataType::Single:
+        case testsweeper::DataType::Single:
             test_syr_work< float, float >( params, run );
             break;
 
-        case libtest::DataType::Double:
+        case testsweeper::DataType::Double:
             test_syr_work< double, double >( params, run );
             break;
 
-        case libtest::DataType::SingleComplex:
+        case testsweeper::DataType::SingleComplex:
             test_syr_work< std::complex<float>, std::complex<float> >
                 ( params, run );
             break;
 
-        case libtest::DataType::DoubleComplex:
+        case testsweeper::DataType::DoubleComplex:
             test_syr_work< std::complex<double>, std::complex<double> >
                 ( params, run );
             break;

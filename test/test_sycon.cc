@@ -48,10 +48,10 @@ void test_sycon_work( Params& params, bool run )
         fprintf( stderr, "lapack::sytrf returned error %lld\n", (lld) info );
     }
     // ---------- run test
-    libtest::flush_cache( params.cache() );
-    double time = libtest::get_wtime();
+    testsweeper::flush_cache( params.cache() );
+    double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::sycon( uplo, n, &A[0], lda, &ipiv_tst[0], anorm, &rcond_tst );
-    time = libtest::get_wtime() - time;
+    time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::sycon returned error %lld\n", (lld) info_tst );
     }
@@ -64,10 +64,10 @@ void test_sycon_work( Params& params, bool run )
         // ---------- reuse factorization and initialize ipiv_ref
         std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
         // ---------- run reference
-        libtest::flush_cache( params.cache() );
-        time = libtest::get_wtime();
+        testsweeper::flush_cache( params.cache() );
+        time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_sycon( uplo2char(uplo), n, &A[0], lda, &ipiv_ref[0], anorm, &rcond_ref );
-        time = libtest::get_wtime() - time;
+        time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_sycon returned error %lld\n", (lld) info_ref );
         }
@@ -90,23 +90,23 @@ void test_sycon_work( Params& params, bool run )
 void test_sycon( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case libtest::DataType::Integer:
+        case testsweeper::DataType::Integer:
             throw std::exception();
             break;
 
-        case libtest::DataType::Single:
+        case testsweeper::DataType::Single:
             test_sycon_work< float >( params, run );
             break;
 
-        case libtest::DataType::Double:
+        case testsweeper::DataType::Double:
             test_sycon_work< double >( params, run );
             break;
 
-        case libtest::DataType::SingleComplex:
+        case testsweeper::DataType::SingleComplex:
             test_sycon_work< std::complex<float> >( params, run );
             break;
 
-        case libtest::DataType::DoubleComplex:
+        case testsweeper::DataType::DoubleComplex:
             test_sycon_work< std::complex<double> >( params, run );
             break;
     }

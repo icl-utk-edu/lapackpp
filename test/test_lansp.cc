@@ -42,10 +42,10 @@ void test_lansp_work( Params& params, bool run )
     }
 
     // ---------- run test
-    libtest::flush_cache( params.cache() );
-    double time = libtest::get_wtime();
+    testsweeper::flush_cache( params.cache() );
+    double time = testsweeper::get_wtime();
     real_t norm_tst = lapack::lansp( norm, uplo, n, &AP[0] );
-    time = libtest::get_wtime() - time;
+    time = testsweeper::get_wtime() - time;
 
     params.time() = time;
     //double gflop = lapack::Gflop< scalar_t >::lansp( norm, n );
@@ -57,10 +57,10 @@ void test_lansp_work( Params& params, bool run )
 
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache() );
-        time = libtest::get_wtime();
+        testsweeper::flush_cache( params.cache() );
+        time = testsweeper::get_wtime();
         real_t norm_ref = LAPACKE_lansp( norm2char(norm), uplo2char(uplo), n, &AP[0] );
-        time = libtest::get_wtime() - time;
+        time = testsweeper::get_wtime() - time;
 
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
@@ -95,23 +95,23 @@ void test_lansp_work( Params& params, bool run )
 void test_lansp( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case libtest::DataType::Integer:
+        case testsweeper::DataType::Integer:
             throw std::exception();
             break;
 
-        case libtest::DataType::Single:
+        case testsweeper::DataType::Single:
             test_lansp_work< float >( params, run );
             break;
 
-        case libtest::DataType::Double:
+        case testsweeper::DataType::Double:
             test_lansp_work< double >( params, run );
             break;
 
-        case libtest::DataType::SingleComplex:
+        case testsweeper::DataType::SingleComplex:
             test_lansp_work< std::complex<float> >( params, run );
             break;
 
-        case libtest::DataType::DoubleComplex:
+        case testsweeper::DataType::DoubleComplex:
             test_lansp_work< std::complex<double> >( params, run );
             break;
     }

@@ -1,6 +1,6 @@
 #include "matrix_params.hh"
 
-using libtest::ParamType;
+using testsweeper::ParamType;
 
 const double inf = std::numeric_limits<double>::infinity();
 
@@ -12,9 +12,9 @@ MatrixParams::MatrixParams():
 
     //          name,    w, p, type,            default,             min, max, help
     kind      ("matrix", 0,    ParamType::List, "rand",                        "test matrix kind; see 'test --help-matrix'" ),
-    cond      ("cond",   0, 1, ParamType::List, libtest::no_data_flag, 0, inf, "matrix condition number" ),
-    cond_used ("cond",   0, 1, ParamType::List, libtest::no_data_flag, 0, inf, "actual condition number used" ),
-    condD     ("condD",  0, 1, ParamType::List, libtest::no_data_flag, 0, inf, "matrix D condition number" )
+    cond      ("cond",   0, 1, ParamType::List, testsweeper::no_data_flag, 0, inf, "matrix condition number" ),
+    cond_used ("cond",   0, 1, ParamType::List, testsweeper::no_data_flag, 0, inf, "actual condition number used" ),
+    condD     ("condD",  0, 1, ParamType::List, testsweeper::no_data_flag, 0, inf, "matrix D condition number" )
 {
     // Make different MatrixParams generate different matrices
     // (e.g., params.matrix and params.matrixB).

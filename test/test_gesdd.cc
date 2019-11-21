@@ -59,10 +59,10 @@ void test_gesdd_work( Params& params, bool run )
     A_ref = A_tst;
 
     // ---------- run test
-    libtest::flush_cache( params.cache() );
-    double time = libtest::get_wtime();
+    testsweeper::flush_cache( params.cache() );
+    double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::gesdd( jobu, m, n, &A_tst[0], lda, &S_tst[0], &U_tst[0], ldu, &VT_tst[0], ldvt );
-    time = libtest::get_wtime() - time;
+    time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::gesdd returned error %lld\n", (lld) info_tst );
     }
@@ -77,10 +77,10 @@ void test_gesdd_work( Params& params, bool run )
     // errors[1] = || I - U^H U || / m,   if jobu  != NoVec
     // errors[2] = || I - VT VT^H || / n, if jobu  != NoVec
     // errors[3] = 0 if S has non-negative values in non-increasing order, else 1
-    real_t errors[4] = { (real_t) libtest::no_data_flag,
-                         (real_t) libtest::no_data_flag,
-                         (real_t) libtest::no_data_flag,
-                         (real_t) libtest::no_data_flag };
+    real_t errors[4] = { (real_t) testsweeper::no_data_flag,
+                         (real_t) testsweeper::no_data_flag,
+                         (real_t) testsweeper::no_data_flag,
+                         (real_t) testsweeper::no_data_flag };
     if (params.check() == 'y') {
         // U2 or VT2 points to A if overwriting
         scalar_t* U2    = &U_tst[0];
@@ -103,10 +103,10 @@ void test_gesdd_work( Params& params, bool run )
 
     if (params.ref() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache() );
-        time = libtest::get_wtime();
+        testsweeper::flush_cache( params.cache() );
+        time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_gesdd( job2char(jobu), m, n, &A_ref[0], lda, &S_ref[0], &U_ref[0], ldu, &VT_ref[0], ldvt );
-        time = libtest::get_wtime() - time;
+        time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gesdd returned error %lld\n", (lld) info_ref );
         }
@@ -135,23 +135,23 @@ void test_gesdd_work( Params& params, bool run )
 void test_gesdd( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case libtest::DataType::Integer:
+        case testsweeper::DataType::Integer:
             throw std::exception();
             break;
 
-        case libtest::DataType::Single:
+        case testsweeper::DataType::Single:
             test_gesdd_work< float >( params, run );
             break;
 
-        case libtest::DataType::Double:
+        case testsweeper::DataType::Double:
             test_gesdd_work< double >( params, run );
             break;
 
-        case libtest::DataType::SingleComplex:
+        case testsweeper::DataType::SingleComplex:
             test_gesdd_work< std::complex<float> >( params, run );
             break;
 
-        case libtest::DataType::DoubleComplex:
+        case testsweeper::DataType::DoubleComplex:
             test_gesdd_work< std::complex<double> >( params, run );
             break;
     }

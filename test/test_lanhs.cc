@@ -46,10 +46,10 @@ void test_lanhs_work( Params& params, bool run )
     }
 
     // ---------- run test
-    libtest::flush_cache( params.cache.value() );
-    double time = libtest::get_wtime();
+    testsweeper::flush_cache( params.cache.value() );
+    double time = testsweeper::get_wtime();
     real_t norm_tst = lapack::lanhs( norm, n, &A[0], lda );
-    time = libtest::get_wtime() - time;
+    time = testsweeper::get_wtime() - time;
 
     params.time.value() = time;
     //double gflop = lapack::Gflop< scalar_t >::lanhs( norm, n );
@@ -61,10 +61,10 @@ void test_lanhs_work( Params& params, bool run )
 
     if (params.ref.value() == 'y' || params.check.value() == 'y') {
         // ---------- run reference
-        libtest::flush_cache( params.cache.value() );
-        time = libtest::get_wtime();
+        testsweeper::flush_cache( params.cache.value() );
+        time = testsweeper::get_wtime();
         real_t norm_ref = LAPACKE_lanhs( norm2char(norm), n, &A[0], lda );
-        time = libtest::get_wtime() - time;
+        time = testsweeper::get_wtime() - time;
 
         params.ref_time.value() = time;
         //params.ref_gflops.value() = gflop / time;
@@ -99,23 +99,23 @@ void test_lanhs_work( Params& params, bool run )
 void test_lanhs( Params& params, bool run )
 {
     switch (params.datatype.value()) {
-        case libtest::DataType::Integer:
+        case testsweeper::DataType::Integer:
             throw std::exception();
             break;
 
-        case libtest::DataType::Single:
+        case testsweeper::DataType::Single:
             test_lanhs_work< float >( params, run );
             break;
 
-        case libtest::DataType::Double:
+        case testsweeper::DataType::Double:
             test_lanhs_work< double >( params, run );
             break;
 
-        case libtest::DataType::SingleComplex:
+        case testsweeper::DataType::SingleComplex:
             test_lanhs_work< std::complex<float> >( params, run );
             break;
 
-        case libtest::DataType::DoubleComplex:
+        case testsweeper::DataType::DoubleComplex:
             test_lanhs_work< std::complex<double> >( params, run );
             break;
     }

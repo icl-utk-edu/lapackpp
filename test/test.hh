@@ -1,13 +1,13 @@
 #ifndef TEST_HH
 #define TEST_HH
 
-#include "libtest.hh"
+#include "testsweeper.hh"
 #include "lapack_util.hh"
 #include "matrix_params.hh"
 #include "matrix_generator.hh"
 
 // -----------------------------------------------------------------------------
-class Params: public libtest::ParamsBase
+class Params: public testsweeper::ParamsBase
 {
 public:
     const double inf = std::numeric_limits<double>::infinity();
@@ -35,83 +35,83 @@ public:
     MatrixParams matrixB;
 
     // ----- test framework parameters
-    libtest::ParamChar   check;
-    libtest::ParamChar   error_exit;
-    libtest::ParamChar   ref;
-    libtest::ParamDouble tol;
-    libtest::ParamInt    repeat;
-    libtest::ParamInt    verbose;
-    libtest::ParamInt    cache;
+    testsweeper::ParamChar   check;
+    testsweeper::ParamChar   error_exit;
+    testsweeper::ParamChar   ref;
+    testsweeper::ParamDouble tol;
+    testsweeper::ParamInt    repeat;
+    testsweeper::ParamInt    verbose;
+    testsweeper::ParamInt    cache;
 
     // ----- routine parameters
-    libtest::ParamEnum< libtest::DataType > datatype;
-    libtest::ParamEnum< blas::Layout >      layout;
-    libtest::ParamEnum< lapack::Side >      side;
-    libtest::ParamInt                       itype;
-    libtest::ParamEnum< lapack::Uplo >      uplo;
-    libtest::ParamEnum< lapack::Op >        trans;
-    libtest::ParamEnum< lapack::Op >        transA;
-    libtest::ParamEnum< lapack::Op >        transB;
-    libtest::ParamEnum< lapack::Diag >      diag;
-    libtest::ParamEnum< lapack::Norm >      norm;
-    libtest::ParamEnum< lapack::Direct >    direct;
-    libtest::ParamEnum< lapack::StoreV >    storev;
-    libtest::ParamEnum< lapack::Job >       jobz;   // heev
-    libtest::ParamEnum< lapack::Job >       jobvl;  // geev
-    libtest::ParamEnum< lapack::Job >       jobvr;  // geev
-    libtest::ParamEnum< lapack::Job >       jobu;   // gesvd, gesdd
-    libtest::ParamEnum< lapack::Job >       jobvt;  // gesvd
-    libtest::ParamEnum< lapack::Range >     range;
-    libtest::ParamEnum< lapack::MatrixType > matrixtype;
-    libtest::ParamEnum< lapack::Factored >  factored;
-    libtest::ParamEnum< lapack::Equed >     equed;
+    testsweeper::ParamEnum< testsweeper::DataType > datatype;
+    testsweeper::ParamEnum< blas::Layout >      layout;
+    testsweeper::ParamEnum< lapack::Side >      side;
+    testsweeper::ParamInt                       itype;
+    testsweeper::ParamEnum< lapack::Uplo >      uplo;
+    testsweeper::ParamEnum< lapack::Op >        trans;
+    testsweeper::ParamEnum< lapack::Op >        transA;
+    testsweeper::ParamEnum< lapack::Op >        transB;
+    testsweeper::ParamEnum< lapack::Diag >      diag;
+    testsweeper::ParamEnum< lapack::Norm >      norm;
+    testsweeper::ParamEnum< lapack::Direct >    direct;
+    testsweeper::ParamEnum< lapack::StoreV >    storev;
+    testsweeper::ParamEnum< lapack::Job >       jobz;   // heev
+    testsweeper::ParamEnum< lapack::Job >       jobvl;  // geev
+    testsweeper::ParamEnum< lapack::Job >       jobvr;  // geev
+    testsweeper::ParamEnum< lapack::Job >       jobu;   // gesvd, gesdd
+    testsweeper::ParamEnum< lapack::Job >       jobvt;  // gesvd
+    testsweeper::ParamEnum< lapack::Range >     range;
+    testsweeper::ParamEnum< lapack::MatrixType > matrixtype;
+    testsweeper::ParamEnum< lapack::Factored >  factored;
+    testsweeper::ParamEnum< lapack::Equed >     equed;
 
-    libtest::ParamInt3   dim;
-    libtest::ParamInt    l;
-    libtest::ParamInt    ka;
-    libtest::ParamInt    kb;
-    libtest::ParamInt    kd;
-    libtest::ParamInt    kl;
-    libtest::ParamInt    ku;
-    libtest::ParamInt    nrhs;
-    libtest::ParamInt    nb;
-    libtest::ParamDouble vl;
-    libtest::ParamDouble vu;
-    libtest::ParamInt    il;
-    libtest::ParamInt    il_out;
-    libtest::ParamInt    iu;
-    libtest::ParamInt    iu_out;
-    libtest::ParamDouble fraction_start;
-    libtest::ParamDouble fraction;
-    libtest::ParamDouble alpha;
-    libtest::ParamDouble beta;
-    libtest::ParamInt    incx;
-    libtest::ParamInt    incy;
-    libtest::ParamInt    align;
+    testsweeper::ParamInt3   dim;
+    testsweeper::ParamInt    l;
+    testsweeper::ParamInt    ka;
+    testsweeper::ParamInt    kb;
+    testsweeper::ParamInt    kd;
+    testsweeper::ParamInt    kl;
+    testsweeper::ParamInt    ku;
+    testsweeper::ParamInt    nrhs;
+    testsweeper::ParamInt    nb;
+    testsweeper::ParamDouble vl;
+    testsweeper::ParamDouble vu;
+    testsweeper::ParamInt    il;
+    testsweeper::ParamInt    il_out;
+    testsweeper::ParamInt    iu;
+    testsweeper::ParamInt    iu_out;
+    testsweeper::ParamDouble fraction_start;
+    testsweeper::ParamDouble fraction;
+    testsweeper::ParamDouble alpha;
+    testsweeper::ParamDouble beta;
+    testsweeper::ParamInt    incx;
+    testsweeper::ParamInt    incy;
+    testsweeper::ParamInt    align;
 
     // ----- output parameters
-    libtest::ParamScientific error;
-    libtest::ParamScientific error2;
-    libtest::ParamScientific error3;
-    libtest::ParamScientific error4;
-    libtest::ParamScientific error5;
-    libtest::ParamScientific ortho;
-    libtest::ParamScientific ortho_U;
-    libtest::ParamScientific ortho_V;
-    libtest::ParamScientific error_sigma;
+    testsweeper::ParamScientific error;
+    testsweeper::ParamScientific error2;
+    testsweeper::ParamScientific error3;
+    testsweeper::ParamScientific error4;
+    testsweeper::ParamScientific error5;
+    testsweeper::ParamScientific ortho;
+    testsweeper::ParamScientific ortho_U;
+    testsweeper::ParamScientific ortho_V;
+    testsweeper::ParamScientific error_sigma;
 
-    libtest::ParamDouble     time;
-    libtest::ParamDouble     gflops;
-    libtest::ParamDouble     gbytes;
-    libtest::ParamInt        iters;
+    testsweeper::ParamDouble     time;
+    testsweeper::ParamDouble     gflops;
+    testsweeper::ParamDouble     gbytes;
+    testsweeper::ParamInt        iters;
 
-    libtest::ParamDouble     ref_time;
-    libtest::ParamDouble     ref_gflops;
-    libtest::ParamDouble     ref_gbytes;
-    libtest::ParamInt        ref_iters;
+    testsweeper::ParamDouble     ref_time;
+    testsweeper::ParamDouble     ref_gflops;
+    testsweeper::ParamDouble     ref_gbytes;
+    testsweeper::ParamInt        ref_iters;
 
-    libtest::ParamOkay       okay;
-    libtest::ParamString     msg;
+    testsweeper::ParamOkay       okay;
+    testsweeper::ParamString     msg;
 };
 
 // -----------------------------------------------------------------------------

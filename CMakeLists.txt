@@ -1,14 +1,14 @@
 # CMake script for LAPACK++ library
 # repo: http://bitbucket.org/icl/lapackpp
 # Requires Libtest (for building tests) and BLASPP library
-#   - http://bitbucket.org/icl/libtest
+#   - http://bitbucket.org/icl/testsweeper
 #   - http://bitbucket.org/icl/blaspp
 
 # Build and install:
 #   hg clone http://bitbucket.org/icl/lapackpp
 #   mkdir build
 #   cd build
-#   cmake -Dlibtest_DIR=/path/to/libtest -Dblaspp_DIR=/path/to/blaspp ..
+#   cmake -Dtestsweeper_DIR=/path/to/testsweeper -Dblaspp_DIR=/path/to/blaspp ..
 #   make install
 
 cmake_minimum_required(VERSION 3.2)

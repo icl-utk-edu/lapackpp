@@ -173,16 +173,16 @@ add_executable(lapackpp_test
 )
 
 # Check if user supplied LIBTEST_DIR on the command line
-# Set -Dlibtest_DIR=/path/to/libtest
-if(libtest_DIR)
-    message("Found libtest_DIR")
+# Set -Dtestsweeper_DIR=/path/to/testsweeper
+if(testsweeper_DIR)
+    message("Found testsweeper_DIR")
 else()
-    find_path(libtest_DIR libtestConfig.cmake
+    find_path(testsweeper_DIR testsweeperConfig.cmake
         PATHS
         ${CMAKE_INSTALL_PREFIX}
         ${CMAKE_INSTALL_PREFIX}/test
         )
-    message("libtest_DIR: " ${libtest_DIR})
+    message("testsweeper_DIR: " ${testsweeper_DIR})
 endif()
 
 # Check if user supplied BLASPP_DIR on the command line
@@ -191,7 +191,7 @@ if(BLASPP_DIR)
     set(blaspp_DIR "${BLASPP_DIR}")
 endif()
 
-find_package(libtest)
+find_package(testsweeper)
 find_package(blaspp)
 #find_package(LAPACKE REQUIRED)
 
@@ -210,7 +210,7 @@ endif()
 
 target_link_libraries(lapackpp_test
     PUBLIC
-    libtest
+    testsweeper
     gfortran
     #blaspp
     lapackpp

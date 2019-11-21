@@ -7,14 +7,14 @@
 #include "test.hh"
 
 // -----------------------------------------------------------------------------
-using libtest::ParamType;
-using libtest::DataType;
-using libtest::char2datatype;
-using libtest::datatype2char;
-using libtest::datatype2str;
-using libtest::ansi_bold;
-using libtest::ansi_red;
-using libtest::ansi_normal;
+using testsweeper::ParamType;
+using testsweeper::DataType;
+using testsweeper::char2datatype;
+using testsweeper::datatype2char;
+using testsweeper::datatype2str;
+using testsweeper::ansi_bold;
+using testsweeper::ansi_red;
+using testsweeper::ansi_normal;
 
 // -----------------------------------------------------------------------------
 // each section must have a corresponding entry in section_names
@@ -62,7 +62,7 @@ const char* section_names[] = {
 };
 
 // { "", nullptr, Section::newline } entries force newline in help
-std::vector< libtest::routines_t > routines = {
+std::vector< testsweeper::routines_t > routines = {
     // -----
     // LU
     { "gesv",               test_gesv,      Section::gesv },
@@ -516,24 +516,24 @@ Params::Params():
     // ----- output parameters
     // min, max are ignored
     //           name,                    w, p, type,              default,               min, max, help
-    error      ( "error",                 9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
-    error2     ( "error2",                9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
-    error3     ( "error3",                9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
-    error4     ( "error4",                9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
-    error5     ( "error5",                9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "numerical error" ),
-    ortho      ( "ortho.\nerror",         9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "orthogonality error" ),
-    ortho_U    ( "U orth.",               9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "U orthogonality error" ),
-    ortho_V    ( "V orth.",               9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "V orthogonality error" ),
-    error_sigma( "Sigma\nerror",          9, 2, ParamType::Output, libtest::no_data_flag,   0,   0, "Sigma error" ),
+    error      ( "error",                 9, 2, ParamType::Output, testsweeper::no_data_flag,   0,   0, "numerical error" ),
+    error2     ( "error2",                9, 2, ParamType::Output, testsweeper::no_data_flag,   0,   0, "numerical error" ),
+    error3     ( "error3",                9, 2, ParamType::Output, testsweeper::no_data_flag,   0,   0, "numerical error" ),
+    error4     ( "error4",                9, 2, ParamType::Output, testsweeper::no_data_flag,   0,   0, "numerical error" ),
+    error5     ( "error5",                9, 2, ParamType::Output, testsweeper::no_data_flag,   0,   0, "numerical error" ),
+    ortho      ( "ortho.\nerror",         9, 2, ParamType::Output, testsweeper::no_data_flag,   0,   0, "orthogonality error" ),
+    ortho_U    ( "U orth.",               9, 2, ParamType::Output, testsweeper::no_data_flag,   0,   0, "U orthogonality error" ),
+    ortho_V    ( "V orth.",               9, 2, ParamType::Output, testsweeper::no_data_flag,   0,   0, "V orthogonality error" ),
+    error_sigma( "Sigma\nerror",          9, 2, ParamType::Output, testsweeper::no_data_flag,   0,   0, "Sigma error" ),
 
-    time      ( "LAPACK++\ntime (s)",    10, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "time to solution" ),
-    gflops    ( "LAPACK++\nGflop/s",     11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "Gflop/s rate" ),
-    gbytes    ( "LAPACK++\nGbyte/s",     11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "Gbyte/s rate" ),
+    time      ( "LAPACK++\ntime (s)",    10, 4, ParamType::Output, testsweeper::no_data_flag,   0,   0, "time to solution" ),
+    gflops    ( "LAPACK++\nGflop/s",     11, 4, ParamType::Output, testsweeper::no_data_flag,   0,   0, "Gflop/s rate" ),
+    gbytes    ( "LAPACK++\nGbyte/s",     11, 4, ParamType::Output, testsweeper::no_data_flag,   0,   0, "Gbyte/s rate" ),
     iters     ( "LAPACK++\niters",        6,    ParamType::Output,                     0,   0,   0, "iterations to solution" ),
 
-    ref_time  ( "Ref.\ntime (s)",        10, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "reference time to solution" ),
-    ref_gflops( "Ref.\nGflop/s",         11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "reference Gflop/s rate" ),
-    ref_gbytes( "Ref.\nGbyte/s",         11, 4, ParamType::Output, libtest::no_data_flag,   0,   0, "reference Gbyte/s rate" ),
+    ref_time  ( "Ref.\ntime (s)",        10, 4, ParamType::Output, testsweeper::no_data_flag,   0,   0, "reference time to solution" ),
+    ref_gflops( "Ref.\nGflop/s",         11, 4, ParamType::Output, testsweeper::no_data_flag,   0,   0, "reference Gflop/s rate" ),
+    ref_gbytes( "Ref.\nGbyte/s",         11, 4, ParamType::Output, testsweeper::no_data_flag,   0,   0, "reference Gbyte/s rate" ),
     ref_iters ( "Ref.\niters",            6,    ParamType::Output,                     0,   0,   0, "reference iterations to solution" ),
 
     // default -1 means "no check"
@@ -659,7 +659,7 @@ void print_matrix_header(
 // -----------------------------------------------------------------------------
 int main( int argc, char** argv )
 {
-    using libtest::QuitException;
+    using testsweeper::QuitException;
 
     // check that all sections have names
     assert( sizeof(section_names)/sizeof(*section_names) == Section::num_sections );
@@ -689,7 +689,7 @@ int main( int argc, char** argv )
 
         // find routine to test
         const char* routine = argv[1];
-        libtest::test_func_ptr test_routine = find_tester( routine, routines );
+        testsweeper::test_func_ptr test_routine = find_tester( routine, routines );
         if (test_routine == nullptr) {
             usage( argc, argv, routines, section_names );
             throw std::runtime_error(
@@ -716,7 +716,7 @@ int main( int argc, char** argv )
 
         // run tests
         int repeat = params.repeat();
-        libtest::DataType last = params.datatype();
+        testsweeper::DataType last = params.datatype();
         std::string matrix, matrixB;
         double cond = 0, condD = 0, condB = 0, condD_B = 0;
         params.header();

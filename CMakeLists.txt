@@ -614,7 +614,7 @@ install (
 install(
     DIRECTORY include/
     DESTINATION include
-    FILES_MATCHING PATTERN "GNUMakefile" EXCLUDE
+    #FILES_MATCHING PATTERN "GNUMakefile" EXCLUDE
 )
 
 # Custom target to mimic makefile target

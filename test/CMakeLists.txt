@@ -182,7 +182,7 @@ else()
         ${CMAKE_INSTALL_PREFIX}
         ${CMAKE_INSTALL_PREFIX}/test
         )
-    message("testsweeper_DIR: " ${testsweeper_DIR})
+    #message("testsweeper_DIR: " ${testsweeper_DIR})
 endif()
 
 # Check if user supplied BLASPP_DIR on the command line
@@ -211,7 +211,7 @@ endif()
 target_link_libraries(lapackpp_test
     PUBLIC
     testsweeper
-    gfortran
+    #gfortran
     #blaspp
     lapackpp
     #LAPACKE

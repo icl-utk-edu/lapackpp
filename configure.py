@@ -114,6 +114,7 @@ def main():
 
     config.extract_defines_from_flags( 'CXXFLAGS' )
     config.output_files( ['make.inc', 'lapack_defines.h'] )
+    print( 'log in config/log.txt' )
 
     print( '-'*80 )
 # end
@@ -121,7 +122,7 @@ def main():
 #-------------------------------------------------------------------------------
 try:
     main()
-except Error as err:
-    print( ansi_bold + ansi_red + 'A fatal error occurred. ' + str(err) + '\n'
-           'LAPACK++ could not be configured.' + ansi_normal )
+except Error as ex:
+    print( ansi_bold + ansi_red + 'A fatal error occurred. ' + str(ex) + '\n'
+           'LAPACK++ could not be configured. Log in config/log.txt' + ansi_normal )
     exit(1)

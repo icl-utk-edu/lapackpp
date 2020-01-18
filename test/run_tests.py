@@ -23,19 +23,7 @@ import re
 import argparse
 import subprocess
 import xml.etree.ElementTree as ET
-
-# ------------------------------------------------------------------------------
-# found at: https://stackoverflow.com/questions/15203829/python-argparse-file-extension-checking
-def check_file_ext(choices):
-    class Act(argparse.Action):
-        def __call__(self, parser, namespace, fname, option_string=None):
-            ext = os.path.splitext(fname[0])[1][1:]
-            if ext not in choices:
-                option_string = '({})'.format( option_string ) if option_string else ''
-                parser.error( "file doesn't end with {}{}".format( choices, option_string ) )
-            else:
-                setattr(namespace, self.dest, fname)
-    return Act
+import io
 
 # ------------------------------------------------------------------------------
 # command line arguments
@@ -46,9 +34,6 @@ group_test.add_argument( '-t', '--test', action='store',
     help='test command to run, e.g., --test "mpirun -np 4 ./test"; default "%(default)s"',
     default='./tester' )
 group_test.add_argument( '--xml', help='generate report.xml for jenkins' )
-#group_test.add_argument( '--xml', action=check_file_ext( {'xml'} ),
-#    help='generate report.xml for jenkins',
-#    nargs=1 )
 
 group_size = parser.add_argument_group( 'matrix dimensions (default is medium)' )
 group_size.add_argument( '-x', '--xsmall', action='store_true', help='run x-small tests' )
@@ -85,10 +70,12 @@ categories = [
     group_cat.add_argument( '--aux-norm',      action='store_true', help='run auxiliary norm tests' ),
     group_cat.add_argument( '--blas',          action='store_true', help='run additional BLAS tests' ),
 ]
-categories = map( lambda x: x.dest, categories ) # map to names: ['lu', 'chol', ...]
+# map category objects to category names: ['lu', 'chol', ...]
+categories = list( map( lambda x: x.dest, categories ) )
 
 group_opt = parser.add_argument_group( 'options' )
 # BLAS and LAPACK
+# Empty defaults (check, ref, etc.) use the default in test.cc.
 group_opt.add_argument( '--type',   action='store', help='default=%(default)s', default='s,d,c,z' )
 group_opt.add_argument( '--layout', action='store', help='default=%(default)s', default='c,r' )
 group_opt.add_argument( '--transA', action='store', help='default=%(default)s', default='n,t,c' )
@@ -302,7 +289,7 @@ gen = check + ref + verbose
 # filters a comma separated list csv based on items in list values.
 # if no items from csv are in values, returns first item in values.
 def filter_csv( values, csv ):
-    f = filter( lambda x: x in values, csv.split( ',' ))
+    f = list( filter( lambda x: x in values, csv.split( ',' ) ) )
     if (not f):
         return values[0]
     return ','.join( f )
@@ -312,6 +299,7 @@ def filter_csv( values, csv ):
 # limit options to specific values
 dtype_real    = ' --type ' + filter_csv( ('s', 'd'), opts.type )
 dtype_complex = ' --type ' + filter_csv( ('c', 'z'), opts.type )
+dtype_double  = ' --type ' + filter_csv( ('d', 'z'), opts.type )
 
 trans_nt = ' --trans ' + filter_csv( ('n', 't'), opts.trans )
 trans_nc = ' --trans ' + filter_csv( ('n', 'c'), opts.trans )
@@ -697,8 +685,11 @@ def run_test( cmd ):
     output = ''
     p = subprocess.Popen( cmd.split(), stdout=subprocess.PIPE,
                                        stderr=subprocess.STDOUT )
+    p_out = p.stdout
+    if (sys.version_info.major >= 3):
+        p_out = io.TextIOWrapper(p.stdout, encoding='utf-8')
     # Read unbuffered ("for line in p.stdout" will buffer).
-    for line in iter(p.stdout.readline, b''):
+    for line in iter(p_out.readline, ''):
         print( line, end='' )
         output += line
     err = p.wait()
@@ -725,7 +716,8 @@ for cmd in cmds:
             failed_tests.append( (cmd[0], err, output) )
         else:
             passed_tests.append( cmd[0] )
-not_seen = filter( lambda x: x not in seen, opts.tests )
+not_seen = list( filter( lambda x: x not in seen, opts.tests ) )
+
 if (not_seen):
     print_tee( 'Warning: unknown routines:', ' '.join( not_seen ))
 

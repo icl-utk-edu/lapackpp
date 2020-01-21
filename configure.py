@@ -119,7 +119,7 @@ def main():
         'https://bitbucket.org/icl/testsweeper/get/tip.tar.gz',
         'testsweeper.tar.gz' )
     if (not testsweeper):
-        print( ansi_red + 'LAPACK++ needs testsweeper to compile testers.' + ansi_normal )
+        print( ansi_red + 'LAPACK++ needs TestSweeper to compile testers.' + ansi_normal )
 
     config.extract_defines_from_flags( 'CXXFLAGS' )
     config.output_files( ['make.inc', 'lapack_defines.h'] )

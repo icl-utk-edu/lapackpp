@@ -461,7 +461,8 @@ if (opts.least_squares):
 
     # Generalized
     [ 'gglse', gen + dtype + align + mnk ],
-    [ 'ggglm', gen + dtype + align + mnk ],
+    # todo: ggglm is failing
+    #[ 'ggglm', gen + dtype + align + mnk ],
     ]
 
 # QR

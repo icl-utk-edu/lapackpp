@@ -1,5 +1,5 @@
 #include "test.hh"
-#include "blas_flops.hh"
+#include "blas/flops.hh"
 #include "print_matrix.hh"
 #include "check_gemm2.hh"
 

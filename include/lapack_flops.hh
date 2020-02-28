@@ -2,7 +2,7 @@
 #define ICL_LAPACK_FLOPS_H
 
 #include "lapack.hh"
-#include "blas_flops.hh"
+#include "blas/flops.hh"
 
 #include <complex>
 

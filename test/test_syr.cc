@@ -5,11 +5,11 @@
 
 #include "test.hh"
 #include "lapack.hh"
-#include "blas_flops.hh"
+#include "blas/flops.hh"
 #include "print_matrix.hh"
-#include "check_gemm2.hh"  // uses lapack++ instead of Fortran lapack
+#include "check_gemm2.hh"  // uses LAPACK++ instead of Fortran lapack
 
-#include "syr.hh"  // from blaspp
+#include "blas/syr.hh"  // from BLAS++
 
 // -----------------------------------------------------------------------------
 // some of this is copied from blaspp/test/cblas.hh

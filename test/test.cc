@@ -669,26 +669,32 @@ int main( int argc, char** argv )
         // print input so running `test [input] > out.txt` documents input
         printf( "input: %s", argv[0] );
         for (int i = 1; i < argc; ++i) {
-            printf( " %s", argv[i] );
+            // quote arg if necessary
+            std::string arg( argv[i] );
+            const char* wordchars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-=";
+            if (arg.find_first_not_of( wordchars ) != std::string::npos)
+                printf( " '%s'", argv[i] );
+            else
+                printf( " %s", argv[i] );
         }
         printf( "\n" );
 
-        // Usage: test routine [params]
-        if (argc < 2 ||
-            strcmp( argv[1], "-h" ) == 0 ||
-            strcmp( argv[1], "--help" ) == 0)
+        // Usage: test [params] routine
+        if (argc < 2
+            || strcmp( argv[argc-1], "-h" ) == 0
+            || strcmp( argv[argc-1], "--help" ) == 0)
         {
             usage( argc, argv, routines, section_names );
             throw QuitException();
         }
 
-        if (strcmp( argv[1], "--help-matrix" ) == 0) {
+        if (strcmp( argv[argc-1], "--help-matrix" ) == 0) {
             lapack::generate_matrix_usage();
             throw QuitException();
         }
 
         // find routine to test
-        const char* routine = argv[1];
+        const char* routine = argv[ argc-1 ];
         testsweeper::test_func_ptr test_routine = find_tester( routine, routines );
         if (test_routine == nullptr) {
             usage( argc, argv, routines, section_names );
@@ -700,9 +706,9 @@ int main( int argc, char** argv )
         Params params;
         test_routine( params, false );
 
-        // parse parameters after routine name
+        // Parse parameters up to routine name.
         try {
-            params.parse( routine, argc-2, argv+2 );
+            params.parse( routine, argc-2, argv+1 );
         }
         catch (const std::exception& ex) {
             params.help( routine );

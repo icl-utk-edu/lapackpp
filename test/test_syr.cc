@@ -56,8 +56,8 @@ inline char lapack_uplo_const( CBLAS_UPLO uplo )
 
 // -----------------------------------------------------------------------------
 // give Fortran prototypes if not given via lapacke.h
-#include "lapack_config.h"
-#include "lapack_mangling.h"
+#include "lapack/config.h"
+#include "lapack/mangling.h"
 
 extern "C" {
 

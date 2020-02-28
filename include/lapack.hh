@@ -1,6 +1,6 @@
-#ifndef ICL_LAPACK_HH
-#define ICL_LAPACK_HH
+#ifndef LAPACK_HH
+#define LAPACK_HH
 
-#include "lapack_wrappers.hh"
+#include "lapack/wrappers.hh"
 
-#endif // ICL_LAPACK_HH
+#endif // LAPACK_HH

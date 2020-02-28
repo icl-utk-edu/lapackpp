@@ -1,5 +1,5 @@
-#ifndef ICL_LAPACK_FLOPS_H
-#define ICL_LAPACK_FLOPS_H
+#ifndef LAPACK_FLOPS_HH
+#define LAPACK_FLOPS_HH
 
 #include "lapack.hh"
 #include "blas/flops.hh"
@@ -514,4 +514,4 @@ public:
 
 }  // namespace lapack
 
-#endif  // ICL_LAPACK_FLOPS_H
+#endif  // LAPACK_FLOPS_HH

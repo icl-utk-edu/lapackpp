@@ -1,8 +1,8 @@
 #ifndef ICL_LAPACKE_WRAPPERS_HH
 #define ICL_LAPACKE_WRAPPERS_HH
 
-#include "lapack_util.hh"
-#include "lapack_config.h"  // may be newer than what's in lapacke.h
+#include "lapack/util.hh"
+#include "lapack/config.h"  // may be newer than what's in lapacke.h
 
 #include <complex>
 #include <vector>
@@ -17,7 +17,7 @@
 #endif
 
 // *after* lapacke.h, which may define LAPACK_GLOBAL macro
-#include "lapack_mangling.h"
+#include "lapack/mangling.h"
 
 // This is in alphabetical order.
 

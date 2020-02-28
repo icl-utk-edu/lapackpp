@@ -1,7 +1,7 @@
-#ifndef ICL_LAPACK_WRAPPERS_HH
-#define ICL_LAPACK_WRAPPERS_HH
+#ifndef LAPACK_WRAPPERS_HH
+#define LAPACK_WRAPPERS_HH
 
-#include "lapack_util.hh"
+#include "lapack/util.hh"
 
 namespace lapack {
 
@@ -10111,4 +10111,4 @@ int64_t upmtr(
 
 }  // namespace lapack
 
-#endif // ICL_LAPACK_WRAPPERS_HH
+#endif // LAPACK_WRAPPERS_HH

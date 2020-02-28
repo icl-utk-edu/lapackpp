@@ -1,7 +1,7 @@
 //
 // -----------------------------------------------------------------------------
 
-#include "lapack_fortran.h"
+#include "lapack/fortran.h"
 #include "lapack.hh"
 
 #include <limits>

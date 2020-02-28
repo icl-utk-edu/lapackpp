@@ -1,6 +1,6 @@
 #include "test.hh"
 #include "lapack.hh"
-#include "lapack_flops.hh"
+#include "lapack/flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
 #include "lapacke_wrappers.hh"

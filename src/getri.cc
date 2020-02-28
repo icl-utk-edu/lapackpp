@@ -1,5 +1,5 @@
 #include "lapack.hh"
-#include "lapack_fortran.h"
+#include "lapack/fortran.h"
 
 #include <vector>
 

@@ -1,8 +1,8 @@
-#ifndef LAPACK_H
-#define LAPACK_H
+#ifndef LAPACK_FORTRAN_H
+#define LAPACK_FORTRAN_H
 
-#include "lapack_config.h"
-#include "lapack_mangling.h"
+#include "lapack/config.h"
+#include "lapack/mangling.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -12681,4 +12681,4 @@ void LAPACK_ztpmlqt(
 }
 #endif /* __cplusplus */
 
-#endif /* LAPACK_H */
+#endif /* LAPACK_FORTRAN_H */

@@ -2,7 +2,7 @@
 #define TEST_HH
 
 #include "testsweeper.hh"
-#include "lapack_util.hh"
+#include "lapack/util.hh"
 #include "matrix_params.hh"
 #include "matrix_generator.hh"
 

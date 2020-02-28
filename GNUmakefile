@@ -123,13 +123,15 @@ TEST_LIBS    += -llapackpp -lblaspp -ltestsweeper
 all: lib tester
 
 install: lib
-	mkdir -p $(DESTDIR)$(prefix)/include
+	mkdir -p $(DESTDIR)$(prefix)/include/lapack
 	mkdir -p $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)
-	cp include/*.{h,hh} $(DESTDIR)$(prefix)/include
+	cp include/*.hh $(DESTDIR)$(prefix)/include
+	cp include/lapack/*.{h,hh} $(DESTDIR)$(prefix)/include/lapack
 	cp $(lib) $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)
 
 uninstall:
 	$(RM) $(addprefix $(DESTDIR)$(prefix)/, $(headers))
+	$(RM) -r $(DESTDIR)$(prefix)/include/lapack
 	$(RM) $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)/liblapackpp.*
 
 #-------------------------------------------------------------------------------
@@ -189,7 +191,7 @@ test/clean:
 #-------------------------------------------------------------------------------
 # headers
 # precompile headers to verify self-sufficiency
-headers     = $(wildcard include/*.h include/*.hh test/*.hh)
+headers     = $(wildcard include/lapack.hh include/lapack/*.h include/lapack/*.hh test/*.hh)
 headers_gch = $(addsuffix .gch, $(basename $(headers)))
 
 headers: $(headers_gch)
@@ -228,6 +230,14 @@ distclean: clean
 
 # preprocess source
 %.i: %.cc
+	$(CXX) $(CXXFLAGS) -I$(blaspp_dir)/test -I$(testsweeper_dir) -E $< -o $@
+
+# preprocess source
+%.i: %.h
+	$(CXX) $(CXXFLAGS) -I$(blaspp_dir)/test -I$(testsweeper_dir) -E $< -o $@
+
+# preprocess source
+%.i: %.hh
 	$(CXX) $(CXXFLAGS) -I$(blaspp_dir)/test -I$(testsweeper_dir) -E $< -o $@
 
 # precompile header to check for errors

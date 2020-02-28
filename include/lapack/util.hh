@@ -1,5 +1,5 @@
-#ifndef ICL_LAPACK_UTIL_HH
-#define ICL_LAPACK_UTIL_HH
+#ifndef LAPACK_UTIL_HH
+#define LAPACK_UTIL_HH
 
 #include <exception>
 #include <complex>
@@ -10,7 +10,7 @@
 #include "blas.hh"
 
 // from config, we need only lapack_logical for callback functions lapack_*_select*
-#include "lapack_config.h"
+#include "lapack/config.h"
 
 namespace lapack {
 
@@ -822,4 +822,4 @@ inline const char* rowcol2str( lapack::RowCol rowcol )
 
 }  // namespace lapack
 
-#endif  // ICL_LAPACK_UTIL_HH
+#endif  // LAPACK_UTIL_HH

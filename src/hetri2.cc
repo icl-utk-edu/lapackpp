@@ -1,5 +1,5 @@
 #include "lapack.hh"
-#include "lapack_fortran.h"
+#include "lapack/fortran.h"
 
 #if LAPACK_VERSION >= 30301  // >= 3.3.1
 

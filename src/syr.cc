@@ -1,5 +1,5 @@
 #include "lapack.hh"
-#include "lapack_fortran.h"
+#include "lapack/fortran.h"
 
 // while [cz]syr are in LAPACK, [sd]syr are in BLAS,
 // so we put them all in the blas namespace

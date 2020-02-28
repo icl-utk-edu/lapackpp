@@ -46,8 +46,8 @@ inline char lapack_uplo_const( CBLAS_UPLO uplo )
 
 // -----------------------------------------------------------------------------
 // give Fortran prototypes if not given via lapacke.h
-#include "lapack_config.h"
-#include "lapack_mangling.h"
+#include "lapack/config.h"
+#include "lapack/mangling.h"
 
 extern "C" {
 
@@ -223,7 +223,6 @@ void test_symv_work( Params& params, bool run )
     yref = y;
 
     // norms for error check
-    real_t work[1];
     real_t Anorm = lapack::lansy( lapack::Norm::Fro, uplo, n, &A[0], lda );
     real_t Xnorm = blas::nrm2( n, &x[0], std::abs(incx) );
     real_t Ynorm = blas::nrm2( n, &y[0], std::abs(incy) );

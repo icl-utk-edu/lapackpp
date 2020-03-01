@@ -666,6 +666,9 @@ int main( int argc, char** argv )
 
     int status = 0;
     try {
+        printf( "LAPACK++ version %d, id %s\n",
+                lapack::lapackpp_version(), lapack::lapackpp_id() );
+
         // print input so running `test [input] > out.txt` documents input
         printf( "input: %s", argv[0] );
         for (int i = 1; i < argc; ++i) {

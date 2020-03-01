@@ -20,15 +20,15 @@ void test_lanhs_work( Params& params, bool run )
     typedef long long lld;
 
     // get & mark input values
-    lapack::Norm norm = params.norm.value();
+    lapack::Norm norm = params.norm();
     int64_t n = params.dim.n();
     int64_t verbose = params.verbose();
-    int64_t align = params.align.value();
+    int64_t align = params.align();
 
     // mark non-standard output values
-    params.ref_time.value();
-    //params.ref_gflops.value();
-    //params.gflops.value();
+    params.ref_time();
+    //params.ref_gflops();
+    //params.gflops();
 
     if (! run)
         return;
@@ -51,28 +51,28 @@ void test_lanhs_work( Params& params, bool run )
     }
 
     // ---------- run test
-    testsweeper::flush_cache( params.cache.value() );
+    testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     real_t norm_tst = lapack::lanhs( norm, n, &A[0], lda );
     time = testsweeper::get_wtime() - time;
 
-    params.time.value() = time;
+    params.time() = time;
     //double gflop = lapack::Gflop< scalar_t >::lanhs( norm, n );
-    //params.gflops.value() = gflop / time;
+    //params.gflops() = gflop / time;
 
     if (verbose >= 1) {
         printf( "norm_tst = %.8e\n", norm_tst );
     }
 
-    if (params.ref.value() == 'y' || params.check.value() == 'y') {
+    if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
-        testsweeper::flush_cache( params.cache.value() );
+        testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         real_t norm_ref = LAPACKE_lanhs( norm2char(norm), n, &A[0], lda );
         time = testsweeper::get_wtime() - time;
 
-        params.ref_time.value() = time;
-        //params.ref_gflops.value() = gflop / time;
+        params.ref_time() = time;
+        //params.ref_gflops() = gflop / time;
 
         if (verbose >= 1) {
             printf( "norm_ref = %.8e\n", norm_ref );
@@ -103,7 +103,7 @@ void test_lanhs_work( Params& params, bool run )
 // -----------------------------------------------------------------------------
 void test_lanhs( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case testsweeper::DataType::Integer:
             throw std::exception();
             break;

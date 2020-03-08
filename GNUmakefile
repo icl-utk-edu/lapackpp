@@ -69,6 +69,9 @@ dep       += $(addsuffix .d, $(basename $(tester_src)))
 
 tester     = test/tester
 
+#-------------------------------------------------------------------------------
+# BLAS++
+
 blaspp_dir = $(wildcard ../blaspp)
 ifeq ($(blaspp_dir),)
     blaspp_dir = $(wildcard ./blaspp)
@@ -82,6 +85,11 @@ endif
 blaspp_src = $(wildcard $(blaspp_dir)/src/*.cc $(blaspp_dir)/include/*.hh)
 
 libblaspp  = $(blaspp_dir)/lib/libblaspp.$(lib_ext)
+
+blaspp: $(libblaspp)
+
+#-------------------------------------------------------------------------------
+# TestSweeper
 
 testsweeper_dir = $(wildcard ../testsweeper)
 ifeq ($(testsweeper_dir),)
@@ -99,6 +107,8 @@ endif
 testsweeper_src = $(wildcard $(testsweeper_dir)/testsweeper.cc $(testsweeper_dir)/testsweeper.hh)
 
 testsweeper = $(testsweeper_dir)/libtestsweeper.$(lib_ext)
+
+testsweeper: $(testsweeper)
 
 #-------------------------------------------------------------------------------
 # Get Mercurial id, and make version.o depend on it via .id file.

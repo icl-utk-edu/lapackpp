@@ -14,17 +14,10 @@
 
 // -----------------------------------------------------------------------------
 // ANSI color codes
-const char *ansi_esc    = "\x1b[";
-const char *ansi_red    = "\x1b[31m";
-const char *ansi_bold   = "\x1b[1m";
-const char *ansi_normal = "\x1b[0m";
-
-// -----------------------------------------------------------------------------
-template< typename scalar_t >
-inline scalar_t rand( scalar_t max_ )
-{
-    return max_ * rand() / scalar_t(RAND_MAX);
-}
+using testsweeper::ansi_esc;
+using testsweeper::ansi_red;
+using testsweeper::ansi_bold;
+using testsweeper::ansi_normal;
 
 // -----------------------------------------------------------------------------
 /// Splits a string by any of the delimiters.

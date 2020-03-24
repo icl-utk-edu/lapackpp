@@ -22,7 +22,7 @@ void test_larfb_work( Params& params, bool run )
     // get & mark input values
     lapack::Side side = params.side();
     lapack::Op trans = params.trans();
-    lapack::Direct direct = params.direct();
+    lapack::Direction direction = params.direction();
     lapack::StoreV storev = params.storev();
     int64_t m = params.dim.m();
     int64_t n = params.dim.n();
@@ -92,18 +92,18 @@ void test_larfb_work( Params& params, bool run )
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
-    lapack::larfb( side, trans, direct, storev, m, n, k, &V[0], ldv, &T[0], ldt, &C_tst[0], ldc );
+    lapack::larfb( side, trans, direction, storev, m, n, k, &V[0], ldv, &T[0], ldt, &C_tst[0], ldc );
     time = testsweeper::get_wtime() - time;
 
     params.time() = time;
-    //double gflop = lapack::Gflop< scalar_t >::larfb( side, trans, direct, storev, m, n, k );
+    //double gflop = lapack::Gflop< scalar_t >::larfb( side, trans, direction, storev, m, n, k );
     //params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_larfb( side2char(side), op2char(trans), direct2char(direct), storev2char(storev), m, n, k, &V[0], ldv, &T[0], ldt, &C_ref[0], ldc );
+        int64_t info_ref = LAPACKE_larfb( side2char(side), op2char(trans), direction2char(direction), storev2char(storev), m, n, k, &V[0], ldv, &T[0], ldt, &C_ref[0], ldc );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_larfb returned error %lld\n", (lld) info_ref );

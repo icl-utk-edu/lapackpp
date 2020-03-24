@@ -108,7 +108,8 @@ int64_t ptcon(
 /// `lapack::pttrf`.
 ///
 /// \f$ || A^{-1} || \f$ is computed by a direct method, and the reciprocal of
-/// the condition number is computed as \f$ \text{rcond} = 1 / (||A||_1 \cdot ||A^{-1}||_1). \f$
+/// the condition number is computed as
+/// \f$ \text{rcond} = 1 / (||A||_1 \cdot ||A^{-1}||_1). \f$
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.

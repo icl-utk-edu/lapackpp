@@ -4079,25 +4079,25 @@ void larf(
 
 // -----------------------------------------------------------------------------
 void larfb(
-    lapack::Side side, lapack::Op trans, lapack::Direct direct, lapack::StoreV storev, int64_t m, int64_t n, int64_t k,
+    lapack::Side side, lapack::Op trans, lapack::Direction direction, lapack::StoreV storev, int64_t m, int64_t n, int64_t k,
     float const* V, int64_t ldv,
     float const* T, int64_t ldt,
     float* C, int64_t ldc );
 
 void larfb(
-    lapack::Side side, lapack::Op trans, lapack::Direct direct, lapack::StoreV storev, int64_t m, int64_t n, int64_t k,
+    lapack::Side side, lapack::Op trans, lapack::Direction direction, lapack::StoreV storev, int64_t m, int64_t n, int64_t k,
     double const* V, int64_t ldv,
     double const* T, int64_t ldt,
     double* C, int64_t ldc );
 
 void larfb(
-    lapack::Side side, lapack::Op trans, lapack::Direct direct, lapack::StoreV storev, int64_t m, int64_t n, int64_t k,
+    lapack::Side side, lapack::Op trans, lapack::Direction direction, lapack::StoreV storev, int64_t m, int64_t n, int64_t k,
     std::complex<float> const* V, int64_t ldv,
     std::complex<float> const* T, int64_t ldt,
     std::complex<float>* C, int64_t ldc );
 
 void larfb(
-    lapack::Side side, lapack::Op trans, lapack::Direct direct, lapack::StoreV storev, int64_t m, int64_t n, int64_t k,
+    lapack::Side side, lapack::Op trans, lapack::Direction direction, lapack::StoreV storev, int64_t m, int64_t n, int64_t k,
     std::complex<double> const* V, int64_t ldv,
     std::complex<double> const* T, int64_t ldt,
     std::complex<double>* C, int64_t ldc );
@@ -4129,25 +4129,25 @@ void larfg(
 
 // -----------------------------------------------------------------------------
 void larft(
-    lapack::Direct direct, lapack::StoreV storev, int64_t n, int64_t k,
+    lapack::Direction direction, lapack::StoreV storev, int64_t n, int64_t k,
     float const* V, int64_t ldv,
     float const* tau,
     float* T, int64_t ldt );
 
 void larft(
-    lapack::Direct direct, lapack::StoreV storev, int64_t n, int64_t k,
+    lapack::Direction direction, lapack::StoreV storev, int64_t n, int64_t k,
     double const* V, int64_t ldv,
     double const* tau,
     double* T, int64_t ldt );
 
 void larft(
-    lapack::Direct direct, lapack::StoreV storev, int64_t n, int64_t k,
+    lapack::Direction direction, lapack::StoreV storev, int64_t n, int64_t k,
     std::complex<float> const* V, int64_t ldv,
     std::complex<float> const* tau,
     std::complex<float>* T, int64_t ldt );
 
 void larft(
-    lapack::Direct direct, lapack::StoreV storev, int64_t n, int64_t k,
+    lapack::Direction direction, lapack::StoreV storev, int64_t n, int64_t k,
     std::complex<double> const* V, int64_t ldv,
     std::complex<double> const* tau,
     std::complex<double>* T, int64_t ldt );
@@ -9476,7 +9476,7 @@ int64_t tpqrt2(
 
 // -----------------------------------------------------------------------------
 void tprfb(
-    lapack::Side side, lapack::Op trans, lapack::Direct direct, lapack::StoreV storev,
+    lapack::Side side, lapack::Op trans, lapack::Direction direction, lapack::StoreV storev,
     int64_t m, int64_t n, int64_t k, int64_t l,
     float const* V, int64_t ldv,
     float const* T, int64_t ldt,
@@ -9484,7 +9484,7 @@ void tprfb(
     float* B, int64_t ldb );
 
 void tprfb(
-    lapack::Side side, lapack::Op trans, lapack::Direct direct, lapack::StoreV storev,
+    lapack::Side side, lapack::Op trans, lapack::Direction direction, lapack::StoreV storev,
     int64_t m, int64_t n, int64_t k, int64_t l,
     double const* V, int64_t ldv,
     double const* T, int64_t ldt,
@@ -9492,7 +9492,7 @@ void tprfb(
     double* B, int64_t ldb );
 
 void tprfb(
-    lapack::Side side, lapack::Op trans, lapack::Direct direct, lapack::StoreV storev,
+    lapack::Side side, lapack::Op trans, lapack::Direction direction, lapack::StoreV storev,
     int64_t m, int64_t n, int64_t k, int64_t l,
     std::complex<float> const* V, int64_t ldv,
     std::complex<float> const* T, int64_t ldt,
@@ -9500,7 +9500,7 @@ void tprfb(
     std::complex<float>* B, int64_t ldb );
 
 void tprfb(
-    lapack::Side side, lapack::Op trans, lapack::Direct direct, lapack::StoreV storev,
+    lapack::Side side, lapack::Op trans, lapack::Direction direction, lapack::StoreV storev,
     int64_t m, int64_t n, int64_t k, int64_t l,
     std::complex<double> const* V, int64_t ldv,
     std::complex<double> const* T, int64_t ldt,

@@ -20,7 +20,7 @@ void test_larft_work( Params& params, bool run )
     typedef long long lld;
 
     // get & mark input values
-    lapack::Direct direct = params.direct();
+    lapack::Direction direction = params.direction();
     lapack::StoreV storev = params.storev();
     int64_t n = params.dim.n();
     int64_t k = params.dim.k();
@@ -70,7 +70,7 @@ void test_larft_work( Params& params, bool run )
 
     // generate Householder vectors; initializes tau
     // From larft docs, with n = 5 and k = 3:
-    // direct = 'f' and storev = 'c':         direct = 'f' and storev = 'r':
+    // direction = 'f' and storev = 'c':         direction = 'f' and storev = 'r':
     //
     //              V = (  1       )                 V = (  1 v1 v1 v1 v1 )
     //                  ( v1  1    )                     (     1 v2 v2 v2 )
@@ -78,7 +78,7 @@ void test_larft_work( Params& params, bool run )
     //                  ( v1 v2 v3 )
     //                  ( v1 v2 v3 )
     //
-    // direct = 'b' and storev = 'c':         direct = 'b' and storev = 'r':
+    // direction = 'b' and storev = 'c':         direction = 'b' and storev = 'r':
     //
     //              V = ( v1 v2 v3 )                 V = ( v1 v1  1       )
     //                  ( v1 v2 v3 )                     ( v2 v2 v2  1    )
@@ -87,7 +87,7 @@ void test_larft_work( Params& params, bool run )
     //                  (        1 )
     for (int i = 0; i < k; ++i) {
         if (storev == lapack::StoreV::Columnwise) {
-            if (direct == lapack::Direct::Forward) {
+            if (direction == lapack::Direction::Forward) {
                 lapack::larfg( n-i, &V[i + i*ldv], &V[i+1 + i*ldv], 1, &tau[i] );
             }
             else {
@@ -95,7 +95,7 @@ void test_larft_work( Params& params, bool run )
             }
         }
         else {
-            if (direct == lapack::Direct::Forward) {
+            if (direction == lapack::Direction::Forward) {
                 lapack::larfg( n-i, &V[i + i*ldv], &V[i + (i+1)*ldv], ldv, &tau[i] );
             }
             else {
@@ -112,11 +112,11 @@ void test_larft_work( Params& params, bool run )
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
-    lapack::larft( direct, storev, n, k, &V[0], ldv, &tau[0], &T_tst[0], ldt );
+    lapack::larft( direction, storev, n, k, &V[0], ldv, &tau[0], &T_tst[0], ldt );
     time = testsweeper::get_wtime() - time;
 
     params.time() = time;
-    //double gflop = lapack::Gflop< scalar_t >::larft( direct, storev, n, k );
+    //double gflop = lapack::Gflop< scalar_t >::larft( direction, storev, n, k );
     //params.gflops() = gflop / time;
 
     if (verbose >= 3) {
@@ -127,7 +127,7 @@ void test_larft_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_larft( direct2char(direct), storev2char(storev), n, k, &V[0], ldv, &tau[0], &T_ref[0], ldt );
+        int64_t info_ref = LAPACKE_larft( direction2char(direction), storev2char(storev), n, k, &V[0], ldv, &tau[0], &T_ref[0], ldt );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_larft returned error %lld\n", (lld) info_ref );

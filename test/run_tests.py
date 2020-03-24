@@ -102,7 +102,7 @@ group_opt.add_argument( '--verbose', action='store', help='default=0', default='
 group_opt.add_argument( '--itype',  action='store', help='default=%(default)s', default='1,2,3' )
 group_opt.add_argument( '--factored', action='store', help='default=%(default)s', default='f,n,e' )
 group_opt.add_argument( '--equed',  action='store', help='default=%(default)s', default='n,r,c,b' )
-group_opt.add_argument( '--direct', action='store', help='default=%(default)s', default='f,b' )
+group_opt.add_argument( '--direction', action='store', help='default=%(default)s', default='f,b' )
 group_opt.add_argument( '--storev', action='store', help='default=%(default)s', default='c,r' )
 group_opt.add_argument( '--norm',   action='store', help='default=%(default)s', default='max,1,inf,fro' )
 group_opt.add_argument( '--jobz',   action='store', help='default=%(default)s', default='n,v' )
@@ -261,7 +261,7 @@ verbose = ' --verbose ' + opts.verbose if (opts.verbose) else ''
 itype  = ' --itype '  + opts.itype  if (opts.itype)  else ''
 factored = ' --factored ' + opts.factored if (opts.factored)  else ''
 equed  = ' --equed '  + opts.equed  if (opts.equed)  else ''
-direct = ' --direct ' + opts.direct if (opts.direct) else ''
+direction = ' --direction ' + opts.direction if (opts.direction) else ''
 storev = ' --storev ' + opts.storev if (opts.storev) else ''
 norm   = ' --norm '   + opts.norm   if (opts.norm)   else ''
 jobz   = ' --jobz '   + opts.jobz   if (opts.jobz)   else ''
@@ -635,8 +635,8 @@ if (opts.aux_house):
     [ 'larf',  gen + dtype + align + mn  + incx + side ],
     [ 'larfx', gen + dtype + align + mn  + side ],
     [ 'larfy', gen + dtype + align + n   + incx ],
-    [ 'larfb', gen + dtype + align + mnk + side + trans + direct + storev ],
-    [ 'larft', gen + dtype + align + nk  + direct + storev ],
+    [ 'larfb', gen + dtype + align + mnk + side + trans + direction + storev ],
+    [ 'larft', gen + dtype + align + nk  + direction + storev ],
     ]
 
 # auxilary - norms

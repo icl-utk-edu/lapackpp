@@ -483,28 +483,28 @@ inline const char* vect2str( lapack::Vect vect )
 
 // -----------------------------------------------------------------------------
 // larfb
-enum class Direct {
+enum class Direction {
     Forward     = 'F',
     Backward    = 'B',
 };
 
-inline char direct2char( lapack::Direct direct )
+inline char direction2char( lapack::Direction direction )
 {
-    return char( direct );
+    return char( direction );
 }
 
-inline lapack::Direct char2direct( char direct )
+inline lapack::Direction char2direction( char direction )
 {
-    direct = char( toupper( direct ));
-    lapack_error_if( direct != 'F' && direct != 'B' );
-    return lapack::Direct( direct );
+    direction = char( toupper( direction ));
+    lapack_error_if( direction != 'F' && direction != 'B' );
+    return lapack::Direction( direction );
 }
 
-inline const char* direct2str( lapack::Direct direct )
+inline const char* direction2str( lapack::Direction direction )
 {
-    switch (direct) {
-        case lapack::Direct::Forward:  return "forward";
-        case lapack::Direct::Backward: return "backward";
+    switch (direction) {
+        case lapack::Direction::Forward:  return "forward";
+        case lapack::Direction::Backward: return "backward";
     }
     return "?";
 }

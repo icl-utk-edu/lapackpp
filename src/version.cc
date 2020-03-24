@@ -32,4 +32,4 @@ const char* lapackpp_id()
     return LAPACKPP_ID;
 }
 
-}  // namespace testsweeper
+}  // namespace lapack

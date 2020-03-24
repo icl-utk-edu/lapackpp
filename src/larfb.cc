@@ -17,7 +17,8 @@ using blas::real;
 // -----------------------------------------------------------------------------
 /// @ingroup unitary_computational
 void larfb(
-    lapack::Side side, lapack::Op trans, lapack::Direct direct, lapack::StoreV storev,
+    lapack::Side side, lapack::Op trans,
+    lapack::Direction direction, lapack::StoreV storev,
     int64_t m, int64_t n, int64_t k,
     float const* V, int64_t ldv,
     float const* T, int64_t ldt,
@@ -34,7 +35,7 @@ void larfb(
     }
     char side_ = side2char( side );
     char trans_ = op2char( trans );
-    char direct_ = direct2char( direct );
+    char direction_ = direction2char( direction );
     char storev_ = storev2char( storev );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
@@ -50,7 +51,7 @@ void larfb(
     std::vector< float > work( ldwork_ * k );
 
     LAPACK_slarfb(
-        &side_, &trans_, &direct_, &storev_, &m_, &n_, &k_,
+        &side_, &trans_, &direction_, &storev_, &m_, &n_, &k_,
         V, &ldv_,
         T, &ldt_,
         C, &ldc_,
@@ -60,7 +61,7 @@ void larfb(
 // -----------------------------------------------------------------------------
 /// @ingroup unitary_computational
 void larfb(
-    lapack::Side side, lapack::Op trans, lapack::Direct direct, lapack::StoreV storev,
+    lapack::Side side, lapack::Op trans, lapack::Direction direction, lapack::StoreV storev,
     int64_t m, int64_t n, int64_t k,
     double const* V, int64_t ldv,
     double const* T, int64_t ldt,
@@ -77,7 +78,7 @@ void larfb(
     }
     char side_ = side2char( side );
     char trans_ = op2char( trans );
-    char direct_ = direct2char( direct );
+    char direction_ = direction2char( direction );
     char storev_ = storev2char( storev );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
@@ -93,7 +94,7 @@ void larfb(
     std::vector< double > work( ldwork_ * k );
 
     LAPACK_dlarfb(
-        &side_, &trans_, &direct_, &storev_, &m_, &n_, &k_,
+        &side_, &trans_, &direction_, &storev_, &m_, &n_, &k_,
         V, &ldv_,
         T, &ldt_,
         C, &ldc_,
@@ -103,7 +104,8 @@ void larfb(
 // -----------------------------------------------------------------------------
 /// @ingroup unitary_computational
 void larfb(
-    lapack::Side side, lapack::Op trans, lapack::Direct direct, lapack::StoreV storev,
+    lapack::Side side, lapack::Op trans,
+    lapack::Direction direction, lapack::StoreV storev,
     int64_t m, int64_t n, int64_t k,
     std::complex<float> const* V, int64_t ldv,
     std::complex<float> const* T, int64_t ldt,
@@ -120,7 +122,7 @@ void larfb(
     }
     char side_ = side2char( side );
     char trans_ = op2char( trans );
-    char direct_ = direct2char( direct );
+    char direction_ = direction2char( direction );
     char storev_ = storev2char( storev );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
@@ -136,7 +138,7 @@ void larfb(
     std::vector< std::complex<float> > work( ldwork_ * k );
 
     LAPACK_clarfb(
-        &side_, &trans_, &direct_, &storev_, &m_, &n_, &k_,
+        &side_, &trans_, &direction_, &storev_, &m_, &n_, &k_,
         (lapack_complex_float*) V, &ldv_,
         (lapack_complex_float*) T, &ldt_,
         (lapack_complex_float*) C, &ldc_,
@@ -158,11 +160,11 @@ void larfb(
 ///     - lapack::Op::NoTrans:   apply \f$ H   \f$ (No transpose)
 ///     - lapack::Op::ConjTrans: apply \f$ H^H \f$ (Conjugate transpose)
 ///
-/// @param[in] direct
+/// @param[in] direction
 ///     Indicates how H is formed from a product of elementary
 ///     reflectors
-///     - lapack::Direct::Forward:  \f$ H = H(1) H(2) \dots H(k) \f$
-///     - lapack::Direct::Backward: \f$ H = H(k) \dots H(2) H(1) \f$
+///     - lapack::Direction::Forward:  \f$ H = H(1) H(2) \dots H(k) \f$
+///     - lapack::Direction::Backward: \f$ H = H(k) \dots H(2) H(1) \f$
 ///
 /// @param[in] storev
 ///     Indicates how the vectors which define the elementary
@@ -222,7 +224,7 @@ void larfb(
 /// k = 3. The elements equal to 1 are not stored. The rest of the
 /// array is not used.
 ///
-///     direct = Forward and             direct = Forward and
+///     direction = Forward and          direction = Forward and
 ///     storev = Columnwise:             storev = Rowwise:
 ///
 ///     V = (  1       )                 V = (  1 v1 v1 v1 v1 )
@@ -231,7 +233,7 @@ void larfb(
 ///         ( v1 v2 v3 )
 ///         ( v1 v2 v3 )
 ///
-///     direct = Backward and            direct = Backward and
+///     direction = Backward and         direction = Backward and
 ///     storev = Columnwise:             storev = Rowwise:
 ///
 ///     V = ( v1 v2 v3 )                 V = ( v1 v1  1       )
@@ -242,7 +244,8 @@ void larfb(
 ///
 /// @ingroup unitary_computational
 void larfb(
-    lapack::Side side, lapack::Op trans, lapack::Direct direct, lapack::StoreV storev,
+    lapack::Side side, lapack::Op trans,
+    lapack::Direction direction, lapack::StoreV storev,
     int64_t m, int64_t n, int64_t k,
     std::complex<double> const* V, int64_t ldv,
     std::complex<double> const* T, int64_t ldt,
@@ -259,7 +262,7 @@ void larfb(
     }
     char side_ = side2char( side );
     char trans_ = op2char( trans );
-    char direct_ = direct2char( direct );
+    char direction_ = direction2char( direction );
     char storev_ = storev2char( storev );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
@@ -275,7 +278,7 @@ void larfb(
     std::vector< std::complex<double> > work( ldwork_ * k );
 
     LAPACK_zlarfb(
-        &side_, &trans_, &direct_, &storev_, &m_, &n_, &k_,
+        &side_, &trans_, &direction_, &storev_, &m_, &n_, &k_,
         (lapack_complex_double*) V, &ldv_,
         (lapack_complex_double*) T, &ldt_,
         (lapack_complex_double*) C, &ldc_,

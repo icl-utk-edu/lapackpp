@@ -5776,52 +5776,52 @@ inline lapack_int LAPACKE_larf(
 
 // -----------------------------------------------------------------------------
 inline lapack_int LAPACKE_larfb(
-    char side, char trans, char direct, char storev, lapack_int m, lapack_int n, lapack_int k,
+    char side, char trans, char direction, char storev, lapack_int m, lapack_int n, lapack_int k,
     float* V, lapack_int ldv,
     float* T, lapack_int ldt,
     float* C, lapack_int ldc )
 {
     return LAPACKE_slarfb(
-        LAPACK_COL_MAJOR, side, trans, direct, storev, m, n, k,
+        LAPACK_COL_MAJOR, side, trans, direction, storev, m, n, k,
         V, ldv,
         T, ldt,
         C, ldc );
 }
 
 inline lapack_int LAPACKE_larfb(
-    char side, char trans, char direct, char storev, lapack_int m, lapack_int n, lapack_int k,
+    char side, char trans, char direction, char storev, lapack_int m, lapack_int n, lapack_int k,
     double* V, lapack_int ldv,
     double* T, lapack_int ldt,
     double* C, lapack_int ldc )
 {
     return LAPACKE_dlarfb(
-        LAPACK_COL_MAJOR, side, trans, direct, storev, m, n, k,
+        LAPACK_COL_MAJOR, side, trans, direction, storev, m, n, k,
         V, ldv,
         T, ldt,
         C, ldc );
 }
 
 inline lapack_int LAPACKE_larfb(
-    char side, char trans, char direct, char storev, lapack_int m, lapack_int n, lapack_int k,
+    char side, char trans, char direction, char storev, lapack_int m, lapack_int n, lapack_int k,
     std::complex<float>* V, lapack_int ldv,
     std::complex<float>* T, lapack_int ldt,
     std::complex<float>* C, lapack_int ldc )
 {
     return LAPACKE_clarfb(
-        LAPACK_COL_MAJOR, side, trans, direct, storev, m, n, k,
+        LAPACK_COL_MAJOR, side, trans, direction, storev, m, n, k,
         (lapack_complex_float*) V, ldv,
         (lapack_complex_float*) T, ldt,
         (lapack_complex_float*) C, ldc );
 }
 
 inline lapack_int LAPACKE_larfb(
-    char side, char trans, char direct, char storev, lapack_int m, lapack_int n, lapack_int k,
+    char side, char trans, char direction, char storev, lapack_int m, lapack_int n, lapack_int k,
     std::complex<double>* V, lapack_int ldv,
     std::complex<double>* T, lapack_int ldt,
     std::complex<double>* C, lapack_int ldc )
 {
     return LAPACKE_zlarfb(
-        LAPACK_COL_MAJOR, side, trans, direct, storev, m, n, k,
+        LAPACK_COL_MAJOR, side, trans, direction, storev, m, n, k,
         (lapack_complex_double*) V, ldv,
         (lapack_complex_double*) T, ldt,
         (lapack_complex_double*) C, ldc );
@@ -5882,52 +5882,52 @@ inline lapack_int LAPACKE_larfg(
 
 // -----------------------------------------------------------------------------
 inline lapack_int LAPACKE_larft(
-    char direct, char storev, lapack_int n, lapack_int k,
+    char direction, char storev, lapack_int n, lapack_int k,
     float* V, lapack_int ldv,
     float* tau,
     float* T, lapack_int ldt )
 {
     return LAPACKE_slarft(
-        LAPACK_COL_MAJOR, direct, storev, n, k,
+        LAPACK_COL_MAJOR, direction, storev, n, k,
         V, ldv,
         tau,
         T, ldt );
 }
 
 inline lapack_int LAPACKE_larft(
-    char direct, char storev, lapack_int n, lapack_int k,
+    char direction, char storev, lapack_int n, lapack_int k,
     double* V, lapack_int ldv,
     double* tau,
     double* T, lapack_int ldt )
 {
     return LAPACKE_dlarft(
-        LAPACK_COL_MAJOR, direct, storev, n, k,
+        LAPACK_COL_MAJOR, direction, storev, n, k,
         V, ldv,
         tau,
         T, ldt );
 }
 
 inline lapack_int LAPACKE_larft(
-    char direct, char storev, lapack_int n, lapack_int k,
+    char direction, char storev, lapack_int n, lapack_int k,
     std::complex<float>* V, lapack_int ldv,
     std::complex<float>* tau,
     std::complex<float>* T, lapack_int ldt )
 {
     return LAPACKE_clarft(
-        LAPACK_COL_MAJOR, direct, storev, n, k,
+        LAPACK_COL_MAJOR, direction, storev, n, k,
         (lapack_complex_float*) V, ldv,
         (lapack_complex_float*) tau,
         (lapack_complex_float*) T, ldt );
 }
 
 inline lapack_int LAPACKE_larft(
-    char direct, char storev, lapack_int n, lapack_int k,
+    char direction, char storev, lapack_int n, lapack_int k,
     std::complex<double>* V, lapack_int ldv,
     std::complex<double>* tau,
     std::complex<double>* T, lapack_int ldt )
 {
     return LAPACKE_zlarft(
-        LAPACK_COL_MAJOR, direct, storev, n, k,
+        LAPACK_COL_MAJOR, direction, storev, n, k,
         (lapack_complex_double*) V, ldv,
         (lapack_complex_double*) tau,
         (lapack_complex_double*) T, ldt );
@@ -9256,14 +9256,14 @@ inline lapack_int LAPACKE_tpqrt2(
 // -----------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30400
 inline lapack_int LAPACKE_tprfb(
-    char side, char trans, char direct, char storev, lapack_int m, lapack_int n, lapack_int k, lapack_int l,
+    char side, char trans, char direction, char storev, lapack_int m, lapack_int n, lapack_int k, lapack_int l,
     float* V, lapack_int ldv,
     float* T, lapack_int ldt,
     float* A, lapack_int lda,
     float* B, lapack_int ldb )
 {
     return LAPACKE_stprfb(
-        LAPACK_COL_MAJOR, side, trans, direct, storev, m, n, k, l,
+        LAPACK_COL_MAJOR, side, trans, direction, storev, m, n, k, l,
         V, ldv,
         T, ldt,
         A, lda,
@@ -9271,14 +9271,14 @@ inline lapack_int LAPACKE_tprfb(
 }
 
 inline lapack_int LAPACKE_tprfb(
-    char side, char trans, char direct, char storev, lapack_int m, lapack_int n, lapack_int k, lapack_int l,
+    char side, char trans, char direction, char storev, lapack_int m, lapack_int n, lapack_int k, lapack_int l,
     double* V, lapack_int ldv,
     double* T, lapack_int ldt,
     double* A, lapack_int lda,
     double* B, lapack_int ldb )
 {
     return LAPACKE_dtprfb(
-        LAPACK_COL_MAJOR, side, trans, direct, storev, m, n, k, l,
+        LAPACK_COL_MAJOR, side, trans, direction, storev, m, n, k, l,
         V, ldv,
         T, ldt,
         A, lda,
@@ -9286,14 +9286,14 @@ inline lapack_int LAPACKE_tprfb(
 }
 
 inline lapack_int LAPACKE_tprfb(
-    char side, char trans, char direct, char storev, lapack_int m, lapack_int n, lapack_int k, lapack_int l,
+    char side, char trans, char direction, char storev, lapack_int m, lapack_int n, lapack_int k, lapack_int l,
     std::complex<float>* V, lapack_int ldv,
     std::complex<float>* T, lapack_int ldt,
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* B, lapack_int ldb )
 {
     return LAPACKE_ctprfb(
-        LAPACK_COL_MAJOR, side, trans, direct, storev, m, n, k, l,
+        LAPACK_COL_MAJOR, side, trans, direction, storev, m, n, k, l,
         (lapack_complex_float*) V, ldv,
         (lapack_complex_float*) T, ldt,
         (lapack_complex_float*) A, lda,
@@ -9301,14 +9301,14 @@ inline lapack_int LAPACKE_tprfb(
 }
 
 inline lapack_int LAPACKE_tprfb(
-    char side, char trans, char direct, char storev, lapack_int m, lapack_int n, lapack_int k, lapack_int l,
+    char side, char trans, char direction, char storev, lapack_int m, lapack_int n, lapack_int k, lapack_int l,
     std::complex<double>* V, lapack_int ldv,
     std::complex<double>* T, lapack_int ldt,
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* B, lapack_int ldb )
 {
     return LAPACKE_ztprfb(
-        LAPACK_COL_MAJOR, side, trans, direct, storev, m, n, k, l,
+        LAPACK_COL_MAJOR, side, trans, direction, storev, m, n, k, l,
         (lapack_complex_double*) V, ldv,
         (lapack_complex_double*) T, ldt,
         (lapack_complex_double*) A, lda,

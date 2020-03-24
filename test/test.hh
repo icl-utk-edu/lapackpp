@@ -59,7 +59,7 @@ public:
     testsweeper::ParamEnum< lapack::Op >        transB;
     testsweeper::ParamEnum< lapack::Diag >      diag;
     testsweeper::ParamEnum< lapack::Norm >      norm;
-    testsweeper::ParamEnum< lapack::Direct >    direct;
+    testsweeper::ParamEnum< lapack::Direction >    direction;
     testsweeper::ParamEnum< lapack::StoreV >    storev;
     testsweeper::ParamEnum< lapack::Job >       jobz;   // heev
     testsweeper::ParamEnum< lapack::Job >       jobvl;  // geev

@@ -19,7 +19,8 @@ using blas::real;
 // -----------------------------------------------------------------------------
 /// @ingroup tpqrt
 void tprfb(
-    lapack::Side side, lapack::Op trans, lapack::Direct direct, lapack::StoreV storev,
+    lapack::Side side, lapack::Op trans,
+    lapack::Direction direction, lapack::StoreV storev,
     int64_t m, int64_t n, int64_t k, int64_t l,
     float const* V, int64_t ldv,
     float const* T, int64_t ldt,
@@ -39,7 +40,7 @@ void tprfb(
     }
     char side_ = side2char( side );
     char trans_ = op2char( trans );
-    char direct_ = direct2char( direct );
+    char direction_ = direction2char( direction );
     char storev_ = storev2char( storev );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
@@ -56,7 +57,7 @@ void tprfb(
     std::vector< float > work( lwork );
 
     LAPACK_stprfb(
-        &side_, &trans_, &direct_, &storev_, &m_, &n_, &k_, &l_,
+        &side_, &trans_, &direction_, &storev_, &m_, &n_, &k_, &l_,
         V, &ldv_,
         T, &ldt_,
         A, &lda_,
@@ -67,7 +68,8 @@ void tprfb(
 // -----------------------------------------------------------------------------
 /// @ingroup tpqrt
 void tprfb(
-    lapack::Side side, lapack::Op trans, lapack::Direct direct, lapack::StoreV storev,
+    lapack::Side side, lapack::Op trans,
+    lapack::Direction direction, lapack::StoreV storev,
     int64_t m, int64_t n, int64_t k, int64_t l,
     double const* V, int64_t ldv,
     double const* T, int64_t ldt,
@@ -87,7 +89,7 @@ void tprfb(
     }
     char side_ = side2char( side );
     char trans_ = op2char( trans );
-    char direct_ = direct2char( direct );
+    char direction_ = direction2char( direction );
     char storev_ = storev2char( storev );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
@@ -104,7 +106,7 @@ void tprfb(
     std::vector< double > work( lwork );
 
     LAPACK_dtprfb(
-        &side_, &trans_, &direct_, &storev_, &m_, &n_, &k_, &l_,
+        &side_, &trans_, &direction_, &storev_, &m_, &n_, &k_, &l_,
         V, &ldv_,
         T, &ldt_,
         A, &lda_,
@@ -115,7 +117,8 @@ void tprfb(
 // -----------------------------------------------------------------------------
 /// @ingroup tpqrt
 void tprfb(
-    lapack::Side side, lapack::Op trans, lapack::Direct direct, lapack::StoreV storev,
+    lapack::Side side, lapack::Op trans,
+    lapack::Direction direction, lapack::StoreV storev,
     int64_t m, int64_t n, int64_t k, int64_t l,
     std::complex<float> const* V, int64_t ldv,
     std::complex<float> const* T, int64_t ldt,
@@ -135,7 +138,7 @@ void tprfb(
     }
     char side_ = side2char( side );
     char trans_ = op2char( trans );
-    char direct_ = direct2char( direct );
+    char direction_ = direction2char( direction );
     char storev_ = storev2char( storev );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
@@ -152,7 +155,7 @@ void tprfb(
     std::vector< std::complex<float> > work( lwork );
 
     LAPACK_ctprfb(
-        &side_, &trans_, &direct_, &storev_, &m_, &n_, &k_, &l_,
+        &side_, &trans_, &direction_, &storev_, &m_, &n_, &k_, &l_,
         (lapack_complex_float*) V, &ldv_,
         (lapack_complex_float*) T, &ldt_,
         (lapack_complex_float*) A, &lda_,
@@ -179,11 +182,11 @@ void tprfb(
 ///     - lapack::Op::NoTrans:   apply $H    (No transpose)
 ///     - lapack::Op::ConjTrans: apply $H^H$ (Conjugate transpose)
 ///
-/// @param[in] direct
+/// @param[in] direction
 ///     Indicates how H is formed from a product of elementary
 ///     reflectors
-///     - lapack::Direct::Forward:  $H = H(1) H(2) . . . H(k)$ (Forward)
-///     - lapack::Direct::Backward: $H = H(k) . . . H(2) H(1)$ (Backward)
+///     - lapack::Direction::Forward:  $H = H(1) H(2) . . . H(k)$ (Forward)
+///     - lapack::Direction::Backward: $H = H(k) . . . H(2) H(1)$ (Backward)
 ///
 /// @param[in] storev
 ///     Indicates how the vectors which define the elementary
@@ -259,19 +262,19 @@ void tprfb(
 /// The block B is of size m-by-n; if side = Right, A is of size m-by-k,
 /// and if side = Left, A is of size k-by-n.
 ///
-/// If side = Right and direct = Forward,
+/// If side = Right and direction = Forward,
 ///     $C = [A B]$.
 ///
-/// If side = Left and direct = Forward,
+/// If side = Left and direction = Forward,
 ///     $C = \left[ \begin{array}{c}
 ///         A
 ///         B
 ///     \end{array} \right].
 ///
-/// If side = Right and direct = Backward,
+/// If side = Right and direction = Backward,
 ///     $C = [B A]$.
 ///
-/// If side = Left and direct = Backward,
+/// If side = Left and direction = Backward,
 ///     $C = \left[ \begin{array}{c}
 ///         B
 ///         A
@@ -282,25 +285,25 @@ void tprfb(
 /// the parameter l, where 0 <= l <= k.  If l=k, the V2 block of V is triangular;
 /// if l=0, there is no trapezoidal block, thus V = V1 is rectangular.
 ///
-/// If direct = Forward and storev = Columnwise:
+/// If direction = Forward and storev = Columnwise:
 ///     $V = \left[ \begin{array}{c}
 ///         V1
 ///         V2
 ///     \end{array} \right].
 ///     - V2 is upper trapezoidal (first l rows of k-by-k upper triangular)
 ///
-/// If direct = Forward and storev = Rowwise:
+/// If direction = Forward and storev = Rowwise:
 ///     $V = [V1 V2]$
 ///     - V2 is lower trapezoidal (first l columns of k-by-k lower triangular)
 ///
-/// If direct = Backward and storev = Columnwise:
+/// If direction = Backward and storev = Columnwise:
 ///     $V = \left[ \begin{array}{c}
 ///         V2
 ///         V1
 ///     \end{array} \right].
 ///     - V2 is lower trapezoidal (last l rows of k-by-k lower triangular)
 ///
-/// If direct = Backwar$d and storev = Rowwise:
+/// If direction = Backwar$d and storev = Rowwise:
 ///     $V = [V2 V1]
 ///     - V2 is upper trapezoidal (last l columns of k-by-k upper triangular)
 ///
@@ -314,7 +317,9 @@ void tprfb(
 ///
 /// @ingroup tpqrt
 void tprfb(
-    lapack::Side side, lapack::Op trans, lapack::Direct direct, lapack::StoreV storev, int64_t m, int64_t n, int64_t k, int64_t l,
+    lapack::Side side, lapack::Op trans,
+    lapack::Direction direction, lapack::StoreV storev,
+    int64_t m, int64_t n, int64_t k, int64_t l,
     std::complex<double> const* V, int64_t ldv,
     std::complex<double> const* T, int64_t ldt,
     std::complex<double>* A, int64_t lda,
@@ -333,7 +338,7 @@ void tprfb(
     }
     char side_ = side2char( side );
     char trans_ = op2char( trans );
-    char direct_ = direct2char( direct );
+    char direction_ = direction2char( direction );
     char storev_ = storev2char( storev );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
@@ -350,7 +355,7 @@ void tprfb(
     std::vector< std::complex<double> > work( lwork );
 
     LAPACK_ztprfb(
-        &side_, &trans_, &direct_, &storev_, &m_, &n_, &k_, &l_,
+        &side_, &trans_, &direction_, &storev_, &m_, &n_, &k_, &l_,
         (lapack_complex_double*) V, &ldv_,
         (lapack_complex_double*) T, &ldt_,
         (lapack_complex_double*) A, &lda_,

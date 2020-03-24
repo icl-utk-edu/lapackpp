@@ -9920,7 +9920,7 @@ double LAPACK_dlamch(
 /* ----- apply block Householder reflector */
 #define LAPACK_slarfb LAPACK_GLOBAL(slarfb,SLARFB)
 void LAPACK_slarfb(
-    char const* side, char const* trans, char const* direct, char const* storev,
+    char const* side, char const* trans, char const* direction, char const* storev,
     lapack_int const* m, lapack_int const* n, lapack_int const* k,
     float const* v, lapack_int const* ldv,
     float const* t, lapack_int const* ldt,
@@ -9928,7 +9928,7 @@ void LAPACK_slarfb(
     float* work, lapack_int const* ldwork );
 #define LAPACK_dlarfb LAPACK_GLOBAL(dlarfb,DLARFB)
 void LAPACK_dlarfb(
-    char const* side, char const* trans, char const* direct, char const* storev,
+    char const* side, char const* trans, char const* direction, char const* storev,
     lapack_int const* m, lapack_int const* n, lapack_int const* k,
     double const* v, lapack_int const* ldv,
     double const* t, lapack_int const* ldt,
@@ -9937,7 +9937,7 @@ void LAPACK_dlarfb(
     lapack_int const* ldwork );
 #define LAPACK_clarfb LAPACK_GLOBAL(clarfb,CLARFB)
 void LAPACK_clarfb(
-    char const* side, char const* trans, char const* direct, char const* storev,
+    char const* side, char const* trans, char const* direction, char const* storev,
     lapack_int const* m, lapack_int const* n, lapack_int const* k,
     lapack_complex_float const* v, lapack_int const* ldv,
     lapack_complex_float const* t, lapack_int const* ldt,
@@ -9945,7 +9945,7 @@ void LAPACK_clarfb(
     lapack_complex_float* work, lapack_int const* ldwork );
 #define LAPACK_zlarfb LAPACK_GLOBAL(zlarfb,ZLARFB)
 void LAPACK_zlarfb(
-    char const* side, char const* trans, char const* direct, char const* storev,
+    char const* side, char const* trans, char const* direction, char const* storev,
     lapack_int const* m, lapack_int const* n, lapack_int const* k,
     lapack_complex_double const* v, lapack_int const* ldv,
     lapack_complex_double const* t, lapack_int const* ldt,
@@ -10003,28 +10003,28 @@ void LAPACK_zlassq(
 /* ----- generate T matrix for block Householder */
 #define LAPACK_slarft LAPACK_GLOBAL(slarft,SLARFT)
 void LAPACK_slarft(
-    char const* direct, char const* storev,
+    char const* direction, char const* storev,
     lapack_int const* n, lapack_int const* k,
     float const* v, lapack_int const* ldv,
     float const* tau,
     float* t, lapack_int const* ldt );
 #define LAPACK_dlarft LAPACK_GLOBAL(dlarft,DLARFT)
 void LAPACK_dlarft(
-    char const* direct, char const* storev,
+    char const* direction, char const* storev,
     lapack_int const* n, lapack_int const* k,
     double const* v, lapack_int const* ldv,
     double const* tau,
     double* t, lapack_int const* ldt );
 #define LAPACK_clarft LAPACK_GLOBAL(clarft,CLARFT)
 void LAPACK_clarft(
-    char const* direct, char const* storev,
+    char const* direction, char const* storev,
     lapack_int const* n, lapack_int const* k,
     lapack_complex_float const* v, lapack_int const* ldv,
     lapack_complex_float const* tau,
     lapack_complex_float* t, lapack_int const* ldt );
 #define LAPACK_zlarft LAPACK_GLOBAL(zlarft,ZLARFT)
 void LAPACK_zlarft(
-    char const* direct, char const* storev,
+    char const* direction, char const* storev,
     lapack_int const* n, lapack_int const* k,
     lapack_complex_double const* v, lapack_int const* ldv,
     lapack_complex_double const* tau,
@@ -11285,7 +11285,7 @@ void LAPACK_ztpmqrt(
 /* ----- apply triangular-pentagonal block reflector */
 #define LAPACK_stprfb LAPACK_GLOBAL(stprfb,STPRFB)
 void LAPACK_stprfb(
-    char const* side, char const* trans, char const* direct, char const* storev,
+    char const* side, char const* trans, char const* direction, char const* storev,
     lapack_int const* m, lapack_int const* n,
     lapack_int const* k, lapack_int const* l,
     float const* v, lapack_int const* ldv,
@@ -11296,7 +11296,7 @@ void LAPACK_stprfb(
     lapack_int const* ldwork );
 #define LAPACK_dtprfb LAPACK_GLOBAL(dtprfb,DTPRFB)
 void LAPACK_dtprfb(
-    char const* side, char const* trans, char const* direct, char const* storev,
+    char const* side, char const* trans, char const* direction, char const* storev,
     lapack_int const* m, lapack_int const* n,
     lapack_int const* k, lapack_int const* l,
     double const* v, lapack_int const* ldv,
@@ -11307,7 +11307,7 @@ void LAPACK_dtprfb(
     lapack_int const* ldwork );
 #define LAPACK_ctprfb LAPACK_GLOBAL(ctprfb,CTPRFB)
 void LAPACK_ctprfb(
-    char const* side, char const* trans, char const* direct, char const* storev,
+    char const* side, char const* trans, char const* direction, char const* storev,
     lapack_int const* m, lapack_int const* n,
     lapack_int const* k, lapack_int const* l,
     lapack_complex_float const* v, lapack_int const* ldv,
@@ -11317,7 +11317,7 @@ void LAPACK_ctprfb(
     lapack_complex_float* work, lapack_int const* ldwork );
 #define LAPACK_ztprfb LAPACK_GLOBAL(ztprfb,ZTPRFB)
 void LAPACK_ztprfb(
-    char const* side, char const* trans, char const* direct, char const* storev,
+    char const* side, char const* trans, char const* direction, char const* storev,
     lapack_int const* m, lapack_int const* n,
     lapack_int const* k, lapack_int const* l,
     lapack_complex_double const* v, lapack_int const* ldv,

@@ -355,7 +355,7 @@ vect = ('lapack::Vect', 'vect2char', {
 })
 
 # larfb
-direct = ('lapack::Direct', 'direct2char', {
+direction = ('lapack::Direction', 'direction2char', {
     'f': 'Forward',
     'b': 'Backward',
 })
@@ -483,7 +483,7 @@ enum_map = {
     'sort':         sort,       # gees
     'range':        range_enum, # syevx, geevx, gesvdx
     'vect':         vect,       # ormbr, orgbr
-    'direct':       direct,     # larfb
+    'direction':    direction,  # larfb
     'storev':       storev,     # larfb
     'matrixtype':   matrixtype, # lascl, laset
     'howmany':      howmany,    # gehrd

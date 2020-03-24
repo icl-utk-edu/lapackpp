@@ -17,6 +17,20 @@
 // from config, we need only lapack_logical for callback functions lapack_*_select*
 #include "lapack/config.h"
 
+#if __cplusplus >= 201402 // C++14
+    //#pragma message "LAPACK_DEPRECATED: [[deprecated]]"
+    #define LAPACK_DEPRECATED(msg) [[deprecated(msg)]]
+#elif defined(_MSC_VER)
+    //#pragma message "LAPACK_DEPRECATED: __declspec"
+    #define LAPACK_DEPRECATED(msg) __declspec(deprecated(msg))
+#elif defined(__GNUC__)
+    //#pragma message "LAPACK_DEPRECATED: __attribute__"
+    #define LAPACK_DEPRECATED(msg) __attribute__((deprecated(msg)))
+#else
+    //#pragma message "LAPACK_DEPRECATED: none"
+    #define LAPACK_DEPRECATED(msg)
+#endif
+
 namespace lapack {
 
 // -----------------------------------------------------------------------------
@@ -507,6 +521,28 @@ inline const char* direction2str( lapack::Direction direction )
         case lapack::Direction::Backward: return "backward";
     }
     return "?";
+}
+
+// Deprecated in 2020.03.00; remove after 2021.03.00.
+LAPACK_DEPRECATED("Direct replaced with Direction")
+typedef Direction Direct;
+
+LAPACK_DEPRECATED("direct2char replaced with direction2char")
+inline char direct2char( lapack::Direction direction )
+{
+    return direction2char( direction );
+}
+
+LAPACK_DEPRECATED("direct2str replaced with direction2str")
+inline const char* direct2str( lapack::Direction direction )
+{
+    return direction2str( direction );
+}
+
+LAPACK_DEPRECATED("char2direct replaced with char2direction")
+inline lapack::Direction char2direct( char direction )
+{
+    return char2direction( direction );
 }
 
 // -----------------------------------------------------------------------------

@@ -138,7 +138,9 @@ int64_t hetrf(
 /// @par Further Details
 ///
 /// If uplo = Upper, then \f$ A = U D U^H, \f$ where
-///     \f[ U = P(n) U(n) \dots P(k) U(k) \dots, \f]
+/// \[
+///     U = P(n) U(n) \dots P(k) U(k) \dots,
+/// \]
 /// i.e., U is a product of terms \f$ P(k) U(k), \f$ where k decreases from n to
 /// 1 in steps of 1 or 2, and D is a block diagonal matrix with 1-by-1
 /// and 2-by-2 diagonal blocks D(k).  P(k) is a permutation matrix as
@@ -155,7 +157,9 @@ int64_t hetrf(
 /// and A(k,k), and v overwrites A(1:k-2,k-1:k).
 ///
 /// If uplo = Lower, then \f$ A = L D L^H, \f$ where
-///     \f[ L = P(1) L(1) \dots P(k) L(k) \dots, \f]
+/// \[
+///     L = P(1) L(1) \dots P(k) L(k) \dots,
+/// \]
 /// i.e., L is a product of terms \f$ P(k) L(k), \f$ where k increases from 1 to
 /// n in steps of 1 or 2, and D is a block diagonal matrix with 1-by-1
 /// and 2-by-2 diagonal blocks D(k).  P(k) is a permutation matrix as

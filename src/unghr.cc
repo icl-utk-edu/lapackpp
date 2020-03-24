@@ -65,8 +65,9 @@ int64_t unghr(
 /// Generates an n-by-n unitary matrix Q which is defined as the
 /// product of ihi-ilo elementary reflectors of order n, as returned by
 /// `lapack::gehrd`:
-///
-///     \f[ Q = H(ilo) H(ilo+1) \dots H(ihi-1). \f]
+/// \[
+///     Q = H(ilo) H(ilo+1) \dots H(ihi-1).
+/// \]
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.

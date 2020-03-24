@@ -191,8 +191,9 @@ int64_t gglse(
 // -----------------------------------------------------------------------------
 /// Solves the linear equality-constrained least squares (LSE)
 /// problem:
-///
-///     \f[ \min_x || c - A x ||_2 \text{ subject to } B x = d \f]
+/// \[
+///     \min_x || c - A x ||_2 \text{ subject to } B x = d
+/// \]
 ///
 /// where A is an m-by-n matrix, B is a p-by-n matrix, c is a given
 /// m-vector, and d is a given p-vector. It is assumed that
@@ -204,8 +205,9 @@ int64_t gglse(
 /// These conditions ensure that the LSE problem has a unique solution,
 /// which is obtained using a generalized RQ factorization of the
 /// matrices (B, A) given by
-///
-///     \f[ B = \left[ 0 \;\; R \right] Q, \quad A = Z T Q. \f]
+/// \[
+///     B = \left[ 0 \;\; R \right] Q, \quad A = Z T Q.
+/// \]
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.

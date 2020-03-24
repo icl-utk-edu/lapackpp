@@ -111,9 +111,9 @@ void larfx(
 /// Applies a elementary reflector H to a m-by-n
 /// matrix C, from either the left or the right. H is represented in the
 /// form
-///
-///     \f[ H = I - \tau v v^H \f]
-///
+/// \[
+///     H = I - \tau v v^H
+/// \]
 /// where \f$ \tau \f$ is a scalar and v is a vector.
 ///
 /// If \f$ \tau = 0, \f$ then H is taken to be the unit matrix

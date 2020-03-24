@@ -175,13 +175,14 @@ int64_t gebal(
 /// The permutations consist of row and column interchanges which put
 /// the matrix in the form
 /**
-    \f[ P A P = \left[ \begin{array}{ccc}
+    \[
+        P A P = \left[ \begin{array}{ccc}
                     T1  &  X  &  Y   \\
                     0   &  B  &  Z   \\
                     0   &  0  &  T2  \\
-                \end{array} \right], \f]
+                \end{array} \right],
+    \]
 */
-///
 /// where T1 and T2 are upper triangular matrices whose eigenvalues lie
 /// along the diagonal.  The column indices ilo and ihi mark the starting
 /// and ending columns of the submatrix B. Balancing consists of applying
@@ -189,11 +190,13 @@ int64_t gebal(
 /// 1-norms of each row of B and its corresponding column nearly equal.
 /// The output matrix is
 /**
-    \f[ \left[ \begin{array}{ccc}
+    \[
+        \left[ \begin{array}{ccc}
             T1  &  X D         &  Y         \\
             0   &  D^{-1} B D  &  D^{-1} Z  \\
             0   &  0           &  T2        \\
-        \end{array} \right]. \f]
+        \end{array} \right].
+    \]
 */
 ///
 /// Information about the permutations P and the diagonal matrix D is

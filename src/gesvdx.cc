@@ -234,9 +234,9 @@ int64_t gesvdx(
 /// Computes the singular value decomposition (SVD) of a
 /// m-by-n matrix A, optionally computing the left and/or right singular
 /// vectors. The SVD is written
-///
-///    \f[ A = U \Sigma V^H \f]
-///
+/// \[
+///     A = U \Sigma V^H,
+/// \]
 /// where \f$ \Sigma \f$ is an m-by-n matrix which is zero except for its
 /// min(m,n) diagonal elements, U is an m-by-m unitary matrix, and
 /// V is an n-by-n unitary matrix. The diagonal elements of SIGMA

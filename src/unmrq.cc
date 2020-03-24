@@ -78,8 +78,9 @@ int64_t unmrq(
 ///
 /// where Q is a unitary matrix defined as the product of k
 /// elementary reflectors, as returned by `lapack::gerqf`:
-///
-///     \f[ Q = H(1)^H H(2)^H \dots H(k)^H. \f]
+/// \[
+///     Q = H(1)^H H(2)^H \dots H(k)^H.
+/// \]
 ///
 /// Q is of order m if side = Left and of order n if side = Right.
 ///

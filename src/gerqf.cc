@@ -192,12 +192,14 @@ int64_t gerqf(
 /// @par Further Details
 ///
 /// The matrix Q is represented as a product of elementary reflectors
-///
-///     \f[ Q = H(1)^H H(2)^H \dots H(k)^H, \text{ where } k = \min(m,n). \f]
+/// \[
+///     Q = H(1)^H H(2)^H \dots H(k)^H, \text{ where } k = \min(m,n).
+/// \]
 ///
 /// Each H(i) has the form
-///
-///     \f[ H(i) = I - \tau v v^H \f]
+/// \[
+///     H(i) = I - \tau v v^H
+/// \]
 ///
 /// where \f$ \tau \f$ is a scalar, and v is a vector with
 /// v(n-k+i+1:n) = 0 and v(n-k+i) = 1; conj(v(1:n-k+i-1)) is stored on

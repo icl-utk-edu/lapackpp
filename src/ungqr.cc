@@ -65,8 +65,9 @@ int64_t ungqr(
 /// Generates an m-by-n matrix Q with orthonormal columns,
 /// which is defined as the first n columns of a product of k elementary
 /// reflectors of order m, as returned by `lapack::geqrf`:
-///
-///     \f[ Q = H(1) H(2) \dots H(k). \f]
+/// \[
+///     Q = H(1) H(2) \dots H(k).
+/// \]
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.

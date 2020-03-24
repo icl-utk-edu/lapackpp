@@ -200,13 +200,14 @@ int64_t gehrd(
 ///
 /// The matrix Q is represented as a product of (ihi-ilo) elementary
 /// reflectors
-///
-///     \f[ Q = H(ilo) H(ilo+1) . . . H(ihi-1). \f]
+/// \[
+///     Q = H(ilo) H(ilo+1) . . . H(ihi-1).
+/// \]
 ///
 /// Each H(i) has the form
-///
-///     \f[ H(i) = I - \tau v v^H \f]
-///
+/// \[
+///     H(i) = I - \tau v v^H
+/// \]
 /// where \f$ \tau \f$ is a scalar, and v is a vector with
 /// v(1:i) = 0, v(i+1) = 1 and v(ihi+1:n) = 0; v(i+2:ihi) is stored on
 /// exit in A(i+2:ihi,i), and \f$ \tau \f$ in tau(i).

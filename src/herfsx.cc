@@ -216,10 +216,10 @@ int64_t herfsx(
 ///     normwise relative error, which is defined as follows:
 ///     \n
 ///     Normwise relative error in the i-th solution vector:
-///     \f[
+///     \[
 ///         \frac{ \max_j | X_{true}(j,i) - X(j,i) | }
 ///              { \max_j | X(j,i) | }
-///     \f]
+///     \]
 ///     The array is indexed by the type of error information as described
 ///     below. There currently are up to three pieces of information
 ///     returned.
@@ -257,10 +257,10 @@ int64_t herfsx(
 ///     componentwise relative error, which is defined as follows:
 ///     \n
 ///     Componentwise relative error in the i-th solution vector:
-///     \f[
+///     \[
 ///         \max_j \frac{ | X_{true}(j,i) - X(j,i) | }
 ///                     { | X(j,i) | }
-///     \f]
+///     \]
 ///     The array is indexed by the right-hand side i (on which the
 ///     componentwise relative error depends), and the type of error
 ///     information as described below. There currently are up to three

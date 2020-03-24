@@ -190,7 +190,9 @@ int64_t ggglm(
 
 // -----------------------------------------------------------------------------
 /// Solves a general Gauss-Markov linear model (GLM) problem:
-///     \f[ \min_x || y ||_2  \text{ subject to } d = A x + B y, \f]
+/// \[
+///     \min_x || y ||_2  \text{ subject to } d = A x + B y,
+/// \]
 /// where A is an n-by-m matrix, B is an n-by-p matrix, and d is a
 /// given n-vector. It is assumed that m <= n <= m+p, and
 ///
@@ -201,20 +203,22 @@ int64_t ggglm(
 /// solution y, which is obtained using a generalized QR factorization
 /// of the matrices (A, B) given by
 /**
-        \f[ A = Q \left[ \begin{array}{c}
+    \[
+        A = Q \left[ \begin{array}{c}
             R \\
             0 \\
         \end{array} \right],
         \quad
         B = Q T Z.
-        \f]
+    \]
 */
 ///
 /// In particular, if matrix B is square nonsingular, then the problem
 /// GLM is equivalent to the following weighted linear least squares
 /// problem
-///
-///     \f[ \min_x || B^{-1} (d - A x) ||_2. \f]
+/// \[
+///     \min_x || B^{-1} (d - A x) ||_2.
+/// \]
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.

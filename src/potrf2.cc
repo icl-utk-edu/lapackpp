@@ -103,12 +103,12 @@ int64_t potrf2(
 /// This is the recursive version of the algorithm. It divides
 /// the matrix into four submatrices:
 /**
-    \f[
+    \[
         A = \left[ \begin{array}{cc}
             A_{11}  &  A_{12}  \\
             A_{21}  &  A_{22}  \\
         \end{array} \right]
-    \f]
+    \]
     where \f$ A_{11} \f$ is n1-by-n1 and \f$ A_{22} \f$ is n2-by-n2,
     with n1 = n/2 and n2 = n-n1.
     The subroutine calls itself to factor \f$ A_{11}, \f$
@@ -116,7 +116,6 @@ int64_t potrf2(
     updates \f$ A_{22}, \f$
     and calls itself to factor \f$ A_{22}. \f$
 */
-///
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.

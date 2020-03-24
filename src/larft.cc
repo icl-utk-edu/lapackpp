@@ -114,13 +114,14 @@ void larft(
 ///
 /// If storev = Columnwise, the vector which defines the elementary reflector
 /// H(i) is stored in the i-th column of the array V, and
-///
-///     \f[ H = I - V T V^H \f]
-///
+/// \[
+///     H = I - V T V^H.
+/// \]
 /// If storev = Rowwise, the vector which defines the elementary reflector
 /// H(i) is stored in the i-th row of the array V, and
-///
-///     \f[ H = I - V^H T V \f]
+/// \[
+///     H = I - V^H T V.
+/// \]
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.

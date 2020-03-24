@@ -65,8 +65,9 @@ int64_t unglq(
 /// Generates an m-by-n matrix Q with orthonormal rows,
 /// which is defined as the first m rows of a product of k elementary
 /// reflectors of order n, as returned by `lapack::gelqf`:
-///
-///     \f[ Q = H(k)^H \dots H(2)^H H(1)^H. \f]
+/// \[
+///     Q = H(k)^H \dots H(2)^H H(1)^H.
+/// \]
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.

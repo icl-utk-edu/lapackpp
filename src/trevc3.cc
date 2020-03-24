@@ -229,10 +229,12 @@ int64_t trevc3(
 ///
 /// The right eigenvector x and the left eigenvector y of T corresponding
 /// to an eigenvalue \f$ \lambda \f$ are defined by:
-///
-///     \f[ T x = \lambda x \f]
-///     \f[ y^H T = \lambda y^H \f]
-///
+/// \[
+///     T x = \lambda x,
+/// \]
+/// \[
+///     y^H T = \lambda y^H,
+/// \]
 /// where \f$ y^H \f$ denotes the conjugate transpose of the vector y.
 /// The eigenvalues are not input to this routine, but are read directly
 /// from the diagonal of T.

@@ -245,14 +245,22 @@ int64_t gebrd(
 /// reflectors:
 ///
 /// If m >= n,
-///
-///     \f[ Q = H(1) H(2) . . . H(n)    \f] and
-///     \f[ P = G(1) G(2) . . . G(n-1). \f]
+/// \[
+///     Q = H(1) H(2) . . . H(n)
+/// \]
+//  and
+/// \[
+///     P = G(1) G(2) . . . G(n-1).
+/// \]
 ///
 /// Each H(i) and G(i) has the form:
-///
-///     \f[ H(i) = I - \tau_q v v^H \f]  and
-///     \f[ G(i) = I - \tau_p u u^H \f]
+/// \[
+///     H(i) = I - \tau_q v v^H
+/// \]
+/// and
+/// \[
+///     G(i) = I - \tau_p u u^H
+/// \]
 ///
 /// where \f$ \tau_q \f$ and \f$ \tau_p \f$ are scalars, and v and u are
 /// vectors; v(1:i-1) = 0, v(i) = 1, and v(i+1:m) is stored on exit in
@@ -260,14 +268,22 @@ int64_t gebrd(
 /// A(i,i+2:n); \f$ \tau_q \f$ is stored in tauq(i) and \f$ \tau_p \f$ in taup(i).
 ///
 /// If m < n,
-///
-///     \f[ Q = H(1) H(2) . . . H(m-1) \f] and
-///     \f[ P = G(1) G(2) . . . G(m)   \f]
+/// \[
+///     Q = H(1) H(2) . . . H(m-1)
+/// \]
+/// and
+/// \[
+///     P = G(1) G(2) . . . G(m)
+/// \]
 ///
 /// Each H(i) and G(i) has the form:
-///
-///     \f[ H(i) = I - \tau_q v v^H \f]  and
-///     \f[ G(i) = I - \tau_p u u^H \f]
+/// \[
+///     H(i) = I - \tau_q v v^H
+/// \]
+/// and
+/// \[
+///     G(i) = I - \tau_p u u^H
+/// \]
 ///
 /// where \f$ \tau_q \f$ and \f$ \tau_p \f$ are scalars, and v and u are
 /// vectors; v(1:i) = 0, v(i+1) = 1, and v(i+2:m) is stored on exit in

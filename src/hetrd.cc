@@ -129,12 +129,14 @@ int64_t hetrd(
 ///
 /// If uplo = Upper, the matrix Q is represented as a product of elementary
 /// reflectors
-///
-///     \f[ Q = H(n-1) . . . H(2) H(1). \f]
+/// \[
+///     Q = H(n-1) . . . H(2) H(1).
+/// \]
 ///
 /// Each H(i) has the form
-///
-///     \f[ H(i) = I - \tau v v^H \f]
+/// \[
+///     H(i) = I - \tau v v^H
+/// \]
 ///
 /// where \f$ \tau \f$ is a scalar, and v is a vector with
 /// v(i+1:n) = 0 and v(i) = 1; v(1:i-1) is stored on exit in
@@ -142,12 +144,14 @@ int64_t hetrd(
 ///
 /// If uplo = Lower, the matrix Q is represented as a product of elementary
 /// reflectors
-///
-///     \f[ Q = H(1) H(2) . . . H(n-1). \f]
+/// \[
+///     Q = H(1) H(2) . . . H(n-1).
+/// \]
 ///
 /// Each H(i) has the form
-///
-///     \f[ H(i) = I - \tau v v^H \f]
+/// \[
+///     H(i) = I - \tau v v^H
+/// \]
 ///
 /// where \f$ \tau \f$ is a scalar, and v is a vector with
 /// v(1:i) = 0 and v(i+1) = 1; v(i+2:n) is stored on exit in A(i+2:n,i),

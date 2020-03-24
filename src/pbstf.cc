@@ -104,14 +104,13 @@ int64_t pbstf(
 /// The factorization has the form \f$ A = S^H S \f$ where S is a band matrix
 /// of the same bandwidth as A and the following structure:
 /**
-    \f[
+    \[
         S = \left[ \begin{array}{cc}
             U  &     \\
             M  &  L  \\
         \end{array} \right],
-    \f]
+    \]
 */
-///
 /// where U is upper triangular of order m = (n+kd)/2, and L is lower
 /// triangular of order n-m.
 ///

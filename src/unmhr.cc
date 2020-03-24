@@ -81,8 +81,9 @@ int64_t unmhr(
 /// where Q is a unitary matrix of order m if
 /// side = Left and order n if side = Right. Q is defined as the product of
 /// ihi-ilo elementary reflectors, as returned by `lapack::gehrd`:
-///
-///     \f[ Q = H(ilo) H(ilo+1) \dots H(ihi-1). \f]
+/// \[
+///     Q = H(ilo) H(ilo+1) \dots H(ihi-1).
+/// \]
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.

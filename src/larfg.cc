@@ -80,7 +80,7 @@ void larfg(
 // -----------------------------------------------------------------------------
 /// Generates a elementary reflector H of order n, such that:
 /**
-    \f[
+    \[
         H^H
         \left[ \begin{array}{c}
             \alpha  \\
@@ -93,13 +93,12 @@ void larfg(
         \end{array} \right];
         \quad
         H^H H = I.
-    \f]
+    \]
 */
-///
 /// where \f$ \alpha \f$ and \f$ \beta \f$ are scalars, with \f$ \beta \f$ real,
 /// and x is an (n-1)-element vector. H is represented in the form
 /**
-    \f[
+    \[
         H = I - \tau
         \left[ \begin{array}{c}
             1  \\
@@ -108,9 +107,8 @@ void larfg(
         \left[ \begin{array}{rc}
             1  &  v^H
         \end{array} \right],
-    \f]
+    \]
 */
-///
 /// where \f$ \tau \f$ is a scalar and v is a (n-1)-element
 /// vector. For complex H, note that H is not hermitian.
 ///

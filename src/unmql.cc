@@ -78,8 +78,9 @@ int64_t unmql(
 ///
 /// where Q is a unitary matrix defined as the product of k
 /// elementary reflectors, as returned by `lapack::geqlf`:
-///
-///     \f[ Q = H(k) \dots H(2) H(1). \f]
+/// \[
+///     Q = H(k) \dots H(2) H(1).
+/// \]
 ///
 /// Q is of order m if side = Left and of order n if side = Right.
 ///

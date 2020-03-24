@@ -199,7 +199,9 @@ int64_t hseqr(
 // -----------------------------------------------------------------------------
 /// Computes the eigenvalues of a Hessenberg matrix H
 /// and, optionally, the matrices T and Z from the Schur decomposition
-///     \f[ H = Z T Z^H, \f]
+/// \[
+///     H = Z T Z^H,
+/// \]
 /// where T is an upper triangular matrix (the
 /// Schur form), and Z is the unitary matrix of Schur vectors.
 ///

@@ -303,8 +303,8 @@ int64_t bbcsd(
 
 /// Computes the CS decomposition of a unitary matrix in
 /// bidiagonal-block form,
-///
-/** \f[
+/**
+    \[
         X =
         \left[ \begin{array}{c|ccc}
             B_{11}  &  B_{12}  &   0  &  0  \\
@@ -331,7 +331,7 @@ int64_t bbcsd(
             \hline
                    &  V_{2}  \\
         \end{array} \right]^H
-    \f]
+    \]
 */
 ///
 /// X is m-by-m, its top-left block is p-by-q, and q must be no larger

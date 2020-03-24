@@ -215,8 +215,9 @@ int64_t gesdd(
 /// Computes the singular value decomposition (SVD) of a
 /// m-by-n matrix A, optionally computing the left and/or right singular
 /// vectors, by using divide-and-conquer method. The SVD is written
-///
-///     \f[ A = U \Sigma V^H \f]
+/// \[
+///     A = U \Sigma V^H
+/// \]
 ///
 /// where \f$ \Sigma \f$ is an m-by-n matrix which is zero except for its
 /// min(m,n) diagonal elements, U is an m-by-m unitary matrix, and

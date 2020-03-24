@@ -17,6 +17,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup tpqrt
 int64_t tpqrt(
     int64_t m, int64_t n, int64_t l, int64_t nb,
     float* A, int64_t lda,
@@ -58,6 +59,7 @@ int64_t tpqrt(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup tpqrt
 int64_t tpqrt(
     int64_t m, int64_t n, int64_t l, int64_t nb,
     double* A, int64_t lda,
@@ -99,6 +101,7 @@ int64_t tpqrt(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup tpqrt
 int64_t tpqrt(
     int64_t m, int64_t n, int64_t l, int64_t nb,
     std::complex<float>* A, int64_t lda,
@@ -140,6 +143,7 @@ int64_t tpqrt(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup tpqrt
 int64_t tpqrt(
     int64_t m, int64_t n, int64_t l, int64_t nb,
     std::complex<double>* A, int64_t lda,

@@ -114,8 +114,8 @@ int64_t posv(
 /// are n-by-nrhs matrices.
 ///
 /// The Cholesky decomposition is used to factor A as
-///     $A = U^H U$, if uplo = Upper, or
-///     $A = L L^H$, if uplo = Lower,
+///     $A = U^H U$ if uplo = Upper, or
+///     $A = L L^H$ if uplo = Lower,
 /// where U is an upper triangular matrix and L is a lower triangular
 /// matrix. The factored form of A is then used to solve the system of
 /// equations $A X = B$.

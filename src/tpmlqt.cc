@@ -17,7 +17,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
-/// @ingroup oubleOTHERcomputational
+/// @ingroup tplqt
 int64_t tpmlqt(
     lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k, int64_t l, int64_t mb,
     float const* V, int64_t ldv,
@@ -72,7 +72,7 @@ int64_t tpmlqt(
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup oubleOTHERcomputational
+/// @ingroup tplqt
 int64_t tpmlqt(
     lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k, int64_t l, int64_t mb,
     double const* V, int64_t ldv,
@@ -127,7 +127,7 @@ int64_t tpmlqt(
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup oubleOTHERcomputational
+/// @ingroup tplqt
 int64_t tpmlqt(
     lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k, int64_t l, int64_t mb,
     std::complex<float> const* V, int64_t ldv,
@@ -288,7 +288,7 @@ int64_t tpmlqt(
 ///
 ///     If trans=ConjTrans and side=Right, C is on exit replaced with C * Q^H.
 ///
-/// @ingroup oubleOTHERcomputational
+/// @ingroup tplqt
 int64_t tpmlqt(
     lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k, int64_t l, int64_t mb,
     std::complex<double> const* V, int64_t ldv,

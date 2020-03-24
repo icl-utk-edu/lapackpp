@@ -15,7 +15,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
-/// @ingroup syev_computational
+/// @ingroup heev_computational
 int64_t orgtr(
     lapack::Uplo uplo, int64_t n,
     float* A, int64_t lda,
@@ -60,7 +60,7 @@ int64_t orgtr(
 
 // -----------------------------------------------------------------------------
 /// @see lapack::ungtr
-/// @ingroup syev_computational
+/// @ingroup heev_computational
 int64_t orgtr(
     lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,

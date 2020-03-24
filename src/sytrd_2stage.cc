@@ -17,7 +17,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
-/// @ingroup syev_computational
+/// @ingroup heev_computational
 int64_t sytrd_2stage(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     float* A, int64_t lda,
@@ -74,7 +74,7 @@ int64_t sytrd_2stage(
 
 // -----------------------------------------------------------------------------
 /// @see lapack::hetrd_2stage
-/// @ingroup syev_computational
+/// @ingroup heev_computational
 int64_t sytrd_2stage(
     lapack::Job jobz, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,

@@ -206,8 +206,8 @@ int64_t sysv_aa(
 /// matrices.
 ///
 /// Aasen's algorithm is used to factor A as
-///     $A = U T U^T$, if uplo = Upper, or
-///     $A = L T L^T$, if uplo = Lower,
+///     $A = U T U^T$ if uplo = Upper, or
+///     $A = L T L^T$ if uplo = Lower,
 /// where U (or L) is a product of permutation and unit upper (lower)
 /// triangular matrices, and T is symmetric tridiagonal. The factored
 /// form of A is then used to solve the system of equations $A X = B$.

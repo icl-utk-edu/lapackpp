@@ -78,6 +78,7 @@ void lassq(
 }
 
 // -----------------------------------------------------------------------------
+/// Compute sum-of-squares without unnecessary overflow.
 /// Returns the values scl and ssq such that
 /// \[
 ///     scl^2 ssq = x_1^2 + \dots + x_n^2 + scale^2 sumsq,

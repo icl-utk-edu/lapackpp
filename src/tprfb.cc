@@ -168,7 +168,6 @@ void tprfb(
 /// conjugate transpose $H^H$ to a complex matrix C, which is composed of two
 /// blocks A and B, either from the left or right.
 ///
-///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
 ///
@@ -179,7 +178,7 @@ void tprfb(
 ///     - lapack::Side::Right: apply $H$ or $H^H$ from the Right
 ///
 /// @param[in] trans
-///     - lapack::Op::NoTrans:   apply $H    (No transpose)
+///     - lapack::Op::NoTrans:   apply $H$   (No transpose)
 ///     - lapack::Op::ConjTrans: apply $H^H$ (Conjugate transpose)
 ///
 /// @param[in] direction
@@ -239,7 +238,7 @@ void tprfb(
 ///     If side = Left,  the k-by-n matrix A, stored in an lda-by-n array.
 ///     If side = Right, the n-by-k matrix A, stored in an lda-by-k array.
 ///     On exit, A is overwritten by the corresponding block of
-///     H*C or H^H*C or C*H or C*H^H. See Further Details.
+///     $HC$ or $H^H C$ or $CH$ or $CH^H$. See Further Details.
 ///
 /// @param[in] lda
 ///     The leading dimension of the array A.
@@ -269,8 +268,8 @@ void tprfb(
 ///
 /// If side = Left and direction = Forward,
 /// \[
-///     $C = \left[ \begin{array}{c}
-///        A
+///     C = \left[ \begin{array}{c}
+///         A
 ///         B
 ///     \end{array} \right].
 /// \]

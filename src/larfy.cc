@@ -105,9 +105,9 @@ void larfy(
 /// to an n x n Hermitian matrix C, from both the left and the right.
 ///
 /// H is represented in the form
-///
-///     \[ H = I - \tau v v^H \]
-///
+/// \[
+///     H = I - \tau v v^H
+/// \]
 /// where $\tau$ is a scalar and $v$ is a vector.
 ///
 /// If $tau$ is zero, then $H$ is taken to be the unit matrix.

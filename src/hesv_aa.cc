@@ -84,8 +84,8 @@ int64_t hesv_aa(
 /// matrices.
 ///
 /// Aasen's algorithm is used to factor A as
-///     $A = U T U^H$, if uplo = Upper, or
-///     $A = L T L^H$, if uplo = Lower,
+///     $A = U T U^H$ if uplo = Upper, or
+///     $A = L T L^H$ if uplo = Lower,
 /// where U (or L) is a product of permutation and unit upper (lower)
 /// triangular matrices, and T is Hermitian tridiagonal. The factored form
 /// of A is then used to solve the system of equations $A X = B$.

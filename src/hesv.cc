@@ -82,8 +82,8 @@ int64_t hesv(
 /// matrices.
 ///
 /// The diagonal pivoting method is used to factor A as
-///     $A = U D U^H$, if uplo = Upper, or
-///     $A = L D L^H$, if uplo = Lower,
+///     $A = U D U^H$ if uplo = Upper, or
+///     $A = L D L^H$ if uplo = Lower,
 /// where U (or L) is a product of permutation and unit upper (lower)
 /// triangular matrices, and D is Hermitian and block diagonal with
 /// 1-by-1 and 2-by-2 diagonal blocks. The factored form of A is then

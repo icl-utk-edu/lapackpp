@@ -217,8 +217,8 @@ int64_t sysv_rk(
 ///
 /// The bounded Bunch-Kaufman (rook) diagonal pivoting method is used
 /// to factor A as
-///     $A = P U D U^T P^T$, if uplo = Upper, or
-///     $A = P L D L^T P^T$, if uplo = Lower,
+///     $A = P U D U^T P^T$ if uplo = Upper, or
+///     $A = P L D L^T P^T$ if uplo = Lower,
 /// where U (or L) is unit upper (or lower) triangular matrix,
 /// $U^T$ (or $L^T$) is the transpose of U (or L), P is a permutation
 /// matrix, $P^T$ is the transpose of P, and D is symmetric and block

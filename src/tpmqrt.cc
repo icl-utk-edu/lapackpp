@@ -17,7 +17,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
-/// @ingroup realOTHERcomputational
+/// @ingroup tpqrt
 int64_t tpmqrt(
     lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k, int64_t l, int64_t nb,
     float const* V, int64_t ldv,
@@ -72,7 +72,7 @@ int64_t tpmqrt(
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup oubleOTHERcomputational
+/// @ingroup tpqrt
 int64_t tpmqrt(
     lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k, int64_t l, int64_t nb,
     double const* V, int64_t ldv,
@@ -127,7 +127,7 @@ int64_t tpmqrt(
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup omplexOTHERcomputational
+/// @ingroup tpqrt
 int64_t tpmqrt(
     lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k, int64_t l, int64_t nb,
     std::complex<float> const* V, int64_t ldv,
@@ -262,44 +262,47 @@ int64_t tpmqrt(
 // -----------------------------------------------------------------------------
 /// @par Further Details
 ///
-///     The columns of the pentagonal matrix V contain the elementary reflectors
-///     H(1), H(2), ..., H(k); V is composed of a rectangular block V1 and a
-///     trapezoidal block V2:
+/// The columns of the pentagonal matrix V contain the elementary reflectors
+/// H(1), H(2), ..., H(k); V is composed of a rectangular block V1 and a
+/// trapezoidal block V2:
+/// \[
+///     V = \left[ \begin{array}{c}
+///         V1
+///         V2
+///     \end{array} \right].
+/// \]
 ///
-///         V = [V1]
-///         [V2].
+/// The size of the trapezoidal block V2 is determined by the parameter l,
+/// where 0 <= l <= k; V2 is upper trapezoidal, consisting of the first l
+/// rows of a k-by-k upper triangular matrix.  If l=k, V2 is upper triangular;
+/// if l=0, there is no trapezoidal block, hence V = V1 is rectangular.
 ///
-///     The size of the trapezoidal block V2 is determined by the parameter l,
-///     where 0 <= l <= k; V2 is upper trapezoidal, consisting of the first l
-///     rows of a k-by-k upper triangular matrix.  If l=k, V2 is upper triangular;
-///     if l=0, there is no trapezoidal block, hence V = V1 is rectangular.
+/// If side = Left:
+/// \[
+///     C = \left[ \begin{array}{c}
+///         A
+///         B
+//      \end{array} \right]
+/// \]
+/// where A is k-by-n,  B is m-by-n and V is m-by-k.
 ///
-///     If side = Left:
-///     \[
-///         C = \left[ \begin{array}{c}
-///             A
-///             B
-//          \end{array} \right]
-///     \]
-///     where A is k-by-n,  B is m-by-n and V is m-by-k.
+/// If side = Right:
+/// \[
+///     C = [A, B]
+/// \]
+/// where A is m-by-k, B is m-by-n and V is n-by-k.
 ///
-///     If side = Right:
-///     \[
-///         C = [A, B]
-///     \]
-///     where A is m-by-k, B is m-by-n and V is n-by-k.
+/// The complex orthogonal matrix Q is formed from V and T.
 ///
-///     The complex orthogonal matrix Q is formed from V and T.
+/// If trans=NoTrans and side=Left,    on exit C is replaced with $QC$.
 ///
-///     If trans=NoTrans and side=Left,    on exit C is replaced with $QC$.
+/// If trans=ConjTrans and side=Left,  on exit C is replaced with $Q^H C$.
 ///
-///     If trans=ConjTrans and side=Left,  on exit C is replaced with $Q^H C$.
+/// If trans=NoTrans and side=Right,   on exit C is replaced with $C Q$.
 ///
-///     If trans=NoTrans and side=Right,   on exit C is replaced with $C Q$.
+/// If trans=ConjTrans and side=Right, on exit C is replaced with $C Q^H$.
 ///
-///     If trans=ConjTrans and side=Right, on exit C is replaced with $C Q^H$.
-///
-/// @ingroup omplex16OTHERcomputational
+/// @ingroup tpqrt
 int64_t tpmqrt(
     lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k, int64_t l, int64_t nb,
     std::complex<double> const* V, int64_t ldv,

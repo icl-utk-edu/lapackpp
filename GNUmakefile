@@ -256,7 +256,14 @@ $(pkg):
 
 #-------------------------------------------------------------------------------
 # documentation
-docs:
+docs: docs/html/index.html
+
+doc_config_files = \
+	docs/doxygen/DoxygenLayout.xml \
+	docs/doxygen/doxyfile.conf \
+	docs/doxygen/groups.dox
+
+docs/html/index.html: $(lib_src) $(tester_src) $(doc_config_files)
 	doxygen docs/doxygen/doxyfile.conf
 	@echo ========================================
 	cat docs/doxygen/errors.txt

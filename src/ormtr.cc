@@ -15,7 +15,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
-/// @ingroup syev_computational
+/// @ingroup heev_computational
 int64_t ormtr(
     lapack::Side side, lapack::Uplo uplo, lapack::Op trans, int64_t m, int64_t n,
     float const* A, int64_t lda,
@@ -73,7 +73,7 @@ int64_t ormtr(
 
 // -----------------------------------------------------------------------------
 /// @see lapack::unmtr
-/// @ingroup syev_computational
+/// @ingroup heev_computational
 int64_t ormtr(
     lapack::Side side, lapack::Uplo uplo, lapack::Op trans, int64_t m, int64_t n,
     double const* A, int64_t lda,

@@ -2,6 +2,7 @@
 
     ----------------------------------------------------------------------------
     @defgroup group_solve Linear solve, AX = B
+    @brief Solve $AX = B$
     @{
         @defgroup gesv General matrix: LU
         @defgroup gbsv General matrix: LU: banded
@@ -18,6 +19,7 @@
 
     ----------------------------------------------------------------------------
     @defgroup group_solve_computational Linear solve: computational routines
+    @brief Factor $LU$, $LL^H$, $LDL^H$; solve; inverse; condition number estimate
     @{
         @defgroup gesv_computational General matrix: LU
         @defgroup gbsv_computational General matrix: LU: banded
@@ -45,6 +47,8 @@
     @defgroup group_gels Least squares
     @{
         @defgroup gels Standard, AX = B
+        @brief Solve $AX \approx B$
+
         @defgroup ggls Constrained
     @}
 
@@ -52,8 +56,10 @@
     @defgroup group_unitary Orthogonal/unitary factorizations (QR, etc.)
     @{
         @defgroup geqrf A = QR factorization
+        @defgroup tpqrt A = QR factorization, triangle-pentagonal tiles
         @defgroup geqpf AP = QR factorization with pivoting
         @defgroup gelqf A = LQ factorization
+        @defgroup tplqt A = LQ factorization, triangle-pentagonal tiles
         @defgroup geqlf A = QL factorization
         @defgroup gerqf A = RQ factorization
         @defgroup tzrzf A = RZ factorization
@@ -65,21 +71,21 @@
     ----------------------------------------------------------------------------
     @defgroup group_symmetric_eigen Symmetric/Hermitian eigenvalues
     @{
-        @defgroup heev Standard, AV = VW
-        @defgroup hpev Standard, AV = VW: packed
-        @defgroup hbev Standard, AV = VW: banded
-        @defgroup htev Standard, AV = VW: tridiagonal
-        @defgroup hygv Generalized, AV = BVW, etc.
-        @defgroup hpgv Generalized, AV = BVW, etc.: packed
-        @defgroup hbgv Generalized, AV = BVW, etc.: banded
+        @defgroup heev Standard, AV = V Lambda
+        @defgroup hpev Standard, AV = V Lambda: packed
+        @defgroup hbev Standard, AV = V Lambda: banded
+        @defgroup htev Standard, AV = V Lambda: tridiagonal
+        @defgroup hygv Generalized, AV = BV Lambda, etc.
+        @defgroup hpgv Generalized, AV = BV Lambda, etc.: packed
+        @defgroup hbgv Generalized, AV = BV Lambda, etc.: banded
         @defgroup heev_computational Computational routines
     @}
 
     ----------------------------------------------------------------------------
     @defgroup group_nonsymmetric_eigen Non-symmetric eigenvalues
     @{
-        @defgroup geev Standard, AV = VW
-        @defgroup ggev Generalized, AV = BVW
+        @defgroup geev Standard, AV = V Lambda
+        @defgroup ggev Generalized, AV = BV Lambda
         @defgroup gees Schur form, A = ZTZ^H
         @defgroup gges Generalized Schur form
         @defgroup geev_computational Computational routines
@@ -88,8 +94,8 @@
     ----------------------------------------------------------------------------
     @defgroup group_svd Singular Value Decomposition (SVD)
     @{
-        @defgroup gesvd Standard, A = USV^H
-        @defgroup bdsvd Standard, A = USV^H, bidiagonal
+        @defgroup gesvd Standard, A = U Sigma V^H
+        @defgroup bdsvd Standard, A = U Sigma V^H, bidiagonal
         @defgroup ggsvd Generalized
         @defgroup gesvd_computational Computational routines
     @}

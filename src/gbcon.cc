@@ -200,7 +200,7 @@ int64_t gbcon(
 ///     The reciprocal of the condition number of the matrix A,
 ///     computed as rcond = 1/(norm(A) * norm(inv(A))).
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 /// @ingroup gbsv_computational
 int64_t gbcon(

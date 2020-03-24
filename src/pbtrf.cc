@@ -135,8 +135,8 @@ int64_t pbtrf(
 /// @param[in] ldab
 ///     The leading dimension of the array AB. ldab >= kd+1.
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i, the leading minor of order i is not
+/// @return = 0: successful exit
+/// @return > 0: if return value = i, the leading minor of order i is not
 ///     positive definite, and the factorization could not be
 ///     completed.
 ///

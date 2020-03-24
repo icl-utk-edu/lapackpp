@@ -115,8 +115,8 @@ int64_t potri(
 /// @param[in] lda
 ///     The leading dimension of the array A. lda >= max(1,n).
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i, the (i,i) element of the factor U or L is
+/// @return = 0: successful exit
+/// @return > 0: if return value = i, the (i,i) element of the factor U or L is
 ///     zero, and the inverse could not be computed.
 ///
 /// @ingroup posv_computational

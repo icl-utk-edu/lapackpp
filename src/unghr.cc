@@ -99,7 +99,7 @@ int64_t unghr(
 ///     tau(i) must contain the scalar factor of the elementary
 ///     reflector H(i), as returned by `lapack::gehrd`.
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 /// @ingroup geev_computational
 int64_t unghr(

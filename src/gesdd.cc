@@ -315,8 +315,8 @@ int64_t gesdd(
 ///     - if jobz = AllVec or (jobz = OverwriteVec and m >= n), ldvt >= n;
 ///     - if jobz = SomeVec, ldvt >= min(m,n).
 ///
-/// @retval = 0: successful exit.
-/// @retval > 0: The updating process of `lapack::bdsdc` did not converge.
+/// @return = 0: successful exit.
+/// @return > 0: The updating process of `lapack::bdsdc` did not converge.
 ///
 /// @ingroup gesvd
 int64_t gesdd(

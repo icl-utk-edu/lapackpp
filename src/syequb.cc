@@ -156,8 +156,8 @@ int64_t syequb(
 ///     very close to overflow or very close to underflow, the
 ///     matrix should be scaled.
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i, the i-th diagonal element is nonpositive.
+/// @return = 0: successful exit
+/// @return > 0: if return value = i, the i-th diagonal element is nonpositive.
 ///
 /// @ingroup sysv_computational
 int64_t syequb(

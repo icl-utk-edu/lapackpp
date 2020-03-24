@@ -134,7 +134,7 @@ int64_t hecon_rk(
 ///     computed as rcond = 1/(anorm * ainv_norm), where ainv_norm is an
 ///     estimate of the 1-norm of $A^{-1}$ computed in this routine.
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 /// @ingroup hesv_rk_computational
 int64_t hecon_rk(

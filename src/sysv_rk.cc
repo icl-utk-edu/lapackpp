@@ -303,8 +303,8 @@ int64_t sysv_rk(
 /// @param[in] ldb
 ///     The leading dimension of the array B. ldb >= max(1,n).
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: If return value = k, the matrix A is singular, because:
+/// @return = 0: successful exit
+/// @return > 0: If return value = k, the matrix A is singular, because:
 ///     If uplo = Upper: column k in the upper
 ///     triangular part of A contains all zeros.
 ///     If uplo = Lower: column k in the lower

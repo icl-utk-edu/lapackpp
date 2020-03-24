@@ -363,14 +363,14 @@ int64_t gtsvx(
 ///     vector X(j) (i.e., the smallest relative change in
 ///     any element of A or B that makes X(j) an exact solution).
 ///
-/// @retval = 0: successful exit
-/// @retval > 0 and <= n: if return value = i,
+/// @return = 0: successful exit
+/// @return > 0 and <= n: if return value = i,
 ///     U(i,i) is exactly zero. The factorization
 ///     has not been completed unless i = n, but the
 ///     factor U is exactly singular, so the solution
 ///     and error bounds could not be computed.
 ///     rcond = 0 is returned.
-/// @retval = n+1: U is nonsingular, but rcond is less than machine
+/// @return = n+1: U is nonsingular, but rcond is less than machine
 ///     precision, meaning that the matrix is singular
 ///     to working precision. Nevertheless, the
 ///     solution and error bounds are computed because

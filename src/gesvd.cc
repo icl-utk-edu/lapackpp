@@ -294,8 +294,8 @@ int64_t gesvd(
 ///     - if jobvt = AllVec, ldvt >= n;
 ///     - if jobvt = SomeVec, ldvt >= min(m,n).
 ///
-/// @retval = 0: successful exit.
-/// @retval > 0: `lapack::bdsqr` did not converge; return value specifies how
+/// @return = 0: successful exit.
+/// @return > 0: `lapack::bdsqr` did not converge; return value specifies how
 ///              many superdiagonals of the intermediate bidiagonal form B
 ///              did not converge to zero.
 ///

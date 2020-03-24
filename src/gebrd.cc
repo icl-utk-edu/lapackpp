@@ -236,7 +236,7 @@ int64_t gebrd(
 ///     The scalar factors of the elementary reflectors which
 ///     represent the unitary matrix P. See Further Details.
 ///
-/// @retval = 0: successful exit.
+/// @return = 0: successful exit.
 ///
 // -----------------------------------------------------------------------------
 /// @par Further Details

@@ -106,7 +106,7 @@ int64_t hetrs2(
 /// @param[in] ldb
 ///     The leading dimension of the array B. ldb >= max(1,n).
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 /// @ingroup hesv_computational
 int64_t hetrs2(

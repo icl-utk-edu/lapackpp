@@ -110,8 +110,8 @@ int64_t pptri(
 ///     - On exit, the upper or lower triangle of the (Hermitian)
 ///     inverse of A, overwriting the input factor U or L.
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i, the (i,i) element of the factor U or L is
+/// @return = 0: successful exit
+/// @return > 0: if return value = i, the (i,i) element of the factor U or L is
 ///     zero, and the inverse could not be computed.
 ///
 /// @ingroup ppsv_computational

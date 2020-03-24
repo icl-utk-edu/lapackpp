@@ -179,7 +179,7 @@ int64_t lascl(
 ///     - if matrixtype = UpperBand, lda >= ku+1;
 ///     - if matrixtype = Band, lda >= 2*kl+ku+1.
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 /// @ingroup auxiliary
 int64_t lascl(

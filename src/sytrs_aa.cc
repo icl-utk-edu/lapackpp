@@ -193,7 +193,7 @@ int64_t sytrs_aa(
 /// @param[in] ldb
 ///     The leading dimension of the array B. ldb >= max(1,n).
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 /// @ingroup sysv_aa_computational
 int64_t sytrs_aa(

@@ -185,8 +185,8 @@ int64_t gesv(
 /// @param[in] ldb
 ///     The leading dimension of the array B. ldb >= max(1,n).
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i, U(i,i) is exactly zero. The factorization
+/// @return = 0: successful exit
+/// @return > 0: if return value = i, U(i,i) is exactly zero. The factorization
 ///              has been completed, but the factor U is exactly
 ///              singular, so the solution could not be computed.
 ///

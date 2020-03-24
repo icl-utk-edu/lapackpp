@@ -110,8 +110,8 @@ int64_t hetri2(
 ///     Details of the interchanges and the block structure of D
 ///     as determined by `lapack::hetrf`.
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i, D(i,i) = 0; the matrix is singular and its
+/// @return = 0: successful exit
+/// @return > 0: if return value = i, D(i,i) = 0; the matrix is singular and its
 ///     inverse could not be computed.
 ///
 /// @ingroup hesv_computational

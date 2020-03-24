@@ -201,7 +201,7 @@ int64_t gtcon(
 ///     computed as rcond = 1/(anorm * ainv_norm), where ainv_norm is an
 ///     estimate of the 1-norm or infinity-norm of $A^{-1}$ computed in this routine.
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 /// @ingroup gtsv_computational
 int64_t gtcon(

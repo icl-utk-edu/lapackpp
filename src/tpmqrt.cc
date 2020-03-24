@@ -257,7 +257,7 @@ int64_t tpmqrt(
 ///     The leading dimension of the array B.
 ///     ldb >= max(1,m).
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 // -----------------------------------------------------------------------------
 /// @par Further Details

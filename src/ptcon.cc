@@ -137,7 +137,7 @@ int64_t ptcon(
 ///     computed as rcond = 1/(anorm * ainv_norm), where ainv_norm is the
 ///     1-norm of $A^{-1}$ computed in this routine.
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 // -----------------------------------------------------------------------------
 /// @par Further Details

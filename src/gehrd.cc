@@ -193,7 +193,7 @@ int64_t gehrd(
 ///     Details). Elements 1:ilo-1 and ihi:n-1 of tau are set to
 ///     zero.
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 // -----------------------------------------------------------------------------
 /// @par Further Details

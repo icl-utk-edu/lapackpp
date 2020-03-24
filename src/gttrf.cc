@@ -185,8 +185,8 @@ int64_t gttrf(
 ///     i or i+1; ipiv(i) = i indicates a row interchange was not
 ///     required.
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i, U(i,i) is exactly zero. The factorization
+/// @return = 0: successful exit
+/// @return > 0: if return value = i, U(i,i) is exactly zero. The factorization
 ///     has been completed, but the factor U is exactly
 ///     singular, and division by zero will occur if it is used
 ///     to solve a system of equations.

@@ -98,7 +98,7 @@ int64_t unglq(
 ///     tau(i) must contain the scalar factor of the elementary
 ///     reflector H(i), as returned by `lapack::gelqf`.
 ///
-/// @retval = 0: successful exit;
+/// @return = 0: successful exit;
 ///
 /// @ingroup gelqf
 int64_t unglq(

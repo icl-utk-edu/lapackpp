@@ -196,8 +196,8 @@ int64_t getrf2(
 ///     The pivot indices; for 1 <= i <= min(m,n), row i of the
 ///     matrix was interchanged with row ipiv(i).
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i, U(i,i) is exactly zero. The factorization
+/// @return = 0: successful exit
+/// @return > 0: if return value = i, U(i,i) is exactly zero. The factorization
 ///     has been completed, but the factor U is exactly
 ///     singular, and division by zero will occur if it is used
 ///     to solve a system of equations.

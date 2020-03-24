@@ -152,7 +152,7 @@ int64_t hetrd_2stage(
 ///     - If jobz=NoVec, lhous2 = max(1, 4*n);
 ///     - if jobz=Vec, option not yet available.
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 // -----------------------------------------------------------------------------
 /// @par Further Details

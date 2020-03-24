@@ -93,7 +93,7 @@ int64_t ungtr(
 ///     tau(i) must contain the scalar factor of the elementary
 ///     reflector H(i), as returned by `lapack::hetrd`.
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 /// @ingroup heev_computational
 int64_t ungtr(

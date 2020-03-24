@@ -125,7 +125,7 @@ int64_t ungbr(
 ///     - If vect = Q, the vector tau of length min(m,k);
 ///     - if vect = P, the vector tau of length min(n,k).
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 /// @ingroup gesvd_computational
 int64_t ungbr(

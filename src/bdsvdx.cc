@@ -187,12 +187,12 @@ int64_t bdsvdx(
 ///     The leading dimension of the array Z. ldz >= 1, and if
 ///     jobz = Vec, ldz >= max(2,2*n).
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i, then i eigenvectors failed to converge
+/// @return = 0: successful exit
+/// @return > 0: if return value = i, then i eigenvectors failed to converge
 ///              in `lapack::stevx`. The indices of the eigenvectors
 ///              (as returned by `lapack::stevx`) are stored in the
 ///              array iwork.
-/// @retval > n: if return value = 2*n + 1, an internal error occurred.
+/// @return > n: if return value = 2*n + 1, an internal error occurred.
 ///
 /// @ingroup bdsvd
 int64_t bdsvdx(

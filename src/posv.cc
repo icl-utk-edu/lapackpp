@@ -162,8 +162,8 @@ int64_t posv(
 /// @param[in] ldb
 ///     The leading dimension of the array B. ldb >= max(1,n).
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i, the leading minor of order i of A is not
+/// @return = 0: successful exit
+/// @return > 0: if return value = i, the leading minor of order i of A is not
 ///              positive definite, so the factorization could not be
 ///              completed, and the solution has not been computed.
 ///

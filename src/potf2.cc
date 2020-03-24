@@ -130,8 +130,8 @@ int64_t potf2(
 /// @param[in] lda
 ///     The leading dimension of the array A. lda >= max(1,n).
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i, the leading minor of order i is not
+/// @return = 0: successful exit
+/// @return > 0: if return value = i, the leading minor of order i is not
 ///              positive definite, and the factorization could not be
 ///              completed.
 ///

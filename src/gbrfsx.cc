@@ -522,14 +522,14 @@ int64_t gbrfsx(
 ///       - 0.0 is false
 ///       - Default: 1.0 (attempt componentwise convergence)
 ///
-/// @retval = 0: Successful exit.
+/// @return = 0: Successful exit.
 ///     The solution to every right-hand side is guaranteed.
-/// @retval > 0 and <= n: if return value = i,
+/// @return > 0 and <= n: if return value = i,
 ///     U(i,i) is exactly zero. The factorization
 ///     has been completed, but the factor U is exactly singular, so
 ///     the solution and error bounds could not be computed. rcond = 0
 ///     is returned.
-/// @retval > n: if return value = n+j,
+/// @return > n: if return value = n+j,
 ///     the solution corresponding to the j-th right-hand side is
 ///     not guaranteed. The solutions corresponding to other right-hand
 ///     sides k with k > j may not be guaranteed as well, but

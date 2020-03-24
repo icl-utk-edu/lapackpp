@@ -276,8 +276,8 @@ int64_t gelsd(
 ///     The effective rank of A, i.e., the number of singular values
 ///     which are greater than rcond*S(1).
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: the algorithm for computing the SVD failed to converge;
+/// @return = 0: successful exit
+/// @return > 0: the algorithm for computing the SVD failed to converge;
 ///     if return value = i, i off-diagonal elements of an intermediate
 ///     bidiagonal form did not converge to zero.
 ///

@@ -289,8 +289,8 @@ int64_t hseqr(
 ///     The leading dimension of the array Z. if compz = Vec or
 ///     compz = Update, then ldz >= max(1,n). Otherwize, ldz >= 1.
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i, `hseqr` failed to compute all of
+/// @return = 0: successful exit
+/// @return > 0: if return value = i, `hseqr` failed to compute all of
 ///     the eigenvalues. Elements 1:ilo-1 and i+1:n of W
 ///     contain those eigenvalues which have been
 ///     successfully computed. (Failures are rare.)

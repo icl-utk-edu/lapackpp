@@ -186,7 +186,7 @@ int64_t gerqf(
 ///     The scalar factors of the elementary reflectors (see Further
 ///     Details).
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 // -----------------------------------------------------------------------------
 /// @par Further Details

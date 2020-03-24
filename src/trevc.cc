@@ -280,7 +280,7 @@ int64_t trevc(
 ///     If howmany = All or Backtransform, m is set to n.
 ///     Each selected eigenvector occupies one column.
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 // -----------------------------------------------------------------------------
 /// @par Further Details

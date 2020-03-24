@@ -271,7 +271,7 @@ int64_t syrfs(
 ///     vector X(j) (i.e., the smallest relative change in
 ///     any element of A or B that makes X(j) an exact solution).
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 /// @ingroup sysv_computational
 int64_t syrfs(

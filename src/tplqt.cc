@@ -195,7 +195,7 @@ int64_t tplqt(
 /// @param[in] ldt
 ///     The leading dimension of the array T. ldt >= mb.
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 // -----------------------------------------------------------------------------
 /// @par Further Details

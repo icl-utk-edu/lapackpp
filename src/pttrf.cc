@@ -111,8 +111,8 @@ int64_t pttrf(
 ///     E can also be regarded as the superdiagonal of the unit
 ///     bidiagonal factor U from the $U^H D U$ factorization of A.
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i, the leading minor of order i is not
+/// @return = 0: successful exit
+/// @return > 0: if return value = i, the leading minor of order i is not
 ///     positive definite; if i < n, the factorization could not
 ///     be completed, while if i = n, the factorization was
 ///     completed, but D(n) <= 0.

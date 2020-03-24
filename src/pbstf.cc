@@ -144,8 +144,8 @@ int64_t pbstf(
 /// @param[in] ldab
 ///     The leading dimension of the array AB. ldab >= kd+1.
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i, the factorization could not be completed,
+/// @return = 0: successful exit
+/// @return > 0: if return value = i, the factorization could not be completed,
 ///     because the updated element a(i,i) was negative; the
 ///     matrix A is not positive definite.
 ///

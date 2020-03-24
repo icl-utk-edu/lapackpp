@@ -483,8 +483,8 @@ int64_t bbcsd(
 ///     to converge, then B22E contains the subdiagonal of the
 ///     partially reduced bottom-right block.
 ///
-/// @retval = 0: successful exit.
-/// @retval > 0: did not converge; return value specifies the number
+/// @return = 0: successful exit.
+/// @return > 0: did not converge; return value specifies the number
 ///              of nonzero entries in phi, and B11D, B11E, etc.,
 ///              contain the partially reduced matrix.
 ///

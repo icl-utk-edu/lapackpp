@@ -259,7 +259,7 @@ int64_t gbbrd(
 ///     - If ncc > 0, ldc >= max(1,m);
 ///     - if ncc = 0, ldc >= 1.
 ///
-/// @retval = 0: successful exit.
+/// @return = 0: successful exit.
 ///
 /// @ingroup gesvd_computational
 int64_t gbbrd(

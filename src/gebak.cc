@@ -164,7 +164,7 @@ int64_t gebak(
 /// @param[in] ldv
 ///     The leading dimension of the array V. ldv >= max(1,n).
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 /// @ingroup geev_computational
 int64_t gebak(

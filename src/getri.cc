@@ -196,8 +196,8 @@ int64_t getri(
 ///     The pivot indices from `lapack::getrf`; for 1 <= i <= n, row i of the
 ///     matrix was interchanged with row ipiv(i).
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i, U(i,i) is exactly zero; the matrix is
+/// @return = 0: successful exit
+/// @return > 0: if return value = i, U(i,i) is exactly zero; the matrix is
 ///     singular and its inverse could not be computed.
 ///
 /// @ingroup gesv_computational

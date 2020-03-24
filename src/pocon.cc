@@ -144,7 +144,7 @@ int64_t pocon(
 ///     computed as rcond = 1/(anorm * ainv_norm), where ainv_norm is an
 ///     estimate of the 1-norm of inv(A) computed in this routine.
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 /// @ingroup posv_computational
 int64_t pocon(

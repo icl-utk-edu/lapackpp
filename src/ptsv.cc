@@ -144,8 +144,8 @@ int64_t ptsv(
 /// @param[in] ldb
 ///     The leading dimension of the array B. ldb >= max(1,n).
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i, the leading minor of order i is not
+/// @return = 0: successful exit
+/// @return > 0: if return value = i, the leading minor of order i is not
 ///     positive definite, and the solution has not been
 ///     computed. The factorization has not been completed
 ///     unless i = n.

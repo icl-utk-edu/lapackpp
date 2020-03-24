@@ -167,7 +167,7 @@ int64_t gebal(
 ///     The order in which the interchanges are made is n to ihi+1,
 ///     then 1 to ilo-1.
 ///
-/// @retval = 0: successful exit.
+/// @return = 0: successful exit.
 ///
 // -----------------------------------------------------------------------------
 /// @par Further Details

@@ -170,8 +170,8 @@ int64_t sytri(
 ///     Details of the interchanges and the block structure of D
 ///     as determined by `lapack::sytrf`.
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i, D(i,i) = 0; the matrix is singular and its
+/// @return = 0: successful exit
+/// @return > 0: if return value = i, D(i,i) = 0; the matrix is singular and its
 ///     inverse could not be computed.
 ///
 /// @ingroup sysv_computational

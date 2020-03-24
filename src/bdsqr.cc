@@ -249,8 +249,8 @@ int64_t bdsqr(
 ///     The leading dimension of the array C.
 ///     ldc >= max(1,n) if ncc > 0; ldc >=1 if ncc = 0.
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: the algorithm did not converge; D and E contain the
+/// @return = 0: successful exit
+/// @return > 0: the algorithm did not converge; D and E contain the
 ///              elements of a bidiagonal matrix which is orthogonally
 ///              similar to the input matrix B; if return value = i, i
 ///              elements of E have not converged to zero.

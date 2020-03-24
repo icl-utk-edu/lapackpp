@@ -238,8 +238,8 @@ int64_t sytrf(
 ///     then rows and columns k+1 and -ipiv(k) were interchanged
 ///     and D(k:k+1,k:k+1) is a 2-by-2 diagonal block.
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i,
+/// @return = 0: successful exit
+/// @return > 0: if return value = i,
 ///     D(i,i) is exactly zero. The factorization
 ///     has been completed, but the block diagonal matrix D is
 ///     exactly singular, and division by zero will occur if it

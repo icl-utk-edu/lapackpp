@@ -257,8 +257,8 @@ int64_t gels(
 /// @param[in] ldb
 ///     The leading dimension of the array B. ldb >= max(1,m,n).
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i, the i-th diagonal element of the
+/// @return = 0: successful exit
+/// @return > 0: if return value = i, the i-th diagonal element of the
 ///     triangular factor of A is zero, so that A does not have
 ///     full rank; the least squares solution could not be
 ///     computed.

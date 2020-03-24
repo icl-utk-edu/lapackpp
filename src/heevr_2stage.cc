@@ -290,8 +290,8 @@ int64_t heevr_2stage(
 ///     1:n because of the unitary transformations applied by `lapack::unmtr`.
 ///     Implemented only for range = All or Index and iu - il = n - 1
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: Internal error
+/// @return = 0: successful exit
+/// @return > 0: Internal error
 ///
 // -----------------------------------------------------------------------------
 /// @par Further Details

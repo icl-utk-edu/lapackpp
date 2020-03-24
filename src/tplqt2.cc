@@ -173,7 +173,7 @@ int64_t tplqt2(
 /// @param[in] ldt
 ///     The leading dimension of the array T. ldt >= max(1,m)
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 // -----------------------------------------------------------------------------
 /// @par Further Details

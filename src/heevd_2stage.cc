@@ -124,8 +124,8 @@ int64_t heevd_2stage(
 ///     The vector W of length n.
 ///     If successful, the eigenvalues in ascending order.
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i and jobz = NoVec, then the algorithm failed
+/// @return = 0: successful exit
+/// @return > 0: if return value = i and jobz = NoVec, then the algorithm failed
 ///              to converge; i off-diagonal elements of an intermediate
 ///              tridiagonal form did not converge to zero;
 ///              if return value = i and jobz = Vec, then the algorithm failed

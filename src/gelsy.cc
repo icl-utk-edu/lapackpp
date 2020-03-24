@@ -317,7 +317,7 @@ int64_t gelsy(
 ///     R11. This is the same as the order of the submatrix T11
 ///     in the complete orthogonal factorization of A.
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 /// @ingroup gels
 int64_t gelsy(

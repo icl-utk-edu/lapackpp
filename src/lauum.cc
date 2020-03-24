@@ -126,7 +126,7 @@ int64_t lauum(
 /// @param[in] lda
 ///     The leading dimension of the array A. lda >= max(1,n).
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 /// @ingroup posv_computational
 int64_t lauum(

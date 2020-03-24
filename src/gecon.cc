@@ -147,7 +147,7 @@ int64_t gecon(
 ///     The reciprocal of the condition number of the matrix A,
 ///     computed as rcond = 1/(norm(A) * norm(inv(A))).
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 /// @ingroup gesv_computational
 int64_t gecon(

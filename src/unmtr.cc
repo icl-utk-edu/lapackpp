@@ -132,7 +132,7 @@ int64_t unmtr(
 /// @param[in] ldc
 ///     The leading dimension of the array C. ldc >= max(1,m).
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 /// @ingroup heev_computational
 int64_t unmtr(

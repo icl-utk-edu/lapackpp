@@ -176,8 +176,8 @@ int64_t bdsdc(
 //
 ///     For other values of compq, IQ is not referenced.
 ///
-/// @retval = 0: successful exit.
-/// @retval > 0: The algorithm failed to compute a singular value.
+/// @return = 0: successful exit.
+/// @return > 0: The algorithm failed to compute a singular value.
 ///              The update process of divide and conquer failed.
 ///
 /// @ingroup bdsvd

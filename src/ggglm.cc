@@ -264,12 +264,12 @@ int64_t ggglm(
 ///     The vector Y of length p.
 ///     On exit, X and Y are the solutions of the GLM problem.
 ///
-/// @retval = 0: successful exit.
-/// @retval = 1: the upper triangular factor R associated with A in the
+/// @return = 0: successful exit.
+/// @return = 1: the upper triangular factor R associated with A in the
 ///     generalized QR factorization of the pair (A, B) is
 ///     singular, so that rank(A) < m; the least squares
 ///     solution could not be computed.
-/// @retval = 2: the bottom (n-m) by (n-m) part of the upper trapezoidal
+/// @return = 2: the bottom (n-m) by (n-m) part of the upper trapezoidal
 ///     factor T associated with B in the generalized QR
 ///     factorization of the pair (A, B) is singular, so that
 ///     rank\f$\left( \left[ \begin{array}{c} A \\ B \end{array} \right] \right) < n \f$;

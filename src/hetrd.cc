@@ -122,7 +122,7 @@ int64_t hetrd(
 ///     The vector tau of length n-1.
 ///     The scalar factors of the elementary reflectors (see Further Details).
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 // -----------------------------------------------------------------------------
 /// @par Further Details

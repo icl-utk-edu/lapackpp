@@ -222,8 +222,8 @@ int64_t heevx_2stage(
 ///     indices of the eigenvectors that failed to converge.
 ///     - If jobz = NoVec, then ifail is not referenced.
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i, then i eigenvectors failed to converge.
+/// @return = 0: successful exit
+/// @return > 0: if return value = i, then i eigenvectors failed to converge.
 ///              Their indices are stored in array ifail.
 ///
 // -----------------------------------------------------------------------------

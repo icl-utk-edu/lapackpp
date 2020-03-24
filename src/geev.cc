@@ -294,8 +294,8 @@ int64_t geev(
 ///     The leading dimension of the array VR. ldvr >= 1;
 ///     if jobvr = Vec, ldvr >= n.
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i, the QR algorithm failed to compute all the
+/// @return = 0: successful exit
+/// @return > 0: if return value = i, the QR algorithm failed to compute all the
 ///              eigenvalues, and no eigenvectors have been computed;
 ///              elements i+1:n of W contain eigenvalues which have
 ///              converged.

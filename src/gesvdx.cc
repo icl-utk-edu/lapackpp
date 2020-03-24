@@ -352,10 +352,10 @@ int64_t gesvdx(
 ///     The leading dimension of the array VT. ldvt >= 1;
 ///     if jobvt = Vec, ldvt >= nfound.
 ///
-/// @retval = 0: successful exit
-/// @retval > 0 and <= n: if return value = i, then i eigenvectors failed to
+/// @return = 0: successful exit
+/// @return > 0 and <= n: if return value = i, then i eigenvectors failed to
 ///              converge in `lapack::bdsvdx`/`lapack::stevx`.
-/// @retval > n: if return value = 2*n + 1, an internal error occurred in
+/// @return > n: if return value = 2*n + 1, an internal error occurred in
 ///              `lapack::bdsvdx`
 ///
 /// @ingroup gesvd

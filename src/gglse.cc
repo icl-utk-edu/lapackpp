@@ -261,12 +261,12 @@ int64_t gglse(
 ///     The vector X of length n.
 ///     On exit, X is the solution of the LSE problem.
 ///
-/// @retval = 0: successful exit.
-/// @retval = 1: the upper triangular factor R associated with B in the
+/// @return = 0: successful exit.
+/// @return = 1: the upper triangular factor R associated with B in the
 ///     generalized RQ factorization of the pair (B, A) is
 ///     singular, so that rank(B) < p; the least squares
 ///     solution could not be computed.
-/// @retval = 2: the (n-p) by (n-p) part of the upper trapezoidal factor
+/// @return = 2: the (n-p) by (n-p) part of the upper trapezoidal factor
 ///     T associated with A in the generalized RQ factorization
 ///     of the pair (B, A) is singular, so that
 ///     rank\f$\left( \left[ \begin{array}{c} A \\ B \end{array} \right] \right) < n \f$;

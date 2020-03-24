@@ -194,9 +194,9 @@ int64_t gbequb(
 ///     close to overflow or very close to underflow, the matrix
 ///     should be scaled.
 ///
-/// @retval = 0: successful exit
-/// @retval > 0 and <= m: if return value = i, the i-th row    of A is exactly zero
-/// @retval > m:          if return value = i, the (i-m)-th column of A is exactly zero
+/// @return = 0: successful exit
+/// @return > 0 and <= m: if return value = i, the i-th row    of A is exactly zero
+/// @return > m:          if return value = i, the (i-m)-th column of A is exactly zero
 ///
 /// @ingroup gbsv_computational
 int64_t gbequb(

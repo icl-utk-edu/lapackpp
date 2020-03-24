@@ -120,7 +120,7 @@ int64_t hetrf_aa(
 ///     the row and column k of A were interchanged with the
 ///     row and column ipiv(k).
 ///
-/// @retval = 0: successful exit
+/// @return = 0: successful exit
 ///
 /// @ingroup hesv_aa_computational
 int64_t hetrf_aa(

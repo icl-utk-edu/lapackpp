@@ -110,8 +110,8 @@ int64_t heev_2stage(
 ///     The vector W of length n.
 ///     If successful, the eigenvalues in ascending order.
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i, the algorithm failed to converge; i
+/// @return = 0: successful exit
+/// @return > 0: if return value = i, the algorithm failed to converge; i
 ///              off-diagonal elements of an intermediate tridiagonal
 ///              form did not converge to zero.
 ///

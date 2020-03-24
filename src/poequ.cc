@@ -137,8 +137,8 @@ int64_t poequ(
 ///     close to overflow or very close to underflow, the matrix
 ///     should be scaled.
 ///
-/// @retval = 0: successful exit
-/// @retval > 0: if return value = i, the i-th diagonal element is nonpositive.
+/// @return = 0: successful exit
+/// @return > 0: if return value = i, the i-th diagonal element is nonpositive.
 ///
 /// @ingroup posv_computational
 int64_t poequ(

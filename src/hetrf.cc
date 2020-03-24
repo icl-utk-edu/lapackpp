@@ -72,10 +72,13 @@ int64_t hetrf(
 /// Computes the factorization of a Hermitian matrix A
 /// using the Bunch-Kaufman diagonal pivoting method. The form of the
 /// factorization is
-///
-///     \f$ A = U D U^H \f$ or
-///     \f$ A = L D L^H \f$
-///
+/// \[
+///     A = U D U^H
+/// \]
+/// or
+/// \[
+///     A = L D L^H
+/// \]
 /// where U (or L) is a product of permutation and unit upper (lower)
 /// triangular matrices, and D is Hermitian and block diagonal with
 /// 1-by-1 and 2-by-2 diagonal blocks.
@@ -137,11 +140,11 @@ int64_t hetrf(
 // -----------------------------------------------------------------------------
 /// @par Further Details
 ///
-/// If uplo = Upper, then \f$ A = U D U^H, \f$ where
+/// If uplo = Upper, then $A = U D U^H,$ where
 /// \[
 ///     U = P(n) U(n) \dots P(k) U(k) \dots,
 /// \]
-/// i.e., U is a product of terms \f$ P(k) U(k), \f$ where k decreases from n to
+/// i.e., U is a product of terms $P(k) U(k),$ where k decreases from n to
 /// 1 in steps of 1 or 2, and D is a block diagonal matrix with 1-by-1
 /// and 2-by-2 diagonal blocks D(k).  P(k) is a permutation matrix as
 /// defined by ipiv(k), and U(k) is a unit upper triangular matrix, such
@@ -156,11 +159,11 @@ int64_t hetrf(
 /// If s = 2, the upper triangle of D(k) overwrites A(k-1,k-1), A(k-1,k),
 /// and A(k,k), and v overwrites A(1:k-2,k-1:k).
 ///
-/// If uplo = Lower, then \f$ A = L D L^H, \f$ where
+/// If uplo = Lower, then $A = L D L^H,$ where
 /// \[
 ///     L = P(1) L(1) \dots P(k) L(k) \dots,
 /// \]
-/// i.e., L is a product of terms \f$ P(k) L(k), \f$ where k increases from 1 to
+/// i.e., L is a product of terms $P(k) L(k),$ where k increases from 1 to
 /// n in steps of 1 or 2, and D is a block diagonal matrix with 1-by-1
 /// and 2-by-2 diagonal blocks D(k).  P(k) is a permutation matrix as
 /// defined by ipiv(k), and L(k) is a unit lower triangular matrix, such

@@ -94,10 +94,10 @@ int64_t potrf(
 /// positive definite matrix A.
 ///
 /// The factorization has the form
-///     \f$ A = U^H U, \f$ if uplo = Upper, or
-///     \f$ A = L L^H, \f$ if uplo = Lower,
-/// where \f$ U \f$ is an upper triangular matrix
-/// and   \f$ L \f$ is a  lower triangular matrix.
+///     $A = U^H U,$ if uplo = Upper, or
+///     $A = L L^H,$ if uplo = Lower,
+/// where $U$ is an upper triangular matrix
+/// and   $L$ is a  lower triangular matrix.
 ///
 /// This is the block version of the algorithm, calling Level 3 BLAS.
 ///
@@ -125,7 +125,7 @@ int64_t potrf(
 ///     triangular part of A is not referenced.
 ///
 ///     - On successful exit, the factor U or L from the Cholesky
-///     factorization \f$ A = U^H U \f$ or \f$ A = L L^H. \f$
+///     factorization $A = U^H U$ or $A = L L^H.$
 ///
 /// @param[in] lda
 ///     The leading dimension of the array A. lda >= max(1,n).

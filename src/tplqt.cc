@@ -201,15 +201,15 @@ int64_t tplqt(
 /// @par Further Details
 ///
 /// The input matrix C is a m-by-(m+n) matrix
-///
-///     $C = [ A, B ]$
-///
+/// \[
+///     C = [ A, B ]
+/// \]
 /// where A is an lower triangular m-by-m matrix, and B is m-by-n pentagonal
 /// matrix consisting of a m-by-(n-l) rectangular matrix B1 left of a m-by-l
 /// upper trapezoidal matrix B2:
-///
-///     $B = [ B1, B2 ]$
-///
+/// \[
+///     B = [ B1, B2 ]
+/// \]
 /// The lower trapezoidal matrix B2 consists of the first l columns of a
 /// m-by-m lower triangular matrix, where 0 <= l <= min(m,n).  If l=0,
 /// B is rectangular m-by-n; if m=l=n, B is lower triangular.
@@ -217,14 +217,16 @@ int64_t tplqt(
 /// The matrix W stores the elementary reflectors H(i) in the i-th row
 /// above the diagonal (of A) in the m-by-(m+n) input matrix C
 /// so that W can be represented as
-///
-///     $W = [ I, V ]$
-///
+/// \[
+///     W = [ I, V ]
+/// \]
 /// where I is m-by-m identity and V is m-by-n, same form as B.
 ///
 /// Thus, all of information needed for W is contained on exit in B, which
 /// we call V above.  Note that V has the same form as B; that is,
-///     $V = [ V1, V2 ]$
+/// \[
+///     V = [ V1, V2 ]
+/// \]
 /// where V1 is m-by-(n-l) rectangular, V2 is m-by-l lower trapezoidal.
 /// The rows of V represent the vectors which define the H(i)'s.
 ///
@@ -233,8 +235,9 @@ int64_t tplqt(
 /// IB = m - (m-1)*mb.  For each of the B blocks, a upper triangular block
 /// reflector factor is computed: T1, T2, ..., TB.  The mb-by-mb (and IB-by-IB
 /// for the last block) T's are stored in the mb-by-n matrix T as
-///
-///     $T = [T1, T2, ..., TB]$.
+/// \[
+///     T = [T1, T2, ..., TB].
+/// \]
 ///
 /// @ingroup tplqt
 int64_t tplqt(

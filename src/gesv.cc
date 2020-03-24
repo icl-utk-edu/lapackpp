@@ -142,15 +142,15 @@ int64_t gesv(
 
 // -----------------------------------------------------------------------------
 /// Computes the solution to a system of linear equations
-///     \f$ A X = B \f$,
+///     $A X = B$,
 /// where A is an n-by-n matrix and X and B are n-by-nrhs matrices.
 ///
 /// The LU decomposition with partial pivoting and row interchanges is
 /// used to factor A as
-///     \f$ A = P L U \f$,
+///     $A = P L U$,
 /// where P is a permutation matrix, L is unit lower triangular, and U is
 /// upper triangular. The factored form of A is then used to solve the
-/// system of equations \f$ A X = B \f$.
+/// system of equations $A X = B$.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -167,7 +167,7 @@ int64_t gesv(
 ///     The n-by-n matrix A, stored in an lda-by-n array.
 ///     On entry, the n-by-n coefficient matrix A.
 ///     On exit, the factors L and U from the factorization
-///     \f$ A = P L U \f$; the unit diagonal elements of L are not stored.
+///     $A = P L U$; the unit diagonal elements of L are not stored.
 ///
 /// @param[in] lda
 ///     The leading dimension of the array A. lda >= max(1,n).

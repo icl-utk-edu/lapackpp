@@ -107,8 +107,10 @@ int64_t pttrs(
 
 // -----------------------------------------------------------------------------
 /// Solves a tridiagonal system of the form
-///     \f$ A X = B \f$
-/// using the factorization \f$ A = U^H D U \f$ or \f$ A = L D L^H \f$ computed by `lapack::pttrf`.
+/// \[
+///     A X = B
+/// \]
+/// using the factorization $A = U^H D U$ or $A = L D L^H$ computed by `lapack::pttrf`.
 /// D is a diagonal matrix specified in the vector D, U (or L) is a unit
 /// bidiagonal matrix whose superdiagonal (subdiagonal) is specified in
 /// the vector E, and X and B are n by nrhs matrices.
@@ -120,8 +122,8 @@ int64_t pttrs(
 ///     Specifies the form of the factorization and whether the
 ///     vector E is the superdiagonal of the upper bidiagonal factor
 ///     U or the subdiagonal of the lower bidiagonal factor L.
-///     - lapack::Uplo::Upper: \f$ A = U^H D U, \f$ E is the superdiagonal of U
-///     - lapack::Uplo::Lower: \f$ A = L D L^H, \f$ E is the subdiagonal of L
+///     - lapack::Uplo::Upper: $A = U^H D U,$ E is the superdiagonal of U
+///     - lapack::Uplo::Lower: $A = L D L^H,$ E is the subdiagonal of L
 ///
 /// @param[in] n
 ///     The order of the tridiagonal matrix A. n >= 0.
@@ -133,15 +135,15 @@ int64_t pttrs(
 /// @param[in] D
 ///     The vector D of length n.
 ///     The n diagonal elements of the diagonal matrix D from the
-///     factorization \f$ A = U^H D U \f$ or \f$ A = L D L^H. \f$
+///     factorization $A = U^H D U$ or $A = L D L^H.$
 ///
 /// @param[in] E
 ///     The vector E of length n-1.
 ///     - If uplo = Upper, the (n-1) superdiagonal elements of the unit
-///     bidiagonal factor U from the factorization \f$ A = U^H D U. \f$
+///     bidiagonal factor U from the factorization $A = U^H D U.$
 ///
 ///     - If uplo = Lower, the (n-1) subdiagonal elements of the unit
-///     bidiagonal factor L from the factorization \f$ A = L D L^H. \f$
+///     bidiagonal factor L from the factorization $A = L D L^H.$
 ///
 /// @param[in,out] B
 ///     The n-by-nrhs matrix B, stored in an ldb-by-nrhs array.

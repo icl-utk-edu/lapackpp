@@ -54,7 +54,7 @@ int64_t hetri(
 
 // -----------------------------------------------------------------------------
 /// Computes the inverse of a Hermitian indefinite matrix
-/// A using the factorization \f$ A = U D U^H \f$ or \f$ A = L D L^H \f$ computed by
+/// A using the factorization $A = U D U^H$ or $A = L D L^H$ computed by
 /// `lapack::hetrf`.
 ///
 /// Overloaded versions are available for
@@ -67,8 +67,8 @@ int64_t hetri(
 /// @param[in] uplo
 ///     Whether the details of the factorization are stored
 ///     as an upper or lower triangular matrix.
-///     - lapack::Uplo::Upper: Upper triangular, form is \f$ A = U D U^H; \f$
-///     - lapack::Uplo::Lower: Lower triangular, form is \f$ A = L D L^H. \f$
+///     - lapack::Uplo::Upper: Upper triangular, form is $A = U D U^H;$
+///     - lapack::Uplo::Lower: Lower triangular, form is $A = L D L^H.$
 ///
 /// @param[in] n
 ///     The order of the matrix A. n >= 0.

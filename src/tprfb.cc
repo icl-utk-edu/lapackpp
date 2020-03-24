@@ -263,22 +263,30 @@ void tprfb(
 /// and if side = Left, A is of size k-by-n.
 ///
 /// If side = Right and direction = Forward,
-///     $C = [A B]$.
+/// \[
+///     C = [A B].
+/// \]
 ///
 /// If side = Left and direction = Forward,
+/// \[
 ///     $C = \left[ \begin{array}{c}
-///         A
+///        A
 ///         B
 ///     \end{array} \right].
+/// \]
 ///
 /// If side = Right and direction = Backward,
-///     $C = [B A]$.
+/// \[
+///     C = [B A].
+/// \]
 ///
 /// If side = Left and direction = Backward,
-///     $C = \left[ \begin{array}{c}
+/// \[
+///     C = \left[ \begin{array}{c}
 ///         B
 ///         A
 ///     \end{array} \right].
+/// \]
 ///
 /// The pentagonal matrix V is composed of a rectangular block V1 and a
 /// trapezoidal block V2.  The size of the trapezoidal block is determined by
@@ -286,25 +294,33 @@ void tprfb(
 /// if l=0, there is no trapezoidal block, thus V = V1 is rectangular.
 ///
 /// If direction = Forward and storev = Columnwise:
-///     $V = \left[ \begin{array}{c}
+/// \[
+///     V = \left[ \begin{array}{c}
 ///         V1
 ///         V2
 ///     \end{array} \right].
+/// \]
 ///     - V2 is upper trapezoidal (first l rows of k-by-k upper triangular)
 ///
 /// If direction = Forward and storev = Rowwise:
-///     $V = [V1 V2]$
+/// \[
+///     V = [V1 V2]
+/// \]
 ///     - V2 is lower trapezoidal (first l columns of k-by-k lower triangular)
 ///
 /// If direction = Backward and storev = Columnwise:
-///     $V = \left[ \begin{array}{c}
+/// \[
+///     V = \left[ \begin{array}{c}
 ///         V2
 ///         V1
 ///     \end{array} \right].
+/// \]
 ///     - V2 is lower trapezoidal (last l rows of k-by-k lower triangular)
 ///
-/// If direction = Backwar$d and storev = Rowwise:
-///     $V = [V2 V1]
+/// If direction = Backward and storev = Rowwise:
+/// \[
+///     V = [V2 V1]
+/// \]
 ///     - V2 is upper trapezoidal (last l columns of k-by-k upper triangular)
 ///
 /// If storev = Columnwise and side = Left, V is m-by-k with V2 l-by-k.

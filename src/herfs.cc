@@ -112,8 +112,8 @@ int64_t herfs(
 ///     The n-by-n matrix AF, stored in an ldaf-by-n array.
 ///     The factored form of the matrix A. AF contains the block
 ///     diagonal matrix D and the multipliers used to obtain the
-///     factor U or L from the factorization \f$ A = U D U^H \f$ or
-///     \f$ A = L D L^H \f$ as computed by `lapack::hetrf`.
+///     factor U or L from the factorization $A = U D U^H$ or
+///     $A = L D L^H$ as computed by `lapack::hetrf`.
 ///
 /// @param[in] ldaf
 ///     The leading dimension of the array AF. ldaf >= max(1,n).

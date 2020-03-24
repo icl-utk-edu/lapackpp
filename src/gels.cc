@@ -181,17 +181,17 @@ int64_t gels(
 ///
 /// 1. If trans = NoTrans and m >= n: find the least squares solution of
 ///     an overdetermined system, i.e., solve the least squares problem
-///     minimize \f$ || B - A X ||_2 \f$.
+///     minimize $|| B - A X ||_2$.
 ///
 /// 2. If trans = NoTrans and m < n: find the minimum norm solution of
-///     an underdetermined system \f$ A X = B \f$.
+///     an underdetermined system $A X = B$.
 ///
 /// 3. If trans = ConjTrans and m >= n: find the minimum norm solution of
-///     an underdetermined system \f$ A^H X = B \f$.
+///     an underdetermined system $A^H X = B$.
 ///
 /// 4. If trans = ConjTrans and m < n: find the least squares solution of
 ///     an overdetermined system, i.e., solve the least squares problem
-///     minimize \f$ || B - A^H X ||_2 \f$.
+///     minimize $|| B - A^H X ||_2$.
 ///
 /// Several right hand side vectors b and solution vectors x can be
 /// handled in a single call; they are stored as the columns of the
@@ -202,9 +202,9 @@ int64_t gels(
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
 ///
 /// @param[in] trans
-///     - lapack::Op::NoTrans:   the linear system involves \f$ A   \f$;
-///     - lapack::Op::ConjTrans: the linear system involves \f$ A^H \f$.
-///     - lapack::Op::Trans:     the linear system involves \f$ A^T \f$.
+///     - lapack::Op::NoTrans:   the linear system involves $A  $;
+///     - lapack::Op::ConjTrans: the linear system involves $A^H$.
+///     - lapack::Op::Trans:     the linear system involves $A^T$.
 ///     \n
 ///     For real matrices, Trans = ConjTrans.
 ///     For complex matrices, Trans is illegal.

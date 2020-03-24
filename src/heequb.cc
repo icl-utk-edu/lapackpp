@@ -52,7 +52,7 @@ int64_t heequb(
 /// Hermitian matrix A (with respect to the Euclidean norm) and reduce
 /// its condition number. The scale factors S are computed by the BIN
 /// algorithm (see references) so that the scaled matrix B with elements
-/// \f$ B_{i,j} = S_{i} A_{i,j} S_{j} \f$ has a condition number within a factor n of
+/// $B_{i,j} = S_{i} A_{i,j} S_{j}$ has a condition number within a factor n of
 /// the smallest possible condition number over all possible diagonal
 /// scalings.
 ///

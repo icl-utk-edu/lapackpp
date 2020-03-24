@@ -224,9 +224,16 @@ int64_t gtsvx(
 // -----------------------------------------------------------------------------
 /// Uses the LU factorization to compute the solution to a complex
 /// system of linear equations
-///     \f$ A   X = B, \f$
-///     \f$ A^T X = B, \f$ or
-///     \f$ A^H X = B, \f$
+/// \[
+///     A   X = B,
+/// \]
+/// \[
+///     A^T X = B,
+/// \]
+/// or
+/// \[
+///     A^H X = B,
+/// \]
 /// where A is a tridiagonal matrix of order n and X and B are n-by-nrhs
 /// matrices.
 ///
@@ -247,9 +254,9 @@ int64_t gtsvx(
 ///
 /// @param[in] trans
 ///     Specifies the form of the system of equations:
-///     - lapack::Op::NoTrans:   \f$ A   X = B \f$ (No transpose)
-///     - lapack::Op::Trans:     \f$ A^T X = B \f$ (Transpose)
-///     - lapack::Op::ConjTrans: \f$ A^H X = B \f$ (Conjugate transpose)
+///     - lapack::Op::NoTrans:   $A   X = B$ (No transpose)
+///     - lapack::Op::Trans:     $A^T X = B$ (Transpose)
+///     - lapack::Op::ConjTrans: $A^H X = B$ (Conjugate transpose)
 ///
 /// @param[in] n
 ///     The order of the matrix A. n >= 0.

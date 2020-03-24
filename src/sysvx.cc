@@ -266,7 +266,7 @@ int64_t sysvx(
 // -----------------------------------------------------------------------------
 /// Uses the diagonal pivoting factorization to compute the
 /// solution to a system of linear equations
-///     \f$ A X = B \f$,
+///     $A X = B$,
 /// where A is an n-by-n symmetric matrix and X and B are n-by-nrhs
 /// matrices.
 ///
@@ -319,12 +319,12 @@ int64_t sysvx(
 ///     - If fact = Factored, then AF is an input argument and on entry
 ///     contains the block diagonal matrix D and the multipliers used
 ///     to obtain the factor U or L from the factorization
-///     \f$ A = U D U^T \f$ or \f$ A = L D L^T \f$ as computed by `lapack::sytrf`.
+///     $A = U D U^T$ or $A = L D L^T$ as computed by `lapack::sytrf`.
 ///
 ///     - If fact = NotFactored, then AF is an output argument and on exit
 ///     returns the block diagonal matrix D and the multipliers used
 ///     to obtain the factor U or L from the factorization
-///     \f$ A = U D U^T \f$ or \f$ A = L D L^T \f$.
+///     $A = U D U^T$ or $A = L D L^T$.
 ///
 /// @param[in] ldaf
 ///     The leading dimension of the array AF. ldaf >= max(1,n).

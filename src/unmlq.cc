@@ -71,10 +71,10 @@ int64_t unmlq(
 // -----------------------------------------------------------------------------
 /// Multiplies the general m-by-n matrix C by Q from `lapack::gelqf` as follows:
 ///
-/// - side = Left,  trans = NoTrans:   \f$ Q C \f$
-/// - side = Right, trans = NoTrans:   \f$ C Q \f$
-/// - side = Left,  trans = ConjTrans: \f$ Q^H C \f$
-/// - side = Right, trans = ConjTrans: \f$ C Q^H \f$
+/// - side = Left,  trans = NoTrans:   $Q C$
+/// - side = Right, trans = NoTrans:   $C Q$
+/// - side = Left,  trans = ConjTrans: $Q^H C$
+/// - side = Right, trans = ConjTrans: $C Q^H$
 ///
 /// where Q is a unitary matrix defined as the product of k
 /// elementary reflectors, as returned by `lapack::gelqf`:
@@ -89,12 +89,12 @@ int64_t unmlq(
 /// For real matrices, this is an alias for `lapack::orglq`.
 ///
 /// @param[in] side
-///     - lapack::Side::Left:  apply \f$ Q \f$ or \f$ Q^H \f$ from the Left;
-///     - lapack::Side::Right: apply \f$ Q \f$ or \f$ Q^H \f$ from the Right.
+///     - lapack::Side::Left:  apply $Q$ or $Q^H$ from the Left;
+///     - lapack::Side::Right: apply $Q$ or $Q^H$ from the Right.
 ///
 /// @param[in] trans
-///     - lapack::Op::NoTrans:   No transpose, apply \f$ Q \f$;
-///     - lapack::Op::ConjTrans: Conjugate transpose, apply \f$ Q^H \f$.
+///     - lapack::Op::NoTrans:   No transpose, apply $Q$;
+///     - lapack::Op::ConjTrans: Conjugate transpose, apply $Q^H$.
 ///
 /// @param[in] m
 ///     The number of rows of the matrix C. m >= 0.
@@ -128,7 +128,7 @@ int64_t unmlq(
 ///     The m-by-n matrix C, stored in an ldc-by-n array.
 ///     On entry, the m-by-n matrix C.
 ///     On exit, C is overwritten by
-///     \f$ Q C \f$ or \f$ Q^H C \f$ or \f$ C Q^H \f$ or \f$ C Q \f$.
+///     $Q C$ or $Q^H C$ or $C Q^H$ or $C Q$.
 ///
 /// @param[in] ldc
 ///     The leading dimension of the array C. ldc >= max(1,m).

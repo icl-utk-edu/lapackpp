@@ -135,7 +135,9 @@ int64_t getrf2(
 /// using partial pivoting with row interchanges.
 ///
 /// The factorization has the form
-///     \f$ A = P L U \f$
+/// \[
+///     A = P L U
+/// \]
 /// where P is a permutation matrix, L is lower triangular with unit
 /// diagonal elements (lower trapezoidal if m > n), and U is upper
 /// triangular (upper trapezoidal if m < n).
@@ -149,26 +151,26 @@ int64_t getrf2(
             A_{21}  &  A_{22}  \\
         \end{array} \right]
     \]
-    where \f$ A_{11} \f$ is n1-by-n1 and \f$ A_{22} \f$ is n2-by-n2,
+    where $A_{11}$ is n1-by-n1 and $A_{22}$ is n2-by-n2,
     with n1 = min(m,n)/2 and n2 = n-n1.
     The subroutine calls itself to factor
-    \f$
+    \[
         \left[ \begin{array}{c}
             A_{11}  \\
             A_{21}  \\
         \end{array} \right],
-    \f$
+    \]
     does the swaps on
-    \f$
+    \[
         \left[ \begin{array}{c}
             A_{12}  \\
             A_{22}  \\
         \end{array} \right],
-    \f$
-    solves \f$ A_{12}, \f$
-    updates \f$ A_{22}, \f$
-    calls itself to factor \f$ A_{22}, \f$
-    and does the swaps on \f$ A_{21}. \f$
+    \]
+    solves $A_{12},$
+    updates $A_{22},$
+    calls itself to factor $A_{22},$
+    and does the swaps on $A_{21}.$
 */
 ///
 /// Overloaded versions are available for
@@ -184,7 +186,7 @@ int64_t getrf2(
 ///     The m-by-n matrix A, stored in an lda-by-n array.
 ///     On entry, the m-by-n matrix to be factored.
 ///     On exit, the factors L and U from the factorization
-///     \f$ A = P L U; \f$ the unit diagonal elements of L are not stored.
+///     $A = P L U;$ the unit diagonal elements of L are not stored.
 ///
 /// @param[in] lda
 ///     The leading dimension of the array A. lda >= max(1,m).

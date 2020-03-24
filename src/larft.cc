@@ -108,9 +108,9 @@ void larft(
 /// Forms the triangular factor T of a complex block reflector H
 /// of order n, which is defined as a product of k elementary reflectors.
 ///
-/// If direction = Forward, \f$ H = H(1) H(2) \dots H(k) \f$ and T is upper triangular;
+/// If direction = Forward, $H = H(1) H(2) \dots H(k)$ and T is upper triangular;
 ///
-/// If direction = Backward, \f$ H = H(k) \dots H(2) H(1) \f$ and T is lower triangular.
+/// If direction = Backward, $H = H(k) \dots H(2) H(1)$ and T is lower triangular.
 ///
 /// If storev = Columnwise, the vector which defines the elementary reflector
 /// H(i) is stored in the i-th column of the array V, and
@@ -129,8 +129,8 @@ void larft(
 /// @param[in] direction
 ///     Specifies the order in which the elementary reflectors are
 ///     multiplied to form the block reflector:
-///     - lapack::Direction::Forward:  \f$ H = H(1) H(2) \dots H(k) \f$
-///     - lapack::Direction::Backward: \f$ H = H(k) \dots H(2) H(1) \f$
+///     - lapack::Direction::Forward:  $H = H(1) H(2) \dots H(k)$
+///     - lapack::Direction::Backward: $H = H(k) \dots H(2) H(1)$
 ///
 /// @param[in] storev
 ///     Specifies how the vectors which define the elementary

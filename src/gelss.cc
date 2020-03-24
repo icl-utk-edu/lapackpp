@@ -186,7 +186,7 @@ int64_t gelss(
 // -----------------------------------------------------------------------------
 /// Computes the minimum norm solution to a complex linear
 /// least squares problem:
-///     minimize \f$ || b - A x ||_2 \f$
+///     minimize $|| b - A x ||_2$
 /// using the singular value decomposition (SVD) of A. A is an m-by-n
 /// matrix which may be rank-deficient.
 ///

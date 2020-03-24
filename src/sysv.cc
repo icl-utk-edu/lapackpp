@@ -199,17 +199,17 @@ int64_t sysv(
 
 // -----------------------------------------------------------------------------
 /// Computes the solution to a system of linear equations
-///     \f$ A X = B \f$,
+///     $A X = B$,
 /// where A is an n-by-n symmetric matrix and X and B are n-by-nrhs
 /// matrices.
 ///
 /// The diagonal pivoting method is used to factor A as
-///     \f$ A = U D U^T \f$, if uplo = Upper, or
-///     \f$ A = L D L^T \f$, if uplo = Lower,
+///     $A = U D U^T$, if uplo = Upper, or
+///     $A = L D L^T$, if uplo = Lower,
 /// where U (or L) is a product of permutation and unit upper (lower)
 /// triangular matrices, and D is symmetric and block diagonal with
 /// 1-by-1 and 2-by-2 diagonal blocks. The factored form of A is then
-/// used to solve the system of equations \f$ A X = B \f$.
+/// used to solve the system of equations $A X = B$.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -243,7 +243,7 @@ int64_t sysv(
 ///
 ///     - On successful exit, the block diagonal matrix D and the
 ///     multipliers used to obtain the factor U or L from the
-///     factorization \f$ A = U D U^T \f$ or \f$ A = L D L^T \f$ as computed by
+///     factorization $A = U D U^T$ or $A = L D L^T$ as computed by
 ///     `lapack::sytrf`.
 ///
 /// @param[in] lda

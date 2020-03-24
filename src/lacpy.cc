@@ -122,7 +122,7 @@ void lacpy(
 ///
 /// @param[out] B
 ///     The m-by-n matrix B, stored in an ldb-by-n array.
-///     On exit, \f$ B = A \f$ in the locations specified by matrixtype.
+///     On exit, $B = A$ in the locations specified by matrixtype.
 ///
 /// @param[in] ldb
 ///     The leading dimension of the array B. ldb >= max(1,m).

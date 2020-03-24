@@ -100,8 +100,8 @@ int64_t pbtrf(
 /// positive definite band matrix A.
 ///
 /// The factorization has the form
-///     \f$ A = U^H U, \f$ if uplo = Upper, or
-///     \f$ A = L L^H, \f$ if uplo = Lower,
+///     $A = U^H U,$ if uplo = Upper, or
+///     $A = L L^H,$ if uplo = Lower,
 /// where U is an upper triangular matrix and L is lower triangular.
 ///
 /// Overloaded versions are available for
@@ -129,7 +129,7 @@ int64_t pbtrf(
 ///       - if uplo = Lower, AB(1+i-j,j) = A(i,j) for j <= i <= min(n,j+kd).
 ///
 ///     - On successful exit, the triangular factor U or L from the
-///     Cholesky factorization \f$ A = U^H U \f$ or \f$ A = L L^H \f$ of the band
+///     Cholesky factorization $A = U^H U$ or $A = L L^H$ of the band
 ///     matrix A, in the same storage format as A.
 ///
 /// @param[in] ldab

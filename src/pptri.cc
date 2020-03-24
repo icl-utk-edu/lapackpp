@@ -85,7 +85,7 @@ int64_t pptri(
 
 // -----------------------------------------------------------------------------
 /// Computes the inverse of a Hermitian positive definite
-/// matrix A using the Cholesky factorization \f$ A = U^H U \f$ or \f$ A = L L^H \f$
+/// matrix A using the Cholesky factorization $A = U^H U$ or $A = L L^H$
 /// computed by `lapack::pptrf`.
 ///
 /// Overloaded versions are available for
@@ -101,7 +101,7 @@ int64_t pptri(
 /// @param[in,out] AP
 ///     The vector AP of length n*(n+1)/2.
 ///     - On entry, the triangular factor U or L from the Cholesky
-///     factorization \f$ A = U^H U \f$ or \f$ A = L L^H, \f$ packed columnwise as
+///     factorization $A = U^H U$ or $A = L L^H,$ packed columnwise as
 ///     a linear array. The j-th column of U or L is stored in the
 ///     array AP as follows:
 ///       - if uplo = Upper, AP(i + (j-1)*j/2) = U(i,j) for 1 <= i <= j;

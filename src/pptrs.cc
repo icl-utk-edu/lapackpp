@@ -102,9 +102,9 @@ int64_t pptrs(
 }
 
 // -----------------------------------------------------------------------------
-/// Solves a system of linear equations \f$ A X = B \f$ with a Hermitian
+/// Solves a system of linear equations $A X = B$ with a Hermitian
 /// positive definite matrix A in packed storage using the Cholesky
-/// factorization \f$ A = U^H U \f$ or \f$ A = L L^H \f$ computed by `lapack::pptrf`.
+/// factorization $A = U^H U$ or $A = L L^H$ computed by `lapack::pptrf`.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -123,7 +123,7 @@ int64_t pptrs(
 /// @param[in] AP
 ///     The vector AP of length n*(n+1)/2.
 ///     The triangular factor U or L from the Cholesky factorization
-///     \f$ A = U^H U \f$ or \f$ A = L L^H, \f$ packed columnwise in a linear
+///     $A = U^H U$ or $A = L L^H,$ packed columnwise in a linear
 ///     array. The j-th column of U or L is stored in the array AP
 ///     as follows:
 ///     - if uplo = Upper, AP(i + (j-1)*j/2) = U(i,j) for 1 <= i <= j;

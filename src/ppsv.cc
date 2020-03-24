@@ -103,16 +103,18 @@ int64_t ppsv(
 
 // -----------------------------------------------------------------------------
 /// Computes the solution to a system of linear equations
-///     \f$ A X = B, \f$
+/// \[
+///     A X = B,
+/// \]
 /// where A is an n-by-n Hermitian positive definite matrix stored in
 /// packed format and X and B are n-by-nrhs matrices.
 ///
 /// The Cholesky decomposition is used to factor A as
-///     \f$ A = U^H U, \f$ if uplo = Upper, or
-///     \f$ A = L L^H, \f$ if uplo = Lower,
+///     $A = U^H U$ if uplo = Upper, or
+///     $A = L L^H$ if uplo = Lower,
 /// where U is an upper triangular matrix and L is a lower triangular
 /// matrix. The factored form of A is then used to solve the system of
-/// equations \f$ A X = B. \f$
+/// equations $A X = B.$
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -140,7 +142,7 @@ int64_t ppsv(
 ///         See below for further details.
 ///
 ///     - On successful exit, the factor U or L from the Cholesky
-///     factorization \f$ A = U^H U \f$ or \f$ A = L L^H, \f$ in the same storage
+///     factorization $A = U^H U$ or $A = L L^H,$ in the same storage
 ///     format as A.
 ///
 /// @param[in,out] B

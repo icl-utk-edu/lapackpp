@@ -70,25 +70,25 @@ int64_t unmtr(
 // -----------------------------------------------------------------------------
 /// Multiplies the general m-by-n matrix C by Q from `lapack::hetrd` as follows:
 ///
-/// - side = left,  trans = NoTrans:   \f$ Q C \f$
-/// - side = right, trans = NoTrans:   \f$ C Q \f$
-/// - side = left,  trans = ConjTrans: \f$ Q^H C \f$
-/// - side = right, trans = ConjTrans: \f$ C Q^H \f$
+/// - side = left,  trans = NoTrans:   $Q C$
+/// - side = right, trans = NoTrans:   $C Q$
+/// - side = left,  trans = ConjTrans: $Q^H C$
+/// - side = right, trans = ConjTrans: $C Q^H$
 ///
 /// where Q is a unitary matrix of order nq, with nq = m if
 /// side = Left and nq = n if side = Right. Q is defined as the product of
 /// nq-1 elementary reflectors, as returned by `lapack::hetrd`:
 ///
-/// - if uplo = Upper, \f$ Q = H(nq-1) \dots H(2) H(1); \f$
-/// - if uplo = Lower, \f$ Q = H(1) H(2) \dots H(nq-1). \f$
+/// - if uplo = Upper, $Q = H(nq-1) \dots H(2) H(1);$
+/// - if uplo = Lower, $Q = H(1) H(2) \dots H(nq-1).$
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
 /// For real matrices, this is an alias for `lapack::ormtr`.
 ///
 /// @param[in] side
-///     - lapack::Side::Left:  apply \f$ Q \f$ or \f$ Q^H \f$ from the Left;
-///     - lapack::Side::Right: apply \f$ Q \f$ or \f$ Q^H \f$ from the Right.
+///     - lapack::Side::Left:  apply $Q$ or $Q^H$ from the Left;
+///     - lapack::Side::Right: apply $Q$ or $Q^H$ from the Right.
 ///
 /// @param[in] uplo
 ///     - lapack::Uplo::Upper: Upper triangle of A contains elementary reflectors
@@ -97,8 +97,8 @@ int64_t unmtr(
 ///         from `lapack::hetrd`.
 ///
 /// @param[in] trans
-///     - lapack::Op::NoTrans:   No transpose, apply \f$ Q \f$;
-///     - lapack::Op::ConjTrans: Conjugate transpose, apply \f$ Q^H \f$.
+///     - lapack::Op::NoTrans:   No transpose, apply $Q$;
+///     - lapack::Op::ConjTrans: Conjugate transpose, apply $Q^H$.
 ///
 /// @param[in] m
 ///     The number of rows of the matrix C. m >= 0.
@@ -127,7 +127,7 @@ int64_t unmtr(
 ///     The m-by-n matrix C, stored in an ldc-by-n array.
 ///     On entry, the m-by-n matrix C.
 ///     On exit, C is overwritten by
-///     \f$ Q C \f$ or \f$ Q^H C \f$ or \f$ C Q^H \f$ or \f$ C Q \f$.
+///     $Q C$ or $Q^H C$ or $C Q^H$ or $C Q$.
 ///
 /// @param[in] ldc
 ///     The leading dimension of the array C. ldc >= max(1,m).

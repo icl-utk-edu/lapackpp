@@ -151,7 +151,7 @@ int64_t geqlf(
 
 // -----------------------------------------------------------------------------
 /// Computes a QL factorization of an m-by-n matrix A:
-/// \f$ A = Q L \f$.
+/// $A = Q L$.
 ///
 /// This is the blocked Level 3 BLAS version of the algorithm.
 ///
@@ -200,9 +200,9 @@ int64_t geqlf(
 /// \[
 ///     H(i) = I - \tau v v^H
 /// \]
-/// where \f$ \tau \f$ is a scalar, and v is a vector with
+/// where $\tau$ is a scalar, and v is a vector with
 /// v(m-k+i+1:m) = 0 and v(m-k+i) = 1; v(1:m-k+i-1) is stored on exit in
-/// A(1:m-k+i-1,n-k+i), and \f$ \tau \f$ in tau(i).
+/// A(1:m-k+i-1,n-k+i), and $\tau$ in tau(i).
 ///
 /// @ingroup geqlf
 int64_t geqlf(

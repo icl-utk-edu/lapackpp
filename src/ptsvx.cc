@@ -161,8 +161,8 @@ int64_t ptsvx(
 }
 
 // -----------------------------------------------------------------------------
-/// Uses the factorization \f$ A = L D L^H \f$ to compute the solution
-/// to a system of linear equations \f$ A X = B, \f$ where A is an
+/// Uses the factorization $A = L D L^H$ to compute the solution
+/// to a system of linear equations $A X = B,$ where A is an
 /// n-by-n Hermitian positive definite tridiagonal matrix and X and B
 /// are n-by-nrhs matrices.
 ///
@@ -199,21 +199,21 @@ int64_t ptsvx(
 ///     The vector DF of length n.
 ///     - If fact = Factored, then DF is an input argument and on entry
 ///     contains the n diagonal elements of the diagonal matrix D
-///     from the \f$ L D L^H \f$ factorization of A.
+///     from the $L D L^H$ factorization of A.
 ///
 ///     - If fact = NotFactored, then DF is an output argument and on exit
 ///     contains the n diagonal elements of the diagonal matrix D
-///     from the \f$ L D L^H \f$ factorization of A.
+///     from the $L D L^H$ factorization of A.
 ///
 /// @param[in,out] EF
 ///     The vector EF of length n-1.
 ///     - If fact = Factored, then EF is an input argument and on entry
 ///     contains the (n-1) subdiagonal elements of the unit
-///     bidiagonal factor L from the \f$ L D L^H \f$ factorization of A.
+///     bidiagonal factor L from the $L D L^H$ factorization of A.
 ///
 ///     - If fact = NotFactored, then EF is an output argument and on exit
 ///     contains the (n-1) subdiagonal elements of the unit
-///     bidiagonal factor L from the \f$ L D L^H \f$ factorization of A.
+///     bidiagonal factor L from the $L D L^H$ factorization of A.
 ///
 /// @param[in] B
 ///     The n-by-nrhs matrix B, stored in an ldb-by-nrhs array.

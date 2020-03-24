@@ -200,7 +200,7 @@ int64_t porfs(
 /// @param[in] AF
 ///     The n-by-n matrix AF, stored in an ldaf-by-n array.
 ///     The triangular factor U or L from the Cholesky factorization
-///     \f$ A = U^H U \f$ or \f$ A = L L^H \f$, as computed by `lapack::potrf`.
+///     $A = U^H U$ or $A = L L^H$, as computed by `lapack::potrf`.
 ///
 /// @param[in] ldaf
 ///     The leading dimension of the array AF. ldaf >= max(1,n).

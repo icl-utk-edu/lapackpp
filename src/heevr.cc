@@ -105,14 +105,14 @@ int64_t heevr(
 /// to `lapack::hetrd`. Then, whenever possible, `heevr` calls `lapack::stemr` to compute
 /// eigenspectrum using Relatively Robust Representations. `lapack::stemr`
 /// computes eigenvalues by the dqds algorithm, while orthogonal
-/// eigenvectors are computed from various "good" \f$ L D L^T \f$ representations
+/// eigenvectors are computed from various "good" $L D L^T$ representations
 /// (also known as Relatively Robust Representations). Gram-Schmidt
 /// orthogonalization is avoided as far as possible. More specifically,
 /// the various steps of the algorithm are as follows.
 ///
 /// For each unreduced block (submatrix) of T,
 ///
-/// (a) Compute \f$ T - \sigma I = L D L^T \f$, so that L and D
+/// (a) Compute $T - \sigma I = L D L^T$, so that L and D
 /// define all the wanted eigenvalues to high relative accuracy.
 /// This means that small relative changes in the entries of D and L
 /// cause only small relative changes in the eigenvalues and

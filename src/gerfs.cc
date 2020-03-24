@@ -198,9 +198,9 @@ int64_t gerfs(
 ///
 /// @param[in] trans
 ///     The form of the system of equations:
-///     - lapack::Op::NoTrans:   \f$ A   X = B \f$ (No transpose)
-///     - lapack::Op::Trans:     \f$ A^T X = B \f$ (Transpose)
-///     - lapack::Op::ConjTrans: \f$ A^H X = B \f$ (Conjugate transpose)
+///     - lapack::Op::NoTrans:   $A   X = B$ (No transpose)
+///     - lapack::Op::Trans:     $A^T X = B$ (Transpose)
+///     - lapack::Op::ConjTrans: $A^H X = B$ (Conjugate transpose)
 ///
 /// @param[in] n
 ///     The order of the matrix A. n >= 0.
@@ -218,7 +218,7 @@ int64_t gerfs(
 ///
 /// @param[in] AF
 ///     The n-by-n matrix AF, stored in an ldaf-by-n array.
-///     The factors L and U from the factorization \f$ A = P L U \f$
+///     The factors L and U from the factorization $A = P L U$
 ///     as computed by `lapack::getrf`.
 ///
 /// @param[in] ldaf

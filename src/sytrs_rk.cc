@@ -149,15 +149,15 @@ int64_t sytrs_rk(
 #define sytrs_3 sytrs_rk
 
 // -----------------------------------------------------------------------------
-/// Solves a system of linear equations \f$ A X = B \f$ with a
+/// Solves a system of linear equations $A X = B$ with a
 /// symmetric matrix A using the factorization computed
 /// by `lapack::sytrf_rk`:
-///
-///     \f$ A = P U D (U^T) (P^T) \f$ or \f$ A = P L D (L^T) (P^T), \f$
-///
+/// \[
+///     A = P U D (U^T) (P^T)$ or $A = P L D (L^T) (P^T),
+/// \]
 /// where U (or L) is unit upper (or lower) triangular matrix,
-/// \f$ U^T \f$ (or \f$ L^T \f$) is the transpose of U (or L), P is a permutation
-/// matrix, \f$ P^T \f$ is the transpose of P, and D is symmetric and block
+/// $U^T$ (or $L^T$) is the transpose of U (or L), P is a permutation
+/// matrix, $P^T$ is the transpose of P, and D is symmetric and block
 /// diagonal with 1-by-1 and 2-by-2 diagonal blocks.
 ///
 /// This algorithm is using Level 3 BLAS.
@@ -176,8 +176,8 @@ int64_t sytrs_rk(
 /// @param[in] uplo
 ///     Specifies whether the details of the factorization are
 ///     stored as an upper or lower triangular matrix:
-///     - lapack::Uplo::Upper: Upper triangular, form is \f$ A = P U D (U^T) (P^T); \f$
-///     - lapack::Uplo::Lower: Lower triangular, form is \f$ A = P L D (L^T) (P^T). \f$
+///     - lapack::Uplo::Upper: Upper triangular, form is $A = P U D (U^T) (P^T);$
+///     - lapack::Uplo::Lower: Lower triangular, form is $A = P L D (L^T) (P^T).$
 ///
 /// @param[in] n
 ///     The order of the matrix A. n >= 0.

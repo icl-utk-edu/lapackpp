@@ -242,9 +242,16 @@ int64_t gbsvx(
 // -----------------------------------------------------------------------------
 /// Uses the LU factorization to compute the solution to a
 /// system of linear equations
-///     \f$ A   X = B, \f$
-///     \f$ A^T X = B, \f$ or
-///     \f$ A^H X = B, \f$
+/// \[
+///     A   X = B,
+/// \]
+/// \[
+///     A^T X = B,
+/// \]
+/// or
+/// \[
+///     A^H X = B,
+/// \]
 /// where A is a band matrix of order n with kl subdiagonals and ku
 /// superdiagonals, and X and B are n-by-nrhs matrices.
 ///
@@ -273,9 +280,9 @@ int64_t gbsvx(
 ///
 /// @param[in] trans
 ///     The form of the system of equations:
-///     - lapack::Op::NoTrans:   \f$ A   X = B \f$ (No transpose)
-///     - lapack::Op::Trans:     \f$ A^T X = B \f$ (Transpose)
-///     - lapack::Op::ConjTrans: \f$ A^H X = B \f$ (Conjugate transpose)
+///     - lapack::Op::NoTrans:   $A   X = B$ (No transpose)
+///     - lapack::Op::Trans:     $A^T X = B$ (Transpose)
+///     - lapack::Op::ConjTrans: $A^H X = B$ (Conjugate transpose)
 ///
 /// @param[in] n
 ///     The number of linear equations, i.e., the order of the
@@ -307,9 +314,9 @@ int64_t gbsvx(
 ///     or if fact = Equilibrate and equed = None on exit.
 ///
 ///     - On exit, if equed != None, A is scaled as follows:
-///       - equed = Row:  \f$ A := \text{diag}(R) \; A \f$
-///       - equed = Col:  \f$ A := A \; \text{diag}(C) \f$
-///       - equed = Both: \f$ A := \text{diag}(R) \; A \; \text{diag}(C). \f$
+///       - equed = Row:  $A := \text{diag}(R) \; A$
+///       - equed = Col:  $A := A \; \text{diag}(C)$
+///       - equed = Both: $A := \text{diag}(R) \; A \; \text{diag}(C).$
 ///
 /// @param[in] ldab
 ///     The leading dimension of the array AB. ldab >= kl+ku+1.
@@ -340,16 +347,16 @@ int64_t gbsvx(
 /// @param[in,out] ipiv
 ///     The vector ipiv of length n.
 ///     - If fact = Factored, then ipiv is an input argument and on entry
-///     contains the pivot indices from the factorization \f$ A = P L U \f$
+///     contains the pivot indices from the factorization $A = P L U$
 ///     as computed by `lapack::gbtrf`; row i of the matrix was interchanged
 ///     with row ipiv(i).
 ///
 ///     - If fact = NotFactored, then ipiv is an output argument and on exit
-///     contains the pivot indices from the factorization \f$ A = P L U \f$
+///     contains the pivot indices from the factorization $A = P L U$
 ///     of the original matrix A.
 ///
 ///     - If fact = Equilibrate, then ipiv is an output argument and on exit
-///     contains the pivot indices from the factorization \f$ A = P L U \f$
+///     contains the pivot indices from the factorization $A = P L U$
 ///     of the equilibrated matrix A.
 ///
 /// @param[in,out] equed
@@ -362,7 +369,7 @@ int64_t gbsvx(
 ///         Column equilibration, i.e., A has been postmultiplied by diag(C).
 ///     - lapack::Equed::Both:
 ///         Both row and column equilibration, i.e.,
-///         A has been replaced by \f$ \text{diag}(R) \; A \; \text{diag}(C). \f$
+///         A has been replaced by $\text{diag}(R) \; A \; \text{diag}(C).$
 ///     \n
 ///     equed is an input argument if fact = Factored; otherwise, it is an
 ///     output argument.
@@ -397,9 +404,9 @@ int64_t gbsvx(
 ///     On exit,
 ///     - if equed = None, B is not modified;
 ///     - if trans = NoTrans and equed = Row or Both, B is overwritten by
-///     \f$ \text{diag}(R) \; B; \f$
+///     $\text{diag}(R) \; B;$
 ///     - if trans = Trans or ConjTrans and equed = Col or Both, B is
-///     overwritten by \f$ \text{diag}(C) \; B. \f$
+///     overwritten by $\text{diag}(C) \; B.$
 ///
 /// @param[in] ldb
 ///     The leading dimension of the array B. ldb >= max(1,n).
@@ -409,8 +416,8 @@ int64_t gbsvx(
 ///     If successful or return value = n+1, the n-by-nrhs solution matrix X
 ///     to the original system of equations. Note that A and B are
 ///     modified on exit if equed != None, and the solution to the
-///     equilibrated system is \f$ \text{diag}(C)^{-1} X \f$ if trans = NoTrans and
-///     equed = Col or Both, or \f$ \text{diag}(R)^{-1} X \f$ if trans = Trans or ConjTrans
+///     equilibrated system is $\text{diag}(C)^{-1} X$ if trans = NoTrans and
+///     equed = Col or Both, or $\text{diag}(R)^{-1} X$ if trans = Trans or ConjTrans
 ///     and equed = Row or Both.
 ///
 /// @param[in] ldx

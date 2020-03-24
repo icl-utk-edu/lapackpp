@@ -73,10 +73,10 @@ int64_t unmhr(
 // -----------------------------------------------------------------------------
 /// Multiplies the general m-by-n matrix C by Q from `lapack::gehrd` as follows:
 ///
-/// - side = Left,  trans = NoTrans:   \f$ Q C \f$
-/// - side = Right, trans = NoTrans:   \f$ C Q \f$
-/// - side = Left,  trans = ConjTrans: \f$ Q^H C \f$
-/// - side = Right, trans = ConjTrans: \f$ C Q^H \f$
+/// - side = Left,  trans = NoTrans:   $Q C$
+/// - side = Right, trans = NoTrans:   $C Q$
+/// - side = Left,  trans = ConjTrans: $Q^H C$
+/// - side = Right, trans = ConjTrans: $C Q^H$
 ///
 /// where Q is a unitary matrix of order m if
 /// side = Left and order n if side = Right. Q is defined as the product of
@@ -90,12 +90,12 @@ int64_t unmhr(
 /// For real matrices, this is an alias for `lapack::ormhr`.
 ///
 /// @param[in] side
-///     - lapack::Side::Left:  apply \f$ Q \f$ or \f$ Q^H \f$ from the Left;
-///     - lapack::Side::Right: apply \f$ Q \f$ or \f$ Q^H \f$ from the Right.
+///     - lapack::Side::Left:  apply $Q$ or $Q^H$ from the Left;
+///     - lapack::Side::Right: apply $Q$ or $Q^H$ from the Right.
 ///
 /// @param[in] trans
-///     - lapack::Op::NoTrans:   apply \f$ Q   \f$ (No transpose)
-///     - lapack::Op::ConjTrans: apply \f$ Q^H \f$ (Conjugate transpose)
+///     - lapack::Op::NoTrans:   apply $Q  $ (No transpose)
+///     - lapack::Op::ConjTrans: apply $Q^H$ (Conjugate transpose)
 ///
 /// @param[in] m
 ///     The number of rows of the matrix C. m >= 0.
@@ -135,7 +135,7 @@ int64_t unmhr(
 ///     The m-by-n matrix C, stored in an ldc-by-n array.
 ///     On entry, the m-by-n matrix C.
 ///     On exit, C is overwritten by
-///     \f$ Q C \f$ or \f$ Q^H C \f$ or \f$ C Q^H \f$ or \f$ C Q \f$.
+///     $Q C$ or $Q^H C$ or $C Q^H$ or $C Q$.
 ///
 /// @param[in] ldc
 ///     The leading dimension of the array C. ldc >= max(1,m).

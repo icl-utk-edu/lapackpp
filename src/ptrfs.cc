@@ -168,8 +168,8 @@ int64_t ptrfs(
 ///     Whether the superdiagonal or the subdiagonal of the
 ///     tridiagonal matrix A is stored and the form of the
 ///     factorization:
-///     - lapack::Uplo::Upper: E is the superdiagonal of A, and \f$ A = U^H D U; \f$
-///     - lapack::Uplo::Lower: E is the subdiagonal   of A, and \f$ A = L D L^H. \f$
+///     - lapack::Uplo::Upper: E is the superdiagonal of A, and $A = U^H D U;$
+///     - lapack::Uplo::Lower: E is the subdiagonal   of A, and $A = L D L^H.$
 ///     \n
 ///     (The two forms are equivalent if A is real.)
 ///

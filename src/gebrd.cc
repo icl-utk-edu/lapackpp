@@ -178,7 +178,7 @@ int64_t gebrd(
 
 // -----------------------------------------------------------------------------
 /// Reduces a general m-by-n matrix A to upper or lower
-/// bidiagonal form B by a unitary transformation: \f$ Q^H A P = B \f$.
+/// bidiagonal form B by a unitary transformation: $Q^H A P = B$.
 ///
 /// If m >= n, B is upper bidiagonal; if m < n, B is lower bidiagonal.
 ///
@@ -262,10 +262,10 @@ int64_t gebrd(
 ///     G(i) = I - \tau_p u u^H
 /// \]
 ///
-/// where \f$ \tau_q \f$ and \f$ \tau_p \f$ are scalars, and v and u are
+/// where $\tau_q$ and $\tau_p$ are scalars, and v and u are
 /// vectors; v(1:i-1) = 0, v(i) = 1, and v(i+1:m) is stored on exit in
 /// A(i+1:m,i); u(1:i) = 0, u(i+1) = 1, and u(i+2:n) is stored on exit in
-/// A(i,i+2:n); \f$ \tau_q \f$ is stored in tauq(i) and \f$ \tau_p \f$ in taup(i).
+/// A(i,i+2:n); $\tau_q$ is stored in tauq(i) and $\tau_p$ in taup(i).
 ///
 /// If m < n,
 /// \[
@@ -285,10 +285,10 @@ int64_t gebrd(
 ///     G(i) = I - \tau_p u u^H
 /// \]
 ///
-/// where \f$ \tau_q \f$ and \f$ \tau_p \f$ are scalars, and v and u are
+/// where $\tau_q$ and $\tau_p$ are scalars, and v and u are
 /// vectors; v(1:i) = 0, v(i+1) = 1, and v(i+2:m) is stored on exit in
 /// A(i+2:m,i); u(1:i-1) = 0, u(i) = 1, and u(i+1:n) is stored on exit in
-/// A(i,i+1:n); \f$ \tau_q \f$ is stored in tauq(i) and \f$ \tau_p \f$ in taup(i).
+/// A(i,i+1:n); $\tau_q$ is stored in tauq(i) and $\tau_p$ in taup(i).
 ///
 /// The contents of A on exit are illustrated by the following examples:
 ///

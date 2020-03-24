@@ -112,13 +112,13 @@ int64_t gtsv(
 
 // -----------------------------------------------------------------------------
 /// Solves the equation
-///
-///     \f$ A X = B, \f$
-///
+/// \[
+///     A X = B,
+/// \]
 /// where A is an n-by-n tridiagonal matrix, by Gaussian elimination with
 /// partial pivoting.
 ///
-/// Note that the equation \f$ A^T X = B \f$ may be solved by interchanging the
+/// Note that the equation $A^T X = B$ may be solved by interchanging the
 /// order of the arguments DU and DL.
 ///
 /// Overloaded versions are available for

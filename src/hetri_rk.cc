@@ -79,13 +79,16 @@ int64_t hetri_rk(
 // -----------------------------------------------------------------------------
 /// Computes the inverse of a Hermitian indefinite
 /// matrix A using the factorization computed by `lapack::hetrf_rk`:
-///
-///     \f$ A = P U D U^H P^T \f$ or
-///     \f$ A = P L D L^H P^T, \f$
-///
+/// \[
+///     A = P U D U^H P^T
+/// \]
+/// or
+/// \[
+///     A = P L D L^H P^T,
+/// \]
 /// where U (or L) is unit upper (or lower) triangular matrix,
-/// \f$ U^H \f$ (or \f$ L^H \f$) is the conjugate of U (or L), P is a permutation
-/// matrix, \f$ P^T \f$ is the transpose of P, and D is Hermitian and block
+/// $U^H$ (or $L^H$) is the conjugate of U (or L), P is a permutation
+/// matrix, $P^T$ is the transpose of P, and D is Hermitian and block
 /// diagonal with 1-by-1 and 2-by-2 diagonal blocks.
 ///
 /// This is the blocked version of the algorithm, calling Level 3 BLAS.

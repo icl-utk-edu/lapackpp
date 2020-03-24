@@ -227,7 +227,7 @@ int64_t porfsx(
 ///     - lapack::Equed::None: No equilibration
 ///     - lapack::Equed::Yes:
 ///         Both row and column equilibration, i.e.,
-///         A has been replaced by \f$ \text{diag}(S) \; A \; \text{diag}(S). \f$
+///         A has been replaced by $\text{diag}(S) \; A \; \text{diag}(S).$
 ///         The right hand side B has been changed accordingly.
 ///
 /// @param[in] n
@@ -256,7 +256,7 @@ int64_t porfsx(
 /// @param[in] AF
 ///     The n-by-n matrix AF, stored in an ldaf-by-n array.
 ///     The triangular factor U or L from the Cholesky factorization
-///     \f$ A = U^T U \f$ or \f$ A = L L^T, \f$ as computed by `lapack::potrf`.
+///     $A = U^T U$ or $A = L L^T,$ as computed by `lapack::potrf`.
 ///
 /// @param[in] ldaf
 ///     The leading dimension of the array AF. ldaf >= max(1,n).
@@ -343,9 +343,9 @@ int64_t porfsx(
 ///         reciprocal condition number. Compared with the threshold
 ///         sqrt(n) * dlamch('Epsilon') to determine if the error
 ///         estimate is "guaranteed". These reciprocal condition
-///         numbers are \f$ 1 / (|| Z^{-1} ||_{inf} \cdot || Z ||_{inf}) \f$ for some
+///         numbers are $1 / (|| Z^{-1} ||_{inf} \cdot || Z ||_{inf})$ for some
 ///         appropriately scaled matrix Z.
-///         Let \f$ Z = S A, \f$ where S scales each row by a power of the
+///         Let $Z = S A,$ where S scales each row by a power of the
 ///         radix so all absolute row sums of Z are approximately 1.
 ///
 ///     - See Lapack Working Note 165 for further details and extra
@@ -388,11 +388,11 @@ int64_t porfsx(
 ///         reciprocal condition number. Compared with the threshold
 ///         sqrt(n) * dlamch('Epsilon') to determine if the error
 ///         estimate is "guaranteed". These reciprocal condition
-///         numbers are \f$ 1 / (|| Z^{-1} ||_{inf} \cdot || Z ||_{inf}) \f$ for some
+///         numbers are $1 / (|| Z^{-1} ||_{inf} \cdot || Z ||_{inf})$ for some
 ///         appropriately scaled matrix Z.
-///         Let \f$ Z = S A \; \text{diag}(x), \f$ where x is the solution for the
+///         Let $Z = S A \; \text{diag}(x),$ where x is the solution for the
 ///         current right-hand side and S scales each row of
-///         \f$ A \; \text{diag}(x) \f$ by a power of the radix so all absolute row
+///         $A \; \text{diag}(x)$ by a power of the radix so all absolute row
 ///         sums of Z are approximately 1.
 ///
 ///     - See Lapack Working Note 165 for further details and extra

@@ -99,8 +99,8 @@ int64_t ppequ(
 /// Computes row and column scalings intended to equilibrate a
 /// Hermitian positive definite matrix A in packed storage and reduce
 /// its condition number (with respect to the two-norm). S contains the
-/// scale factors, \f$ S_i = 1 / \sqrt{ A_{i,i} }, \f$ chosen so that the scaled matrix
-/// B with elements \f$ B_{i,j} = S_{i} A_{i,j} S_{j} \f$ has ones on the diagonal.
+/// scale factors, $S_i = 1 / \sqrt{ A_{i,i} },$ chosen so that the scaled matrix
+/// B with elements $B_{i,j} = S_{i} A_{i,j} S_{j}$ has ones on the diagonal.
 /// This choice of S puts the condition number of B within a factor n of
 /// the smallest possible condition number over all possible diagonal
 /// scalings.

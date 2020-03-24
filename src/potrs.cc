@@ -108,9 +108,9 @@ int64_t potrs(
 }
 
 // -----------------------------------------------------------------------------
-/// Solves a system of linear equations \f$ A X = B \f$ with a Hermitian
+/// Solves a system of linear equations $A X = B$ with a Hermitian
 /// positive definite matrix A using the Cholesky factorization
-/// \f$ A = U^H U \f$ or \f$ A = L L^H \f$ computed by `lapack::potrf`.
+/// $A = U^H U$ or $A = L L^H$ computed by `lapack::potrf`.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -129,7 +129,7 @@ int64_t potrs(
 /// @param[in] A
 ///     The n-by-n matrix A, stored in an lda-by-n array.
 ///     The triangular factor U or L from the Cholesky factorization
-///     \f$ A = U^H U \f$ or \f$ A = L L^H \f$, as computed by `lapack::potrf`.
+///     $A = U^H U$ or $A = L L^H$, as computed by `lapack::potrf`.
 ///
 /// @param[in] lda
 ///     The leading dimension of the array A. lda >= max(1,n).

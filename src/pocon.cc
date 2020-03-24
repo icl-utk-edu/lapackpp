@@ -113,7 +113,7 @@ int64_t pocon(
 // -----------------------------------------------------------------------------
 /// Estimates the reciprocal of the condition number (in the
 /// 1-norm) of a Hermitian positive definite matrix using the
-/// Cholesky factorization \f$ A = U^H U \f$ or \f$ A = L L^H \f$ computed by `lapack::potrf`.
+/// Cholesky factorization $A = U^H U$ or $A = L L^H$ computed by `lapack::potrf`.
 ///
 /// An estimate is obtained for norm(inv(A)), and the reciprocal of the
 /// condition number is computed as rcond = 1 / (anorm * norm(inv(A))).
@@ -131,7 +131,7 @@ int64_t pocon(
 /// @param[in] A
 ///     The n-by-n matrix A, stored in an lda-by-n array.
 ///     The triangular factor U or L from the Cholesky factorization
-///     \f$ A = U^H U \f$ or \f$ A = L L^H \f$, as computed by `lapack::potrf`.
+///     $A = U^H U$ or $A = L L^H$, as computed by `lapack::potrf`.
 ///
 /// @param[in] lda
 ///     The leading dimension of the array A. lda >= max(1,n).

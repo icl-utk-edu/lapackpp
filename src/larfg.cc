@@ -95,7 +95,7 @@ void larfg(
         H^H H = I.
     \]
 */
-/// where \f$ \alpha \f$ and \f$ \beta \f$ are scalars, with \f$ \beta \f$ real,
+/// where $\alpha$ and $\beta$ are scalars, with $\beta$ real,
 /// and x is an (n-1)-element vector. H is represented in the form
 /**
     \[
@@ -109,13 +109,13 @@ void larfg(
         \end{array} \right],
     \]
 */
-/// where \f$ \tau \f$ is a scalar and v is a (n-1)-element
+/// where $\tau$ is a scalar and v is a (n-1)-element
 /// vector. For complex H, note that H is not hermitian.
 ///
-/// If the elements of x are all zero and alpha is real, then \f$ \tau = 0 \f$
+/// If the elements of x are all zero and alpha is real, then $\tau = 0$
 /// and H is taken to be the unit matrix.
 ///
-/// Otherwise \f$ 1 \le \text{real}(\tau) \le 2 \f$ and \f$ |\tau - 1| \le 1. \f$
+/// Otherwise $1 \le \text{real}(\tau) \le 2$ and $|\tau - 1| \le 1.$
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.

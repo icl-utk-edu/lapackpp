@@ -152,8 +152,8 @@ int64_t gtcon(
 /// tridiagonal matrix A using the LU factorization as computed by
 /// `lapack::gttrf`.
 ///
-/// An estimate is obtained for \f$ || A^{-1} ||, \f$ and the reciprocal of the
-/// condition number is computed as  \f$ \text{rcond} = 1 / (|| A || \cdot || A^{-1} ||). \f$
+/// An estimate is obtained for $|| A^{-1} ||,$ and the reciprocal of the
+/// condition number is computed as  $\text{rcond} = 1 / (|| A || \cdot || A^{-1} ||).$
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -199,7 +199,7 @@ int64_t gtcon(
 /// @param[out] rcond
 ///     The reciprocal of the condition number of the matrix A,
 ///     computed as rcond = 1/(anorm * ainv_norm), where ainv_norm is an
-///     estimate of the 1-norm or infinity-norm of \f$ A^{-1} \f$ computed in this routine.
+///     estimate of the 1-norm or infinity-norm of $A^{-1}$ computed in this routine.
 ///
 /// @retval = 0: successful exit
 ///

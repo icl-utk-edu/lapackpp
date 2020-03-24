@@ -88,8 +88,8 @@ int64_t pptrf(
 /// positive definite matrix A stored in packed format.
 ///
 /// The factorization has the form
-///     \f$ A = U^H U, \f$ if uplo = Upper, or
-///     \f$ A = L L^H, \f$ if uplo = Lower,
+///     $A = U^H U,$ if uplo = Upper, or
+///     $A = L L^H,$ if uplo = Lower,
 /// where U is an upper triangular matrix and L is lower triangular.
 ///
 /// Overloaded versions are available for
@@ -113,7 +113,7 @@ int64_t pptrf(
 ///         See below for further details.
 ///
 ///     - On successful exit, the triangular factor U or L from the
-///     Cholesky factorization \f$ A = U^H U \f$ or \f$ A = L L^H, \f$ in the same
+///     Cholesky factorization $A = U^H U$ or $A = L L^H,$ in the same
 ///     storage format as A.
 ///
 /// @retval = 0: successful exit

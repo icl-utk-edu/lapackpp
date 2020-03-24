@@ -181,10 +181,13 @@ int64_t sytrf_aa(
 // -----------------------------------------------------------------------------
 /// Computes the factorization of a symmetric matrix A
 /// using the Aasen's algorithm. The form of the factorization is
-///
-///     \f$ A = U T U^T \f$ or
-///     \f$ A = L T L^T \f$
-///
+/// \[
+///     A = U T U^T
+/// \]
+/// or
+/// \[
+///     A = L T L^T
+/// \]
 /// where U (or L) is a product of permutation and unit upper (lower)
 /// triangular matrices, and T is a symmetric tridiagonal matrix.
 ///

@@ -152,9 +152,9 @@ int64_t sytrs_aa(
 }
 
 // -----------------------------------------------------------------------------
-/// Solves a system of linear equations \f$ A X = B \f$ with a
-/// symmetric matrix A using the factorization \f$ A = U T U^T \f$ or
-/// \f$ A = L T L^T \f$ computed by `lapack::sytrf_aa`.
+/// Solves a system of linear equations $A X = B$ with a
+/// symmetric matrix A using the factorization $A = U T U^T$ or
+/// $A = L T L^T$ computed by `lapack::sytrf_aa`.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -164,8 +164,8 @@ int64_t sytrs_aa(
 /// @param[in] uplo
 ///     Whether the details of the factorization are stored
 ///     as an upper or lower triangular matrix.
-///     - lapack::Uplo::Upper: Upper triangular, form is \f$ A = U T U^T; \f$
-///     - lapack::Uplo::Lower: Lower triangular, form is \f$ A = L T L^T. \f$
+///     - lapack::Uplo::Upper: Upper triangular, form is $A = U T U^T;$
+///     - lapack::Uplo::Lower: Lower triangular, form is $A = L T L^T.$
 ///
 /// @param[in] n
 ///     The order of the matrix A. n >= 0.

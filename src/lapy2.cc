@@ -23,7 +23,7 @@ float lapy2(
 }
 
 // -----------------------------------------------------------------------------
-/// Returns \f$ \sqrt{ x^2 + y^2 }, \f$ taking care not to cause unnecessary
+/// Returns $\sqrt{ x^2 + y^2 },$ taking care not to cause unnecessary
 /// overflow.
 ///
 /// Overloaded versions are available for

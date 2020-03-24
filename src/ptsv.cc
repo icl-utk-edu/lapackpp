@@ -106,10 +106,10 @@ int64_t ptsv(
 
 // -----------------------------------------------------------------------------
 /// Computes the solution to a system of linear equations
-/// \f$ A X = B, \f$ where A is an n-by-n Hermitian positive definite tridiagonal
+/// $A X = B,$ where A is an n-by-n Hermitian positive definite tridiagonal
 /// matrix, and X and B are n-by-nrhs matrices.
 ///
-/// A is factored as \f$ A = L D L^H, \f$ and the factored form of A is then
+/// A is factored as $A = L D L^H,$ and the factored form of A is then
 /// used to solve the system of equations.
 ///
 /// Overloaded versions are available for
@@ -126,15 +126,15 @@ int64_t ptsv(
 ///     The vector D of length n.
 ///     On entry, the n diagonal elements of the tridiagonal matrix
 ///     A. On exit, the n diagonal elements of the diagonal matrix
-///     D from the factorization \f$ A = L D L^H. \f$
+///     D from the factorization $A = L D L^H.$
 ///
 /// @param[in,out] E
 ///     The vector E of length n-1.
 ///     On entry, the (n-1) subdiagonal elements of the tridiagonal
 ///     matrix A. On exit, the (n-1) subdiagonal elements of the
-///     unit bidiagonal factor L from the \f$ L D L^H \f$ factorization of
+///     unit bidiagonal factor L from the $L D L^H$ factorization of
 ///     A. E can also be regarded as the superdiagonal of the unit
-///     bidiagonal factor U from the \f$ U^H D U \f$ factorization of A.
+///     bidiagonal factor U from the $U^H D U$ factorization of A.
 ///
 /// @param[in,out] B
 ///     The n-by-nrhs matrix B, stored in an ldb-by-nrhs array.

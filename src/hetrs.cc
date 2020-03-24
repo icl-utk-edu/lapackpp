@@ -55,9 +55,9 @@ int64_t hetrs(
 }
 
 // -----------------------------------------------------------------------------
-/// Solves a system of linear equations \f$ A X = B \f$ with a
-/// Hermitian matrix A using the factorization \f$ A = U D U^H \f$ or
-/// \f$ A = L D L^H \f$ computed by `lapack::hetrf`.
+/// Solves a system of linear equations $A X = B$ with a
+/// Hermitian matrix A using the factorization $A = U D U^H$ or
+/// $A = L D L^H$ computed by `lapack::hetrf`.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -69,8 +69,8 @@ int64_t hetrs(
 /// @param[in] uplo
 ///     Whether the details of the factorization are stored
 ///     as an upper or lower triangular matrix.
-///     - lapack::Uplo::Upper: Upper triangular, form is \f$ A = U D U^H; \f$
-///     - lapack::Uplo::Lower: Lower triangular, form is \f$ A = L D L^H. \f$
+///     - lapack::Uplo::Upper: Upper triangular, form is $A = U D U^H;$
+///     - lapack::Uplo::Lower: Lower triangular, form is $A = L D L^H.$
 ///
 /// @param[in] n
 ///     The order of the matrix A. n >= 0.

@@ -180,7 +180,7 @@ int64_t pprfs(
 /// @param[in] AFP
 ///     The vector AFP of length n*(n+1)/2.
 ///     The triangular factor U or L from the Cholesky factorization
-///     \f$ A = U^H U \f$ or \f$ A = L L^H, \f$ as computed by `lapack::pptrf`,
+///     $A = U^H U$ or $A = L L^H,$ as computed by `lapack::pptrf`,
 ///     packed columnwise in a linear array in the same format as A
 ///     (see AP).
 ///

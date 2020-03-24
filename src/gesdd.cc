@@ -219,14 +219,14 @@ int64_t gesdd(
 ///     A = U \Sigma V^H
 /// \]
 ///
-/// where \f$ \Sigma \f$ is an m-by-n matrix which is zero except for its
+/// where $\Sigma$ is an m-by-n matrix which is zero except for its
 /// min(m,n) diagonal elements, U is an m-by-m unitary matrix, and
-/// V is an n-by-n unitary matrix. The diagonal elements of \f$ \Sigma \f$
+/// V is an n-by-n unitary matrix. The diagonal elements of $\Sigma$
 /// are the singular values of A; they are real and non-negative, and
 /// are returned in descending order. The first min(m,n) columns of
 /// U and V are the left and right singular vectors of A.
 ///
-/// Note that the routine returns VT \f$ = V^H \f$, not V.
+/// Note that the routine returns VT $= V^H$, not V.
 ///
 /// The divide and conquer algorithm makes very mild assumptions about
 /// floating point arithmetic. It will work on machines with a guard
@@ -241,22 +241,22 @@ int64_t gesdd(
 /// @param[in] jobz
 ///     Specifies options for computing all or part of the matrix U:
 ///     - lapack::Job::AllVec:
-///         all m columns of U and all n rows of \f$ V^H \f$ are
+///         all m columns of U and all n rows of $V^H$ are
 ///         returned in the arrays U and VT;
 ///     - lapack::Job::SomeVec:
 ///         the first min(m,n) columns of U and the first
-///         min(m,n) rows of \f$ V^H \f$ are returned in the arrays U
+///         min(m,n) rows of $V^H$ are returned in the arrays U
 ///         and VT;
 ///     - lapack::Job::OverwriteVec:
 ///         + If m >= n, the first n columns of U are overwritten
-///           in the array A and all rows of \f$ V^H \f$ are returned in
+///           in the array A and all rows of $V^H$ are returned in
 ///           the array VT;
 ///
 ///         + otherwise, all columns of U are returned in the
-///           array U and the first m rows of \f$ V^H \f$ are overwritten
+///           array U and the first m rows of $V^H$ are overwritten
 ///           in the array A;
 ///     - lapack::Job::NoVec:
-///         no columns of U or rows of \f$ V^H \f$ are computed.
+///         no columns of U or rows of $V^H$ are computed.
 ///
 /// @param[in] m
 ///     The number of rows of the input matrix A. m >= 0.
@@ -273,7 +273,7 @@ int64_t gesdd(
 ///         of U (the left singular vectors, stored
 ///         columnwise);
 ///       + if m < n, A is overwritten with the first m rows
-///         of \f$ V^H \f$ (the right singular vectors, stored
+///         of $V^H$ (the right singular vectors, stored
 ///         rowwise).
 ///     - Otherwise, the contents of A are destroyed.
 ///
@@ -302,10 +302,10 @@ int64_t gesdd(
 /// @param[out] VT
 ///     The vrow-by-n matrix VT, stored in an ldvt-by-n array.
 ///     - If jobz = AllVec or (jobz = OverwriteVec and m >= n),
-///       vrow = n and VT contains the n-by-n unitary matrix \f$ V^H \f$;
+///       vrow = n and VT contains the n-by-n unitary matrix $V^H$;
 ///
 ///     - if jobz = SomeVec, vrow = min(m,n) and VT contains the first min(m,n)
-///       rows of \f$ V^H \f$ (the right singular vectors, stored rowwise);
+///       rows of $V^H$ (the right singular vectors, stored rowwise);
 ///
 ///     - if (jobz = OverwriteVec and m < n), or jobz = NoVec,
 ///       VT is not referenced.

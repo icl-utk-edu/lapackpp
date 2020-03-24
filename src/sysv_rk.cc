@@ -210,21 +210,23 @@ int64_t sysv_rk(
 
 // -----------------------------------------------------------------------------
 /// Computes the solution to a system of linear equations
-///     \f$ A X = B, \f$
+/// \[
+///     A X = B,
+/// \]
 /// where A is an n-by-n symmetric matrix and X and B are n-by-nrhs matrices.
 ///
 /// The bounded Bunch-Kaufman (rook) diagonal pivoting method is used
 /// to factor A as
-///     \f$ A = P U D U^T P^T, \f$ if uplo = Upper, or
-///     \f$ A = P L D L^T P^T, \f$ if uplo = Lower,
+///     $A = P U D U^T P^T$, if uplo = Upper, or
+///     $A = P L D L^T P^T$, if uplo = Lower,
 /// where U (or L) is unit upper (or lower) triangular matrix,
-/// \f$ U^T \f$ (or \f$ L^T \f$) is the transpose of U (or L), P is a permutation
-/// matrix, \f$ P^T \f$ is the transpose of P, and D is symmetric and block
+/// $U^T$ (or $L^T$) is the transpose of U (or L), P is a permutation
+/// matrix, $P^T$ is the transpose of P, and D is symmetric and block
 /// diagonal with 1-by-1 and 2-by-2 diagonal blocks.
 ///
 /// `lapack::sytrf_rk` is called to compute the factorization of a
 /// symmetric matrix. The factored form of A is then used to solve
-/// the system of equations \f$ A X = B \f$ by calling `lapack::sytrs_rk`.
+/// the system of equations $A X = B$ by calling `lapack::sytrs_rk`.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.

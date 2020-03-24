@@ -91,7 +91,7 @@ int64_t potri(
 
 // -----------------------------------------------------------------------------
 /// Computes the inverse of a Hermitian positive definite
-/// matrix A using the Cholesky factorization \f$ A = U^H U \f$ or \f$ A = L L^H \f$
+/// matrix A using the Cholesky factorization $A = U^H U$ or $A = L L^H$
 /// computed by `lapack::potrf`.
 ///
 /// Overloaded versions are available for
@@ -107,7 +107,7 @@ int64_t potri(
 /// @param[in,out] A
 ///     The n-by-n matrix A, stored in an lda-by-n array.
 ///     On entry, the triangular factor U or L from the Cholesky
-///     factorization \f$ A = U^H U \f$ or \f$ A = L L^H, \f$ as computed by
+///     factorization $A = U^H U$ or $A = L L^H,$ as computed by
 ///     `lapack::potrf`.
 ///     On exit, the upper or lower triangle of the (Hermitian)
 ///     inverse of A, overwriting the input factor U or L.

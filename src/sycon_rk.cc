@@ -148,17 +148,20 @@ int64_t sycon_rk(
 /// Estimates the reciprocal of the condition number (in the
 /// 1-norm) of a symmetric matrix A using the factorization
 /// computed by `lapack::sytrf_rk`:
-///
-///     \f$ A = P U D U^T P^T \f$ or
-///     \f$ A = P L D L^T P^T, \f$
-///
+/// \[
+///     A = P U D U^T P^T,
+/// \]
+/// or
+/// \[
+///     A = P L D L^T P^T,
+/// \]
 /// where U (or L) is unit upper (or lower) triangular matrix,
-/// \f$ U^T \f$ (or \f$ L^T \f$) is the transpose of U (or L), P is a permutation
-/// matrix, \f$ P^T \f$ is the transpose of P, and D is symmetric and block
+/// $U^T$ (or $L^T$) is the transpose of U (or L), P is a permutation
+/// matrix, $P^T$ is the transpose of P, and D is symmetric and block
 /// diagonal with 1-by-1 and 2-by-2 diagonal blocks.
 ///
-/// An estimate is obtained for \f$ || A^{-1} ||_1, \f$ and the reciprocal of the
-/// condition number is computed as \f$ \text{rcond} = 1 / (|| A ||_1 * || A^{-1} ||_1). \f$
+/// An estimate is obtained for $|| A^{-1} ||_1,$ and the reciprocal of the
+/// condition number is computed as $\text{rcond} = 1 / (|| A ||_1 * || A^{-1} ||_1).$
 /// This routine uses the BLAS-3 solver `lapack::hetrs_rk`.
 ///
 /// Overloaded versions are available for
@@ -171,8 +174,8 @@ int64_t sycon_rk(
 /// @param[in] uplo
 ///     Specifies whether the details of the factorization are
 ///     stored as an upper or lower triangular matrix:
-///     - lapack::Uplo::Upper: Upper triangular, form is \f$ A = P U D U^T P^T; \f$
-///     - lapack::Uplo::Lower: Lower triangular, form is \f$ A = P L D L^T P^T. \f$
+///     - lapack::Uplo::Upper: Upper triangular, form is $A = P U D U^T P^T;$
+///     - lapack::Uplo::Lower: Lower triangular, form is $A = P L D L^T P^T.$
 ///
 /// @param[in] n
 ///     The order of the matrix A. n >= 0.
@@ -214,7 +217,7 @@ int64_t sycon_rk(
 /// @param[out] rcond
 ///     The reciprocal of the condition number of the matrix A,
 ///     computed as rcond = 1/(anorm * ainv_norm), where ainv_norm is an
-///     estimate of the 1-norm of \f$ A^{-1} \f$ computed in this routine.
+///     estimate of the 1-norm of $A^{-1}$ computed in this routine.
 ///
 /// @retval = 0: successful exit
 ///

@@ -96,8 +96,8 @@ int64_t potrf2(
 /// positive definite matrix A using the recursive algorithm.
 ///
 /// The factorization has the form
-///     \f$ A = U^H U, \f$ if uplo = Upper, or
-///     \f$ A = L L^H, \f$ if uplo = Lower,
+///     $A = U^H U,$ if uplo = Upper, or
+///     $A = L L^H,$ if uplo = Lower,
 /// where U is an upper triangular matrix and L is lower triangular.
 ///
 /// This is the recursive version of the algorithm. It divides
@@ -109,12 +109,12 @@ int64_t potrf2(
             A_{21}  &  A_{22}  \\
         \end{array} \right]
     \]
-    where \f$ A_{11} \f$ is n1-by-n1 and \f$ A_{22} \f$ is n2-by-n2,
+    where $A_{11}$ is n1-by-n1 and $A_{22}$ is n2-by-n2,
     with n1 = n/2 and n2 = n-n1.
-    The subroutine calls itself to factor \f$ A_{11}, \f$
-    updates and scales \f$ A_{21} \f$ or \f$ A_{12}, \f$
-    updates \f$ A_{22}, \f$
-    and calls itself to factor \f$ A_{22}. \f$
+    The subroutine calls itself to factor $A_{11},$
+    updates and scales $A_{21}$ or $A_{12},$
+    updates $A_{22},$
+    and calls itself to factor $A_{22}.$
 */
 ///
 /// Overloaded versions are available for
@@ -141,7 +141,7 @@ int64_t potrf2(
 ///     triangular part of A is not referenced.
 ///
 ///     - On successful exit, the factor U or L from the Cholesky
-///     factorization \f$ A = U^H U \f$ or \f$ A = L L^H. \f$
+///     factorization $A = U^H U$ or $A = L L^H.$
 ///
 /// @param[in] lda
 ///     The leading dimension of the array A. lda >= max(1,n).

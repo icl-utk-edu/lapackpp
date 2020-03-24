@@ -216,7 +216,7 @@ int64_t gelsy(
 // -----------------------------------------------------------------------------
 /// Computes the minimum-norm solution to a complex linear least
 /// squares problem:
-///     minimize \f$ || A X - B ||_2 \f$
+///     minimize $|| A X - B ||_2$
 /// using a complete orthogonal factorization of A. A is an m-by-n
 /// matrix which may be rank-deficient.
 ///
@@ -259,7 +259,7 @@ int64_t gelsy(
         \end{array} \right],
     \]
 */
-/// where \f$ Q_1 \f$ consists of the first rank columns of Q.
+/// where $Q_1$ consists of the first rank columns of Q.
 ///
 /// This routine is basically identical to the original gelsx except
 /// three differences:
@@ -303,7 +303,7 @@ int64_t gelsy(
 ///     The vector jpvt of length n.
 ///     On entry, if jpvt(i) != 0, the i-th column of A is permuted
 ///     to the front of AP, otherwise column i is a free column.
-///     On exit, if jpvt(i) = k, then the i-th column of \f$ A P \f$
+///     On exit, if jpvt(i) = k, then the i-th column of $A P$
 ///     was the k-th column of A.
 ///
 /// @param[in] rcond

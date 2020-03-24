@@ -109,16 +109,16 @@ int64_t posv(
 
 // -----------------------------------------------------------------------------
 /// Computes the solution to a system of linear equations
-///     \f$ A X = B \f$,
+///     $A X = B$,
 /// where A is an n-by-n Hermitian positive definite matrix and X and B
 /// are n-by-nrhs matrices.
 ///
 /// The Cholesky decomposition is used to factor A as
-///     \f$ A = U^H U \f$, if uplo = Upper, or
-///     \f$ A = L L^H \f$, if uplo = Lower,
+///     $A = U^H U$, if uplo = Upper, or
+///     $A = L L^H$, if uplo = Lower,
 /// where U is an upper triangular matrix and L is a lower triangular
 /// matrix. The factored form of A is then used to solve the system of
-/// equations \f$ A X = B \f$.
+/// equations $A X = B$.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -149,7 +149,7 @@ int64_t posv(
 ///     triangular part of A is not referenced.
 ///
 ///     - On successful exit, the factor U or L from the Cholesky
-///     factorization \f$ A = U^H U \f$  or \f$ A = L L^H \f$ .
+///     factorization $A = U^H U$  or $A = L L^H$ .
 ///
 /// @param[in] lda
 ///     The leading dimension of the array A. lda >= max(1,n).

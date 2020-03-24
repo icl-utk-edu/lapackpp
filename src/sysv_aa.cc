@@ -201,16 +201,16 @@ int64_t sysv_aa(
 
 // -----------------------------------------------------------------------------
 /// Computes the solution to a system of linear equations
-///     \f$ A X = B \f$,
+///     $A X = B$,
 /// where A is an n-by-n symmetric matrix and X and B are n-by-nrhs
 /// matrices.
 ///
 /// Aasen's algorithm is used to factor A as
-///     \f$ A = U T U^T \f$, if uplo = Upper, or
-///     \f$ A = L T L^T \f$, if uplo = Lower,
+///     $A = U T U^T$, if uplo = Upper, or
+///     $A = L T L^T$, if uplo = Lower,
 /// where U (or L) is a product of permutation and unit upper (lower)
 /// triangular matrices, and T is symmetric tridiagonal. The factored
-/// form of A is then used to solve the system of equations \f$ A X = B \f$.
+/// form of A is then used to solve the system of equations $A X = B$.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -244,7 +244,7 @@ int64_t sysv_aa(
 ///
 ///     - On successful exit, the tridiagonal matrix T and the
 ///     multipliers used to obtain the factor U or L from the
-///     factorization \f$ A = U T U^T \f$ or \f$ A = L T L^T \f$ as computed by
+///     factorization $A = U T U^T$ or $A = L T L^T$ as computed by
 ///     `lapack::sytrf`.
 ///
 /// @param[in] lda

@@ -119,11 +119,11 @@ int64_t pbcon(
 // -----------------------------------------------------------------------------
 /// Estimates the reciprocal of the condition number (in the
 /// 1-norm) of a Hermitian positive definite band matrix using
-/// the Cholesky factorization \f$ A = U^H U \f$ or \f$ A = L L^H \f$ computed by
+/// the Cholesky factorization $A = U^H U$ or $A = L L^H$ computed by
 /// `lapack::pbtrf`.
 ///
-/// An estimate is obtained for \f$ || A^{-1} ||, \f$ and the reciprocal of the
-/// condition number is computed as \f$ \text{rcond} = 1 / (||A||_1 \cdot || A^{-1} ||_1). \f$
+/// An estimate is obtained for $|| A^{-1} ||,$ and the reciprocal of the
+/// condition number is computed as $\text{rcond} = 1 / (||A||_1 \cdot || A^{-1} ||_1).$
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -143,7 +143,7 @@ int64_t pbcon(
 /// @param[in] AB
 ///     The n-by-n band matrix AB, stored in an ldab-by-n array.
 ///     The triangular factor U or L from the Cholesky factorization
-///     \f$ A = U^H U \f$ or \f$ A = L L^H \f$ of the band matrix A, stored in the
+///     $A = U^H U$ or $A = L L^H$ of the band matrix A, stored in the
 ///     first kd+1 rows of the array. The j-th column of U or L is
 ///     stored in the j-th column of the array AB as follows:
 ///     - if uplo = Upper, AB(kd+1+i-j,j) = U(i,j) for max(1,j-kd) <= i <= j;

@@ -196,13 +196,16 @@ int64_t sytrf_rk(
 // -----------------------------------------------------------------------------
 /// Computes the factorization of a symmetric matrix A
 /// using the bounded Bunch-Kaufman (rook) diagonal pivoting method:
-///
-///     \f$ A = P U D U^T P^T \f$ or
-///     \f$ A = P L D L^T P^T, \f$
-///
+/// \[
+///     A = P U D U^T P^T
+/// \]
+/// or
+/// \[
+///     A = P L D L^T P^T,
+/// \]
 /// where U (or L) is unit upper (or lower) triangular matrix,
-/// \f$ U^T \f$ (or \f$ L^T \f$) is the transpose of U (or L), P is a permutation
-/// matrix, \f$ P^T \f$ is the transpose of P, and D is symmetric and block
+/// $U^T$ (or $L^T$) is the transpose of U (or L), P is a permutation
+/// matrix, $P^T$ is the transpose of P, and D is symmetric and block
 /// diagonal with 1-by-1 and 2-by-2 diagonal blocks.
 ///
 /// This is the blocked version of the algorithm, calling Level 3 BLAS.

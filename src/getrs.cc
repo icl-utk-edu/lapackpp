@@ -139,9 +139,16 @@ int64_t getrs(
 
 // -----------------------------------------------------------------------------
 /// Solves a system of linear equations
-///     \f$ A   X = B \f$,
-///     \f$ A^T X = B \f$, or
-///     \f$ A^H X = B \f$
+/// \[
+///     A   X = B,
+/// \]
+/// \[
+///     A^T X = B,
+/// \]
+/// or
+/// \[
+///     A^H X = B
+/// \]
 /// with a general n-by-n matrix A using the LU factorization computed
 /// by `lapack::getrf`.
 ///
@@ -150,9 +157,9 @@ int64_t getrs(
 ///
 /// @param[in] trans
 ///     The form of the system of equations:
-///     - lapack::Op::NoTrans:   \f$ A   X = B \f$ (No transpose)
-///     - lapack::Op::Trans:     \f$ A^T X = B \f$ (Transpose)
-///     - lapack::Op::ConjTrans: \f$ A^H X = B \f$ (Conjugate transpose)
+///     - lapack::Op::NoTrans:   $A   X = B$ (No transpose)
+///     - lapack::Op::Trans:     $A^T X = B$ (Transpose)
+///     - lapack::Op::ConjTrans: $A^H X = B$ (Conjugate transpose)
 ///
 /// @param[in] n
 ///     The order of the matrix A. n >= 0.
@@ -163,7 +170,7 @@ int64_t getrs(
 ///
 /// @param[in] A
 ///     The n-by-n matrix A, stored in an lda-by-n array.
-///     The factors L and U from the factorization \f$ A = P L U \f$
+///     The factors L and U from the factorization $A = P L U$
 ///     as computed by `lapack::getrf`.
 ///
 /// @param[in] lda

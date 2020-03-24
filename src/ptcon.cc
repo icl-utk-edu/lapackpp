@@ -104,12 +104,14 @@ int64_t ptcon(
 // -----------------------------------------------------------------------------
 /// Computes the reciprocal of the condition number (in the
 /// 1-norm) of a Hermitian positive definite tridiagonal matrix
-/// using the factorization \f$ A = L D L^H \f$ or \f$ A = U^H D U \f$ computed by
+/// using the factorization $A = L D L^H$ or $A = U^H D U$ computed by
 /// `lapack::pttrf`.
 ///
-/// \f$ || A^{-1} || \f$ is computed by a direct method, and the reciprocal of
+/// $|| A^{-1} ||$ is computed by a direct method, and the reciprocal of
 /// the condition number is computed as
-/// \f$ \text{rcond} = 1 / (||A||_1 \cdot ||A^{-1}||_1). \f$
+/// \[
+///     \text{rcond} = 1 / (||A||_1 \cdot ||A^{-1}||_1).
+/// \]
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -133,7 +135,7 @@ int64_t ptcon(
 /// @param[out] rcond
 ///     The reciprocal of the condition number of the matrix A,
 ///     computed as rcond = 1/(anorm * ainv_norm), where ainv_norm is the
-///     1-norm of \f$ A^{-1} \f$ computed in this routine.
+///     1-norm of $A^{-1}$ computed in this routine.
 ///
 /// @retval = 0: successful exit
 ///

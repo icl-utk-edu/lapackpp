@@ -133,7 +133,7 @@ int64_t gecon(
 ///
 /// @param[in] A
 ///     The n-by-n matrix A, stored in an lda-by-n array.
-///     The factors L and U from the factorization \f$ A = P L U \f$
+///     The factors L and U from the factorization $A = P L U$
 ///     as computed by `lapack::getrf`.
 ///
 /// @param[in] lda

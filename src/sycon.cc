@@ -138,10 +138,10 @@ int64_t sycon(
 // -----------------------------------------------------------------------------
 /// Estimates the reciprocal of the condition number (in the
 /// 1-norm) of a symmetric matrix A using the factorization
-/// \f$ A = U D U^T \f$ or \f$ A = L D L^T \f$ computed by `lapack::sytrf`.
+/// $A = U D U^T$ or $A = L D L^T$ computed by `lapack::sytrf`.
 ///
-/// An estimate is obtained for \f$ || A^{-1} ||_1, \f$ and the reciprocal of the
-/// condition number is computed as \f$ \text{rcond} = 1 / (||A||_1 \cdot || A^{-1} ||_1). \f$
+/// An estimate is obtained for $|| A^{-1} ||_1,$ and the reciprocal of the
+/// condition number is computed as $\text{rcond} = 1 / (||A||_1 \cdot || A^{-1} ||_1).$
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -151,8 +151,8 @@ int64_t sycon(
 /// @param[in] uplo
 ///     Whether the details of the factorization are stored
 ///     as an upper or lower triangular matrix.
-///     - lapack::Uplo::Upper: Upper triangular, form is \f$ A = U D U^T; \f$
-///     - lapack::Uplo::Lower: Lower triangular, form is \f$ A = L D L^T. \f$
+///     - lapack::Uplo::Upper: Upper triangular, form is $A = U D U^T;$
+///     - lapack::Uplo::Lower: Lower triangular, form is $A = L D L^T.$
 ///
 /// @param[in] n
 ///     The order of the matrix A. n >= 0.
@@ -176,7 +176,7 @@ int64_t sycon(
 /// @param[out] rcond
 ///     The reciprocal of the condition number of the matrix A,
 ///     computed as rcond = 1/(anorm * ainv_norm), where ainv_norm is an
-///     estimate of the 1-norm of \f$ A^{-1} \f$ computed in this routine.
+///     estimate of the 1-norm of $A^{-1}$ computed in this routine.
 ///
 /// @retval = 0: successful exit
 ///

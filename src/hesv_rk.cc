@@ -82,21 +82,23 @@ int64_t hesv_rk(
 
 // -----------------------------------------------------------------------------
 /// Computes the solution to a system of linear equations
-///     \f$ A X = B, \f$
+/// \[
+///     A X = B,
+/// \]
 /// where A is an n-by-n Hermitian matrix and X and B are n-by-nrhs matrices.
 ///
 /// The bounded Bunch-Kaufman (rook) diagonal pivoting method is used
 /// to factor A as
-///     \f$ A = P U D U^H P^T, \f$ if uplo = Upper, or
-///     \f$ A = P L D L^H P^T, \f$ if uplo = Lower,
+///     $A = P U D U^H P^T,$ if uplo = Upper, or
+///     $A = P L D L^H P^T,$ if uplo = Lower,
 /// where U (or L) is unit upper (or lower) triangular matrix,
-/// \f$ U^H \f$ (or \f$ L^H \f$) is the conjugate of U (or L), P is a permutation
-/// matrix, \f$ P^T \f$ is the transpose of P, and D is Hermitian and block
+/// $U^H$ (or $L^H$) is the conjugate of U (or L), P is a permutation
+/// matrix, $P^T$ is the transpose of P, and D is Hermitian and block
 /// diagonal with 1-by-1 and 2-by-2 diagonal blocks.
 ///
 /// `lapack::hetrf_rk` is called to compute the factorization of a
 /// Hermitian matrix. The factored form of A is then used to solve
-/// the system of equations \f$ A X = B \f$ by calling `lapack::hetrs_rk`.
+/// the system of equations $A X = B$ by calling `lapack::hetrs_rk`.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.

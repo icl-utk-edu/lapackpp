@@ -149,9 +149,9 @@ int64_t sytrs2(
 }
 
 // -----------------------------------------------------------------------------
-/// Solves a system of linear equations \f$ A X = B \f$ with a
-/// symmetric matrix A using the factorization \f$ A = U D U^T \f$ or
-/// \f$ A = L D L^T \f$ computed by `lapack::sytrf` and converted by `lapack::syconv`.
+/// Solves a system of linear equations $A X = B$ with a
+/// symmetric matrix A using the factorization $A = U D U^T$ or
+/// $A = L D L^T$ computed by `lapack::sytrf` and converted by `lapack::syconv`.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -163,8 +163,8 @@ int64_t sytrs2(
 /// @param[in] uplo
 ///     Whether the details of the factorization are stored
 ///     as an upper or lower triangular matrix.
-///     - lapack::Uplo::Upper: Upper triangular, form is \f$ A = U D U^T; \f$
-///     - lapack::Uplo::Lower: Lower triangular, form is \f$ A = L D L^T. \f$
+///     - lapack::Uplo::Upper: Upper triangular, form is $A = U D U^T;$
+///     - lapack::Uplo::Lower: Lower triangular, form is $A = L D L^T.$
 ///
 /// @param[in] n
 ///     The order of the matrix A. n >= 0.

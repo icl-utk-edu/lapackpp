@@ -236,7 +236,9 @@ int64_t gesvx(
 // -----------------------------------------------------------------------------
 /// Uses the LU factorization to compute the solution to a
 /// system of linear equations
-///     \f$ A X = B, \f$
+/// \[
+///     A X = B,
+/// \]
 /// where A is an n-by-n matrix and X and B are n-by-nrhs matrices.
 ///
 /// Error bounds on the solution and a condition estimate are also
@@ -264,9 +266,9 @@ int64_t gesvx(
 ///
 /// @param[in] trans
 ///     The form of the system of equations:
-///     - lapack::Op::NoTrans:   \f$ A   X = B \f$ (No transpose)
-///     - lapack::Op::Trans:     \f$ A^T X = B \f$ (Transpose)
-///     - lapack::Op::ConjTrans: \f$ A^H X = B \f$ (Conjugate transpose)
+///     - lapack::Op::NoTrans:   $A   X = B$ (No transpose)
+///     - lapack::Op::Trans:     $A^T X = B$ (Transpose)
+///     - lapack::Op::ConjTrans: $A^H X = B$ (Conjugate transpose)
 ///
 /// @param[in] n
 ///     The number of linear equations, i.e., the order of the
@@ -287,9 +289,9 @@ int64_t gesvx(
 ///     or if fact = Equilibrate and equed = None on exit.
 ///
 ///     - On exit, if equed != None, A is scaled as follows:
-///       - equed = Row:  \f$ A := \text{diag}(R) \; A \f$
-///       - equed = Col:  \f$ A := A \; \text{diag}(C) \f$
-///       - equed = Both: \f$ A := \text{diag}(R) \; A \; \text{diag}(C). \f$
+///       - equed = Row:  $A := \text{diag}(R) \; A$
+///       - equed = Col:  $A := A \; \text{diag}(C)$
+///       - equed = Both: $A := \text{diag}(R) \; A \; \text{diag}(C).$
 ///
 /// @param[in] lda
 ///     The leading dimension of the array A. lda >= max(1,n).
@@ -298,17 +300,17 @@ int64_t gesvx(
 ///     The n-by-n matrix AF, stored in an ldaf-by-n array.
 ///     - If fact = Factored, then AF is an input argument and on entry
 ///     contains the factors L and U from the factorization
-///     \f$ A = P L U \f$ as computed by `lapack::getrf`.
+///     $A = P L U$ as computed by `lapack::getrf`.
 ///
 ///     - If equed != None, then
 ///     AF is the factored form of the equilibrated matrix A.
 ///
 ///     - If fact = NotFactored, then AF is an output argument and on exit
-///     returns the factors L and U from the factorization \f$ A = P L U \f$
+///     returns the factors L and U from the factorization $A = P L U$
 ///     of the original matrix A.
 ///
 ///     - If fact = Equilibrate, then AF is an output argument and on exit
-///     returns the factors L and U from the factorization \f$ A = P L U \f$
+///     returns the factors L and U from the factorization $A = P L U$
 ///     of the equilibrated matrix A (see the description of A for
 ///     the form of the equilibrated matrix).
 ///
@@ -318,16 +320,16 @@ int64_t gesvx(
 /// @param[in,out] ipiv
 ///     The vector ipiv of length n.
 ///     - If fact = Factored, then ipiv is an input argument and on entry
-///     contains the pivot indices from the factorization \f$ A = P L U \f$
+///     contains the pivot indices from the factorization $A = P L U$
 ///     as computed by `lapack::getrf`; row i of the matrix was interchanged
 ///     with row ipiv(i).
 ///
 ///     - If fact = NotFactored, then ipiv is an output argument and on exit
-///     contains the pivot indices from the factorization \f$ A = P L U \f$
+///     contains the pivot indices from the factorization $A = P L U$
 ///     of the original matrix A.
 ///
 ///     - If fact = Equilibrate, then ipiv is an output argument and on exit
-///     contains the pivot indices from the factorization \f$ A = P L U \f$
+///     contains the pivot indices from the factorization $A = P L U$
 ///     of the equilibrated matrix A.
 ///
 /// @param[in,out] equed
@@ -340,7 +342,7 @@ int64_t gesvx(
 ///         Column equilibration, i.e., A has been postmultiplied by diag(C).
 ///     - lapack::Equed::Both:
 ///         Both row and column equilibration, i.e.,
-///         A has been replaced by \f$ \text{diag}(R) \; A \; \text{diag}(C). \f$
+///         A has been replaced by $\text{diag}(R) \; A \; \text{diag}(C).$
 ///     \n
 ///     equed is an input argument if fact = Factored; otherwise, it is an
 ///     output argument.
@@ -375,9 +377,9 @@ int64_t gesvx(
 ///     On exit,
 ///     - if equed = None, B is not modified;
 ///     - if trans = NoTrans and equed = Row or Both, B is overwritten by
-///     \f$ \text{diag}(R) \; B; \f$
+///     $\text{diag}(R) \; B;$
 ///     - if trans = Trans or ConjTrans and equed = Col or Both, B is
-///     overwritten by \f$ \text{diag}(C) \; B. \f$
+///     overwritten by $\text{diag}(C) \; B.$
 ///
 /// @param[in] ldb
 ///     The leading dimension of the array B. ldb >= max(1,n).
@@ -387,8 +389,8 @@ int64_t gesvx(
 ///     If successful or return value = n+1, the n-by-nrhs solution matrix X
 ///     to the original system of equations. Note that A and B are
 ///     modified on exit if equed != None, and the solution to the
-///     equilibrated system is \f$ \text{diag}(C)^{-1} X \f$ if trans = NoTrans and
-///     equed = Col or Both, or \f$ \text{diag}(R)^{-1} X \f$ if trans = Trans or ConjTrans
+///     equilibrated system is $\text{diag}(C)^{-1} X$ if trans = NoTrans and
+///     equed = Col or Both, or $\text{diag}(R)^{-1} X$ if trans = Trans or ConjTrans
 ///     and equed = Row or Both.
 ///
 /// @param[in] ldx
@@ -429,13 +431,13 @@ int64_t gesvx(
 ///     rpivotgrowth contains the reciprocal pivot growth factor for the
 ///     leading info columns of A.
 ///
-/// @retval = 0: successful exit
-/// @retval > 0 and <= n: if return value = i,
+/// @return = 0: successful exit
+/// @return > 0 and <= n: if return value = i,
 ///     then U(i,i) is exactly zero. The factorization has
 ///     been completed, but the factor U is exactly
 ///     singular, so the solution and error bounds
 ///     could not be computed. rcond = 0 is returned.
-/// @retval = n+1: U is nonsingular, but rcond is less than machine
+/// @return = n+1: U is nonsingular, but rcond is less than machine
 ///     precision, meaning that the matrix is singular
 ///     to working precision. Nevertheless, the
 ///     solution and error bounds are computed because

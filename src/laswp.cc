@@ -148,7 +148,7 @@ void laswp(
 ///     The vector ipiv of length k1+(k2-k1)*abs(incx).
 ///     The vector of pivot indices. Only the elements in positions
 ///     k1 through k1+(k2-k1)*abs(incx) of ipiv are accessed.
-///     ipiv(k1+(\f$ K- \f$k1)*abs(incx)) = L implies rows K and L are to be
+///     ipiv(k1+($K-$k1)*abs(incx)) = L implies rows K and L are to be
 ///     interchanged.
 ///
 /// @param[in] incx

@@ -148,9 +148,16 @@ int64_t gttrs(
 
 // -----------------------------------------------------------------------------
 /// Solves one of the systems of equations
-///     \f$ A   X = B, \f$
-///     \f$ A^T X = B, \f$ or
-///     \f$ A^H X = B, \f$
+/// \[
+///     A   X = B,
+/// \]
+/// \[
+///     A^T X = B,
+/// \]
+/// or
+/// \[
+///     A^H X = B,
+/// \]
 /// with a tridiagonal matrix A using the LU factorization computed
 /// by `lapack::gttrf`.
 ///
@@ -159,9 +166,9 @@ int64_t gttrs(
 ///
 /// @param[in] trans
 ///     Specifies the form of the system of equations.
-///     - lapack::Op::NoTrans:   \f$ A   X = B \f$ (No transpose)
-///     - lapack::Op::Trans:     \f$ A^T X = B \f$ (Transpose)
-///     - lapack::Op::ConjTrans: \f$ A^H X = B \f$ (Conjugate transpose)
+///     - lapack::Op::NoTrans:   $A   X = B$ (No transpose)
+///     - lapack::Op::Trans:     $A^T X = B$ (Transpose)
+///     - lapack::Op::ConjTrans: $A^H X = B$ (Conjugate transpose)
 ///
 /// @param[in] n
 ///     The order of the matrix A.

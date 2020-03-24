@@ -87,9 +87,9 @@ int64_t pttrf(
 }
 
 // -----------------------------------------------------------------------------
-/// Computes the \f$ L D L^H \f$ factorization of a Hermitian
+/// Computes the $L D L^H$ factorization of a Hermitian
 /// positive definite tridiagonal matrix A. The factorization may also
-/// be regarded as having the form \f$ A = U^H D U. \f$
+/// be regarded as having the form $A = U^H D U.$
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -101,15 +101,15 @@ int64_t pttrf(
 ///     The vector D of length n.
 ///     On entry, the n diagonal elements of the tridiagonal matrix
 ///     A. On exit, the n diagonal elements of the diagonal matrix
-///     D from the \f$ L D L^H \f$ factorization of A.
+///     D from the $L D L^H$ factorization of A.
 ///
 /// @param[in,out] E
 ///     The vector E of length n-1.
 ///     On entry, the (n-1) subdiagonal elements of the tridiagonal
 ///     matrix A. On exit, the (n-1) subdiagonal elements of the
-///     unit bidiagonal factor L from the \f$ L D L^H \f$ factorization of A.
+///     unit bidiagonal factor L from the $L D L^H$ factorization of A.
 ///     E can also be regarded as the superdiagonal of the unit
-///     bidiagonal factor U from the \f$ U^H D U \f$ factorization of A.
+///     bidiagonal factor U from the $U^H D U$ factorization of A.
 ///
 /// @retval = 0: successful exit
 /// @retval > 0: if return value = i, the leading minor of order i is not

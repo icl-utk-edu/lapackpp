@@ -77,17 +77,17 @@ int64_t hesv(
 
 // -----------------------------------------------------------------------------
 /// Computes the solution to  system of linear equations
-///     \f$ A X = B \f$,
+///     $A X = B$,
 /// where A is an n-by-n Hermitian matrix and X and B are n-by-nrhs
 /// matrices.
 ///
 /// The diagonal pivoting method is used to factor A as
-///     \f$ A = U D U^H \f$, if uplo = Upper, or
-///     \f$ A = L D L^H \f$, if uplo = Lower,
+///     $A = U D U^H$, if uplo = Upper, or
+///     $A = L D L^H$, if uplo = Lower,
 /// where U (or L) is a product of permutation and unit upper (lower)
 /// triangular matrices, and D is Hermitian and block diagonal with
 /// 1-by-1 and 2-by-2 diagonal blocks. The factored form of A is then
-/// used to solve the system of equations \f$ A X = B \f$.
+/// used to solve the system of equations $A X = B$.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -119,7 +119,7 @@ int64_t hesv(
 ///
 ///     - On successful exit, the block diagonal matrix D and the
 ///     multipliers used to obtain the factor U or L from the
-///     factorization \f$ A = U D U^H \f$ or \f$ A = L D L^H \f$ as computed by
+///     factorization $A = U D U^H$ or $A = L D L^H$ as computed by
 ///     `lapack::hetrf`.
 ///
 /// @param[in] lda

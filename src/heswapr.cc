@@ -52,8 +52,8 @@ void heswapr(
 /// @param[in] uplo
 ///     Whether the details of the factorization are stored
 ///     as an upper or lower triangular matrix.
-///     - lapack::Uplo::Upper: Upper triangular, form is \f$ A = U D U^T; \f$
-///     - lapack::Uplo::Lower: Lower triangular, form is \f$ A = L D L^T. \f$
+///     - lapack::Uplo::Upper: Upper triangular, form is $A = U D U^T;$
+///     - lapack::Uplo::Lower: Lower triangular, form is $A = L D L^T.$
 ///
 /// @param[in] n
 ///     The order of the matrix A. n >= 0.

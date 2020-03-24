@@ -64,13 +64,13 @@ int64_t bdsvdx(
 
 // -----------------------------------------------------------------------------
 /// Computes the singular value decomposition (SVD) of a real
-/// n-by-n (upper or lower) bidiagonal matrix B, \f$ B = U S VT \f$,
+/// n-by-n (upper or lower) bidiagonal matrix B, $B = U S VT$,
 /// where S is a diagonal matrix with non-negative diagonal elements
 /// (the singular values of B), and U and VT are orthogonal matrices
 /// of left and right singular vectors, respectively.
 ///
-/// Given an upper bidiagonal B with diagonal \f$ D = [ d_1 d_2 ... d_n ] \f$
-/// and superdiagonal \f$ E = [ e_1 e_2 ... e_{n-1} ] \f$, `bdsvdx` computes the
+/// Given an upper bidiagonal B with diagonal $D = [ d_1 d_2 ... d_n ]$
+/// and superdiagonal $E = [ e_1 e_2 ... e_{n-1} ]$, `bdsvdx` computes the
 /// singular value decompositon of B through the eigenvalues and
 /// eigenvectors of the 2n-by-2n tridiagonal matrix
 /**

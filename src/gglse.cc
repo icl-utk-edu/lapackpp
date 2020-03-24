@@ -198,9 +198,13 @@ int64_t gglse(
 /// where A is an m-by-n matrix, B is a p-by-n matrix, c is a given
 /// m-vector, and d is a given p-vector. It is assumed that
 /// p <= n <= m+p, and
-///
-/// rank(B) = p and
-/// rank\f$\left( \left[ \begin{array}{c} A \\ B \end{array} \right] \right) = n. \f$
+/// \[
+///     rank(B) = p
+/// \]
+/// and
+/// \[
+///     rank $\left( \left[ \begin{array}{c} A \\ B \end{array} \right] \right) = n.
+/// \]
 ///
 /// These conditions ensure that the LSE problem has a unique solution,
 /// which is obtained using a generalized RQ factorization of the

@@ -175,10 +175,12 @@ int64_t ppsvx(
 
 // -----------------------------------------------------------------------------
 /// Uses the Cholesky factorization
-///     \f$ A = U^H U \f$ or
-///     \f$ A = L L^H \f$ to
+///     $A = U^H U$ or
+///     $A = L L^H$ to
 /// compute the solution to a system of linear equations
-///     \f$ A X = B, \f$
+/// \[
+///     A X = B,
+/// \]
 /// where A is an n-by-n Hermitian positive definite matrix stored in
 /// packed format and X and B are n-by-nrhs matrices.
 ///
@@ -222,7 +224,7 @@ int64_t ppsvx(
 ///     - On entry, the upper or lower triangle of the Hermitian matrix
 ///     A, packed columnwise in a linear array, except if fact = Factored
 ///     and equed = Yes, then A must contain the equilibrated matrix
-///     \f$ \text{diag}(S) \; A \; \text{diag}(S). \f$
+///     $\text{diag}(S) \; A \; \text{diag}(S)$.
 ///     The j-th column of A is stored in the array AP as follows:
 ///       - if uplo = Upper, AP(i + (j-1)*j/2) = A(i,j) for 1 <= i <= j;
 ///       - if uplo = Lower, AP(i + (j-1)*(2n-j)/2) = A(i,j) for j <= i <= n.
@@ -233,13 +235,13 @@ int64_t ppsvx(
 ///     or if fact = Equilibrate and equed = None on exit.
 ///
 ///     - On exit, if fact = Equilibrate and equed = Yes, A is overwritten by
-///     \f$ \text{diag}(S) \; A \; \text{diag}(S). \f$
+///     $\text{diag}(S) \; A \; \text{diag}(S)$.
 ///
 /// @param[in,out] AFP
 ///     The vector AFP of length n*(n+1)/2.
 ///     - If fact = Factored, then AFP is an input argument and on entry
 ///     contains the triangular factor U or L from the Cholesky
-///     factorization \f$ A = U^H U \f$ or \f$ A = L L^H, \f$ in the same storage
+///     factorization $A = U^H U$ or $A = L L^H,$ in the same storage
 ///     format as A.
 ///
 ///     - If equed != None, then AFP is the factored
@@ -247,12 +249,12 @@ int64_t ppsvx(
 ///
 ///     - If fact = NotFactored, then AFP is an output argument and on exit
 ///     returns the triangular factor U or L from the Cholesky
-///     factorization \f$ A = U^H U \f$ or \f$ A = L L^H \f$ of the original
+///     factorization $A = U^H U$ or $A = L L^H$ of the original
 ///     matrix A.
 ///
 ///     - If fact = Equilibrate, then AFP is an output argument and on exit
 ///     returns the triangular factor U or L from the Cholesky
-///     factorization \f$ A = U^H U \f$ or \f$ A = L L^H \f$ of the equilibrated
+///     factorization $A = U^H U$ or $A = L L^H$ of the equilibrated
 ///     matrix A (see the description of AP for the form of the
 ///     equilibrated matrix).
 ///
@@ -262,7 +264,7 @@ int64_t ppsvx(
 ///         No equilibration (always true if fact = NotFactored).
 ///     - lapack::Equed::Yes:
 ///         Equilibration was done, i.e.,
-///         A has been replaced by \f$ \text{diag}(S) \; A \; \text{diag}(S). \f$
+///         A has been replaced by $\text{diag}(S) \; A \; \text{diag}(S).$
 ///
 ///     - equed is an input argument if fact = Factored; otherwise, it is an
 ///     output argument.
@@ -279,7 +281,7 @@ int64_t ppsvx(
 ///     The n-by-nrhs matrix B, stored in an ldb-by-nrhs array.
 ///     On entry, the n-by-nrhs right hand side matrix B.
 ///     On exit, if equed = None, B is not modified; if equed = Yes,
-///     B is overwritten by \f$ \text{diag}(S) \; B. \f$
+///     B is overwritten by $\text{diag}(S) \; B.$
 ///
 /// @param[in] ldb
 ///     The leading dimension of the array B. ldb >= max(1,n).
@@ -289,7 +291,7 @@ int64_t ppsvx(
 ///     If successful or return value = n+1, the n-by-nrhs solution matrix X to
 ///     the original system of equations. Note that if equed = Yes,
 ///     A and B are modified on exit, and the solution to the
-///     equilibrated system is \f$ \text{diag}(S)^{-1} X. \f$
+///     equilibrated system is $\text{diag}(S)^{-1} X.$
 ///
 /// @param[in] ldx
 ///     The leading dimension of the array X. ldx >= max(1,n).

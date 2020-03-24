@@ -75,7 +75,7 @@ int64_t hetrd_2stage(
 // -----------------------------------------------------------------------------
 /// Reduces a Hermitian matrix A to real symmetric
 /// tridiagonal form T by a unitary similarity transformation:
-/// \f$ Q1^H Q2^H A Q2 Q1 = T \f$.
+/// $Q1^H Q2^H A Q2 Q1 = T$.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -86,7 +86,7 @@ int64_t hetrd_2stage(
 ///         in particular for the second stage (band to
 ///         tridiagonal).
 ///     - lapack::Job::Vec: the Householder representation is needed to
-///         either generate \f$ Q1 Q2 \f$ or to apply \f$ Q1 Q2 \f$.
+///         either generate $Q1 Q2$ or to apply $Q1 Q2$.
 ///         Not yet available (as of LAPACK 3.8.0).
 ///
 /// @param[in] uplo

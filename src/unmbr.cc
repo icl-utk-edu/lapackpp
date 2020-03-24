@@ -73,48 +73,48 @@ int64_t unmbr(
 /// Multiplies the general m-by-n matrix C by P or Q from `lapack::gebrd` as follows:
 ///
 /// - If vect = Q:
-///   - side = Left,  trans = NoTrans:   \f$ Q C \f$
-///   - side = Right, trans = NoTrans:   \f$ C Q \f$
-///   - side = Left,  trans = ConjTrans: \f$ Q^H C \f$
-///   - side = Right, trans = ConjTrans: \f$ C Q^H \f$
+///   - side = Left,  trans = NoTrans:   $Q C$
+///   - side = Right, trans = NoTrans:   $C Q$
+///   - side = Left,  trans = ConjTrans: $Q^H C$
+///   - side = Right, trans = ConjTrans: $C Q^H$
 ///
 /// - If vect = P:
-///   - side = Left,  trans = NoTrans:   \f$ P C \f$
-///   - side = Right, trans = NoTrans:   \f$ C P \f$
-///   - side = Left,  trans = ConjTrans: \f$ P^H C \f$
-///   - side = Right, trans = ConjTrans: \f$ C P^H \f$
+///   - side = Left,  trans = NoTrans:   $P C$
+///   - side = Right, trans = NoTrans:   $C P$
+///   - side = Left,  trans = ConjTrans: $P^H C$
+///   - side = Right, trans = ConjTrans: $C P^H$
 ///
-/// Here \f$ Q \f$ and \f$ P^H \f$ are the unitary matrices determined by `lapack::gebrd` when
-/// reducing a complex matrix A to bidiagonal form: \f$ A = Q B P^H. \f$
-/// \f$ Q \f$ and \f$ P^H \f$ are defined as products of elementary reflectors H(i) and
+/// Here $Q$ and $P^H$ are the unitary matrices determined by `lapack::gebrd` when
+/// reducing a complex matrix A to bidiagonal form: $A = Q B P^H.$
+/// $Q$ and $P^H$ are defined as products of elementary reflectors H(i) and
 /// G(i) respectively.
 ///
 /// Let nq = m if side = Left and nq = n if side = Right. Thus nq is the
-/// order of the unitary matrix \f$ Q \f$ or \f$ P^H \f$ that is applied.
+/// order of the unitary matrix $Q$ or $P^H$ that is applied.
 ///
 /// - If vect = Q, A is assumed to have been an nq-by-k matrix:
-///   - if nq >= k, \f$ Q = H(1) H(2) \dots H(k); \f$
-///   - if nq <  k, \f$ Q = H(1) H(2) \dots H(nq-1). \f$
+///   - if nq >= k, $Q = H(1) H(2) \dots H(k);$
+///   - if nq <  k, $Q = H(1) H(2) \dots H(nq-1).$
 ///
 /// - If vect = P, A is assumed to have been a k-by-nq matrix:
-///   - if k <  nq, \f$ P = G(1) G(2) \dots G(k); \f$
-///   - if k >= nq, \f$ P = G(1) G(2) \dots G(nq-1). \f$
+///   - if k <  nq, $P = G(1) G(2) \dots G(k);$
+///   - if k >= nq, $P = G(1) G(2) \dots G(nq-1).$
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
 /// For real matrices, this is an alias for `lapack::ormbr`.
 ///
 /// @param[in] vect
-///     - lapack::Vect::Q: apply \f$ Q \f$ or \f$ Q^H; \f$
-///     - lapack::Vect::P: apply \f$ P \f$ or \f$ P^H. \f$
+///     - lapack::Vect::Q: apply $Q$ or $Q^H;$
+///     - lapack::Vect::P: apply $P$ or $P^H.$
 ///
 /// @param[in] side
-///     - lapack::Side::Left:  apply \f$ Q, \f$ \f$ Q^H, \f$ \f$ P, \f$ or \f$ P^H \f$ from the Left;
-///     - lapack::Side::Right: apply \f$ Q, \f$ \f$ Q^H, \f$ \f$ P, \f$ or \f$ P^H \f$ from the Right.
+///     - lapack::Side::Left:  apply $Q,$ $Q^H,$ $P,$ or $P^H$ from the Left;
+///     - lapack::Side::Right: apply $Q,$ $Q^H,$ $P,$ or $P^H$ from the Right.
 ///
 /// @param[in] trans
-///     - lapack::Op::NoTrans:   No transpose, apply \f$ Q \f$ or \f$ P; \f$
-///     - lapack::Op::ConjTrans: Conjugate transpose, apply \f$ Q^H \f$ or \f$ P^H. \f$
+///     - lapack::Op::NoTrans:   No transpose, apply $Q$ or $P;$
+///     - lapack::Op::ConjTrans: Conjugate transpose, apply $Q^H$ or $P^H.$
 ///
 /// @param[in] m
 ///     The number of rows of the matrix C. m >= 0.
@@ -154,8 +154,8 @@ int64_t unmbr(
 ///     The m-by-n matrix C, stored in an ldc-by-n array.
 ///     On entry, the m-by-n matrix C.
 ///     On exit, C is overwritten by one of
-///     \f$ Q C, \f$ \f$ Q^H C, \f$ \f$ C Q^H, \f$    \f$ C Q, \f$
-///     \f$ P C, \f$ \f$ P^H C, \f$ \f$ C P^H, \f$ or \f$ C P. \f$
+///     $Q C$, $Q^H C$, $C Q^H$,    $C Q,$
+///     $P C$, $P^H C$, $C P^H$, or $C P$.
 ///
 /// @param[in] ldc
 ///     The leading dimension of the array C. ldc >= max(1,m).

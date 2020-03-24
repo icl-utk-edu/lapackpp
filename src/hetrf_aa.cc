@@ -73,10 +73,13 @@ int64_t hetrf_aa(
 // -----------------------------------------------------------------------------
 /// Computes the factorization of a hermitian matrix A
 /// using the Aasen's algorithm. The form of the factorization is
-///
-///     \f$ A = U T U^H \f$ or
-///     \f$ A = L T L^H \f$
-///
+/// \[
+///     A = U T U^H
+/// \]
+/// or
+/// \[
+///     A = L T L^H
+/// \]
 /// where U (or L) is a product of permutation and unit upper (lower)
 /// triangular matrices, and T is a hermitian tridiagonal matrix.
 ///

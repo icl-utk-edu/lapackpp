@@ -206,7 +206,7 @@ int64_t pbrfs(
 /// @param[in] AFB
 ///     The n-by-n band matrix AFB, stored in an ldafb-by-n array.
 ///     The triangular factor U or L from the Cholesky factorization
-///     \f$ A = U^H U \f$ or \f$ A = L L^H \f$ of the band matrix A as computed by
+///     $A = U^H U$ or $A = L L^H$ of the band matrix A as computed by
 ///     `lapack::pbtrf`, in the same storage format as A (see AB).
 ///
 /// @param[in] ldafb

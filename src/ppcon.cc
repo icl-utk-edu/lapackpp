@@ -107,11 +107,11 @@ int64_t ppcon(
 // -----------------------------------------------------------------------------
 /// Estimates the reciprocal of the condition number (in the
 /// 1-norm) of a Hermitian positive definite packed matrix using
-/// the Cholesky factorization \f$ A = U^H U \f$ or \f$ A = L L^H \f$ computed by
+/// the Cholesky factorization $A = U^H U$ or $A = L L^H$ computed by
 /// `lapack::pptrf`.
 ///
-/// An estimate is obtained for \f$ ||A^{-1}||_1 \f$, and the reciprocal of the
-/// condition number is computed as \f$ \text{rcond} = 1 / (||A||_1 \cdot ||A^{-1}||_1). \f$
+/// An estimate is obtained for $||A^{-1}||_1$, and the reciprocal of the
+/// condition number is computed as $\text{rcond} = 1 / (||A||_1 \cdot ||A^{-1}||_1).$
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -126,7 +126,7 @@ int64_t ppcon(
 /// @param[in] AP
 ///     The vector AP of length n*(n+1)/2.
 ///     The triangular factor U or L from the Cholesky factorization
-///     \f$ A = U^H U \f$ or \f$ A = L L^H, \f$ packed columnwise in a linear
+///     $A = U^H U$ or $A = L L^H,$ packed columnwise in a linear
 ///     array. The j-th column of U or L is stored in the array AP
 ///     as follows:
 ///     - if uplo = Upper, AP(i + (j-1)*j/2) = U(i,j) for 1 <= i <= j;
@@ -138,7 +138,7 @@ int64_t ppcon(
 /// @param[out] rcond
 ///     The reciprocal of the condition number of the matrix A,
 ///     computed as rcond = 1/(anorm * ainv_norm), where ainv_norm is an
-///     estimate of the 1-norm of \f$ A^{-1} \f$ computed in this routine.
+///     estimate of the 1-norm of $A^{-1}$ computed in this routine.
 ///
 /// @retval = 0: successful exit
 ///

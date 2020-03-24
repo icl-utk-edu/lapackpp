@@ -275,14 +275,18 @@ int64_t tpmqrt(
 ///     if l=0, there is no trapezoidal block, hence V = V1 is rectangular.
 ///
 ///     If side = Left:
-///         $C = \left[ \begin{array}{c}
+///     \[
+///         C = \left[ \begin{array}{c}
 ///             A
 ///             B
-//          \end{array} \right]$
+//          \end{array} \right]
+///     \]
 ///     where A is k-by-n,  B is m-by-n and V is m-by-k.
 ///
 ///     If side = Right:
-///         $C = [A, B]$
+///     \[
+///         C = [A, B]
+///     \]
 ///     where A is m-by-k, B is m-by-n and V is n-by-k.
 ///
 ///     The complex orthogonal matrix Q is formed from V and T.

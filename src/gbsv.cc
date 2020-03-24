@@ -154,14 +154,14 @@ int64_t gbsv(
 
 // -----------------------------------------------------------------------------
 /// Computes the solution to a system of linear equations
-/// \f$ A X = B \f$, where A is a band matrix of order n with kl subdiagonals
+/// $A X = B$, where A is a band matrix of order n with kl subdiagonals
 /// and ku superdiagonals, and X and B are n-by-nrhs matrices.
 ///
 /// The LU decomposition with partial pivoting and row interchanges is
-/// used to factor A as \f$ A = L U \f$, where L is a product of permutation
+/// used to factor A as $A = L U$, where L is a product of permutation
 /// and unit lower triangular matrices with kl subdiagonals, and U is
 /// upper triangular with kl+ku superdiagonals. The factored form of A
-/// is then used to solve the system of equations \f$ A X = B \f$.
+/// is then used to solve the system of equations $A X = B$.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.

@@ -114,9 +114,9 @@ int64_t pbtrs(
 }
 
 // -----------------------------------------------------------------------------
-/// Solves a system of linear equations \f$ A X = B \f$ with a Hermitian
+/// Solves a system of linear equations $A X = B$ with a Hermitian
 /// positive definite band matrix A using the Cholesky factorization
-/// \f$ A = U^H U \f$ or \f$ A = L L^H \f$ computed by `lapack::pbtrf`.
+/// $A = U^H U$ or $A = L L^H$ computed by `lapack::pbtrf`.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -140,7 +140,7 @@ int64_t pbtrs(
 /// @param[in] AB
 ///     The n-by-n band matrix AB, stored in an ldab-by-n array.
 ///     The triangular factor U or L from the Cholesky factorization
-///     \f$ A = U^H U \f$ or \f$ A = L L^H \f$ of the band matrix A, stored in the
+///     $A = U^H U$ or $A = L L^H$ of the band matrix A, stored in the
 ///     first kd+1 rows of the array. The j-th column of U or L is
 ///     stored in the j-th column of the array AB as follows:
 ///     - if uplo = Upper, AB(kd+1+i-j,j) = U(i,j) for max(1,j-kd) <= i <= j;

@@ -139,7 +139,9 @@ int64_t gttrf(
 /// using elimination with partial pivoting and row interchanges.
 ///
 /// The factorization has the form
-///     \f$ A = L U \f$
+/// \[
+///     A = L U
+/// \]
 /// where L is a product of permutation and unit lower bidiagonal
 /// matrices and U is upper triangular with nonzeros in only the main
 /// diagonal and first two superdiagonals.

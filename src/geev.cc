@@ -204,11 +204,15 @@ int64_t geev(
 /// eigenvalues and, optionally, the left and/or right eigenvectors.
 ///
 /// The right eigenvector v_j of A satisfies
-///     \f$ A v_j = \lambda_j v_j \f$
-/// where \f$ \lambda_j \f$ is its eigenvalue.
-/// The left eigenvector \f$ u_j \f$ of A satisfies
-///     \f$ u_j^H A = \lambda_j u_j^H \f$
-/// where \f$ u_j^H \f$ denotes the conjugate transpose of \f$ u_j \f$.
+/// \[
+///     A v_j = \lambda_j v_j
+/// \]
+/// where $\lambda_j$ is its eigenvalue.
+/// The left eigenvector $u_j$ of A satisfies
+/// \[
+///     u_j^H A = \lambda_j u_j^H
+/// \]
+/// where $u_j^H$ denotes the conjugate transpose of $u_j$.
 ///
 /// The computed eigenvectors are normalized to have Euclidean norm
 /// equal to 1 and largest component real.
@@ -244,23 +248,23 @@ int64_t geev(
 ///
 /// @param[out] VL
 ///     The n-by-n matrix VL, stored in an ldvl-by-n array.
-///     - If jobvl = Vec, the left eigenvectors \f$ u_j \f$ are stored one
+///     - If jobvl = Vec, the left eigenvectors $u_j$ are stored one
 ///     after another in the columns of VL, in the same order
 ///     as their eigenvalues.
 ///
 ///     - If jobvl = NoVec, VL is not referenced.
 ///
 ///     - For std::complex versions:
-///     \f$ u_j \f$ = VL(:,j), the j-th column of VL.
+///     $u_j$ = VL(:,j), the j-th column of VL.
 ///
 ///     - For real (float, double) versions:
 ///       + If the j-th eigenvalue is real, then
-///         \f$ u_j \f$ = VL(:,j),
+///         $u_j$ = VL(:,j),
 ///         the j-th column of VL.
 ///       + If the j-th and (j+1)-st eigenvalues form a complex
 ///         conjugate pair, then
-///         \f$ u_j     \f$ = VL(:,j) + i*VL(:,j+1) and
-///         \f$ u_{j+1} \f$ = VL(:,j) - i*VL(:,j+1).
+///         $u_j    $ = VL(:,j) + i*VL(:,j+1) and
+///         $u_{j+1}$ = VL(:,j) - i*VL(:,j+1).
 ///
 /// @param[in] ldvl
 ///     The leading dimension of the array VL. ldvl >= 1;
@@ -268,23 +272,23 @@ int64_t geev(
 ///
 /// @param[out] VR
 ///     The n-by-n matrix VR, stored in an ldvr-by-n array.
-///     - If jobvr = Vec, the right eigenvectors \f$ v_j \f$ are stored one
+///     - If jobvr = Vec, the right eigenvectors $v_j$ are stored one
 ///     after another in the columns of VR, in the same order
 ///     as their eigenvalues.
 ///
 ///     - If jobvr = NoVec, VR is not referenced.
 ///
 ///     - For std::complex versions:
-///     \f$ v_j \f$ = VR(:,j), the j-th column of VR.
+///     $v_j$ = VR(:,j), the j-th column of VR.
 ///
 ///     - For real (float, double) versions:
 ///       + If the j-th eigenvalue is real, then
-///         \f$ v_j \f$ = VR(:,j),
+///         $v_j$ = VR(:,j),
 ///         the j-th column of VR.
 ///       + If the j-th and (j+1)-st eigenvalues form a complex
 ///         conjugate pair, then
-///         \f$ v_j     \f$ = VR(:,j) + i*VR(:,j+1) and
-///         \f$ v_{j+1} \f$ = VR(:,j) - i*VR(:,j+1).
+///         $v_j    $ = VR(:,j) + i*VR(:,j+1) and
+///         $v_{j+1}$ = VR(:,j) - i*VR(:,j+1).
 ///
 /// @param[in] ldvr
 ///     The leading dimension of the array VR. ldvr >= 1;

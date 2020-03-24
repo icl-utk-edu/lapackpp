@@ -75,10 +75,10 @@ int64_t bdsdc(
 
 // -----------------------------------------------------------------------------
 /// Computes the singular value decomposition (SVD) of a real
-/// n-by-n (upper or lower) bidiagonal matrix B: \f$ B = U S V^T \f$,
+/// n-by-n (upper or lower) bidiagonal matrix B: $B = U S V^T$,
 /// using a divide and conquer method, where S is a diagonal matrix
 /// with non-negative diagonal elements (the singular values of B), and
-/// U and VT \f$ = V^T \f$ are orthogonal matrices of left and right singular vectors,
+/// U and VT $= V^T$ are orthogonal matrices of left and right singular vectors,
 /// respectively. `bdsdc` can be used to compute all singular values,
 /// and optionally, singular vectors or singular vectors in compact form.
 ///

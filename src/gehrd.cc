@@ -157,7 +157,7 @@ int64_t gehrd(
 
 // -----------------------------------------------------------------------------
 /// Reduces a general matrix A to upper Hessenberg form H by
-/// an unitary similarity transformation: \f$ Q^H A Q = H \f$.
+/// an unitary similarity transformation: $Q^H A Q = H$.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -208,9 +208,9 @@ int64_t gehrd(
 /// \[
 ///     H(i) = I - \tau v v^H
 /// \]
-/// where \f$ \tau \f$ is a scalar, and v is a vector with
+/// where $\tau$ is a scalar, and v is a vector with
 /// v(1:i) = 0, v(i+1) = 1 and v(ihi+1:n) = 0; v(i+2:ihi) is stored on
-/// exit in A(i+2:ihi,i), and \f$ \tau \f$ in tau(i).
+/// exit in A(i+2:ihi,i), and $\tau$ in tau(i).
 ///
 /// The contents of A are illustrated by the following example, with
 /// n = 7, ilo = 2 and ihi = 6:

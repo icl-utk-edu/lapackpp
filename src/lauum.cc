@@ -90,7 +90,7 @@ int64_t lauum(
 }
 
 // -----------------------------------------------------------------------------
-/// Computes the product \f$ U U^H \f$ or \f$ L^H L, \f$ where the triangular
+/// Computes the product $U U^H$ or $L^H L,$ where the triangular
 /// factor U or L is stored in the upper or lower triangular part of
 /// the array A.
 ///
@@ -119,9 +119,9 @@ int64_t lauum(
 ///     On entry, the triangular factor U or L.
 ///     On exit,
 ///     - if uplo = Upper, the upper triangle of A is
-///     overwritten with the upper triangle of the product \f$ U U^H \f$;
+///     overwritten with the upper triangle of the product $U U^H$;
 ///     - if uplo = Lower, the lower triangle of A is overwritten with
-///     the lower triangle of the product \f$ L^H L \f$.
+///     the lower triangle of the product $L^H L$.
 ///
 /// @param[in] lda
 ///     The leading dimension of the array A. lda >= max(1,n).

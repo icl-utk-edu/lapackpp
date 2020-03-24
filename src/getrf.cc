@@ -133,7 +133,9 @@ int64_t getrf(
 /// using partial pivoting with row interchanges.
 ///
 /// The factorization has the form
-///     \f$ A = P L U \f$
+/// \[
+///     A = P L U
+/// \]
 /// where P is a permutation matrix, L is lower triangular with unit
 /// diagonal elements (lower trapezoidal if m > n), and U is upper
 /// triangular (upper trapezoidal if m < n).
@@ -153,7 +155,7 @@ int64_t getrf(
 ///     The m-by-n matrix A, stored in an lda-by-n array.
 ///     On entry, the m-by-n matrix to be factored.
 ///     On exit, the factors L and U from the factorization
-///     \f$ A = P L U; \f$ the unit diagonal elements of L are not stored.
+///     $A = P L U;$ the unit diagonal elements of L are not stored.
 ///
 /// @param[in] lda
 ///     The leading dimension of the array A. lda >= max(1,m).

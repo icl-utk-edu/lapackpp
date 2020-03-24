@@ -177,10 +177,10 @@ int64_t gbbrd(
 
 // -----------------------------------------------------------------------------
 /// Reduces a general m-by-n band matrix A to real upper
-/// bidiagonal form B by a unitary transformation: \f$ Q^H A P = B \f$.
+/// bidiagonal form B by a unitary transformation: $Q^H A P = B$.
 ///
-/// The routine computes B, and optionally forms \f$ Q \f$ or \f$ P^H \f$, or computes
-/// \f$ Q^H C \f$ for a given matrix C.
+/// The routine computes B, and optionally forms $Q$ or $P^H$, or computes
+/// $Q^H C$ for a given matrix C.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -188,9 +188,9 @@ int64_t gbbrd(
 /// @param[in] vect
 ///     Whether or not the matrices Q and P^H are to be
 ///     formed.
-///     - lapack::Vect::None: do not form \f$ Q \f$ or \f$ P^H \f$;
-///     - lapack::Vect::Q:    form \f$ Q   \f$ only;
-///     - lapack::Vect::P:    form \f$ P^H \f$ only;
+///     - lapack::Vect::None: do not form $Q$ or $P^H$;
+///     - lapack::Vect::Q:    form $Q  $ only;
+///     - lapack::Vect::P:    form $P^H$ only;
 ///     - lapack::Vect::Both: form both.
 ///
 /// @param[in] m
@@ -240,7 +240,7 @@ int64_t gbbrd(
 ///
 /// @param[out] PT
 ///     The n-by-n matrix PT, stored in an ldpt-by-n array.
-///     - If vect = P or Both, the n-by-n unitary matrix \f$ P^H \f$;
+///     - If vect = P or Both, the n-by-n unitary matrix $P^H$;
 ///     - If vect = None or Q, the array PT is not referenced.
 ///
 /// @param[in] ldpt
@@ -251,7 +251,7 @@ int64_t gbbrd(
 /// @param[in,out] C
 ///     The m-by-ncc matrix C, stored in an ldc-by-ncc array.
 ///     On entry, an m-by-ncc matrix C.
-///     On exit, C is overwritten by \f$ Q^H C \f$.
+///     On exit, C is overwritten by $Q^H C$.
 ///     C is not referenced if ncc = 0.
 ///
 /// @param[in] ldc

@@ -250,9 +250,9 @@ int64_t gerfsx(
 ///
 /// @param[in] trans
 ///     The form of the system of equations:
-///     - lapack::Op::NoTrans:   \f$ A   X = B \f$ (No transpose)
-///     - lapack::Op::Trans:     \f$ A^T X = B \f$ (Transpose)
-///     - lapack::Op::ConjTrans: \f$ A^H X = B \f$ (Conjugate transpose)
+///     - lapack::Op::NoTrans:   $A   X = B$ (No transpose)
+///     - lapack::Op::Trans:     $A^T X = B$ (Transpose)
+///     - lapack::Op::ConjTrans: $A^H X = B$ (Conjugate transpose)
 ///
 /// @param[in] equed
 ///     The form of equilibration that was done to A
@@ -265,7 +265,7 @@ int64_t gerfsx(
 ///         Column equilibration, i.e., A has been postmultiplied by diag(C).
 ///     - lapack::Equed::Both:
 ///         Both row and column equilibration, i.e.,
-///         A has been replaced by \f$ \text{diag}(R) \; A \; \text{diag}(C). \f$
+///         A has been replaced by $\text{diag}(R) \; A \; \text{diag}(C).$
 ///         The right hand side B has been changed accordingly.
 ///
 /// @param[in] n
@@ -284,7 +284,7 @@ int64_t gerfsx(
 ///
 /// @param[in] AF
 ///     The n-by-n matrix AF, stored in an ldaf-by-n array.
-///     The factors L and U from the factorization \f$ A = P L U \f$
+///     The factors L and U from the factorization $A = P L U$
 ///     as computed by `lapack::getrf`.
 ///
 /// @param[in] ldaf
@@ -388,9 +388,9 @@ int64_t gerfsx(
 ///         reciprocal condition number. Compared with the threshold
 ///         sqrt(n) * dlamch('Epsilon') to determine if the error
 ///         estimate is "guaranteed". These reciprocal condition
-///         numbers are \f$ 1 / (|| Z^{-1} ||_{inf} \cdot || Z ||_{inf}) \f$ for some
+///         numbers are $1 / (|| Z^{-1} ||_{inf} \cdot || Z ||_{inf})$ for some
 ///         appropriately scaled matrix Z.
-///         Let \f$ Z = S A, \f$ where S scales each row by a power of the
+///         Let $Z = S A,$ where S scales each row by a power of the
 ///         radix so all absolute row sums of Z are approximately 1.
 ///
 ///     - See Lapack Working Note 165 for further details and extra
@@ -433,11 +433,11 @@ int64_t gerfsx(
 ///         reciprocal condition number. Compared with the threshold
 ///         sqrt(n) * dlamch('Epsilon') to determine if the error
 ///         estimate is "guaranteed". These reciprocal condition
-///         numbers are \f$ 1 / (|| Z^{-1} ||_{inf} \cdot || Z ||_{inf}) \f$ for some
+///         numbers are $1 / (|| Z^{-1} ||_{inf} \cdot || Z ||_{inf})$ for some
 ///         appropriately scaled matrix Z.
-///         Let \f$ Z = S A \; \text{diag}(x), \f$ where x is the solution for the
+///         Let $Z = S A \; \text{diag}(x),$ where x is the solution for the
 ///         current right-hand side and S scales each row of
-///         \f$ A \; \text{diag}(x) \f$ by a power of the radix so all absolute row
+///         $A \; \text{diag}(x)$ by a power of the radix so all absolute row
 ///         sums of Z are approximately 1.
 ///
 ///     - See Lapack Working Note 165 for further details and extra

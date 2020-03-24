@@ -101,7 +101,7 @@ int64_t pbstf(
 ///
 /// This routine is designed to be used in conjunction with `lapack::hbgst`.
 ///
-/// The factorization has the form \f$ A = S^H S \f$ where S is a band matrix
+/// The factorization has the form $A = S^H S$ where S is a band matrix
 /// of the same bandwidth as A and the following structure:
 /**
     \[
@@ -139,7 +139,7 @@ int64_t pbstf(
 ///       - if uplo = Lower, AB(1+i-j,j) = A(i,j) for j <= i <= min(n,j+kd).
 ///
 ///     - On successful exit, the factor S from the split Cholesky
-///     factorization \f$ A = S^H S. \f$ See Further Details.
+///     factorization $A = S^H S.$ See Further Details.
 ///
 /// @param[in] ldab
 ///     The leading dimension of the array AB. ldab >= kd+1.

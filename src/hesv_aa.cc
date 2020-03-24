@@ -79,16 +79,16 @@ int64_t hesv_aa(
 
 // -----------------------------------------------------------------------------
 /// Computes the solution to a system of linear equations
-///     \f$ A X = B \f$,
+///     $A X = B$,
 /// where A is an n-by-n Hermitian matrix and X and B are n-by-nrhs
 /// matrices.
 ///
 /// Aasen's algorithm is used to factor A as
-///     \f$ A = U T U^H \f$, if uplo = Upper, or
-///     \f$ A = L T L^H \f$, if uplo = Lower,
+///     $A = U T U^H$, if uplo = Upper, or
+///     $A = L T L^H$, if uplo = Lower,
 /// where U (or L) is a product of permutation and unit upper (lower)
 /// triangular matrices, and T is Hermitian tridiagonal. The factored form
-/// of A is then used to solve the system of equations \f$ A X = B \f$.
+/// of A is then used to solve the system of equations $A X = B$.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -122,7 +122,7 @@ int64_t hesv_aa(
 ///
 ///     - On successful exit, the tridiagonal matrix T and the
 ///     multipliers used to obtain the factor U or L from the
-///     factorization \f$ A = U T U^H \f$ or \f$ A = L T L^H \f$ as computed by
+///     factorization $A = U T U^H$ or $A = L T L^H$ as computed by
 ///     `lapack::hetrf_aa`.
 ///
 /// @param[in] lda

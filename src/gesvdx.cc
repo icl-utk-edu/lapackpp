@@ -237,7 +237,7 @@ int64_t gesvdx(
 /// \[
 ///     A = U \Sigma V^H,
 /// \]
-/// where \f$ \Sigma \f$ is an m-by-n matrix which is zero except for its
+/// where $\Sigma$ is an m-by-n matrix which is zero except for its
 /// min(m,n) diagonal elements, U is an m-by-m unitary matrix, and
 /// V is an n-by-n unitary matrix. The diagonal elements of SIGMA
 /// are the singular values of A; they are real and non-negative, and
@@ -248,7 +248,7 @@ int64_t gesvdx(
 /// allows for the computation of a subset of singular values and
 /// vectors. See `lapack::bdsvdx` for details.
 ///
-/// Note that the routine returns VT = \f$ V^H \f$, not V.
+/// Note that the routine returns VT = $V^H$, not V.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -263,12 +263,12 @@ int64_t gesvdx(
 ///
 /// @param[in] jobvt
 ///      Specifies options for computing all or part of the matrix
-///      \f$ V^H \f$:
+///      $V^H$:
 ///     - lapack::Job::Vec:
-///         the first min(m,n) rows of \f$ V^H \f$ (the right singular
+///         the first min(m,n) rows of $V^H$ (the right singular
 ///         vectors) or as specified by range are returned in the array VT;
 ///     - lapack::Job::NoVec:
-///         no rows of \f$ V^H \f$ (no right singular vectors) are computed.
+///         no rows of $V^H$ (no right singular vectors) are computed.
 ///
 /// @param[in] range
 ///     - lapack::Range::All:
@@ -340,7 +340,7 @@ int64_t gesvdx(
 ///
 /// @param[out] VT
 ///     The nfound-by-n matrix VT, stored in an ldvt-by-n array.
-///     - If jobvt = Vec, VT contains the rows of \f$ V^H \f$
+///     - If jobvt = Vec, VT contains the rows of $V^H$
 ///       (the right singular vectors, stored rowwise) as specified by range;
 ///     - if jobvt = NoVec, VT is not referenced.
 ///     \n

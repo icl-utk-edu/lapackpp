@@ -120,18 +120,18 @@ void larf(
 /// \[
 ///     H = I - \tau v v^H,
 /// \]
-/// where \f$ \tau \f$ is a scalar and v is a vector.
+/// where $\tau$ is a scalar and v is a vector.
 ///
-/// If \f$ \tau = 0, \f$ then H is taken to be the unit matrix.
+/// If $\tau = 0,$ then H is taken to be the unit matrix.
 ///
-/// To apply \f$ H^H, \f$ supply \f$ \text{conj}(\tau) \f$ instead of \f$ \tau. \f$
+/// To apply $H^H,$ supply $\text{conj}(\tau)$ instead of $\tau.$
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
 ///
 /// @param[in] side
-///     - lapack::Side::Left:  form \f$ H C \f$
-///     - lapack::Side::Right: form \f$ C H \f$
+///     - lapack::Side::Left:  form $H C$
+///     - lapack::Side::Right: form $C H$
 ///
 /// @param[in] m
 ///     The number of rows of the matrix C.
@@ -153,8 +153,8 @@ void larf(
 /// @param[in,out] C
 ///     The m-by-n matrix C, stored in an ldc-by-n array.
 ///     On entry, the m-by-n matrix C.
-///     On exit, C is overwritten by the matrix \f$ H C \f$ if side = Left,
-///     or \f$ C H \f$ if side = Right.
+///     On exit, C is overwritten by the matrix $H C$ if side = Left,
+///     or $C H$ if side = Right.
 ///
 /// @param[in] ldc
 ///     The leading dimension of the array C. ldc >= max(1,m).

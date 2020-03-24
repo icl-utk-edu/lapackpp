@@ -197,14 +197,14 @@ int64_t gesvd(
 ///     A = U \Sigma V^H
 /// \]
 ///
-/// where \f$ \Sigma \f$ is an m-by-n matrix which is zero except for its
+/// where $\Sigma$ is an m-by-n matrix which is zero except for its
 /// min(m,n) diagonal elements, U is an m-by-m unitary matrix, and
-/// V is an n-by-n unitary matrix. The diagonal elements of \f$ \Sigma \f$
+/// V is an n-by-n unitary matrix. The diagonal elements of $\Sigma$
 /// are the singular values of A; they are real and non-negative, and
 /// are returned in descending order. The first min(m,n) columns of
 /// U and V are the left and right singular vectors of A.
 ///
-/// Note that the routine returns VT \f$ = V^H \f$, not V.
+/// Note that the routine returns VT $= V^H$, not V.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -224,17 +224,17 @@ int64_t gesvd(
 ///
 /// @param[in] jobvt
 ///     Specifies options for computing all or part of the matrix
-///     \f$ V^H \f$:
+///     $V^H$:
 ///     - lapack::Job::AllVec:
-///         all n rows of \f$ V^H \f$ are returned in the array VT;
+///         all n rows of $V^H$ are returned in the array VT;
 ///     - lapack::Job::SomeVec:
-///         the first min(m,n) rows of \f$ V^H \f$ (the right singular vectors)
+///         the first min(m,n) rows of $V^H$ (the right singular vectors)
 ///         are returned in the array VT;
 ///     - lapack::Job::OverwriteVec:
-///         the first min(m,n) rows of \f$ V^H \f$ (the right singular vectors)
+///         the first min(m,n) rows of $V^H$ (the right singular vectors)
 ///         are overwritten on the array A;
 ///     - lapack::Job::NoVec:
-///         no rows of \f$ V^H \f$ (no right singular vectors) are computed.
+///         no rows of $V^H$ (no right singular vectors) are computed.
 ///     \n
 ///     jobvt and jobu cannot both be OverwriteVec.
 ///
@@ -253,7 +253,7 @@ int64_t gesvd(
 ///       (the left singular vectors, stored columnwise);
 ///
 ///     - if jobvt = OverwriteVec,
-///       A is overwritten with the first min(m,n) rows of \f$ V^H \f$
+///       A is overwritten with the first min(m,n) rows of $V^H$
 ///       (the right singular vectors, stored rowwise);
 ///
 ///     - if jobu != OverwriteVec and jobvt != OverwriteVec,
@@ -282,10 +282,10 @@ int64_t gesvd(
 /// @param[out] VT
 ///     The vrow-by-n matrix VT, stored in an ldvt-by-n array.
 ///     - If jobvt = AllVec, vrow = n and VT contains the n-by-n unitary matrix
-///       \f$ V^H \f$;
+///       $V^H$;
 ///
 ///     - if jobvt = SomeVec, VT contains the first min(m,n) rows of
-///       \f$ V^H \f$ (the right singular vectors, stored rowwise);
+///       $V^H$ (the right singular vectors, stored rowwise);
 ///
 ///     - if jobvt = NoVec or OverwriteVec, VT is not referenced.
 ///

@@ -228,8 +228,8 @@ int64_t syrfs(
 ///     The n-by-n matrix AF, stored in an ldaf-by-n array.
 ///     The factored form of the matrix A. AF contains the block
 ///     diagonal matrix D and the multipliers used to obtain the
-///     factor U or L from the factorization \f$ A = U D U^T \f$ or
-///     \f$ A = L D L^T \f$ as computed by `lapack::sytrf`.
+///     factor U or L from the factorization $A = U D U^T$ or
+///     $A = L D L^T$ as computed by `lapack::sytrf`.
 ///
 /// @param[in] ldaf
 ///     The leading dimension of the array AF. ldaf >= max(1,n).

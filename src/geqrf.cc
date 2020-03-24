@@ -151,7 +151,7 @@ int64_t geqrf(
 
 // -----------------------------------------------------------------------------
 /// Computes a QR factorization of an m-by-n matrix A:
-/// \f$ A = Q R \f$.
+/// $A = Q R$.
 ///
 /// This is the blocked Level 3 BLAS version of the algorithm.
 ///
@@ -197,9 +197,9 @@ int64_t geqrf(
 ///     H(i) = I - \tau v v^H
 /// \]
 ///
-/// where \f$ \tau \f$ is a scalar, and v is a vector with
+/// where $\tau$ is a scalar, and v is a vector with
 /// v(1:i-1) = 0 and v(i) = 1; v(i+1:m) is stored on exit in A(i+1:m,i),
-/// and \f$ \tau \f$ in tau(i).
+/// and $\tau$ in tau(i).
 ///
 /// @ingroup geqrf
 int64_t geqrf(

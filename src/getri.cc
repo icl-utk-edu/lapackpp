@@ -171,8 +171,10 @@ int64_t getri(
 /// Computes the inverse of a matrix using the LU factorization
 /// computed by `lapack::getrf`.
 ///
-/// This method inverts U and then computes \f$ A^{-1} \f$ by solving the system
-/// \f$ A^{-1} L = U^{-1} \f$ for \f$ A^{-1}. \f$
+/// This method inverts U and then computes $A^{-1}$ by solving the system
+/// \[
+///     A^{-1} L = U^{-1}$ for $A^{-1}.
+/// \]
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -183,7 +185,7 @@ int64_t getri(
 /// @param[in,out] A
 ///     The n-by-n matrix A, stored in an lda-by-n array.
 ///     On entry, the factors L and U from the factorization
-///     \f$ A = P L U \f$ as computed by `lapack::getrf`.
+///     $A = P L U$ as computed by `lapack::getrf`.
 ///     On successful exit, the inverse of the original matrix A.
 ///
 /// @param[in] lda

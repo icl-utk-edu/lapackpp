@@ -192,9 +192,11 @@ int64_t pbsvx(
 }
 
 // -----------------------------------------------------------------------------
-/// Uses the Cholesky factorization \f$ A = U^H U \f$ or \f$ A = L L^H \f$ to
+/// Uses the Cholesky factorization $A = U^H U$ or $A = L L^H$ to
 /// compute the solution to a system of linear equations
-///     \f$ A X = B, \f$
+/// \[
+///     A X = B,
+/// \]
 /// where A is an n-by-n Hermitian positive definite band matrix and X
 /// and B are n-by-nrhs matrices.
 ///
@@ -243,7 +245,7 @@ int64_t pbsvx(
 ///     - On entry, the upper or lower triangle of the Hermitian band
 ///     matrix A, stored in the first kd+1 rows of the array, except
 ///     if fact = Factored and equed = Yes, then A must contain the
-///     equilibrated matrix \f$ \text{diag}(S) \; A \; \text{diag}(S) \f$. The j-th column of A
+///     equilibrated matrix $\text{diag}(S) \; A \; \text{diag}(S)$. The j-th column of A
 ///     is stored in the j-th column of the array AB as follows:
 ///       - if uplo = Upper, AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd) <= i <= j;
 ///       - if uplo = Lower, AB(1+i-j,j) = A(i,j) for j <= i <= min(n,j+kd).
@@ -251,7 +253,7 @@ int64_t pbsvx(
 ///         See below for further details.
 ///
 ///     - On exit, if fact = Equilibrate and equed = Yes, A is overwritten by
-///     \f$ \text{diag}(S) \; A \; \text{diag}(S). \f$
+///     $\text{diag}(S) \; A \; \text{diag}(S).$
 ///
 /// @param[in] ldab
 ///     The leading dimension of the array A. ldab >= kd+1.
@@ -260,7 +262,7 @@ int64_t pbsvx(
 ///     The n-by-n band matrix AFB, stored in an ldafb-by-n array.
 ///     - If fact = Factored, then AFB is an input argument and on entry
 ///     contains the triangular factor U or L from the Cholesky
-///     factorization \f$ A = U^H U \f$ or \f$ A = L L^H \f$ of the band matrix
+///     factorization $A = U^H U$ or $A = L L^H$ of the band matrix
 ///     A, in the same storage format as A (see AB).
 ///
 ///     - If equed = Yes, then AFB is the factored form of the equilibrated
@@ -268,11 +270,11 @@ int64_t pbsvx(
 ///
 ///     - If fact = NotFactored, then AFB is an output argument and on exit
 ///     returns the triangular factor U or L from the Cholesky
-///     factorization \f$ A = U^H U \f$ or \f$ A = L L^H. \f$
+///     factorization $A = U^H U$ or $A = L L^H.$
 ///
 ///     - If fact = Equilibrate, then AFB is an output argument and on exit
 ///     returns the triangular factor U or L from the Cholesky
-///     factorization \f$ A = U^H U \f$ or \f$ A = L L^H \f$ of the equilibrated
+///     factorization $A = U^H U$ or $A = L L^H$ of the equilibrated
 ///     matrix A (see the description of A for the form of the
 ///     equilibrated matrix).
 ///
@@ -285,7 +287,7 @@ int64_t pbsvx(
 ///         No equilibration (always true if fact = NotFactored).
 ///     - lapack::Equed::Yes:
 ///         Equilibration was done, i.e.,
-///         A has been replaced by \f$ \text{diag}(S) \; A \; \text{diag}(S). \f$
+///         A has been replaced by $\text{diag}(S) \; A \; \text{diag}(S).$
 ///     \n
 ///     equed is an input argument if fact = Factored; otherwise, it is an
 ///     output argument.
@@ -305,7 +307,7 @@ int64_t pbsvx(
 ///     The n-by-nrhs matrix B, stored in an ldb-by-nrhs array.
 ///     On entry, the n-by-nrhs right hand side matrix B.
 ///     On exit, if equed = None, B is not modified; if equed = Yes,
-///     B is overwritten by \f$ \text{diag}(S) \; B. \f$
+///     B is overwritten by $\text{diag}(S) \; B.$
 ///
 /// @param[in] ldb
 ///     The leading dimension of the array B. ldb >= max(1,n).
@@ -315,7 +317,7 @@ int64_t pbsvx(
 ///     If successful or return value = n+1, the n-by-nrhs solution matrix X to
 ///     the original system of equations. Note that if equed = Yes,
 ///     A and B are modified on exit, and the solution to the
-///     equilibrated system is \f$ \text{diag}(S)^{-1} \; X. \f$
+///     equilibrated system is $\text{diag}(S)^{-1} \; X.$
 ///
 /// @param[in] ldx
 ///     The leading dimension of the array X. ldx >= max(1,n).

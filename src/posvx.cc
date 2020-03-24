@@ -187,10 +187,12 @@ int64_t posvx(
 
 // -----------------------------------------------------------------------------
 /// Uses the Cholesky factorization
-///     \f$ A = U^H U \f$ or
-///     \f$ A = L L^H \f$ to
+///     $A = U^H U$ or
+///     $A = L L^H$ to
 /// compute the solution to a system of linear equations
-///     \f$ A X = B, \f$
+/// \[
+///     A X = B,
+/// \]
 /// where A is an n-by-n Hermitian positive definite matrix and X and B
 /// are n-by-nrhs matrices.
 ///
@@ -233,7 +235,7 @@ int64_t posvx(
 ///     The n-by-n matrix A, stored in an lda-by-n array.
 ///     On entry, the Hermitian matrix A, except if fact = Factored and
 ///     equed = Yes, then A must contain the equilibrated matrix
-///     \f$ \text{diag}(S) \; A \; \text{diag}(S). \f$
+///     $\text{diag}(S) \; A \; \text{diag}(S).$
 ///     - If uplo = Upper, the leading
 ///     n-by-n upper triangular part of A contains the upper
 ///     triangular part of the matrix A, and the strictly lower
@@ -248,7 +250,7 @@ int64_t posvx(
 ///     or if fact = Equilibrate and equed = None on exit.
 ///
 ///     - On exit, if fact = Equilibrate and equed = Yes, A is overwritten by
-///     \f$ \text{diag}(S) \; A \; \text{diag}(S). \f$
+///     $\text{diag}(S) \; A \; \text{diag}(S).$
 ///
 /// @param[in] lda
 ///     The leading dimension of the array A. lda >= max(1,n).
@@ -257,20 +259,20 @@ int64_t posvx(
 ///     The n-by-n matrix AF, stored in an ldaf-by-n array.
 ///     - If fact = Factored, then AF is an input argument and on entry
 ///     contains the triangular factor U or L from the Cholesky
-///     factorization \f$ A = U^H U \f$ or \f$ A = L L^H, \f$ in the same storage
+///     factorization $A = U^H U$ or $A = L L^H,$ in the same storage
 ///     format as A.
 ///
 ///     - If equed != None, then AF is the factored form
-///     of the equilibrated matrix \f$ \text{diag}(S) \; A \; \text{diag}(S). \f$
+///     of the equilibrated matrix $\text{diag}(S) \; A \; \text{diag}(S).$
 ///
 ///     - If fact = NotFactored, then AF is an output argument and on exit
 ///     returns the triangular factor U or L from the Cholesky
-///     factorization \f$ A = U^H U \f$ or \f$ A = L L^H \f$ of the original
+///     factorization $A = U^H U$ or $A = L L^H$ of the original
 ///     matrix A.
 ///
 ///     - If fact = Equilibrate, then AF is an output argument and on exit
 ///     returns the triangular factor U or L from the Cholesky
-///     factorization \f$ A = U^H U \f$ or \f$ A = L L^H \f$ of the equilibrated
+///     factorization $A = U^H U$ or $A = L L^H$ of the equilibrated
 ///     matrix A (see the description of A for the form of the
 ///     equilibrated matrix).
 ///
@@ -283,7 +285,7 @@ int64_t posvx(
 ///         No equilibration (always true if fact = NotFactored).
 ///     - lapack::Equed::Yes:
 ///         Equilibration was done, i.e.,
-///         A has been replaced by \f$ \text{diag}(S) \; A \; \text{diag}(S). \f$
+///         A has been replaced by $\text{diag}(S) \; A \; \text{diag}(S).$
 ///
 ///     - equed is an input argument if fact = Factored; otherwise, it is an
 ///     output argument.
@@ -300,7 +302,7 @@ int64_t posvx(
 ///     The n-by-nrhs matrix B, stored in an ldb-by-nrhs array.
 ///     On entry, the n-by-nrhs righthand side matrix B.
 ///     On exit, if equed = None, B is not modified; if equed = Yes,
-///     B is overwritten by \f$ \text{diag}(S) \; B. \f$
+///     B is overwritten by $\text{diag}(S) \; B.$
 ///
 /// @param[in] ldb
 ///     The leading dimension of the array B. ldb >= max(1,n).
@@ -310,7 +312,7 @@ int64_t posvx(
 ///     If successful or return value = n+1, the n-by-nrhs solution matrix X to
 ///     the original system of equations. Note that if equed = Yes,
 ///     A and B are modified on exit, and the solution to the
-///     equilibrated system is \f$ \text{diag}(S)^{-1} X. \f$
+///     equilibrated system is $\text{diag}(S)^{-1} X.$
 ///
 /// @param[in] ldx
 ///     The leading dimension of the array X. ldx >= max(1,n).

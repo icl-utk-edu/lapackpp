@@ -130,7 +130,7 @@ int64_t sytri(
 
 // -----------------------------------------------------------------------------
 /// Computes the inverse of a symmetric indefinite matrix
-/// A using the factorization \f$ A = U D U^T \f$ or \f$ A = L D L^T \f$ computed by
+/// A using the factorization $A = U D U^T$ or $A = L D L^T$ computed by
 /// `lapack::sytrf`.
 ///
 /// Overloaded versions are available for
@@ -143,8 +143,8 @@ int64_t sytri(
 /// @param[in] uplo
 ///     Whether the details of the factorization are stored
 ///     as an upper or lower triangular matrix.
-///     - lapack::Uplo::Upper: Upper triangular, form is \f$ A = U D U^T; \f$
-///     - lapack::Uplo::Lower: Lower triangular, form is \f$ A = L D L^T. \f$
+///     - lapack::Uplo::Upper: Upper triangular, form is $A = U D U^T;$
+///     - lapack::Uplo::Lower: Lower triangular, form is $A = L D L^T.$
 ///
 /// @param[in] n
 ///     The order of the matrix A. n >= 0.

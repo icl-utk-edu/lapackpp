@@ -225,24 +225,24 @@ int64_t trevc3(
 /// Computes some or all of the right and/or left eigenvectors of
 /// a complex upper triangular matrix T.
 /// Matrices of this type are produced by the Schur factorization of
-/// a complex general matrix: \f$ A = Q T Q^H \f$, as computed by `lapack::hseqr`.
+/// a complex general matrix: $A = Q T Q^H$, as computed by `lapack::hseqr`.
 ///
 /// The right eigenvector x and the left eigenvector y of T corresponding
-/// to an eigenvalue \f$ \lambda \f$ are defined by:
+/// to an eigenvalue $\lambda$ are defined by:
 /// \[
 ///     T x = \lambda x,
 /// \]
 /// \[
 ///     y^H T = \lambda y^H,
 /// \]
-/// where \f$ y^H \f$ denotes the conjugate transpose of the vector y.
+/// where $y^H$ denotes the conjugate transpose of the vector y.
 /// The eigenvalues are not input to this routine, but are read directly
 /// from the diagonal of T.
 ///
 /// This routine returns the matrices X and/or Y of right and left
-/// eigenvectors of T, or the products \f$ Q X \f$ and/or \f$ Q Y \f$, where Q is an
+/// eigenvectors of T, or the products $Q X$ and/or $Q Y$, where Q is an
 /// input matrix. If Q is the unitary factor that reduces a matrix A to
-/// Schur form T, then \f$ Q X \f$ and \f$ Q Y \f$ are the matrices of right and left
+/// Schur form T, then $Q X$ and $Q Y$ are the matrices of right and left
 /// eigenvectors of A.
 ///
 /// This uses a Level 3 BLAS version of the back transformation.
@@ -293,7 +293,7 @@ int64_t trevc3(
 ///     Schur vectors returned by `lapack::hseqr`).
 ///     On exit, if side = Left or Both, VL contains:
 ///     - if howmany = All, the matrix Y of left eigenvectors of T;
-///     - if howmany = Backtransform, the matrix \f$ Q Y \f$;
+///     - if howmany = Backtransform, the matrix $Q Y$;
 ///     - if howmany = Select, the left eigenvectors of T specified by
 ///         select, stored consecutively in the columns
 ///         of VL, in the same order as their
@@ -312,7 +312,7 @@ int64_t trevc3(
 ///     Schur vectors returned by `lapack::hseqr`).
 ///     On exit, if side = Right or Both, VR contains:
 ///     - if howmany = All, the matrix X of right eigenvectors of T;
-///     - if howmany = Backtransform, the matrix \f$ Q X \f$;
+///     - if howmany = Backtransform, the matrix $Q X$;
 ///     - if howmany = Select, the right eigenvectors of T specified by
 ///         select, stored consecutively in the columns
 ///         of VR, in the same order as their

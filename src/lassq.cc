@@ -82,7 +82,7 @@ void lassq(
 /// \[
 ///     scl^2 ssq = x_1^2 + \dots + x_n^2 + scale^2 sumsq,
 /// \]
-/// where \f$ x_i = | x( 1 + ( i - 1 )*incx ) |, 1 \le i \le n. \f$
+/// where $x_i = | x( 1 + ( i - 1 )*incx ) |, 1 \le i \le n.$
 /// The value of sumsq is
 /// assumed to be at least unity and the value of ssq will then satisfy
 ///

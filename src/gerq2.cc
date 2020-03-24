@@ -112,7 +112,7 @@ int64_t gerq2(
 
 // -----------------------------------------------------------------------------
 /// Computes an RQ factorization of an m-by-n matrix A:
-/// \f$ A = R Q \f$.
+/// $A = R Q$.
 ///
 /// This is the unblocked Level 2 BLAS version of the algorithm.
 ///
@@ -162,9 +162,9 @@ int64_t gerq2(
 ///     H(i) = I - \tau v v^H
 /// \]
 ///
-/// where \f$ \tau \f$ is a scalar, and v is a vector with
+/// where $\tau$ is a scalar, and v is a vector with
 /// v(n-k+i+1:n) = 0 and v(n-k+i) = 1; conj(v(1:n-k+i-1)) is stored on
-/// exit in A(m-k+i,1:n-k+i-1), and \f$ \tau \f$ in tau(i).
+/// exit in A(m-k+i,1:n-k+i-1), and $\tau$ in tau(i).
 ///
 /// @ingroup gerqf
 int64_t gerq2(

@@ -67,7 +67,7 @@ int64_t hetrd(
 // -----------------------------------------------------------------------------
 /// Reduces a Hermitian matrix A to real symmetric
 /// tridiagonal form T by a unitary similarity transformation:
-/// \f$ Q^H A Q = T \f$.
+/// $Q^H A Q = T$.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -138,9 +138,9 @@ int64_t hetrd(
 ///     H(i) = I - \tau v v^H
 /// \]
 ///
-/// where \f$ \tau \f$ is a scalar, and v is a vector with
+/// where $\tau$ is a scalar, and v is a vector with
 /// v(i+1:n) = 0 and v(i) = 1; v(1:i-1) is stored on exit in
-/// A(1:i-1,i+1), and \f$ \tau \f$ in tau(i).
+/// A(1:i-1,i+1), and $\tau$ in tau(i).
 ///
 /// If uplo = Lower, the matrix Q is represented as a product of elementary
 /// reflectors
@@ -153,9 +153,9 @@ int64_t hetrd(
 ///     H(i) = I - \tau v v^H
 /// \]
 ///
-/// where \f$ \tau \f$ is a scalar, and v is a vector with
+/// where $\tau$ is a scalar, and v is a vector with
 /// v(1:i) = 0 and v(i+1) = 1; v(i+2:n) is stored on exit in A(i+2:n,i),
-/// and \f$ \tau \f$ in tau(i).
+/// and $\tau$ in tau(i).
 ///
 /// The contents of A on exit are illustrated by the following examples
 /// with n = 5:

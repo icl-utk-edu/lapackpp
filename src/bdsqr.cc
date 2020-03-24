@@ -160,21 +160,21 @@ int64_t bdsqr(
 /// left singular vectors from the singular value decomposition (SVD) of
 /// a real n-by-n (upper or lower) bidiagonal matrix B using the implicit
 /// zero-shift QR algorithm. The SVD of B has the form
-///
-///     \f$ B = Q S P^H \f$
-///
+/// \[
+///     B = Q S P^H
+/// \]
 /// where S is the diagonal matrix of singular values, Q is an orthogonal
 /// matrix of left singular vectors, and P is an orthogonal matrix of
 /// right singular vectors. If left singular vectors are requested, this
-/// subroutine actually returns \f$ U Q \f$ instead of Q, and, if right singular
-/// vectors are requested, this subroutine returns \f$ P^H V^H \f$ instead of
-/// \f$ P^H \f$, for given input matrices U and VT \f$ = V^H \f$. When U and VT are
+/// subroutine actually returns $U Q$ instead of Q, and, if right singular
+/// vectors are requested, this subroutine returns $P^H V^H$ instead of
+/// $P^H$, for given input matrices U and VT $= V^H$. When U and VT are
 /// the unitary matrices that reduce a general matrix A to bidiagonal
-/// form: \f$ A = U B V^H \f$, as computed by `lapack::gebrd`, then
-///
-///     \f$ A = (U Q) S (P^H V^H) \f$
-///
-/// is the SVD of A. Optionally, the subroutine may also compute \f$ Q^H C \f$
+/// form: $A = U B V^H$, as computed by `lapack::gebrd`, then
+/// \[
+///     A = (U Q) S (P^H V^H)
+/// \]
+/// is the SVD of A. Optionally, the subroutine may also compute $Q^H C$
 /// for a given input matrix C.
 ///
 /// See "Computing Small Singular Values of Bidiagonal Matrices With
@@ -223,7 +223,7 @@ int64_t bdsqr(
 /// @param[in,out] VT
 ///     The n-by-ncvt matrix VT, stored in an ldvt-by-ncvt array.
 ///     On entry, an n-by-ncvt matrix VT.
-///     On exit, VT is overwritten by \f$ P^H V^H \f$.
+///     On exit, VT is overwritten by $P^H V^H$.
 ///     Not referenced if ncvt = 0.
 ///
 /// @param[in] ldvt
@@ -233,7 +233,7 @@ int64_t bdsqr(
 /// @param[in,out] U
 ///     The nru-by-n matrix U, stored in an ldu-by-n array.
 ///     On entry, an nru-by-n matrix U.
-///     On exit, U is overwritten by \f$ U Q \f$.
+///     On exit, U is overwritten by $U Q$.
 ///     Not referenced if nru = 0.
 ///
 /// @param[in] ldu
@@ -242,7 +242,7 @@ int64_t bdsqr(
 /// @param[in,out] C
 ///     The n-by-ncc matrix C, stored in an ldc-by-ncc array.
 ///     On entry, an n-by-ncc matrix C.
-///     On exit, C is overwritten by \f$ Q^H C \f$.
+///     On exit, C is overwritten by $Q^H C$.
 ///     Not referenced if ncc = 0.
 ///
 /// @param[in] ldc

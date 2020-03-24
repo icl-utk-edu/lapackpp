@@ -112,7 +112,7 @@ int64_t gelq2(
 
 // -----------------------------------------------------------------------------
 /// Computes an LQ factorization of an m-by-n matrix A:
-/// \f$ A = L Q \f$.
+/// $A = L Q$.
 ///
 /// This is the unblocked Level 2 BLAS version of the algorithm.
 ///
@@ -156,9 +156,9 @@ int64_t gelq2(
 /// \[
 ///     H(i) = I - \tau v v^H
 /// \]
-/// where \f$ \tau \f$ is a scalar, and v is a vector with
+/// where $\tau$ is a scalar, and v is a vector with
 /// v(1:i-1) = 0 and v(i) = 1; conj(v(i+1:n)) is stored on exit in
-/// A(i,i+1:n), and \f$ \tau \f$ in tau(i).
+/// A(i,i+1:n), and $\tau$ in tau(i).
 ///
 /// @ingroup gelqf
 int64_t gelq2(

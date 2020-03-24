@@ -146,25 +146,25 @@ void larfb(
 }
 
 // -----------------------------------------------------------------------------
-/// Applies a block reflector \f$ H \f$ or its transpose \f$ H^H \f$ to a
+/// Applies a block reflector $H$ or its transpose $H^H$ to a
 /// m-by-n matrix C, from either the left or the right.
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
 ///
 /// @param[in] side
-///     - lapack::Side::Left:  apply \f$ H \f$ or \f$ H^H \f$ from the Left
-///     - lapack::Side::Right: apply \f$ H \f$ or \f$ H^H \f$ from the Right
+///     - lapack::Side::Left:  apply $H$ or $H^H$ from the Left
+///     - lapack::Side::Right: apply $H$ or $H^H$ from the Right
 ///
 /// @param[in] trans
-///     - lapack::Op::NoTrans:   apply \f$ H   \f$ (No transpose)
-///     - lapack::Op::ConjTrans: apply \f$ H^H \f$ (Conjugate transpose)
+///     - lapack::Op::NoTrans:   apply $H  $ (No transpose)
+///     - lapack::Op::ConjTrans: apply $H^H$ (Conjugate transpose)
 ///
 /// @param[in] direction
 ///     Indicates how H is formed from a product of elementary
 ///     reflectors
-///     - lapack::Direction::Forward:  \f$ H = H(1) H(2) \dots H(k) \f$
-///     - lapack::Direction::Backward: \f$ H = H(k) \dots H(2) H(1) \f$
+///     - lapack::Direction::Forward:  $H = H(1) H(2) \dots H(k)$
+///     - lapack::Direction::Backward: $H = H(k) \dots H(2) H(1)$
 ///
 /// @param[in] storev
 ///     Indicates how the vectors which define the elementary
@@ -211,7 +211,7 @@ void larfb(
 ///     The m-by-n matrix C, stored in an ldc-by-n array.
 ///     On entry, the m-by-n matrix C.
 ///     On exit, C is overwritten by
-///     \f$ H C \f$ or \f$ H^H C \f$ or \f$ C H \f$ or \f$ C H^H \f$.
+///     $H C$ or $H^H C$ or $C H$ or $C H^H$.
 ///
 /// @param[in] ldc
 ///     The leading dimension of the array C. ldc >= max(1,m).

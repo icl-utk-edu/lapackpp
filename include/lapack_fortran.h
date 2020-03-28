@@ -5488,28 +5488,32 @@ void LAPACK_ssygst(
     lapack_int const* n,
     float* a, lapack_int const* lda,
     float const* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info,
+    unsigned uplo_len );
 #define LAPACK_dsygst LAPACK_GLOBAL(dsygst,DSYGST)
 void LAPACK_dsygst(
     lapack_int const* itype, char const* uplo,
     lapack_int const* n,
     double* a, lapack_int const* lda,
     double const* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info,
+    unsigned uplo_len );
 #define LAPACK_chegst LAPACK_GLOBAL(chegst,CHEGST)
 void LAPACK_chegst(
     lapack_int const* itype, char const* uplo,
     lapack_int const* n,
     lapack_complex_float* a, lapack_int const* lda,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info,
+    unsigned uplo_len );
 #define LAPACK_zhegst LAPACK_GLOBAL(zhegst,ZHEGST)
 void LAPACK_zhegst(
     lapack_int const* itype, char const* uplo,
     lapack_int const* n,
     lapack_complex_double* a, lapack_int const* lda,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info,
+    unsigned uplo_len );
 
 #define LAPACK_sspgst LAPACK_GLOBAL(sspgst,SSPGST)
 void LAPACK_sspgst(

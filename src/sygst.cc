@@ -28,11 +28,13 @@ int64_t sygst(
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ldb_ = (lapack_int) ldb;
     lapack_int info_ = 0;
+    const unsigned string_len = 1;
 
     LAPACK_ssygst(
         &itype_, &uplo_, &n_,
         A, &lda_,
-        B, &ldb_, &info_ );
+        B, &ldb_, &info_,
+        string_len );
     if (info_ < 0) {
         throw Error();
     }
@@ -58,11 +60,13 @@ int64_t sygst(
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ldb_ = (lapack_int) ldb;
     lapack_int info_ = 0;
+    const unsigned string_len = 1;
 
     LAPACK_dsygst(
         &itype_, &uplo_, &n_,
         A, &lda_,
-        B, &ldb_, &info_ );
+        B, &ldb_, &info_,
+        string_len );
     if (info_ < 0) {
         throw Error();
     }

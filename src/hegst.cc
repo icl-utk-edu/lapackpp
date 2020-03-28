@@ -28,11 +28,13 @@ int64_t hegst(
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ldb_ = (lapack_int) ldb;
     lapack_int info_ = 0;
+    const unsigned string_len = 1;
 
     LAPACK_chegst(
         &itype_, &uplo_, &n_,
         (lapack_complex_float*) A, &lda_,
-        (lapack_complex_float*) B, &ldb_, &info_ );
+        (lapack_complex_float*) B, &ldb_, &info_,
+        string_len );
     if (info_ < 0) {
         throw Error();
     }
@@ -58,11 +60,13 @@ int64_t hegst(
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ldb_ = (lapack_int) ldb;
     lapack_int info_ = 0;
+    const unsigned string_len = 1;
 
     LAPACK_zhegst(
         &itype_, &uplo_, &n_,
         (lapack_complex_double*) A, &lda_,
-        (lapack_complex_double*) B, &ldb_, &info_ );
+        (lapack_complex_double*) B, &ldb_, &info_,
+        string_len );
     if (info_ < 0) {
         throw Error();
     }

@@ -59,6 +59,22 @@ int64_t getsls(
     }
     lapack_int lwork_ = real(qry_work[0]);
 
+    // LAPACK bug: min work can be > opt work for m < n, e.g. m = 2, n = 3.
+    lapack_int ineg_two = -2;
+    LAPACK_sgetsls(
+        &trans_, &m_, &n_, &nrhs_,
+        A, &lda_,
+        B, &ldb_,
+        qry_work, &ineg_two, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
+    if (info_ < 0) {
+        throw Error();
+    }
+    lwork_ = max( lwork_, real(qry_work[0]) );
+
     // allocate workspace
     std::vector< float > work( lwork_ );
 
@@ -120,6 +136,22 @@ int64_t getsls(
     }
     lapack_int lwork_ = real(qry_work[0]);
 
+    // LAPACK bug: min work can be > opt work for m < n, e.g. m = 2, n = 3.
+    lapack_int ineg_two = -2;
+    LAPACK_dgetsls(
+        &trans_, &m_, &n_, &nrhs_,
+        A, &lda_,
+        B, &ldb_,
+        qry_work, &ineg_two, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
+    if (info_ < 0) {
+        throw Error();
+    }
+    lwork_ = max( lwork_, real(qry_work[0]) );
+
     // allocate workspace
     std::vector< double > work( lwork_ );
 
@@ -177,6 +209,22 @@ int64_t getsls(
     }
     lapack_int lwork_ = real(qry_work[0]);
 
+    // LAPACK bug: min work can be > opt work for m < n, e.g. m = 2, n = 3.
+    lapack_int ineg_two = -2;
+    LAPACK_cgetsls(
+        &trans_, &m_, &n_, &nrhs_,
+        (lapack_complex_float*) A, &lda_,
+        (lapack_complex_float*) B, &ldb_,
+        (lapack_complex_float*) qry_work, &ineg_two, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
+    if (info_ < 0) {
+        throw Error();
+    }
+    lwork_ = max( lwork_, real(qry_work[0]) );
+
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
 
@@ -233,6 +281,22 @@ int64_t getsls(
         throw Error();
     }
     lapack_int lwork_ = real(qry_work[0]);
+
+    // LAPACK bug: min work can be > opt work for m < n, e.g. m = 2, n = 3.
+    lapack_int ineg_two = -2;
+    LAPACK_zgetsls(
+        &trans_, &m_, &n_, &nrhs_,
+        (lapack_complex_double*) A, &lda_,
+        (lapack_complex_double*) B, &ldb_,
+        (lapack_complex_double*) qry_work, &ineg_two, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
+    if (info_ < 0) {
+        throw Error();
+    }
+    lwork_ = max( lwork_, real(qry_work[0]) );
 
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );

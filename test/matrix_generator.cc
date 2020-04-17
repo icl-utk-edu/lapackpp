@@ -93,28 +93,28 @@ void generate_sigma(
             }
             break;
 
-        case Dist::cluster:
+        case Dist::cluster0:
             sigma[0] = 1;
             for (int64_t i = 1; i < minmn; ++i) {
                 sigma[i] = 1/cond;
             }
             break;
 
-        case Dist::rcluster:
+        case Dist::rcluster0:
             for (int64_t i = 0; i < minmn-1; ++i) {
                 sigma[i] = 1/cond;
             }
             sigma[minmn-1] = 1;
             break;
 
-        case Dist::cluster2:
+        case Dist::cluster1:
             for (int64_t i = 0; i < minmn-1; ++i) {
                 sigma[i] = 1;
             }
             sigma[minmn-1] = 1/cond;
             break;
 
-        case Dist::rcluster2:
+        case Dist::rcluster1:
             sigma[0] = 1/cond;
             for (int64_t i = 1; i < minmn; ++i) {
                 sigma[i] = 1;
@@ -136,7 +136,7 @@ void generate_sigma(
         }
 
         case Dist::randn:
-        case Dist::randu:
+        case Dist::rands:
         case Dist::rand: {
             int64_t idist = (int64_t) dist;
             lapack::larnv( idist, params.iseed, sigma.n, sigma(0) );
@@ -479,7 +479,7 @@ void generate_matrix_usage()
     "jordan    |  ones on diagonal and first subdiagonal, rest zero\n"
     "          |  \n"
     "rand@     |  matrix entries random uniform on (0, 1)\n"
-    "randu@    |  matrix entries random uniform on (-1, 1)\n"
+    "rands@    |  matrix entries random uniform on (-1, 1)\n"
     "randn@    |  matrix entries random normal with mean 0, std 1\n"
     "          |  \n"
     "diag^@    |  A = Sigma\n"
@@ -498,16 +498,16 @@ void generate_matrix_usage()
     "_logrand        |  log(sigma_i) random uniform on [ log(1/cond), log(1) ]; default\n"
     "_arith          |  sigma_i = 1 - frac{i - 1}{n - 1} (1 - 1/cond); arithmetic: sigma_{i+1} - sigma_i is constant\n"
     "_geo            |  sigma_i = (cond)^{ -(i-1)/(n-1) };             geometric:  sigma_{i+1} / sigma_i is constant\n"
-    "_cluster        |  sigma = [ 1, 1/cond, ..., 1/cond ];  1  unit value,  n-1 small values\n"
-    "_cluster2       |  sigma = [ 1, ..., 1, 1/cond ];      n-1 unit values,  1  small value\n"
+    "_cluster0       |  sigma = [ 1, 1/cond, ..., 1/cond ];  1  unit value,  n-1 small values\n"
+    "_cluster1       |  sigma = [ 1, ..., 1, 1/cond ];      n-1 unit values,  1  small value\n"
     "_rarith         |  _arith,    reversed order\n"
     "_rgeo           |  _geo,      reversed order\n"
-    "_rcluster       |  _cluster,  reversed order\n"
-    "_rcluster2      |  _cluster2, reversed order\n"
+    "_rcluster0      |  _cluster0, reversed order\n"
+    "_rcluster1      |  _cluster1, reversed order\n"
     "_specified      |  user specified sigma on input\n"
     "                |  \n"
     "_rand           |  sigma_i random uniform on (0, 1)\n"
-    "_randu          |  sigma_i random uniform on (-1, 1)\n"
+    "_rands          |  sigma_i random uniform on (-1, 1)\n"
     "_randn          |  sigma_i random normal with mean 0, std 1\n"
     "\n"
     "%s@ Scaling%s       |  %sDescription%s\n"
@@ -601,7 +601,7 @@ void generate_matrix_usage()
 /// jordan   | ones on diagonal and first subdiagonal, rest zero
 /// --       | --
 /// rand@    | matrix entries random uniform on (0, 1)
-/// randu@   | matrix entries random uniform on (-1, 1)
+/// rands@   | matrix entries random uniform on (-1, 1)
 /// randn@   | matrix entries random normal with mean 0, std 1
 /// --       | --
 /// diag^@   | $A = \Sigma$
@@ -623,22 +623,23 @@ void generate_matrix_usage()
 /// _logrand        |  $\log(\sigma_i)$ random uniform on $[ \log(1/cond), \log(1) ]$; default
 /// _arith          |  $\sigma_i = 1 - \frac{i - 1}{n - 1} (1 - 1/cond)$; arithmetic: $\sigma_{i+1} - \sigma_i$ is constant
 /// _geo            |  $\sigma_i = (cond)^{ -(i-1)/(n-1) }$;              geometric:  $\sigma_{i+1} / \sigma_i$ is constant
-/// _cluster        |  $\Sigma = [ 1, 1/cond, ..., 1/cond ]$;  1     unit value,  $n-1$ small values
-/// _cluster2       |  $\Sigma = [ 1, ..., 1, 1/cond ]$;       $n-1$ unit values, 1     small value
+/// _cluster0       |  $\Sigma = [ 1, 1/cond, ..., 1/cond ]$;  1     unit value,  $n-1$ small values
+/// _cluster1       |  $\Sigma = [ 1, ..., 1, 1/cond ]$;       $n-1$ unit values, 1     small value
 /// _rarith         |  _arith,    reversed order
 /// _rgeo           |  _geo,      reversed order
-/// _rcluster       |  _cluster,  reversed order
-/// _rcluster2      |  _cluster2, reversed order
+/// _rcluster0      |  _cluster0, reversed order
+/// _rcluster1      |  _cluster1, reversed order
 /// _specified      |  user specified sigma on input
 /// --              |  --
 /// _rand           |  $\sigma_i$ random uniform on (0, 1)
-/// _randu          |  $\sigma_i$ random uniform on (-1, 1)
+/// _rands          |  $\sigma_i$ random uniform on (-1, 1)
 /// _randn          |  $\sigma_i$ random normal with mean 0, std 1
 ///
-/// Note _rand, _randu, _randn do not use cond; the condition number is random.
+/// Note _rand, _rands, _randn do not use cond; the condition number is random.
+/// For randn, Expected( log( cond ) ) = log( 4.65 n ) [Edelman, 1988].
 ///
-/// Note for _randu and _randn, $\Sigma$ contains negative values.
-/// This means poev_randu and poev_randn will not generate an SPD matrix.
+/// Note for _rands and _randn, $\Sigma$ contains negative values.
+/// This means poev_rands and poev_randn will not generate an SPD matrix.
 ///
 /// @ Scaling       |  Description
 /// ----------------|-------------
@@ -716,7 +717,7 @@ void generate_matrix(
     else if (base == "identity") { type = TestMatrixType::identity; }
     else if (base == "jordan"  ) { type = TestMatrixType::jordan;   }
     else if (base == "randn"   ) { type = TestMatrixType::randn;    }
-    else if (base == "randu"   ) { type = TestMatrixType::randu;    }
+    else if (base == "rands"   ) { type = TestMatrixType::rands;    }
     else if (base == "rand"    ) { type = TestMatrixType::rand;     }
     else if (base == "diag"    ) { type = TestMatrixType::diag;     }
     else if (base == "svd"     ) { type = TestMatrixType::svd;      }
@@ -738,17 +739,17 @@ void generate_matrix(
     if (token != tokens.end()) {
         suffix = *token;
         if      (suffix == "randn"    ) { dist = Dist::randn;     }
-        else if (suffix == "randu"    ) { dist = Dist::randu;     }
+        else if (suffix == "rands"    ) { dist = Dist::rands;     }
         else if (suffix == "rand"     ) { dist = Dist::rand;      }
         else if (suffix == "logrand"  ) { dist = Dist::logrand;   }
         else if (suffix == "arith"    ) { dist = Dist::arith;     }
         else if (suffix == "geo"      ) { dist = Dist::geo;       }
-        else if (suffix == "cluster2" ) { dist = Dist::cluster2;  }
-        else if (suffix == "cluster"  ) { dist = Dist::cluster;   }
+        else if (suffix == "cluster1" ) { dist = Dist::cluster1;  }
+        else if (suffix == "cluster0" ) { dist = Dist::cluster0;  }
         else if (suffix == "rarith"   ) { dist = Dist::rarith;    }
         else if (suffix == "rgeo"     ) { dist = Dist::rgeo;      }
-        else if (suffix == "rcluster2") { dist = Dist::rcluster2; }
-        else if (suffix == "rcluster" ) { dist = Dist::rcluster;  }
+        else if (suffix == "rcluster1") { dist = Dist::rcluster1; }
+        else if (suffix == "rcluster0") { dist = Dist::rcluster0; }
         else if (suffix == "specified") { dist = Dist::specified; }
 
         // if found, move to next token
@@ -788,7 +789,7 @@ void generate_matrix(
 
             // error if matrix type doesn't support it
             if (! (type == TestMatrixType::rand  ||
-                   type == TestMatrixType::randu ||
+                   type == TestMatrixType::rands ||
                    type == TestMatrixType::randn ||
                    type == TestMatrixType::svd   ||
                    type == TestMatrixType::poev  ||
@@ -816,7 +817,7 @@ void generate_matrix(
 
             // error if matrix type doesn't support it
             if (! (type == TestMatrixType::rand  ||
-                   type == TestMatrixType::randu ||
+                   type == TestMatrixType::rands ||
                    type == TestMatrixType::randn ||
                    type == TestMatrixType::svd   ||
                    type == TestMatrixType::poev  ||
@@ -855,7 +856,7 @@ void generate_matrix(
         type == TestMatrixType::identity  ||
         type == TestMatrixType::jordan    ||
         type == TestMatrixType::randn     ||
-        type == TestMatrixType::randu     ||
+        type == TestMatrixType::rands     ||
         type == TestMatrixType::rand)
     {
         // warn first time if user set cond and matrix doesn't use it
@@ -868,14 +869,14 @@ void generate_matrix(
         params.cond_used() = testsweeper::no_data_flag;
     }
     else if (dist == Dist::randn ||
-             dist == Dist::randu ||
+             dist == Dist::rands ||
              dist == Dist::rand)
     {
         // warn first time if user set cond and distribution doesn't use it
         static std::string last;
         if (! cond_default && last != kind) {
             last = kind;
-            fprintf( stderr, "%sWarning: matrix '%s': rand, randn, and randu "
+            fprintf( stderr, "%sWarning: matrix '%s': rand, randn, and rands "
                      "singular/eigenvalue distributions ignore cond %.2e.%s\n",
                      ansi_red, kind.c_str(), params.cond(), ansi_normal );
         }
@@ -899,10 +900,10 @@ void generate_matrix(
     }
 
     if (type == TestMatrixType::poev &&
-        (dist == Dist::randu ||
+        (dist == Dist::rands ||
          dist == Dist::randn))
     {
-        fprintf( stderr, "%sWarning: matrix '%s' using randu or randn "
+        fprintf( stderr, "%sWarning: matrix '%s' using rands or randn "
                  "will not generate SPD matrix; use rand instead.%s\n",
                  ansi_red, kind.c_str(), ansi_normal );
     }
@@ -927,7 +928,7 @@ void generate_matrix(
         }
 
         case TestMatrixType::rand:
-        case TestMatrixType::randu:
+        case TestMatrixType::rands:
         case TestMatrixType::randn: {
             //int64_t idist = (int64_t) type;
             int64_t idist = 1;

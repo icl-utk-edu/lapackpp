@@ -32,6 +32,11 @@ stage ('Build - Caffeine'){
 
       hg clone http://bitbucket.org/icl/lapackpp && cd lapackpp
       make config CXXFLAGS="-Werror"
+      
+      # modify make.inc to add netlib LAPACKE for bug fixes
+      export LAPACKDIR=/tmp/jenkins/workspace/jmfinney/netlib-caffeine/caffeine_build/lib
+      sed -i -e 's/-lmkl_gf_lp64/-L${LAPACKDIR} -llapacke -lmkl_gf_lp64/g' make.inc
+      
       make -j4
       ldd test/tester | tee ldd_output.txt
     '''
@@ -81,6 +86,11 @@ stage ('Build - Lips'){
 
       hg clone http://bitbucket.org/icl/lapackpp && cd lapackpp
       make config CXXFLAGS="-Werror"
+      
+      # Needs newest LAPACK for bug fixes
+      export LAPACKDIR=/home/jmfinney/projects/lapack/build/lib
+      sed -i -e 's/-lmkl_gf_lp64/-L${LAPACKDIR} -llapacke -lmkl_gf_lp64/g' make.inc
+
       make -j4
       ldd test/tester | tee ldd_output.txt
     '''
@@ -112,6 +122,8 @@ stage ('Test - Caffeine') {
       #!/bin/sh +x
       echo "LAPACK++ Building..."
       hostname && pwd
+
+      export LAPACKDIR=/tmp/jenkins/workspace/jmfinney/netlib-caffeine/caffeine_build/lib
 
       source /home/jmfinney/spack/share/spack/setup-env.sh
       spack load gcc@6.4.0
@@ -152,6 +164,8 @@ stage ('Test - Lips') {
       spack load cuda
       spack load intel-mkl
       spack load intel-mpi
+
+      export LAPACKDIR=/home/jmfinney/projects/lapack/build/lib
 
       cd lapackpp/test
       ./run_tests.py --ref n --xml report.xml

@@ -153,7 +153,7 @@ stage ('Test - Lips') {
       spack load intel-mkl
       spack load intel-mpi
 
-      cd blaspp/test
+      cd lapackpp/test
       ./run_tests.py --ref n --xml report.xml
     '''
     junit 'lapackpp/test/*.xml'

@@ -119,3 +119,57 @@ If you experience unexpected problems, please see config/log.txt to diagnose the
 issue. The log shows the option being tested, the exact command run, the
 command's standard output (stdout), error output (stderr), and exit status. All
 test files are in the config directory.
+
+CMake Installation
+--------------------------------------------------------------------------------
+
+Note that LAPACK++ inherits its dependencies from BLAS++. It requires th
+BLAS++ library to be installed via CMake prior to compilation.  Information and
+installation instructions can be found at https://bitbucket.org/icl/blaspp.
+
+The CMake script enforces an out of source build. The simplest way to accomplish
+this is to create a build directory off the LAPACK++ root directory:
+
+    cd /my/lapackpp/dir
+    mkdir build && cd build
+
+### Options
+
+By default LAPACK++ is set to install into `/opt/slate/`. If you wish to
+change this, CMake needs to be told where to install the LAPACK++ library.
+You can do this by defining CMAKE_INSTALL_PREFIX variable via the CMake
+command line:
+
+    # Assuming the working dir is still /my/lapackpp/dir/build
+    cmake -DCMAKE_INSTALL_PREFIX=/path/to/my/dir ..
+
+By default LAPACK++ builds a testing suite located in `lapackpp/test`.  To disable,
+define `LAPACKPP_BUILD_TESTS` as `OFF`, as follows:
+
+    # Disable building LAPACKPP test suite
+    cmake -DLAPACKPP_BUILD_TESTS=OFF ..
+
+If `LAPACKPP_BUILD_TESTS` is enabled, the build will require the TestSweeper
+library to be installed via CMake prior to compilation.  Information and
+installation instructions can be found at https://bitbucket.org/icl/testsweeper.
+
+### LAPACK++ Library options
+
+LAPACK++ inherits its dependencies from BLAS++ as noted above.  However, if the
+user wishes to override these options, they may set `USE_OPTIMIZED_LAPACK` to `TRUE`
+to use the CMake included `find_package(LAPACK)`.
+
+The user may also set `LAPACK_LIBRARIES` to the path of their desired LAPACK
+library.  LAPACK++ will then attempt to explicitly link to this.
+
+Once the LAPACK library is set or inherited, the CMake script attempts to compile
+several small code snippets to determine what compiler options are necessary for
+LAPACK++.
+
+### CMake build
+Once CMake generates the required makefiles, BLAS++ can be built
+and installed using the following:
+
+    # Assuming the working dir is still /my/lapackpp/dir/build
+    make
+    make install

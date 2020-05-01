@@ -4,40 +4,31 @@ triggers { cron ('H H(0-2) * * *') }
 stages {
 stage ('Build'){
 parallel {
-stage ('Build - Caffeine'){
-  agent { node ('caffeine.icl.utk.edu')}
+stage ('Build - Master'){
+  agent { label ('master') }
   steps {
     sh '''
       #!/bin/sh +x
       echo "LAPACK++ Building..."
       hostname && pwd
 
-      source /home/jmfinney/spack/share/spack/setup-env.sh
+      source /opt/spack/share/spack/setup-env.sh
+      spack load gcc
       spack load cmake
-      spack load gcc@6.4.0
       spack load intel-mkl
       spack load intel-mpi
-
+      
       rm -rf *
 
-      hg clone http://bitbucket.org/icl/testsweeper && cd testsweeper
-      make config
-      sed -i '/CXXFLAGS/s/$/ -DNO_COLOR/' make.inc
-      make
-      cd ..
-
-      hg clone http://bitbucket.org/icl/blaspp && cd blaspp
-      make config && make -j4
-      cd ..
-
       hg clone http://bitbucket.org/icl/lapackpp && cd lapackpp
+      export color=no
       make config CXXFLAGS="-Werror"
       
       # modify make.inc to add netlib LAPACKE for bug fixes
-      export LAPACKDIR=/tmp/jenkins/workspace/jmfinney/netlib-caffeine/caffeine_build/lib
+      export LAPACKDIR=/var/lib/jenkins/workspace/jmfinney/netlib-xylitol/build/lib
       sed -i -e 's/-lmkl_gf_lp64/-L${LAPACKDIR} -llapacke -lmkl_gf_lp64/g' make.inc
       
-      make -j4
+      make -j8
       ldd test/tester | tee ldd_output.txt
     '''
   } // steps
@@ -115,18 +106,19 @@ stage ('Build - Lips'){
 } // stage (build)
 stage ('Test') {
 parallel {
-stage ('Test - Caffeine') {
-  agent { node ('caffeine.icl.utk.edu')}
+stage ('Test - Master') {
+  agent { label ('master') }
   steps {
     sh '''
       #!/bin/sh +x
-      echo "LAPACK++ Building..."
+      echo "LAPACK++ Testing..."
       hostname && pwd
 
-      export LAPACKDIR=/tmp/jenkins/workspace/jmfinney/netlib-caffeine/caffeine_build/lib
+      export LAPACKDIR=/var/lib/jenkins/workspace/jmfinney/netlib-xylitol/build/lib
 
-      source /home/jmfinney/spack/share/spack/setup-env.sh
-      spack load gcc@6.4.0
+      source /opt/spack/share/spack/setup-env.sh
+      spack load gcc
+      spack load cmake
       spack load intel-mkl
       spack load intel-mpi
 
@@ -156,7 +148,7 @@ stage ('Test - Lips') {
   steps {
     sh '''
       #!/bin/sh +x
-      echo "LAPACK++ Building..."
+      echo "LAPACK++ Testing..."
       hostname && pwd
 
       source /home/jmfinney/spack/share/spack/setup-env.sh

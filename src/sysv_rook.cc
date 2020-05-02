@@ -200,7 +200,7 @@ int64_t sysv_rook(
 }
 
 // -----------------------------------------------------------------------------
-/// @deprecated Replaced by `lapack::sysv_rk`.
+/// @see lapack::sysv_rk.
 /// @since LAPACK 3.5.0.
 /// @ingroup sysv
 int64_t sysv_rook(

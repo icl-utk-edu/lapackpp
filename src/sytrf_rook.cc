@@ -179,7 +179,7 @@ int64_t sytrf_rook(
 }
 
 // -----------------------------------------------------------------------------
-/// @deprecated Replaced by `lapack::sytrf_rk`.
+/// @see lapack::sytrf_rk.
 /// @since LAPACK 3.5.0.
 /// @ingroup sysv_rk_computational
 int64_t sytrf_rook(

@@ -78,7 +78,7 @@ int64_t hesv_rook(
 }
 
 // -----------------------------------------------------------------------------
-/// @deprecated Replaced by `lapack::hesv_rk`.
+/// @see lapack::hesv_rk.
 /// @since LAPACK 3.5.0.
 /// @ingroup hesv
 int64_t hesv_rook(

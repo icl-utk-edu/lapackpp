@@ -137,7 +137,7 @@ int64_t sytrs_rook(
 }
 
 // -----------------------------------------------------------------------------
-/// @deprecated Replaced by `lapack::sytrs_rk`.
+/// @see lapack::sytrs_rk
 /// @since LAPACK 3.5.0.
 /// @ingroup sysv_rk_computational
 int64_t sytrs_rook(

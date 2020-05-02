@@ -71,7 +71,7 @@ int64_t hetrf_rook(
 }
 
 // -----------------------------------------------------------------------------
-/// @deprecated Replaced by `lapack::hetrf_rk`.
+/// @see lapack::hetrf_rk.
 /// @since LAPACK 3.5.0.
 /// @ingroup hesv_rk_computational
 int64_t hetrf_rook(

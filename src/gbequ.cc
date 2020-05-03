@@ -188,7 +188,7 @@ int64_t gbequ(
 ///     should be scaled.
 ///
 /// @return = 0: successful exit
-/// @return > 0 and <= m: if return value = i, the i-th row    of A is exactly zero
+/// @return > 0 and <= m: if return value = i, the i-th row of A is exactly zero
 /// @return > m:          if return value = i, the (i-m)-th column of A is exactly zero
 ///
 /// @ingroup gbsv_computational

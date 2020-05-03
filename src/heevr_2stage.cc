@@ -281,7 +281,7 @@ int64_t heevr_2stage(
 ///     jobz = Vec, ldz >= max(1,n).
 ///
 /// @param[out] isuppz
-///     The vector isuppz of length  2*max(1,nfound) .
+///     The vector isuppz of length 2*max(1,nfound).
 ///     The support of the eigenvectors in Z, i.e., the indices
 ///     indicating the nonzero elements in Z. The i-th eigenvector
 ///     is nonzero only in elements isuppz( 2*i-1 ) through

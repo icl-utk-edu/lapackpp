@@ -288,8 +288,8 @@ void tprfb(
 /// \]
 ///
 /// The pentagonal matrix V is composed of a rectangular block V1 and a
-/// trapezoidal block V2.  The size of the trapezoidal block is determined by
-/// the parameter l, where 0 <= l <= k.  If l=k, the V2 block of V is triangular;
+/// trapezoidal block V2. The size of the trapezoidal block is determined by
+/// the parameter l, where 0 <= l <= k. If l=k, the V2 block of V is triangular;
 /// if l=0, there is no trapezoidal block, thus V = V1 is rectangular.
 ///
 /// If direction = Forward and storev = Columnwise:

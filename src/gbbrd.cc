@@ -189,7 +189,7 @@ int64_t gbbrd(
 ///     Whether or not the matrices Q and P^H are to be
 ///     formed.
 ///     - lapack::Vect::None: do not form $Q$ or $P^H$;
-///     - lapack::Vect::Q:    form $Q  $ only;
+///     - lapack::Vect::Q:    form $Q$   only;
 ///     - lapack::Vect::P:    form $P^H$ only;
 ///     - lapack::Vect::Both: form both.
 ///

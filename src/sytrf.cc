@@ -254,7 +254,7 @@ int64_t sytrf(
 /// \]
 /// i.e., U is a product of terms $P(k) U(k),$ where k decreases from n to
 /// 1 in steps of 1 or 2, and D is a block diagonal matrix with 1-by-1
-/// and 2-by-2 diagonal blocks D(k).  P(k) is a permutation matrix as
+/// and 2-by-2 diagonal blocks D(k). P(k) is a permutation matrix as
 /// defined by ipiv(k), and U(k) is a unit upper triangular matrix, such
 /// that if the diagonal block D(k) is of order s (s = 1 or 2), then
 ///
@@ -273,7 +273,7 @@ int64_t sytrf(
 /// \]
 /// i.e., L is a product of terms $P(k) L(k),$ where k increases from 1 to
 /// n in steps of 1 or 2, and D is a block diagonal matrix with 1-by-1
-/// and 2-by-2 diagonal blocks D(k).  P(k) is a permutation matrix as
+/// and 2-by-2 diagonal blocks D(k). P(k) is a permutation matrix as
 /// defined by ipiv(k), and L(k) is a unit lower triangular matrix, such
 /// that if the diagonal block D(k) is of order s (s = 1 or 2), then
 ///

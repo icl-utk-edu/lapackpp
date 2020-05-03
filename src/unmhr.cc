@@ -94,7 +94,7 @@ int64_t unmhr(
 ///     - lapack::Side::Right: apply $Q$ or $Q^H$ from the Right.
 ///
 /// @param[in] trans
-///     - lapack::Op::NoTrans:   apply $Q  $ (No transpose)
+///     - lapack::Op::NoTrans:   apply $Q$   (No transpose)
 ///     - lapack::Op::ConjTrans: apply $Q^H$ (Conjugate transpose)
 ///
 /// @param[in] m

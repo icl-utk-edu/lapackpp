@@ -76,7 +76,7 @@ int64_t hesv(
 }
 
 // -----------------------------------------------------------------------------
-/// Computes the solution to  system of linear equations
+/// Computes the solution to a system of linear equations
 ///     $A X = B$,
 /// where A is an n-by-n Hermitian matrix and X and B are n-by-nrhs
 /// matrices.

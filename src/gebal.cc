@@ -184,7 +184,7 @@ int64_t gebal(
     \]
 */
 /// where T1 and T2 are upper triangular matrices whose eigenvalues lie
-/// along the diagonal.  The column indices ilo and ihi mark the starting
+/// along the diagonal. The column indices ilo and ihi mark the starting
 /// and ending columns of the submatrix B. Balancing consists of applying
 /// a diagonal similarity transformation $D^{-1} B D$ to make the
 /// 1-norms of each row of B and its corresponding column nearly equal.

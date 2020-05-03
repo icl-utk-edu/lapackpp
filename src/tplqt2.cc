@@ -189,7 +189,7 @@ int64_t tplqt2(
 ///     B = [ B1, B2 ]
 /// \]
 /// The lower trapezoidal matrix B2 consists of the first l columns of a
-/// n-by-n lower triangular matrix, where 0 <= l <= min(m,n).  If l=0,
+/// n-by-n lower triangular matrix, where 0 <= l <= min(m,n). If l=0,
 /// B is rectangular m-by-n; if m=l=n, B is lower triangular.
 ///
 /// The matrix W stores the elementary reflectors H(i) in the i-th row
@@ -201,7 +201,7 @@ int64_t tplqt2(
 /// where I is m-by-m identity and V is m-by-n, same form as B.
 ///
 /// Thus, all of information needed for W is contained on exit in B, which
-/// we call V above.  Note that V has the same form as B; that is,
+/// we call V above. Note that V has the same form as B; that is,
 /// \[
 ///     V = [ V1, V2 ]
 /// \]

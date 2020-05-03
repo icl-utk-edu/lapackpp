@@ -211,7 +211,7 @@ int64_t tplqt(
 ///     B = [ B1, B2 ]
 /// \]
 /// The lower trapezoidal matrix B2 consists of the first l columns of a
-/// m-by-m lower triangular matrix, where 0 <= l <= min(m,n).  If l=0,
+/// m-by-m lower triangular matrix, where 0 <= l <= min(m,n). If l=0,
 /// B is rectangular m-by-n; if m=l=n, B is lower triangular.
 ///
 /// The matrix W stores the elementary reflectors H(i) in the i-th row
@@ -223,7 +223,7 @@ int64_t tplqt(
 /// where I is m-by-m identity and V is m-by-n, same form as B.
 ///
 /// Thus, all of information needed for W is contained on exit in B, which
-/// we call V above.  Note that V has the same form as B; that is,
+/// we call V above. Note that V has the same form as B; that is,
 /// \[
 ///     V = [ V1, V2 ]
 /// \]
@@ -232,8 +232,8 @@ int64_t tplqt(
 ///
 /// The number of blocks is B = ceiling(m/mb), where each
 /// block is of order mb except for the last block, which is of order
-/// IB = m - (m-1)*mb.  For each of the B blocks, a upper triangular block
-/// reflector factor is computed: T1, T2, ..., TB.  The mb-by-mb (and IB-by-IB
+/// IB = m - (m-1)*mb. For each of the B blocks, a upper triangular block
+/// reflector factor is computed: T1, T2, ..., TB. The mb-by-mb (and IB-by-IB
 /// for the last block) T's are stored in the mb-by-n matrix T as
 /// \[
 ///     T = [T1, T2, ..., TB].

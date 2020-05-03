@@ -153,7 +153,8 @@ int64_t gtcon(
 /// `lapack::gttrf`.
 ///
 /// An estimate is obtained for $|| A^{-1} ||,$ and the reciprocal of the
-/// condition number is computed as  $\text{rcond} = 1 / (|| A || \cdot || A^{-1} ||).$
+/// condition number is computed as
+/// $\text{rcond} = 1 / (|| A || \cdot || A^{-1} ||).$
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.

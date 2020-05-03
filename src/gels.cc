@@ -202,7 +202,7 @@ int64_t gels(
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
 ///
 /// @param[in] trans
-///     - lapack::Op::NoTrans:   the linear system involves $A  $;
+///     - lapack::Op::NoTrans:   the linear system involves $A$;
 ///     - lapack::Op::ConjTrans: the linear system involves $A^H$.
 ///     - lapack::Op::Trans:     the linear system involves $A^T$.
 ///     \n

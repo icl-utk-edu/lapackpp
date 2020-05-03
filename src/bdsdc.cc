@@ -153,7 +153,7 @@ int64_t bdsdc(
 //      and right singular vectors in a compact form,
 //      requiring O(n log n) space instead of 2*n^2.
 //      In particular, Q contains all the DOUBLE PRECISION data in
-//      LDQ >= n*(11 + 2*SMLSIZ + 8*INT(LOG_2(n/(SMLSIZ+1))))
+//      ldq >= n*(11 + 2*SMLSIZ + 8*INT(LOG_2(n/(SMLSIZ+1))))
 //      words of memory, where SMLSIZ is returned by ILAENV and
 //      is equal to the maximum size of the subproblems at the
 //      bottom of the computation tree (usually about 25).

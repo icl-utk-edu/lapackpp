@@ -149,7 +149,7 @@ int64_t posv(
 ///     triangular part of A is not referenced.
 ///
 ///     - On successful exit, the factor U or L from the Cholesky
-///     factorization $A = U^H U$  or $A = L L^H$ .
+///     factorization $A = U^H U$ or $A = L L^H$.
 ///
 /// @param[in] lda
 ///     The leading dimension of the array A. lda >= max(1,n).

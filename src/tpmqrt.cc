@@ -180,7 +180,12 @@ int64_t tpmqrt(
 // -----------------------------------------------------------------------------
 /// Applies a complex orthogonal matrix Q obtained from a
 /// "triangular-pentagonal" complex block reflector H to a general
-/// complex matrix C, which consists of two blocks A and B.
+/// complex matrix C, which consists of two blocks A and B, as follows:
+///
+/// - side = Left,  trans = NoTrans:   $Q C$
+/// - side = Right, trans = NoTrans:   $C Q$
+/// - side = Left,  trans = ConjTrans: $Q^H C$
+/// - side = Right, trans = ConjTrans: $C Q^H$
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
@@ -235,23 +240,21 @@ int64_t tpmqrt(
 ///     The leading dimension of the array T. ldt >= nb.
 ///
 /// @param[in,out] A
-///     The vector A of length lda,n if side = Left or; lda,k if side = Right.
-///     (lda,n) if side = Left or
-///     (lda,k) if side = Right
-///     On entry, the k-by-n or m-by-k matrix A.
+///     If side = Left,  the k-by-n matrix A, stored in an lda-by-n array;
+///     if side = Right, the m-by-k matrix A, stored in an lda-by-k array.
 ///     On exit, A is overwritten by the corresponding block of
-///     $op(Q) C$ or $C op(Q)$. See Further Details.
+///     $Q C$ or $Q^H C$ or $C Q$ or $C Q^H$. See Further Details.
 ///
 /// @param[in] lda
 ///     The leading dimension of the array A.
-///     If side = Left, LDC >= max(1,k);
-///     If side = Right, LDC >= max(1,m).
+///     If side = Left,  lda >= max(1,k);
+///     If side = Right, lda >= max(1,m).
 ///
 /// @param[in,out] B
 ///     The m-by-n matrix B, stored in an ldb-by-n array.
 ///     On entry, the m-by-n matrix B.
 ///     On exit, B is overwritten by the corresponding block of
-///     $QC$, $Q^H C$, $CQ$, or $CQ^H$. See Further Details.
+///     $Q C$ or $Q^H C$ or $C Q$ or $C Q^H$. See Further Details.
 ///
 /// @param[in] ldb
 ///     The leading dimension of the array B.
@@ -266,41 +269,32 @@ int64_t tpmqrt(
 /// H(1), H(2), ..., H(k); V is composed of a rectangular block V1 and a
 /// trapezoidal block V2:
 /// \[
-///     V = \left[ \begin{array}{c}
-///         V1
+///     V = \begin{bmatrix}
+///         V1  \\
 ///         V2
-///     \end{array} \right].
+///     \end{bmatrix}.
 /// \]
-///
 /// The size of the trapezoidal block V2 is determined by the parameter l,
 /// where 0 <= l <= k; V2 is upper trapezoidal, consisting of the first l
-/// rows of a k-by-k upper triangular matrix.  If l=k, V2 is upper triangular;
+/// rows of a k-by-k upper triangular matrix. If l=k, V2 is upper triangular;
 /// if l=0, there is no trapezoidal block, hence V = V1 is rectangular.
 ///
 /// If side = Left:
 /// \[
-///     C = \left[ \begin{array}{c}
-///         A
+///     C = \begin{bmatrix}
+///         A  \\
 ///         B
-//      \end{array} \right]
+///     \end{bmatrix},
 /// \]
-/// where A is k-by-n,  B is m-by-n and V is m-by-k.
+/// where A is k-by-n, B is m-by-n and V is m-by-k.
 ///
 /// If side = Right:
 /// \[
-///     C = [A, B]
+///     C = \begin{bmatrix}  A  &  B  \end{bmatrix},
 /// \]
 /// where A is m-by-k, B is m-by-n and V is n-by-k.
 ///
-/// The complex orthogonal matrix Q is formed from V and T.
-///
-/// If trans=NoTrans and side=Left,    on exit C is replaced with $QC$.
-///
-/// If trans=ConjTrans and side=Left,  on exit C is replaced with $Q^H C$.
-///
-/// If trans=NoTrans and side=Right,   on exit C is replaced with $C Q$.
-///
-/// If trans=ConjTrans and side=Right, on exit C is replaced with $C Q^H$.
+/// The unitary matrix Q is formed from V and T.
 ///
 /// @ingroup tpqrt
 int64_t tpmqrt(

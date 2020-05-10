@@ -53,7 +53,11 @@ void syr(
     LAPACK_csyr( &uplo_, &n_,
                  (lapack_complex_float*) &alpha,
                  (lapack_complex_float*) x, &incx_,
-                 (lapack_complex_float*) A, &lda_ );
+                 (lapack_complex_float*) A, &lda_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +99,11 @@ void syr(
     LAPACK_zsyr( &uplo_, &n_,
                  (lapack_complex_double*) &alpha,
                  (lapack_complex_double*) x, &incx_,
-                 (lapack_complex_double*) A, &lda_ );
+                 (lapack_complex_double*) A, &lda_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
 }
 
 }  // namespace blas

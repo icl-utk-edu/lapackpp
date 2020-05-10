@@ -36,7 +36,11 @@ void sfrk(
     LAPACK_ssfrk(
         &transr_, &uplo_, &trans_, &n_, &k_, &alpha,
         A, &lda_, &beta,
-        C );
+        C
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +65,11 @@ void sfrk(
     LAPACK_dsfrk(
         &transr_, &uplo_, &trans_, &n_, &k_, &alpha,
         A, &lda_, &beta,
-        C );
+        C
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1
+        #endif
+    );
 }
 
 }  // namespace lapack

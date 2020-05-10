@@ -71,7 +71,11 @@ int64_t ggesx(
         rcondv,
         qry_work, &ineg_one,
         qry_iwork, &ineg_one,
-        qry_bwork, &info_ );
+        qry_bwork, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -97,7 +101,11 @@ int64_t ggesx(
         rcondv,
         &work[0], &lwork_,
         &iwork[0], &liwork_,
-        &bwork[0], &info_ );
+        &bwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -166,7 +174,11 @@ int64_t ggesx(
         rcondv,
         qry_work, &ineg_one,
         qry_iwork, &ineg_one,
-        qry_bwork, &info_ );
+        qry_bwork, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -192,7 +204,11 @@ int64_t ggesx(
         rcondv,
         &work[0], &lwork_,
         &iwork[0], &liwork_,
-        &bwork[0], &info_ );
+        &bwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -258,7 +274,11 @@ int64_t ggesx(
         (lapack_complex_float*) qry_work, &ineg_one,
         qry_rwork,
         qry_iwork, &ineg_one,
-        qry_bwork, &info_ );
+        qry_bwork, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -285,7 +305,11 @@ int64_t ggesx(
         (lapack_complex_float*) &work[0], &lwork_,
         &rwork[0],
         &iwork[0], &liwork_,
-        &bwork[0], &info_ );
+        &bwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -347,7 +371,11 @@ int64_t ggesx(
         (lapack_complex_double*) qry_work, &ineg_one,
         qry_rwork,
         qry_iwork, &ineg_one,
-        qry_bwork, &info_ );
+        qry_bwork, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -374,7 +402,11 @@ int64_t ggesx(
         (lapack_complex_double*) &work[0], &lwork_,
         &rwork[0],
         &iwork[0], &liwork_,
-        &bwork[0], &info_ );
+        &bwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

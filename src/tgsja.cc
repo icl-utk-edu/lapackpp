@@ -67,7 +67,11 @@ int64_t tgsja(
         U, &ldu_,
         V, &ldv_,
         Q, &ldq_,
-        &work[0], &ncycle_, &info_ );
+        &work[0], &ncycle_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -128,7 +132,11 @@ int64_t tgsja(
         U, &ldu_,
         V, &ldv_,
         Q, &ldq_,
-        &work[0], &ncycle_, &info_ );
+        &work[0], &ncycle_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -189,7 +197,11 @@ int64_t tgsja(
         (lapack_complex_float*) U, &ldu_,
         (lapack_complex_float*) V, &ldv_,
         (lapack_complex_float*) Q, &ldq_,
-        (lapack_complex_float*) &work[0], &ncycle_, &info_ );
+        (lapack_complex_float*) &work[0], &ncycle_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -250,7 +262,11 @@ int64_t tgsja(
         (lapack_complex_double*) U, &ldu_,
         (lapack_complex_double*) V, &ldv_,
         (lapack_complex_double*) Q, &ldq_,
-        (lapack_complex_double*) &work[0], &ncycle_, &info_ );
+        (lapack_complex_double*) &work[0], &ncycle_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

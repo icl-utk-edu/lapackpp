@@ -30,7 +30,11 @@ int64_t pptri(
 
     LAPACK_spptri(
         &uplo_, &n_,
-        AP, &info_ );
+        AP, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -53,7 +57,11 @@ int64_t pptri(
 
     LAPACK_dpptri(
         &uplo_, &n_,
-        AP, &info_ );
+        AP, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -76,7 +84,11 @@ int64_t pptri(
 
     LAPACK_cpptri(
         &uplo_, &n_,
-        (lapack_complex_float*) AP, &info_ );
+        (lapack_complex_float*) AP, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -129,7 +141,11 @@ int64_t pptri(
 
     LAPACK_zpptri(
         &uplo_, &n_,
-        (lapack_complex_double*) AP, &info_ );
+        (lapack_complex_double*) AP, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

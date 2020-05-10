@@ -55,7 +55,11 @@ void larfb(
         V, &ldv_,
         T, &ldt_,
         C, &ldc_,
-        &work[0], &ldwork_ );
+        &work[0], &ldwork_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1, 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,7 +102,11 @@ void larfb(
         V, &ldv_,
         T, &ldt_,
         C, &ldc_,
-        &work[0], &ldwork_ );
+        &work[0], &ldwork_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1, 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,7 +150,11 @@ void larfb(
         (lapack_complex_float*) V, &ldv_,
         (lapack_complex_float*) T, &ldt_,
         (lapack_complex_float*) C, &ldc_,
-        (lapack_complex_float*) &work[0], &ldwork_ );
+        (lapack_complex_float*) &work[0], &ldwork_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1, 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -282,7 +294,11 @@ void larfb(
         (lapack_complex_double*) V, &ldv_,
         (lapack_complex_double*) T, &ldt_,
         (lapack_complex_double*) C, &ldc_,
-        (lapack_complex_double*) &work[0], &ldwork_ );
+        (lapack_complex_double*) &work[0], &ldwork_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1, 1
+        #endif
+    );
 }
 
 }  // namespace lapack

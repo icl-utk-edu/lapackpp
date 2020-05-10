@@ -39,7 +39,11 @@ float lanhe(
     return LAPACK_clanhe(
         &norm_, &uplo_, &n_,
         (lapack_complex_float*) A, &lda_,
-        &work[0] );
+        &work[0]
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +116,11 @@ double lanhe(
     return LAPACK_zlanhe(
         &norm_, &uplo_, &n_,
         (lapack_complex_double*) A, &lda_,
-        &work[0] );
+        &work[0]
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
 }
 
 }  // namespace lapack

@@ -43,7 +43,11 @@ int64_t heev_2stage(
         (lapack_complex_float*) A, &lda_,
         W,
         (lapack_complex_float*) qry_work, &ineg_one,
-        qry_rwork, &info_ );
+        qry_rwork, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -58,7 +62,11 @@ int64_t heev_2stage(
         (lapack_complex_float*) A, &lda_,
         W,
         (lapack_complex_float*) &work[0], &lwork_,
-        &rwork[0], &info_ );
+        &rwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -169,7 +177,11 @@ int64_t heev_2stage(
         (lapack_complex_double*) A, &lda_,
         W,
         (lapack_complex_double*) qry_work, &ineg_one,
-        qry_rwork, &info_ );
+        qry_rwork, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -184,7 +196,11 @@ int64_t heev_2stage(
         (lapack_complex_double*) A, &lda_,
         W,
         (lapack_complex_double*) &work[0], &lwork_,
-        &rwork[0], &info_ );
+        &rwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

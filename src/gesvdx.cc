@@ -60,7 +60,11 @@ int64_t gesvdx(
         U, &ldu_,
         VT, &ldvt_,
         qry_work, &ineg_one,
-        qry_iwork, &info_ );
+        qry_iwork, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -77,7 +81,11 @@ int64_t gesvdx(
         U, &ldu_,
         VT, &ldvt_,
         &work[0], &lwork_,
-        &iwork[0], &info_ );
+        &iwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -129,7 +137,11 @@ int64_t gesvdx(
         U, &ldu_,
         VT, &ldvt_,
         qry_work, &ineg_one,
-        qry_iwork, &info_ );
+        qry_iwork, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -146,7 +158,11 @@ int64_t gesvdx(
         U, &ldu_,
         VT, &ldvt_,
         &work[0], &lwork_,
-        &iwork[0], &info_ );
+        &iwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -200,7 +216,11 @@ int64_t gesvdx(
         (lapack_complex_float*) VT, &ldvt_,
         (lapack_complex_float*) qry_work, &ineg_one,
         qry_rwork,
-        qry_iwork, &info_ );
+        qry_iwork, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -222,7 +242,11 @@ int64_t gesvdx(
         (lapack_complex_float*) VT, &ldvt_,
         (lapack_complex_float*) &work[0], &lwork_,
         &rwork[0],
-        &iwork[0], &info_ );
+        &iwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -403,7 +427,11 @@ int64_t gesvdx(
         (lapack_complex_double*) VT, &ldvt_,
         (lapack_complex_double*) qry_work, &ineg_one,
         qry_rwork,
-        qry_iwork, &info_ );
+        qry_iwork, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -425,7 +453,11 @@ int64_t gesvdx(
         (lapack_complex_double*) VT, &ldvt_,
         (lapack_complex_double*) &work[0], &lwork_,
         &rwork[0],
-        &iwork[0], &info_ );
+        &iwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

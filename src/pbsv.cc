@@ -40,7 +40,11 @@ int64_t pbsv(
     LAPACK_spbsv(
         &uplo_, &n_, &kd_, &nrhs_,
         AB, &ldab_,
-        B, &ldb_, &info_ );
+        B, &ldb_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -73,7 +77,11 @@ int64_t pbsv(
     LAPACK_dpbsv(
         &uplo_, &n_, &kd_, &nrhs_,
         AB, &ldab_,
-        B, &ldb_, &info_ );
+        B, &ldb_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -106,7 +114,11 @@ int64_t pbsv(
     LAPACK_cpbsv(
         &uplo_, &n_, &kd_, &nrhs_,
         (lapack_complex_float*) AB, &ldab_,
-        (lapack_complex_float*) B, &ldb_, &info_ );
+        (lapack_complex_float*) B, &ldb_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -227,7 +239,11 @@ int64_t pbsv(
     LAPACK_zpbsv(
         &uplo_, &n_, &kd_, &nrhs_,
         (lapack_complex_double*) AB, &ldab_,
-        (lapack_complex_double*) B, &ldb_, &info_ );
+        (lapack_complex_double*) B, &ldb_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

@@ -47,7 +47,11 @@ int64_t unmql(
         (lapack_complex_float*) A, &lda_,
         (lapack_complex_float*) tau,
         (lapack_complex_float*) C, &ldc_,
-        (lapack_complex_float*) qry_work, &ineg_one, &info_ );
+        (lapack_complex_float*) qry_work, &ineg_one, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -61,7 +65,11 @@ int64_t unmql(
         (lapack_complex_float*) A, &lda_,
         (lapack_complex_float*) tau,
         (lapack_complex_float*) C, &ldc_,
-        (lapack_complex_float*) &work[0], &lwork_, &info_ );
+        (lapack_complex_float*) &work[0], &lwork_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -168,7 +176,11 @@ int64_t unmql(
         (lapack_complex_double*) A, &lda_,
         (lapack_complex_double*) tau,
         (lapack_complex_double*) C, &ldc_,
-        (lapack_complex_double*) qry_work, &ineg_one, &info_ );
+        (lapack_complex_double*) qry_work, &ineg_one, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -182,7 +194,11 @@ int64_t unmql(
         (lapack_complex_double*) A, &lda_,
         (lapack_complex_double*) tau,
         (lapack_complex_double*) C, &ldc_,
-        (lapack_complex_double*) &work[0], &lwork_, &info_ );
+        (lapack_complex_double*) &work[0], &lwork_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

@@ -31,7 +31,11 @@ float lanht(
     return LAPACK_clanht(
         &norm_, &n_,
         D,
-        (lapack_complex_float*) E );
+        (lapack_complex_float*) E
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,7 +83,11 @@ double lanht(
     return LAPACK_zlanht(
         &norm_, &n_,
         D,
-        (lapack_complex_double*) E );
+        (lapack_complex_double*) E
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
 }
 
 }  // namespace lapack

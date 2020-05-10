@@ -98,7 +98,11 @@ int64_t pttrs(
         &uplo_, &n_, &nrhs_,
         D,
         (lapack_complex_float*) E,
-        (lapack_complex_float*) B, &ldb_, &info_ );
+        (lapack_complex_float*) B, &ldb_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -179,7 +183,11 @@ int64_t pttrs(
         &uplo_, &n_, &nrhs_,
         D,
         (lapack_complex_double*) E,
-        (lapack_complex_double*) B, &ldb_, &info_ );
+        (lapack_complex_double*) B, &ldb_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

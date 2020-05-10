@@ -42,7 +42,11 @@ int64_t tbcon(
         &norm_, &uplo_, &diag_, &n_, &kd_,
         AB, &ldab_, rcond,
         &work[0],
-        &iwork[0], &info_ );
+        &iwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -77,7 +81,11 @@ int64_t tbcon(
         &norm_, &uplo_, &diag_, &n_, &kd_,
         AB, &ldab_, rcond,
         &work[0],
-        &iwork[0], &info_ );
+        &iwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -112,7 +120,11 @@ int64_t tbcon(
         &norm_, &uplo_, &diag_, &n_, &kd_,
         (lapack_complex_float*) AB, &ldab_, rcond,
         (lapack_complex_float*) &work[0],
-        &rwork[0], &info_ );
+        &rwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -147,7 +159,11 @@ int64_t tbcon(
         &norm_, &uplo_, &diag_, &n_, &kd_,
         (lapack_complex_double*) AB, &ldab_, rcond,
         (lapack_complex_double*) &work[0],
-        &rwork[0], &info_ );
+        &rwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

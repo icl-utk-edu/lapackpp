@@ -38,7 +38,11 @@ int64_t posv(
     LAPACK_sposv(
         &uplo_, &n_, &nrhs_,
         A, &lda_,
-        B, &ldb_, &info_ );
+        B, &ldb_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -69,7 +73,11 @@ int64_t posv(
     LAPACK_dposv(
         &uplo_, &n_, &nrhs_,
         A, &lda_,
-        B, &ldb_, &info_ );
+        B, &ldb_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -100,7 +108,11 @@ int64_t posv(
     LAPACK_cposv(
         &uplo_, &n_, &nrhs_,
         (lapack_complex_float*) A, &lda_,
-        (lapack_complex_float*) B, &ldb_, &info_ );
+        (lapack_complex_float*) B, &ldb_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -190,7 +202,11 @@ int64_t posv(
     LAPACK_zposv(
         &uplo_, &n_, &nrhs_,
         (lapack_complex_double*) A, &lda_,
-        (lapack_complex_double*) B, &ldb_, &info_ );
+        (lapack_complex_double*) B, &ldb_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -232,7 +248,11 @@ int64_t posv(
         B, &ldb_,
         X, &ldx_,
         &work[0],
-        &swork[0], &iter_, &info_ );
+        &swork[0], &iter_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -277,7 +297,11 @@ int64_t posv(
         (lapack_complex_double*) X, &ldx_,
         (lapack_complex_double*) &work[0],
         (lapack_complex_float*) &swork[0],
-        &rwork[0], &iter_, &info_ );
+        &rwork[0], &iter_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

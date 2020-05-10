@@ -45,7 +45,11 @@ int64_t spcon(
         AP,
         ipiv_ptr, &anorm, rcond,
         &work[0],
-        &iwork[0], &info_ );
+        &iwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -83,7 +87,11 @@ int64_t spcon(
         AP,
         ipiv_ptr, &anorm, rcond,
         &work[0],
-        &iwork[0], &info_ );
+        &iwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -119,7 +127,11 @@ int64_t spcon(
         &uplo_, &n_,
         (lapack_complex_float*) AP,
         ipiv_ptr, &anorm, rcond,
-        (lapack_complex_float*) &work[0], &info_ );
+        (lapack_complex_float*) &work[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -155,7 +167,11 @@ int64_t spcon(
         &uplo_, &n_,
         (lapack_complex_double*) AP,
         ipiv_ptr, &anorm, rcond,
-        (lapack_complex_double*) &work[0], &info_ );
+        (lapack_complex_double*) &work[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

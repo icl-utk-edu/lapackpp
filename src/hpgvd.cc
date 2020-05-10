@@ -48,7 +48,11 @@ int64_t hpgvd(
         (lapack_complex_float*) Z, &ldz_,
         (lapack_complex_float*) qry_work, &ineg_one,
         qry_rwork, &ineg_one,
-        qry_iwork, &ineg_one, &info_ );
+        qry_iwork, &ineg_one, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -69,7 +73,11 @@ int64_t hpgvd(
         (lapack_complex_float*) Z, &ldz_,
         (lapack_complex_float*) &work[0], &lwork_,
         &rwork[0], &lrwork_,
-        &iwork[0], &liwork_, &info_ );
+        &iwork[0], &liwork_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -110,7 +118,11 @@ int64_t hpgvd(
         (lapack_complex_double*) Z, &ldz_,
         (lapack_complex_double*) qry_work, &ineg_one,
         qry_rwork, &ineg_one,
-        qry_iwork, &ineg_one, &info_ );
+        qry_iwork, &ineg_one, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -131,7 +143,11 @@ int64_t hpgvd(
         (lapack_complex_double*) Z, &ldz_,
         (lapack_complex_double*) &work[0], &lwork_,
         &rwork[0], &lrwork_,
-        &iwork[0], &liwork_, &info_ );
+        &iwork[0], &liwork_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

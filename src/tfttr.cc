@@ -34,7 +34,11 @@ int64_t tfttr(
     LAPACK_stfttr(
         &transr_, &uplo_, &n_,
         ARF,
-        A, &lda_, &info_ );
+        A, &lda_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -61,7 +65,11 @@ int64_t tfttr(
     LAPACK_dtfttr(
         &transr_, &uplo_, &n_,
         ARF,
-        A, &lda_, &info_ );
+        A, &lda_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -88,7 +96,11 @@ int64_t tfttr(
     LAPACK_ctfttr(
         &transr_, &uplo_, &n_,
         (lapack_complex_float*) ARF,
-        (lapack_complex_float*) A, &lda_, &info_ );
+        (lapack_complex_float*) A, &lda_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -115,7 +127,11 @@ int64_t tfttr(
     LAPACK_ztfttr(
         &transr_, &uplo_, &n_,
         (lapack_complex_double*) ARF,
-        (lapack_complex_double*) A, &lda_, &info_ );
+        (lapack_complex_double*) A, &lda_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

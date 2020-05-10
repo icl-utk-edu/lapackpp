@@ -54,7 +54,11 @@ int64_t bdsqr(
         VT, &ldvt_,
         U, &ldu_,
         C, &ldc_,
-        &work[0], &info_ );
+        &work[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -101,7 +105,11 @@ int64_t bdsqr(
         VT, &ldvt_,
         U, &ldu_,
         C, &ldc_,
-        &work[0], &info_ );
+        &work[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -148,7 +156,11 @@ int64_t bdsqr(
         (lapack_complex_float*) VT, &ldvt_,
         (lapack_complex_float*) U, &ldu_,
         (lapack_complex_float*) C, &ldc_,
-        &rwork[0], &info_ );
+        &rwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -294,7 +306,11 @@ int64_t bdsqr(
         (lapack_complex_double*) VT, &ldvt_,
         (lapack_complex_double*) U, &ldu_,
         (lapack_complex_double*) C, &ldc_,
-        &rwork[0], &info_ );
+        &rwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

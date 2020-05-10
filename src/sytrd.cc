@@ -42,7 +42,11 @@ int64_t sytrd(
         D,
         E,
         tau,
-        qry_work, &ineg_one, &info_ );
+        qry_work, &ineg_one, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -57,7 +61,11 @@ int64_t sytrd(
         D,
         E,
         tau,
-        &work[0], &lwork_, &info_ );
+        &work[0], &lwork_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -93,7 +101,11 @@ int64_t sytrd(
         D,
         E,
         tau,
-        qry_work, &ineg_one, &info_ );
+        qry_work, &ineg_one, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -108,7 +120,11 @@ int64_t sytrd(
         D,
         E,
         tau,
-        &work[0], &lwork_, &info_ );
+        &work[0], &lwork_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

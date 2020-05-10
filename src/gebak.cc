@@ -41,7 +41,11 @@ int64_t gebak(
     LAPACK_sgebak(
         &balance_, &side_, &n_, &ilo_, &ihi_,
         scale, &m_,
-        V, &ldv_, &info_ );
+        V, &ldv_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -75,7 +79,11 @@ int64_t gebak(
     LAPACK_dgebak(
         &balance_, &side_, &n_, &ilo_, &ihi_,
         scale, &m_,
-        V, &ldv_, &info_ );
+        V, &ldv_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -109,7 +117,11 @@ int64_t gebak(
     LAPACK_cgebak(
         &balance_, &side_, &n_, &ilo_, &ihi_,
         scale, &m_,
-        (lapack_complex_float*) V, &ldv_, &info_ );
+        (lapack_complex_float*) V, &ldv_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -192,7 +204,11 @@ int64_t gebak(
     LAPACK_zgebak(
         &balance_, &side_, &n_, &ilo_, &ihi_,
         scale, &m_,
-        (lapack_complex_double*) V, &ldv_, &info_ );
+        (lapack_complex_double*) V, &ldv_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

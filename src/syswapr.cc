@@ -37,7 +37,11 @@ void syswapr(
 
     LAPACK_ssyswapr(
         &uplo_, &n_,
-        A, &lda_, &i1_, &i2_ );
+        A, &lda_, &i1_, &i2_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +65,11 @@ void syswapr(
 
     LAPACK_dsyswapr(
         &uplo_, &n_,
-        A, &lda_, &i1_, &i2_ );
+        A, &lda_, &i1_, &i2_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +93,11 @@ void syswapr(
 
     LAPACK_csyswapr(
         &uplo_, &n_,
-        (lapack_complex_float*) A, &lda_, &i1_, &i2_ );
+        (lapack_complex_float*) A, &lda_, &i1_, &i2_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +151,11 @@ void syswapr(
 
     LAPACK_zsyswapr(
         &uplo_, &n_,
-        (lapack_complex_double*) A, &lda_, &i1_, &i2_ );
+        (lapack_complex_double*) A, &lda_, &i1_, &i2_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
 }
 
 }  // namespace lapack

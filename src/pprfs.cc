@@ -52,7 +52,11 @@ int64_t pprfs(
         ferr,
         berr,
         &work[0],
-        &iwork[0], &info_ );
+        &iwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -97,7 +101,11 @@ int64_t pprfs(
         ferr,
         berr,
         &work[0],
-        &iwork[0], &info_ );
+        &iwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -142,7 +150,11 @@ int64_t pprfs(
         ferr,
         berr,
         (lapack_complex_float*) &work[0],
-        &rwork[0], &info_ );
+        &rwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -255,7 +267,11 @@ int64_t pprfs(
         ferr,
         berr,
         (lapack_complex_double*) &work[0],
-        &rwork[0], &info_ );
+        &rwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

@@ -62,7 +62,11 @@ void symv(
                 (lapack_complex_float*) A, &lda_,
                 (lapack_complex_float*) x, &incx_,
                 (lapack_complex_float*) &beta,
-                (lapack_complex_float*) y, &incy_ );
+                (lapack_complex_float*) y, &incy_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +115,11 @@ void symv(
                 (lapack_complex_double*) A, &lda_,
                 (lapack_complex_double*) x, &incx_,
                 (lapack_complex_double*) &beta,
-                (lapack_complex_double*) y, &incy_ );
+                (lapack_complex_double*) y, &incy_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
 }
 
 }  // namespace blas

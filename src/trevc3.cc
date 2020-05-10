@@ -59,7 +59,11 @@ int64_t trevc3(
         T, &ldt_,
         VL, &ldvl_,
         VR, &ldvr_, &mm_, &m_,
-        qry_work, &ineg_one, &info_ );
+        qry_work, &ineg_one, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -74,7 +78,11 @@ int64_t trevc3(
         T, &ldt_,
         VL, &ldvl_,
         VR, &ldvr_, &mm_, &m_,
-        &work[0], &lwork_, &info_ );
+        &work[0], &lwork_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -126,7 +134,11 @@ int64_t trevc3(
         T, &ldt_,
         VL, &ldvl_,
         VR, &ldvr_, &mm_, &m_,
-        qry_work, &ineg_one, &info_ );
+        qry_work, &ineg_one, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -141,7 +153,11 @@ int64_t trevc3(
         T, &ldt_,
         VL, &ldvl_,
         VR, &ldvr_, &mm_, &m_,
-        &work[0], &lwork_, &info_ );
+        &work[0], &lwork_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -195,7 +211,11 @@ int64_t trevc3(
         (lapack_complex_float*) VL, &ldvl_,
         (lapack_complex_float*) VR, &ldvr_, &mm_, &m_,
         (lapack_complex_float*) qry_work, &ineg_one,
-        qry_rwork, &ineg_one, &info_ );
+        qry_rwork, &ineg_one, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -213,7 +233,11 @@ int64_t trevc3(
         (lapack_complex_float*) VL, &ldvl_,
         (lapack_complex_float*) VR, &ldvr_, &mm_, &m_,
         (lapack_complex_float*) &work[0], &lwork_,
-        &rwork[0], &lrwork_, &info_ );
+        &rwork[0], &lrwork_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -389,7 +413,11 @@ int64_t trevc3(
         (lapack_complex_double*) VL, &ldvl_,
         (lapack_complex_double*) VR, &ldvr_, &mm_, &m_,
         (lapack_complex_double*) qry_work, &ineg_one,
-        qry_rwork, &ineg_one, &info_ );
+        qry_rwork, &ineg_one, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -407,7 +435,11 @@ int64_t trevc3(
         (lapack_complex_double*) VL, &ldvl_,
         (lapack_complex_double*) VR, &ldvr_, &mm_, &m_,
         (lapack_complex_double*) &work[0], &lwork_,
-        &rwork[0], &lrwork_, &info_ );
+        &rwork[0], &lrwork_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

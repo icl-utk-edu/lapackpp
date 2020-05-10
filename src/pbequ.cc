@@ -38,7 +38,11 @@ int64_t pbequ(
     LAPACK_spbequ(
         &uplo_, &n_, &kd_,
         AB, &ldab_,
-        S, scond, amax, &info_ );
+        S, scond, amax, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -69,7 +73,11 @@ int64_t pbequ(
     LAPACK_dpbequ(
         &uplo_, &n_, &kd_,
         AB, &ldab_,
-        S, scond, amax, &info_ );
+        S, scond, amax, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -100,7 +108,11 @@ int64_t pbequ(
     LAPACK_cpbequ(
         &uplo_, &n_, &kd_,
         (lapack_complex_float*) AB, &ldab_,
-        S, scond, amax, &info_ );
+        S, scond, amax, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -183,7 +195,11 @@ int64_t pbequ(
     LAPACK_zpbequ(
         &uplo_, &n_, &kd_,
         (lapack_complex_double*) AB, &ldab_,
-        S, scond, amax, &info_ );
+        S, scond, amax, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

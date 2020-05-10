@@ -38,7 +38,11 @@ int64_t lascl(
 
     LAPACK_slascl(
         &matrixtype_, &kl_, &ku_, &cfrom, &cto, &m_, &n_,
-        A, &lda_, &info_ );
+        A, &lda_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -69,7 +73,11 @@ int64_t lascl(
 
     LAPACK_dlascl(
         &matrixtype_, &kl_, &ku_, &cfrom, &cto, &m_, &n_,
-        A, &lda_, &info_ );
+        A, &lda_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -100,7 +108,11 @@ int64_t lascl(
 
     LAPACK_clascl(
         &matrixtype_, &kl_, &ku_, &cfrom, &cto, &m_, &n_,
-        (lapack_complex_float*) A, &lda_, &info_ );
+        (lapack_complex_float*) A, &lda_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -204,7 +216,11 @@ int64_t lascl(
 
     LAPACK_zlascl(
         &matrixtype_, &kl_, &ku_, &cfrom, &cto, &m_, &n_,
-        (lapack_complex_double*) A, &lda_, &info_ );
+        (lapack_complex_double*) A, &lda_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

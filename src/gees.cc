@@ -52,7 +52,11 @@ int64_t gees(
         &WI[0],
         VS, &ldvs_,
         qry_work, &ineg_one,
-        qry_bwork, &info_ );
+        qry_bwork, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -70,7 +74,11 @@ int64_t gees(
         &WI[0],
         VS, &ldvs_,
         &work[0], &lwork_,
-        &bwork[0], &info_ );
+        &bwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -120,7 +128,11 @@ int64_t gees(
         &WI[0],
         VS, &ldvs_,
         qry_work, &ineg_one,
-        qry_bwork, &info_ );
+        qry_bwork, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -138,7 +150,11 @@ int64_t gees(
         &WI[0],
         VS, &ldvs_,
         &work[0], &lwork_,
-        &bwork[0], &info_ );
+        &bwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -185,7 +201,11 @@ int64_t gees(
         (lapack_complex_float*) VS, &ldvs_,
         (lapack_complex_float*) qry_work, &ineg_one,
         qry_rwork,
-        qry_bwork, &info_ );
+        qry_bwork, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -204,7 +224,11 @@ int64_t gees(
         (lapack_complex_float*) VS, &ldvs_,
         (lapack_complex_float*) &work[0], &lwork_,
         &rwork[0],
-        &bwork[0], &info_ );
+        &bwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -247,7 +271,11 @@ int64_t gees(
         (lapack_complex_double*) VS, &ldvs_,
         (lapack_complex_double*) qry_work, &ineg_one,
         qry_rwork,
-        qry_bwork, &info_ );
+        qry_bwork, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -266,7 +294,11 @@ int64_t gees(
         (lapack_complex_double*) VS, &ldvs_,
         (lapack_complex_double*) &work[0], &lwork_,
         &rwork[0],
-        &bwork[0], &info_ );
+        &bwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

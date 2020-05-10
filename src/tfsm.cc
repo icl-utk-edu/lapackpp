@@ -38,7 +38,11 @@ void tfsm(
     LAPACK_stfsm(
         &transr_, &side_, &uplo_, &trans_, &diag_, &m_, &n_, &alpha,
         A,
-        B, &ldb_ );
+        B, &ldb_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1, 1, 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +69,11 @@ void tfsm(
     LAPACK_dtfsm(
         &transr_, &side_, &uplo_, &trans_, &diag_, &m_, &n_, &alpha,
         A,
-        B, &ldb_ );
+        B, &ldb_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1, 1, 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,7 +101,11 @@ void tfsm(
         &transr_, &side_, &uplo_, &trans_, &diag_, &m_, &n_,
         (lapack_complex_float*) &alpha,
         (lapack_complex_float*) A,
-        (lapack_complex_float*) B, &ldb_ );
+        (lapack_complex_float*) B, &ldb_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1, 1, 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,7 +133,11 @@ void tfsm(
         &transr_, &side_, &uplo_, &trans_, &diag_, &m_, &n_,
         (lapack_complex_double*) &alpha,
         (lapack_complex_double*) A,
-        (lapack_complex_double*) B, &ldb_ );
+        (lapack_complex_double*) B, &ldb_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1, 1, 1
+        #endif
+    );
 }
 
 }  // namespace lapack

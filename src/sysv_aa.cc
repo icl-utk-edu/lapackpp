@@ -53,7 +53,11 @@ int64_t sysv_aa(
         A, &lda_,
         ipiv_ptr,
         B, &ldb_,
-        qry_work, &ineg_one, &info_ );
+        qry_work, &ineg_one, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -67,7 +71,11 @@ int64_t sysv_aa(
         A, &lda_,
         ipiv_ptr,
         B, &ldb_,
-        &work[0], &lwork_, &info_ );
+        &work[0], &lwork_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -114,7 +122,11 @@ int64_t sysv_aa(
         A, &lda_,
         ipiv_ptr,
         B, &ldb_,
-        qry_work, &ineg_one, &info_ );
+        qry_work, &ineg_one, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -128,7 +140,11 @@ int64_t sysv_aa(
         A, &lda_,
         ipiv_ptr,
         B, &ldb_,
-        &work[0], &lwork_, &info_ );
+        &work[0], &lwork_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -175,7 +191,11 @@ int64_t sysv_aa(
         (lapack_complex_float*) A, &lda_,
         ipiv_ptr,
         (lapack_complex_float*) B, &ldb_,
-        (lapack_complex_float*) qry_work, &ineg_one, &info_ );
+        (lapack_complex_float*) qry_work, &ineg_one, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -189,7 +209,11 @@ int64_t sysv_aa(
         (lapack_complex_float*) A, &lda_,
         ipiv_ptr,
         (lapack_complex_float*) B, &ldb_,
-        (lapack_complex_float*) &work[0], &lwork_, &info_ );
+        (lapack_complex_float*) &work[0], &lwork_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -305,7 +329,11 @@ int64_t sysv_aa(
         (lapack_complex_double*) A, &lda_,
         ipiv_ptr,
         (lapack_complex_double*) B, &ldb_,
-        (lapack_complex_double*) qry_work, &ineg_one, &info_ );
+        (lapack_complex_double*) qry_work, &ineg_one, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -319,7 +347,11 @@ int64_t sysv_aa(
         (lapack_complex_double*) A, &lda_,
         ipiv_ptr,
         (lapack_complex_double*) B, &ldb_,
-        (lapack_complex_double*) &work[0], &lwork_, &info_ );
+        (lapack_complex_double*) &work[0], &lwork_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

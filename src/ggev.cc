@@ -56,7 +56,11 @@ int64_t ggev(
         beta,
         VL, &ldvl_,
         VR, &ldvr_,
-        qry_work, &ineg_one, &info_ );
+        qry_work, &ineg_one, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -73,7 +77,11 @@ int64_t ggev(
         beta,
         VL, &ldvl_,
         VR, &ldvr_,
-        &work[0], &lwork_, &info_ );
+        &work[0], &lwork_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -126,7 +134,11 @@ int64_t ggev(
         beta,
         VL, &ldvl_,
         VR, &ldvr_,
-        qry_work, &ineg_one, &info_ );
+        qry_work, &ineg_one, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -143,7 +155,11 @@ int64_t ggev(
         beta,
         VL, &ldvl_,
         VR, &ldvr_,
-        &work[0], &lwork_, &info_ );
+        &work[0], &lwork_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -194,7 +210,11 @@ int64_t ggev(
         (lapack_complex_float*) VL, &ldvl_,
         (lapack_complex_float*) VR, &ldvr_,
         (lapack_complex_float*) qry_work, &ineg_one,
-        qry_rwork, &info_ );
+        qry_rwork, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -213,7 +233,11 @@ int64_t ggev(
         (lapack_complex_float*) VL, &ldvl_,
         (lapack_complex_float*) VR, &ldvr_,
         (lapack_complex_float*) &work[0], &lwork_,
-        &rwork[0], &info_ );
+        &rwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -260,7 +284,11 @@ int64_t ggev(
         (lapack_complex_double*) VL, &ldvl_,
         (lapack_complex_double*) VR, &ldvr_,
         (lapack_complex_double*) qry_work, &ineg_one,
-        qry_rwork, &info_ );
+        qry_rwork, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -279,7 +307,11 @@ int64_t ggev(
         (lapack_complex_double*) VL, &ldvl_,
         (lapack_complex_double*) VR, &ldvr_,
         (lapack_complex_double*) &work[0], &lwork_,
-        &rwork[0], &info_ );
+        &rwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

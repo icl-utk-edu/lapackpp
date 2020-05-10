@@ -42,7 +42,11 @@ void larfx(
         &side_, &m_, &n_,
         v, &tau,
         C, &ldc_,
-        &work[0] );
+        &work[0]
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +77,11 @@ void larfx(
         &side_, &m_, &n_,
         v, &tau,
         C, &ldc_,
-        &work[0] );
+        &work[0]
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +112,11 @@ void larfx(
         &side_, &m_, &n_,
         (lapack_complex_float*) v, (lapack_complex_float*) &tau,
         (lapack_complex_float*) C, &ldc_,
-        (lapack_complex_float*) &work[0] );
+        (lapack_complex_float*) &work[0]
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,7 +188,11 @@ void larfx(
         &side_, &m_, &n_,
         (lapack_complex_double*) v, (lapack_complex_double*) &tau,
         (lapack_complex_double*) C, &ldc_,
-        (lapack_complex_double*) &work[0] );
+        (lapack_complex_double*) &work[0]
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
 }
 
 }  // namespace lapack

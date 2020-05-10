@@ -41,7 +41,11 @@ float lanhb(
     return LAPACK_clanhb(
         &norm_, &uplo_, &n_, &kd_,
         (lapack_complex_float*) AB, &ldab_,
-        &work[0] );
+        &work[0]
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,7 +118,11 @@ double lanhb(
     return LAPACK_zlanhb(
         &norm_, &uplo_, &n_, &kd_,
         (lapack_complex_double*) AB, &ldab_,
-        &work[0] );
+        &work[0]
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
 }
 
 }  // namespace lapack

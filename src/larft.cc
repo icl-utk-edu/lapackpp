@@ -41,7 +41,11 @@ void larft(
         &direction_, &storev_, &n_, &k_,
         V, &ldv_,
         tau,
-        T, &ldt_ );
+        T, &ldt_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +75,11 @@ void larft(
         &direction_, &storev_, &n_, &k_,
         V, &ldv_,
         tau,
-        T, &ldt_ );
+        T, &ldt_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,7 +109,11 @@ void larft(
         &direction_, &storev_, &n_, &k_,
         (lapack_complex_float*) V, &ldv_,
         (lapack_complex_float*) tau,
-        (lapack_complex_float*) T, &ldt_ );
+        (lapack_complex_float*) T, &ldt_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -223,7 +235,11 @@ void larft(
         &direction_, &storev_, &n_, &k_,
         (lapack_complex_double*) V, &ldv_,
         (lapack_complex_double*) tau,
-        (lapack_complex_double*) T, &ldt_ );
+        (lapack_complex_double*) T, &ldt_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
 }
 
 }  // namespace lapack

@@ -33,7 +33,11 @@ void laset(
 
     LAPACK_slaset(
         &matrixtype_, &m_, &n_, &offdiag, &diag,
-        A, &lda_ );
+        A, &lda_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +59,11 @@ void laset(
 
     LAPACK_dlaset(
         &matrixtype_, &m_, &n_, &offdiag, &diag,
-        A, &lda_ );
+        A, &lda_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +85,11 @@ void laset(
 
     LAPACK_claset(
         &matrixtype_, &m_, &n_, (lapack_complex_float*) &offdiag, (lapack_complex_float*) &diag,
-        (lapack_complex_float*) A, &lda_ );
+        (lapack_complex_float*) A, &lda_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +150,11 @@ void laset(
 
     LAPACK_zlaset(
         &matrixtype_, &m_, &n_, (lapack_complex_double*) &offdiag, (lapack_complex_double*) &diag,
-        (lapack_complex_double*) A, &lda_ );
+        (lapack_complex_double*) A, &lda_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
 }
 
 }  // namespace lapack

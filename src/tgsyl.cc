@@ -63,7 +63,11 @@ int64_t tgsyl(
         E, &lde_,
         F, &ldf_, dif, scale,
         qry_work, &ineg_one,
-        qry_iwork, &info_ );
+        qry_iwork, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -82,7 +86,11 @@ int64_t tgsyl(
         E, &lde_,
         F, &ldf_, dif, scale,
         &work[0], &lwork_,
-        &iwork[0], &info_ );
+        &iwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -138,7 +146,11 @@ int64_t tgsyl(
         E, &lde_,
         F, &ldf_, dif, scale,
         qry_work, &ineg_one,
-        qry_iwork, &info_ );
+        qry_iwork, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -157,7 +169,11 @@ int64_t tgsyl(
         E, &lde_,
         F, &ldf_, dif, scale,
         &work[0], &lwork_,
-        &iwork[0], &info_ );
+        &iwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -213,7 +229,11 @@ int64_t tgsyl(
         (lapack_complex_float*) E, &lde_,
         (lapack_complex_float*) F, &ldf_, dif, scale,
         (lapack_complex_float*) qry_work, &ineg_one,
-        qry_iwork, &info_ );
+        qry_iwork, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -232,7 +252,11 @@ int64_t tgsyl(
         (lapack_complex_float*) E, &lde_,
         (lapack_complex_float*) F, &ldf_, dif, scale,
         (lapack_complex_float*) &work[0], &lwork_,
-        &iwork[0], &info_ );
+        &iwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -288,7 +312,11 @@ int64_t tgsyl(
         (lapack_complex_double*) E, &lde_,
         (lapack_complex_double*) F, &ldf_, dif, scale,
         (lapack_complex_double*) qry_work, &ineg_one,
-        qry_iwork, &info_ );
+        qry_iwork, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -307,7 +335,11 @@ int64_t tgsyl(
         (lapack_complex_double*) E, &lde_,
         (lapack_complex_double*) F, &ldf_, dif, scale,
         (lapack_complex_double*) &work[0], &lwork_,
-        &iwork[0], &info_ );
+        &iwork[0], &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

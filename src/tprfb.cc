@@ -62,7 +62,11 @@ void tprfb(
         T, &ldt_,
         A, &lda_,
         B, &ldb_,
-        &work[0], &ldwork_ );
+        &work[0], &ldwork_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1, 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +115,11 @@ void tprfb(
         T, &ldt_,
         A, &lda_,
         B, &ldb_,
-        &work[0], &ldwork_ );
+        &work[0], &ldwork_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1, 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -160,7 +168,11 @@ void tprfb(
         (lapack_complex_float*) T, &ldt_,
         (lapack_complex_float*) A, &lda_,
         (lapack_complex_float*) B, &ldb_,
-        (lapack_complex_float*) &work[0], &ldwork_ );
+        (lapack_complex_float*) &work[0], &ldwork_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1, 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -375,7 +387,11 @@ void tprfb(
         (lapack_complex_double*) T, &ldt_,
         (lapack_complex_double*) A, &lda_,
         (lapack_complex_double*) B, &ldb_,
-        (lapack_complex_double*) &work[0], &ldwork_ );
+        (lapack_complex_double*) &work[0], &ldwork_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1, 1
+        #endif
+    );
 }
 
 }  // namespace lapack

@@ -37,7 +37,11 @@ void lacpy(
     LAPACK_slacpy(
         &matrixtype_, &m_, &n_,
         A, &lda_,
-        B, &ldb_ );
+        B, &ldb_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,7 +67,11 @@ void lacpy(
     LAPACK_dlacpy(
         &matrixtype_, &m_, &n_,
         A, &lda_,
-        B, &ldb_ );
+        B, &ldb_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +97,11 @@ void lacpy(
     LAPACK_clacpy(
         &matrixtype_, &m_, &n_,
         (lapack_complex_float*) A, &lda_,
-        (lapack_complex_float*) B, &ldb_ );
+        (lapack_complex_float*) B, &ldb_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -149,7 +161,11 @@ void lacpy(
     LAPACK_zlacpy(
         &matrixtype_, &m_, &n_,
         (lapack_complex_double*) A, &lda_,
-        (lapack_complex_double*) B, &ldb_ );
+        (lapack_complex_double*) B, &ldb_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1
+        #endif
+    );
 }
 
 }  // namespace lapack

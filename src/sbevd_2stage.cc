@@ -48,7 +48,11 @@ int64_t sbevd_2stage(
         W,
         Z, &ldz_,
         qry_work, &ineg_one,
-        qry_iwork, &ineg_one, &info_ );
+        qry_iwork, &ineg_one, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -65,7 +69,11 @@ int64_t sbevd_2stage(
         W,
         Z, &ldz_,
         &work[0], &lwork_,
-        &iwork[0], &liwork_, &info_ );
+        &iwork[0], &liwork_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -104,7 +112,11 @@ int64_t sbevd_2stage(
         W,
         Z, &ldz_,
         qry_work, &ineg_one,
-        qry_iwork, &ineg_one, &info_ );
+        qry_iwork, &ineg_one, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -121,7 +133,11 @@ int64_t sbevd_2stage(
         W,
         Z, &ldz_,
         &work[0], &lwork_,
-        &iwork[0], &liwork_, &info_ );
+        &iwork[0], &liwork_, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

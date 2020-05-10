@@ -41,7 +41,11 @@ float lansb(
     return LAPACK_slansb(
         &norm_, &uplo_, &n_, &kd_,
         AB, &ldab_,
-        &work[0] );
+        &work[0]
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +75,11 @@ double lansb(
     return LAPACK_dlansb(
         &norm_, &uplo_, &n_, &kd_,
         AB, &ldab_,
-        &work[0] );
+        &work[0]
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,7 +109,11 @@ float lansb(
     return LAPACK_clansb(
         &norm_, &uplo_, &n_, &kd_,
         (lapack_complex_float*) AB, &ldab_,
-        &work[0] );
+        &work[0]
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +184,11 @@ double lansb(
     return LAPACK_zlansb(
         &norm_, &uplo_, &n_, &kd_,
         (lapack_complex_double*) AB, &ldab_,
-        &work[0] );
+        &work[0]
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1
+        #endif
+    );
 }
 
 }  // namespace lapack

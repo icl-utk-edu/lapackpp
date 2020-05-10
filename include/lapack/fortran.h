@@ -9,6 +9,11 @@
 #include "lapack/config.h"
 #include "lapack/mangling.h"
 
+/* It seems all current Fortran compilers put strlen at end.
+*  Some historical compilers put strlen after the str argument
+*  or make the str argument into a struct. */
+#define LAPACK_FORTRAN_STRLEN_END
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -154,50 +159,82 @@ void LAPACK_spotrf2(
     char const* uplo,
     lapack_int const* n,
     float* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dpotrf2 LAPACK_GLOBAL(dpotrf2,DPOTRF2)
 void LAPACK_dpotrf2(
     char const* uplo,
     lapack_int const* n,
     double* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cpotrf2 LAPACK_GLOBAL(cpotrf2,CPOTRF2)
 void LAPACK_cpotrf2(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_float* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zpotrf2 LAPACK_GLOBAL(zpotrf2,ZPOTRF2)
 void LAPACK_zpotrf2(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_double* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_spotrf LAPACK_GLOBAL(spotrf,SPOTRF)
 void LAPACK_spotrf(
     char const* uplo,
     lapack_int const* n,
     float* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dpotrf LAPACK_GLOBAL(dpotrf,DPOTRF)
 void LAPACK_dpotrf(
     char const* uplo,
     lapack_int const* n,
     double* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cpotrf LAPACK_GLOBAL(cpotrf,CPOTRF)
 void LAPACK_cpotrf(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_float* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zpotrf LAPACK_GLOBAL(zpotrf,ZPOTRF)
 void LAPACK_zpotrf(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_double* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_spstrf LAPACK_GLOBAL(spstrf,SPSTRF)
 void LAPACK_spstrf(
@@ -207,7 +244,11 @@ void LAPACK_spstrf(
     lapack_int* piv, lapack_int* rank,
     float const* tol,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dpstrf LAPACK_GLOBAL(dpstrf,DPSTRF)
 void LAPACK_dpstrf(
     char const* uplo,
@@ -216,7 +257,11 @@ void LAPACK_dpstrf(
     lapack_int* piv, lapack_int* rank,
     double const* tol,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cpstrf LAPACK_GLOBAL(cpstrf,CPSTRF)
 void LAPACK_cpstrf(
     char const* uplo,
@@ -225,7 +270,11 @@ void LAPACK_cpstrf(
     lapack_int* piv, lapack_int* rank,
     float const* tol,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zpstrf LAPACK_GLOBAL(zpstrf,ZPSTRF)
 void LAPACK_zpstrf(
     char const* uplo,
@@ -234,82 +283,134 @@ void LAPACK_zpstrf(
     lapack_int* piv, lapack_int* rank,
     double const* tol,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_spftrf LAPACK_GLOBAL(spftrf,SPFTRF)
 void LAPACK_spftrf(
     char const* transr, char const* uplo,
     lapack_int const* n,
     float* a,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dpftrf LAPACK_GLOBAL(dpftrf,DPFTRF)
 void LAPACK_dpftrf(
     char const* transr, char const* uplo,
     lapack_int const* n,
     double* a,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cpftrf LAPACK_GLOBAL(cpftrf,CPFTRF)
 void LAPACK_cpftrf(
     char const* transr, char const* uplo,
     lapack_int const* n,
     lapack_complex_float* a,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zpftrf LAPACK_GLOBAL(zpftrf,ZPFTRF)
 void LAPACK_zpftrf(
     char const* transr, char const* uplo,
     lapack_int const* n,
     lapack_complex_double* a,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_spptrf LAPACK_GLOBAL(spptrf,SPPTRF)
 void LAPACK_spptrf(
     char const* uplo,
     lapack_int const* n,
     float* ap,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dpptrf LAPACK_GLOBAL(dpptrf,DPPTRF)
 void LAPACK_dpptrf(
     char const* uplo,
     lapack_int const* n,
     double* ap,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cpptrf LAPACK_GLOBAL(cpptrf,CPPTRF)
 void LAPACK_cpptrf(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_float* ap,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zpptrf LAPACK_GLOBAL(zpptrf,ZPPTRF)
 void LAPACK_zpptrf(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_double* ap,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_spbtrf LAPACK_GLOBAL(spbtrf,SPBTRF)
 void LAPACK_spbtrf(
     char const* uplo,
     lapack_int const* n, lapack_int const* kd,
     float* ab, lapack_int const* ldab,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dpbtrf LAPACK_GLOBAL(dpbtrf,DPBTRF)
 void LAPACK_dpbtrf(
     char const* uplo,
     lapack_int const* n, lapack_int const* kd,
     double* ab, lapack_int const* ldab,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cpbtrf LAPACK_GLOBAL(cpbtrf,CPBTRF)
 void LAPACK_cpbtrf(
     char const* uplo,
     lapack_int const* n, lapack_int const* kd,
     lapack_complex_float* ab, lapack_int const* ldab,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zpbtrf LAPACK_GLOBAL(zpbtrf,ZPBTRF)
 void LAPACK_zpbtrf(
     char const* uplo,
     lapack_int const* n, lapack_int const* kd,
     lapack_complex_double* ab, lapack_int const* ldab,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_spttrf LAPACK_GLOBAL(spttrf,SPTTRF)
 void LAPACK_spttrf(
@@ -340,7 +441,11 @@ void LAPACK_ssytrf(
     float* a, lapack_int const* lda,
     lapack_int* ipiv,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsytrf LAPACK_GLOBAL(dsytrf,DSYTRF)
 void LAPACK_dsytrf(
     char const* uplo,
@@ -348,7 +453,11 @@ void LAPACK_dsytrf(
     double* a, lapack_int const* lda,
     lapack_int* ipiv,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csytrf LAPACK_GLOBAL(csytrf,CSYTRF)
 void LAPACK_csytrf(
     char const* uplo,
@@ -356,7 +465,11 @@ void LAPACK_csytrf(
     lapack_complex_float* a, lapack_int const* lda,
     lapack_int* ipiv,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsytrf LAPACK_GLOBAL(zsytrf,ZSYTRF)
 void LAPACK_zsytrf(
     char const* uplo,
@@ -364,7 +477,11 @@ void LAPACK_zsytrf(
     lapack_complex_double* a, lapack_int const* lda,
     lapack_int* ipiv,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chetrf LAPACK_GLOBAL(chetrf,CHETRF)
 void LAPACK_chetrf(
     char const* uplo,
@@ -372,7 +489,11 @@ void LAPACK_chetrf(
     lapack_complex_float* a, lapack_int const* lda,
     lapack_int* ipiv,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhetrf LAPACK_GLOBAL(zhetrf,ZHETRF)
 void LAPACK_zhetrf(
     char const* uplo,
@@ -380,48 +501,76 @@ void LAPACK_zhetrf(
     lapack_complex_double* a, lapack_int const* lda,
     lapack_int* ipiv,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_ssptrf LAPACK_GLOBAL(ssptrf,SSPTRF)
 void LAPACK_ssptrf(
     char const* uplo,
     lapack_int const* n,
     float* ap, lapack_int* ipiv,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsptrf LAPACK_GLOBAL(dsptrf,DSPTRF)
 void LAPACK_dsptrf(
     char const* uplo,
     lapack_int const* n,
     double* ap, lapack_int* ipiv,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csptrf LAPACK_GLOBAL(csptrf,CSPTRF)
 void LAPACK_csptrf(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_float* ap,
     lapack_int* ipiv,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsptrf LAPACK_GLOBAL(zsptrf,ZSPTRF)
 void LAPACK_zsptrf(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_double* ap,
     lapack_int* ipiv,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chptrf LAPACK_GLOBAL(chptrf,CHPTRF)
 void LAPACK_chptrf(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_float* ap,
     lapack_int* ipiv,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhptrf LAPACK_GLOBAL(zhptrf,ZHPTRF)
 void LAPACK_zhptrf(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_double* ap,
     lapack_int* ipiv,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -433,7 +582,11 @@ void LAPACK_sgetrs(
     float const* a, lapack_int const* lda,
     lapack_int const* ipiv,
     float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_dgetrs LAPACK_GLOBAL(dgetrs,DGETRS)
 void LAPACK_dgetrs(
     char const* trans,
@@ -441,7 +594,11 @@ void LAPACK_dgetrs(
     double const* a, lapack_int const* lda,
     lapack_int const* ipiv,
     double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_cgetrs LAPACK_GLOBAL(cgetrs,CGETRS)
 void LAPACK_cgetrs(
     char const* trans,
@@ -449,7 +606,11 @@ void LAPACK_cgetrs(
     lapack_complex_float const* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_zgetrs LAPACK_GLOBAL(zgetrs,ZGETRS)
 void LAPACK_zgetrs(
     char const* trans,
@@ -457,7 +618,11 @@ void LAPACK_zgetrs(
     lapack_complex_double const* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 
 #define LAPACK_sgbtrs LAPACK_GLOBAL(sgbtrs,SGBTRS)
 void LAPACK_sgbtrs(
@@ -468,7 +633,11 @@ void LAPACK_sgbtrs(
     float const* ab, lapack_int const* ldab,
     lapack_int const* ipiv,
     float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_dgbtrs LAPACK_GLOBAL(dgbtrs,DGBTRS)
 void LAPACK_dgbtrs(
     char const* trans,
@@ -478,7 +647,11 @@ void LAPACK_dgbtrs(
     double const* ab, lapack_int const* ldab,
     lapack_int const* ipiv,
     double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_cgbtrs LAPACK_GLOBAL(cgbtrs,CGBTRS)
 void LAPACK_cgbtrs(
     char const* trans,
@@ -488,7 +661,11 @@ void LAPACK_cgbtrs(
     lapack_complex_float const* ab, lapack_int const* ldab,
     lapack_int const* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_zgbtrs LAPACK_GLOBAL(zgbtrs,ZGBTRS)
 void LAPACK_zgbtrs(
     char const* trans,
@@ -498,7 +675,11 @@ void LAPACK_zgbtrs(
     lapack_complex_double const* ab, lapack_int const* ldab,
     lapack_int const* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 
 #define LAPACK_sgttrs LAPACK_GLOBAL(sgttrs,SGTTRS)
 void LAPACK_sgttrs(
@@ -508,7 +689,11 @@ void LAPACK_sgttrs(
     float const* du, float const* du2,
     lapack_int const* ipiv,
     float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_dgttrs LAPACK_GLOBAL(dgttrs,DGTTRS)
 void LAPACK_dgttrs(
     char const* trans,
@@ -517,7 +702,11 @@ void LAPACK_dgttrs(
     double const* du, double const* du2,
     lapack_int const* ipiv,
     double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_cgttrs LAPACK_GLOBAL(cgttrs,CGTTRS)
 void LAPACK_cgttrs(
     char const* trans,
@@ -526,7 +715,11 @@ void LAPACK_cgttrs(
     lapack_complex_float const* du, lapack_complex_float const* du2,
     lapack_int const* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_zgttrs LAPACK_GLOBAL(zgttrs,ZGTTRS)
 void LAPACK_zgttrs(
     char const* trans,
@@ -535,7 +728,11 @@ void LAPACK_zgttrs(
     lapack_complex_double const* du, lapack_complex_double const* du2,
     lapack_int const* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 
 /* ----- Cholesky triangular solve */
 #define LAPACK_spotrs LAPACK_GLOBAL(spotrs,SPOTRS)
@@ -544,28 +741,44 @@ void LAPACK_spotrs(
     lapack_int const* n, lapack_int const* nrhs,
     float const* a, lapack_int const* lda,
     float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dpotrs LAPACK_GLOBAL(dpotrs,DPOTRS)
 void LAPACK_dpotrs(
     char const* uplo,
     lapack_int const* n, lapack_int const* nrhs,
     double const* a, lapack_int const* lda,
     double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cpotrs LAPACK_GLOBAL(cpotrs,CPOTRS)
 void LAPACK_cpotrs(
     char const* uplo,
     lapack_int const* n, lapack_int const* nrhs,
     lapack_complex_float const* a, lapack_int const* lda,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zpotrs LAPACK_GLOBAL(zpotrs,ZPOTRS)
 void LAPACK_zpotrs(
     char const* uplo,
     lapack_int const* n, lapack_int const* nrhs,
     lapack_complex_double const* a, lapack_int const* lda,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_spftrs LAPACK_GLOBAL(spftrs,SPFTRS)
 void LAPACK_spftrs(
@@ -573,28 +786,44 @@ void LAPACK_spftrs(
     lapack_int const* n, lapack_int const* nrhs,
     float const* a,
     float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dpftrs LAPACK_GLOBAL(dpftrs,DPFTRS)
 void LAPACK_dpftrs(
     char const* transr, char const* uplo,
     lapack_int const* n, lapack_int const* nrhs,
     double const* a,
     double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cpftrs LAPACK_GLOBAL(cpftrs,CPFTRS)
 void LAPACK_cpftrs(
     char const* transr, char const* uplo,
     lapack_int const* n, lapack_int const* nrhs,
     lapack_complex_float const* a,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zpftrs LAPACK_GLOBAL(zpftrs,ZPFTRS)
 void LAPACK_zpftrs(
     char const* transr, char const* uplo,
     lapack_int const* n, lapack_int const* nrhs,
     lapack_complex_double const* a,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_spptrs LAPACK_GLOBAL(spptrs,SPPTRS)
 void LAPACK_spptrs(
@@ -602,28 +831,44 @@ void LAPACK_spptrs(
     lapack_int const* n, lapack_int const* nrhs,
     float const* ap,
     float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dpptrs LAPACK_GLOBAL(dpptrs,DPPTRS)
 void LAPACK_dpptrs(
     char const* uplo,
     lapack_int const* n, lapack_int const* nrhs,
     double const* ap,
     double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cpptrs LAPACK_GLOBAL(cpptrs,CPPTRS)
 void LAPACK_cpptrs(
     char const* uplo,
     lapack_int const* n, lapack_int const* nrhs,
     lapack_complex_float const* ap,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zpptrs LAPACK_GLOBAL(zpptrs,ZPPTRS)
 void LAPACK_zpptrs(
     char const* uplo,
     lapack_int const* n, lapack_int const* nrhs,
     lapack_complex_double const* ap,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_spbtrs LAPACK_GLOBAL(spbtrs,SPBTRS)
 void LAPACK_spbtrs(
@@ -631,28 +876,44 @@ void LAPACK_spbtrs(
     lapack_int const* n, lapack_int const* kd, lapack_int const* nrhs,
     float const* ab, lapack_int const* ldab,
     float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dpbtrs LAPACK_GLOBAL(dpbtrs,DPBTRS)
 void LAPACK_dpbtrs(
     char const* uplo,
     lapack_int const* n, lapack_int const* kd, lapack_int const* nrhs,
     double const* ab, lapack_int const* ldab,
     double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cpbtrs LAPACK_GLOBAL(cpbtrs,CPBTRS)
 void LAPACK_cpbtrs(
     char const* uplo,
     lapack_int const* n, lapack_int const* kd, lapack_int const* nrhs,
     lapack_complex_float const* ab, lapack_int const* ldab,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zpbtrs LAPACK_GLOBAL(zpbtrs,ZPBTRS)
 void LAPACK_zpbtrs(
     char const* uplo,
     lapack_int const* n, lapack_int const* kd, lapack_int const* nrhs,
     lapack_complex_double const* ab, lapack_int const* ldab,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_spttrs LAPACK_GLOBAL(spttrs,SPTTRS)
 void LAPACK_spttrs(
@@ -675,14 +936,22 @@ void LAPACK_cpttrs(
     float const* d,
     lapack_complex_float const* e,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zpttrs LAPACK_GLOBAL(zpttrs,ZPTTRS)
 void LAPACK_zpttrs(
     char const* uplo,
     lapack_int const* n, lapack_int const* nrhs,
     double const* d, lapack_complex_double const* e,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric indefinite triangular solve */
 #define LAPACK_ssytrs LAPACK_GLOBAL(ssytrs,SSYTRS)
@@ -692,7 +961,11 @@ void LAPACK_ssytrs(
     float const* a, lapack_int const* lda,
     lapack_int const* ipiv,
     float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsytrs LAPACK_GLOBAL(dsytrs,DSYTRS)
 void LAPACK_dsytrs(
     char const* uplo,
@@ -700,7 +973,11 @@ void LAPACK_dsytrs(
     double const* a, lapack_int const* lda,
     lapack_int const* ipiv,
     double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csytrs LAPACK_GLOBAL(csytrs,CSYTRS)
 void LAPACK_csytrs(
     char const* uplo,
@@ -708,7 +985,11 @@ void LAPACK_csytrs(
     lapack_complex_float const* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsytrs LAPACK_GLOBAL(zsytrs,ZSYTRS)
 void LAPACK_zsytrs(
     char const* uplo,
@@ -716,7 +997,11 @@ void LAPACK_zsytrs(
     lapack_complex_double const* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chetrs LAPACK_GLOBAL(chetrs,CHETRS)
 void LAPACK_chetrs(
     char const* uplo,
@@ -724,7 +1009,11 @@ void LAPACK_chetrs(
     lapack_complex_float const* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhetrs LAPACK_GLOBAL(zhetrs,ZHETRS)
 void LAPACK_zhetrs(
     char const* uplo,
@@ -732,7 +1021,11 @@ void LAPACK_zhetrs(
     lapack_complex_double const* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_ssptrs LAPACK_GLOBAL(ssptrs,SSPTRS)
 void LAPACK_ssptrs(
@@ -741,7 +1034,11 @@ void LAPACK_ssptrs(
     float const* ap,
     lapack_int const* ipiv,
     float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsptrs LAPACK_GLOBAL(dsptrs,DSPTRS)
 void LAPACK_dsptrs(
     char const* uplo,
@@ -749,7 +1046,11 @@ void LAPACK_dsptrs(
     double const* ap,
     lapack_int const* ipiv,
     double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csptrs LAPACK_GLOBAL(csptrs,CSPTRS)
 void LAPACK_csptrs(
     char const* uplo,
@@ -757,7 +1058,11 @@ void LAPACK_csptrs(
     lapack_complex_float const* ap,
     lapack_int const* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsptrs LAPACK_GLOBAL(zsptrs,ZSPTRS)
 void LAPACK_zsptrs(
     char const* uplo,
@@ -765,7 +1070,11 @@ void LAPACK_zsptrs(
     lapack_complex_double const* ap,
     lapack_int const* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chptrs LAPACK_GLOBAL(chptrs,CHPTRS)
 void LAPACK_chptrs(
     char const* uplo,
@@ -773,7 +1082,11 @@ void LAPACK_chptrs(
     lapack_complex_float const* ap,
     lapack_int const* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhptrs LAPACK_GLOBAL(zhptrs,ZHPTRS)
 void LAPACK_zhptrs(
     char const* uplo,
@@ -781,7 +1094,11 @@ void LAPACK_zhptrs(
     lapack_complex_double const* ap,
     lapack_int const* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- triangular solve */
 #define LAPACK_strtrs LAPACK_GLOBAL(strtrs,STRTRS)
@@ -791,7 +1108,11 @@ void LAPACK_strtrs(
     lapack_int const* nrhs,
     float const* a, lapack_int const* lda,
     float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_dtrtrs LAPACK_GLOBAL(dtrtrs,DTRTRS)
 void LAPACK_dtrtrs(
     char const* uplo, char const* trans, char const* diag,
@@ -799,7 +1120,11 @@ void LAPACK_dtrtrs(
     lapack_int const* nrhs,
     double const* a, lapack_int const* lda,
     double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ctrtrs LAPACK_GLOBAL(ctrtrs,CTRTRS)
 void LAPACK_ctrtrs(
     char const* uplo, char const* trans, char const* diag,
@@ -807,7 +1132,11 @@ void LAPACK_ctrtrs(
     lapack_int const* nrhs,
     lapack_complex_float const* a, lapack_int const* lda,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ztrtrs LAPACK_GLOBAL(ztrtrs,ZTRTRS)
 void LAPACK_ztrtrs(
     char const* uplo, char const* trans, char const* diag,
@@ -815,7 +1144,11 @@ void LAPACK_ztrtrs(
     lapack_int const* nrhs,
     lapack_complex_double const* a, lapack_int const* lda,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 
 #define LAPACK_stptrs LAPACK_GLOBAL(stptrs,STPTRS)
 void LAPACK_stptrs(
@@ -824,7 +1157,11 @@ void LAPACK_stptrs(
     lapack_int const* nrhs,
     float const* ap,
     float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_dtptrs LAPACK_GLOBAL(dtptrs,DTPTRS)
 void LAPACK_dtptrs(
     char const* uplo, char const* trans, char const* diag,
@@ -832,7 +1169,11 @@ void LAPACK_dtptrs(
     lapack_int const* nrhs,
     double const* ap,
     double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ctptrs LAPACK_GLOBAL(ctptrs,CTPTRS)
 void LAPACK_ctptrs(
     char const* uplo, char const* trans, char const* diag,
@@ -840,7 +1181,11 @@ void LAPACK_ctptrs(
     lapack_int const* nrhs,
     lapack_complex_float const* ap,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ztptrs LAPACK_GLOBAL(ztptrs,ZTPTRS)
 void LAPACK_ztptrs(
     char const* uplo, char const* trans, char const* diag,
@@ -848,7 +1193,11 @@ void LAPACK_ztptrs(
     lapack_int const* nrhs,
     lapack_complex_double const* ap,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 
 #define LAPACK_stbtrs LAPACK_GLOBAL(stbtrs,STBTRS)
 void LAPACK_stbtrs(
@@ -857,7 +1206,11 @@ void LAPACK_stbtrs(
     lapack_int const* kd, lapack_int const* nrhs,
     float const* ab, lapack_int const* ldab,
     float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_dtbtrs LAPACK_GLOBAL(dtbtrs,DTBTRS)
 void LAPACK_dtbtrs(
     char const* uplo, char const* trans, char const* diag,
@@ -865,7 +1218,11 @@ void LAPACK_dtbtrs(
     lapack_int const* kd, lapack_int const* nrhs,
     double const* ab, lapack_int const* ldab,
     double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ctbtrs LAPACK_GLOBAL(ctbtrs,CTBTRS)
 void LAPACK_ctbtrs(
     char const* uplo, char const* trans, char const* diag,
@@ -873,7 +1230,11 @@ void LAPACK_ctbtrs(
     lapack_int const* kd, lapack_int const* nrhs,
     lapack_complex_float const* ab, lapack_int const* ldab,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ztbtrs LAPACK_GLOBAL(ztbtrs,ZTBTRS)
 void LAPACK_ztbtrs(
     char const* uplo, char const* trans, char const* diag,
@@ -881,7 +1242,11 @@ void LAPACK_ztbtrs(
     lapack_int const* kd, lapack_int const* nrhs,
     lapack_complex_double const* ab, lapack_int const* ldab,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -893,7 +1258,11 @@ void LAPACK_sgecon(
     float const* a, lapack_int const* lda,
     float const* anorm, float* rcond,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_dgecon LAPACK_GLOBAL(dgecon,DGECON)
 void LAPACK_dgecon(
     char const* norm,
@@ -901,7 +1270,11 @@ void LAPACK_dgecon(
     double const* a, lapack_int const* lda,
     double const* anorm, double* rcond,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_cgecon LAPACK_GLOBAL(cgecon,CGECON)
 void LAPACK_cgecon(
     char const* norm,
@@ -909,7 +1282,11 @@ void LAPACK_cgecon(
     lapack_complex_float const* a, lapack_int const* lda,
     float const* anorm, float* rcond,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_zgecon LAPACK_GLOBAL(zgecon,ZGECON)
 void LAPACK_zgecon(
     char const* norm,
@@ -917,7 +1294,11 @@ void LAPACK_zgecon(
     lapack_complex_double const* a, lapack_int const* lda,
     double const* anorm, double* rcond,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 
 #define LAPACK_sgbcon LAPACK_GLOBAL(sgbcon,SGBCON)
 void LAPACK_sgbcon(
@@ -928,7 +1309,11 @@ void LAPACK_sgbcon(
     lapack_int const* ipiv,
     float const* anorm, float* rcond,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_dgbcon LAPACK_GLOBAL(dgbcon,DGBCON)
 void LAPACK_dgbcon(
     char const* norm,
@@ -938,7 +1323,11 @@ void LAPACK_dgbcon(
     lapack_int const* ipiv,
     double const* anorm, double* rcond,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_cgbcon LAPACK_GLOBAL(cgbcon,CGBCON)
 void LAPACK_cgbcon(
     char const* norm,
@@ -948,7 +1337,11 @@ void LAPACK_cgbcon(
     lapack_int const* ipiv,
     float const* anorm, float* rcond,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_zgbcon LAPACK_GLOBAL(zgbcon,ZGBCON)
 void LAPACK_zgbcon(
     char const* norm,
@@ -958,7 +1351,11 @@ void LAPACK_zgbcon(
     lapack_int const* ipiv,
     double const* anorm, double* rcond,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 
 #define LAPACK_sgtcon LAPACK_GLOBAL(sgtcon,SGTCON)
 void LAPACK_sgtcon(
@@ -969,7 +1366,11 @@ void LAPACK_sgtcon(
     lapack_int const* ipiv,
     float const* anorm, float* rcond,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_dgtcon LAPACK_GLOBAL(dgtcon,DGTCON)
 void LAPACK_dgtcon(
     char const* norm,
@@ -979,7 +1380,11 @@ void LAPACK_dgtcon(
     lapack_int const* ipiv,
     double const* anorm, double* rcond,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_cgtcon LAPACK_GLOBAL(cgtcon,CGTCON)
 void LAPACK_cgtcon(
     char const* norm,
@@ -989,7 +1394,11 @@ void LAPACK_cgtcon(
     lapack_int const* ipiv,
     float const* anorm, float* rcond,
     lapack_complex_float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_zgtcon LAPACK_GLOBAL(zgtcon,ZGTCON)
 void LAPACK_zgtcon(
     char const* norm,
@@ -999,7 +1408,11 @@ void LAPACK_zgtcon(
     lapack_int const* ipiv,
     double const* anorm, double* rcond,
     lapack_complex_double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 
 /* ----- Cholesky condition number estimate */
 #define LAPACK_spocon LAPACK_GLOBAL(spocon,SPOCON)
@@ -1009,7 +1422,11 @@ void LAPACK_spocon(
     float const* a, lapack_int const* lda,
     float const* anorm, float* rcond,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dpocon LAPACK_GLOBAL(dpocon,DPOCON)
 void LAPACK_dpocon(
     char const* uplo,
@@ -1017,7 +1434,11 @@ void LAPACK_dpocon(
     double const* a, lapack_int const* lda,
     double const* anorm, double* rcond,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cpocon LAPACK_GLOBAL(cpocon,CPOCON)
 void LAPACK_cpocon(
     char const* uplo,
@@ -1025,7 +1446,11 @@ void LAPACK_cpocon(
     lapack_complex_float const* a, lapack_int const* lda,
     float const* anorm, float* rcond,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zpocon LAPACK_GLOBAL(zpocon,ZPOCON)
 void LAPACK_zpocon(
     char const* uplo,
@@ -1033,7 +1458,11 @@ void LAPACK_zpocon(
     lapack_complex_double const* a, lapack_int const* lda,
     double const* anorm, double* rcond,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_sppcon LAPACK_GLOBAL(sppcon,SPPCON)
 void LAPACK_sppcon(
@@ -1042,7 +1471,11 @@ void LAPACK_sppcon(
     float const* ap, float const* anorm,
     float* rcond,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dppcon LAPACK_GLOBAL(dppcon,DPPCON)
 void LAPACK_dppcon(
     char const* uplo,
@@ -1050,7 +1483,11 @@ void LAPACK_dppcon(
     double const* ap, double const* anorm,
     double* rcond,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cppcon LAPACK_GLOBAL(cppcon,CPPCON)
 void LAPACK_cppcon(
     char const* uplo,
@@ -1058,7 +1495,11 @@ void LAPACK_cppcon(
     lapack_complex_float const* ap,
     float const* anorm, float* rcond,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zppcon LAPACK_GLOBAL(zppcon,ZPPCON)
 void LAPACK_zppcon(
     char const* uplo,
@@ -1066,7 +1507,11 @@ void LAPACK_zppcon(
     lapack_complex_double const* ap,
     double const* anorm, double* rcond,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_spbcon LAPACK_GLOBAL(spbcon,SPBCON)
 void LAPACK_spbcon(
@@ -1075,7 +1520,11 @@ void LAPACK_spbcon(
     float const* ab, lapack_int const* ldab,
     float const* anorm, float* rcond,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dpbcon LAPACK_GLOBAL(dpbcon,DPBCON)
 void LAPACK_dpbcon(
     char const* uplo,
@@ -1083,7 +1532,11 @@ void LAPACK_dpbcon(
     double const* ab, lapack_int const* ldab,
     double const* anorm, double* rcond,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cpbcon LAPACK_GLOBAL(cpbcon,CPBCON)
 void LAPACK_cpbcon(
     char const* uplo,
@@ -1091,7 +1544,11 @@ void LAPACK_cpbcon(
     lapack_complex_float const* ab, lapack_int const* ldab,
     float const* anorm, float* rcond,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zpbcon LAPACK_GLOBAL(zpbcon,ZPBCON)
 void LAPACK_zpbcon(
     char const* uplo,
@@ -1099,7 +1556,11 @@ void LAPACK_zpbcon(
     lapack_complex_double const* ab, lapack_int const* ldab,
     double const* anorm, double* rcond,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_sptcon LAPACK_GLOBAL(sptcon,SPTCON)
 void LAPACK_sptcon(
@@ -1139,7 +1600,11 @@ void LAPACK_ssycon(
     lapack_int const* ipiv,
     float const* anorm, float* rcond,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsycon LAPACK_GLOBAL(dsycon,DSYCON)
 void LAPACK_dsycon(
     char const* uplo,
@@ -1148,7 +1613,11 @@ void LAPACK_dsycon(
     lapack_int const* ipiv,
     double const* anorm, double* rcond,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csycon LAPACK_GLOBAL(csycon,CSYCON)
 void LAPACK_csycon(
     char const* uplo,
@@ -1158,7 +1627,11 @@ void LAPACK_csycon(
     float const* anorm,
     float* rcond,
     lapack_complex_float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsycon LAPACK_GLOBAL(zsycon,ZSYCON)
 void LAPACK_zsycon(
     char const* uplo,
@@ -1168,7 +1641,11 @@ void LAPACK_zsycon(
     double const* anorm,
     double* rcond,
     lapack_complex_double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_checon LAPACK_GLOBAL(checon,CHECON)
 void LAPACK_checon(
     char const* uplo,
@@ -1178,7 +1655,11 @@ void LAPACK_checon(
     float const* anorm,
     float* rcond,
     lapack_complex_float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhecon LAPACK_GLOBAL(zhecon,ZHECON)
 void LAPACK_zhecon(
     char const* uplo,
@@ -1188,7 +1669,11 @@ void LAPACK_zhecon(
     double const* anorm,
     double* rcond,
     lapack_complex_double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_sspcon LAPACK_GLOBAL(sspcon,SSPCON)
 void LAPACK_sspcon(
@@ -1198,7 +1683,11 @@ void LAPACK_sspcon(
     lapack_int const* ipiv,
     float const* anorm, float* rcond,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dspcon LAPACK_GLOBAL(dspcon,DSPCON)
 void LAPACK_dspcon(
     char const* uplo,
@@ -1207,7 +1696,11 @@ void LAPACK_dspcon(
     lapack_int const* ipiv,
     double const* anorm, double* rcond,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cspcon LAPACK_GLOBAL(cspcon,CSPCON)
 void LAPACK_cspcon(
     char const* uplo,
@@ -1216,7 +1709,11 @@ void LAPACK_cspcon(
     lapack_int const* ipiv,
     float const* anorm, float* rcond,
     lapack_complex_float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zspcon LAPACK_GLOBAL(zspcon,ZSPCON)
 void LAPACK_zspcon(
     char const* uplo,
@@ -1225,7 +1722,11 @@ void LAPACK_zspcon(
     lapack_int const* ipiv,
     double const* anorm, double* rcond,
     lapack_complex_double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chpcon LAPACK_GLOBAL(chpcon,CHPCON)
 void LAPACK_chpcon(
     char const* uplo,
@@ -1234,7 +1735,11 @@ void LAPACK_chpcon(
     lapack_int const* ipiv,
     float const* anorm, float* rcond,
     lapack_complex_float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhpcon LAPACK_GLOBAL(zhpcon,ZHPCON)
 void LAPACK_zhpcon(
     char const* uplo,
@@ -1243,7 +1748,11 @@ void LAPACK_zhpcon(
     lapack_int const* ipiv,
     double const* anorm, double* rcond,
     lapack_complex_double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- triangular condition number estimate */
 #define LAPACK_strcon LAPACK_GLOBAL(strcon,STRCON)
@@ -1253,7 +1762,11 @@ void LAPACK_strcon(
     float const* a, lapack_int const* lda,
     float* rcond,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_dtrcon LAPACK_GLOBAL(dtrcon,DTRCON)
 void LAPACK_dtrcon(
     char const* norm, char const* uplo, char const* diag,
@@ -1261,7 +1774,11 @@ void LAPACK_dtrcon(
     double const* a, lapack_int const* lda,
     double* rcond,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ctrcon LAPACK_GLOBAL(ctrcon,CTRCON)
 void LAPACK_ctrcon(
     char const* norm, char const* uplo, char const* diag,
@@ -1269,7 +1786,11 @@ void LAPACK_ctrcon(
     lapack_complex_float const* a, lapack_int const* lda,
     float* rcond,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ztrcon LAPACK_GLOBAL(ztrcon,ZTRCON)
 void LAPACK_ztrcon(
     char const* norm, char const* uplo, char const* diag,
@@ -1277,7 +1798,11 @@ void LAPACK_ztrcon(
     lapack_complex_double const* a, lapack_int const* lda,
     double* rcond,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 
 #define LAPACK_stpcon LAPACK_GLOBAL(stpcon,STPCON)
 void LAPACK_stpcon(
@@ -1285,28 +1810,44 @@ void LAPACK_stpcon(
     lapack_int const* n,
     float const* ap, float* rcond,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_dtpcon LAPACK_GLOBAL(dtpcon,DTPCON)
 void LAPACK_dtpcon(
     char const* norm, char const* uplo, char const* diag,
     lapack_int const* n,
     double const* ap, double* rcond,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ctpcon LAPACK_GLOBAL(ctpcon,CTPCON)
 void LAPACK_ctpcon(
     char const* norm, char const* uplo, char const* diag,
     lapack_int const* n,
     lapack_complex_float const* ap, float* rcond,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ztpcon LAPACK_GLOBAL(ztpcon,ZTPCON)
 void LAPACK_ztpcon(
     char const* norm, char const* uplo, char const* diag,
     lapack_int const* n,
     lapack_complex_double const* ap, double* rcond,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 
 #define LAPACK_stbcon LAPACK_GLOBAL(stbcon,STBCON)
 void LAPACK_stbcon(
@@ -1316,7 +1857,11 @@ void LAPACK_stbcon(
     float const* ab, lapack_int const* ldab,
     float* rcond,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_dtbcon LAPACK_GLOBAL(dtbcon,DTBCON)
 void LAPACK_dtbcon(
     char const* norm, char const* uplo, char const* diag,
@@ -1325,7 +1870,11 @@ void LAPACK_dtbcon(
     double const* ab, lapack_int const* ldab,
     double* rcond,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ctbcon LAPACK_GLOBAL(ctbcon,CTBCON)
 void LAPACK_ctbcon(
     char const* norm, char const* uplo, char const* diag,
@@ -1334,7 +1883,11 @@ void LAPACK_ctbcon(
     lapack_complex_float const* ab, lapack_int const* ldab,
     float* rcond,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ztbcon LAPACK_GLOBAL(ztbcon,ZTBCON)
 void LAPACK_ztbcon(
     char const* norm, char const* uplo, char const* diag,
@@ -1343,7 +1896,11 @@ void LAPACK_ztbcon(
     lapack_complex_double const* ab, lapack_int const* ldab,
     double* rcond,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -1359,7 +1916,11 @@ void LAPACK_sgerfs(
     float* x, lapack_int const* ldx,
     float* ferr, float* berr,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_dgerfs LAPACK_GLOBAL(dgerfs,DGERFS)
 void LAPACK_dgerfs(
     char const* trans,
@@ -1371,7 +1932,11 @@ void LAPACK_dgerfs(
     double* x, lapack_int const* ldx,
     double* ferr, double* berr,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_cgerfs LAPACK_GLOBAL(cgerfs,CGERFS)
 void LAPACK_cgerfs(
     char const* trans,
@@ -1383,7 +1948,11 @@ void LAPACK_cgerfs(
     lapack_complex_float* x, lapack_int const* ldx,
     float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_zgerfs LAPACK_GLOBAL(zgerfs,ZGERFS)
 void LAPACK_zgerfs(
     char const* trans,
@@ -1395,7 +1964,11 @@ void LAPACK_zgerfs(
     lapack_complex_double* x, lapack_int const* ldx,
     double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 
 #define LAPACK_sgerfsx LAPACK_GLOBAL(sgerfsx,SGERFSX)
 void LAPACK_sgerfsx(
@@ -1411,7 +1984,11 @@ void LAPACK_sgerfsx(
     lapack_int const* n_err_bnds, float* err_bnds_norm, float* err_bnds_comp,
     lapack_int const* nparams, float* params,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_dgerfsx LAPACK_GLOBAL(dgerfsx,DGERFSX)
 void LAPACK_dgerfsx(
     char const* trans, char const* equed,
@@ -1426,7 +2003,11 @@ void LAPACK_dgerfsx(
     lapack_int const* n_err_bnds, double* err_bnds_norm, double* err_bnds_comp,
     lapack_int const* nparams, double* params,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_cgerfsx LAPACK_GLOBAL(cgerfsx,CGERFSX)
 void LAPACK_cgerfsx(
     char const* trans, char const* equed,
@@ -1441,7 +2022,11 @@ void LAPACK_cgerfsx(
     lapack_int const* n_err_bnds, float* err_bnds_norm, float* err_bnds_comp,
     lapack_int const* nparams, float* params,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_zgerfsx LAPACK_GLOBAL(zgerfsx,ZGERFSX)
 void LAPACK_zgerfsx(
     char const* trans, char const* equed,
@@ -1456,7 +2041,11 @@ void LAPACK_zgerfsx(
     lapack_int const* n_err_bnds, double* err_bnds_norm, double* err_bnds_comp,
     lapack_int const* nparams, double* params,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len, unsigned equed_len
+    #endif
+    );
 
 #define LAPACK_sgbrfs LAPACK_GLOBAL(sgbrfs,SGBRFS)
 void LAPACK_sgbrfs(
@@ -1471,7 +2060,11 @@ void LAPACK_sgbrfs(
     float* x, lapack_int const* ldx,
     float* ferr, float* berr,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_dgbrfs LAPACK_GLOBAL(dgbrfs,DGBRFS)
 void LAPACK_dgbrfs(
     char const* trans,
@@ -1485,7 +2078,11 @@ void LAPACK_dgbrfs(
     double* x, lapack_int const* ldx,
     double* ferr, double* berr,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_cgbrfs LAPACK_GLOBAL(cgbrfs,CGBRFS)
 void LAPACK_cgbrfs(
     char const* trans,
@@ -1499,7 +2096,11 @@ void LAPACK_cgbrfs(
     lapack_complex_float* x, lapack_int const* ldx,
     float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_zgbrfs LAPACK_GLOBAL(zgbrfs,ZGBRFS)
 void LAPACK_zgbrfs(
     char const* trans,
@@ -1513,7 +2114,11 @@ void LAPACK_zgbrfs(
     lapack_complex_double* x, lapack_int const* ldx,
     double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 
 #define LAPACK_sgbrfsx LAPACK_GLOBAL(sgbrfsx,SGBRFSX)
 void LAPACK_sgbrfsx(
@@ -1531,7 +2136,11 @@ void LAPACK_sgbrfsx(
     lapack_int const* n_err_bnds, float* err_bnds_norm, float* err_bnds_comp,
     lapack_int const* nparams, float* params,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_dgbrfsx LAPACK_GLOBAL(dgbrfsx,DGBRFSX)
 void LAPACK_dgbrfsx(
     char const* trans, char const* equed,
@@ -1548,7 +2157,11 @@ void LAPACK_dgbrfsx(
     lapack_int const* n_err_bnds, double* err_bnds_norm, double* err_bnds_comp,
     lapack_int const* nparams, double* params,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_cgbrfsx LAPACK_GLOBAL(cgbrfsx,CGBRFSX)
 void LAPACK_cgbrfsx(
     char const* trans, char const* equed,
@@ -1565,7 +2178,11 @@ void LAPACK_cgbrfsx(
     lapack_int const* n_err_bnds, float* err_bnds_norm, float* err_bnds_comp,
     lapack_int const* nparams, float* params,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_zgbrfsx LAPACK_GLOBAL(zgbrfsx,ZGBRFSX)
 void LAPACK_zgbrfsx(
     char const* trans, char const* equed,
@@ -1582,7 +2199,11 @@ void LAPACK_zgbrfsx(
     lapack_int const* n_err_bnds, double* err_bnds_norm, double* err_bnds_comp,
     lapack_int const* nparams, double* params,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len, unsigned equed_len
+    #endif
+    );
 
 #define LAPACK_sgtrfs LAPACK_GLOBAL(sgtrfs,SGTRFS)
 void LAPACK_sgtrfs(
@@ -1600,7 +2221,11 @@ void LAPACK_sgtrfs(
     float* x, lapack_int const* ldx,
     float* ferr, float* berr,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_dgtrfs LAPACK_GLOBAL(dgtrfs,DGTRFS)
 void LAPACK_dgtrfs(
     char const* trans,
@@ -1617,7 +2242,11 @@ void LAPACK_dgtrfs(
     double* x, lapack_int const* ldx,
     double* ferr, double* berr,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_cgtrfs LAPACK_GLOBAL(cgtrfs,CGTRFS)
 void LAPACK_cgtrfs(
     char const* trans,
@@ -1634,7 +2263,11 @@ void LAPACK_cgtrfs(
     lapack_complex_float* x, lapack_int const* ldx,
     float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_zgtrfs LAPACK_GLOBAL(zgtrfs,ZGTRFS)
 void LAPACK_zgtrfs(
     char const* trans,
@@ -1651,7 +2284,11 @@ void LAPACK_zgtrfs(
     lapack_complex_double* x, lapack_int const* ldx,
     double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 
 /* ----- Cholesky iterative refinement */
 #define LAPACK_sporfs LAPACK_GLOBAL(sporfs,SPORFS)
@@ -1664,7 +2301,11 @@ void LAPACK_sporfs(
     float* x, lapack_int const* ldx,
     float* ferr, float* berr,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dporfs LAPACK_GLOBAL(dporfs,DPORFS)
 void LAPACK_dporfs(
     char const* uplo,
@@ -1675,7 +2316,11 @@ void LAPACK_dporfs(
     double* x, lapack_int const* ldx,
     double* ferr, double* berr,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cporfs LAPACK_GLOBAL(cporfs,CPORFS)
 void LAPACK_cporfs(
     char const* uplo,
@@ -1686,7 +2331,11 @@ void LAPACK_cporfs(
     lapack_complex_float* x, lapack_int const* ldx,
     float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zporfs LAPACK_GLOBAL(zporfs,ZPORFS)
 void LAPACK_zporfs(
     char const* uplo,
@@ -1697,7 +2346,11 @@ void LAPACK_zporfs(
     lapack_complex_double* x, lapack_int const* ldx,
     double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_sporfsx LAPACK_GLOBAL(sporfsx,SPORFSX)
 void LAPACK_sporfsx(
@@ -1712,7 +2365,11 @@ void LAPACK_sporfsx(
     lapack_int const* n_err_bnds, float* err_bnds_norm, float* err_bnds_comp,
     lapack_int const* nparams, float* params,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_dporfsx LAPACK_GLOBAL(dporfsx,DPORFSX)
 void LAPACK_dporfsx(
     char const* uplo, char const* equed,
@@ -1726,7 +2383,11 @@ void LAPACK_dporfsx(
     lapack_int const* n_err_bnds, double* err_bnds_norm, double* err_bnds_comp,
     lapack_int const* nparams, double* params,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_cporfsx LAPACK_GLOBAL(cporfsx,CPORFSX)
 void LAPACK_cporfsx(
     char const* uplo, char const* equed,
@@ -1740,7 +2401,11 @@ void LAPACK_cporfsx(
     lapack_int const* n_err_bnds, float* err_bnds_norm, float* err_bnds_comp,
     lapack_int const* nparams, float* params,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_zporfsx LAPACK_GLOBAL(zporfsx,ZPORFSX)
 void LAPACK_zporfsx(
     char const* uplo, char const* equed,
@@ -1754,7 +2419,11 @@ void LAPACK_zporfsx(
     lapack_int const* n_err_bnds, double* err_bnds_norm, double* err_bnds_comp,
     lapack_int const* nparams, double* params,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 
 #define LAPACK_spprfs LAPACK_GLOBAL(spprfs,SPPRFS)
 void LAPACK_spprfs(
@@ -1765,7 +2434,11 @@ void LAPACK_spprfs(
     float* x, lapack_int const* ldx,
     float* ferr, float* berr,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dpprfs LAPACK_GLOBAL(dpprfs,DPPRFS)
 void LAPACK_dpprfs(
     char const* uplo,
@@ -1775,7 +2448,11 @@ void LAPACK_dpprfs(
     double* x, lapack_int const* ldx,
     double* ferr, double* berr,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cpprfs LAPACK_GLOBAL(cpprfs,CPPRFS)
 void LAPACK_cpprfs(
     char const* uplo,
@@ -1786,7 +2463,11 @@ void LAPACK_cpprfs(
     lapack_complex_float* x, lapack_int const* ldx,
     float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zpprfs LAPACK_GLOBAL(zpprfs,ZPPRFS)
 void LAPACK_zpprfs(
     char const* uplo,
@@ -1797,7 +2478,11 @@ void LAPACK_zpprfs(
     lapack_complex_double* x, lapack_int const* ldx,
     double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_spbrfs LAPACK_GLOBAL(spbrfs,SPBRFS)
 void LAPACK_spbrfs(
@@ -1809,7 +2494,11 @@ void LAPACK_spbrfs(
     float* x, lapack_int const* ldx,
     float* ferr, float* berr,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dpbrfs LAPACK_GLOBAL(dpbrfs,DPBRFS)
 void LAPACK_dpbrfs(
     char const* uplo,
@@ -1820,7 +2509,11 @@ void LAPACK_dpbrfs(
     double* x, lapack_int const* ldx,
     double* ferr, double* berr,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cpbrfs LAPACK_GLOBAL(cpbrfs,CPBRFS)
 void LAPACK_cpbrfs(
     char const* uplo,
@@ -1831,7 +2524,11 @@ void LAPACK_cpbrfs(
     lapack_complex_float* x, lapack_int const* ldx,
     float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zpbrfs LAPACK_GLOBAL(zpbrfs,ZPBRFS)
 void LAPACK_zpbrfs(
     char const* uplo,
@@ -1842,7 +2539,11 @@ void LAPACK_zpbrfs(
     lapack_complex_double* x, lapack_int const* ldx,
     double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_sptrfs LAPACK_GLOBAL(sptrfs,SPTRFS)
 void LAPACK_sptrfs(
@@ -1877,7 +2578,11 @@ void LAPACK_cptrfs(
     lapack_complex_float* x, lapack_int const* ldx,
     float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zptrfs LAPACK_GLOBAL(zptrfs,ZPTRFS)
 void LAPACK_zptrfs(
     char const* uplo,
@@ -1890,7 +2595,11 @@ void LAPACK_zptrfs(
     lapack_complex_double* x, lapack_int const* ldx,
     double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric indefinite iterative refinement */
 #define LAPACK_ssyrfs LAPACK_GLOBAL(ssyrfs,SSYRFS)
@@ -1904,7 +2613,11 @@ void LAPACK_ssyrfs(
     float* x, lapack_int const* ldx,
     float* ferr, float* berr,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsyrfs LAPACK_GLOBAL(dsyrfs,DSYRFS)
 void LAPACK_dsyrfs(
     char const* uplo,
@@ -1916,7 +2629,11 @@ void LAPACK_dsyrfs(
     double* x, lapack_int const* ldx,
     double* ferr, double* berr,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csyrfs LAPACK_GLOBAL(csyrfs,CSYRFS)
 void LAPACK_csyrfs(
     char const* uplo,
@@ -1928,7 +2645,11 @@ void LAPACK_csyrfs(
     lapack_complex_float* x, lapack_int const* ldx,
     float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsyrfs LAPACK_GLOBAL(zsyrfs,ZSYRFS)
 void LAPACK_zsyrfs(
     char const* uplo,
@@ -1940,7 +2661,11 @@ void LAPACK_zsyrfs(
     lapack_complex_double* x, lapack_int const* ldx,
     double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cherfs LAPACK_GLOBAL(cherfs,CHERFS)
 void LAPACK_cherfs(
     char const* uplo,
@@ -1952,7 +2677,11 @@ void LAPACK_cherfs(
     lapack_complex_float* x, lapack_int const* ldx,
     float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zherfs LAPACK_GLOBAL(zherfs,ZHERFS)
 void LAPACK_zherfs(
     char const* uplo,
@@ -1964,7 +2693,11 @@ void LAPACK_zherfs(
     lapack_complex_double* x, lapack_int const* ldx,
     double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_ssyrfsx LAPACK_GLOBAL(ssyrfsx,SSYRFSX)
 void LAPACK_ssyrfsx(
@@ -1980,7 +2713,11 @@ void LAPACK_ssyrfsx(
     lapack_int const* n_err_bnds, float* err_bnds_norm, float* err_bnds_comp,
     lapack_int const* nparams, float* params,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_dsyrfsx LAPACK_GLOBAL(dsyrfsx,DSYRFSX)
 void LAPACK_dsyrfsx(
     char const* uplo, char const* equed,
@@ -1995,7 +2732,11 @@ void LAPACK_dsyrfsx(
     lapack_int const* n_err_bnds, double* err_bnds_norm, double* err_bnds_comp,
     lapack_int const* nparams, double* params,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_csyrfsx LAPACK_GLOBAL(csyrfsx,CSYRFSX)
 void LAPACK_csyrfsx(
     char const* uplo, char const* equed,
@@ -2010,7 +2751,11 @@ void LAPACK_csyrfsx(
     lapack_int const* n_err_bnds, float* err_bnds_norm, float* err_bnds_comp,
     lapack_int const* nparams, float* params,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_zsyrfsx LAPACK_GLOBAL(zsyrfsx,ZSYRFSX)
 void LAPACK_zsyrfsx(
     char const* uplo, char const* equed,
@@ -2025,7 +2770,11 @@ void LAPACK_zsyrfsx(
     lapack_int const* n_err_bnds, double* err_bnds_norm, double* err_bnds_comp,
     lapack_int const* nparams, double* params,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_zherfsx LAPACK_GLOBAL(zherfsx,ZHERFSX)
 void LAPACK_zherfsx(
     char const* uplo, char const* equed,
@@ -2040,7 +2789,11 @@ void LAPACK_zherfsx(
     lapack_int const* n_err_bnds, double* err_bnds_norm, double* err_bnds_comp,
     lapack_int const* nparams, double* params,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_cherfsx LAPACK_GLOBAL(cherfsx,CHERFSX)
 void LAPACK_cherfsx(
     char const* uplo, char const* equed,
@@ -2055,7 +2808,11 @@ void LAPACK_cherfsx(
     lapack_int const* n_err_bnds, float* err_bnds_norm, float* err_bnds_comp,
     lapack_int const* nparams, float* params,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 
 #define LAPACK_ssprfs LAPACK_GLOBAL(ssprfs,SSPRFS)
 void LAPACK_ssprfs(
@@ -2067,7 +2824,11 @@ void LAPACK_ssprfs(
     float* x, lapack_int const* ldx,
     float* ferr, float* berr,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsprfs LAPACK_GLOBAL(dsprfs,DSPRFS)
 void LAPACK_dsprfs(
     char const* uplo,
@@ -2078,7 +2839,11 @@ void LAPACK_dsprfs(
     double* x, lapack_int const* ldx,
     double* ferr, double* berr,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csprfs LAPACK_GLOBAL(csprfs,CSPRFS)
 void LAPACK_csprfs(
     char const* uplo,
@@ -2090,7 +2855,11 @@ void LAPACK_csprfs(
     lapack_complex_float* x, lapack_int const* ldx,
     float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsprfs LAPACK_GLOBAL(zsprfs,ZSPRFS)
 void LAPACK_zsprfs(
     char const* uplo,
@@ -2102,7 +2871,11 @@ void LAPACK_zsprfs(
     lapack_complex_double* x, lapack_int const* ldx,
     double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chprfs LAPACK_GLOBAL(chprfs,CHPRFS)
 void LAPACK_chprfs(
     char const* uplo,
@@ -2114,7 +2887,11 @@ void LAPACK_chprfs(
     lapack_complex_float* x, lapack_int const* ldx,
     float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhprfs LAPACK_GLOBAL(zhprfs,ZHPRFS)
 void LAPACK_zhprfs(
     char const* uplo,
@@ -2126,7 +2903,11 @@ void LAPACK_zhprfs(
     lapack_complex_double* x, lapack_int const* ldx,
     double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- triangular backwards error, no refinement */
 #define LAPACK_strrfs LAPACK_GLOBAL(strrfs,STRRFS)
@@ -2139,7 +2920,11 @@ void LAPACK_strrfs(
     float const* x, lapack_int const* ldx,
     float* ferr, float* berr,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_dtrrfs LAPACK_GLOBAL(dtrrfs,DTRRFS)
 void LAPACK_dtrrfs(
     char const* uplo, char const* trans, char const* diag,
@@ -2150,7 +2935,11 @@ void LAPACK_dtrrfs(
     double const* x, lapack_int const* ldx,
     double* ferr, double* berr,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ctrrfs LAPACK_GLOBAL(ctrrfs,CTRRFS)
 void LAPACK_ctrrfs(
     char const* uplo, char const* trans, char const* diag,
@@ -2161,7 +2950,11 @@ void LAPACK_ctrrfs(
     lapack_complex_float const* x, lapack_int const* ldx,
     float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ztrrfs LAPACK_GLOBAL(ztrrfs,ZTRRFS)
 void LAPACK_ztrrfs(
     char const* uplo, char const* trans, char const* diag,
@@ -2172,7 +2965,11 @@ void LAPACK_ztrrfs(
     lapack_complex_double const* x, lapack_int const* ldx,
     double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 
 #define LAPACK_stprfs LAPACK_GLOBAL(stprfs,STPRFS)
 void LAPACK_stprfs(
@@ -2184,7 +2981,11 @@ void LAPACK_stprfs(
     float const* x, lapack_int const* ldx,
     float* ferr, float* berr,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_dtprfs LAPACK_GLOBAL(dtprfs,DTPRFS)
 void LAPACK_dtprfs(
     char const* uplo, char const* trans, char const* diag,
@@ -2195,7 +2996,11 @@ void LAPACK_dtprfs(
     double const* x, lapack_int const* ldx,
     double* ferr, double* berr,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ctprfs LAPACK_GLOBAL(ctprfs,CTPRFS)
 void LAPACK_ctprfs(
     char const* uplo, char const* trans, char const* diag,
@@ -2206,7 +3011,11 @@ void LAPACK_ctprfs(
     lapack_complex_float const* x, lapack_int const* ldx,
     float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ztprfs LAPACK_GLOBAL(ztprfs,ZTPRFS)
 void LAPACK_ztprfs(
     char const* uplo, char const* trans, char const* diag,
@@ -2217,7 +3026,11 @@ void LAPACK_ztprfs(
     lapack_complex_double const* x, lapack_int const* ldx,
     double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 
 #define LAPACK_stbrfs LAPACK_GLOBAL(stbrfs,STBRFS)
 void LAPACK_stbrfs(
@@ -2229,7 +3042,11 @@ void LAPACK_stbrfs(
     float const* x, lapack_int const* ldx,
     float* ferr, float* berr,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_dtbrfs LAPACK_GLOBAL(dtbrfs,DTBRFS)
 void LAPACK_dtbrfs(
     char const* uplo, char const* trans, char const* diag,
@@ -2240,7 +3057,11 @@ void LAPACK_dtbrfs(
     double const* x, lapack_int const* ldx,
     double* ferr, double* berr,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ctbrfs LAPACK_GLOBAL(ctbrfs,CTBRFS)
 void LAPACK_ctbrfs(
     char const* uplo, char const* trans, char const* diag,
@@ -2251,7 +3072,11 @@ void LAPACK_ctbrfs(
     lapack_complex_float const* x, lapack_int const* ldx,
     float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ztbrfs LAPACK_GLOBAL(ztbrfs,ZTBRFS)
 void LAPACK_ztbrfs(
     char const* uplo, char const* trans, char const* diag,
@@ -2262,7 +3087,11 @@ void LAPACK_ztbrfs(
     lapack_complex_double const* x, lapack_int const* ldx,
     double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -2302,75 +3131,123 @@ void LAPACK_spotri(
     char const* uplo,
     lapack_int const* n,
     float* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dpotri LAPACK_GLOBAL(dpotri,DPOTRI)
 void LAPACK_dpotri(
     char const* uplo,
     lapack_int const* n,
     double* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cpotri LAPACK_GLOBAL(cpotri,CPOTRI)
 void LAPACK_cpotri(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_float* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zpotri LAPACK_GLOBAL(zpotri,ZPOTRI)
 void LAPACK_zpotri(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_double* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_spftri LAPACK_GLOBAL(spftri,SPFTRI)
 void LAPACK_spftri(
     char const* transr, char const* uplo,
     lapack_int const* n,
     float* a,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dpftri LAPACK_GLOBAL(dpftri,DPFTRI)
 void LAPACK_dpftri(
     char const* transr, char const* uplo,
     lapack_int const* n,
     double* a,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cpftri LAPACK_GLOBAL(cpftri,CPFTRI)
 void LAPACK_cpftri(
     char const* transr, char const* uplo,
     lapack_int const* n,
     lapack_complex_float* a,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zpftri LAPACK_GLOBAL(zpftri,ZPFTRI)
 void LAPACK_zpftri(
     char const* transr, char const* uplo,
     lapack_int const* n,
     lapack_complex_double* a,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_spptri LAPACK_GLOBAL(spptri,SPPTRI)
 void LAPACK_spptri(
     char const* uplo,
     lapack_int const* n,
     float* ap,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dpptri LAPACK_GLOBAL(dpptri,DPPTRI)
 void LAPACK_dpptri(
     char const* uplo,
     lapack_int const* n,
     double* ap,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cpptri LAPACK_GLOBAL(cpptri,CPPTRI)
 void LAPACK_cpptri(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_float* ap,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zpptri LAPACK_GLOBAL(zpptri,ZPPTRI)
 void LAPACK_zpptri(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_double* ap,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric indefinite inverse (see also sy/hetri2) */
 #define LAPACK_ssytri LAPACK_GLOBAL(ssytri,SSYTRI)
@@ -2380,7 +3257,11 @@ void LAPACK_ssytri(
     float* a, lapack_int const* lda,
     lapack_int const* ipiv,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsytri LAPACK_GLOBAL(dsytri,DSYTRI)
 void LAPACK_dsytri(
     char const* uplo,
@@ -2388,7 +3269,11 @@ void LAPACK_dsytri(
     double* a, lapack_int const* lda,
     lapack_int const* ipiv,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csytri LAPACK_GLOBAL(csytri,CSYTRI)
 void LAPACK_csytri(
     char const* uplo,
@@ -2396,7 +3281,11 @@ void LAPACK_csytri(
     lapack_complex_float* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsytri LAPACK_GLOBAL(zsytri,ZSYTRI)
 void LAPACK_zsytri(
     char const* uplo,
@@ -2404,7 +3293,11 @@ void LAPACK_zsytri(
     lapack_complex_double* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chetri LAPACK_GLOBAL(chetri,CHETRI)
 void LAPACK_chetri(
     char const* uplo,
@@ -2412,7 +3305,11 @@ void LAPACK_chetri(
     lapack_complex_float* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhetri LAPACK_GLOBAL(zhetri,ZHETRI)
 void LAPACK_zhetri(
     char const* uplo,
@@ -2420,7 +3317,11 @@ void LAPACK_zhetri(
     lapack_complex_double* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_ssptri LAPACK_GLOBAL(ssptri,SSPTRI)
 void LAPACK_ssptri(
@@ -2429,7 +3330,11 @@ void LAPACK_ssptri(
     float* ap,
     lapack_int const* ipiv,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsptri LAPACK_GLOBAL(dsptri,DSPTRI)
 void LAPACK_dsptri(
     char const* uplo,
@@ -2437,7 +3342,11 @@ void LAPACK_dsptri(
     double* ap,
     lapack_int const* ipiv,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csptri LAPACK_GLOBAL(csptri,CSPTRI)
 void LAPACK_csptri(
     char const* uplo,
@@ -2445,7 +3354,11 @@ void LAPACK_csptri(
     lapack_complex_float* ap,
     lapack_int const* ipiv,
     lapack_complex_float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsptri LAPACK_GLOBAL(zsptri,ZSPTRI)
 void LAPACK_zsptri(
     char const* uplo,
@@ -2453,7 +3366,11 @@ void LAPACK_zsptri(
     lapack_complex_double* ap,
     lapack_int const* ipiv,
     lapack_complex_double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chptri LAPACK_GLOBAL(chptri,CHPTRI)
 void LAPACK_chptri(
     char const* uplo,
@@ -2461,7 +3378,11 @@ void LAPACK_chptri(
     lapack_complex_float* ap,
     lapack_int const* ipiv,
     lapack_complex_float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhptri LAPACK_GLOBAL(zhptri,ZHPTRI)
 void LAPACK_zhptri(
     char const* uplo,
@@ -2469,7 +3390,11 @@ void LAPACK_zhptri(
     lapack_complex_double* ap,
     lapack_int const* ipiv,
     lapack_complex_double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- triangular inverse */
 #define LAPACK_strtri LAPACK_GLOBAL(strtri,STRTRI)
@@ -2477,75 +3402,123 @@ void LAPACK_strtri(
     char const* uplo, char const* diag,
     lapack_int const* n,
     float* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_dtrtri LAPACK_GLOBAL(dtrtri,DTRTRI)
 void LAPACK_dtrtri(
     char const* uplo, char const* diag,
     lapack_int const* n,
     double* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ctrtri LAPACK_GLOBAL(ctrtri,CTRTRI)
 void LAPACK_ctrtri(
     char const* uplo, char const* diag,
     lapack_int const* n,
     lapack_complex_float* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ztrtri LAPACK_GLOBAL(ztrtri,ZTRTRI)
 void LAPACK_ztrtri(
     char const* uplo, char const* diag,
     lapack_int const* n,
     lapack_complex_double* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 
 #define LAPACK_stftri LAPACK_GLOBAL(stftri,STFTRI)
 void LAPACK_stftri(
     char const* transr, char const* uplo, char const* diag,
     lapack_int const* n,
     float* a,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_dtftri LAPACK_GLOBAL(dtftri,DTFTRI)
 void LAPACK_dtftri(
     char const* transr, char const* uplo, char const* diag,
     lapack_int const* n,
     double* a,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ctftri LAPACK_GLOBAL(ctftri,CTFTRI)
 void LAPACK_ctftri(
     char const* transr, char const* uplo, char const* diag,
     lapack_int const* n,
     lapack_complex_float* a,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ztftri LAPACK_GLOBAL(ztftri,ZTFTRI)
 void LAPACK_ztftri(
     char const* transr, char const* uplo, char const* diag,
     lapack_int const* n,
     lapack_complex_double* a,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 
 #define LAPACK_stptri LAPACK_GLOBAL(stptri,STPTRI)
 void LAPACK_stptri(
     char const* uplo, char const* diag,
     lapack_int const* n,
     float* ap,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_dtptri LAPACK_GLOBAL(dtptri,DTPTRI)
 void LAPACK_dtptri(
     char const* uplo, char const* diag,
     lapack_int const* n,
     double* ap,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ctptri LAPACK_GLOBAL(ctptri,CTPTRI)
 void LAPACK_ctptri(
     char const* uplo, char const* diag,
     lapack_int const* n,
     lapack_complex_float* ap,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ztptri LAPACK_GLOBAL(ztptri,ZTPTRI)
 void LAPACK_ztptri(
     char const* uplo, char const* diag,
     lapack_int const* n,
     lapack_complex_double* ap,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -2739,14 +3712,22 @@ void LAPACK_sppequ(
     lapack_int const* n,
     float const* ap, float* s,
     float* scond, float* amax,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dppequ LAPACK_GLOBAL(dppequ,DPPEQU)
 void LAPACK_dppequ(
     char const* uplo,
     lapack_int const* n,
     double const* ap, double* s,
     double* scond, double* amax,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cppequ LAPACK_GLOBAL(cppequ,CPPEQU)
 void LAPACK_cppequ(
     char const* uplo,
@@ -2754,7 +3735,11 @@ void LAPACK_cppequ(
     lapack_complex_float const* ap,
     float* s,
     float* scond, float* amax,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zppequ LAPACK_GLOBAL(zppequ,ZPPEQU)
 void LAPACK_zppequ(
     char const* uplo,
@@ -2762,7 +3747,11 @@ void LAPACK_zppequ(
     lapack_complex_double const* ap,
     double* s,
     double* scond, double* amax,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_spbequ LAPACK_GLOBAL(spbequ,SPBEQU)
 void LAPACK_spbequ(
@@ -2771,7 +3760,11 @@ void LAPACK_spbequ(
     float const* ab, lapack_int const* ldab,
     float* s,
     float* scond, float* amax,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dpbequ LAPACK_GLOBAL(dpbequ,DPBEQU)
 void LAPACK_dpbequ(
     char const* uplo,
@@ -2779,7 +3772,11 @@ void LAPACK_dpbequ(
     double const* ab, lapack_int const* ldab,
     double* s,
     double* scond, double* amax,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cpbequ LAPACK_GLOBAL(cpbequ,CPBEQU)
 void LAPACK_cpbequ(
     char const* uplo,
@@ -2787,7 +3784,11 @@ void LAPACK_cpbequ(
     lapack_complex_float const* ab, lapack_int const* ldab,
     float* s,
     float* scond, float* amax,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zpbequ LAPACK_GLOBAL(zpbequ,ZPBEQU)
 void LAPACK_zpbequ(
     char const* uplo,
@@ -2795,7 +3796,11 @@ void LAPACK_zpbequ(
     lapack_complex_double const* ab, lapack_int const* ldab,
     double* s,
     double* scond, double* amax,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric indefinite equilibration */
 #define LAPACK_ssyequb LAPACK_GLOBAL(ssyequb,SSYEQUB)
@@ -2806,7 +3811,11 @@ void LAPACK_ssyequb(
     float* s,
     float* scond, float* amax,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsyequb LAPACK_GLOBAL(dsyequb,DSYEQUB)
 void LAPACK_dsyequb(
     char const* uplo,
@@ -2815,7 +3824,11 @@ void LAPACK_dsyequb(
     double* s,
     double* scond, double* amax,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csyequb LAPACK_GLOBAL(csyequb,CSYEQUB)
 void LAPACK_csyequb(
     char const* uplo,
@@ -2824,7 +3837,11 @@ void LAPACK_csyequb(
     float* s,
     float* scond, float* amax,
     lapack_complex_float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsyequb LAPACK_GLOBAL(zsyequb,ZSYEQUB)
 void LAPACK_zsyequb(
     char const* uplo,
@@ -2833,7 +3850,11 @@ void LAPACK_zsyequb(
     double* s,
     double* scond, double* amax,
     lapack_complex_double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cheequb LAPACK_GLOBAL(cheequb,CHEEQUB)
 void LAPACK_cheequb(
     char const* uplo,
@@ -2842,7 +3863,11 @@ void LAPACK_cheequb(
     float* s,
     float* scond, float* amax,
     lapack_complex_float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zheequb LAPACK_GLOBAL(zheequb,ZHEEQUB)
 void LAPACK_zheequb(
     char const* uplo,
@@ -2851,7 +3876,11 @@ void LAPACK_zheequb(
     double* s,
     double* scond, double* amax,
     lapack_complex_double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -2918,7 +3947,11 @@ void LAPACK_sgesvx(
     float* x, lapack_int const* ldx,
     float* rcond, float* ferr, float* berr,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned trans_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_dgesvx LAPACK_GLOBAL(dgesvx,DGESVX)
 void LAPACK_dgesvx(
     char const* fact, char const* trans,
@@ -2931,7 +3964,11 @@ void LAPACK_dgesvx(
     double* x, lapack_int const* ldx,
     double* rcond, double* ferr, double* berr,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned trans_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_cgesvx LAPACK_GLOBAL(cgesvx,CGESVX)
 void LAPACK_cgesvx(
     char const* fact, char const* trans,
@@ -2945,7 +3982,11 @@ void LAPACK_cgesvx(
     float* rcond,
     float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned trans_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_zgesvx LAPACK_GLOBAL(zgesvx,ZGESVX)
 void LAPACK_zgesvx(
     char const* fact, char const* trans,
@@ -2959,7 +4000,11 @@ void LAPACK_zgesvx(
     double* rcond,
     double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned trans_len, unsigned equed_len
+    #endif
+    );
 
 #define LAPACK_sgesvxx LAPACK_GLOBAL(sgesvxx,SGESVXX)
 void LAPACK_sgesvxx(
@@ -2975,7 +4020,11 @@ void LAPACK_sgesvxx(
     lapack_int const* n_err_bnds, float* err_bnds_norm, float* err_bnds_comp,
     lapack_int const* nparams, float* params,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned trans_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_dgesvxx LAPACK_GLOBAL(dgesvxx,DGESVXX)
 void LAPACK_dgesvxx(
     char const* fact, char const* trans,
@@ -2990,7 +4039,11 @@ void LAPACK_dgesvxx(
     lapack_int const* n_err_bnds, double* err_bnds_norm, double* err_bnds_comp,
     lapack_int const* nparams, double* params,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned trans_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_cgesvxx LAPACK_GLOBAL(cgesvxx,CGESVXX)
 void LAPACK_cgesvxx(
     char const* fact, char const* trans,
@@ -3005,7 +4058,11 @@ void LAPACK_cgesvxx(
     lapack_int const* n_err_bnds, float* err_bnds_norm, float* err_bnds_comp,
     lapack_int const* nparams, float* params,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned trans_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_zgesvxx LAPACK_GLOBAL(zgesvxx,ZGESVXX)
 void LAPACK_zgesvxx(
     char const* fact, char const* trans,
@@ -3020,7 +4077,11 @@ void LAPACK_zgesvxx(
     lapack_int const* n_err_bnds, double* err_bnds_norm, double* err_bnds_comp,
     lapack_int const* nparams, double* params,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned trans_len, unsigned equed_len
+    #endif
+    );
 
 #define LAPACK_sgbsv LAPACK_GLOBAL(sgbsv,SGBSV)
 void LAPACK_sgbsv(
@@ -3073,7 +4134,11 @@ void LAPACK_sgbsvx(
     float* x, lapack_int const* ldx,
     float* rcond, float* ferr, float* berr,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned trans_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_dgbsvx LAPACK_GLOBAL(dgbsvx,DGBSVX)
 void LAPACK_dgbsvx(
     char const* fact, char const* trans,
@@ -3088,7 +4153,11 @@ void LAPACK_dgbsvx(
     double* x, lapack_int const* ldx,
     double* rcond, double* ferr, double* berr,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned trans_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_cgbsvx LAPACK_GLOBAL(cgbsvx,CGBSVX)
 void LAPACK_cgbsvx(
     char const* fact, char const* trans,
@@ -3103,7 +4172,11 @@ void LAPACK_cgbsvx(
     lapack_complex_float* x, lapack_int const* ldx,
     float* rcond, float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned trans_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_zgbsvx LAPACK_GLOBAL(zgbsvx,ZGBSVX)
 void LAPACK_zgbsvx(
     char const* fact, char const* trans,
@@ -3118,7 +4191,11 @@ void LAPACK_zgbsvx(
     lapack_complex_double* x, lapack_int const* ldx,
     double* rcond, double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned trans_len, unsigned equed_len
+    #endif
+    );
 
 #define LAPACK_sgbsvxx LAPACK_GLOBAL(sgbsvxx,SGBSVXX)
 void LAPACK_sgbsvxx(
@@ -3136,7 +4213,11 @@ void LAPACK_sgbsvxx(
     lapack_int const* n_err_bnds, float* err_bnds_norm, float* err_bnds_comp,
     lapack_int const* nparams, float* params,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned trans_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_dgbsvxx LAPACK_GLOBAL(dgbsvxx,DGBSVXX)
 void LAPACK_dgbsvxx(
     char const* fact, char const* trans,
@@ -3153,7 +4234,11 @@ void LAPACK_dgbsvxx(
     lapack_int const* n_err_bnds, double* err_bnds_norm, double* err_bnds_comp,
     lapack_int const* nparams, double* params,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned trans_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_cgbsvxx LAPACK_GLOBAL(cgbsvxx,CGBSVXX)
 void LAPACK_cgbsvxx(
     char const* fact, char const* trans,
@@ -3170,7 +4255,11 @@ void LAPACK_cgbsvxx(
     lapack_int const* n_err_bnds, float* err_bnds_norm, float* err_bnds_comp,
     lapack_int const* nparams, float* params,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned trans_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_zgbsvxx LAPACK_GLOBAL(zgbsvxx,ZGBSVXX)
 void LAPACK_zgbsvxx(
     char const* fact, char const* trans,
@@ -3187,7 +4276,11 @@ void LAPACK_zgbsvxx(
     lapack_int const* n_err_bnds, double* err_bnds_norm, double* err_bnds_comp,
     lapack_int const* nparams, double* params,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned trans_len, unsigned equed_len
+    #endif
+    );
 
 #define LAPACK_sgtsv LAPACK_GLOBAL(sgtsv,SGTSV)
 void LAPACK_sgtsv(
@@ -3238,7 +4331,11 @@ void LAPACK_sgtsvx(
     float* x, lapack_int const* ldx,
     float* rcond, float* ferr, float* berr,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_dgtsvx LAPACK_GLOBAL(dgtsvx,DGTSVX)
 void LAPACK_dgtsvx(
     char const* fact, char const* trans,
@@ -3255,7 +4352,11 @@ void LAPACK_dgtsvx(
     double* x, lapack_int const* ldx,
     double* rcond, double* ferr, double* berr,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_cgtsvx LAPACK_GLOBAL(cgtsvx,CGTSVX)
 void LAPACK_cgtsvx(
     char const* fact, char const* trans,
@@ -3272,7 +4373,11 @@ void LAPACK_cgtsvx(
     lapack_complex_float* x, lapack_int const* ldx,
     float* rcond, float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_zgtsvx LAPACK_GLOBAL(zgtsvx,ZGTSVX)
 void LAPACK_zgtsvx(
     char const* fact, char const* trans,
@@ -3289,7 +4394,11 @@ void LAPACK_zgtsvx(
     lapack_complex_double* x, lapack_int const* ldx,
     double* rcond, double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned trans_len
+    #endif
+    );
 
 /* ----- Cholesky solve */
 #define LAPACK_sposv LAPACK_GLOBAL(sposv,SPOSV)
@@ -3298,28 +4407,44 @@ void LAPACK_sposv(
     lapack_int const* n, lapack_int const* nrhs,
     float* a, lapack_int const* lda,
     float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dposv LAPACK_GLOBAL(dposv,DPOSV)
 void LAPACK_dposv(
     char const* uplo,
     lapack_int const* n, lapack_int const* nrhs,
     double* a, lapack_int const* lda,
     double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cposv LAPACK_GLOBAL(cposv,CPOSV)
 void LAPACK_cposv(
     char const* uplo,
     lapack_int const* n, lapack_int const* nrhs,
     lapack_complex_float* a, lapack_int const* lda,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zposv LAPACK_GLOBAL(zposv,ZPOSV)
 void LAPACK_zposv(
     char const* uplo,
     lapack_int const* n, lapack_int const* nrhs,
     lapack_complex_double* a, lapack_int const* lda,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_dsposv LAPACK_GLOBAL(dsposv,DSPOSV)
 void LAPACK_dsposv(
@@ -3330,7 +4455,11 @@ void LAPACK_dsposv(
     double* x, lapack_int const* ldx,
     double* work, float* swork,
     lapack_int* iter,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zcposv LAPACK_GLOBAL(zcposv,ZCPOSV)
 void LAPACK_zcposv(
     char const* uplo,
@@ -3340,7 +4469,11 @@ void LAPACK_zcposv(
     lapack_complex_double* x, lapack_int const* ldx,
     lapack_complex_double* work, lapack_complex_float* swork,
     double* rwork, lapack_int* iter,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_sposvx LAPACK_GLOBAL(sposvx,SPOSVX)
 void LAPACK_sposvx(
@@ -3353,7 +4486,11 @@ void LAPACK_sposvx(
     float* x, lapack_int const* ldx,
     float* rcond, float* ferr, float* berr,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_dposvx LAPACK_GLOBAL(dposvx,DPOSVX)
 void LAPACK_dposvx(
     char const* fact, char const* uplo,
@@ -3365,7 +4502,11 @@ void LAPACK_dposvx(
     double* x, lapack_int const* ldx,
     double* rcond, double* ferr, double* berr,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_cposvx LAPACK_GLOBAL(cposvx,CPOSVX)
 void LAPACK_cposvx(
     char const* fact, char const* uplo,
@@ -3377,7 +4518,11 @@ void LAPACK_cposvx(
     lapack_complex_float* x, lapack_int const* ldx,
     float* rcond, float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_zposvx LAPACK_GLOBAL(zposvx,ZPOSVX)
 void LAPACK_zposvx(
     char const* fact, char const* uplo,
@@ -3389,7 +4534,11 @@ void LAPACK_zposvx(
     lapack_complex_double* x, lapack_int const* ldx,
     double* rcond, double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 
 #define LAPACK_sposvxx LAPACK_GLOBAL(sposvxx,SPOSVXX)
 void LAPACK_sposvxx(
@@ -3404,7 +4553,11 @@ void LAPACK_sposvxx(
     lapack_int const* n_err_bnds, float* err_bnds_norm, float* err_bnds_comp,
     lapack_int const* nparams, float* params,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_dposvxx LAPACK_GLOBAL(dposvxx,DPOSVXX)
 void LAPACK_dposvxx(
     char const* fact, char const* uplo,
@@ -3418,7 +4571,11 @@ void LAPACK_dposvxx(
     lapack_int const* n_err_bnds, double* err_bnds_norm, double* err_bnds_comp,
     lapack_int const* nparams, double* params,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_cposvxx LAPACK_GLOBAL(cposvxx,CPOSVXX)
 void LAPACK_cposvxx(
     char const* fact, char const* uplo,
@@ -3432,7 +4589,11 @@ void LAPACK_cposvxx(
     lapack_int const* n_err_bnds, float* err_bnds_norm, float* err_bnds_comp,
     lapack_int const* nparams, float* params,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_zposvxx LAPACK_GLOBAL(zposvxx,ZPOSVXX)
 void LAPACK_zposvxx(
     char const* fact, char const* uplo,
@@ -3446,7 +4607,11 @@ void LAPACK_zposvxx(
     lapack_int const* n_err_bnds, double* err_bnds_norm, double* err_bnds_comp,
     lapack_int const* nparams, double* params,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 
 #define LAPACK_sppsv LAPACK_GLOBAL(sppsv,SPPSV)
 void LAPACK_sppsv(
@@ -3454,28 +4619,44 @@ void LAPACK_sppsv(
     lapack_int const* n, lapack_int const* nrhs,
     float* ap,
     float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dppsv LAPACK_GLOBAL(dppsv,DPPSV)
 void LAPACK_dppsv(
     char const* uplo,
     lapack_int const* n, lapack_int const* nrhs,
     double* ap,
     double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cppsv LAPACK_GLOBAL(cppsv,CPPSV)
 void LAPACK_cppsv(
     char const* uplo,
     lapack_int const* n, lapack_int const* nrhs,
     lapack_complex_float* ap,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zppsv LAPACK_GLOBAL(zppsv,ZPPSV)
 void LAPACK_zppsv(
     char const* uplo,
     lapack_int const* n, lapack_int const* nrhs,
     lapack_complex_double* ap,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_sppsvx LAPACK_GLOBAL(sppsvx,SPPSVX)
 void LAPACK_sppsvx(
@@ -3487,7 +4668,11 @@ void LAPACK_sppsvx(
     float* x, lapack_int const* ldx,
     float* rcond, float* ferr, float* berr,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_dppsvx LAPACK_GLOBAL(dppsvx,DPPSVX)
 void LAPACK_dppsvx(
     char const* fact, char const* uplo,
@@ -3498,7 +4683,11 @@ void LAPACK_dppsvx(
     double* x, lapack_int const* ldx,
     double* rcond, double* ferr, double* berr,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_cppsvx LAPACK_GLOBAL(cppsvx,CPPSVX)
 void LAPACK_cppsvx(
     char const* fact, char const* uplo,
@@ -3509,7 +4698,11 @@ void LAPACK_cppsvx(
     lapack_complex_float* x, lapack_int const* ldx,
     float* rcond, float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_zppsvx LAPACK_GLOBAL(zppsvx,ZPPSVX)
 void LAPACK_zppsvx(
     char const* fact, char const* uplo,
@@ -3520,7 +4713,11 @@ void LAPACK_zppsvx(
     lapack_complex_double* x, lapack_int const* ldx,
     double* rcond, double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 
 #define LAPACK_spbsv LAPACK_GLOBAL(spbsv,SPBSV)
 void LAPACK_spbsv(
@@ -3528,28 +4725,44 @@ void LAPACK_spbsv(
     lapack_int const* n, lapack_int const* kd, lapack_int const* nrhs,
     float* ab, lapack_int const* ldab,
     float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dpbsv LAPACK_GLOBAL(dpbsv,DPBSV)
 void LAPACK_dpbsv(
     char const* uplo,
     lapack_int const* n, lapack_int const* kd, lapack_int const* nrhs,
     double* ab, lapack_int const* ldab,
     double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cpbsv LAPACK_GLOBAL(cpbsv,CPBSV)
 void LAPACK_cpbsv(
     char const* uplo,
     lapack_int const* n, lapack_int const* kd, lapack_int const* nrhs,
     lapack_complex_float* ab, lapack_int const* ldab,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zpbsv LAPACK_GLOBAL(zpbsv,ZPBSV)
 void LAPACK_zpbsv(
     char const* uplo,
     lapack_int const* n, lapack_int const* kd, lapack_int const* nrhs,
     lapack_complex_double* ab, lapack_int const* ldab,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_spbsvx LAPACK_GLOBAL(spbsvx,SPBSVX)
 void LAPACK_spbsvx(
@@ -3563,7 +4776,11 @@ void LAPACK_spbsvx(
     float* x, lapack_int const* ldx,
     float* rcond, float* ferr, float* berr,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_dpbsvx LAPACK_GLOBAL(dpbsvx,DPBSVX)
 void LAPACK_dpbsvx(
     char const* fact, char const* uplo,
@@ -3576,7 +4793,11 @@ void LAPACK_dpbsvx(
     double* x, lapack_int const* ldx,
     double* rcond, double* ferr, double* berr,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_cpbsvx LAPACK_GLOBAL(cpbsvx,CPBSVX)
 void LAPACK_cpbsvx(
     char const* fact, char const* uplo,
@@ -3589,7 +4810,11 @@ void LAPACK_cpbsvx(
     lapack_complex_float* x, lapack_int const* ldx,
     float* rcond, float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_zpbsvx LAPACK_GLOBAL(zpbsvx,ZPBSVX)
 void LAPACK_zpbsvx(
     char const* fact, char const* uplo,
@@ -3602,7 +4827,11 @@ void LAPACK_zpbsvx(
     lapack_complex_double* x, lapack_int const* ldx,
     double* rcond, double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 
 #define LAPACK_sptsv LAPACK_GLOBAL(sptsv,SPTSV)
 void LAPACK_sptsv(
@@ -3639,7 +4868,11 @@ void LAPACK_sptsvx(
     float* x, lapack_int const* ldx,
     float* rcond, float* ferr, float* berr,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len
+    #endif
+    );
 #define LAPACK_dptsvx LAPACK_GLOBAL(dptsvx,DPTSVX)
 void LAPACK_dptsvx(
     char const* fact,
@@ -3650,7 +4883,11 @@ void LAPACK_dptsvx(
     double* x, lapack_int const* ldx,
     double* rcond, double* ferr, double* berr,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len
+    #endif
+    );
 #define LAPACK_cptsvx LAPACK_GLOBAL(cptsvx,CPTSVX)
 void LAPACK_cptsvx(
     char const* fact,
@@ -3661,7 +4898,11 @@ void LAPACK_cptsvx(
     lapack_complex_float* x, lapack_int const* ldx,
     float* rcond, float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len
+    #endif
+    );
 #define LAPACK_zptsvx LAPACK_GLOBAL(zptsvx,ZPTSVX)
 void LAPACK_zptsvx(
     char const* fact,
@@ -3672,7 +4913,11 @@ void LAPACK_zptsvx(
     lapack_complex_double* x, lapack_int const* ldx,
     double* rcond, double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len
+    #endif
+    );
 
 /* ----- symmetric indefinite solve */
 #define LAPACK_ssysv LAPACK_GLOBAL(ssysv,SSYSV)
@@ -3683,7 +4928,11 @@ void LAPACK_ssysv(
     lapack_int* ipiv,
     float* b, lapack_int const* ldb,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsysv LAPACK_GLOBAL(dsysv,DSYSV)
 void LAPACK_dsysv(
     char const* uplo,
@@ -3692,7 +4941,11 @@ void LAPACK_dsysv(
     lapack_int* ipiv,
     double* b, lapack_int const* ldb,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csysv LAPACK_GLOBAL(csysv,CSYSV)
 void LAPACK_csysv(
     char const* uplo,
@@ -3701,7 +4954,11 @@ void LAPACK_csysv(
     lapack_int* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsysv LAPACK_GLOBAL(zsysv,ZSYSV)
 void LAPACK_zsysv(
     char const* uplo,
@@ -3710,7 +4967,11 @@ void LAPACK_zsysv(
     lapack_int* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chesv LAPACK_GLOBAL(chesv,CHESV)
 void LAPACK_chesv(
     char const* uplo,
@@ -3719,7 +4980,11 @@ void LAPACK_chesv(
     lapack_int* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhesv LAPACK_GLOBAL(zhesv,ZHESV)
 void LAPACK_zhesv(
     char const* uplo,
@@ -3728,7 +4993,11 @@ void LAPACK_zhesv(
     lapack_int* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_ssysvx LAPACK_GLOBAL(ssysvx,SSYSVX)
 void LAPACK_ssysvx(
@@ -3742,7 +5011,11 @@ void LAPACK_ssysvx(
     float* rcond, float* ferr, float* berr,
     float* work, lapack_int const* lwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsysvx LAPACK_GLOBAL(dsysvx,DSYSVX)
 void LAPACK_dsysvx(
     char const* fact, char const* uplo,
@@ -3755,7 +5028,11 @@ void LAPACK_dsysvx(
     double* rcond, double* ferr, double* berr,
     double* work, lapack_int const* lwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csysvx LAPACK_GLOBAL(csysvx,CSYSVX)
 void LAPACK_csysvx(
     char const* fact, char const* uplo,
@@ -3768,7 +5045,11 @@ void LAPACK_csysvx(
     float* rcond, float* ferr, float* berr,
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsysvx LAPACK_GLOBAL(zsysvx,ZSYSVX)
 void LAPACK_zsysvx(
     char const* fact, char const* uplo,
@@ -3781,7 +5062,11 @@ void LAPACK_zsysvx(
     double* rcond, double* ferr, double* berr,
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chesvx LAPACK_GLOBAL(chesvx,CHESVX)
 void LAPACK_chesvx(
     char const* fact, char const* uplo,
@@ -3794,7 +5079,11 @@ void LAPACK_chesvx(
     float* rcond, float* ferr, float* berr,
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhesvx LAPACK_GLOBAL(zhesvx,ZHESVX)
 void LAPACK_zhesvx(
     char const* fact, char const* uplo,
@@ -3807,7 +5096,11 @@ void LAPACK_zhesvx(
     double* rcond, double* ferr, double* berr,
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_ssysvxx LAPACK_GLOBAL(ssysvxx,SSYSVXX)
 void LAPACK_ssysvxx(
@@ -3823,7 +5116,11 @@ void LAPACK_ssysvxx(
     lapack_int const* n_err_bnds, float* err_bnds_norm, float* err_bnds_comp,
     lapack_int const* nparams, float* params,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_dsysvxx LAPACK_GLOBAL(dsysvxx,DSYSVXX)
 void LAPACK_dsysvxx(
     char const* fact, char const* uplo,
@@ -3838,7 +5135,11 @@ void LAPACK_dsysvxx(
     lapack_int const* n_err_bnds, double* err_bnds_norm, double* err_bnds_comp,
     lapack_int const* nparams, double* params,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_csysvxx LAPACK_GLOBAL(csysvxx,CSYSVXX)
 void LAPACK_csysvxx(
     char const* fact, char const* uplo,
@@ -3853,7 +5154,11 @@ void LAPACK_csysvxx(
     lapack_int const* n_err_bnds, float* err_bnds_norm, float* err_bnds_comp,
     lapack_int const* nparams, float* params,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_zsysvxx LAPACK_GLOBAL(zsysvxx,ZSYSVXX)
 void LAPACK_zsysvxx(
     char const* fact, char const* uplo,
@@ -3868,7 +5173,11 @@ void LAPACK_zsysvxx(
     lapack_int const* n_err_bnds, double* err_bnds_norm, double* err_bnds_comp,
     lapack_int const* nparams, double* params,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_zhesvxx LAPACK_GLOBAL(zhesvxx,ZHESVXX)
 void LAPACK_zhesvxx(
     char const* fact, char const* uplo,
@@ -3883,7 +5192,11 @@ void LAPACK_zhesvxx(
     lapack_int const* n_err_bnds, double* err_bnds_norm, double* err_bnds_comp,
     lapack_int const* nparams, double* params,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 #define LAPACK_chesvxx LAPACK_GLOBAL(chesvxx,CHESVXX)
 void LAPACK_chesvxx(
     char const* fact, char const* uplo,
@@ -3898,7 +5211,11 @@ void LAPACK_chesvxx(
     lapack_int const* n_err_bnds, float* err_bnds_norm, float* err_bnds_comp,
     lapack_int const* nparams, float* params,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len, unsigned equed_len
+    #endif
+    );
 
 #define LAPACK_sspsv LAPACK_GLOBAL(sspsv,SSPSV)
 void LAPACK_sspsv(
@@ -3907,7 +5224,11 @@ void LAPACK_sspsv(
     float* ap,
     lapack_int* ipiv,
     float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dspsv LAPACK_GLOBAL(dspsv,DSPSV)
 void LAPACK_dspsv(
     char const* uplo,
@@ -3915,7 +5236,11 @@ void LAPACK_dspsv(
     double* ap,
     lapack_int* ipiv,
     double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cspsv LAPACK_GLOBAL(cspsv,CSPSV)
 void LAPACK_cspsv(
     char const* uplo,
@@ -3923,7 +5248,11 @@ void LAPACK_cspsv(
     lapack_complex_float* ap,
     lapack_int* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zspsv LAPACK_GLOBAL(zspsv,ZSPSV)
 void LAPACK_zspsv(
     char const* uplo,
@@ -3931,7 +5260,11 @@ void LAPACK_zspsv(
     lapack_complex_double* ap,
     lapack_int* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chpsv LAPACK_GLOBAL(chpsv,CHPSV)
 void LAPACK_chpsv(
     char const* uplo,
@@ -3939,7 +5272,11 @@ void LAPACK_chpsv(
     lapack_complex_float* ap,
     lapack_int* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhpsv LAPACK_GLOBAL(zhpsv,ZHPSV)
 void LAPACK_zhpsv(
     char const* uplo,
@@ -3947,7 +5284,11 @@ void LAPACK_zhpsv(
     lapack_complex_double* ap,
     lapack_int* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_sspsvx LAPACK_GLOBAL(sspsvx,SSPSVX)
 void LAPACK_sspsvx(
@@ -3959,7 +5300,11 @@ void LAPACK_sspsvx(
     float* x, lapack_int const* ldx,
     float* rcond, float* ferr, float* berr,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dspsvx LAPACK_GLOBAL(dspsvx,DSPSVX)
 void LAPACK_dspsvx(
     char const* fact, char const* uplo,
@@ -3970,7 +5315,11 @@ void LAPACK_dspsvx(
     double* x, lapack_int const* ldx,
     double* rcond, double* ferr, double* berr,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cspsvx LAPACK_GLOBAL(cspsvx,CSPSVX)
 void LAPACK_cspsvx(
     char const* fact, char const* uplo,
@@ -3981,7 +5330,11 @@ void LAPACK_cspsvx(
     lapack_complex_float* x, lapack_int const* ldx,
     float* rcond, float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zspsvx LAPACK_GLOBAL(zspsvx,ZSPSVX)
 void LAPACK_zspsvx(
     char const* fact, char const* uplo,
@@ -3992,7 +5345,11 @@ void LAPACK_zspsvx(
     lapack_complex_double* x, lapack_int const* ldx,
     double* rcond, double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chpsvx LAPACK_GLOBAL(chpsvx,CHPSVX)
 void LAPACK_chpsvx(
     char const* fact, char const* uplo,
@@ -4003,7 +5360,11 @@ void LAPACK_chpsvx(
     lapack_complex_float* x, lapack_int const* ldx,
     float* rcond, float* ferr, float* berr,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhpsvx LAPACK_GLOBAL(zhpsvx,ZHPSVX)
 void LAPACK_zhpsvx(
     char const* fact, char const* uplo,
@@ -4014,7 +5375,11 @@ void LAPACK_zhpsvx(
     lapack_complex_double* x, lapack_int const* ldx,
     double* rcond, double* ferr, double* berr,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned fact_len, unsigned uplo_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -4124,7 +5489,11 @@ void LAPACK_sormqr(
     float const* tau,
     float* c, lapack_int const* ldc,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_dormqr LAPACK_GLOBAL(dormqr,DORMQR)
 void LAPACK_dormqr(
     char const* side, char const* trans,
@@ -4134,7 +5503,11 @@ void LAPACK_dormqr(
     double const* tau,
     double* c, lapack_int const* ldc,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_cunmqr LAPACK_GLOBAL(cunmqr,CUNMQR)
 void LAPACK_cunmqr(
     char const* side, char const* trans,
@@ -4144,7 +5517,11 @@ void LAPACK_cunmqr(
     lapack_complex_float const* tau,
     lapack_complex_float* c, lapack_int const* ldc,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_zunmqr LAPACK_GLOBAL(zunmqr,ZUNMQR)
 void LAPACK_zunmqr(
     char const* side, char const* trans,
@@ -4154,7 +5531,11 @@ void LAPACK_zunmqr(
     lapack_complex_double const* tau,
     lapack_complex_double* c, lapack_int const* ldc,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -4228,7 +5609,11 @@ void LAPACK_sormlq(
     float const* tau,
     float* c, lapack_int const* ldc,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_dormlq LAPACK_GLOBAL(dormlq,DORMLQ)
 void LAPACK_dormlq(
     char const* side, char const* trans,
@@ -4238,7 +5623,11 @@ void LAPACK_dormlq(
     double const* tau,
     double* c, lapack_int const* ldc,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_cunmlq LAPACK_GLOBAL(cunmlq,CUNMLQ)
 void LAPACK_cunmlq(
     char const* side, char const* trans,
@@ -4248,7 +5637,11 @@ void LAPACK_cunmlq(
     lapack_complex_float const* tau,
     lapack_complex_float* c, lapack_int const* ldc,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_zunmlq LAPACK_GLOBAL(zunmlq,ZUNMLQ)
 void LAPACK_zunmlq(
     char const* side, char const* trans,
@@ -4258,7 +5651,11 @@ void LAPACK_zunmlq(
     lapack_complex_double const* tau,
     lapack_complex_double* c, lapack_int const* ldc,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -4332,7 +5729,11 @@ void LAPACK_sormql(
     float const* tau,
     float* c, lapack_int const* ldc,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_dormql LAPACK_GLOBAL(dormql,DORMQL)
 void LAPACK_dormql(
     char const* side, char const* trans,
@@ -4342,7 +5743,11 @@ void LAPACK_dormql(
     double const* tau,
     double* c, lapack_int const* ldc,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_cunmql LAPACK_GLOBAL(cunmql,CUNMQL)
 void LAPACK_cunmql(
     char const* side, char const* trans,
@@ -4352,7 +5757,11 @@ void LAPACK_cunmql(
     lapack_complex_float const* tau,
     lapack_complex_float* c, lapack_int const* ldc,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_zunmql LAPACK_GLOBAL(zunmql,ZUNMQL)
 void LAPACK_zunmql(
     char const* side, char const* trans,
@@ -4362,7 +5771,11 @@ void LAPACK_zunmql(
     lapack_complex_double const* tau,
     lapack_complex_double* c, lapack_int const* ldc,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -4436,7 +5849,11 @@ void LAPACK_sormrq(
     float const* tau,
     float* c, lapack_int const* ldc,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_dormrq LAPACK_GLOBAL(dormrq,DORMRQ)
 void LAPACK_dormrq(
     char const* side, char const* trans,
@@ -4446,7 +5863,11 @@ void LAPACK_dormrq(
     double const* tau,
     double* c, lapack_int const* ldc,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_cunmrq LAPACK_GLOBAL(cunmrq,CUNMRQ)
 void LAPACK_cunmrq(
     char const* side, char const* trans,
@@ -4456,7 +5877,11 @@ void LAPACK_cunmrq(
     lapack_complex_float const* tau,
     lapack_complex_float* c, lapack_int const* ldc,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_zunmrq LAPACK_GLOBAL(zunmrq,ZUNMRQ)
 void LAPACK_zunmrq(
     char const* side, char const* trans,
@@ -4466,7 +5891,11 @@ void LAPACK_zunmrq(
     lapack_complex_double const* tau,
     lapack_complex_double* c, lapack_int const* ldc,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -4510,7 +5939,11 @@ void LAPACK_sormrz(
     float const* tau,
     float* c, lapack_int const* ldc,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_dormrz LAPACK_GLOBAL(dormrz,DORMRZ)
 void LAPACK_dormrz(
     char const* side, char const* trans,
@@ -4520,7 +5953,11 @@ void LAPACK_dormrz(
     double const* tau,
     double* c, lapack_int const* ldc,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_cunmrz LAPACK_GLOBAL(cunmrz,CUNMRZ)
 void LAPACK_cunmrz(
     char const* side, char const* trans,
@@ -4530,7 +5967,11 @@ void LAPACK_cunmrz(
     lapack_complex_float const* tau,
     lapack_complex_float* c, lapack_int const* ldc,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_zunmrz LAPACK_GLOBAL(zunmrz,ZUNMRZ)
 void LAPACK_zunmrz(
     char const* side, char const* trans,
@@ -4540,7 +5981,11 @@ void LAPACK_zunmrz(
     lapack_complex_double const* tau,
     lapack_complex_double* c, lapack_int const* ldc,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -4668,7 +6113,11 @@ void LAPACK_sgbbrd(
     float* pt, lapack_int const* ldpt,
     float* c, lapack_int const* ldc,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned vect_len
+    #endif
+    );
 #define LAPACK_dgbbrd LAPACK_GLOBAL(dgbbrd,DGBBRD)
 void LAPACK_dgbbrd(
     char const* vect,
@@ -4680,7 +6129,11 @@ void LAPACK_dgbbrd(
     double* pt, lapack_int const* ldpt,
     double* c, lapack_int const* ldc,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned vect_len
+    #endif
+    );
 #define LAPACK_cgbbrd LAPACK_GLOBAL(cgbbrd,CGBBRD)
 void LAPACK_cgbbrd(
     char const* vect,
@@ -4692,7 +6145,11 @@ void LAPACK_cgbbrd(
     lapack_complex_float* pt, lapack_int const* ldpt,
     lapack_complex_float* c, lapack_int const* ldc,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned vect_len
+    #endif
+    );
 #define LAPACK_zgbbrd LAPACK_GLOBAL(zgbbrd,ZGBBRD)
 void LAPACK_zgbbrd(
     char const* vect,
@@ -4704,7 +6161,11 @@ void LAPACK_zgbbrd(
     lapack_complex_double* pt, lapack_int const* ldpt,
     lapack_complex_double* c, lapack_int const* ldc,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned vect_len
+    #endif
+    );
 
 /* ----- generate Q or P^T from gebrd */
 #define LAPACK_sorgbr LAPACK_GLOBAL(sorgbr,SORGBR)
@@ -4714,7 +6175,11 @@ void LAPACK_sorgbr(
     float* a, lapack_int const* lda,
     float const* tau,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned vect_len
+    #endif
+    );
 #define LAPACK_dorgbr LAPACK_GLOBAL(dorgbr,DORGBR)
 void LAPACK_dorgbr(
     char const* vect,
@@ -4722,7 +6187,11 @@ void LAPACK_dorgbr(
     double* a, lapack_int const* lda,
     double const* tau,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned vect_len
+    #endif
+    );
 #define LAPACK_cungbr LAPACK_GLOBAL(cungbr,CUNGBR)
 void LAPACK_cungbr(
     char const* vect,
@@ -4730,7 +6199,11 @@ void LAPACK_cungbr(
     lapack_complex_float* a, lapack_int const* lda,
     lapack_complex_float const* tau,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned vect_len
+    #endif
+    );
 #define LAPACK_zungbr LAPACK_GLOBAL(zungbr,ZUNGBR)
 void LAPACK_zungbr(
     char const* vect,
@@ -4738,7 +6211,11 @@ void LAPACK_zungbr(
     lapack_complex_double* a, lapack_int const* lda,
     lapack_complex_double const* tau,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned vect_len
+    #endif
+    );
 
 /* ----- multiply by Q or P^T from gebrd */
 #define LAPACK_sormbr LAPACK_GLOBAL(sormbr,SORMBR)
@@ -4750,7 +6227,11 @@ void LAPACK_sormbr(
     float const* tau,
     float* c, lapack_int const* ldc,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned vect_len, unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_dormbr LAPACK_GLOBAL(dormbr,DORMBR)
 void LAPACK_dormbr(
     char const* vect, char const* side, char const* trans,
@@ -4760,7 +6241,11 @@ void LAPACK_dormbr(
     double const* tau,
     double* c, lapack_int const* ldc,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned vect_len, unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_cunmbr LAPACK_GLOBAL(cunmbr,CUNMBR)
 void LAPACK_cunmbr(
     char const* vect, char const* side, char const* trans,
@@ -4770,7 +6255,11 @@ void LAPACK_cunmbr(
     lapack_complex_float const* tau,
     lapack_complex_float* c, lapack_int const* ldc,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned vect_len, unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_zunmbr LAPACK_GLOBAL(zunmbr,ZUNMBR)
 void LAPACK_zunmbr(
     char const* vect, char const* side, char const* trans,
@@ -4780,7 +6269,11 @@ void LAPACK_zunmbr(
     lapack_complex_double const* tau,
     lapack_complex_double* c, lapack_int const* ldc,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned vect_len, unsigned side_len, unsigned trans_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -4795,7 +6288,11 @@ void LAPACK_sbdsqr(
     float* u, lapack_int const* ldu,
     float* c, lapack_int const* ldc,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dbdsqr LAPACK_GLOBAL(dbdsqr,DBDSQR)
 void LAPACK_dbdsqr(
     char const* uplo,
@@ -4806,7 +6303,11 @@ void LAPACK_dbdsqr(
     double* u, lapack_int const* ldu,
     double* c, lapack_int const* ldc,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cbdsqr LAPACK_GLOBAL(cbdsqr,CBDSQR)
 void LAPACK_cbdsqr(
     char const* uplo,
@@ -4817,7 +6318,11 @@ void LAPACK_cbdsqr(
     lapack_complex_float* u, lapack_int const* ldu,
     lapack_complex_float* c, lapack_int const* ldc,
     float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zbdsqr LAPACK_GLOBAL(zbdsqr,ZBDSQR)
 void LAPACK_zbdsqr(
     char const* uplo,
@@ -4828,7 +6333,11 @@ void LAPACK_zbdsqr(
     lapack_complex_double* u, lapack_int const* ldu,
     lapack_complex_double* c, lapack_int const* ldc,
     double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- bidiagonal SVD, by divide and conquer */
 #define LAPACK_sbdsdc LAPACK_GLOBAL(sbdsdc,SBDSDC)
@@ -4840,7 +6349,11 @@ void LAPACK_sbdsdc(
     float* vt, lapack_int const* ldvt,
     float* q, lapack_int* iq,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned compq_len
+    #endif
+    );
 #define LAPACK_dbdsdc LAPACK_GLOBAL(dbdsdc,DBDSDC)
 void LAPACK_dbdsdc(
     char const* uplo, char const* compq,
@@ -4851,7 +6364,11 @@ void LAPACK_dbdsdc(
     double* vt, lapack_int const* ldvt,
     double* q, lapack_int* iq,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned compq_len
+    #endif
+    );
 
 /* ----- bidiagonal SVD, by bisection */
 #define LAPACK_sbdsvdx LAPACK_GLOBAL(sbdsvdx,SBDSVDX)
@@ -4865,7 +6382,11 @@ void LAPACK_sbdsvdx(
     float* s,
     float* z, lapack_int const* ldz,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned jobz_len, unsigned range_len
+    #endif
+    );
 #define LAPACK_dbdsvdx LAPACK_GLOBAL(dbdsvdx,DBDSVDX)
 void LAPACK_dbdsvdx(
     char const* uplo, char const* jobz, char const* range,
@@ -4877,7 +6398,11 @@ void LAPACK_dbdsvdx(
     double* s,
     double* z, lapack_int const* ldz,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned jobz_len, unsigned range_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -4890,7 +6415,11 @@ void LAPACK_ssytrd(
     float* d, float* e,
     float* tau,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsytrd LAPACK_GLOBAL(dsytrd,DSYTRD)
 void LAPACK_dsytrd(
     char const* uplo,
@@ -4899,7 +6428,11 @@ void LAPACK_dsytrd(
     double* d, double* e,
     double* tau,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chetrd LAPACK_GLOBAL(chetrd,CHETRD)
 void LAPACK_chetrd(
     char const* uplo,
@@ -4908,7 +6441,11 @@ void LAPACK_chetrd(
     float* d, float* e,
     lapack_complex_float* tau,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhetrd LAPACK_GLOBAL(zhetrd,ZHETRD)
 void LAPACK_zhetrd(
     char const* uplo,
@@ -4917,7 +6454,11 @@ void LAPACK_zhetrd(
     double* d, double* e,
     lapack_complex_double* tau,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- generate Q from sy/hetrd */
 #define LAPACK_sorgtr LAPACK_GLOBAL(sorgtr,SORGTR)
@@ -4927,7 +6468,11 @@ void LAPACK_sorgtr(
     float* a, lapack_int const* lda,
     float const* tau,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dorgtr LAPACK_GLOBAL(dorgtr,DORGTR)
 void LAPACK_dorgtr(
     char const* uplo,
@@ -4935,7 +6480,11 @@ void LAPACK_dorgtr(
     double* a, lapack_int const* lda,
     double const* tau,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cungtr LAPACK_GLOBAL(cungtr,CUNGTR)
 void LAPACK_cungtr(
     char const* uplo,
@@ -4943,7 +6492,11 @@ void LAPACK_cungtr(
     lapack_complex_float* a, lapack_int const* lda,
     lapack_complex_float const* tau,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zungtr LAPACK_GLOBAL(zungtr,ZUNGTR)
 void LAPACK_zungtr(
     char const* uplo,
@@ -4951,7 +6504,11 @@ void LAPACK_zungtr(
     lapack_complex_double* a, lapack_int const* lda,
     lapack_complex_double const* tau,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- multiply by Q from sy/hetrd */
 #define LAPACK_sormtr LAPACK_GLOBAL(sormtr,SORMTR)
@@ -4963,7 +6520,11 @@ void LAPACK_sormtr(
     float const* tau,
     float* c, lapack_int const* ldc,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned uplo_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_dormtr LAPACK_GLOBAL(dormtr,DORMTR)
 void LAPACK_dormtr(
     char const* side, char const* uplo, char const* trans,
@@ -4973,7 +6534,11 @@ void LAPACK_dormtr(
     double const* tau,
     double* c, lapack_int const* ldc,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned uplo_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_cunmtr LAPACK_GLOBAL(cunmtr,CUNMTR)
 void LAPACK_cunmtr(
     char const* side, char const* uplo, char const* trans,
@@ -4983,7 +6548,11 @@ void LAPACK_cunmtr(
     lapack_complex_float const* tau,
     lapack_complex_float* c, lapack_int const* ldc,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned uplo_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_zunmtr LAPACK_GLOBAL(zunmtr,ZUNMTR)
 void LAPACK_zunmtr(
     char const* side, char const* uplo, char const* trans,
@@ -4993,7 +6562,11 @@ void LAPACK_zunmtr(
     lapack_complex_double const* tau,
     lapack_complex_double* c, lapack_int const* ldc,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned uplo_len, unsigned trans_len
+    #endif
+    );
 
 /* ----- symmetric/Hermitian tridiagonal reduction, packed */
 #define LAPACK_ssptrd LAPACK_GLOBAL(ssptrd,SSPTRD)
@@ -5003,7 +6576,11 @@ void LAPACK_ssptrd(
     float* ap,
     float* d, float* e,
     float* tau,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsptrd LAPACK_GLOBAL(dsptrd,DSPTRD)
 void LAPACK_dsptrd(
     char const* uplo,
@@ -5011,7 +6588,11 @@ void LAPACK_dsptrd(
     double* ap,
     double* d, double* e,
     double* tau,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chptrd LAPACK_GLOBAL(chptrd,CHPTRD)
 void LAPACK_chptrd(
     char const* uplo,
@@ -5019,7 +6600,11 @@ void LAPACK_chptrd(
     lapack_complex_float* ap,
     float* d, float* e,
     lapack_complex_float* tau,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhptrd LAPACK_GLOBAL(zhptrd,ZHPTRD)
 void LAPACK_zhptrd(
     char const* uplo,
@@ -5027,7 +6612,11 @@ void LAPACK_zhptrd(
     lapack_complex_double* ap,
     double* d, double* e,
     lapack_complex_double* tau,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- generate Q from sp/hptrd */
 #define LAPACK_sopgtr LAPACK_GLOBAL(sopgtr,SOPGTR)
@@ -5038,7 +6627,11 @@ void LAPACK_sopgtr(
     float const* tau,
     float* q, lapack_int const* ldq,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dopgtr LAPACK_GLOBAL(dopgtr,DOPGTR)
 void LAPACK_dopgtr(
     char const* uplo,
@@ -5047,7 +6640,11 @@ void LAPACK_dopgtr(
     double const* tau,
     double* q, lapack_int const* ldq,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cupgtr LAPACK_GLOBAL(cupgtr,CUPGTR)
 void LAPACK_cupgtr(
     char const* uplo,
@@ -5056,7 +6653,11 @@ void LAPACK_cupgtr(
     lapack_complex_float const* tau,
     lapack_complex_float* q, lapack_int const* ldq,
     lapack_complex_float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zupgtr LAPACK_GLOBAL(zupgtr,ZUPGTR)
 void LAPACK_zupgtr(
     char const* uplo,
@@ -5065,7 +6666,11 @@ void LAPACK_zupgtr(
     lapack_complex_double const* tau,
     lapack_complex_double* q, lapack_int const* ldq,
     lapack_complex_double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- multiply by Q from sp/hptrd */
 #define LAPACK_sopmtr LAPACK_GLOBAL(sopmtr,SOPMTR)
@@ -5077,7 +6682,11 @@ void LAPACK_sopmtr(
     float const* tau,
     float* c, lapack_int const* ldc,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned uplo_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_dopmtr LAPACK_GLOBAL(dopmtr,DOPMTR)
 void LAPACK_dopmtr(
     char const* side, char const* uplo, char const* trans,
@@ -5087,7 +6696,11 @@ void LAPACK_dopmtr(
     double const* tau,
     double* c, lapack_int const* ldc,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned uplo_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_cupmtr LAPACK_GLOBAL(cupmtr,CUPMTR)
 void LAPACK_cupmtr(
     char const* side, char const* uplo, char const* trans,
@@ -5097,7 +6710,11 @@ void LAPACK_cupmtr(
     lapack_complex_float const* tau,
     lapack_complex_float* c, lapack_int const* ldc,
     lapack_complex_float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned uplo_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_zupmtr LAPACK_GLOBAL(zupmtr,ZUPMTR)
 void LAPACK_zupmtr(
     char const* side, char const* uplo, char const* trans,
@@ -5107,7 +6724,11 @@ void LAPACK_zupmtr(
     lapack_complex_double const* tau,
     lapack_complex_double* c, lapack_int const* ldc,
     lapack_complex_double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned uplo_len, unsigned trans_len
+    #endif
+    );
 
 /* ----- symmetric/Hermitian band tridiagonal reduction */
 #define LAPACK_ssbtrd LAPACK_GLOBAL(ssbtrd,SSBTRD)
@@ -5118,7 +6739,11 @@ void LAPACK_ssbtrd(
     float* d, float* e,
     float* q, lapack_int const* ldq,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned vect_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsbtrd LAPACK_GLOBAL(dsbtrd,DSBTRD)
 void LAPACK_dsbtrd(
     char const* vect, char const* uplo,
@@ -5127,7 +6752,11 @@ void LAPACK_dsbtrd(
     double* d, double* e,
     double* q, lapack_int const* ldq,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned vect_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chbtrd LAPACK_GLOBAL(chbtrd,CHBTRD)
 void LAPACK_chbtrd(
     char const* vect, char const* uplo,
@@ -5137,7 +6766,11 @@ void LAPACK_chbtrd(
     float* e,
     lapack_complex_float* q, lapack_int const* ldq,
     lapack_complex_float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned vect_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhbtrd LAPACK_GLOBAL(zhbtrd,ZHBTRD)
 void LAPACK_zhbtrd(
     char const* vect, char const* uplo,
@@ -5147,7 +6780,11 @@ void LAPACK_zhbtrd(
     double* e,
     lapack_complex_double* q, lapack_int const* ldq,
     lapack_complex_double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned vect_len, unsigned uplo_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -5171,7 +6808,11 @@ void LAPACK_ssteqr(
     float* d, float* e,
     float* z, lapack_int const* ldz,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compz_len
+    #endif
+    );
 #define LAPACK_dsteqr LAPACK_GLOBAL(dsteqr,DSTEQR)
 void LAPACK_dsteqr(
     char const* compz,
@@ -5179,7 +6820,11 @@ void LAPACK_dsteqr(
     double* d, double* e,
     double* z, lapack_int const* ldz,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compz_len
+    #endif
+    );
 #define LAPACK_csteqr LAPACK_GLOBAL(csteqr,CSTEQR)
 void LAPACK_csteqr(
     char const* compz,
@@ -5187,7 +6832,11 @@ void LAPACK_csteqr(
     float* d, float* e,
     lapack_complex_float* z, lapack_int const* ldz,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compz_len
+    #endif
+    );
 #define LAPACK_zsteqr LAPACK_GLOBAL(zsteqr,ZSTEQR)
 void LAPACK_zsteqr(
     char const* compz,
@@ -5195,7 +6844,11 @@ void LAPACK_zsteqr(
     double* d, double* e,
     lapack_complex_double* z, lapack_int const* ldz,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compz_len
+    #endif
+    );
 
 /* ----- symmetric tridiagonal eigenvalues, by MRRR */
 #define LAPACK_sstemr LAPACK_GLOBAL(sstemr,SSTEMR)
@@ -5212,7 +6865,11 @@ void LAPACK_sstemr(
     lapack_logical* tryrac,
     float* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len
+    #endif
+    );
 #define LAPACK_dstemr LAPACK_GLOBAL(dstemr,DSTEMR)
 void LAPACK_dstemr(
     char const* jobz, char const* range,
@@ -5227,7 +6884,11 @@ void LAPACK_dstemr(
     lapack_logical* tryrac,
     double* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len
+    #endif
+    );
 #define LAPACK_cstemr LAPACK_GLOBAL(cstemr,CSTEMR)
 void LAPACK_cstemr(
     char const* jobz, char const* range,
@@ -5242,7 +6903,11 @@ void LAPACK_cstemr(
     lapack_logical* tryrac,
     float* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len
+    #endif
+    );
 #define LAPACK_zstemr LAPACK_GLOBAL(zstemr,ZSTEMR)
 void LAPACK_zstemr(
     char const* jobz, char const* range,
@@ -5257,7 +6922,11 @@ void LAPACK_zstemr(
     lapack_logical* tryrac,
     double* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len
+    #endif
+    );
 
 /* ----- symmetric tridiagonal eigenvalues, by divide and conquer */
 #define LAPACK_sstedc LAPACK_GLOBAL(sstedc,SSTEDC)
@@ -5268,7 +6937,11 @@ void LAPACK_sstedc(
     float* z, lapack_int const* ldz,
     float* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compz_len
+    #endif
+    );
 #define LAPACK_dstedc LAPACK_GLOBAL(dstedc,DSTEDC)
 void LAPACK_dstedc(
     char const* compz,
@@ -5277,7 +6950,11 @@ void LAPACK_dstedc(
     double* z, lapack_int const* ldz,
     double* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compz_len
+    #endif
+    );
 #define LAPACK_cstedc LAPACK_GLOBAL(cstedc,CSTEDC)
 void LAPACK_cstedc(
     char const* compz,
@@ -5287,7 +6964,11 @@ void LAPACK_cstedc(
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork, lapack_int const* lrwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compz_len
+    #endif
+    );
 #define LAPACK_zstedc LAPACK_GLOBAL(zstedc,ZSTEDC)
 void LAPACK_zstedc(
     char const* compz,
@@ -5297,7 +6978,11 @@ void LAPACK_zstedc(
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork, lapack_int const* lrwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compz_len
+    #endif
+    );
 
 /* ----- symmetric tridiagonal eigenvalues, by MRRR (deprecated; see sstemr) */
 #define LAPACK_sstegr LAPACK_GLOBAL(sstegr,SSTEGR)
@@ -5313,7 +6998,11 @@ void LAPACK_sstegr(
     lapack_int* isuppz,
     float* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len
+    #endif
+    );
 #define LAPACK_dstegr LAPACK_GLOBAL(dstegr,DSTEGR)
 void LAPACK_dstegr(
     char const* jobz, char const* range,
@@ -5327,7 +7016,11 @@ void LAPACK_dstegr(
     lapack_int* isuppz,
     double* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len
+    #endif
+    );
 #define LAPACK_cstegr LAPACK_GLOBAL(cstegr,CSTEGR)
 void LAPACK_cstegr(
     char const* jobz, char const* range,
@@ -5341,7 +7034,11 @@ void LAPACK_cstegr(
     lapack_int* isuppz,
     float* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len
+    #endif
+    );
 #define LAPACK_zstegr LAPACK_GLOBAL(zstegr,ZSTEGR)
 void LAPACK_zstegr(
     char const* jobz, char const* range,
@@ -5355,7 +7052,11 @@ void LAPACK_zstegr(
     lapack_int* isuppz,
     double* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len
+    #endif
+    );
 
 /* ----- SPD tridiagonal eigenvalues, by Cholesky + SVD */
 #define LAPACK_spteqr LAPACK_GLOBAL(spteqr,SPTEQR)
@@ -5365,7 +7066,11 @@ void LAPACK_spteqr(
     float* d, float* e,
     float* z, lapack_int const* ldz,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compz_len
+    #endif
+    );
 #define LAPACK_dpteqr LAPACK_GLOBAL(dpteqr,DPTEQR)
 void LAPACK_dpteqr(
     char const* compz,
@@ -5373,7 +7078,11 @@ void LAPACK_dpteqr(
     double* d, double* e,
     double* z, lapack_int const* ldz,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compz_len
+    #endif
+    );
 #define LAPACK_cpteqr LAPACK_GLOBAL(cpteqr,CPTEQR)
 void LAPACK_cpteqr(
     char const* compz,
@@ -5381,7 +7090,11 @@ void LAPACK_cpteqr(
     float* d, float* e,
     lapack_complex_float* z, lapack_int const* ldz,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compz_len
+    #endif
+    );
 #define LAPACK_zpteqr LAPACK_GLOBAL(zpteqr,ZPTEQR)
 void LAPACK_zpteqr(
     char const* compz,
@@ -5389,7 +7102,11 @@ void LAPACK_zpteqr(
     double* d, double* e,
     lapack_complex_double* z, lapack_int const* ldz,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compz_len
+    #endif
+    );
 
 /* ----- symmetric tridiagonal eigenvalues, by QR iteration??? */
 #define LAPACK_sstebz LAPACK_GLOBAL(sstebz,SSTEBZ)
@@ -5404,7 +7121,11 @@ void LAPACK_sstebz(
     float* w,
     lapack_int* iblock, lapack_int* isplit,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned range_len, unsigned order_len
+    #endif
+    );
 #define LAPACK_dstebz LAPACK_GLOBAL(dstebz,DSTEBZ)
 void LAPACK_dstebz(
     char const* range, char const* order,
@@ -5417,7 +7138,11 @@ void LAPACK_dstebz(
     double* w,
     lapack_int* iblock, lapack_int* isplit,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned range_len, unsigned order_len
+    #endif
+    );
 
 /* ----- symmetric tridiagonal eigenvectors, by inverse iteration */
 #define LAPACK_sstein LAPACK_GLOBAL(sstein,SSTEIN)
@@ -5474,14 +7199,22 @@ void LAPACK_sdisna(
     lapack_int const* m, lapack_int const* n,
     float const* d,
     float* sep,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len
+    #endif
+    );
 #define LAPACK_ddisna LAPACK_GLOBAL(ddisna,DDISNA)
 void LAPACK_ddisna(
     char const* job,
     lapack_int const* m, lapack_int const* n,
     double const* d,
     double* sep,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -5493,28 +7226,44 @@ void LAPACK_ssygst(
     lapack_int const* n,
     float* a, lapack_int const* lda,
     float const* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsygst LAPACK_GLOBAL(dsygst,DSYGST)
 void LAPACK_dsygst(
     lapack_int const* itype, char const* uplo,
     lapack_int const* n,
     double* a, lapack_int const* lda,
     double const* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chegst LAPACK_GLOBAL(chegst,CHEGST)
 void LAPACK_chegst(
     lapack_int const* itype, char const* uplo,
     lapack_int const* n,
     lapack_complex_float* a, lapack_int const* lda,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhegst LAPACK_GLOBAL(zhegst,ZHEGST)
 void LAPACK_zhegst(
     lapack_int const* itype, char const* uplo,
     lapack_int const* n,
     lapack_complex_double* a, lapack_int const* lda,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_sspgst LAPACK_GLOBAL(sspgst,SSPGST)
 void LAPACK_sspgst(
@@ -5522,28 +7271,44 @@ void LAPACK_sspgst(
     lapack_int const* n,
     float* ap,
     float const* bp,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dspgst LAPACK_GLOBAL(dspgst,DSPGST)
 void LAPACK_dspgst(
     lapack_int const* itype, char const* uplo,
     lapack_int const* n,
     double* ap,
     double const* bp,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chpgst LAPACK_GLOBAL(chpgst,CHPGST)
 void LAPACK_chpgst(
     lapack_int const* itype, char const* uplo,
     lapack_int const* n,
     lapack_complex_float* ap,
     lapack_complex_float const* bp,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhpgst LAPACK_GLOBAL(zhpgst,ZHPGST)
 void LAPACK_zhpgst(
     lapack_int const* itype, char const* uplo,
     lapack_int const* n,
     lapack_complex_double* ap,
     lapack_complex_double const* bp,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_ssbgst LAPACK_GLOBAL(ssbgst,SSBGST)
 void LAPACK_ssbgst(
@@ -5554,7 +7319,11 @@ void LAPACK_ssbgst(
     float const* bb, lapack_int const* ldbb,
     float* x, lapack_int const* ldx,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned vect_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsbgst LAPACK_GLOBAL(dsbgst,DSBGST)
 void LAPACK_dsbgst(
     char const* vect, char const* uplo,
@@ -5564,7 +7333,11 @@ void LAPACK_dsbgst(
     double const* bb, lapack_int const* ldbb,
     double* x, lapack_int const* ldx,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned vect_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chbgst LAPACK_GLOBAL(chbgst,CHBGST)
 void LAPACK_chbgst(
     char const* vect, char const* uplo,
@@ -5574,7 +7347,11 @@ void LAPACK_chbgst(
     lapack_complex_float const* bb, lapack_int const* ldbb,
     lapack_complex_float* x, lapack_int const* ldx,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned vect_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhbgst LAPACK_GLOBAL(zhbgst,ZHBGST)
 void LAPACK_zhbgst(
     char const* vect, char const* uplo,
@@ -5584,7 +7361,11 @@ void LAPACK_zhbgst(
     lapack_complex_double const* bb, lapack_int const* ldbb,
     lapack_complex_double* x, lapack_int const* ldx,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned vect_len, unsigned uplo_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -5594,25 +7375,41 @@ void LAPACK_spbstf(
     char const* uplo,
     lapack_int const* n, lapack_int const* kd,
     float* ab, lapack_int const* ldab,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dpbstf LAPACK_GLOBAL(dpbstf,DPBSTF)
 void LAPACK_dpbstf(
     char const* uplo,
     lapack_int const* n, lapack_int const* kd,
     double* ab, lapack_int const* ldab,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cpbstf LAPACK_GLOBAL(cpbstf,CPBSTF)
 void LAPACK_cpbstf(
     char const* uplo,
     lapack_int const* n, lapack_int const* kd,
     lapack_complex_float* ab, lapack_int const* ldab,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zpbstf LAPACK_GLOBAL(zpbstf,ZPBSTF)
 void LAPACK_zpbstf(
     char const* uplo,
     lapack_int const* n, lapack_int const* kd,
     lapack_complex_double* ab, lapack_int const* ldab,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -5694,7 +7491,11 @@ void LAPACK_sormhr(
     float const* tau,
     float* c, lapack_int const* ldc,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_dormhr LAPACK_GLOBAL(dormhr,DORMHR)
 void LAPACK_dormhr(
     char const* side, char const* trans,
@@ -5704,7 +7505,11 @@ void LAPACK_dormhr(
     double const* tau,
     double* c, lapack_int const* ldc,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_cunmhr LAPACK_GLOBAL(cunmhr,CUNMHR)
 void LAPACK_cunmhr(
     char const* side, char const* trans,
@@ -5714,7 +7519,11 @@ void LAPACK_cunmhr(
     lapack_complex_float const* tau,
     lapack_complex_float* c, lapack_int const* ldc,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_zunmhr LAPACK_GLOBAL(zunmhr,ZUNMHR)
 void LAPACK_zunmhr(
     char const* side, char const* trans,
@@ -5724,7 +7533,11 @@ void LAPACK_zunmhr(
     lapack_complex_double const* tau,
     lapack_complex_double* c, lapack_int const* ldc,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -5736,7 +7549,11 @@ void LAPACK_sgebal(
     float* a, lapack_int const* lda,
     lapack_int* ilo, lapack_int* ihi,
     float* scale,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned balance_len
+    #endif
+    );
 #define LAPACK_dgebal LAPACK_GLOBAL(dgebal,DGEBAL)
 void LAPACK_dgebal(
     char const* balance,
@@ -5744,7 +7561,11 @@ void LAPACK_dgebal(
     double* a, lapack_int const* lda,
     lapack_int* ilo, lapack_int* ihi,
     double* scale,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned balance_len
+    #endif
+    );
 #define LAPACK_cgebal LAPACK_GLOBAL(cgebal,CGEBAL)
 void LAPACK_cgebal(
     char const* balance,
@@ -5752,7 +7573,11 @@ void LAPACK_cgebal(
     lapack_complex_float* a, lapack_int const* lda,
     lapack_int* ilo, lapack_int* ihi,
     float* scale,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned balance_len
+    #endif
+    );
 #define LAPACK_zgebal LAPACK_GLOBAL(zgebal,ZGEBAL)
 void LAPACK_zgebal(
     char const* balance,
@@ -5760,7 +7585,11 @@ void LAPACK_zgebal(
     lapack_complex_double* a, lapack_int const* lda,
     lapack_int* ilo, lapack_int* ihi,
     double* scale,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned balance_len
+    #endif
+    );
 
 /* ----- back-transform eigenvectors after gebal */
 #define LAPACK_sgebak LAPACK_GLOBAL(sgebak,SGEBAK)
@@ -5770,7 +7599,11 @@ void LAPACK_sgebak(
     lapack_int const* ilo, lapack_int const* ihi,
     float const* scale, lapack_int const* m,
     float* v, lapack_int const* ldv,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned side_len
+    #endif
+    );
 #define LAPACK_dgebak LAPACK_GLOBAL(dgebak,DGEBAK)
 void LAPACK_dgebak(
     char const* job, char const* side,
@@ -5778,7 +7611,11 @@ void LAPACK_dgebak(
     lapack_int const* ilo, lapack_int const* ihi,
     double const* scale, lapack_int const* m,
     double* v, lapack_int const* ldv,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned side_len
+    #endif
+    );
 #define LAPACK_cgebak LAPACK_GLOBAL(cgebak,CGEBAK)
 void LAPACK_cgebak(
     char const* job, char const* side,
@@ -5786,7 +7623,11 @@ void LAPACK_cgebak(
     lapack_int const* ilo, lapack_int const* ihi,
     float const* scale, lapack_int const* m,
     lapack_complex_float* v, lapack_int const* ldv,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned side_len
+    #endif
+    );
 #define LAPACK_zgebak LAPACK_GLOBAL(zgebak,ZGEBAK)
 void LAPACK_zgebak(
     char const* job, char const* side,
@@ -5794,7 +7635,11 @@ void LAPACK_zgebak(
     lapack_int const* ilo, lapack_int const* ihi,
     double const* scale, lapack_int const* m,
     lapack_complex_double* v, lapack_int const* ldv,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned side_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -5808,7 +7653,11 @@ void LAPACK_shseqr(
     float* wr, float* wi,
     float* z, lapack_int const* ldz,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned compz_len
+    #endif
+    );
 #define LAPACK_dhseqr LAPACK_GLOBAL(dhseqr,DHSEQR)
 void LAPACK_dhseqr(
     char const* job, char const* compz,
@@ -5818,7 +7667,11 @@ void LAPACK_dhseqr(
     double* wr, double* wi,
     double* z, lapack_int const* ldz,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned compz_len
+    #endif
+    );
 #define LAPACK_chseqr LAPACK_GLOBAL(chseqr,CHSEQR)
 void LAPACK_chseqr(
     char const* job, char const* compz,
@@ -5828,7 +7681,11 @@ void LAPACK_chseqr(
     lapack_complex_float* w,
     lapack_complex_float* z, lapack_int const* ldz,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned compz_len
+    #endif
+    );
 #define LAPACK_zhseqr LAPACK_GLOBAL(zhseqr,ZHSEQR)
 void LAPACK_zhseqr(
     char const* job, char const* compz,
@@ -5838,7 +7695,11 @@ void LAPACK_zhseqr(
     lapack_complex_double* w,
     lapack_complex_double* z, lapack_int const* ldz,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned compz_len
+    #endif
+    );
 
 /* ----- Hessenberg eigenvectors, by inverse iteration */
 #define LAPACK_shsein LAPACK_GLOBAL(shsein,SHSEIN)
@@ -5852,7 +7713,11 @@ void LAPACK_shsein(
     lapack_int const* mm, lapack_int* m,
     float* work,
     lapack_int* ifaill, lapack_int* ifailr,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned eigsrc_len, unsigned initv_len
+    #endif
+    );
 #define LAPACK_dhsein LAPACK_GLOBAL(dhsein,DHSEIN)
 void LAPACK_dhsein(
     char const* side, char const* eigsrc, char const* initv,
@@ -5864,7 +7729,11 @@ void LAPACK_dhsein(
     lapack_int const* mm, lapack_int* m,
     double* work,
     lapack_int* ifaill, lapack_int* ifailr,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned eigsrc_len, unsigned initv_len
+    #endif
+    );
 #define LAPACK_chsein LAPACK_GLOBAL(chsein,CHSEIN)
 void LAPACK_chsein(
     char const* side, char const* eigsrc, char const* initv,
@@ -5876,7 +7745,11 @@ void LAPACK_chsein(
     lapack_int const* mm, lapack_int* m,
     lapack_complex_float* work, float* rwork,
     lapack_int* ifaill, lapack_int* ifailr,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned eigsrc_len, unsigned initv_len
+    #endif
+    );
 #define LAPACK_zhsein LAPACK_GLOBAL(zhsein,ZHSEIN)
 void LAPACK_zhsein(
     char const* side, char const* eigsrc, char const* initv,
@@ -5888,7 +7761,11 @@ void LAPACK_zhsein(
     lapack_int const* mm, lapack_int* m,
     lapack_complex_double* work, double* rwork,
     lapack_int* ifaill, lapack_int* ifailr,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned eigsrc_len, unsigned initv_len
+    #endif
+    );
 
 /* ----- eigenvectors of quasi-triangular real Schur form */
 #define LAPACK_strevc LAPACK_GLOBAL(strevc,STREVC)
@@ -5901,7 +7778,11 @@ void LAPACK_strevc(
     float* vr, lapack_int const* ldvr,
     lapack_int const* mm, lapack_int* m,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned howmny_len
+    #endif
+    );
 #define LAPACK_dtrevc LAPACK_GLOBAL(dtrevc,DTREVC)
 void LAPACK_dtrevc(
     char const* side, char const* howmny,
@@ -5912,7 +7793,11 @@ void LAPACK_dtrevc(
     double* vr, lapack_int const* ldvr,
     lapack_int const* mm, lapack_int* m,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned howmny_len
+    #endif
+    );
 #define LAPACK_ctrevc LAPACK_GLOBAL(ctrevc,CTREVC)
 void LAPACK_ctrevc(
     char const* side, char const* howmny,
@@ -5923,7 +7808,11 @@ void LAPACK_ctrevc(
     lapack_complex_float* vr, lapack_int const* ldvr,
     lapack_int const* mm, lapack_int* m,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned howmny_len
+    #endif
+    );
 #define LAPACK_ztrevc LAPACK_GLOBAL(ztrevc,ZTREVC)
 void LAPACK_ztrevc(
     char const* side, char const* howmny,
@@ -5934,7 +7823,11 @@ void LAPACK_ztrevc(
     lapack_complex_double* vr, lapack_int const* ldvr,
     lapack_int const* mm, lapack_int* m,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned howmny_len
+    #endif
+    );
 
 #define LAPACK_strevc3 LAPACK_GLOBAL(strevc3,STREVC3)
 void LAPACK_strevc3(
@@ -5946,7 +7839,11 @@ void LAPACK_strevc3(
     float* VR, lapack_int const* ldvr,
     lapack_int const* mm, lapack_int* m,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned howmny_len
+    #endif
+    );
 #define LAPACK_dtrevc3 LAPACK_GLOBAL(dtrevc3,DTREVC3)
 void LAPACK_dtrevc3(
     char const* side, char const* howmny,
@@ -5957,7 +7854,11 @@ void LAPACK_dtrevc3(
     double* VR, lapack_int const* ldvr,
     lapack_int const* mm, lapack_int* m,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned howmny_len
+    #endif
+    );
 #define LAPACK_ctrevc3 LAPACK_GLOBAL(ctrevc3,CTREVC3)
 void LAPACK_ctrevc3(
     char const* side, char const* howmny,
@@ -5969,7 +7870,11 @@ void LAPACK_ctrevc3(
     lapack_int const* mm, lapack_int* m,
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork, lapack_int const* lrwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned howmny_len
+    #endif
+    );
 #define LAPACK_ztrevc3 LAPACK_GLOBAL(ztrevc3,ZTREVC3)
 void LAPACK_ztrevc3(
     char const* side, char const* howmny,
@@ -5981,7 +7886,11 @@ void LAPACK_ztrevc3(
     lapack_int const* mm, lapack_int* m,
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork, lapack_int const* lrwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned howmny_len
+    #endif
+    );
 
 /* ----- non-symmetric eigenvectors condition number */
 #define LAPACK_strsna LAPACK_GLOBAL(strsna,STRSNA)
@@ -5996,7 +7905,11 @@ void LAPACK_strsna(
     lapack_int const* mm, lapack_int* m,
     float* work, lapack_int const* ldwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned howmny_len
+    #endif
+    );
 #define LAPACK_dtrsna LAPACK_GLOBAL(dtrsna,DTRSNA)
 void LAPACK_dtrsna(
     char const* job, char const* howmny,
@@ -6009,7 +7922,11 @@ void LAPACK_dtrsna(
     lapack_int const* mm, lapack_int* m,
     double* work, lapack_int const* ldwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned howmny_len
+    #endif
+    );
 #define LAPACK_ctrsna LAPACK_GLOBAL(ctrsna,CTRSNA)
 void LAPACK_ctrsna(
     char const* job, char const* howmny,
@@ -6022,7 +7939,11 @@ void LAPACK_ctrsna(
     lapack_int const* mm, lapack_int* m,
     lapack_complex_float* work, lapack_int const* ldwork,
     float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned howmny_len
+    #endif
+    );
 #define LAPACK_ztrsna LAPACK_GLOBAL(ztrsna,ZTRSNA)
 void LAPACK_ztrsna(
     char const* job, char const* howmny,
@@ -6035,7 +7956,11 @@ void LAPACK_ztrsna(
     lapack_int const* mm, lapack_int* m,
     lapack_complex_double* work, lapack_int const* ldwork,
     double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned howmny_len
+    #endif
+    );
 
 /* ----- reorder Schur form */
 #define LAPACK_strexc LAPACK_GLOBAL(strexc,STREXC)
@@ -6046,7 +7971,11 @@ void LAPACK_strexc(
     float* q, lapack_int const* ldq,
     lapack_int* ifst, lapack_int* ilst,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compq_len
+    #endif
+    );
 #define LAPACK_dtrexc LAPACK_GLOBAL(dtrexc,DTREXC)
 void LAPACK_dtrexc(
     char const* compq,
@@ -6055,7 +7984,11 @@ void LAPACK_dtrexc(
     double* q, lapack_int const* ldq,
     lapack_int* ifst, lapack_int* ilst,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compq_len
+    #endif
+    );
 #define LAPACK_ctrexc LAPACK_GLOBAL(ctrexc,CTREXC)
 void LAPACK_ctrexc(
     char const* compq,
@@ -6063,7 +7996,11 @@ void LAPACK_ctrexc(
     lapack_complex_float* t, lapack_int const* ldt,
     lapack_complex_float* q, lapack_int const* ldq,
     lapack_int const* ifst, lapack_int const* ilst,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compq_len
+    #endif
+    );
 #define LAPACK_ztrexc LAPACK_GLOBAL(ztrexc,ZTREXC)
 void LAPACK_ztrexc(
     char const* compq,
@@ -6071,7 +8008,11 @@ void LAPACK_ztrexc(
     lapack_complex_double* t, lapack_int const* ldt,
     lapack_complex_double* q, lapack_int const* ldq,
     lapack_int const* ifst, lapack_int const* ilst,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compq_len
+    #endif
+    );
 
 /* ----- reorder Schur form */
 #define LAPACK_strsen LAPACK_GLOBAL(strsen,STRSEN)
@@ -6085,7 +8026,11 @@ void LAPACK_strsen(
     float* s, float* sep,
     float* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned compq_len
+    #endif
+    );
 #define LAPACK_dtrsen LAPACK_GLOBAL(dtrsen,DTRSEN)
 void LAPACK_dtrsen(
     char const* job, char const* compq,
@@ -6097,7 +8042,11 @@ void LAPACK_dtrsen(
     double* s, double* sep,
     double* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned compq_len
+    #endif
+    );
 #define LAPACK_ctrsen LAPACK_GLOBAL(ctrsen,CTRSEN)
 void LAPACK_ctrsen(
     char const* job, char const* compq,
@@ -6109,7 +8058,11 @@ void LAPACK_ctrsen(
     float* s,
     float* sep,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned compq_len
+    #endif
+    );
 #define LAPACK_ztrsen LAPACK_GLOBAL(ztrsen,ZTRSEN)
 void LAPACK_ztrsen(
     char const* job, char const* compq,
@@ -6121,7 +8074,11 @@ void LAPACK_ztrsen(
     double* s,
     double* sep,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned compq_len
+    #endif
+    );
 
 /* ----- solve Sylvester equation */
 #define LAPACK_strsyl LAPACK_GLOBAL(strsyl,STRSYL)
@@ -6133,7 +8090,11 @@ void LAPACK_strsyl(
     float const* b, lapack_int const* ldb,
     float* c, lapack_int const* ldc,
     float* scale,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trana_len, unsigned tranb_len
+    #endif
+    );
 #define LAPACK_dtrsyl LAPACK_GLOBAL(dtrsyl,DTRSYL)
 void LAPACK_dtrsyl(
     char const* trana, char const* tranb,
@@ -6143,7 +8104,11 @@ void LAPACK_dtrsyl(
     double const* b, lapack_int const* ldb,
     double* c, lapack_int const* ldc,
     double* scale,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trana_len, unsigned tranb_len
+    #endif
+    );
 #define LAPACK_ctrsyl LAPACK_GLOBAL(ctrsyl,CTRSYL)
 void LAPACK_ctrsyl(
     char const* trana, char const* tranb,
@@ -6153,7 +8118,11 @@ void LAPACK_ctrsyl(
     lapack_complex_float const* b, lapack_int const* ldb,
     lapack_complex_float* c, lapack_int const* ldc,
     float* scale,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trana_len, unsigned tranb_len
+    #endif
+    );
 #define LAPACK_ztrsyl LAPACK_GLOBAL(ztrsyl,ZTRSYL)
 void LAPACK_ztrsyl(
     char const* trana, char const* tranb,
@@ -6163,7 +8132,11 @@ void LAPACK_ztrsyl(
     lapack_complex_double const* b, lapack_int const* ldb,
     lapack_complex_double* c, lapack_int const* ldc,
     double* scale,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trana_len, unsigned tranb_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -6177,7 +8150,11 @@ void LAPACK_sgghrd(
     float* b, lapack_int const* ldb,
     float* q, lapack_int const* ldq,
     float* z, lapack_int const* ldz,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compq_len, unsigned compz_len
+    #endif
+    );
 #define LAPACK_dgghrd LAPACK_GLOBAL(dgghrd,DGGHRD)
 void LAPACK_dgghrd(
     char const* compq, char const* compz,
@@ -6187,7 +8164,11 @@ void LAPACK_dgghrd(
     double* b, lapack_int const* ldb,
     double* q, lapack_int const* ldq,
     double* z, lapack_int const* ldz,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compq_len, unsigned compz_len
+    #endif
+    );
 #define LAPACK_cgghrd LAPACK_GLOBAL(cgghrd,CGGHRD)
 void LAPACK_cgghrd(
     char const* compq, char const* compz,
@@ -6197,7 +8178,11 @@ void LAPACK_cgghrd(
     lapack_complex_float* b, lapack_int const* ldb,
     lapack_complex_float* q, lapack_int const* ldq,
     lapack_complex_float* z, lapack_int const* ldz,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compq_len, unsigned compz_len
+    #endif
+    );
 #define LAPACK_zgghrd LAPACK_GLOBAL(zgghrd,ZGGHRD)
 void LAPACK_zgghrd(
     char const* compq, char const* compz,
@@ -6207,7 +8192,11 @@ void LAPACK_zgghrd(
     lapack_complex_double* b, lapack_int const* ldb,
     lapack_complex_double* q, lapack_int const* ldq,
     lapack_complex_double* z, lapack_int const* ldz,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compq_len, unsigned compz_len
+    #endif
+    );
 
 #define LAPACK_sgghd3 LAPACK_GLOBAL(sgghd3,SGGHD3)
 void LAPACK_sgghd3(
@@ -6219,7 +8208,11 @@ void LAPACK_sgghd3(
     float* q, lapack_int const* ldq,
     float* z, lapack_int const* ldz,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compq_len, unsigned compz_len
+    #endif
+    );
 #define LAPACK_dgghd3 LAPACK_GLOBAL(dgghd3,DGGHD3)
 void LAPACK_dgghd3(
     char const* compq, char const* compz,
@@ -6230,7 +8223,11 @@ void LAPACK_dgghd3(
     double* q, lapack_int const* ldq,
     double* z, lapack_int const* ldz,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compq_len, unsigned compz_len
+    #endif
+    );
 #define LAPACK_cgghd3 LAPACK_GLOBAL(cgghd3,CGGHD3)
 void LAPACK_cgghd3(
     char const* compq, char const* compz,
@@ -6241,7 +8238,11 @@ void LAPACK_cgghd3(
     lapack_complex_float* q, lapack_int const* ldq,
     lapack_complex_float* z, lapack_int const* ldz,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compq_len, unsigned compz_len
+    #endif
+    );
 #define LAPACK_zgghd3 LAPACK_GLOBAL(zgghd3,ZGGHD3)
 void LAPACK_zgghd3(
     char const* compq, char const* compz,
@@ -6252,7 +8253,11 @@ void LAPACK_zgghd3(
     lapack_complex_double* q, lapack_int const* ldq,
     lapack_complex_double* z, lapack_int const* ldz,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned compq_len, unsigned compz_len
+    #endif
+    );
 
 /* ----- generalized balance matrix for eigenvalues */
 #define LAPACK_sggbal LAPACK_GLOBAL(sggbal,SGGBAL)
@@ -6264,7 +8269,11 @@ void LAPACK_sggbal(
     lapack_int* ilo, lapack_int* ihi,
     float* lscale, float* rscale,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned balance_len
+    #endif
+    );
 #define LAPACK_dggbal LAPACK_GLOBAL(dggbal,DGGBAL)
 void LAPACK_dggbal(
     char const* balance,
@@ -6274,7 +8283,11 @@ void LAPACK_dggbal(
     lapack_int* ilo, lapack_int* ihi,
     double* lscale, double* rscale,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned balance_len
+    #endif
+    );
 #define LAPACK_cggbal LAPACK_GLOBAL(cggbal,CGGBAL)
 void LAPACK_cggbal(
     char const* balance,
@@ -6284,7 +8297,11 @@ void LAPACK_cggbal(
     lapack_int* ilo, lapack_int* ihi,
     float* lscale, float* rscale,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned balance_len
+    #endif
+    );
 #define LAPACK_zggbal LAPACK_GLOBAL(zggbal,ZGGBAL)
 void LAPACK_zggbal(
     char const* balance,
@@ -6294,7 +8311,11 @@ void LAPACK_zggbal(
     lapack_int* ilo, lapack_int* ihi,
     double* lscale, double* rscale,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned balance_len
+    #endif
+    );
 
 /* ----- back-transform eigenvectors after ggbal */
 #define LAPACK_sggbak LAPACK_GLOBAL(sggbak,SGGBAK)
@@ -6305,7 +8326,11 @@ void LAPACK_sggbak(
     float const* lscale, float const* rscale,
     lapack_int const* m,
     float* v, lapack_int const* ldv,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned side_len
+    #endif
+    );
 #define LAPACK_dggbak LAPACK_GLOBAL(dggbak,DGGBAK)
 void LAPACK_dggbak(
     char const* job, char const* side,
@@ -6314,7 +8339,11 @@ void LAPACK_dggbak(
     double const* lscale, double const* rscale,
     lapack_int const* m,
     double* v, lapack_int const* ldv,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned side_len
+    #endif
+    );
 #define LAPACK_cggbak LAPACK_GLOBAL(cggbak,CGGBAK)
 void LAPACK_cggbak(
     char const* job, char const* side,
@@ -6323,7 +8352,11 @@ void LAPACK_cggbak(
     float const* lscale, float const* rscale,
     lapack_int const* m,
     lapack_complex_float* v, lapack_int const* ldv,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned side_len
+    #endif
+    );
 #define LAPACK_zggbak LAPACK_GLOBAL(zggbak,ZGGBAK)
 void LAPACK_zggbak(
     char const* job, char const* side,
@@ -6332,7 +8365,11 @@ void LAPACK_zggbak(
     double const* lscale, double const* rscale,
     lapack_int const* m,
     lapack_complex_double* v, lapack_int const* ldv,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned side_len
+    #endif
+    );
 
 /* ----- generalized Hessenberg eigenvalues, by QZ method */
 #define LAPACK_shgeqz LAPACK_GLOBAL(shgeqz,SHGEQZ)
@@ -6346,7 +8383,11 @@ void LAPACK_shgeqz(
     float* q, lapack_int const* ldq,
     float* z, lapack_int const* ldz,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned compq_len, unsigned compz_len
+    #endif
+    );
 #define LAPACK_dhgeqz LAPACK_GLOBAL(dhgeqz,DHGEQZ)
 void LAPACK_dhgeqz(
     char const* job, char const* compq, char const* compz,
@@ -6358,7 +8399,11 @@ void LAPACK_dhgeqz(
     double* q, lapack_int const* ldq,
     double* z, lapack_int const* ldz,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned compq_len, unsigned compz_len
+    #endif
+    );
 #define LAPACK_chgeqz LAPACK_GLOBAL(chgeqz,CHGEQZ)
 void LAPACK_chgeqz(
     char const* job, char const* compq, char const* compz,
@@ -6371,7 +8416,11 @@ void LAPACK_chgeqz(
     lapack_complex_float* z, lapack_int const* ldz,
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned compq_len, unsigned compz_len
+    #endif
+    );
 #define LAPACK_zhgeqz LAPACK_GLOBAL(zhgeqz,ZHGEQZ)
 void LAPACK_zhgeqz(
     char const* job, char const* compq, char const* compz,
@@ -6384,7 +8433,11 @@ void LAPACK_zhgeqz(
     lapack_complex_double* z, lapack_int const* ldz,
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned compq_len, unsigned compz_len
+    #endif
+    );
 
 /* ----- eigenvectors of generalized Schur form */
 #define LAPACK_stgevc LAPACK_GLOBAL(stgevc,STGEVC)
@@ -6398,7 +8451,11 @@ void LAPACK_stgevc(
     float* vr, lapack_int const* ldvr,
     lapack_int const* mm, lapack_int* m,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned howmny_len
+    #endif
+    );
 #define LAPACK_dtgevc LAPACK_GLOBAL(dtgevc,DTGEVC)
 void LAPACK_dtgevc(
     char const* side, char const* howmny,
@@ -6410,7 +8467,11 @@ void LAPACK_dtgevc(
     double* vr, lapack_int const* ldvr,
     lapack_int const* mm, lapack_int* m,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned howmny_len
+    #endif
+    );
 #define LAPACK_ctgevc LAPACK_GLOBAL(ctgevc,CTGEVC)
 void LAPACK_ctgevc(
     char const* side, char const* howmny,
@@ -6423,7 +8484,11 @@ void LAPACK_ctgevc(
     lapack_int const* mm,
     lapack_int* m,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned howmny_len
+    #endif
+    );
 #define LAPACK_ztgevc LAPACK_GLOBAL(ztgevc,ZTGEVC)
 void LAPACK_ztgevc(
     char const* side, char const* howmny,
@@ -6435,7 +8500,11 @@ void LAPACK_ztgevc(
     lapack_complex_double* vr, lapack_int const* ldvr,
     lapack_int const* mm, lapack_int* m,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned howmny_len
+    #endif
+    );
 
 /* ----- reorder generalized Schur form */
 /* weird that ifst is const for complex */
@@ -6559,7 +8628,11 @@ void LAPACK_stgsyl(
     float* dif, float* scale,
     float* work, lapack_int const* lwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_dtgsyl LAPACK_GLOBAL(dtgsyl,DTGSYL)
 void LAPACK_dtgsyl(
     char const* trans,
@@ -6573,7 +8646,11 @@ void LAPACK_dtgsyl(
     double* dif, double* scale,
     double* work, lapack_int const* lwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_ctgsyl LAPACK_GLOBAL(ctgsyl,CTGSYL)
 void LAPACK_ctgsyl(
     char const* trans,
@@ -6587,7 +8664,11 @@ void LAPACK_ctgsyl(
     float* dif, float* scale,
     lapack_complex_float* work, lapack_int const* lwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_ztgsyl LAPACK_GLOBAL(ztgsyl,ZTGSYL)
 void LAPACK_ztgsyl(
     char const* trans,
@@ -6601,7 +8682,11 @@ void LAPACK_ztgsyl(
     double* dif, double* scale,
     lapack_complex_double* work, lapack_int const* lwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 
 /* ----- generalized non-symmetric eigenvectors condition number */
 #define LAPACK_stgsna LAPACK_GLOBAL(stgsna,STGSNA)
@@ -6617,7 +8702,11 @@ void LAPACK_stgsna(
     lapack_int const* mm, lapack_int* m,
     float* work, lapack_int const* lwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned howmny_len
+    #endif
+    );
 #define LAPACK_dtgsna LAPACK_GLOBAL(dtgsna,DTGSNA)
 void LAPACK_dtgsna(
     char const* job, char const* howmny,
@@ -6631,7 +8720,11 @@ void LAPACK_dtgsna(
     lapack_int const* mm, lapack_int* m,
     double* work, lapack_int const* lwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned howmny_len
+    #endif
+    );
 #define LAPACK_ctgsna LAPACK_GLOBAL(ctgsna,CTGSNA)
 void LAPACK_ctgsna(
     char const* job, char const* howmny,
@@ -6645,7 +8738,11 @@ void LAPACK_ctgsna(
     lapack_int const* mm, lapack_int* m,
     lapack_complex_float* work, lapack_int const* lwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned howmny_len
+    #endif
+    );
 #define LAPACK_ztgsna LAPACK_GLOBAL(ztgsna,ZTGSNA)
 void LAPACK_ztgsna(
     char const* job, char const* howmny,
@@ -6659,7 +8756,11 @@ void LAPACK_ztgsna(
     lapack_int const* mm, lapack_int* m,
     lapack_complex_double* work, lapack_int const* lwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned job_len, unsigned howmny_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -6679,7 +8780,11 @@ void LAPACK_sggsvp3(
     lapack_int* iwork,
     float* tau,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu_len, unsigned jobv_len, unsigned jobq_len
+    #endif
+    );
 #define LAPACK_dggsvp3 LAPACK_GLOBAL(dggsvp3,DGGSVP3)
 void LAPACK_dggsvp3(
     char const* jobu, char const* jobv, char const* jobq,
@@ -6695,7 +8800,11 @@ void LAPACK_dggsvp3(
     lapack_int* iwork,
     double* tau,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu_len, unsigned jobv_len, unsigned jobq_len
+    #endif
+    );
 #define LAPACK_cggsvp3 LAPACK_GLOBAL(cggsvp3,CGGSVP3)
 void LAPACK_cggsvp3(
     char const* jobu, char const* jobv, char const* jobq,
@@ -6712,7 +8821,11 @@ void LAPACK_cggsvp3(
     float* rwork,
     lapack_complex_float* tau,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu_len, unsigned jobv_len, unsigned jobq_len
+    #endif
+    );
 #define LAPACK_zggsvp3 LAPACK_GLOBAL(zggsvp3,ZGGSVP3)
 void LAPACK_zggsvp3(
     char const* jobu, char const* jobv, char const* jobq,
@@ -6729,7 +8842,11 @@ void LAPACK_zggsvp3(
     double* rwork,
     lapack_complex_double* tau,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu_len, unsigned jobv_len, unsigned jobq_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -6748,7 +8865,11 @@ void LAPACK_stgsja(
     float* q, lapack_int const* ldq,
     float* work,
     lapack_int* ncycle,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu_len, unsigned jobv_len, unsigned jobq_len
+    #endif
+    );
 #define LAPACK_dtgsja LAPACK_GLOBAL(dtgsja,DTGSJA)
 void LAPACK_dtgsja(
     char const* jobu, char const* jobv, char const* jobq,
@@ -6763,7 +8884,11 @@ void LAPACK_dtgsja(
     double* q, lapack_int const* ldq,
     double* work,
     lapack_int* ncycle,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu_len, unsigned jobv_len, unsigned jobq_len
+    #endif
+    );
 #define LAPACK_ctgsja LAPACK_GLOBAL(ctgsja,CTGSJA)
 void LAPACK_ctgsja(
     char const* jobu, char const* jobv, char const* jobq,
@@ -6778,7 +8903,11 @@ void LAPACK_ctgsja(
     lapack_complex_float* q, lapack_int const* ldq,
     lapack_complex_float* work,
     lapack_int* ncycle,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu_len, unsigned jobv_len, unsigned jobq_len
+    #endif
+    );
 #define LAPACK_ztgsja LAPACK_GLOBAL(ztgsja,ZTGSJA)
 void LAPACK_ztgsja(
     char const* jobu, char const* jobv, char const* jobq,
@@ -6793,7 +8922,11 @@ void LAPACK_ztgsja(
     lapack_complex_double* q, lapack_int const* ldq,
     lapack_complex_double* work,
     lapack_int* ncycle,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu_len, unsigned jobv_len, unsigned jobq_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -6805,7 +8938,11 @@ void LAPACK_sgels(
     float* a, lapack_int const* lda,
     float* b, lapack_int const* ldb,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_dgels LAPACK_GLOBAL(dgels,DGELS)
 void LAPACK_dgels(
     char const* trans,
@@ -6813,7 +8950,11 @@ void LAPACK_dgels(
     double* a, lapack_int const* lda,
     double* b, lapack_int const* ldb,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_cgels LAPACK_GLOBAL(cgels,CGELS)
 void LAPACK_cgels(
     char const* trans,
@@ -6821,7 +8962,11 @@ void LAPACK_cgels(
     lapack_complex_float* a, lapack_int const* lda,
     lapack_complex_float* b, lapack_int const* ldb,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_zgels LAPACK_GLOBAL(zgels,ZGELS)
 void LAPACK_zgels(
     char const* trans,
@@ -6829,7 +8974,11 @@ void LAPACK_zgels(
     lapack_complex_double* a, lapack_int const* lda,
     lapack_complex_double* b, lapack_int const* ldb,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 
 /* ----- solve linear least squares, by complete orthogonal factorization */
 #define LAPACK_sgelsy LAPACK_GLOBAL(sgelsy,SGELSY)
@@ -7049,7 +9198,11 @@ void LAPACK_ssyev(
     float* a, lapack_int const* lda,
     float* w,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsyev LAPACK_GLOBAL(dsyev,DSYEV)
 void LAPACK_dsyev(
     char const* jobz, char const* uplo,
@@ -7057,7 +9210,11 @@ void LAPACK_dsyev(
     double* a, lapack_int const* lda,
     double* w,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cheev LAPACK_GLOBAL(cheev,CHEEV)
 void LAPACK_cheev(
     char const* jobz, char const* uplo,
@@ -7066,7 +9223,11 @@ void LAPACK_cheev(
     float* w,
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zheev LAPACK_GLOBAL(zheev,ZHEEV)
 void LAPACK_zheev(
     char const* jobz, char const* uplo,
@@ -7075,7 +9236,11 @@ void LAPACK_zheev(
     double* w,
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric eigenvalues, by divide and conquer */
 #define LAPACK_ssyevd LAPACK_GLOBAL(ssyevd,SSYEVD)
@@ -7086,7 +9251,11 @@ void LAPACK_ssyevd(
     float* w,
     float* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsyevd LAPACK_GLOBAL(dsyevd,DSYEVD)
 void LAPACK_dsyevd(
     char const* jobz, char const* uplo,
@@ -7095,7 +9264,11 @@ void LAPACK_dsyevd(
     double* w,
     double* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cheevd LAPACK_GLOBAL(cheevd,CHEEVD)
 void LAPACK_cheevd(
     char const* jobz, char const* uplo,
@@ -7105,7 +9278,11 @@ void LAPACK_cheevd(
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork, lapack_int const* lrwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zheevd LAPACK_GLOBAL(zheevd,ZHEEVD)
 void LAPACK_zheevd(
     char const* jobz, char const* uplo,
@@ -7115,7 +9292,11 @@ void LAPACK_zheevd(
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork, lapack_int const* lrwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric eigenvalues, by bisection */
 #define LAPACK_ssyevx LAPACK_GLOBAL(ssyevx,SSYEVX)
@@ -7132,7 +9313,11 @@ void LAPACK_ssyevx(
     float* work, lapack_int const* lwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsyevx LAPACK_GLOBAL(dsyevx,DSYEVX)
 void LAPACK_dsyevx(
     char const* jobz, char const* range, char const* uplo,
@@ -7147,7 +9332,11 @@ void LAPACK_dsyevx(
     double* work, lapack_int const* lwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cheevx LAPACK_GLOBAL(cheevx,CHEEVX)
 void LAPACK_cheevx(
     char const* jobz, char const* range, char const* uplo,
@@ -7163,7 +9352,11 @@ void LAPACK_cheevx(
     float* rwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zheevx LAPACK_GLOBAL(zheevx,ZHEEVX)
 void LAPACK_zheevx(
     char const* jobz, char const* range, char const* uplo,
@@ -7179,7 +9372,11 @@ void LAPACK_zheevx(
     double* rwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric eigenvalues, by MRRR */
 #define LAPACK_ssyevr LAPACK_GLOBAL(ssyevr,SSYEVR)
@@ -7196,7 +9393,11 @@ void LAPACK_ssyevr(
     lapack_int* isuppz,
     float* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsyevr LAPACK_GLOBAL(dsyevr,DSYEVR)
 void LAPACK_dsyevr(
     char const* jobz, char const* range, char const* uplo,
@@ -7211,7 +9412,11 @@ void LAPACK_dsyevr(
     lapack_int* isuppz,
     double* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cheevr LAPACK_GLOBAL(cheevr,CHEEVR)
 void LAPACK_cheevr(
     char const* jobz, char const* range, char const* uplo,
@@ -7227,7 +9432,11 @@ void LAPACK_cheevr(
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork, lapack_int const* lrwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zheevr LAPACK_GLOBAL(zheevr,ZHEEVR)
 void LAPACK_zheevr(
     char const* jobz, char const* range, char const* uplo,
@@ -7243,7 +9452,11 @@ void LAPACK_zheevr(
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork, lapack_int const* lrwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric eigenvalues, packed, by QR iteration */
 #define LAPACK_sspev LAPACK_GLOBAL(sspev,SSPEV)
@@ -7253,7 +9466,11 @@ void LAPACK_sspev(
     float* ap, float* w,
     float* z, lapack_int const* ldz,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dspev LAPACK_GLOBAL(dspev,DSPEV)
 void LAPACK_dspev(
     char const* jobz, char const* uplo,
@@ -7261,7 +9478,11 @@ void LAPACK_dspev(
     double* ap, double* w,
     double* z, lapack_int const* ldz,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chpev LAPACK_GLOBAL(chpev,CHPEV)
 void LAPACK_chpev(
     char const* jobz, char const* uplo,
@@ -7270,7 +9491,11 @@ void LAPACK_chpev(
     float* w,
     lapack_complex_float* z, lapack_int const* ldz,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhpev LAPACK_GLOBAL(zhpev,ZHPEV)
 void LAPACK_zhpev(
     char const* jobz, char const* uplo,
@@ -7279,7 +9504,11 @@ void LAPACK_zhpev(
     double* w,
     lapack_complex_double* z, lapack_int const* ldz,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric eigenvalues, packed, by divide and conquer */
 #define LAPACK_sspevd LAPACK_GLOBAL(sspevd,SSPEVD)
@@ -7291,7 +9520,11 @@ void LAPACK_sspevd(
     float* z, lapack_int const* ldz,
     float* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dspevd LAPACK_GLOBAL(dspevd,DSPEVD)
 void LAPACK_dspevd(
     char const* jobz, char const* uplo,
@@ -7301,7 +9534,11 @@ void LAPACK_dspevd(
     double* z, lapack_int const* ldz,
     double* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chpevd LAPACK_GLOBAL(chpevd,CHPEVD)
 void LAPACK_chpevd(
     char const* jobz, char const* uplo,
@@ -7312,7 +9549,11 @@ void LAPACK_chpevd(
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork, lapack_int const* lrwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhpevd LAPACK_GLOBAL(zhpevd,ZHPEVD)
 void LAPACK_zhpevd(
     char const* jobz, char const* uplo,
@@ -7323,7 +9564,11 @@ void LAPACK_zhpevd(
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork, lapack_int const* lrwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric eigenvalues, packed, by bisection */
 #define LAPACK_sspevx LAPACK_GLOBAL(sspevx,SSPEVX)
@@ -7338,7 +9583,11 @@ void LAPACK_sspevx(
     float* z, lapack_int const* ldz,
     float* work, lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dspevx LAPACK_GLOBAL(dspevx,DSPEVX)
 void LAPACK_dspevx(
     char const* jobz, char const* range, char const* uplo,
@@ -7351,7 +9600,11 @@ void LAPACK_dspevx(
     double* z, lapack_int const* ldz,
     double* work, lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chpevx LAPACK_GLOBAL(chpevx,CHPEVX)
 void LAPACK_chpevx(
     char const* jobz, char const* range, char const* uplo,
@@ -7366,7 +9619,11 @@ void LAPACK_chpevx(
     lapack_complex_float* work, float* rwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhpevx LAPACK_GLOBAL(zhpevx,ZHPEVX)
 void LAPACK_zhpevx(
     char const* jobz, char const* range, char const* uplo,
@@ -7381,7 +9638,11 @@ void LAPACK_zhpevx(
     lapack_complex_double* work, double* rwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric eigenvalues, banded, by QR iteration */
 #define LAPACK_ssbev LAPACK_GLOBAL(ssbev,SSBEV)
@@ -7392,7 +9653,11 @@ void LAPACK_ssbev(
     float* w,
     float* z, lapack_int const* ldz,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsbev LAPACK_GLOBAL(dsbev,DSBEV)
 void LAPACK_dsbev(
     char const* jobz, char const* uplo,
@@ -7401,7 +9666,11 @@ void LAPACK_dsbev(
     double* w,
     double* z, lapack_int const* ldz,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chbev LAPACK_GLOBAL(chbev,CHBEV)
 void LAPACK_chbev(
     char const* jobz, char const* uplo,
@@ -7410,7 +9679,11 @@ void LAPACK_chbev(
     float* w,
     lapack_complex_float* z, lapack_int const* ldz,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhbev LAPACK_GLOBAL(zhbev,ZHBEV)
 void LAPACK_zhbev(
     char const* jobz, char const* uplo,
@@ -7419,7 +9692,11 @@ void LAPACK_zhbev(
     double* w,
     lapack_complex_double* z, lapack_int const* ldz,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric eigenvalues, banded, by divide and conquer */
 #define LAPACK_ssbevd LAPACK_GLOBAL(ssbevd,SSBEVD)
@@ -7431,7 +9708,11 @@ void LAPACK_ssbevd(
     float* z, lapack_int const* ldz,
     float* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsbevd LAPACK_GLOBAL(dsbevd,DSBEVD)
 void LAPACK_dsbevd(
     char const* jobz, char const* uplo,
@@ -7441,7 +9722,11 @@ void LAPACK_dsbevd(
     double* z, lapack_int const* ldz,
     double* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chbevd LAPACK_GLOBAL(chbevd,CHBEVD)
 void LAPACK_chbevd(
     char const* jobz, char const* uplo,
@@ -7452,7 +9737,11 @@ void LAPACK_chbevd(
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork, lapack_int const* lrwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhbevd LAPACK_GLOBAL(zhbevd,ZHBEVD)
 void LAPACK_zhbevd(
     char const* jobz, char const* uplo,
@@ -7463,7 +9752,11 @@ void LAPACK_zhbevd(
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork, lapack_int const* lrwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric eigenvalues, banded, by bisection */
 #define LAPACK_ssbevx LAPACK_GLOBAL(ssbevx,SSBEVX)
@@ -7481,7 +9774,11 @@ void LAPACK_ssbevx(
     float* z, lapack_int const* ldz,
     float* work, lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsbevx LAPACK_GLOBAL(dsbevx,DSBEVX)
 void LAPACK_dsbevx(
     char const* jobz, char const* range, char const* uplo,
@@ -7497,7 +9794,11 @@ void LAPACK_dsbevx(
     double* z, lapack_int const* ldz,
     double* work, lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chbevx LAPACK_GLOBAL(chbevx,CHBEVX)
 void LAPACK_chbevx(
     char const* jobz, char const* range, char const* uplo,
@@ -7514,7 +9815,11 @@ void LAPACK_chbevx(
     lapack_complex_float* work, float* rwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhbevx LAPACK_GLOBAL(zhbevx,ZHBEVX)
 void LAPACK_zhbevx(
     char const* jobz, char const* range, char const* uplo,
@@ -7531,7 +9836,11 @@ void LAPACK_zhbevx(
     lapack_complex_double* work, double* rwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -7543,7 +9852,11 @@ void LAPACK_sstev(
     float* d, float* e,
     float* z, lapack_int const* ldz,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len
+    #endif
+    );
 #define LAPACK_dstev LAPACK_GLOBAL(dstev,DSTEV)
 void LAPACK_dstev(
     char const* jobz,
@@ -7551,7 +9864,11 @@ void LAPACK_dstev(
     double* d, double* e,
     double* z, lapack_int const* ldz,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len
+    #endif
+    );
 
 /* ----- symmetric tridiagonal eigenvalues, by divide and conquer */
 #define LAPACK_sstevd LAPACK_GLOBAL(sstevd,SSTEVD)
@@ -7562,7 +9879,11 @@ void LAPACK_sstevd(
     float* z, lapack_int const* ldz,
     float* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len
+    #endif
+    );
 #define LAPACK_dstevd LAPACK_GLOBAL(dstevd,DSTEVD)
 void LAPACK_dstevd(
     char const* jobz,
@@ -7571,7 +9892,11 @@ void LAPACK_dstevd(
     double* z, lapack_int const* ldz,
     double* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len
+    #endif
+    );
 
 /* ----- symmetric tridiagonal eigenvalues, by bisection */
 #define LAPACK_sstevx LAPACK_GLOBAL(sstevx,SSTEVX)
@@ -7587,7 +9912,11 @@ void LAPACK_sstevx(
     float* z, lapack_int const* ldz,
     float* work, lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len
+    #endif
+    );
 #define LAPACK_dstevx LAPACK_GLOBAL(dstevx,DSTEVX)
 void LAPACK_dstevx(
     char const* jobz, char const* range,
@@ -7602,7 +9931,11 @@ void LAPACK_dstevx(
     double* z, lapack_int const* ldz,
     double* work, lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len
+    #endif
+    );
 
 /* ----- symmetric tridiagonal eigenvalues, by MRRR */
 #define LAPACK_sstevr LAPACK_GLOBAL(sstevr,SSTEVR)
@@ -7619,7 +9952,11 @@ void LAPACK_sstevr(
     lapack_int* isuppz,
     float* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len
+    #endif
+    );
 #define LAPACK_dstevr LAPACK_GLOBAL(dstevr,DSTEVR)
 void LAPACK_dstevr(
     char const* jobz, char const* range,
@@ -7635,7 +9972,11 @@ void LAPACK_dstevr(
     lapack_int* isuppz,
     double* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -7649,7 +9990,11 @@ void LAPACK_sgees(
     float* wr, float* wi,
     float* vs, lapack_int const* ldvs,
     float* work, lapack_int const* lwork, lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvs_len, unsigned sort_len
+    #endif
+    );
 #define LAPACK_dgees LAPACK_GLOBAL(dgees,DGEES)
 void LAPACK_dgees(
     char const* jobvs, char const* sort, LAPACK_D_SELECT2 select,
@@ -7659,7 +10004,11 @@ void LAPACK_dgees(
     double* wr, double* wi,
     double* vs, lapack_int const* ldvs,
     double* work, lapack_int const* lwork, lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvs_len, unsigned sort_len
+    #endif
+    );
 #define LAPACK_cgees LAPACK_GLOBAL(cgees,CGEES)
 void LAPACK_cgees(
     char const* jobvs, char const* sort, LAPACK_C_SELECT1 select,
@@ -7671,7 +10020,11 @@ void LAPACK_cgees(
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork,
     lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvs_len, unsigned sort_len
+    #endif
+    );
 #define LAPACK_zgees LAPACK_GLOBAL(zgees,ZGEES)
 void LAPACK_zgees(
     char const* jobvs, char const* sort, LAPACK_Z_SELECT1 select,
@@ -7682,7 +10035,11 @@ void LAPACK_zgees(
     lapack_complex_double* vs, lapack_int const* ldvs,
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork, lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvs_len, unsigned sort_len
+    #endif
+    );
 
 #define LAPACK_sgeesx LAPACK_GLOBAL(sgeesx,SGEESX)
 void LAPACK_sgeesx(
@@ -7698,7 +10055,11 @@ void LAPACK_sgeesx(
     lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
     lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvs_len, unsigned sort_len, unsigned sense_len
+    #endif
+    );
 #define LAPACK_dgeesx LAPACK_GLOBAL(dgeesx,DGEESX)
 void LAPACK_dgeesx(
     char const* jobvs, char const* sort, LAPACK_D_SELECT2 select,
@@ -7712,7 +10073,11 @@ void LAPACK_dgeesx(
     double* work, lapack_int const* lwork,
     lapack_int* iwork,
     lapack_int const* liwork, lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvs_len, unsigned sort_len, unsigned sense_len
+    #endif
+    );
 #define LAPACK_cgeesx LAPACK_GLOBAL(cgeesx,CGEESX)
 void LAPACK_cgeesx(
     char const* jobvs, char const* sort, LAPACK_C_SELECT1 select,
@@ -7726,7 +10091,11 @@ void LAPACK_cgeesx(
     lapack_complex_float* work,
     lapack_int const* lwork,
     float* rwork, lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvs_len, unsigned sort_len, unsigned sense_len
+    #endif
+    );
 #define LAPACK_zgeesx LAPACK_GLOBAL(zgeesx,ZGEESX)
 void LAPACK_zgeesx(
     char const* jobvs, char const* sort, LAPACK_Z_SELECT1 select,
@@ -7740,7 +10109,11 @@ void LAPACK_zgeesx(
     lapack_complex_double* work,
     lapack_int const* lwork,
     double* rwork, lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvs_len, unsigned sort_len, unsigned sense_len
+    #endif
+    );
 
 /* ----- non-symmetric eigenvalues */
 #define LAPACK_sgeev LAPACK_GLOBAL(sgeev,SGEEV)
@@ -7752,7 +10125,11 @@ void LAPACK_sgeev(
     float* vl, lapack_int const* ldvl,
     float* vr, lapack_int const* ldvr,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvl_len, unsigned jobvr_len
+    #endif
+    );
 #define LAPACK_dgeev LAPACK_GLOBAL(dgeev,DGEEV)
 void LAPACK_dgeev(
     char const* jobvl, char const* jobvr,
@@ -7762,7 +10139,11 @@ void LAPACK_dgeev(
     double* vl, lapack_int const* ldvl,
     double* vr, lapack_int const* ldvr,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvl_len, unsigned jobvr_len
+    #endif
+    );
 #define LAPACK_cgeev LAPACK_GLOBAL(cgeev,CGEEV)
 void LAPACK_cgeev(
     char const* jobvl, char const* jobvr,
@@ -7773,7 +10154,11 @@ void LAPACK_cgeev(
     lapack_complex_float* vr, lapack_int const* ldvr,
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvl_len, unsigned jobvr_len
+    #endif
+    );
 #define LAPACK_zgeev LAPACK_GLOBAL(zgeev,ZGEEV)
 void LAPACK_zgeev(
     char const* jobvl, char const* jobvr,
@@ -7784,7 +10169,11 @@ void LAPACK_zgeev(
     lapack_complex_double* vr, lapack_int const* ldvr,
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvl_len, unsigned jobvr_len
+    #endif
+    );
 
 #define LAPACK_sgeevx LAPACK_GLOBAL(sgeevx,SGEEVX)
 void LAPACK_sgeevx(
@@ -7800,7 +10189,11 @@ void LAPACK_sgeevx(
     float* rconde, float* rcondv,
     float* work, lapack_int const* lwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned balanc_len, unsigned jobvl_len, unsigned jobvr_len, unsigned sense_len
+    #endif
+    );
 #define LAPACK_dgeevx LAPACK_GLOBAL(dgeevx,DGEEVX)
 void LAPACK_dgeevx(
     char const* balanc, char const* jobvl, char const* jobvr, char const* sense,
@@ -7815,7 +10208,11 @@ void LAPACK_dgeevx(
     double* rconde, double* rcondv,
     double* work, lapack_int const* lwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned balanc_len, unsigned jobvl_len, unsigned jobvr_len, unsigned sense_len
+    #endif
+    );
 #define LAPACK_cgeevx LAPACK_GLOBAL(cgeevx,CGEEVX)
 void LAPACK_cgeevx(
     char const* balanc, char const* jobvl, char const* jobvr, char const* sense,
@@ -7829,7 +10226,11 @@ void LAPACK_cgeevx(
     float* rconde, float* rcondv,
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned balanc_len, unsigned jobvl_len, unsigned jobvr_len, unsigned sense_len
+    #endif
+    );
 #define LAPACK_zgeevx LAPACK_GLOBAL(zgeevx,ZGEEVX)
 void LAPACK_zgeevx(
     char const* balanc, char const* jobvl, char const* jobvr, char const* sense,
@@ -7843,7 +10244,11 @@ void LAPACK_zgeevx(
     double* rconde, double* rcondv,
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned balanc_len, unsigned jobvl_len, unsigned jobvr_len, unsigned sense_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -7857,7 +10262,11 @@ void LAPACK_sgesvd(
     float* u, lapack_int const* ldu,
     float* vt, lapack_int const* ldvt,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu_len, unsigned jobvt_len
+    #endif
+    );
 #define LAPACK_dgesvd LAPACK_GLOBAL(dgesvd,DGESVD)
 void LAPACK_dgesvd(
     char const* jobu, char const* jobvt,
@@ -7867,7 +10276,11 @@ void LAPACK_dgesvd(
     double* u, lapack_int const* ldu,
     double* vt, lapack_int const* ldvt,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu_len, unsigned jobvt_len
+    #endif
+    );
 #define LAPACK_cgesvd LAPACK_GLOBAL(cgesvd,CGESVD)
 void LAPACK_cgesvd(
     char const* jobu, char const* jobvt,
@@ -7878,7 +10291,11 @@ void LAPACK_cgesvd(
     lapack_complex_float* vt, lapack_int const* ldvt,
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu_len, unsigned jobvt_len
+    #endif
+    );
 #define LAPACK_zgesvd LAPACK_GLOBAL(zgesvd,ZGESVD)
 void LAPACK_zgesvd(
     char const* jobu, char const* jobvt,
@@ -7889,7 +10306,11 @@ void LAPACK_zgesvd(
     lapack_complex_double* vt, lapack_int const* ldvt,
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu_len, unsigned jobvt_len
+    #endif
+    );
 
 /* ----- singular value decomposition (SVD), by bisection */
 #define LAPACK_sgesvdx LAPACK_GLOBAL(sgesvdx,SGESVDX)
@@ -7904,7 +10325,11 @@ void LAPACK_sgesvdx(
     float* u, lapack_int const* ldu,
     float* vt, lapack_int const* ldvt,
     float* work, lapack_int const* lwork, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu_len, unsigned jobvt_len, unsigned range_len
+    #endif
+    );
 #define LAPACK_dgesvdx LAPACK_GLOBAL(dgesvdx,DGESVDX)
 void LAPACK_dgesvdx(
     char const* jobu, char const* jobvt, char const* range,
@@ -7917,7 +10342,11 @@ void LAPACK_dgesvdx(
     double* u, lapack_int const* ldu,
     double* vt, lapack_int const* ldvt,
     double* work, lapack_int const* lwork, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu_len, unsigned jobvt_len, unsigned range_len
+    #endif
+    );
 #define LAPACK_cgesvdx LAPACK_GLOBAL(cgesvdx,CGESVDX)
 void LAPACK_cgesvdx(
     char const* jobu, char const* jobvt, char const* range,
@@ -7932,7 +10361,11 @@ void LAPACK_cgesvdx(
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu_len, unsigned jobvt_len, unsigned range_len
+    #endif
+    );
 #define LAPACK_zgesvdx LAPACK_GLOBAL(zgesvdx,ZGESVDX)
 void LAPACK_zgesvdx(
     char const* jobu, char const* jobvt, char const* range,
@@ -7946,7 +10379,11 @@ void LAPACK_zgesvdx(
     lapack_complex_double* vt, lapack_int const* ldvt,
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu_len, unsigned jobvt_len, unsigned range_len
+    #endif
+    );
 
 /* ----- singular value decomposition (SVD), by divide and conquer */
 #define LAPACK_sgesdd LAPACK_GLOBAL(sgesdd,SGESDD)
@@ -7959,7 +10396,11 @@ void LAPACK_sgesdd(
     float* vt, lapack_int const* ldvt,
     float* work, lapack_int const* lwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len
+    #endif
+    );
 #define LAPACK_dgesdd LAPACK_GLOBAL(dgesdd,DGESDD)
 void LAPACK_dgesdd(
     char const* jobz,
@@ -7970,7 +10411,11 @@ void LAPACK_dgesdd(
     double* vt, lapack_int const* ldvt,
     double* work, lapack_int const* lwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len
+    #endif
+    );
 #define LAPACK_cgesdd LAPACK_GLOBAL(cgesdd,CGESDD)
 void LAPACK_cgesdd(
     char const* jobz,
@@ -7982,7 +10427,11 @@ void LAPACK_cgesdd(
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len
+    #endif
+    );
 #define LAPACK_zgesdd LAPACK_GLOBAL(zgesdd,ZGESDD)
 void LAPACK_zgesdd(
     char const* jobz,
@@ -7994,7 +10443,11 @@ void LAPACK_zgesdd(
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len
+    #endif
+    );
 
 /* ----- singular value decomposition (SVD), by preconditioned one-sided Jacobi */
 #define LAPACK_sgejsv LAPACK_GLOBAL(sgejsv,SGEJSV)
@@ -8008,7 +10461,11 @@ void LAPACK_sgejsv(
     float* v, lapack_int const* ldv,
     float* work, lapack_int const* lwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned joba_len, unsigned jobu_len, unsigned jobv_len, unsigned jobr_len, unsigned jobt_len, unsigned jobp_len
+    #endif
+    );
 #define LAPACK_dgejsv LAPACK_GLOBAL(dgejsv,DGEJSV)
 void LAPACK_dgejsv(
     char const* joba, char const* jobu, char const* jobv, char const* jobr,
@@ -8020,7 +10477,11 @@ void LAPACK_dgejsv(
     double* v, lapack_int const* ldv,
     double* work, lapack_int const* lwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned joba_len, unsigned jobu_len, unsigned jobv_len, unsigned jobr_len, unsigned jobt_len, unsigned jobp_len
+    #endif
+    );
 #define LAPACK_cgejsv LAPACK_GLOBAL(cgejsv,CGEJSV)
 void LAPACK_cgejsv(
     char const* joba, char const* jobu, char const* jobv, char const* jobr,
@@ -8033,7 +10494,11 @@ void LAPACK_cgejsv(
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork, lapack_int const* lrwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned joba_len, unsigned jobu_len, unsigned jobv_len, unsigned jobr_len, unsigned jobt_len, unsigned jobp_len
+    #endif
+    );
 #define LAPACK_zgejsv LAPACK_GLOBAL(zgejsv,ZGEJSV)
 void LAPACK_zgejsv(
     char const* joba, char const* jobu, char const* jobv, char const* jobr,
@@ -8046,7 +10511,11 @@ void LAPACK_zgejsv(
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork, lapack_int const* lrwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned joba_len, unsigned jobu_len, unsigned jobv_len, unsigned jobr_len, unsigned jobt_len, unsigned jobp_len
+    #endif
+    );
 
 /* ----- singular value decomposition (SVD), by one-sided Jacobi */
 #define LAPACK_sgesvj LAPACK_GLOBAL(sgesvj,SGESVJ)
@@ -8059,7 +10528,11 @@ void LAPACK_sgesvj(
     lapack_int const* mv,
     float* v, lapack_int const* ldv,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned joba_len, unsigned jobu_len, unsigned jobv_len
+    #endif
+    );
 #define LAPACK_dgesvj LAPACK_GLOBAL(dgesvj,DGESVJ)
 void LAPACK_dgesvj(
     char const* joba, char const* jobu, char const* jobv,
@@ -8070,7 +10543,11 @@ void LAPACK_dgesvj(
     lapack_int const* mv,
     double* v, lapack_int const* ldv,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned joba_len, unsigned jobu_len, unsigned jobv_len
+    #endif
+    );
 #define LAPACK_cgesvj LAPACK_GLOBAL(cgesvj,CGESVJ)
 void LAPACK_cgesvj(
     char const* joba, char const* jobu, char const* jobv,
@@ -8082,7 +10559,11 @@ void LAPACK_cgesvj(
     lapack_complex_float* v, lapack_int const* ldv,
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork, lapack_int const* lrwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned joba_len, unsigned jobu_len, unsigned jobv_len
+    #endif
+    );
 #define LAPACK_zgesvj LAPACK_GLOBAL(zgesvj,ZGESVJ)
 void LAPACK_zgesvj(
     char const* joba, char const* jobu, char const* jobv,
@@ -8094,7 +10575,11 @@ void LAPACK_zgesvj(
     lapack_complex_double* v, lapack_int const* ldv,
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork, lapack_int const* lrwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned joba_len, unsigned jobu_len, unsigned jobv_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -8112,7 +10597,11 @@ void LAPACK_sggsvd3(
     float* q, lapack_int const* ldq,
     float* work, lapack_int const* lwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu_len, unsigned jobv_len, unsigned jobq_len
+    #endif
+    );
 #define LAPACK_dggsvd3 LAPACK_GLOBAL(dggsvd3,DGGSVD3)
 void LAPACK_dggsvd3(
     char const* jobu, char const* jobv, char const* jobq,
@@ -8126,7 +10615,11 @@ void LAPACK_dggsvd3(
     double* q, lapack_int const* ldq,
     double* work, lapack_int const* lwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu_len, unsigned jobv_len, unsigned jobq_len
+    #endif
+    );
 #define LAPACK_cggsvd3 LAPACK_GLOBAL(cggsvd3,CGGSVD3)
 void LAPACK_cggsvd3(
     char const* jobu, char const* jobv, char const* jobq,
@@ -8141,7 +10634,11 @@ void LAPACK_cggsvd3(
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu_len, unsigned jobv_len, unsigned jobq_len
+    #endif
+    );
 #define LAPACK_zggsvd3 LAPACK_GLOBAL(zggsvd3,ZGGSVD3)
 void LAPACK_zggsvd3(
     char const* jobu, char const* jobv, char const* jobq,
@@ -8156,7 +10653,11 @@ void LAPACK_zggsvd3(
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu_len, unsigned jobv_len, unsigned jobq_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -8170,7 +10671,11 @@ void LAPACK_ssygv(
     float* b, lapack_int const* ldb,
     float* w,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsygv LAPACK_GLOBAL(dsygv,DSYGV)
 void LAPACK_dsygv(
     lapack_int const* itype,
@@ -8180,7 +10685,11 @@ void LAPACK_dsygv(
     double* b, lapack_int const* ldb,
     double* w,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chegv LAPACK_GLOBAL(chegv,CHEGV)
 void LAPACK_chegv(
     lapack_int const* itype,
@@ -8191,7 +10700,11 @@ void LAPACK_chegv(
     float* w,
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhegv LAPACK_GLOBAL(zhegv,ZHEGV)
 void LAPACK_zhegv(
     lapack_int const* itype,
@@ -8202,7 +10715,11 @@ void LAPACK_zhegv(
     double* w,
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- generalized symmetric eigenvalues, by divide and conquer */
 #define LAPACK_ssygvd LAPACK_GLOBAL(ssygvd,SSYGVD)
@@ -8215,7 +10732,11 @@ void LAPACK_ssygvd(
     float* w,
     float* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsygvd LAPACK_GLOBAL(dsygvd,DSYGVD)
 void LAPACK_dsygvd(
     lapack_int const* itype,
@@ -8226,7 +10747,11 @@ void LAPACK_dsygvd(
     double* w,
     double* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chegvd LAPACK_GLOBAL(chegvd,CHEGVD)
 void LAPACK_chegvd(
     lapack_int const* itype,
@@ -8238,7 +10763,11 @@ void LAPACK_chegvd(
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork, lapack_int const* lrwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhegvd LAPACK_GLOBAL(zhegvd,ZHEGVD)
 void LAPACK_zhegvd(
     lapack_int const* itype,
@@ -8250,7 +10779,11 @@ void LAPACK_zhegvd(
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork, lapack_int const* lrwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- generalized symmetric eigenvalues, by bisection */
 #define LAPACK_ssygvx LAPACK_GLOBAL(ssygvx,SSYGVX)
@@ -8269,7 +10802,11 @@ void LAPACK_ssygvx(
     float* work, lapack_int const* lwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsygvx LAPACK_GLOBAL(dsygvx,DSYGVX)
 void LAPACK_dsygvx(
     lapack_int const* itype,
@@ -8286,7 +10823,11 @@ void LAPACK_dsygvx(
     double* work, lapack_int const* lwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chegvx LAPACK_GLOBAL(chegvx,CHEGVX)
 void LAPACK_chegvx(
     lapack_int const* itype,
@@ -8304,7 +10845,11 @@ void LAPACK_chegvx(
     float* rwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhegvx LAPACK_GLOBAL(zhegvx,ZHEGVX)
 void LAPACK_zhegvx(
     lapack_int const* itype,
@@ -8322,7 +10867,11 @@ void LAPACK_zhegvx(
     double* rwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- generalized symmetric eigenvalues, packed, by QR iteration */
 #define LAPACK_sspgv LAPACK_GLOBAL(sspgv,SSPGV)
@@ -8335,7 +10884,11 @@ void LAPACK_sspgv(
     float* w,
     float* z, lapack_int const* ldz,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dspgv LAPACK_GLOBAL(dspgv,DSPGV)
 void LAPACK_dspgv(
     lapack_int const* itype,
@@ -8346,7 +10899,11 @@ void LAPACK_dspgv(
     double* w,
     double* z, lapack_int const* ldz,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chpgv LAPACK_GLOBAL(chpgv,CHPGV)
 void LAPACK_chpgv(
     lapack_int const* itype,
@@ -8357,7 +10914,11 @@ void LAPACK_chpgv(
     float* w,
     lapack_complex_float* z, lapack_int const* ldz,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhpgv LAPACK_GLOBAL(zhpgv,ZHPGV)
 void LAPACK_zhpgv(
     lapack_int const* itype,
@@ -8368,7 +10929,11 @@ void LAPACK_zhpgv(
     double* w,
     lapack_complex_double* z, lapack_int const* ldz,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- generalized symmetric eigenvalues, packed, by divide and conquer */
 #define LAPACK_sspgvd LAPACK_GLOBAL(sspgvd,SSPGVD)
@@ -8382,7 +10947,11 @@ void LAPACK_sspgvd(
     float* z, lapack_int const* ldz,
     float* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dspgvd LAPACK_GLOBAL(dspgvd,DSPGVD)
 void LAPACK_dspgvd(
     lapack_int const* itype,
@@ -8394,7 +10963,11 @@ void LAPACK_dspgvd(
     double* z, lapack_int const* ldz,
     double* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chpgvd LAPACK_GLOBAL(chpgvd,CHPGVD)
 void LAPACK_chpgvd(
     lapack_int const* itype,
@@ -8407,7 +10980,11 @@ void LAPACK_chpgvd(
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork, lapack_int const* lrwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhpgvd LAPACK_GLOBAL(zhpgvd,ZHPGVD)
 void LAPACK_zhpgvd(
     lapack_int const* itype,
@@ -8420,7 +10997,11 @@ void LAPACK_zhpgvd(
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork, lapack_int const* lrwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- generalized symmetric eigenvalues, packed, by bisection */
 #define LAPACK_sspgvx LAPACK_GLOBAL(sspgvx,SSPGVX)
@@ -8438,7 +11019,11 @@ void LAPACK_sspgvx(
     float* z, lapack_int const* ldz,
     float* work, lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dspgvx LAPACK_GLOBAL(dspgvx,DSPGVX)
 void LAPACK_dspgvx(
     lapack_int const* itype,
@@ -8453,7 +11038,11 @@ void LAPACK_dspgvx(
     double* z, lapack_int const* ldz,
     double* work, lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chpgvx LAPACK_GLOBAL(chpgvx,CHPGVX)
 void LAPACK_chpgvx(
     lapack_int const* itype,
@@ -8470,7 +11059,11 @@ void LAPACK_chpgvx(
     lapack_complex_float* work, float* rwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhpgvx LAPACK_GLOBAL(zhpgvx,ZHPGVX)
 void LAPACK_zhpgvx(
     lapack_int const* itype,
@@ -8487,7 +11080,11 @@ void LAPACK_zhpgvx(
     lapack_complex_double* work, double* rwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- generalized symmetric eigenvalues, banded, by QR iteration */
 #define LAPACK_ssbgv LAPACK_GLOBAL(ssbgv,SSBGV)
@@ -8500,7 +11097,11 @@ void LAPACK_ssbgv(
     float* w,
     float* z, lapack_int const* ldz,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsbgv LAPACK_GLOBAL(dsbgv,DSBGV)
 void LAPACK_dsbgv(
     char const* jobz, char const* uplo,
@@ -8511,7 +11112,11 @@ void LAPACK_dsbgv(
     double* w,
     double* z, lapack_int const* ldz,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chbgv LAPACK_GLOBAL(chbgv,CHBGV)
 void LAPACK_chbgv(
     char const* jobz, char const* uplo,
@@ -8522,7 +11127,11 @@ void LAPACK_chbgv(
     float* w,
     lapack_complex_float* z, lapack_int const* ldz,
     lapack_complex_float* work, float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhbgv LAPACK_GLOBAL(zhbgv,ZHBGV)
 void LAPACK_zhbgv(
     char const* jobz, char const* uplo,
@@ -8533,7 +11142,11 @@ void LAPACK_zhbgv(
     double* w,
     lapack_complex_double* z, lapack_int const* ldz,
     lapack_complex_double* work, double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- generalized symmetric eigenvalues, banded, by divide and conquer */
 #define LAPACK_ssbgvd LAPACK_GLOBAL(ssbgvd,SSBGVD)
@@ -8547,7 +11160,11 @@ void LAPACK_ssbgvd(
     float* z, lapack_int const* ldz,
     float* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsbgvd LAPACK_GLOBAL(dsbgvd,DSBGVD)
 void LAPACK_dsbgvd(
     char const* jobz, char const* uplo,
@@ -8559,7 +11176,11 @@ void LAPACK_dsbgvd(
     double* z, lapack_int const* ldz,
     double* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chbgvd LAPACK_GLOBAL(chbgvd,CHBGVD)
 void LAPACK_chbgvd(
     char const* jobz, char const* uplo,
@@ -8572,7 +11193,11 @@ void LAPACK_chbgvd(
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork, lapack_int const* lrwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhbgvd LAPACK_GLOBAL(zhbgvd,ZHBGVD)
 void LAPACK_zhbgvd(
     char const* jobz, char const* uplo,
@@ -8585,7 +11210,11 @@ void LAPACK_zhbgvd(
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork, lapack_int const* lrwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- generalized symmetric eigenvalues, banded, by divide and conquer */
 #define LAPACK_ssbgvx LAPACK_GLOBAL(ssbgvx,SSBGVX)
@@ -8604,7 +11233,11 @@ void LAPACK_ssbgvx(
     float* z, lapack_int const* ldz,
     float* work, lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsbgvx LAPACK_GLOBAL(dsbgvx,DSBGVX)
 void LAPACK_dsbgvx(
     char const* jobz, char const* range, char const* uplo,
@@ -8621,7 +11254,11 @@ void LAPACK_dsbgvx(
     double* z, lapack_int const* ldz,
     double* work, lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chbgvx LAPACK_GLOBAL(chbgvx,CHBGVX)
 void LAPACK_chbgvx(
     char const* jobz, char const* range, char const* uplo,
@@ -8639,7 +11276,11 @@ void LAPACK_chbgvx(
     lapack_complex_float* work, float* rwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhbgvx LAPACK_GLOBAL(zhbgvx,ZHBGVX)
 void LAPACK_zhbgvx(
     char const* jobz, char const* range, char const* uplo,
@@ -8657,7 +11298,11 @@ void LAPACK_zhbgvx(
     lapack_complex_double* work, double* rwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -8673,7 +11318,11 @@ void LAPACK_sgges(
     float* vsl, lapack_int const* ldvsl,
     float* vsr, lapack_int const* ldvsr,
     float* work, lapack_int const* lwork, lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvsl_len, unsigned jobvsr_len, unsigned sort_len
+    #endif
+    );
 #define LAPACK_dgges LAPACK_GLOBAL(dgges,DGGES)
 void LAPACK_dgges(
     char const* jobvsl, char const* jobvsr, char const* sort,
@@ -8686,7 +11335,11 @@ void LAPACK_dgges(
     double* vsr, lapack_int const* ldvsr,
     double* work, lapack_int const* lwork,
     lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvsl_len, unsigned jobvsr_len, unsigned sort_len
+    #endif
+    );
 #define LAPACK_cgges LAPACK_GLOBAL(cgges,CGGES)
 void LAPACK_cgges(
     char const* jobvsl, char const* jobvsr, char const* sort,
@@ -8700,7 +11353,11 @@ void LAPACK_cgges(
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork,
     lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvsl_len, unsigned jobvsr_len, unsigned sort_len
+    #endif
+    );
 #define LAPACK_zgges LAPACK_GLOBAL(zgges,ZGGES)
 void LAPACK_zgges(
     char const* jobvsl, char const* jobvsr, char const* sort,
@@ -8713,7 +11370,11 @@ void LAPACK_zgges(
     lapack_complex_double* vsr, lapack_int const* ldvsr,
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork, lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvsl_len, unsigned jobvsr_len, unsigned sort_len
+    #endif
+    );
 
 #define LAPACK_sgges3 LAPACK_GLOBAL(sgges3,SGGES3)
 void LAPACK_sgges3(
@@ -8726,7 +11387,11 @@ void LAPACK_sgges3(
     float* vsl, lapack_int const* ldvsl,
     float* vsr, lapack_int const* ldvsr,
     float* work, lapack_int const* lwork, lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvsl_len, unsigned jobvsr_len, unsigned sort_len
+    #endif
+    );
 #define LAPACK_dgges3 LAPACK_GLOBAL(dgges3,DGGES3)
 void LAPACK_dgges3(
     char const* jobvsl, char const* jobvsr, char const* sort,
@@ -8739,7 +11404,11 @@ void LAPACK_dgges3(
     double* vsr, lapack_int const* ldvsr,
     double* work, lapack_int const* lwork,
     lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvsl_len, unsigned jobvsr_len, unsigned sort_len
+    #endif
+    );
 #define LAPACK_cgges3 LAPACK_GLOBAL(cgges3,CGGES3)
 void LAPACK_cgges3(
     char const* jobvsl, char const* jobvsr, char const* sort,
@@ -8753,7 +11422,11 @@ void LAPACK_cgges3(
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork,
     lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvsl_len, unsigned jobvsr_len, unsigned sort_len
+    #endif
+    );
 #define LAPACK_zgges3 LAPACK_GLOBAL(zgges3,ZGGES3)
 void LAPACK_zgges3(
     char const* jobvsl, char const* jobvsr, char const* sort,
@@ -8766,7 +11439,11 @@ void LAPACK_zgges3(
     lapack_complex_double* vsr, lapack_int const* ldvsr,
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork, lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvsl_len, unsigned jobvsr_len, unsigned sort_len
+    #endif
+    );
 
 #define LAPACK_sggesx LAPACK_GLOBAL(sggesx,SGGESX)
 void LAPACK_sggesx(
@@ -8783,7 +11460,11 @@ void LAPACK_sggesx(
     float* work, lapack_int const* lwork,
     lapack_int* iwork,
     lapack_int const* liwork, lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvsl_len, unsigned jobvsr_len, unsigned sort_len, unsigned sense_len
+    #endif
+    );
 #define LAPACK_dggesx LAPACK_GLOBAL(dggesx,DGGESX)
 void LAPACK_dggesx(
     char const* jobvsl, char const* jobvsr, char const* sort,
@@ -8799,7 +11480,11 @@ void LAPACK_dggesx(
     double* work, lapack_int const* lwork,
     lapack_int* iwork,
     lapack_int const* liwork, lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvsl_len, unsigned jobvsr_len, unsigned sort_len, unsigned sense_len
+    #endif
+    );
 #define LAPACK_cggesx LAPACK_GLOBAL(cggesx,CGGESX)
 void LAPACK_cggesx(
     char const* jobvsl, char const* jobvsr, char const* sort,
@@ -8817,7 +11502,11 @@ void LAPACK_cggesx(
     float* rwork,
     lapack_int* iwork,
     lapack_int const* liwork, lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvsl_len, unsigned jobvsr_len, unsigned sort_len, unsigned sense_len
+    #endif
+    );
 #define LAPACK_zggesx LAPACK_GLOBAL(zggesx,ZGGESX)
 void LAPACK_zggesx(
     char const* jobvsl, char const* jobvsr, char const* sort,
@@ -8835,7 +11524,11 @@ void LAPACK_zggesx(
     double* rwork,
     lapack_int* iwork,
     lapack_int const* liwork, lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvsl_len, unsigned jobvsr_len, unsigned sort_len, unsigned sense_len
+    #endif
+    );
 
 /* ----- generalized non-symmetric eigenvalues */
 #define LAPACK_sggev LAPACK_GLOBAL(sggev,SGGEV)
@@ -8848,7 +11541,11 @@ void LAPACK_sggev(
     float* vl, lapack_int const* ldvl,
     float* vr, lapack_int const* ldvr,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvl_len, unsigned jobvr_len
+    #endif
+    );
 #define LAPACK_dggev LAPACK_GLOBAL(dggev,DGGEV)
 void LAPACK_dggev(
     char const* jobvl, char const* jobvr,
@@ -8859,7 +11556,11 @@ void LAPACK_dggev(
     double* vl, lapack_int const* ldvl,
     double* vr, lapack_int const* ldvr,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvl_len, unsigned jobvr_len
+    #endif
+    );
 #define LAPACK_cggev LAPACK_GLOBAL(cggev,CGGEV)
 void LAPACK_cggev(
     char const* jobvl, char const* jobvr,
@@ -8871,7 +11572,11 @@ void LAPACK_cggev(
     lapack_complex_float* vr, lapack_int const* ldvr,
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvl_len, unsigned jobvr_len
+    #endif
+    );
 #define LAPACK_zggev LAPACK_GLOBAL(zggev,ZGGEV)
 void LAPACK_zggev(
     char const* jobvl, char const* jobvr,
@@ -8883,7 +11588,11 @@ void LAPACK_zggev(
     lapack_complex_double* vr, lapack_int const* ldvr,
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvl_len, unsigned jobvr_len
+    #endif
+    );
 
 #define LAPACK_sggev3 LAPACK_GLOBAL(sggev3,SGGEV3)
 void LAPACK_sggev3(
@@ -8895,7 +11604,11 @@ void LAPACK_sggev3(
     float* vl, lapack_int const* ldvl,
     float* vr, lapack_int const* ldvr,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvl_len, unsigned jobvr_len
+    #endif
+    );
 #define LAPACK_dggev3 LAPACK_GLOBAL(dggev3,DGGEV3)
 void LAPACK_dggev3(
     char const* jobvl, char const* jobvr,
@@ -8906,7 +11619,11 @@ void LAPACK_dggev3(
     double* vl, lapack_int const* ldvl,
     double* vr, lapack_int const* ldvr,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvl_len, unsigned jobvr_len
+    #endif
+    );
 #define LAPACK_cggev3 LAPACK_GLOBAL(cggev3,CGGEV3)
 void LAPACK_cggev3(
     char const* jobvl, char const* jobvr,
@@ -8918,7 +11635,11 @@ void LAPACK_cggev3(
     lapack_complex_float* vr, lapack_int const* ldvr,
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvl_len, unsigned jobvr_len
+    #endif
+    );
 #define LAPACK_zggev3 LAPACK_GLOBAL(zggev3,ZGGEV3)
 void LAPACK_zggev3(
     char const* jobvl, char const* jobvr,
@@ -8930,7 +11651,11 @@ void LAPACK_zggev3(
     lapack_complex_double* vr, lapack_int const* ldvr,
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobvl_len, unsigned jobvr_len
+    #endif
+    );
 
 /* ----- generalized non-symmetric eigenvalues */
 #define LAPACK_sggevx LAPACK_GLOBAL(sggevx,SGGEVX)
@@ -8948,7 +11673,11 @@ void LAPACK_sggevx(
     float* rconde, float* rcondv,
     float* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned balanc_len, unsigned jobvl_len, unsigned jobvr_len, unsigned sense_len
+    #endif
+    );
 #define LAPACK_dggevx LAPACK_GLOBAL(dggevx,DGGEVX)
 void LAPACK_dggevx(
     char const* balanc, char const* jobvl, char const* jobvr, char const* sense,
@@ -8964,7 +11693,11 @@ void LAPACK_dggevx(
     double* rconde, double* rcondv,
     double* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned balanc_len, unsigned jobvl_len, unsigned jobvr_len, unsigned sense_len
+    #endif
+    );
 #define LAPACK_cggevx LAPACK_GLOBAL(cggevx,CGGEVX)
 void LAPACK_cggevx(
     char const* balanc, char const* jobvl, char const* jobvr, char const* sense,
@@ -8981,7 +11714,11 @@ void LAPACK_cggevx(
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork,
     lapack_int* iwork, lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned balanc_len, unsigned jobvl_len, unsigned jobvr_len, unsigned sense_len
+    #endif
+    );
 #define LAPACK_zggevx LAPACK_GLOBAL(zggevx,ZGGEVX)
 void LAPACK_zggevx(
     char const* balanc, char const* jobvl, char const* jobvr, char const* sense,
@@ -8999,7 +11736,11 @@ void LAPACK_zggevx(
     double* rwork,
     lapack_int* iwork,
     lapack_logical* bwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned balanc_len, unsigned jobvl_len, unsigned jobvr_len, unsigned sense_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -9012,7 +11753,11 @@ void LAPACK_ssfrk(
     float const* alpha,
     float const* a, lapack_int const* lda,
     float const* beta,
-    float* c );
+    float* c
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_dsfrk LAPACK_GLOBAL(dsfrk,DSFRK)
 void LAPACK_dsfrk(
     char const* transr, char const* uplo, char const* trans,
@@ -9021,7 +11766,11 @@ void LAPACK_dsfrk(
     double const* alpha,
     double const* a, lapack_int const* lda,
     double const* beta,
-    double* c );
+    double* c
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_chfrk LAPACK_GLOBAL(chfrk,CHFRK)
 void LAPACK_chfrk(
     char const* transr, char const* uplo, char const* trans,
@@ -9030,7 +11779,11 @@ void LAPACK_chfrk(
     float const* alpha,
     lapack_complex_float const* a, lapack_int const* lda,
     float const* beta,
-    lapack_complex_float* c );
+    lapack_complex_float* c
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_zhfrk LAPACK_GLOBAL(zhfrk,ZHFRK)
 void LAPACK_zhfrk(
     char const* transr, char const* uplo, char const* trans,
@@ -9039,7 +11792,11 @@ void LAPACK_zhfrk(
     double const* alpha,
     lapack_complex_double const* a, lapack_int const* lda,
     double const* beta,
-    lapack_complex_double* c );
+    lapack_complex_double* c
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len, unsigned trans_len
+    #endif
+    );
 
 /* ----- RFP BLAS triangular solve */
 #define LAPACK_stfsm LAPACK_GLOBAL(stfsm,STFSM)
@@ -9049,7 +11806,11 @@ void LAPACK_stfsm(
     lapack_int const* m, lapack_int const* n,
     float const* alpha,
     float const* a,
-    float* b, lapack_int const* ldb );
+    float* b, lapack_int const* ldb
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned side_len, unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_dtfsm LAPACK_GLOBAL(dtfsm,DTFSM)
 void LAPACK_dtfsm(
     char const* transr, char const* side, char const* uplo,
@@ -9057,7 +11818,11 @@ void LAPACK_dtfsm(
     lapack_int const* m, lapack_int const* n,
     double const* alpha,
     double const* a,
-    double* b, lapack_int const* ldb );
+    double* b, lapack_int const* ldb
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned side_len, unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ctfsm LAPACK_GLOBAL(ctfsm,CTFSM)
 void LAPACK_ctfsm(
     char const* transr, char const* side, char const* uplo,
@@ -9065,7 +11830,11 @@ void LAPACK_ctfsm(
     lapack_int const* m, lapack_int const* n,
     lapack_complex_float const* alpha,
     lapack_complex_float const* a,
-    lapack_complex_float* b, lapack_int const* ldb );
+    lapack_complex_float* b, lapack_int const* ldb
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned side_len, unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_ztfsm LAPACK_GLOBAL(ztfsm,ZTFSM)
 void LAPACK_ztfsm(
     char const* transr, char const* side, char const* uplo, char const* trans,
@@ -9073,7 +11842,11 @@ void LAPACK_ztfsm(
     lapack_int const* m, lapack_int const* n,
     lapack_complex_double const* alpha,
     lapack_complex_double const* a,
-    lapack_complex_double* b, lapack_int const* ldb );
+    lapack_complex_double* b, lapack_int const* ldb
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned side_len, unsigned uplo_len, unsigned trans_len, unsigned diag_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -9084,28 +11857,44 @@ void LAPACK_stfttp(
     lapack_int const* n,
     float const* arf,
     float* ap,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dtfttp LAPACK_GLOBAL(dtfttp,DTFTTP)
 void LAPACK_dtfttp(
     char const* transr, char const* uplo,
     lapack_int const* n,
     double const* arf,
     double* ap,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_ctfttp LAPACK_GLOBAL(ctfttp,CTFTTP)
 void LAPACK_ctfttp(
     char const* transr, char const* uplo,
     lapack_int const* n,
     lapack_complex_float const* arf,
     lapack_complex_float* ap,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_ztfttp LAPACK_GLOBAL(ztfttp,ZTFTTP)
 void LAPACK_ztfttp(
     char const* transr, char const* uplo,
     lapack_int const* n,
     lapack_complex_double const* arf,
     lapack_complex_double* ap,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- triangular RFP (tf) to full (tr) */
 #define LAPACK_stfttr LAPACK_GLOBAL(stfttr,STFTTR)
@@ -9114,28 +11903,44 @@ void LAPACK_stfttr(
     lapack_int const* n,
     float const* arf,
     float* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_ctfttr LAPACK_GLOBAL(ctfttr,CTFTTR)
 void LAPACK_ctfttr(
     char const* transr, char const* uplo,
     lapack_int const* n,
     lapack_complex_float const* arf,
     lapack_complex_float* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dtfttr LAPACK_GLOBAL(dtfttr,DTFTTR)
 void LAPACK_dtfttr(
     char const* transr, char const* uplo,
     lapack_int const* n,
     double const* arf,
     double* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_ztfttr LAPACK_GLOBAL(ztfttr,ZTFTTR)
 void LAPACK_ztfttr(
     char const* transr, char const* uplo,
     lapack_int const* n,
     lapack_complex_double const* arf,
     lapack_complex_double* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- triangular packed (tp) to RFP (tf) */
 #define LAPACK_stpttf LAPACK_GLOBAL(stpttf,STPTTF)
@@ -9144,28 +11949,44 @@ void LAPACK_stpttf(
     lapack_int const* n,
     float const* ap,
     float* arf,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dtpttf LAPACK_GLOBAL(dtpttf,DTPTTF)
 void LAPACK_dtpttf(
     char const* transr, char const* uplo,
     lapack_int const* n,
     double const* ap,
     double* arf,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_ctpttf LAPACK_GLOBAL(ctpttf,CTPTTF)
 void LAPACK_ctpttf(
     char const* transr, char const* uplo,
     lapack_int const* n,
     lapack_complex_float const* ap,
     lapack_complex_float* arf,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_ztpttf LAPACK_GLOBAL(ztpttf,ZTPTTF)
 void LAPACK_ztpttf(
     char const* transr, char const* uplo,
     lapack_int const* n,
     lapack_complex_double const* ap,
     lapack_complex_double* arf,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- triangular packed (tp) to full (tr) */
 #define LAPACK_stpttr LAPACK_GLOBAL(stpttr,STPTTR)
@@ -9174,28 +11995,44 @@ void LAPACK_stpttr(
     lapack_int const* n,
     float const* ap,
     float* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dtpttr LAPACK_GLOBAL(dtpttr,DTPTTR)
 void LAPACK_dtpttr(
     char const* uplo,
     lapack_int const* n,
     double const* ap,
     double* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_ctpttr LAPACK_GLOBAL(ctpttr,CTPTTR)
 void LAPACK_ctpttr(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_float const* ap,
     lapack_complex_float* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_ztpttr LAPACK_GLOBAL(ztpttr,ZTPTTR)
 void LAPACK_ztpttr(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_double const* ap,
     lapack_complex_double* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- triangular full (tr) to RFP (tf) */
 #define LAPACK_strttf LAPACK_GLOBAL(strttf,STRTTF)
@@ -9204,28 +12041,44 @@ void LAPACK_strttf(
     lapack_int const* n,
     float const* a, lapack_int const* lda,
     float* arf,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dtrttf LAPACK_GLOBAL(dtrttf,DTRTTF)
 void LAPACK_dtrttf(
     char const* transr, char const* uplo,
     lapack_int const* n,
     double const* a, lapack_int const* lda,
     double* arf,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_ctrttf LAPACK_GLOBAL(ctrttf,CTRTTF)
 void LAPACK_ctrttf(
     char const* transr, char const* uplo,
     lapack_int const* n,
     lapack_complex_float const* a, lapack_int const* lda,
     lapack_complex_float* arf,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_ztrttf LAPACK_GLOBAL(ztrttf,ZTRTTF)
 void LAPACK_ztrttf(
     char const* transr, char const* uplo,
     lapack_int const* n,
     lapack_complex_double const* a, lapack_int const* lda,
     lapack_complex_double* arf,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned transr_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- triangular full (tr) to packed (tp) */
 #define LAPACK_strttp LAPACK_GLOBAL(strttp,STRTTP)
@@ -9234,28 +12087,44 @@ void LAPACK_strttp(
     lapack_int const* n,
     float const* a, lapack_int const* lda,
     float* ap,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dtrttp LAPACK_GLOBAL(dtrttp,DTRTTP)
 void LAPACK_dtrttp(
     char const* uplo,
     lapack_int const* n,
     double const* a, lapack_int const* lda,
     double* ap,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_ctrttp LAPACK_GLOBAL(ctrttp,CTRTTP)
 void LAPACK_ctrttp(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_float const* a, lapack_int const* lda,
     lapack_complex_float* ap,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_ztrttp LAPACK_GLOBAL(ztrttp,ZTRTTP)
 void LAPACK_ztrttp(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_double const* a, lapack_int const* lda,
     lapack_complex_double* ap,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* -------------------------------------------------------------------------- */
 
@@ -9475,25 +12344,41 @@ void LAPACK_slacpy(
     char const* uplo,
     lapack_int const* m, lapack_int const* n,
     float const* a, lapack_int const* lda,
-    float* b, lapack_int const* ldb );
+    float* b, lapack_int const* ldb
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dlacpy LAPACK_GLOBAL(dlacpy,DLACPY)
 void LAPACK_dlacpy(
     char const* uplo,
     lapack_int const* m, lapack_int const* n,
     double const* a, lapack_int const* lda,
-    double* b, lapack_int const* ldb );
+    double* b, lapack_int const* ldb
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_clacpy LAPACK_GLOBAL(clacpy,CLACPY)
 void LAPACK_clacpy(
     char const* uplo,
     lapack_int const* m, lapack_int const* n,
     lapack_complex_float const* a, lapack_int const* lda,
-    lapack_complex_float* b, lapack_int const* ldb );
+    lapack_complex_float* b, lapack_int const* ldb
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zlacpy LAPACK_GLOBAL(zlacpy,ZLACPY)
 void LAPACK_zlacpy(
     char const* uplo,
     lapack_int const* m, lapack_int const* n,
     lapack_complex_double const* a, lapack_int const* lda,
-    lapack_complex_double* b, lapack_int const* ldb );
+    lapack_complex_double* b, lapack_int const* ldb
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- copy real to complex matrix conversion */
 #define LAPACK_clacp2 LAPACK_GLOBAL(clacp2,CLACP2)
@@ -9501,13 +12386,21 @@ void LAPACK_clacp2(
     char const* uplo,
     lapack_int const* m, lapack_int const* n,
     float const* a, lapack_int const* lda,
-    lapack_complex_float* b, lapack_int const* ldb );
+    lapack_complex_float* b, lapack_int const* ldb
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zlacp2 LAPACK_GLOBAL(zlacp2,ZLACP2)
 void LAPACK_zlacp2(
     char const* uplo,
     lapack_int const* m, lapack_int const* n,
     double const* a, lapack_int const* lda,
-    lapack_complex_double* b, lapack_int const* ldb );
+    lapack_complex_double* b, lapack_int const* ldb
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- LU triangular factorization panel (Level 2 BLAS) */
 #define LAPACK_sgetf2 LAPACK_GLOBAL(sgetf2,SGETF2)
@@ -9541,25 +12434,41 @@ void LAPACK_spotf2(
     char const* uplo,
     lapack_int const* n,
     float* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dpotf2 LAPACK_GLOBAL(dpotf2,DPOTF2)
 void LAPACK_dpotf2(
     char const* uplo,
     lapack_int const* n,
     double* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cpotf2 LAPACK_GLOBAL(cpotf2,CPOTF2)
 void LAPACK_cpotf2(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_float* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zpotf2 LAPACK_GLOBAL(zpotf2,ZPOTF2)
 void LAPACK_zpotf2(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_double* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- swap rows for LU */
 #define LAPACK_slaswp LAPACK_GLOBAL(slaswp,SLASWP)
@@ -9595,75 +12504,123 @@ lapack_float_return LAPACK_slange(
     char const* norm,
     lapack_int const* m, lapack_int const* n,
     float const* a, lapack_int const* lda,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_dlange LAPACK_GLOBAL(dlange,DLANGE)
 double LAPACK_dlange(
     char const* norm,
     lapack_int const* m, lapack_int const* n,
     double const* a, lapack_int const* lda,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_clange LAPACK_GLOBAL(clange,CLANGE)
 lapack_float_return LAPACK_clange(
     char const* norm,
     lapack_int const* m, lapack_int const* n,
     lapack_complex_float const* a, lapack_int const* lda,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_zlange LAPACK_GLOBAL(zlange,ZLANGE)
 double LAPACK_zlange(
     char const* norm,
     lapack_int const* m, lapack_int const* n,
     lapack_complex_double const* a, lapack_int const* lda,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 
 #define LAPACK_slangb LAPACK_GLOBAL(slangb,SLANGB)
 lapack_float_return LAPACK_slangb(
     char const* norm, lapack_int const* n,
     lapack_int const* kl, lapack_int const* ku,
     float const* AB, lapack_int const* ldab,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_dlangb LAPACK_GLOBAL(dlangb,DLANGB)
 double LAPACK_dlangb(
     char const* norm, lapack_int const* n,
     lapack_int const* kl, lapack_int const* ku,
     double const* AB, lapack_int const* ldab,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_clangb LAPACK_GLOBAL(clangb,CLANGB)
 lapack_float_return LAPACK_clangb(
     char const* norm, lapack_int const* n,
     lapack_int const* kl, lapack_int const* ku,
     lapack_complex_float const* AB, lapack_int const* ldab,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_zlangb LAPACK_GLOBAL(zlangb,ZLANGB)
 double LAPACK_zlangb(
     char const* norm, lapack_int const* n,
     lapack_int const* kl, lapack_int const* ku,
     lapack_complex_double const* AB, lapack_int const* ldab,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 
 #define LAPACK_slangt LAPACK_GLOBAL(slangt,SLANGT)
 lapack_float_return LAPACK_slangt(
     char const* norm, lapack_int const* n,
     float const* DL,
     float const* D,
-    float const* DU );
+    float const* DU
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_dlangt LAPACK_GLOBAL(dlangt,DLANGT)
 double LAPACK_dlangt(
     char const* norm, lapack_int const* n,
     double const* DL,
     double const* D,
-    double const* DU );
+    double const* DU
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_clangt LAPACK_GLOBAL(clangt,CLANGT)
 lapack_float_return LAPACK_clangt(
     char const* norm, lapack_int const* n,
     lapack_complex_float const* DL,
     lapack_complex_float const* D,
-    lapack_complex_float const* DU );
+    lapack_complex_float const* DU
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_zlangt LAPACK_GLOBAL(zlangt,ZLANGT)
 double LAPACK_zlangt(
     char const* norm, lapack_int const* n,
     lapack_complex_double const* DL,
     lapack_complex_double const* D,
-    lapack_complex_double const* DU );
+    lapack_complex_double const* DU
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 
 /* ----- Hessenberg matrix norm */
 #define LAPACK_slanhs LAPACK_GLOBAL(slanhs,SLANHS)
@@ -9671,25 +12628,41 @@ lapack_float_return LAPACK_slanhs(
     char const* norm,
     lapack_int const* n,
     float const* A, lapack_int const* lda,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_dlanhs LAPACK_GLOBAL(dlanhs,DLANHS)
 double LAPACK_dlanhs(
     char const* norm,
     lapack_int const* n,
     double const* A, lapack_int const* lda,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_clanhs LAPACK_GLOBAL(clanhs,CLANHS)
 lapack_float_return LAPACK_clanhs(
     char const* norm,
     lapack_int const* n,
     lapack_complex_float const* A, lapack_int const* lda,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_zlanhs LAPACK_GLOBAL(zlanhs,ZLANHS)
 double LAPACK_zlanhs(
     char const* norm,
     lapack_int const* n,
     lapack_complex_double const* A, lapack_int const* lda,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 
 /* ----- Hermitian matrix norm */
 #define LAPACK_clanhe LAPACK_GLOBAL(clanhe,CLANHE)
@@ -9697,50 +12670,82 @@ lapack_float_return LAPACK_clanhe(
     char const* norm, char const* uplo,
     lapack_int const* n,
     lapack_complex_float const* a, lapack_int const* lda,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zlanhe LAPACK_GLOBAL(zlanhe,ZLANHE)
 double LAPACK_zlanhe(
     char const* norm, char const* uplo,
     lapack_int const* n,
     lapack_complex_double const* a, lapack_int const* lda,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_clanhp LAPACK_GLOBAL(clanhp,CLANHP)
 lapack_float_return LAPACK_clanhp(
     char const* norm, char const* uplo,
     lapack_int const* n,
     lapack_complex_float const* AP,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zlanhp LAPACK_GLOBAL(zlanhp,ZLANHP)
 double LAPACK_zlanhp(
     char const* norm, char const* uplo,
     lapack_int const* n,
     lapack_complex_double const* AP,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_clanhb LAPACK_GLOBAL(clanhb,CLANHB)
 lapack_float_return LAPACK_clanhb(
     char const* norm, char const* uplo,
     lapack_int const* n, lapack_int const* kd,
     lapack_complex_float const* AB, lapack_int const* ldab,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zlanhb LAPACK_GLOBAL(zlanhb,ZLANHB)
 double LAPACK_zlanhb(
     char const* norm, char const* uplo,
     lapack_int const* n, lapack_int const* kd,
     lapack_complex_double const* AB, lapack_int const* ldab,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_clanht LAPACK_GLOBAL(clanht,CLANHT)
 lapack_float_return LAPACK_clanht(
     char const* norm, lapack_int const* n,
     float const* D,
-    lapack_complex_float const* E );
+    lapack_complex_float const* E
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_zlanht LAPACK_GLOBAL(zlanht,ZLANHT)
 double LAPACK_zlanht(
     char const* norm, lapack_int const* n,
     double const* D,
-    lapack_complex_double const* E );
+    lapack_complex_double const* E
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 
 /* ----- symmetric matrix norm */
 #define LAPACK_slansy LAPACK_GLOBAL(slansy,SLANSY)
@@ -9748,86 +12753,142 @@ lapack_float_return LAPACK_slansy(
     char const* norm, char const* uplo,
     lapack_int const* n,
     float const* a, lapack_int const* lda,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dlansy LAPACK_GLOBAL(dlansy,DLANSY)
 double LAPACK_dlansy(
     char const* norm, char const* uplo,
     lapack_int const* n,
     double const* a, lapack_int const* lda,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_clansy LAPACK_GLOBAL(clansy,CLANSY)
 lapack_float_return LAPACK_clansy(
     char const* norm, char const* uplo,
     lapack_int const* n,
     lapack_complex_float const* a, lapack_int const* lda,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zlansy LAPACK_GLOBAL(zlansy,ZLANSY)
 double LAPACK_zlansy(
     char const* norm, char const* uplo,
     lapack_int const* n,
     lapack_complex_double const* a, lapack_int const* lda,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_slansp LAPACK_GLOBAL(slansp,SLANSP)
 lapack_float_return LAPACK_slansp(
     char const* norm, char const* uplo,
     lapack_int const* n,
     float const* AP,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dlansp LAPACK_GLOBAL(dlansp,DLANSP)
 double LAPACK_dlansp(
     char const* norm, char const* uplo,
     lapack_int const* n,
     double const* AP,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_clansp LAPACK_GLOBAL(clansp,CLANSP)
 lapack_float_return LAPACK_clansp(
     char const* norm, char const* uplo,
     lapack_int const* n,
     lapack_complex_float const* AP,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zlansp LAPACK_GLOBAL(zlansp,ZLANSP)
 double LAPACK_zlansp(
     char const* norm, char const* uplo,
     lapack_int const* n,
     lapack_complex_double const* AP,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_slansb LAPACK_GLOBAL(slansb,SLANSB)
 lapack_float_return LAPACK_slansb(
     char const* norm, char const* uplo,
     lapack_int const* n, lapack_int const* kd,
     float const* AB, lapack_int const* ldab,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dlansb LAPACK_GLOBAL(dlansb,DLANSB)
 double LAPACK_dlansb(
     char const* norm, char const* uplo,
     lapack_int const* n, lapack_int const* kd,
     double const* AB, lapack_int const* ldab,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_clansb LAPACK_GLOBAL(clansb,CLANSB)
 lapack_float_return LAPACK_clansb(
     char const* norm, char const* uplo,
     lapack_int const* n, lapack_int const* kd,
     lapack_complex_float const* AB, lapack_int const* ldab,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zlansb LAPACK_GLOBAL(zlansb,ZLANSB)
 double LAPACK_zlansb(
     char const* norm, char const* uplo,
     lapack_int const* n, lapack_int const* kd,
     lapack_complex_double const* AB, lapack_int const* ldab,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_slanst LAPACK_GLOBAL(slanst,SLANST)
 lapack_float_return LAPACK_slanst(
     char const* norm, lapack_int const* n,
     float const* D,
-    float const* E );
+    float const* E
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 #define LAPACK_dlanst LAPACK_GLOBAL(dlanst,DLANST)
 double LAPACK_dlanst(
     char const* norm, lapack_int const* n,
     double const* D,
-    double const* E );
+    double const* E
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len
+    #endif
+    );
 
 /* ----- triangular matrix norm */
 #define LAPACK_slantr LAPACK_GLOBAL(slantr,SLANTR)
@@ -9836,86 +12897,142 @@ lapack_float_return LAPACK_slantr(
     lapack_int const* m,
     lapack_int const* n,
     float const* a, lapack_int const* lda,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_dlantr LAPACK_GLOBAL(dlantr,DLANTR)
 double LAPACK_dlantr(
     char const* norm, char const* uplo, char const* diag,
     lapack_int const* m,
     lapack_int const* n,
     double const* a, lapack_int const* lda,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_clantr LAPACK_GLOBAL(clantr,CLANTR)
 lapack_float_return LAPACK_clantr(
     char const* norm, char const* uplo, char const* diag,
     lapack_int const* m,
     lapack_int const* n,
     lapack_complex_float const* a, lapack_int const* lda,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_zlantr LAPACK_GLOBAL(zlantr,ZLANTR)
 double LAPACK_zlantr(
     char const* norm, char const* uplo, char const* diag,
     lapack_int const* m,
     lapack_int const* n,
     lapack_complex_double const* a, lapack_int const* lda,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 
 #define LAPACK_slantp LAPACK_GLOBAL(slantp,SLANTP)
 lapack_float_return LAPACK_slantp(
     char const* norm, char const* uplo, char const* diag,
     lapack_int const* n,
     float const* AP,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_dlantp LAPACK_GLOBAL(dlantp,DLANTP)
 double LAPACK_dlantp(
     char const* norm, char const* uplo, char const* diag,
     lapack_int const* n,
     double const* AP,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_clantp LAPACK_GLOBAL(clantp,CLANTP)
 lapack_float_return LAPACK_clantp(
     char const* norm, char const* uplo, char const* diag,
     lapack_int const* n,
     lapack_complex_float const* AP,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_zlantp LAPACK_GLOBAL(zlantp,ZLANTP)
 double LAPACK_zlantp(
     char const* norm, char const* uplo, char const* diag,
     lapack_int const* n,
     lapack_complex_double const* AP,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 
 #define LAPACK_slantb LAPACK_GLOBAL(slantb,SLANTB)
 lapack_float_return LAPACK_slantb(
     char const* norm, char const* uplo, char const* diag,
     lapack_int const* n, lapack_int const* k,
     float const* AB, lapack_int const* ldab,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_dlantb LAPACK_GLOBAL(dlantb,DLANTB)
 double LAPACK_dlantb(
     char const* norm, char const* uplo, char const* diag,
     lapack_int const* n, lapack_int const* k,
     double const* AB, lapack_int const* ldab,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_clantb LAPACK_GLOBAL(clantb,CLANTB)
 lapack_float_return LAPACK_clantb(
     char const* norm, char const* uplo, char const* diag,
     lapack_int const* n, lapack_int const* k,
     lapack_complex_float const* AB, lapack_int const* ldab,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 #define LAPACK_zlantb LAPACK_GLOBAL(zlantb,ZLANTB)
 double LAPACK_zlantb(
     char const* norm, char const* uplo, char const* diag,
     lapack_int const* n, lapack_int const* k,
     lapack_complex_double const* AB, lapack_int const* ldab,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned norm_len, unsigned uplo_len, unsigned diag_len
+    #endif
+    );
 
 /* ----- machine properties */
 #define LAPACK_slamch LAPACK_GLOBAL(slamch,SLAMCH)
 lapack_float_return LAPACK_slamch(
-    char const* cmach );
+    char const* cmach
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned cmach_len
+    #endif
+    );
 #define LAPACK_dlamch LAPACK_GLOBAL(dlamch,DLAMCH)
 double LAPACK_dlamch(
-    char const* cmach );
+    char const* cmach
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned cmach_len
+    #endif
+    );
 
 /* ----- apply block Householder reflector */
 #define LAPACK_slarfb LAPACK_GLOBAL(slarfb,SLARFB)
@@ -9925,7 +13042,11 @@ void LAPACK_slarfb(
     float const* v, lapack_int const* ldv,
     float const* t, lapack_int const* ldt,
     float* c, lapack_int const* ldc,
-    float* work, lapack_int const* ldwork );
+    float* work, lapack_int const* ldwork
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len, unsigned direction_len, unsigned storev_len
+    #endif
+    );
 #define LAPACK_dlarfb LAPACK_GLOBAL(dlarfb,DLARFB)
 void LAPACK_dlarfb(
     char const* side, char const* trans, char const* direction, char const* storev,
@@ -9934,7 +13055,11 @@ void LAPACK_dlarfb(
     double const* t, lapack_int const* ldt,
     double* c, lapack_int const* ldc,
     double* work,
-    lapack_int const* ldwork );
+    lapack_int const* ldwork
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len, unsigned direction_len, unsigned storev_len
+    #endif
+    );
 #define LAPACK_clarfb LAPACK_GLOBAL(clarfb,CLARFB)
 void LAPACK_clarfb(
     char const* side, char const* trans, char const* direction, char const* storev,
@@ -9942,7 +13067,11 @@ void LAPACK_clarfb(
     lapack_complex_float const* v, lapack_int const* ldv,
     lapack_complex_float const* t, lapack_int const* ldt,
     lapack_complex_float* c, lapack_int const* ldc,
-    lapack_complex_float* work, lapack_int const* ldwork );
+    lapack_complex_float* work, lapack_int const* ldwork
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len, unsigned direction_len, unsigned storev_len
+    #endif
+    );
 #define LAPACK_zlarfb LAPACK_GLOBAL(zlarfb,ZLARFB)
 void LAPACK_zlarfb(
     char const* side, char const* trans, char const* direction, char const* storev,
@@ -9950,7 +13079,11 @@ void LAPACK_zlarfb(
     lapack_complex_double const* v, lapack_int const* ldv,
     lapack_complex_double const* t, lapack_int const* ldt,
     lapack_complex_double* c, lapack_int const* ldc,
-    lapack_complex_double* work, lapack_int const* ldwork );
+    lapack_complex_double* work, lapack_int const* ldwork
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len, unsigned direction_len, unsigned storev_len
+    #endif
+    );
 
 /* ----- generate Householder reflector */
 #define LAPACK_slarfg LAPACK_GLOBAL(slarfg,SLARFG)
@@ -10007,28 +13140,44 @@ void LAPACK_slarft(
     lapack_int const* n, lapack_int const* k,
     float const* v, lapack_int const* ldv,
     float const* tau,
-    float* t, lapack_int const* ldt );
+    float* t, lapack_int const* ldt
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned direction_len, unsigned storev_len
+    #endif
+    );
 #define LAPACK_dlarft LAPACK_GLOBAL(dlarft,DLARFT)
 void LAPACK_dlarft(
     char const* direction, char const* storev,
     lapack_int const* n, lapack_int const* k,
     double const* v, lapack_int const* ldv,
     double const* tau,
-    double* t, lapack_int const* ldt );
+    double* t, lapack_int const* ldt
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned direction_len, unsigned storev_len
+    #endif
+    );
 #define LAPACK_clarft LAPACK_GLOBAL(clarft,CLARFT)
 void LAPACK_clarft(
     char const* direction, char const* storev,
     lapack_int const* n, lapack_int const* k,
     lapack_complex_float const* v, lapack_int const* ldv,
     lapack_complex_float const* tau,
-    lapack_complex_float* t, lapack_int const* ldt );
+    lapack_complex_float* t, lapack_int const* ldt
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned direction_len, unsigned storev_len
+    #endif
+    );
 #define LAPACK_zlarft LAPACK_GLOBAL(zlarft,ZLARFT)
 void LAPACK_zlarft(
     char const* direction, char const* storev,
     lapack_int const* n, lapack_int const* k,
     lapack_complex_double const* v, lapack_int const* ldv,
     lapack_complex_double const* tau,
-    lapack_complex_double* t, lapack_int const* ldt );
+    lapack_complex_double* t, lapack_int const* ldt
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned direction_len, unsigned storev_len
+    #endif
+    );
 
 /* ----- apply Householder reflector */
 #define LAPACK_slarf LAPACK_GLOBAL(slarf,SLARF)
@@ -10038,7 +13187,11 @@ void LAPACK_slarf(
     float const* v, lapack_int const* incv,
     float const* tau,
     float* c, lapack_int const* ldc,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len
+    #endif
+    );
 #define LAPACK_dlarf LAPACK_GLOBAL(dlarf,DLARF)
 void LAPACK_dlarf(
     char const* side,
@@ -10046,7 +13199,11 @@ void LAPACK_dlarf(
     double const* v, lapack_int const* incv,
     double const* tau,
     double* c, lapack_int const* ldc,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len
+    #endif
+    );
 #define LAPACK_clarf LAPACK_GLOBAL(clarf,CLARF)
 void LAPACK_clarf(
     char const* side,
@@ -10054,7 +13211,11 @@ void LAPACK_clarf(
     lapack_complex_float const* v, lapack_int const* incv,
     lapack_complex_float const* tau,
     lapack_complex_float* c, lapack_int const* ldc,
-    lapack_complex_float* work );
+    lapack_complex_float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len
+    #endif
+    );
 #define LAPACK_zlarf LAPACK_GLOBAL(zlarf,ZLARF)
 void LAPACK_zlarf(
     char const* side,
@@ -10062,7 +13223,11 @@ void LAPACK_zlarf(
     lapack_complex_double const* v, lapack_int const* incv,
     lapack_complex_double const* tau,
     lapack_complex_double* c, lapack_int const* ldc,
-    lapack_complex_double* work );
+    lapack_complex_double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len
+    #endif
+    );
 
 /* ----- apply Householder reflector, optimized for small sizes */
 #define LAPACK_slarfx LAPACK_GLOBAL(slarfx,SLARFX)
@@ -10072,7 +13237,11 @@ void LAPACK_slarfx(
     float const* v,
     float const* tau,
     float* c, lapack_int const* ldc,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len
+    #endif
+    );
 #define LAPACK_dlarfx LAPACK_GLOBAL(dlarfx,DLARFX)
 void LAPACK_dlarfx(
     char const* side,
@@ -10080,21 +13249,33 @@ void LAPACK_dlarfx(
     double const* v,
     double const* tau,
     double* c, lapack_int const* ldc,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len
+    #endif
+    );
 #define LAPACK_clarfx LAPACK_GLOBAL(clarfx,CLARFX)
 void LAPACK_clarfx(
     char const* side,
     lapack_int const* m, lapack_int const* n,
     lapack_complex_float const* v, lapack_complex_float const* tau,
     lapack_complex_float* c, lapack_int const* ldc,
-    lapack_complex_float* work );
+    lapack_complex_float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len
+    #endif
+    );
 #define LAPACK_zlarfx LAPACK_GLOBAL(zlarfx,ZLARFX)
 void LAPACK_zlarfx(
     char const* side,
     lapack_int const* m, lapack_int const* n,
     lapack_complex_double const* v, lapack_complex_double const* tau,
     lapack_complex_double* c, lapack_int const* ldc,
-    lapack_complex_double* work );
+    lapack_complex_double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len
+    #endif
+    );
 
 /* ----- apply Householder reflector on both left and right. */
 #define LAPACK_slarfy LAPACK_GLOBAL(slarfy,SLARFY)
@@ -10104,7 +13285,11 @@ void LAPACK_slarfy(
     float const* v, lapack_int const* incv,
     float const* tau,
     float* C, lapack_int const* ldc,
-    float* work );
+    float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_dlarfy LAPACK_GLOBAL(dlarfy,DLARFY)
 void LAPACK_dlarfy(
@@ -10113,7 +13298,11 @@ void LAPACK_dlarfy(
     double const* v, lapack_int const* incv,
     double const* tau,
     double* C, lapack_int const* ldc,
-    double* work );
+    double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_clarfy LAPACK_GLOBAL(clarfy,CLARFY)
 void LAPACK_clarfy(
@@ -10122,7 +13311,11 @@ void LAPACK_clarfy(
     lapack_complex_float const* v, lapack_int const* incv,
     lapack_complex_float const* tau,
     lapack_complex_float* C, lapack_int const* ldc,
-    lapack_complex_float* work );
+    lapack_complex_float* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_zlarfy LAPACK_GLOBAL(zlarfy,ZLARFY)
 void LAPACK_zlarfy(
@@ -10131,7 +13324,11 @@ void LAPACK_zlarfy(
     lapack_complex_double const* v, lapack_int const* incv,
     lapack_complex_double const* tau,
     lapack_complex_double* C, lapack_int const* ldc,
-    lapack_complex_double* work );
+    lapack_complex_double* work
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- generate test matrix with singular values */
 #define LAPACK_slatms LAPACK_GLOBAL(slatms,SLATMS)
@@ -10146,7 +13343,11 @@ void LAPACK_slatms(
     char const* pack,
     float* a, lapack_int const* lda,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned dist_len, unsigned sym_len, unsigned pack_len
+    #endif
+    );
 #define LAPACK_dlatms LAPACK_GLOBAL(dlatms,DLATMS)
 void LAPACK_dlatms(
     lapack_int const* m, lapack_int const* n, char const* dist,
@@ -10159,7 +13360,11 @@ void LAPACK_dlatms(
     char const* pack,
     double* a, lapack_int const* lda,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned dist_len, unsigned sym_len, unsigned pack_len
+    #endif
+    );
 #define LAPACK_clatms LAPACK_GLOBAL(clatms,CLATMS)
 void LAPACK_clatms(
     lapack_int const* m, lapack_int const* n, char const* dist,
@@ -10172,7 +13377,11 @@ void LAPACK_clatms(
     char const* pack,
     lapack_complex_float* a, lapack_int const* lda,
     lapack_complex_float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned dist_len, unsigned sym_len, unsigned pack_len
+    #endif
+    );
 #define LAPACK_zlatms LAPACK_GLOBAL(zlatms,ZLATMS)
 void LAPACK_zlatms(
     lapack_int const* m, lapack_int const* n, char const* dist,
@@ -10185,7 +13394,11 @@ void LAPACK_zlatms(
     char const* pack,
     lapack_complex_double* a, lapack_int const* lda,
     lapack_complex_double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned dist_len, unsigned sym_len, unsigned pack_len
+    #endif
+    );
 
 /* ----- single to double conversion */
 /* ----- double to single conversion */
@@ -10220,25 +13433,41 @@ void LAPACK_slauum(
     char const* uplo,
     lapack_int const* n,
     float* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dlauum LAPACK_GLOBAL(dlauum,DLAUUM)
 void LAPACK_dlauum(
     char const* uplo,
     lapack_int const* n,
     double* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_clauum LAPACK_GLOBAL(clauum,CLAUUM)
 void LAPACK_clauum(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_float* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zlauum LAPACK_GLOBAL(zlauum,ZLAUUM)
 void LAPACK_zlauum(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_double* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- generate test matrix */
 #define LAPACK_slagge LAPACK_GLOBAL(slagge,SLAGGE)
@@ -10286,7 +13515,11 @@ void LAPACK_slascl(
     float const* cfrom, float const* cto,
     lapack_int const* m, lapack_int const* n,
     float* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned type_len
+    #endif
+    );
 #define LAPACK_dlascl LAPACK_GLOBAL(dlascl,DLASCL)
 void LAPACK_dlascl(
     char const* type,
@@ -10294,7 +13527,11 @@ void LAPACK_dlascl(
     double const* cfrom, double const* cto,
     lapack_int const* m, lapack_int const* n,
     double* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned type_len
+    #endif
+    );
 #define LAPACK_clascl LAPACK_GLOBAL(clascl,CLASCL)
 void LAPACK_clascl(
     char const* type,
@@ -10302,7 +13539,11 @@ void LAPACK_clascl(
     float const* cfrom, float const* cto,
     lapack_int const* m, lapack_int const* n,
     lapack_complex_float* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned type_len
+    #endif
+    );
 #define LAPACK_zlascl LAPACK_GLOBAL(zlascl,ZLASCL)
 void LAPACK_zlascl(
     char const* type,
@@ -10310,7 +13551,11 @@ void LAPACK_zlascl(
     double const* cfrom, double const* cto,
     lapack_int const* m, lapack_int const* n,
     lapack_complex_double* a, lapack_int const* lda,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned type_len
+    #endif
+    );
 
 /* ----- set matrix to constants */
 #define LAPACK_slaset LAPACK_GLOBAL(slaset,SLASET)
@@ -10318,25 +13563,41 @@ void LAPACK_slaset(
     char const* uplo,
     lapack_int const* m, lapack_int const* n,
     float const* offdiag, float const* diag,
-    float* a, lapack_int const* lda );
+    float* a, lapack_int const* lda
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dlaset LAPACK_GLOBAL(dlaset,DLASET)
 void LAPACK_dlaset(
     char const* uplo,
     lapack_int const* m, lapack_int const* n,
     double const* offdiag, double const* diag,
-    double* a, lapack_int const* lda );
+    double* a, lapack_int const* lda
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_claset LAPACK_GLOBAL(claset,CLASET)
 void LAPACK_claset(
     char const* uplo,
     lapack_int const* m, lapack_int const* n,
     lapack_complex_float const* offdiag, lapack_complex_float const* diag,
-    lapack_complex_float* a, lapack_int const* lda );
+    lapack_complex_float* a, lapack_int const* lda
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zlaset LAPACK_GLOBAL(zlaset,ZLASET)
 void LAPACK_zlaset(
     char const* uplo,
     lapack_int const* m, lapack_int const* n,
     lapack_complex_double const* offdiag, lapack_complex_double const* diag,
-    lapack_complex_double* a, lapack_int const* lda );
+    lapack_complex_double* a, lapack_int const* lda
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- sort */
 #define LAPACK_slasrt LAPACK_GLOBAL(slasrt,SLASRT)
@@ -10344,13 +13605,21 @@ void LAPACK_slasrt(
     char const* id,
     lapack_int const* n,
     float* d,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned id_len
+    #endif
+    );
 #define LAPACK_dlasrt LAPACK_GLOBAL(dlasrt,DLASRT)
 void LAPACK_dlasrt(
     char const* id,
     lapack_int const* n,
     double* d,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned id_len
+    #endif
+    );
 
 /* ----- generate symmetric/Hermitian test matrix */
 #define LAPACK_slagsy LAPACK_GLOBAL(slagsy,SLAGSY)
@@ -10495,14 +13764,22 @@ void LAPACK_csyr(
     lapack_int const* n,
     lapack_complex_float const* alpha,
     lapack_complex_float const* x, lapack_int const* incx,
-    lapack_complex_float* a, lapack_int const* lda );
+    lapack_complex_float* a, lapack_int const* lda
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsyr LAPACK_GLOBAL(zsyr,ZSYR)
 void LAPACK_zsyr(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_double const* alpha,
     lapack_complex_double const* x, lapack_int const* incx,
-    lapack_complex_double* a, lapack_int const* lda );
+    lapack_complex_double* a, lapack_int const* lda
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* symv, moved from BLAS++ */
 #define LAPACK_csymv LAPACK_GLOBAL(csymv, CSYMV)
@@ -10513,7 +13790,11 @@ void LAPACK_csymv(
     lapack_complex_float const* A, lapack_int const* lda,
     lapack_complex_float const* x, lapack_int const* incx,
     lapack_complex_float const* beta,
-    lapack_complex_float* y, lapack_int const* incy );
+    lapack_complex_float* y, lapack_int const* incy
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 #define LAPACK_zsymv LAPACK_GLOBAL(zsymv, ZSYMV)
 void LAPACK_zsymv(
@@ -10523,7 +13804,11 @@ void LAPACK_zsymv(
     lapack_complex_double const* A, lapack_int const* lda,
     lapack_complex_double const* x, lapack_int const* incx,
     lapack_complex_double const* beta,
-    lapack_complex_double* y, lapack_int const* incy );
+    lapack_complex_double* y, lapack_int const* incy
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- LAPACK version number */
 #define LAPACK_ilaver LAPACK_GLOBAL(ilaver,ILAVER)
@@ -10551,7 +13836,11 @@ void LAPACK_sbbcsd(
     float* b21d, float* b21e,
     float* b22d, float* b22e,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu1_len, unsigned jobu2_len, unsigned jobv1t_len, unsigned jobv2t_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_dbbcsd LAPACK_GLOBAL(dbbcsd,DBBCSD)
 void LAPACK_dbbcsd(
     char const* jobu1, char const* jobu2,
@@ -10567,7 +13856,11 @@ void LAPACK_dbbcsd(
     double* b21d, double* b21e,
     double* b22d, double* b22e,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu1_len, unsigned jobu2_len, unsigned jobv1t_len, unsigned jobv2t_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_cbbcsd LAPACK_GLOBAL(cbbcsd,CBBCSD)
 void LAPACK_cbbcsd(
     char const* jobu1, char const* jobu2,
@@ -10584,7 +13877,11 @@ void LAPACK_cbbcsd(
     float* b22d, float* b22e,
     float* rwork,
     lapack_int const* lrwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu1_len, unsigned jobu2_len, unsigned jobv1t_len, unsigned jobv2t_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_zbbcsd LAPACK_GLOBAL(zbbcsd,ZBBCSD)
 void LAPACK_zbbcsd(
     char const* jobu1, char const* jobu2,
@@ -10601,7 +13898,11 @@ void LAPACK_zbbcsd(
     double* b22d, double* b22e,
     double* rwork,
     lapack_int const* lrwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu1_len, unsigned jobu2_len, unsigned jobv1t_len, unsigned jobv2t_len, unsigned trans_len
+    #endif
+    );
 
 /* ----- symmetric permute rows and columns */
 #define LAPACK_ssyswapr LAPACK_GLOBAL(ssyswapr,SSYSWAPR)
@@ -10609,38 +13910,62 @@ void LAPACK_ssyswapr(
     char const* uplo,
     lapack_int const* n,
     float* a, lapack_int const* lda,
-    lapack_int const* i1, lapack_int const* i2 );
+    lapack_int const* i1, lapack_int const* i2
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsyswapr LAPACK_GLOBAL(dsyswapr,DSYSWAPR)
 void LAPACK_dsyswapr(
     char const* uplo,
     lapack_int const* n,
     double* a, lapack_int const* lda,
-    lapack_int const* i1, lapack_int const* i2 );
+    lapack_int const* i1, lapack_int const* i2
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csyswapr LAPACK_GLOBAL(csyswapr,CSYSWAPR)
 void LAPACK_csyswapr(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_float* a, lapack_int const* lda,
-    lapack_int const* i1, lapack_int const* i2 );
+    lapack_int const* i1, lapack_int const* i2
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsyswapr LAPACK_GLOBAL(zsyswapr,ZSYSWAPR)
 void LAPACK_zsyswapr(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_double* a, lapack_int const* lda,
     lapack_int const* i1,
-    lapack_int const* i2 );
+    lapack_int const* i2
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cheswapr LAPACK_GLOBAL(cheswapr,CHESWAPR)
 void LAPACK_cheswapr(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_float* a, lapack_int const* lda,
-    lapack_int const* i1, lapack_int const* i2 );
+    lapack_int const* i1, lapack_int const* i2
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zheswapr LAPACK_GLOBAL(zheswapr,ZHESWAPR)
 void LAPACK_zheswapr(
     char const* uplo,
     lapack_int const* n,
     lapack_complex_double* a, lapack_int const* lda,
-    lapack_int const* i1, lapack_int const* i2 );
+    lapack_int const* i1, lapack_int const* i2
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric indefinite inverse (see also sy/hetri) */
 #define LAPACK_ssytri2 LAPACK_GLOBAL(ssytri2,SSYTRI2)
@@ -10650,7 +13975,11 @@ void LAPACK_ssytri2(
     float* a, lapack_int const* lda,
     lapack_int const* ipiv,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsytri2 LAPACK_GLOBAL(dsytri2,DSYTRI2)
 void LAPACK_dsytri2(
     char const* uplo,
@@ -10658,7 +13987,11 @@ void LAPACK_dsytri2(
     double* a, lapack_int const* lda,
     lapack_int const* ipiv,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csytri2 LAPACK_GLOBAL(csytri2,CSYTRI2)
 void LAPACK_csytri2(
     char const* uplo,
@@ -10666,7 +13999,11 @@ void LAPACK_csytri2(
     lapack_complex_float* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsytri2 LAPACK_GLOBAL(zsytri2,ZSYTRI2)
 void LAPACK_zsytri2(
     char const* uplo,
@@ -10674,7 +14011,11 @@ void LAPACK_zsytri2(
     lapack_complex_double* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chetri2 LAPACK_GLOBAL(chetri2,CHETRI2)
 void LAPACK_chetri2(
     char const* uplo,
@@ -10682,7 +14023,11 @@ void LAPACK_chetri2(
     lapack_complex_float* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhetri2 LAPACK_GLOBAL(zhetri2,ZHETRI2)
 void LAPACK_zhetri2(
     char const* uplo,
@@ -10690,7 +14035,11 @@ void LAPACK_zhetri2(
     lapack_complex_double* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric indefinite inverse (internal, used by sytri2) */
 #define LAPACK_ssytri2x LAPACK_GLOBAL(ssytri2x,SSYTRI2X)
@@ -10701,7 +14050,11 @@ void LAPACK_ssytri2x(
     lapack_int const* ipiv,
     float* work,
     lapack_int const* nb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsytri2x LAPACK_GLOBAL(dsytri2x,DSYTRI2X)
 void LAPACK_dsytri2x(
     char const* uplo,
@@ -10710,7 +14063,11 @@ void LAPACK_dsytri2x(
     lapack_int const* ipiv,
     double* work,
     lapack_int const* nb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csytri2x LAPACK_GLOBAL(csytri2x,CSYTRI2X)
 void LAPACK_csytri2x(
     char const* uplo,
@@ -10718,7 +14075,11 @@ void LAPACK_csytri2x(
     lapack_complex_float* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_float* work, lapack_int const* nb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsytri2x LAPACK_GLOBAL(zsytri2x,ZSYTRI2X)
 void LAPACK_zsytri2x(
     char const* uplo,
@@ -10726,7 +14087,11 @@ void LAPACK_zsytri2x(
     lapack_complex_double* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_double* work, lapack_int const* nb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chetri2x LAPACK_GLOBAL(chetri2x,CHETRI2X)
 void LAPACK_chetri2x(
     char const* uplo,
@@ -10734,7 +14099,11 @@ void LAPACK_chetri2x(
     lapack_complex_float* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_float* work, lapack_int const* nb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhetri2x LAPACK_GLOBAL(zhetri2x,ZHETRI2X)
 void LAPACK_zhetri2x(
     char const* uplo,
@@ -10742,7 +14111,11 @@ void LAPACK_zhetri2x(
     lapack_complex_double* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_double* work, lapack_int const* nb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric indefinite solve */
 /* matrix A is modified, but restored on exit (not for [cz]hetrs2) */
@@ -10755,7 +14128,11 @@ void LAPACK_ssytrs2(
     lapack_int const* ipiv,
     float* b, lapack_int const* ldb,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsytrs2 LAPACK_GLOBAL(dsytrs2,DSYTRS2)
 void LAPACK_dsytrs2(
     char const* uplo,
@@ -10765,7 +14142,11 @@ void LAPACK_dsytrs2(
     lapack_int const* ipiv,
     double* b, lapack_int const* ldb,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csytrs2 LAPACK_GLOBAL(csytrs2,CSYTRS2)
 void LAPACK_csytrs2(
     char const* uplo,
@@ -10775,7 +14156,11 @@ void LAPACK_csytrs2(
     lapack_int const* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
     lapack_complex_float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsytrs2 LAPACK_GLOBAL(zsytrs2,ZSYTRS2)
 void LAPACK_zsytrs2(
     char const* uplo,
@@ -10785,7 +14170,11 @@ void LAPACK_zsytrs2(
     lapack_int const* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
     lapack_complex_double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chetrs2 LAPACK_GLOBAL(chetrs2,CHETRS2)
 void LAPACK_chetrs2(
     char const* uplo,
@@ -10795,7 +14184,11 @@ void LAPACK_chetrs2(
     lapack_int const* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
     lapack_complex_float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhetrs2 LAPACK_GLOBAL(zhetrs2,ZHETRS2)
 void LAPACK_zhetrs2(
     char const* uplo,
@@ -10805,7 +14198,11 @@ void LAPACK_zhetrs2(
     lapack_int const* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
     lapack_complex_double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric indefinite convert formats */
 #define LAPACK_ssyconv LAPACK_GLOBAL(ssyconv,SSYCONV)
@@ -10815,7 +14212,11 @@ void LAPACK_ssyconv(
     float* a, lapack_int const* lda,
     lapack_int const* ipiv,
     float* e,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned way_len
+    #endif
+    );
 #define LAPACK_dsyconv LAPACK_GLOBAL(dsyconv,DSYCONV)
 void LAPACK_dsyconv(
     char const* uplo, char const* way,
@@ -10823,7 +14224,11 @@ void LAPACK_dsyconv(
     double* a, lapack_int const* lda,
     lapack_int const* ipiv,
     double* e,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned way_len
+    #endif
+    );
 #define LAPACK_csyconv LAPACK_GLOBAL(csyconv,CSYCONV)
 void LAPACK_csyconv(
     char const* uplo, char const* way,
@@ -10831,7 +14236,11 @@ void LAPACK_csyconv(
     lapack_complex_float* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_float* e,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned way_len
+    #endif
+    );
 #define LAPACK_zsyconv LAPACK_GLOBAL(zsyconv,ZSYCONV)
 void LAPACK_zsyconv(
     char const* uplo, char const* way,
@@ -10839,7 +14248,11 @@ void LAPACK_zsyconv(
     lapack_complex_double* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_double* e,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len, unsigned way_len
+    #endif
+    );
 
 /* ----- bidiagonalize orthogonal matrix */
 #define LAPACK_sorbdb LAPACK_GLOBAL(sorbdb,SORBDB)
@@ -10856,7 +14269,11 @@ void LAPACK_sorbdb(
     float* tauq1, float* tauq2,
     float* work,
     lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len, unsigned signs_len
+    #endif
+    );
 #define LAPACK_dorbdb LAPACK_GLOBAL(dorbdb,DORBDB)
 void LAPACK_dorbdb(
     char const* trans, char const* signs,
@@ -10871,7 +14288,11 @@ void LAPACK_dorbdb(
     double* tauq1, double* tauq2,
     double* work,
     lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len, unsigned signs_len
+    #endif
+    );
 #define LAPACK_cunbdb LAPACK_GLOBAL(cunbdb,CUNBDB)
 void LAPACK_cunbdb(
     char const* trans, char const* signs,
@@ -10884,7 +14305,11 @@ void LAPACK_cunbdb(
     lapack_complex_float* taup1, lapack_complex_float* taup2,
     lapack_complex_float* tauq1, lapack_complex_float* tauq2,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len, unsigned signs_len
+    #endif
+    );
 #define LAPACK_zunbdb LAPACK_GLOBAL(zunbdb,ZUNBDB)
 void LAPACK_zunbdb(
     char const* trans, char const* signs,
@@ -10897,7 +14322,11 @@ void LAPACK_zunbdb(
     lapack_complex_double* taup1, lapack_complex_double* taup2,
     lapack_complex_double* tauq1, lapack_complex_double* tauq2,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len, unsigned signs_len
+    #endif
+    );
 
 /* ----- CS decomposition of orthogonal matrix */
 #define LAPACK_sorcsd LAPACK_GLOBAL(sorcsd,SORCSD)
@@ -10918,7 +14347,11 @@ void LAPACK_sorcsd(
     float* v2t, lapack_int const* ldv2t,
     float* work, lapack_int const* lwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu1_len, unsigned jobu2_len, unsigned jobv1t_len, unsigned jobv2t_len, unsigned trans_len, unsigned signs_len
+    #endif
+    );
 #define LAPACK_dorcsd LAPACK_GLOBAL(dorcsd,DORCSD)
 void LAPACK_dorcsd(
     char const* jobu1, char const* jobu2,
@@ -10937,7 +14370,11 @@ void LAPACK_dorcsd(
     double* v2t, lapack_int const* ldv2t,
     double* work, lapack_int const* lwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu1_len, unsigned jobu2_len, unsigned jobv1t_len, unsigned jobv2t_len, unsigned trans_len, unsigned signs_len
+    #endif
+    );
 #define LAPACK_cuncsd LAPACK_GLOBAL(cuncsd,CUNCSD)
 void LAPACK_cuncsd(
     char const* jobu1, char const* jobu2,
@@ -10957,7 +14394,11 @@ void LAPACK_cuncsd(
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork, lapack_int const* lrwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu1_len, unsigned jobu2_len, unsigned jobv1t_len, unsigned jobv2t_len, unsigned trans_len, unsigned signs_len
+    #endif
+    );
 #define LAPACK_zuncsd LAPACK_GLOBAL(zuncsd,ZUNCSD)
 void LAPACK_zuncsd(
     char const* jobu1, char const* jobu2,
@@ -10977,7 +14418,11 @@ void LAPACK_zuncsd(
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork, lapack_int const* lrwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu1_len, unsigned jobu2_len, unsigned jobv1t_len, unsigned jobv2t_len, unsigned trans_len, unsigned signs_len
+    #endif
+    );
 
 /* ----- CS decomposition of 2-by-1 partitioned orthogonal matrix */
 #define LAPACK_sorcsd2by1 LAPACK_GLOBAL(sorcsd2by1,SORCSD2BY1)
@@ -10994,7 +14439,11 @@ void LAPACK_sorcsd2by1(
     float* v1t, lapack_int const* ldv1t,
     float* work, lapack_int const* lwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu1_len, unsigned jobu2_len, unsigned jobv1t_len
+    #endif
+    );
 #define LAPACK_dorcsd2by1 LAPACK_GLOBAL(dorcsd2by1,DORCSD2BY1)
 void LAPACK_dorcsd2by1(
     char const* jobu1, char const* jobu2,
@@ -11009,7 +14458,11 @@ void LAPACK_dorcsd2by1(
     double* v1t, lapack_int const* ldv1t,
     double* work, lapack_int const* lwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu1_len, unsigned jobu2_len, unsigned jobv1t_len
+    #endif
+    );
 #define LAPACK_cuncsd2by1 LAPACK_GLOBAL(cuncsd2by1,CUNCSD2BY1)
 void LAPACK_cuncsd2by1(
     char const* jobu1, char const* jobu2,
@@ -11025,7 +14478,11 @@ void LAPACK_cuncsd2by1(
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork, lapack_int const* lrwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu1_len, unsigned jobu2_len, unsigned jobv1t_len
+    #endif
+    );
 #define LAPACK_zuncsd2by1 LAPACK_GLOBAL(zuncsd2by1,ZUNCSD2BY1)
 void LAPACK_zuncsd2by1(
     char const* jobu1, char const* jobu2,
@@ -11041,7 +14498,11 @@ void LAPACK_zuncsd2by1(
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork, lapack_int const* lrwork,
     lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobu1_len, unsigned jobu2_len, unsigned jobv1t_len
+    #endif
+    );
 
 /* =============================================================================
 *  LAPACK 3.4.0 */
@@ -11136,7 +14597,11 @@ void LAPACK_sgemqrt(
     float const* t, lapack_int const* ldt,
     float* c, lapack_int const* ldc,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_dgemqrt LAPACK_GLOBAL(dgemqrt,DGEMQRT)
 void LAPACK_dgemqrt(
     char const* side, char const* trans,
@@ -11146,7 +14611,11 @@ void LAPACK_dgemqrt(
     double const* t, lapack_int const* ldt,
     double* c, lapack_int const* ldc,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_cgemqrt LAPACK_GLOBAL(cgemqrt,CGEMQRT)
 void LAPACK_cgemqrt(
     char const* side, char const* trans,
@@ -11156,7 +14625,11 @@ void LAPACK_cgemqrt(
     lapack_complex_float const* t, lapack_int const* ldt,
     lapack_complex_float* c, lapack_int const* ldc,
     lapack_complex_float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_zgemqrt LAPACK_GLOBAL(zgemqrt,ZGEMQRT)
 void LAPACK_zgemqrt(
     char const* side, char const* trans,
@@ -11166,7 +14639,11 @@ void LAPACK_zgemqrt(
     lapack_complex_double const* t, lapack_int const* ldt,
     lapack_complex_double* c, lapack_int const* ldc,
     lapack_complex_double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 
 /* ----- QR factorization of triangular A and pentagonal B */
 #define LAPACK_stpqrt LAPACK_GLOBAL(stpqrt,STPQRT)
@@ -11247,7 +14724,11 @@ void LAPACK_stpmqrt(
     float* a, lapack_int const* lda,
     float* b, lapack_int const* ldb,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_dtpmqrt LAPACK_GLOBAL(dtpmqrt,DTPMQRT)
 void LAPACK_dtpmqrt(
     char const* side, char const* trans,
@@ -11258,7 +14739,11 @@ void LAPACK_dtpmqrt(
     double* a, lapack_int const* lda,
     double* b, lapack_int const* ldb,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_ctpmqrt LAPACK_GLOBAL(ctpmqrt,CTPMQRT)
 void LAPACK_ctpmqrt(
     char const* side, char const* trans,
@@ -11269,7 +14754,11 @@ void LAPACK_ctpmqrt(
     lapack_complex_float* a, lapack_int const* lda,
     lapack_complex_float* b, lapack_int const* ldb,
     lapack_complex_float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_ztpmqrt LAPACK_GLOBAL(ztpmqrt,ZTPMQRT)
 void LAPACK_ztpmqrt(
     char const* side, char const* trans,
@@ -11280,7 +14769,11 @@ void LAPACK_ztpmqrt(
     lapack_complex_double* a, lapack_int const* lda,
     lapack_complex_double* b, lapack_int const* ldb,
     lapack_complex_double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 
 /* ----- apply triangular-pentagonal block reflector */
 #define LAPACK_stprfb LAPACK_GLOBAL(stprfb,STPRFB)
@@ -11293,7 +14786,11 @@ void LAPACK_stprfb(
     float* a, lapack_int const* lda,
     float* b, lapack_int const* ldb,
     float* work,
-    lapack_int const* ldwork );
+    lapack_int const* ldwork
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len, unsigned direction_len, unsigned storev_len
+    #endif
+    );
 #define LAPACK_dtprfb LAPACK_GLOBAL(dtprfb,DTPRFB)
 void LAPACK_dtprfb(
     char const* side, char const* trans, char const* direction, char const* storev,
@@ -11304,7 +14801,11 @@ void LAPACK_dtprfb(
     double* a, lapack_int const* lda,
     double* b, lapack_int const* ldb,
     double* work,
-    lapack_int const* ldwork );
+    lapack_int const* ldwork
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len, unsigned direction_len, unsigned storev_len
+    #endif
+    );
 #define LAPACK_ctprfb LAPACK_GLOBAL(ctprfb,CTPRFB)
 void LAPACK_ctprfb(
     char const* side, char const* trans, char const* direction, char const* storev,
@@ -11314,7 +14815,11 @@ void LAPACK_ctprfb(
     lapack_complex_float const* t, lapack_int const* ldt,
     lapack_complex_float* a, lapack_int const* lda,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_complex_float* work, lapack_int const* ldwork );
+    lapack_complex_float* work, lapack_int const* ldwork
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len, unsigned direction_len, unsigned storev_len
+    #endif
+    );
 #define LAPACK_ztprfb LAPACK_GLOBAL(ztprfb,ZTPRFB)
 void LAPACK_ztprfb(
     char const* side, char const* trans, char const* direction, char const* storev,
@@ -11324,7 +14829,11 @@ void LAPACK_ztprfb(
     lapack_complex_double const* t, lapack_int const* ldt,
     lapack_complex_double* a, lapack_int const* lda,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_complex_double* work, lapack_int const* ldwork );
+    lapack_complex_double* work, lapack_int const* ldwork
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len, unsigned direction_len, unsigned storev_len
+    #endif
+    );
 
 /* =============================================================================
 *  LAPACK 3.5.0 */
@@ -11338,7 +14847,11 @@ void LAPACK_ssysv_rook(
     lapack_int* ipiv,
     float* b, lapack_int const* ldb,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsysv_rook LAPACK_GLOBAL(dsysv_rook,DSYSV_ROOK)
 void LAPACK_dsysv_rook(
     char const* uplo,
@@ -11347,7 +14860,11 @@ void LAPACK_dsysv_rook(
     lapack_int* ipiv,
     double* b, lapack_int const* ldb,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csysv_rook LAPACK_GLOBAL(csysv_rook,CSYSV_ROOK)
 void LAPACK_csysv_rook(
     char const* uplo,
@@ -11356,7 +14873,11 @@ void LAPACK_csysv_rook(
     lapack_int* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsysv_rook LAPACK_GLOBAL(zsysv_rook,ZSYSV_ROOK)
 void LAPACK_zsysv_rook(
     char const* uplo,
@@ -11365,7 +14886,11 @@ void LAPACK_zsysv_rook(
     lapack_int* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chesv_rook LAPACK_GLOBAL(chesv_rook,CHESV_ROOK)
 void LAPACK_chesv_rook(
     char const* uplo,
@@ -11374,7 +14899,11 @@ void LAPACK_chesv_rook(
     lapack_int* ipiv,
     lapack_complex_float* B, lapack_int const* ldb,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhesv_rook LAPACK_GLOBAL(zhesv_rook,ZHESV_ROOK)
 void LAPACK_zhesv_rook(
     char const* uplo,
@@ -11383,7 +14912,11 @@ void LAPACK_zhesv_rook(
     lapack_int* ipiv,
     lapack_complex_double* B, lapack_int const* ldb,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric indefinite factorization, rook pivoting */
 #define LAPACK_ssytrf_rook LAPACK_GLOBAL(ssytrf_rook,SSYTRF_ROOK)
@@ -11393,7 +14926,11 @@ void LAPACK_ssytrf_rook(
     float* a, lapack_int const* lda,
     lapack_int* ipiv,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsytrf_rook LAPACK_GLOBAL(dsytrf_rook,DSYTRF_ROOK)
 void LAPACK_dsytrf_rook(
     char const* uplo,
@@ -11401,7 +14938,11 @@ void LAPACK_dsytrf_rook(
     double* a, lapack_int const* lda,
     lapack_int* ipiv,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csytrf_rook LAPACK_GLOBAL(csytrf_rook,CSYTRF_ROOK)
 void LAPACK_csytrf_rook(
     char const* uplo,
@@ -11409,7 +14950,11 @@ void LAPACK_csytrf_rook(
     lapack_complex_float* a, lapack_int const* lda,
     lapack_int* ipiv,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsytrf_rook LAPACK_GLOBAL(zsytrf_rook,ZSYTRF_ROOK)
 void LAPACK_zsytrf_rook(
     char const* uplo,
@@ -11417,7 +14962,11 @@ void LAPACK_zsytrf_rook(
     lapack_complex_double* a, lapack_int const* lda,
     lapack_int* ipiv,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chetrf_rook LAPACK_GLOBAL(chetrf_rook,CHETRF_ROOK)
 void LAPACK_chetrf_rook(
     char const* uplo,
@@ -11425,7 +14974,11 @@ void LAPACK_chetrf_rook(
     lapack_complex_float* a, lapack_int const* lda,
     lapack_int* ipiv,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhetrf_rook LAPACK_GLOBAL(zhetrf_rook,ZHETRF_ROOK)
 void LAPACK_zhetrf_rook(
     char const* uplo,
@@ -11433,7 +14986,11 @@ void LAPACK_zhetrf_rook(
     lapack_complex_double* a, lapack_int const* lda,
     lapack_int* ipiv,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric indefinite solve, rook pivoting */
 #define LAPACK_ssytrs_rook LAPACK_GLOBAL(ssytrs_rook,SSYTRS_ROOK)
@@ -11443,7 +15000,11 @@ void LAPACK_ssytrs_rook(
     float const* a, lapack_int const* lda,
     lapack_int const* ipiv,
     float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsytrs_rook LAPACK_GLOBAL(dsytrs_rook,DSYTRS_ROOK)
 void LAPACK_dsytrs_rook(
     char const* uplo,
@@ -11451,7 +15012,11 @@ void LAPACK_dsytrs_rook(
     double const* a, lapack_int const* lda,
     lapack_int const* ipiv,
     double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csytrs_rook LAPACK_GLOBAL(csytrs_rook,CSYTRS_ROOK)
 void LAPACK_csytrs_rook(
     char const* uplo,
@@ -11459,7 +15024,11 @@ void LAPACK_csytrs_rook(
     lapack_complex_float const* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsytrs_rook LAPACK_GLOBAL(zsytrs_rook,ZSYTRS_ROOK)
 void LAPACK_zsytrs_rook(
     char const* uplo,
@@ -11467,7 +15036,11 @@ void LAPACK_zsytrs_rook(
     lapack_complex_double const* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chetrs_rook LAPACK_GLOBAL(chetrs_rook,CHETRS_ROOK)
 void LAPACK_chetrs_rook(
     char const* uplo,
@@ -11475,7 +15048,11 @@ void LAPACK_chetrs_rook(
     lapack_complex_float const* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhetrs_rook LAPACK_GLOBAL(zhetrs_rook,ZHETRS_ROOK)
 void LAPACK_zhetrs_rook(
     char const* uplo,
@@ -11483,7 +15060,11 @@ void LAPACK_zhetrs_rook(
     lapack_complex_double const* a, lapack_int const* lda,
     lapack_int const* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* =============================================================================
 *  LAPACK 3.7.0 */
@@ -11497,7 +15078,11 @@ void LAPACK_ssysv_aa(
     lapack_int* ipiv,
     float* b, lapack_int const* ldb,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsysv_aa LAPACK_GLOBAL(dsysv_aa,DSYSV_AA)
 void LAPACK_dsysv_aa(
     char const* uplo,
@@ -11506,7 +15091,11 @@ void LAPACK_dsysv_aa(
     lapack_int* ipiv,
     double* b, lapack_int const* ldb,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csysv_aa LAPACK_GLOBAL(csysv_aa,CSYSV_AA)
 void LAPACK_csysv_aa(
     char const* uplo,
@@ -11515,7 +15104,11 @@ void LAPACK_csysv_aa(
     lapack_int* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsysv_aa LAPACK_GLOBAL(zsysv_aa,ZSYSV_AA)
 void LAPACK_zsysv_aa(
     char const* uplo,
@@ -11524,7 +15117,11 @@ void LAPACK_zsysv_aa(
     lapack_int* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chesv_aa LAPACK_GLOBAL(chesv_aa,CHESV_AA)
 void LAPACK_chesv_aa(
     char const* uplo,
@@ -11533,7 +15130,11 @@ void LAPACK_chesv_aa(
     lapack_int* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhesv_aa LAPACK_GLOBAL(zhesv_aa,ZHESV_AA)
 void LAPACK_zhesv_aa(
     char const* uplo,
@@ -11542,7 +15143,11 @@ void LAPACK_zhesv_aa(
     lapack_int* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric indefinite factorization, Aasen's */
 #define LAPACK_ssytrf_aa LAPACK_GLOBAL(ssytrf_aa,SSYTRF_AA)
@@ -11552,7 +15157,11 @@ void LAPACK_ssytrf_aa(
     float* a, lapack_int const* lda,
     lapack_int* ipiv,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsytrf_aa LAPACK_GLOBAL(dsytrf_aa,DSYTRF_AA)
 void LAPACK_dsytrf_aa(
     char const* uplo,
@@ -11560,7 +15169,11 @@ void LAPACK_dsytrf_aa(
     double* a, lapack_int const* lda,
     lapack_int* ipiv,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csytrf_aa LAPACK_GLOBAL(csytrf_aa,CSYTRF_AA)
 void LAPACK_csytrf_aa(
     char const* uplo,
@@ -11568,7 +15181,11 @@ void LAPACK_csytrf_aa(
     lapack_complex_float* a, lapack_int const* lda,
     lapack_int* ipiv,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsytrf_aa LAPACK_GLOBAL(zsytrf_aa,ZSYTRF_AA)
 void LAPACK_zsytrf_aa(
     char const* uplo,
@@ -11576,7 +15193,11 @@ void LAPACK_zsytrf_aa(
     lapack_complex_double* a, lapack_int const* lda,
     lapack_int* ipiv,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chetrf_aa LAPACK_GLOBAL(chetrf_aa,CHETRF_AA)
 void LAPACK_chetrf_aa(
     char const* uplo,
@@ -11584,7 +15205,11 @@ void LAPACK_chetrf_aa(
     lapack_complex_float* a, lapack_int const* lda,
     lapack_int* ipiv,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhetrf_aa LAPACK_GLOBAL(zhetrf_aa,ZHETRF_AA)
 void LAPACK_zhetrf_aa(
     char const* uplo,
@@ -11592,7 +15217,11 @@ void LAPACK_zhetrf_aa(
     lapack_complex_double* a, lapack_int const* lda,
     lapack_int* ipiv,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric indefinite solve, Aasen's */
 #define LAPACK_ssytrs_aa LAPACK_GLOBAL(ssytrs_aa,SSYTRS_AA)
@@ -11604,7 +15233,11 @@ void LAPACK_ssytrs_aa(
     lapack_int const* ipiv,
     float* b, lapack_int const* ldb,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsytrs_aa LAPACK_GLOBAL(dsytrs_aa,DSYTRS_AA)
 void LAPACK_dsytrs_aa(
     char const* uplo,
@@ -11614,7 +15247,11 @@ void LAPACK_dsytrs_aa(
     lapack_int const* ipiv,
     double* b, lapack_int const* ldb,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csytrs_aa LAPACK_GLOBAL(csytrs_aa,CSYTRS_AA)
 void LAPACK_csytrs_aa(
     char const* uplo,
@@ -11624,7 +15261,11 @@ void LAPACK_csytrs_aa(
     lapack_int const* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsytrs_aa LAPACK_GLOBAL(zsytrs_aa,ZSYTRS_AA)
 void LAPACK_zsytrs_aa(
     char const* uplo,
@@ -11634,7 +15275,11 @@ void LAPACK_zsytrs_aa(
     lapack_int const* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chetrs_aa LAPACK_GLOBAL(chetrs_aa,CHETRS_AA)
 void LAPACK_chetrs_aa(
     char const* uplo,
@@ -11644,7 +15289,11 @@ void LAPACK_chetrs_aa(
     lapack_int const* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhetrs_aa LAPACK_GLOBAL(zhetrs_aa,ZHETRS_AA)
 void LAPACK_zhetrs_aa(
     char const* uplo,
@@ -11654,7 +15303,11 @@ void LAPACK_zhetrs_aa(
     lapack_int const* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric indefinite solve, rook pivoting */
 #define LAPACK_ssysv_rk LAPACK_GLOBAL(ssysv_rk,SSYSV_RK)
@@ -11666,7 +15319,11 @@ void LAPACK_ssysv_rk(
     lapack_int* ipiv,
     float* b, lapack_int const* ldb,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsysv_rk LAPACK_GLOBAL(dsysv_rk,DSYSV_RK)
 void LAPACK_dsysv_rk(
     char const* uplo,
@@ -11676,7 +15333,11 @@ void LAPACK_dsysv_rk(
     lapack_int* ipiv,
     double* b, lapack_int const* ldb,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csysv_rk LAPACK_GLOBAL(csysv_rk,CSYSV_RK)
 void LAPACK_csysv_rk(
     char const* uplo,
@@ -11686,7 +15347,11 @@ void LAPACK_csysv_rk(
     lapack_int* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsysv_rk LAPACK_GLOBAL(zsysv_rk,ZSYSV_RK)
 void LAPACK_zsysv_rk(
     char const* uplo,
@@ -11696,7 +15361,11 @@ void LAPACK_zsysv_rk(
     lapack_int* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chesv_rk LAPACK_GLOBAL(chesv_rk,CHESV_RK)
 void LAPACK_chesv_rk(
     char const* uplo,
@@ -11706,7 +15375,11 @@ void LAPACK_chesv_rk(
     lapack_int* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhesv_rk LAPACK_GLOBAL(zhesv_rk,ZHESV_RK)
 void LAPACK_zhesv_rk(
     char const* uplo,
@@ -11716,7 +15389,11 @@ void LAPACK_zhesv_rk(
     lapack_int* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric indefinite factorization, rook pivoting */
 #define LAPACK_ssytrf_rk LAPACK_GLOBAL(ssytrf_rk,SSYTRF_RK)
@@ -11727,7 +15404,11 @@ void LAPACK_ssytrf_rk(
     float* e,
     lapack_int* ipiv,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsytrf_rk LAPACK_GLOBAL(dsytrf_rk,DSYTRF_RK)
 void LAPACK_dsytrf_rk(
     char const* uplo,
@@ -11736,7 +15417,11 @@ void LAPACK_dsytrf_rk(
     double* e,
     lapack_int* ipiv,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csytrf_rk LAPACK_GLOBAL(csytrf_rk,CSYTRF_RK)
 void LAPACK_csytrf_rk(
     char const* uplo,
@@ -11745,7 +15430,11 @@ void LAPACK_csytrf_rk(
     lapack_complex_float* e,
     lapack_int* ipiv,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsytrf_rk LAPACK_GLOBAL(zsytrf_rk,ZSYTRF_RK)
 void LAPACK_zsytrf_rk(
     char const* uplo,
@@ -11754,7 +15443,11 @@ void LAPACK_zsytrf_rk(
     lapack_complex_double* e,
     lapack_int* ipiv,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chetrf_rk LAPACK_GLOBAL(chetrf_rk,CHETRF_RK)
 void LAPACK_chetrf_rk(
     char const* uplo,
@@ -11763,7 +15456,11 @@ void LAPACK_chetrf_rk(
     lapack_complex_float* e,
     lapack_int* ipiv,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhetrf_rk LAPACK_GLOBAL(zhetrf_rk,ZHETRF_RK)
 void LAPACK_zhetrf_rk(
     char const* uplo,
@@ -11772,7 +15469,11 @@ void LAPACK_zhetrf_rk(
     lapack_complex_double* e,
     lapack_int* ipiv,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric indefinite solve, rook pivoting */
 #define LAPACK_ssytrs_3 LAPACK_GLOBAL(ssytrs_3,SSYTRS_3)
@@ -11784,7 +15485,11 @@ void LAPACK_ssytrs_3(
     float const* e,
     lapack_int const* ipiv,
     float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsytrs_3 LAPACK_GLOBAL(dsytrs_3,DSYTRS_3)
 void LAPACK_dsytrs_3(
     char const* uplo,
@@ -11794,7 +15499,11 @@ void LAPACK_dsytrs_3(
     double const* e,
     lapack_int const* ipiv,
     double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csytrs_3 LAPACK_GLOBAL(csytrs_3,CSYTRS_3)
 void LAPACK_csytrs_3(
     char const* uplo,
@@ -11804,7 +15513,11 @@ void LAPACK_csytrs_3(
     lapack_complex_float const* e,
     lapack_int const* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsytrs_3 LAPACK_GLOBAL(zsytrs_3,ZSYTRS_3)
 void LAPACK_zsytrs_3(
     char const* uplo,
@@ -11814,7 +15527,11 @@ void LAPACK_zsytrs_3(
     lapack_complex_double const* e,
     lapack_int const* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chetrs_3 LAPACK_GLOBAL(chetrs_3,CHETRS_3)
 void LAPACK_chetrs_3(
     char const* uplo,
@@ -11824,7 +15541,11 @@ void LAPACK_chetrs_3(
     lapack_complex_float const* e,
     lapack_int const* ipiv,
     lapack_complex_float* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhetrs_3 LAPACK_GLOBAL(zhetrs_3,ZHETRS_3)
 void LAPACK_zhetrs_3(
     char const* uplo,
@@ -11834,7 +15555,11 @@ void LAPACK_zhetrs_3(
     lapack_complex_double const* e,
     lapack_int const* ipiv,
     lapack_complex_double* b, lapack_int const* ldb,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric indefinite inverse, rook pivoting */
 #define LAPACK_ssytri_3 LAPACK_GLOBAL(ssytri_3,SSYTRI_3)
@@ -11845,7 +15570,11 @@ void LAPACK_ssytri_3(
     float const* e,
     lapack_int const* ipiv,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsytri_3 LAPACK_GLOBAL(dsytri_3,DSYTRI_3)
 void LAPACK_dsytri_3(
     char const* uplo,
@@ -11854,7 +15583,11 @@ void LAPACK_dsytri_3(
     double const* e,
     lapack_int const* ipiv,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csytri_3 LAPACK_GLOBAL(csytri_3,CSYTRI_3)
 void LAPACK_csytri_3(
     char const* uplo,
@@ -11863,7 +15596,11 @@ void LAPACK_csytri_3(
     lapack_complex_float const* e,
     lapack_int const* ipiv,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsytri_3 LAPACK_GLOBAL(zsytri_3,ZSYTRI_3)
 void LAPACK_zsytri_3(
     char const* uplo,
@@ -11872,7 +15609,11 @@ void LAPACK_zsytri_3(
     lapack_complex_double const* e,
     lapack_int const* ipiv,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chetri_3 LAPACK_GLOBAL(chetri_3,CHETRI_3)
 void LAPACK_chetri_3(
     char const* uplo,
@@ -11881,7 +15622,11 @@ void LAPACK_chetri_3(
     lapack_complex_float const* e,
     lapack_int const* ipiv,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhetri_3 LAPACK_GLOBAL(zhetri_3,ZHETRI_3)
 void LAPACK_zhetri_3(
     char const* uplo,
@@ -11890,7 +15635,11 @@ void LAPACK_zhetri_3(
     lapack_complex_double const* e,
     lapack_int const* ipiv,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric indefinite condition number estimate, rook pivoting */
 #define LAPACK_ssycon_3 LAPACK_GLOBAL(ssycon_3,SSYCON_3)
@@ -11903,7 +15652,11 @@ void LAPACK_ssycon_3(
     float const* anorm,
     float* rcond,
     float* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsycon_3 LAPACK_GLOBAL(dsycon_3,DSYCON_3)
 void LAPACK_dsycon_3(
     char const* uplo,
@@ -11914,7 +15667,11 @@ void LAPACK_dsycon_3(
     double const* anorm,
     double* rcond,
     double* work, lapack_int* iwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_csycon_3 LAPACK_GLOBAL(csycon_3,CSYCON_3)
 void LAPACK_csycon_3(
     char const* uplo,
@@ -11925,7 +15682,11 @@ void LAPACK_csycon_3(
     float const* anorm,
     float* rcond,
     lapack_complex_float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zsycon_3 LAPACK_GLOBAL(zsycon_3,ZSYCON_3)
 void LAPACK_zsycon_3(
     char const* uplo,
@@ -11936,7 +15697,11 @@ void LAPACK_zsycon_3(
     double const* anorm,
     double* rcond,
     lapack_complex_double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_checon_3 LAPACK_GLOBAL(checon_3,CHECON_3)
 void LAPACK_checon_3(
     char const* uplo,
@@ -11947,7 +15712,11 @@ void LAPACK_checon_3(
     float const* anorm,
     float* rcond,
     lapack_complex_float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhecon_3 LAPACK_GLOBAL(zhecon_3,ZHECON_3)
 void LAPACK_zhecon_3(
     char const* uplo,
@@ -11958,7 +15727,11 @@ void LAPACK_zhecon_3(
     double const* anorm,
     double* rcond,
     lapack_complex_double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned uplo_len
+    #endif
+    );
 
 /* ----- LQ factorization, opaque structures (for short-wide LQ) */
 #define LAPACK_sgelq LAPACK_GLOBAL(sgelq,SGELQ)
@@ -11999,7 +15772,11 @@ void LAPACK_sgemlq(
     float const* t, lapack_int const* tsize,
     float* c, lapack_int const* ldc,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_dgemlq LAPACK_GLOBAL(dgemlq,DGEMLQ)
 void LAPACK_dgemlq(
     char const* side, char const* trans,
@@ -12008,7 +15785,11 @@ void LAPACK_dgemlq(
     double const* t, lapack_int const* tsize,
     double* c, lapack_int const* ldc,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_cgemlq LAPACK_GLOBAL(cgemlq,CGEMLQ)
 void LAPACK_cgemlq(
     char const* side, char const* trans,
@@ -12017,7 +15798,11 @@ void LAPACK_cgemlq(
     lapack_complex_float const* t, lapack_int const* tsize,
     lapack_complex_float* c, lapack_int const* ldc,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_zgemlq LAPACK_GLOBAL(zgemlq,ZGEMLQ)
 void LAPACK_zgemlq(
     char const* side, char const* trans,
@@ -12026,7 +15811,11 @@ void LAPACK_zgemlq(
     lapack_complex_double const* t, lapack_int const* tsize,
     lapack_complex_double* c, lapack_int const* ldc,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 
 /* ----- QR factorization, opaque structures (for tall-skinny QR) */
 #define LAPACK_sgeqr LAPACK_GLOBAL(sgeqr,SGEQR)
@@ -12067,7 +15856,11 @@ void LAPACK_sgemqr(
     float const* t, lapack_int const* tsize,
     float* c, lapack_int const* ldc,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_dgemqr LAPACK_GLOBAL(dgemqr,DGEMQR)
 void LAPACK_dgemqr(
     char const* side, char const* trans,
@@ -12076,7 +15869,11 @@ void LAPACK_dgemqr(
     double const* t, lapack_int const* tsize,
     double* c, lapack_int const* ldc,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_cgemqr LAPACK_GLOBAL(cgemqr,CGEMQR)
 void LAPACK_cgemqr(
     char const* side, char const* trans,
@@ -12085,7 +15882,11 @@ void LAPACK_cgemqr(
     lapack_complex_float const* t, lapack_int const* tsize,
     lapack_complex_float* c, lapack_int const* ldc,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_zgemqr LAPACK_GLOBAL(zgemqr,ZGEMQR)
 void LAPACK_zgemqr(
     char const* side, char const* trans,
@@ -12094,7 +15895,11 @@ void LAPACK_zgemqr(
     lapack_complex_double const* t, lapack_int const* tsize,
     lapack_complex_double* c, lapack_int const* ldc,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 
 /* ----- tall-skinny or short-wide least squares */
 #define LAPACK_sgetsls LAPACK_GLOBAL(sgetsls,SGETSLS)
@@ -12104,7 +15909,11 @@ void LAPACK_sgetsls(
     float* a, lapack_int const* lda,
     float* b, lapack_int const* ldb,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_dgetsls LAPACK_GLOBAL(dgetsls,DGETSLS)
 void LAPACK_dgetsls(
     char const* trans,
@@ -12112,7 +15921,11 @@ void LAPACK_dgetsls(
     double* a, lapack_int const* lda,
     double* b, lapack_int const* ldb,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_cgetsls LAPACK_GLOBAL(cgetsls,CGETSLS)
 void LAPACK_cgetsls(
     char const* trans,
@@ -12120,7 +15933,11 @@ void LAPACK_cgetsls(
     lapack_complex_float* a, lapack_int const* lda,
     lapack_complex_float* b, lapack_int const* ldb,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 #define LAPACK_zgetsls LAPACK_GLOBAL(zgetsls,ZGETSLS)
 void LAPACK_zgetsls(
     char const* trans,
@@ -12128,7 +15945,11 @@ void LAPACK_zgetsls(
     lapack_complex_double* a, lapack_int const* lda,
     lapack_complex_double* b, lapack_int const* ldb,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned trans_len
+    #endif
+    );
 
 /* ----- symmetric eigenvalues, 2-stage tridiagonal reduction, by QR iteration */
 #define LAPACK_ssyev_2stage LAPACK_GLOBAL(ssyev_2stage,SSYEV_2STAGE)
@@ -12138,7 +15959,11 @@ void LAPACK_ssyev_2stage(
     float* a, lapack_int const* lda,
     float* w,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsyev_2stage LAPACK_GLOBAL(dsyev_2stage,DSYEV_2STAGE)
 void LAPACK_dsyev_2stage(
     char const* jobz, char const* uplo,
@@ -12146,7 +15971,11 @@ void LAPACK_dsyev_2stage(
     double* a, lapack_int const* lda,
     double* w,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cheev_2stage LAPACK_GLOBAL(cheev_2stage,CHEEV_2STAGE)
 void LAPACK_cheev_2stage(
     char const* jobz, char const* uplo,
@@ -12155,7 +15984,11 @@ void LAPACK_cheev_2stage(
     float* w,
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zheev_2stage LAPACK_GLOBAL(zheev_2stage,ZHEEV_2STAGE)
 void LAPACK_zheev_2stage(
     char const* jobz, char const* uplo,
@@ -12164,7 +15997,11 @@ void LAPACK_zheev_2stage(
     double* w,
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric eigenvalues, 2-stage tridiagonal reduction, by divide and conquer */
 #define LAPACK_ssyevd_2stage LAPACK_GLOBAL(ssyevd_2stage,SSYEVD_2STAGE)
@@ -12175,7 +16012,11 @@ void LAPACK_ssyevd_2stage(
     float* w,
     float* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsyevd_2stage LAPACK_GLOBAL(dsyevd_2stage,DSYEVD_2STAGE)
 void LAPACK_dsyevd_2stage(
     char const* jobz, char const* uplo,
@@ -12184,7 +16025,11 @@ void LAPACK_dsyevd_2stage(
     double* w,
     double* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cheevd_2stage LAPACK_GLOBAL(cheevd_2stage,CHEEVD_2STAGE)
 void LAPACK_cheevd_2stage(
     char const* jobz, char const* uplo,
@@ -12194,7 +16039,11 @@ void LAPACK_cheevd_2stage(
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork, lapack_int const* lrwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zheevd_2stage LAPACK_GLOBAL(zheevd_2stage,ZHEEVD_2STAGE)
 void LAPACK_zheevd_2stage(
     char const* jobz, char const* uplo,
@@ -12204,7 +16053,11 @@ void LAPACK_zheevd_2stage(
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork, lapack_int const* lrwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric eigenvalues, 2-stage tridiagonal reduction, by bisection */
 #define LAPACK_ssyevx_2stage LAPACK_GLOBAL(ssyevx_2stage,SSYEVX_2STAGE)
@@ -12221,7 +16074,11 @@ void LAPACK_ssyevx_2stage(
     float* work, lapack_int const* lwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsyevx_2stage LAPACK_GLOBAL(dsyevx_2stage,DSYEVX_2STAGE)
 void LAPACK_dsyevx_2stage(
     char const* jobz, char const* range, char const* uplo,
@@ -12236,7 +16093,11 @@ void LAPACK_dsyevx_2stage(
     double* work, lapack_int const* lwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cheevx_2stage LAPACK_GLOBAL(cheevx_2stage,CHEEVX_2STAGE)
 void LAPACK_cheevx_2stage(
     char const* jobz, char const* range, char const* uplo,
@@ -12252,7 +16113,11 @@ void LAPACK_cheevx_2stage(
     float* rwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zheevx_2stage LAPACK_GLOBAL(zheevx_2stage,ZHEEVX_2STAGE)
 void LAPACK_zheevx_2stage(
     char const* jobz, char const* range, char const* uplo,
@@ -12268,7 +16133,11 @@ void LAPACK_zheevx_2stage(
     double* rwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric eigenvalues, 2-stage tridiagonal reduction, by MRRR */
 #define LAPACK_ssyevr_2stage LAPACK_GLOBAL(ssyevr_2stage,SSYEVR_2STAGE)
@@ -12285,7 +16154,11 @@ void LAPACK_ssyevr_2stage(
     lapack_int* isuppz,
     float* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsyevr_2stage LAPACK_GLOBAL(dsyevr_2stage,DSYEVR_2STAGE)
 void LAPACK_dsyevr_2stage(
     char const* jobz, char const* range, char const* uplo,
@@ -12300,7 +16173,11 @@ void LAPACK_dsyevr_2stage(
     lapack_int* isuppz,
     double* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_cheevr_2stage LAPACK_GLOBAL(cheevr_2stage,CHEEVR_2STAGE)
 void LAPACK_cheevr_2stage(
     char const* jobz, char const* range, char const* uplo,
@@ -12316,7 +16193,11 @@ void LAPACK_cheevr_2stage(
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork, lapack_int const* lrwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zheevr_2stage LAPACK_GLOBAL(zheevr_2stage,ZHEEVR_2STAGE)
 void LAPACK_zheevr_2stage(
     char const* jobz, char const* range, char const* uplo,
@@ -12332,7 +16213,11 @@ void LAPACK_zheevr_2stage(
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork, lapack_int const* lrwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric banded eigenvalues, 2-stage tridiagonal reduction, by QR iteration */
 #define LAPACK_ssbev_2stage LAPACK_GLOBAL(ssbev_2stage,SSBEV_2STAGE)
@@ -12343,7 +16228,11 @@ void LAPACK_ssbev_2stage(
     float* w,
     float* z, lapack_int const* ldz,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsbev_2stage LAPACK_GLOBAL(dsbev_2stage,DSBEV_2STAGE)
 void LAPACK_dsbev_2stage(
     char const* jobz, char const* uplo,
@@ -12352,7 +16241,11 @@ void LAPACK_dsbev_2stage(
     double* w,
     double* z, lapack_int const* ldz,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chbev_2stage LAPACK_GLOBAL(chbev_2stage,CHBEV_2STAGE)
 void LAPACK_chbev_2stage(
     char const* jobz, char const* uplo,
@@ -12362,7 +16255,11 @@ void LAPACK_chbev_2stage(
     lapack_complex_float* z, lapack_int const* ldz,
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhbev_2stage LAPACK_GLOBAL(zhbev_2stage,ZHBEV_2STAGE)
 void LAPACK_zhbev_2stage(
     char const* jobz, char const* uplo,
@@ -12372,7 +16269,11 @@ void LAPACK_zhbev_2stage(
     lapack_complex_double* z, lapack_int const* ldz,
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric banded eigenvalues, 2-stage tridiagonal reduction, by divide and conquer */
 #define LAPACK_ssbevd_2stage LAPACK_GLOBAL(ssbevd_2stage,SSBEVD_2STAGE)
@@ -12384,7 +16285,11 @@ void LAPACK_ssbevd_2stage(
     float* z, lapack_int const* ldz,
     float* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsbevd_2stage LAPACK_GLOBAL(dsbevd_2stage,DSBEVD_2STAGE)
 void LAPACK_dsbevd_2stage(
     char const* jobz, char const* uplo,
@@ -12394,7 +16299,11 @@ void LAPACK_dsbevd_2stage(
     double* z, lapack_int const* ldz,
     double* work, lapack_int const* lwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chbevd_2stage LAPACK_GLOBAL(chbevd_2stage,CHBEVD_2STAGE)
 void LAPACK_chbevd_2stage(
     char const* jobz, char const* uplo,
@@ -12405,7 +16314,11 @@ void LAPACK_chbevd_2stage(
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork, lapack_int const* lrwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhbevd_2stage LAPACK_GLOBAL(zhbevd_2stage,ZHBEVD_2STAGE)
 void LAPACK_zhbevd_2stage(
     char const* jobz, char const* uplo,
@@ -12416,7 +16329,11 @@ void LAPACK_zhbevd_2stage(
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork, lapack_int const* lrwork,
     lapack_int* iwork, lapack_int const* liwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- symmetric eigenvalues, 2-stage tridiagonal reduction, by bisection */
 #define LAPACK_ssbevx_2stage LAPACK_GLOBAL(ssbevx_2stage,SSBEVX_2STAGE)
@@ -12435,7 +16352,11 @@ void LAPACK_ssbevx_2stage(
     float* work, lapack_int const* lwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsbevx_2stage LAPACK_GLOBAL(dsbevx_2stage,DSBEVX_2STAGE)
 void LAPACK_dsbevx_2stage(
     char const* jobz, char const* range, char const* uplo,
@@ -12452,7 +16373,11 @@ void LAPACK_dsbevx_2stage(
     double* work, lapack_int const* lwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chbevx_2stage LAPACK_GLOBAL(chbevx_2stage,CHBEVX_2STAGE)
 void LAPACK_chbevx_2stage(
     char const* jobz, char const* range, char const* uplo,
@@ -12470,7 +16395,11 @@ void LAPACK_chbevx_2stage(
     float* rwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhbevx_2stage LAPACK_GLOBAL(zhbevx_2stage,ZHBEVX_2STAGE)
 void LAPACK_zhbevx_2stage(
     char const* jobz, char const* range, char const* uplo,
@@ -12488,7 +16417,11 @@ void LAPACK_zhbevx_2stage(
     double* rwork,
     lapack_int* iwork,
     lapack_int* ifail,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned range_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- generalized symmetric eigenvalues, 2-stage tridiagonal reduction, by QR iteration */
 #define LAPACK_ssygv_2stage LAPACK_GLOBAL(ssygv_2stage,SSYGV_2STAGE)
@@ -12499,7 +16432,11 @@ void LAPACK_ssygv_2stage(
     float* b, lapack_int const* ldb,
     float* w,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsygv_2stage LAPACK_GLOBAL(dsygv_2stage,DSYGV_2STAGE)
 void LAPACK_dsygv_2stage(
     lapack_int const* itype, char const* jobz, char const* uplo,
@@ -12508,7 +16445,11 @@ void LAPACK_dsygv_2stage(
     double* b, lapack_int const* ldb,
     double* w,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chegv_2stage LAPACK_GLOBAL(chegv_2stage,CHEGV_2STAGE)
 void LAPACK_chegv_2stage(
     lapack_int const* itype, char const* jobz, char const* uplo,
@@ -12518,7 +16459,11 @@ void LAPACK_chegv_2stage(
     float* w,
     lapack_complex_float* work, lapack_int const* lwork,
     float* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhegv_2stage LAPACK_GLOBAL(zhegv_2stage,ZHEGV_2STAGE)
 void LAPACK_zhegv_2stage(
     lapack_int const* itype, char const* jobz, char const* uplo,
@@ -12528,7 +16473,11 @@ void LAPACK_zhegv_2stage(
     double* w,
     lapack_complex_double* work, lapack_int const* lwork,
     double* rwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- 2-stage tridiagonal reduction */
 #define LAPACK_ssytrd_2stage LAPACK_GLOBAL(ssytrd_2stage,SSYTRD_2STAGE)
@@ -12539,7 +16488,11 @@ void LAPACK_ssytrd_2stage(
     float* D, float* E, float* TAU,
     float* HOUS2, lapack_int const* lhous2,
     float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_dsytrd_2stage LAPACK_GLOBAL(dsytrd_2stage,DSYTRD_2STAGE)
 void LAPACK_dsytrd_2stage(
     char const* jobz, char const* uplo,
@@ -12548,7 +16501,11 @@ void LAPACK_dsytrd_2stage(
     double* D, double* E, double* TAU,
     double* HOUS2, lapack_int const* lhous2,
     double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_chetrd_2stage LAPACK_GLOBAL(chetrd_2stage,CHETRD_2STAGE)
 void LAPACK_chetrd_2stage(
     char const* jobz, char const* uplo,
@@ -12557,7 +16514,11 @@ void LAPACK_chetrd_2stage(
     float* D, float* E, lapack_complex_float* TAU,
     lapack_complex_float* HOUS2, lapack_int const* lhous2,
     lapack_complex_float* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 #define LAPACK_zhetrd_2stage LAPACK_GLOBAL(zhetrd_2stage,ZHETRD_2STAGE)
 void LAPACK_zhetrd_2stage(
     char const* jobz, char const* uplo,
@@ -12566,7 +16527,11 @@ void LAPACK_zhetrd_2stage(
     double* D, double* E, lapack_complex_double* TAU,
     lapack_complex_double* HOUS2, lapack_int const* lhous2,
     lapack_complex_double* work, lapack_int const* lwork,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned jobz_len, unsigned uplo_len
+    #endif
+    );
 
 /* ----- LQ factorization of triangular A and pentagonal B */
 #define LAPACK_stplqt LAPACK_GLOBAL(stplqt,STPLQT)
@@ -12647,7 +16612,11 @@ void LAPACK_stpmlqt(
     float* A, lapack_int const* lda,
     float* B, lapack_int const* ldb,
     float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_dtpmlqt LAPACK_GLOBAL(dtpmlqt,DTPMLQT)
 void LAPACK_dtpmlqt(
     char const* side, char const* trans,
@@ -12658,7 +16627,11 @@ void LAPACK_dtpmlqt(
     double* A, lapack_int const* lda,
     double* B, lapack_int const* ldb,
     double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_ctpmlqt LAPACK_GLOBAL(ctpmlqt,CTPMLQT)
 void LAPACK_ctpmlqt(
     char const* side, char const* trans,
@@ -12669,7 +16642,11 @@ void LAPACK_ctpmlqt(
     lapack_complex_float* A, lapack_int const* lda,
     lapack_complex_float* B, lapack_int const* ldb,
     lapack_complex_float* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 #define LAPACK_ztpmlqt LAPACK_GLOBAL(ztpmlqt,ZTPMLQT)
 void LAPACK_ztpmlqt(
     char const* side, char const* trans,
@@ -12680,10 +16657,15 @@ void LAPACK_ztpmlqt(
     lapack_complex_double* A, lapack_int const* lda,
     lapack_complex_double* B, lapack_int const* ldb,
     lapack_complex_double* work,
-    lapack_int* info );
+    lapack_int* info
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , unsigned side_len, unsigned trans_len
+    #endif
+    );
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
 #endif /* LAPACK_FORTRAN_H */
+

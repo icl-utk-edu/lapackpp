@@ -62,7 +62,11 @@ int64_t spgvx(
         Z, &ldz_,
         &work[0],
         &iwork[0],
-        ifail_ptr, &info_ );
+        ifail_ptr, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }
@@ -121,7 +125,11 @@ int64_t spgvx(
         Z, &ldz_,
         &work[0],
         &iwork[0],
-        ifail_ptr, &info_ );
+        ifail_ptr, &info_
+        #ifdef LAPACK_FORTRAN_STRLEN_END
+        , 1, 1, 1
+        #endif
+    );
     if (info_ < 0) {
         throw Error();
     }

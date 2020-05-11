@@ -282,8 +282,8 @@ int64_t tpmqrt(
 /// trapezoidal block V2:
 /// \[
 ///     V = \begin{bmatrix}
-///         V1  \\
-///         V2
+///             V1
+///         \\  V2
 ///     \end{bmatrix}.
 /// \]
 /// The size of the trapezoidal block V2 is determined by the parameter l,
@@ -294,8 +294,8 @@ int64_t tpmqrt(
 /// If side = Left:
 /// \[
 ///     C = \begin{bmatrix}
-///         A  \\
-///         B
+///             A
+///         \\  B
 ///     \end{bmatrix},
 /// \]
 /// where A is k-by-n, B is m-by-n and V is m-by-k.

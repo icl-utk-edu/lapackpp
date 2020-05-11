@@ -323,40 +323,36 @@ int64_t bbcsd(
 }
 
 // -----------------------------------------------------------------------------
-// (C-style comments avoid warnings about multi-line comments due to backslash)
-
 /// Computes the CS decomposition of a unitary matrix in
 /// bidiagonal-block form,
-/**
-    \[
-        X =
-        \left[ \begin{array}{c|ccc}
-            B_{11}  &  B_{12}  &   0  &  0  \\
-            0       &  0       &  -I  &  0  \\
-            \hline
-            B_{21}  &  B_{22}  &   0  &  0  \\
-            0       &  0       &   0  &  I  \\
-        \end{array} \right]
-        =
-        \left[ \begin{array}{c|c}
-            U_{1}  &         \\
-            \hline
-                   &  U_{2}  \\
-        \end{array} \right]
-        \left[ \begin{array}{c|ccc}
-            C  &  -S  &   0  &  0  \\
-            0  &   0  &  -I  &  0  \\
-            \hline
-            S  &   C  &   0  &  0  \\
-            0  &   0  &   0  &  I  \\
-        \end{array} \right]
-        \left[ \begin{array}{c|c}
-            V_{1}  &         \\
-            \hline
-                   &  V_{2}  \\
-        \end{array} \right]^H
-    \]
-*/
+/// \[
+///     X =
+///     \begin{bmatrix}
+///             B_{11}  &  B_{12}  &   0  &  0
+///         \\  0       &  0       &  -I  &  0
+///         \\  \hline
+///             B_{21}  &  B_{22}  &   0  &  0
+///         \\  0       &  0       &   0  &  I
+///     \end{bmatrix}
+///     =
+///     \begin{bmatrix}
+///             U_{1}  &
+///         \\  \hline
+///                    &  U_{2}
+///     \end{bmatrix}
+///     \begin{bmatrix}
+///             C  &  -S  &   0  &  0
+///         \\  0  &   0  &  -I  &  0
+///         \\  \hline
+///             S  &   C  &   0  &  0
+///         \\  0  &   0  &   0  &  I
+///     \end{bmatrix}
+///     \begin{bmatrix}
+///             V_{1}  &
+///         \\  \hline
+///                    &  V_{2}
+///     \end{bmatrix}^H
+/// \]
 ///
 /// X is m-by-m, its top-left block is p-by-q, and q must be no larger
 /// than p, m-p, or m-q. (If q is not the smallest index, then X must be

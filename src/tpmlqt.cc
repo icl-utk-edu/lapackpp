@@ -291,8 +291,8 @@ int64_t tpmlqt(
 /// If side = Left:
 /// \[
 ///     C = \begin{bmatrix}
-///         A  \\
-///         B
+///             A
+///         \\  B
 ///     \end{bmatrix},
 /// \]
 /// where A is k-by-n, B is m-by-n and V is k-by-m.

@@ -203,14 +203,17 @@ int64_t gglse(
 /// \]
 /// and
 /// \[
-///     rank $\left( \left[ \begin{array}{c} A \\ B \end{array} \right] \right) = n.
+///     rank\left( \begin{bmatrix}
+///            A
+///         \\ B
+///     \end{bmatrix} \right) = n.
 /// \]
 ///
 /// These conditions ensure that the LSE problem has a unique solution,
 /// which is obtained using a generalized RQ factorization of the
 /// matrices (B, A) given by
 /// \[
-///     B = \left[ 0 \;\; R \right] Q, \quad A = Z T Q.
+///     B = \begin{bmatrix} 0  &  R \end{bmatrix} Q, \quad A = Z T Q.
 /// \]
 ///
 /// Overloaded versions are available for
@@ -269,7 +272,12 @@ int64_t gglse(
 /// @return = 2: the (n-p) by (n-p) part of the upper trapezoidal factor
 ///     T associated with A in the generalized RQ factorization
 ///     of the pair (B, A) is singular, so that
-///     rank\f$\left( \left[ \begin{array}{c} A \\ B \end{array} \right] \right) < n \f$;
+///     \[
+///     rank\left( \begin{bmatrix}
+///            A
+///         \\ B
+///     \end{bmatrix} \right) < n;
+///     \]
 ///     the least squares solution could not be computed.
 ///
 /// @ingroup ggls

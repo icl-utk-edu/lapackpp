@@ -66,6 +66,7 @@
         @defgroup ggqrf Generalized QR factorization
         @defgroup ggrqf Generalized RQ factorization
         @defgroup bbcsd Cosine-Sine (CS) decomposition
+        @defgroup unitary_computational Householder reflectors and plane rotations
     @}
 
     ----------------------------------------------------------------------------
@@ -105,7 +106,6 @@
     @{
         @defgroup initialize Initialize, copy, convert matrices
         @defgroup norm Matrix norms
-        @defgroup unitary_computational Householder reflectors and plane rotations
         @defgroup auxiliary Other auxiliary routines
     @}
 

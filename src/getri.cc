@@ -173,7 +173,7 @@ int64_t getri(
 ///
 /// This method inverts U and then computes $A^{-1}$ by solving the system
 /// \[
-///     A^{-1} L = U^{-1}$ for $A^{-1}.
+///     A^{-1} L = U^{-1} \text{ for } A^{-1}.
 /// \]
 ///
 /// Overloaded versions are available for

@@ -77,17 +77,15 @@ int64_t bdsvdx(
 /// and superdiagonal $E = [ e_1 e_2 ... e_{n-1} ]$, `bdsvdx` computes the
 /// singular value decompositon of B through the eigenvalues and
 /// eigenvectors of the 2n-by-2n tridiagonal matrix
-/**
-    \[
-        TGK = \left[ \begin{array}{cccccc}
-            0    &  d_1                              \\
-            d_1  &  0    &  e_1                      \\
-                 &  e_1  &  0    &  d_2              \\
-                 &       &  d_2  &  .    &  .        \\
-                 &       &       &  .    &  .  &  .  \\
-              \end{array} \right]
-    \]
-*/
+/// \[
+///     TGK = \begin{bmatrix}
+///             0    &  d_1
+///         \\  d_1  &  0    &  e_1
+///         \\       &  e_1  &  0    &  d_2
+///         \\       &       &  d_2  &  .    &  .
+///         \\       &       &       &  .    &  .  &  .
+///     \end{bmatrix}
+/// \]
 ///
 /// If (s,u,v) is a singular triplet of B with ||u|| = ||v|| = 1, then
 /// (+/-s,q), ||q|| = 1, are eigenpairs of TGK, with q = P * (u' +/- v') /
@@ -173,14 +171,13 @@ int64_t bdsvdx(
 ///     contain the singular vectors of the matrix B corresponding to
 ///     the selected singular values, with U in rows 1 to n and V
 ///     in rows n+1 to 2*n, i.e.
-/**
-        \[
-            Z = \left[ \begin{array}{c}
-                U  \\
-                V  \\
-            \end{array} \right]
-        \]
-*/
+///     \[
+///         Z = \begin{bmatrix}
+///                 U
+///             \\  V
+///         \end{bmatrix}
+///     \]
+///
 ///     - If jobz = NoVec, then Z is not referenced.
 ///     \n
 ///     Note: The user must ensure that zcol >= nfound+1 columns are

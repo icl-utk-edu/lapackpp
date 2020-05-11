@@ -226,14 +226,12 @@ int64_t gelsy(
 /// matrix X.
 ///
 /// The routine first computes a QR factorization with column pivoting:
-/**
-    \[
-        A P = Q \left[ \begin{array}{cc}
-            R_{11}  &  R_{12}  \\
-            0       &  R_{22}  \\
-        \end{array} \right],
-    \]
-*/
+/// \[
+///     A P = Q \begin{bmatrix}
+///             R_{11}  &  R_{12}
+///         \\  0       &  R_{22}
+///     \end{bmatrix},
+/// \]
 /// with R11 defined as the largest leading submatrix whose estimated
 /// condition number is less than 1/rcond. The order of R11, rank,
 /// is the effective rank of A.
@@ -241,24 +239,20 @@ int64_t gelsy(
 /// Then, R22 is considered to be negligible, and R12 is annihilated
 /// by unitary transformations from the right, arriving at the
 /// complete orthogonal factorization:
-/**
-    \[
-        A P = Q \left[ \begin{array}{cc}
-            T_{11}  &  0  \\
-            0       &  0  \\
-        \end{array} \right] Z.
-    \]
-*/
+/// \[
+///     A P = Q \begin{bmatrix}
+///             T_{11}  &  0
+///         \\  0       &  0
+///     \end{bmatrix} Z.
+/// \]
 ///
 /// The minimum-norm solution is then
-/**
-    \[
-        X = P Z^H \left[ \begin{array}{cc}
-            T_{11}^{-1} Q_1^H B  \\
-            0
-        \end{array} \right],
-    \]
-*/
+/// \[
+///     X = P Z^H \begin{bmatrix}
+///             T_{11}^{-1} Q_1^H B
+///         \\  0
+///     \end{bmatrix},
+/// \]
 /// where $Q_1$ consists of the first rank columns of Q.
 ///
 /// This routine is basically identical to the original gelsx except

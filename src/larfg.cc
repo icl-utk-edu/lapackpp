@@ -79,36 +79,32 @@ void larfg(
 
 // -----------------------------------------------------------------------------
 /// Generates a elementary reflector H of order n, such that:
-/**
-    \[
-        H^H
-        \left[ \begin{array}{c}
-            \alpha  \\
-            x       \\
-        \end{array} \right]
-        =
-        \left[ \begin{array}{c}
-            \beta   \\
-            0       \\
-        \end{array} \right];
-        \quad
-        H^H H = I.
-    \]
-*/
+/// \[
+///     H^H
+///     \begin{bmatrix}
+///             \alpha
+///         \\  x
+///     \end{bmatrix}
+///     =
+///     \begin{bmatrix}
+///             \beta
+///         \\  0
+///     \end{bmatrix};
+///     \quad
+///     H^H H = I.
+/// \]
 /// where $\alpha$ and $\beta$ are scalars, with $\beta$ real,
 /// and x is an (n-1)-element vector. H is represented in the form
-/**
-    \[
-        H = I - \tau
-        \left[ \begin{array}{c}
-            1  \\
-            v  \\
-        \end{array} \right]
-        \left[ \begin{array}{rc}
-            1  &  v^H
-        \end{array} \right],
-    \]
-*/
+/// \[
+///     H = I - \tau
+///     \begin{bmatrix}
+///             1
+///         \\  v
+///     \end{bmatrix}
+///     \begin{bmatrix}
+///         1  &  v^H
+///     \end{bmatrix},
+/// \]
 /// where $\tau$ is a scalar and v is a (n-1)-element
 /// vector. For complex H, note that H is not hermitian.
 ///

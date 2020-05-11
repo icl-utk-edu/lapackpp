@@ -275,28 +275,28 @@ void tprfb(
 ///
 /// If side = Right and direction = Forward,
 /// \[
-///     C = [A B].
+///     C = \begin{bmatrix} A  &  B \end{bmatrix}.
 /// \]
 ///
 /// If side = Left and direction = Forward,
 /// \[
-///     C = \left[ \begin{array}{c}
-///         A
-///         B
-///     \end{array} \right].
+///     C = \begin{bmatrix}
+///             A
+///         \\  B
+///     \end{bmatrix}.
 /// \]
 ///
 /// If side = Right and direction = Backward,
 /// \[
-///     C = [B A].
+///     C = \begin{bmatrix} B  &  A \end{bmatrix}.
 /// \]
 ///
 /// If side = Left and direction = Backward,
 /// \[
-///     C = \left[ \begin{array}{c}
-///         B
-///         A
-///     \end{array} \right].
+///     C = \begin{bmatrix}
+///             B
+///         \\  A
+///     \end{bmatrix}.
 /// \]
 ///
 /// The pentagonal matrix V is composed of a rectangular block V1 and a
@@ -306,31 +306,31 @@ void tprfb(
 ///
 /// If direction = Forward and storev = Columnwise:
 /// \[
-///     V = \left[ \begin{array}{c}
-///         V1
-///         V2
-///     \end{array} \right].
+///     V = \begin{bmatrix}
+///             V1
+///         \\  V2
+///     \end{bmatrix}.
 /// \]
 ///     - V2 is upper trapezoidal (first l rows of k-by-k upper triangular)
 ///
 /// If direction = Forward and storev = Rowwise:
 /// \[
-///     V = [V1 V2]
+///     V = \begin{bmatrix} V1  &  V2 \end{bmatrix}
 /// \]
 ///     - V2 is lower trapezoidal (first l columns of k-by-k lower triangular)
 ///
 /// If direction = Backward and storev = Columnwise:
 /// \[
-///     V = \left[ \begin{array}{c}
-///         V2
-///         V1
-///     \end{array} \right].
+///     V = \begin{bmatrix}
+///             V2
+///         \\  V1
+///     \end{bmatrix}.
 /// \]
 ///     - V2 is lower trapezoidal (last l rows of k-by-k lower triangular)
 ///
 /// If direction = Backward and storev = Rowwise:
 /// \[
-///     V = [V2 V1]
+///     V = \begin{bmatrix} V2  &  V1 \end{bmatrix}
 /// \]
 ///     - V2 is upper trapezoidal (last l columns of k-by-k upper triangular)
 ///

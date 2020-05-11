@@ -186,30 +186,26 @@ int64_t gebal(
 ///
 /// The permutations consist of row and column interchanges which put
 /// the matrix in the form
-/**
-    \[
-        P A P = \left[ \begin{array}{ccc}
-                    T1  &  X  &  Y   \\
-                    0   &  B  &  Z   \\
-                    0   &  0  &  T2  \\
-                \end{array} \right],
-    \]
-*/
+/// \[
+///     P A P = \begin{bmatrix}
+///                     T1  &  X  &  Y
+///                 \\  0   &  B  &  Z
+///                 \\  0   &  0  &  T2
+///             \end{bmatrix},
+/// \]
 /// where T1 and T2 are upper triangular matrices whose eigenvalues lie
 /// along the diagonal. The column indices ilo and ihi mark the starting
 /// and ending columns of the submatrix B. Balancing consists of applying
 /// a diagonal similarity transformation $D^{-1} B D$ to make the
 /// 1-norms of each row of B and its corresponding column nearly equal.
 /// The output matrix is
-/**
-    \[
-        \left[ \begin{array}{ccc}
-            T1  &  X D         &  Y         \\
-            0   &  D^{-1} B D  &  D^{-1} Z  \\
-            0   &  0           &  T2        \\
-        \end{array} \right].
-    \]
-*/
+/// \[
+///     \begin{bmatrix}
+///             T1  &  X D         &  Y
+///         \\  0   &  D^{-1} B D  &  D^{-1} Z
+///         \\  0   &  0           &  T2
+///     \end{bmatrix}.
+/// \]
 ///
 /// Information about the permutations P and the diagonal matrix D is
 /// returned in the vector scale.

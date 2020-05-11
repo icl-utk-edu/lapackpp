@@ -144,34 +144,33 @@ int64_t getrf2(
 ///
 /// This is the recursive version of the algorithm. It divides
 /// the matrix into four submatrices:
-/**
-    \[
-        A = \left[ \begin{array}{cc}
-            A_{11}  &  A_{12}  \\
-            A_{21}  &  A_{22}  \\
-        \end{array} \right]
-    \]
-    where $A_{11}$ is n1-by-n1 and $A_{22}$ is n2-by-n2,
-    with n1 = min(m,n)/2 and n2 = n-n1.
-    The subroutine calls itself to factor
-    \[
-        \left[ \begin{array}{c}
-            A_{11}  \\
-            A_{21}  \\
-        \end{array} \right],
-    \]
-    does the swaps on
-    \[
-        \left[ \begin{array}{c}
-            A_{12}  \\
-            A_{22}  \\
-        \end{array} \right],
-    \]
-    solves $A_{12},$
-    updates $A_{22},$
-    calls itself to factor $A_{22},$
-    and does the swaps on $A_{21}.$
-*/
+/// \[
+///     A = \begin{bmatrix}
+///             A_{11}  &  A_{12}
+///         \\  A_{21}  &  A_{22}
+///     \end{bmatrix}
+/// \]
+/// where $A_{11}$ is n1-by-n1 and $A_{22}$ is n2-by-n2,
+/// with n1 = min(m,n)/2 and n2 = n-n1.
+/// The subroutine calls itself to factor
+/// \[
+///     \begin{bmatrix}
+///             A_{11}
+///         \\  A_{21}
+///     \end{bmatrix},
+/// \]
+/// does the swaps on
+/// \[
+///     \begin{bmatrix}
+///             A_{12}
+///         \\  A_{22}
+///     \end{bmatrix},
+/// \]
+/// solves $A_{12},$
+/// updates $A_{22},$
+/// calls itself to factor $A_{22},$
+/// and does the swaps on $A_{21}.$
+///
 ///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.

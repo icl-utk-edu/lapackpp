@@ -195,23 +195,21 @@ int64_t ggglm(
 /// \]
 /// where A is an n-by-m matrix, B is an n-by-p matrix, and d is a
 /// given n-vector. It is assumed that m <= n <= m+p, and
-///
-///     rank(A) = m and rank( A B ) = n.
-///
+/// \[
+///     rank(A) = m \text{ and } rank( [A, B] ) = n.
+/// \]
 /// Under these assumptions, the constrained equation is always
 /// consistent, and there is a unique solution x and a minimal 2-norm
 /// solution y, which is obtained using a generalized QR factorization
 /// of the matrices (A, B) given by
-/**
-    \[
-        A = Q \left[ \begin{array}{c}
-            R \\
-            0 \\
-        \end{array} \right],
-        \quad
-        B = Q T Z.
-    \]
-*/
+/// \[
+///     A = Q \begin{bmatrix}
+///            R
+///         \\ 0
+///     \end{bmatrix},
+///     \quad
+///     B = Q T Z.
+/// \]
 ///
 /// In particular, if matrix B is square nonsingular, then the problem
 /// GLM is equivalent to the following weighted linear least squares
@@ -272,7 +270,7 @@ int64_t ggglm(
 /// @return = 2: the bottom (n-m) by (n-m) part of the upper trapezoidal
 ///     factor T associated with B in the generalized QR
 ///     factorization of the pair (A, B) is singular, so that
-///     rank\f$\left( \left[ \begin{array}{c} A \\ B \end{array} \right] \right) < n \f$;
+///     $rank( [A, B] ) < n$;
 ///     the least squares solution could not be computed.
 ///
 /// @ingroup ggls

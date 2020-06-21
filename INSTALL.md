@@ -19,23 +19,40 @@ Option 2: CMake
     cmake ..
     make && make install
 
+
+Environment variables (Makefile and CMake)
+--------------------------------------------------------------------------------
+
+Standard environment variables affect both Makefile (configure.py) and CMake.
+These include:
+
+CXX                 C++ compiler
+CXXFLAGS            C++ compiler flags
+LDFLAGS             linker flags
+CPATH               compiler include search path
+LIBRARY_PATH        compile-time library search path
+LD_LIBRARY_PATH     runtime library search path
+DYLD_LIBRARY_PATH   runtime library search path on macOS
+
+
 Makefile Installation
 --------------------------------------------------------------------------------
 
+Available targets:
+
     make           - configures (if make.inc is missing),
-                     then compiles the library and tester.
-    make config    - configures LAPACK++, creating a make.inc file.
-    make lib       - compiles the library (lib/liblapackpp.so).
-    make tester    - compiles test/tester.
+                     then compiles the library and tester
+    make config    - configures LAPACK++, creating a make.inc file
+    make lib       - compiles the library (lib/liblapackpp.so)
+    make tester    - compiles test/tester
     make docs      - generates documentation in docs/html/index.html
-    make install   - installs the library and headers to ${prefix}.
-    make uninstall - remove installed library and headers from ${prefix}.
-    make clean     - deletes object (*.o) and library (*.a, *.so) files.
-    make distclean - also deletes make.inc and dependency files (*.d).
-    If static=1, makes .a instead of .so library.
+    make install   - installs the library and headers to ${prefix}
+    make uninstall - remove installed library and headers from ${prefix}
+    make clean     - deletes object (*.o) and library (*.a, *.so) files
+    make distclean - also deletes make.inc and dependency files (*.d)
 
 
-### Details
+### Options
 
     make config [options]
 
@@ -47,16 +64,11 @@ script can be invoked directly:
     python configure.py [options]
 
 Running `configure.py -h` will print a help message with the current options.
-Variables that affect configure.py include:
+In addition to those listed in the Environment variables section above,
+options include:
 
-    CXX                C++ compiler
-    CXXFLAGS           C++ compiler flags
-    LDFLAGS            linker flags
-    CPATH              compiler include search path
-    LIBRARY_PATH       compile time library search path
-    LD_LIBRARY_PATH    runtime library search path
-    DYLD_LIBRARY_PATH  runtime library search path on macOS
-    prefix             where to install:
+    static={0,1}        build as shared (default) or static library
+    prefix              where to install, default /opt/slate.
                        headers go   in ${prefix}/include,
                        library goes in ${prefix}/lib${LIB_SUFFIX}
 
@@ -120,6 +132,7 @@ issue. The log shows the option being tested, the exact command run, the
 command's standard output (stdout), error output (stderr), and exit status. All
 test files are in the config directory.
 
+
 CMake Installation
 --------------------------------------------------------------------------------
 
@@ -127,33 +140,41 @@ Note that LAPACK++ inherits its dependencies from BLAS++. It requires the
 BLAS++ library to be installed via CMake prior to compilation. Information and
 installation instructions can be found at https://bitbucket.org/icl/blaspp.
 
-The CMake script enforces an out of source build. The simplest way to accomplish
-this is to create a build directory off the LAPACK++ root directory:
+The CMake script enforces an out-of-source build. Create a build
+directory under the LAPACK++ root directory:
 
-    cd /my/lapackpp/dir
+    cd /path/to/lapackpp
     mkdir build && cd build
+    cmake [options] ..
+    make
+    make install
+
 
 ### Options
 
-By default LAPACK++ is set to install into `/opt/slate/`. If you wish to
-change this, CMake needs to be told where to install the LAPACK++ library.
-You can do this by defining CMAKE_INSTALL_PREFIX variable via the CMake
-command line:
+CMake uses the settings in the Environment variables section above.
+Additionally, options include:
 
-    # Assuming the working dir is still /my/lapackpp/dir/build
-    cmake -DCMAKE_INSTALL_PREFIX=/path/to/my/dir ..
+USE_OPENMP={on,off}         use OpenMP, if available
+BLASPP_BUILD_TESTS={on,off} build test suite (test/tester)
+CMAKE_INSTALL_PREFIX        where to install, default /opt/slate
 
-By default LAPACK++ builds a testing suite located in `lapackpp/test`. To disable,
-define `LAPACKPP_BUILD_TESTS` as `OFF`, as follows:
+These options are defined on the command line using `-D`, e.g.,
 
-    # Disable building LAPACKPP test suite
-    cmake -DLAPACKPP_BUILD_TESTS=OFF ..
+    # in build directory
+    cmake -DCOLOR=off -DCMAKE_INSTALL_PREFIX=/usr/local ..
+
+Alternatively, use the `ccmake` text-based interface or the CMake app GUI.
+
+    # in build directory
+    ccmake ..
+    Type 'c' to configure, then 'g' to generate Makefile
 
 If `LAPACKPP_BUILD_TESTS` is enabled, the build will require the TestSweeper
 library to be installed via CMake prior to compilation. Information and
 installation instructions can be found at https://bitbucket.org/icl/testsweeper.
 
-### LAPACK++ Library options
+### LAPACK library options
 
 LAPACK++ inherits its dependencies from BLAS++ as noted above. However, if the
 user wishes to override these options, they may set `USE_OPTIMIZED_LAPACK` to `TRUE`
@@ -165,11 +186,3 @@ library. LAPACK++ will then attempt to explicitly link to this.
 Once the LAPACK library is set or inherited, the CMake script attempts to compile
 several small code snippets to determine what compiler options are necessary for
 LAPACK++.
-
-### CMake build
-Once CMake generates the required makefiles, LAPACK++ can be built
-and installed using the following:
-
-    # Assuming the working dir is still /my/lapackpp/dir/build
-    make
-    make install

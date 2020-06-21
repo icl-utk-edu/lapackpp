@@ -60,7 +60,7 @@ are set so your compiler can find libraries. See INSTALL.txt for more details.
 
 #-------------------------------------------------------------------------------
 def main():
-    config.init( prefix='/usr/local/lapackpp' )
+    config.init( prefix='/opt/slate' )
     config.prog_cxx()
     config.prog_cxx_flags([
         '-O2', '-std=c++11', '-MMD',
@@ -113,7 +113,7 @@ def main():
         'BLAS++',
         ['../blaspp', './blaspp'],
         'https://bitbucket.org/icl/blaspp',
-        'https://bitbucket.org/icl/blaspp/get/tip.tar.gz',
+        'https://bitbucket.org/icl/blaspp/get/master.tar.gz',
         'blaspp.tar.gz' )
     if (not blaspp):
         raise Exception( 'LAPACK++ requires BLAS++.' )
@@ -122,7 +122,7 @@ def main():
         'testsweeper',
         ['../testsweeper', blaspp + '/testsweeper', './testsweeper'],
         'https://bitbucket.org/icl/testsweeper',
-        'https://bitbucket.org/icl/testsweeper/get/tip.tar.gz',
+        'https://bitbucket.org/icl/testsweeper/get/master.tar.gz',
         'testsweeper.tar.gz' )
     if (not testsweeper):
         print_warn( 'LAPACK++ needs TestSweeper only in testers.' )

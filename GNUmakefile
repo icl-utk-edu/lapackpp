@@ -28,7 +28,7 @@ make.inc:
 
 # Defaults if not given in make.inc. GNU make doesn't have defaults for these.
 RANLIB   ?= ranlib
-prefix   ?= /usr/local/lapackpp
+prefix   ?= /opt/slate
 
 # auto-detect OS
 # $OSTYPE may not be exported from the shell, so echo it
@@ -113,9 +113,9 @@ testsweeper: $(testsweeper)
 #-------------------------------------------------------------------------------
 # Get Mercurial id, and make version.o depend on it via .id file.
 
-ifneq ($(wildcard .hg),)
-    id := $(shell hg id -i)
-    src/version.o: CXXFLAGS += -DLAPACKPP_ID='"$(id)"'
+ifneq ($(wildcard .git),)
+    id := $(shell git rev-parse --short HEAD)
+    src/version.o: CXXFLAGS += -DBLASPP_ID='"$(id)"'
 endif
 
 last_id := $(shell [ -e .id ] && cat .id || echo 'NA')

@@ -1,173 +1,96 @@
 pipeline {
-    agent none
-    triggers { cron ('H H(0-2) * * *') }
-    stages {
-        //======================================================================
-        stage('Parallel Build') {
-            parallel {
-                //--------------------------------------------------------------
-                stage('Build - Master gcc MKL') {
+
+agent none
+triggers { cron ('H H(0-2) * * *') }
+stages {
+    //======================================================================
+    stage('Parallel Build') {
+        matrix {
+            axes {
+                axis {
+                    name 'maker'
+                    values 'make'
+                }
+            } // axes
+            stages {
+                stage('Build') {
                     agent { label 'master' }
+
+                    //----------------------------------------------------------
                     steps {
                         sh '''
                         #!/bin/sh +x
-                        echo "LAPACK++ Building"
                         hostname && pwd
 
+                        # LAPACK++ currently has spurious errors on lips,
+                        # so run only on master.
+                        # on lips
+                        #source /home/jmfinney/spack/share/spack/setup-env.sh
+                        #spack load gcc@6.4.0
+
+                        # on master
                         source /opt/spack/share/spack/setup-env.sh
                         spack load gcc
+
                         spack load intel-mkl
 
-                        export color=no
-                        make config
-                        #make config CXXFLAGS="-Werror"
+                        echo "========================================"
+                        echo "maker ${maker}"
+                        if [ "${maker}" = "make" ]; then
+                            export color=no
+                            make distclean
+                            make config CXXFLAGS="-Werror"
+                            export top=..
 
-                        # Modify make.inc to add netlib LAPACKE for bug fixes.
-                        export LAPACKDIR=/var/lib/jenkins/workspace/jmfinney/netlib-xylitol/build/lib
-                        sed -i -e 's/LIBS *=/LIBS = -L${LAPACKDIR} -llapacke /' make.inc
+                            # Modify make.inc to add netlib LAPACKE for bug fixes.
+                            # on lips
+                            #export LAPACKDIR=/home/jmfinney/projects/lapack/build/lib
+                            export LAPACKDIR=/var/lib/jenkins/workspace/jmfinney/netlib-xylitol/build/lib
+                            sed -i -e 's/LIBS *=/LIBS = -L${LAPACKDIR} -llapacke /' make.inc
+                        fi
 
+                        echo "========================================"
+                        # master is 4 core
                         make -j4
+
+                        echo "========================================"
                         ldd test/tester
-                        '''
-                    } // steps
-                    post {
-                        unstable {
-                            slackSend channel: '#slate_ci',
-                                color: 'warning',
-                                message: "Master build - ${currentBuild.fullDisplayName} unstable: (<${env.BUILD_URL}|Open>)"
-                        }
-                        failure {
-                            slackSend channel: '#slate_ci',
-                                color: 'danger',
-                                message: "Master build - ${currentBuild.fullDisplayName} failed: (<${env.BUILD_URL}|Open>)"
-                            mail to: 'slate-dev@icl.utk.edu',
-                                subject: "${currentBuild.fullDisplayName} Build Failure",
-                                body: "Master build - See more at ${env.BUILD_URL}"
-                        }
-                    } // post
-                } // stage(Build - Master)
 
-                //--------------------------------------------------------------
-                stage('Build - Lips gcc CUDA MKL'){
-                    agent { node 'lips.icl.utk.edu' }
-                    steps {
-                        sh '''
-                        #!/bin/sh +x
-                        echo "LAPACK++ Building"
-                        hostname && pwd
-
-                        source /home/jmfinney/spack/share/spack/setup-env.sh
-                        spack load gcc@6.4.0
-                        spack load cuda
-                        spack load intel-mkl
-
-                        export color=no
-                        make config
-                        #make config CXXFLAGS="-Werror"
-
-                        # Modify make.inc to add netlib LAPACKE for bug fixes.
-                        export LAPACKDIR=/home/jmfinney/projects/lapack/build/lib
-                        sed -i -e 's/LIBS *=/LIBS = -L${LAPACKDIR} -llapacke /' make.inc
-
-                        make -j4
-                        ldd test/tester
-                        '''
-                    } // steps
-                    post {
-                        unstable {
-                            slackSend channel: '#slate_ci',
-                                color: 'warning',
-                                message: "Lips build - ${currentBuild.fullDisplayName} unstable: (<${env.BUILD_URL}|Open>)"
-                        }
-                        failure {
-                            slackSend channel: '#slate_ci',
-                                color: 'danger',
-                                message: "Lips build - ${currentBuild.fullDisplayName} failed: (<${env.BUILD_URL}|Open>)"
-                            mail to: 'slate-dev@icl.utk.edu',
-                                subject: "${currentBuild.fullDisplayName} Build Failure",
-                                body: "Master build - See more at ${env.BUILD_URL}"
-                        }
-                    } // post
-                } // stage(Build - Lips)
-            } // parallel
-        } // stage(Parallel Build)
-
-        //======================================================================
-        stage('Parallel Test') {
-            parallel {
-                //--------------------------------------------------------------
-                stage('Test - Master') {
-                    agent { label 'master' }
-                    steps {
-                        sh '''
-                        #!/bin/sh +x
-                        echo "LAPACK++ Testing"
-                        hostname && pwd
-
-                        source /opt/spack/share/spack/setup-env.sh
-                        spack load gcc
-                        spack load intel-mkl
-
+                        echo "========================================"
                         cd test
-                        ./run_tests.py --ref n --xml report.xml
+                        ./run_tests.py --xml ${top}/report-${maker}.xml
                         '''
                     } // steps
+
+                    //----------------------------------------------------------
                     post {
+                        changed {
+                            slackSend channel: '#slate_ci',
+                                color: 'good',
+                                message: "${currentBuild.fullDisplayName} >> ${STAGE_NAME} >> ${maker} ${host} changed (<${env.BUILD_URL}|Open>)"
+                        }
                         unstable {
                             slackSend channel: '#slate_ci',
                                 color: 'warning',
-                                message: "Master test - ${currentBuild.fullDisplayName} unstable: (<${env.BUILD_URL}|Open>)"
+                                message: "${currentBuild.fullDisplayName} >> ${STAGE_NAME} >> ${maker} ${host} unstable (<${env.BUILD_URL}|Open>)"
                         }
                         failure {
                             slackSend channel: '#slate_ci',
                                 color: 'danger',
-                                message: "Master test - ${currentBuild.fullDisplayName} failed: (<${env.BUILD_URL}|Open>)"
+                                message: "${currentBuild.fullDisplayName} >> ${STAGE_NAME} >> ${maker} ${host} failed (<${env.BUILD_URL}|Open>)"
                             mail to: 'slate-dev@icl.utk.edu',
-                                subject: "${currentBuild.fullDisplayName} Build Failure",
-                                body: "Master build - See more at ${env.BUILD_URL}"
+                                subject: "${currentBuild.fullDisplayName} >> ${STAGE_NAME} >> ${maker} ${host} failed",
+                                body: "See more at ${env.BUILD_URL}"
                         }
                         always {
-                            junit 'test/*.xml'
+                            junit '*.xml'
                         }
                     } // post
-                } // stage(Test - Master)
 
-                //--------------------------------------------------------------
-                stage('Test - Lips') {
-                    agent { node 'lips.icl.utk.edu' }
-                    steps {
-                        sh '''
-                        #!/bin/sh +x
-                        echo "LAPACK++ Testing"
-                        hostname && pwd
+                } // stage(Build)
+            } // stages
+        } // matrix
+    } // stage(Parallel Build)
+} // stages
 
-                        source /home/jmfinney/spack/share/spack/setup-env.sh
-                        spack load gcc@6.4.0
-                        spack load cuda
-                        spack load intel-mkl
-
-                        cd test
-                        ./run_tests.py --ref n --xml report.xml
-                        '''
-                    } // steps
-                    post {
-                        unstable {
-                            slackSend channel: '#slate_ci',
-                                color: 'warning',
-                                message: "Lips test - ${currentBuild.fullDisplayName} unstable: (<${env.BUILD_URL}|Open>)"
-                        }
-                        // Lips currently has spurious errors; don't email them.
-                        failure {
-                            slackSend channel: '#slate_ci',
-                                color: 'danger',
-                                message: "Lips test - ${currentBuild.fullDisplayName} failed: (<${env.BUILD_URL}|Open>)"
-                        }
-                        always {
-                            junit 'test/*.xml'
-                        }
-                    } // post
-                } // stage(Test - Lips)
-            } // parallel
-        } // stage(Parallel Test)
-    } // stages
 } // pipeline

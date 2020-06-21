@@ -11,6 +11,10 @@ stages {
                     name 'maker'
                     values 'make'
                 }
+                axis {
+                    name 'host'
+                    values 'master'
+                }
             } // axes
             stages {
                 stage('Build') {
@@ -58,7 +62,7 @@ stages {
 
                         echo "========================================"
                         cd test
-                        ./run_tests.py --xml ${top}/report-${maker}.xml
+                        ./run_tests.py --small --xml ${top}/report-${maker}.xml
                         '''
                     } // steps
 

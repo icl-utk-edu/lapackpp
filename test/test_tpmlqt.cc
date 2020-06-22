@@ -43,8 +43,16 @@ void test_tpmlqt_work( Params& params, bool run )
         return;
 
     // skip invalid sizes
-    if (k < l || k < nb || nb < 1) {
-        params.msg() = "skipping: requires k >= l >= 0 and k >= nb >= 1";
+    if (k < nb || nb < 1) {
+        params.msg() = "skipping: k >= nb >= 1";
+        return;
+    }
+    if (side == lapack::Side::Left  && std::min( m, k ) < l) {
+        params.msg() = "skipping: side=left requires min( m, k ) >= l >= 0";
+        return;
+    }
+    if (side == lapack::Side::Right && std::min( n, k ) < l) {
+        params.msg() = "skipping: side=right requires min( n, k ) >= l >= 0";
         return;
     }
 

@@ -41,6 +41,8 @@ void test_gesvd_work( Params& params, bool run )
     params.error_sigma();
     params.msg();
 
+    params.error.name( "A - USV^H\nerror" );
+
     if (! run)
         return;
 
@@ -53,13 +55,14 @@ void test_gesvd_work( Params& params, bool run )
     }
 
     // ---------- setup
-    int64_t ucol = (jobu == lapack::Job::AllVec ? m : blas::min( m, n ));
+    int64_t u_ncol = (jobu == lapack::Job::AllVec ? m : blas::min( m, n ));
     int64_t lda = roundup( blas::max( 1, m ), align );
     int64_t ldu = roundup( m, align );
-    int64_t ldvt = roundup( (jobvt == lapack::Job::AllVec ? n : blas::min( m, n )), align );
+    int64_t v_nrow = (jobvt == lapack::Job::AllVec ? n : blas::min( m, n ));
+    int64_t ldvt = roundup( v_nrow, align );
     size_t size_A = (size_t) lda * n;
     size_t size_S = (size_t) (blas::min(m,n));
-    size_t size_U = (size_t) ldu * ucol;
+    size_t size_U = (size_t) ldu * u_ncol;
     size_t size_VT = (size_t) ldvt * n;
 
     std::vector< scalar_t > A_tst( size_A );
@@ -76,7 +79,6 @@ void test_gesvd_work( Params& params, bool run )
 
     if (verbose >= 2) {
         printf( "A = " ); print_matrix( m, n, &A_tst[0], lda );
-        printf( "S = " ); print_vector( n, &S_tst[0], 1 );
     }
 
 
@@ -87,6 +89,13 @@ void test_gesvd_work( Params& params, bool run )
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::gesvd returned error %lld\n", (lld) info_tst );
+    }
+
+    if (verbose >= 2) {
+        printf( "Aout = " ); print_matrix( m, n, &A_tst[0], lda );
+        printf( "U = "    ); print_matrix( m, u_ncol, &U_tst[0], ldu );
+        printf( "VT = "   ); print_matrix( v_nrow, n, &VT_tst[0], ldvt );
+        printf( "S = "    ); print_vector( n, &S_tst[0], 1 );
     }
 
     params.time() = time;
@@ -119,6 +128,11 @@ void test_gesvd_work( Params& params, bool run )
         }
         check_svd( jobu, jobvt, m, n, &A_ref[0], lda,
                    &S_tst[0], U2, ldu2, VT2, ldvt2, errors );
+
+        if (verbose >= 2) {
+            printf( "U2 = "  ); print_matrix( m, u_ncol, U2, ldu2 );
+            printf( "VT2 = " ); print_matrix( v_nrow, n, VT2, ldvt2 );
+        }
     }
 
     if (params.ref() == 'y') {

@@ -608,11 +608,11 @@ if (opts.geev):
 # svd
 if (opts.svd):
     cmds += [
-    # todo: MKL seems to have a bug with jobu=o, jobvt=s,a for tall matrices,
-    # e.g., dim=40x10. Skip for now.
+    # todo: MKL seems to have a bug with jobu=o,s and jobvt=o,s,a
+    # for tall matrices, e.g., dim=100x50. Skip failing combinations for now.
     #[ 'gesvd',         gen + dtype + align + mn + jobu + jobvt ],
-    [ 'gesvd',         gen + dtype + align + mn + " --jobu n,s,a" + jobvt ],
-    [ 'gesvd',         gen + dtype + align + mn + " --jobu o --jobvt n" ],
+    [ 'gesvd',         gen + dtype + align + mn + " --jobu n,a" + jobvt ],
+    [ 'gesvd',         gen + dtype + align + mn + " --jobu o,s --jobvt n" ],
     [ 'gesdd',         gen + dtype + align + mn + jobu ],
     # todo: gesvdx is failing
     #[ 'gesvdx',        gen + dtype + align + mn + jobz + jobvr + vl + vu ],

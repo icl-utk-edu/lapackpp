@@ -18,7 +18,7 @@ stages {
             } // axes
             stages {
                 stage('Build') {
-                    agent { label 'master' }
+                    agent { label 'lips' }
 
                     //----------------------------------------------------------
                     steps {
@@ -26,11 +26,6 @@ stages {
                         #!/bin/sh +x
                         hostname && pwd
 
-                        # LAPACK++ currently has spurious errors on lips,
-                        # so run only on master.
-                        # on lips
-
-                        # on master
                         source /home/jenkins/spack_setup
                         sload gcc@6.4.0
                         sload intel-mkl

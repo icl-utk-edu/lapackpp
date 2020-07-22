@@ -29,14 +29,11 @@ stages {
                         # LAPACK++ currently has spurious errors on lips,
                         # so run only on master.
                         # on lips
-                        #source /home/jmfinney/spack/share/spack/setup-env.sh
-                        #spack load gcc@6.4.0
 
                         # on master
-                        source /opt/spack/share/spack/setup-env.sh
-                        spack load gcc
-
-                        spack load intel-mkl
+                        source /home/jenkins/spack_setup
+                        sload gcc@6.4.0
+                        sload intel-mkl
 
                         echo "========================================"
                         echo "maker ${maker}"

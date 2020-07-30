@@ -29,6 +29,7 @@ stages {
                         source /home/jenkins/spack_setup
                         sload gcc@6.4.0
                         sload intel-mkl
+                        sload netlib-lapack
 
                         echo "========================================"
                         echo "maker ${maker}"
@@ -39,14 +40,13 @@ stages {
                             export top=..
 
                             # Modify make.inc to add netlib LAPACKE for bug fixes.
-                            # on lips
-                            #export LAPACKDIR=/home/jmfinney/projects/lapack/build/lib
-                            export LAPACKDIR=/var/lib/jenkins/workspace/jmfinney/netlib-xylitol/build/lib
-                            sed -i -e 's/LIBS *=/LIBS = -L${LAPACKDIR} -llapacke /' make.inc
+                            ##export LAPACKDIR=/home/jmfinney/projects/lapack/build/lib
+                            #export LAPACKDIR=/var/lib/jenkins/workspace/jmfinney/netlib-xylitol/build/lib
+                            export LAPACKDIR=`spack location -i netlib-lapack`
+                            sed -i -e 's/LIBS *=/LIBS = -L${LAPACKDIR}/lib64 -llapacke /' make.inc
                         fi
 
                         echo "========================================"
-                        # master is 4 core
                         make -j4
 
                         echo "========================================"

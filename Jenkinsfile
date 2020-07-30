@@ -43,7 +43,7 @@ stages {
                             ##export LAPACKDIR=/home/jmfinney/projects/lapack/build/lib
                             #export LAPACKDIR=/var/lib/jenkins/workspace/jmfinney/netlib-xylitol/build/lib
                             export LAPACKDIR=`spack location -i netlib-lapack`
-                            sed -i -e 's/LIBS *=/LIBS = -L${LAPACKDIR}/lib64 -llapacke /' make.inc
+                            sed -i -e 's/LIBS *=/LIBS = -L${LAPACKDIR}\/lib64 -llapacke /' make.inc
                         fi
 
                         echo "========================================"

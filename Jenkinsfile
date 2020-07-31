@@ -42,8 +42,8 @@ stages {
                             # Modify make.inc to add netlib LAPACKE for bug fixes.
                             ##export LAPACKDIR=/home/jmfinney/projects/lapack/build/lib
                             #export LAPACKDIR=/var/lib/jenkins/workspace/jmfinney/netlib-xylitol/build/lib
-                            export LAPACKDIR=`spack location -i netlib-lapack`
-                            sed -i -e 's/LIBS *=/LIBS = -L${LAPACKDIR}\/lib64 -llapacke /' make.inc
+                            export LAPACKDIR=`spack location -i netlib-lapack`/lib64
+                            sed -i -e 's/LIBS *=/LIBS = -L${LAPACKDIR} -llapacke /' make.inc
                         fi
 
                         echo "========================================"

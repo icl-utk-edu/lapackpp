@@ -1,9 +1,35 @@
-# CMake script for LAPACK++ testers
-# Requires Libtest, BLASPP, and LAPACKPP
+# Can't build testers if CBLAS, LAPACKE, or TestSweeper are not found.
+if (NOT blaspp_cblas_found)
+    message( WARNING "CBLAS not found; tester cannot be built." )
+    return()
+endif()
 
-cmake_minimum_required(VERSION 3.2)
+if (NOT lapacke_found)
+    message( WARNING "LAPACKE not found; tester cannot be built." )
+    return()
+endif()
 
-add_executable(lapackpp_test
+message( STATUS "Checking for TestSweeper library" )
+find_package( testsweeper QUIET )
+if (testsweeper_FOUND)
+    message( "   Found TestSweeper library: ${testsweeper_DIR}" )
+else()
+    set( url "https://bitbucket.org/icl/testsweeper" )
+    message( "" )
+    message( "---------- TestSweeper" )
+    message( STATUS "Fetching TestSweeper from ${url}" )
+    # Don't install TestSweeper.
+    option( testsweeper_install "" false )
+    include( FetchContent )
+    FetchContent_Declare( testsweeper GIT_REPOSITORY "${url}" )
+    FetchContent_MakeAvailable( testsweeper )
+    message( "---------- TestSweeper done" )
+    message( "" )
+endif()
+
+#-------------------------------------------------------------------------------
+add_executable(
+    tester
     matrix_generator.cc
     matrix_params.cc
     test.cc
@@ -160,7 +186,6 @@ add_executable(lapackpp_test
     test_unmtr.cc
     test_upgtr.cc
     test_upmtr.cc
-    # Triangle-pentagon QR/LQ
     test_tplqt.cc
     test_tplqt2.cc
     test_tpmlqt.cc
@@ -172,121 +197,36 @@ add_executable(lapackpp_test
     test_larfy.cc
 )
 
-# Check if user supplied LIBTEST_DIR on the command line
-# Set -Dtestsweeper_DIR=/path/to/testsweeper
-if(testsweeper_DIR)
-    message("Found testsweeper_DIR")
-else()
-    find_path(testsweeper_DIR testsweeperConfig.cmake
-        PATHS
-        ${CMAKE_INSTALL_PREFIX}
-        ${CMAKE_INSTALL_PREFIX}/test
-        )
-    #message("testsweeper_DIR: " ${testsweeper_DIR})
-endif()
+# C++11 is inherited from blaspp, but disabling extensions is not.
+set_target_properties( tester PROPERTIES CXX_EXTENSIONS false )
 
-# Check if user supplied BLASPP_DIR on the command line
-if(BLASPP_DIR)
-    message("using user supplied BLASPP_DIR: ${BLASPP_DIR}")
-    set(blaspp_DIR "${BLASPP_DIR}")
-endif()
-
-find_package(testsweeper)
-find_package(blaspp)
-#find_package(LAPACKE REQUIRED)
-
-#cmake_policy(SET CMP0079 NEW)
-
-if ("${LAPACKE_DEFINES}" MATCHES "HAVE_LAPACKE")
-    #message ("lapacke include dirs: ${LAPACKE_INCLUDE_DIRS}")
-    target_link_libraries(lapackpp_test
-        PUBLIC
-            ${LAPACKE_LIBRARIES}
-    )
-    target_include_directories(lapackpp_test
-        PUBLIC ${LAPACKE_INCLUDE_DIRS}
-        )
-endif()
-
-target_link_libraries(lapackpp_test
-    PUBLIC
+target_link_libraries(
+    tester
     testsweeper
-    #gfortran
-    #blaspp
     lapackpp
-    #LAPACKE
+    "${blaspp_cblas_libraries}"
+    "${lapacke_libraries}"
 )
 
-target_include_directories(lapackpp_test
+target_include_directories(
+    tester
     PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}../include
-    ${LAPACKE_INCLUDE_DIRS}
+        "${blaspp_cblas_include}"
+        "${lapacke_include}" )
+
+target_compile_definitions(
+    tester
+    PRIVATE
+        "${blaspp_defines}"
+        "${blaspp_config_defines}"
+        "${blaspp_cblas_defines}"
+        "${lapack_defines}"
 )
 
-# Some debug
-if(LAPACKPP_TEST_DEBUG)
-    message("LAPACKPP tester compilation definitions:")
-    message("MKL INTS defines: ${BLAS_int}")
-    message("FORTRAN MANGLING defines: " ${FORTRAN_MANGLING_DEFINES})
-    message("BLAS DEFINES: " ${BLAS_DEFINES})
-    message("CBLAS DEFINES: " ${CBLAS_DEFINES})
-    message("BLAS RETURN: " ${BLAS_RETURN})
-    message("LAPACK DEFINES: " ${LAPACK_DEFINES})
-    message("LAPACKE DEFINES: " ${LAPACKE_DEFINES})
-    message("XBLAS DEFINES: " ${XBLAS_DEFINES})
-    message("LAPACK version define: " ${LAPACK_VER_DEFINE})
-endif()
-
-# these definitions are inherited from LAPACKPP
-#target_compile_definitions(lapackpp_test PRIVATE
-    # Example definition set:
-    # -DFORTRAN_ADD_ -DADD_ -DHAVE_BLAS -DBLAS_COMPLEX_RETURN_ARGUMENT -DHAVE_MKL -DHAVE_CBLAS -DHAVE_LAPACK -DLAPACK_VERSION=30700 -DHAVE_XBLAS -DHAVE_LAPACKE
-#    ${FORTRAN_MANGLING_DEFINES}
-#    ${BLAS_DEFINES}
-#    ${BLAS_RETURN}
-#    ${MKL_DEFINES}
-#    ${CBLAS_DEFINES}
-#    ${LAPACK_DEFINES}
-#    ${BLAS_INT_DEFINES}
-#    ${LAPACK_VER_DEFINE}
-#    ${XBLAS_DEFINES}
-#    ${LAPACKE_DEFINES}
-#)
-
-# Move test script to build directory
-add_custom_command(TARGET lapackpp_test POST_BUILD
+# Copy run_tests script to build directory. Used in Jenkins.
+add_custom_command(
+    TARGET tester POST_BUILD
     COMMAND
         cp ${CMAKE_CURRENT_SOURCE_DIR}/run_tests.py
            ${CMAKE_CURRENT_BINARY_DIR}/run_tests.py
-)
-
-#Move test script to build directory
-add_custom_command(TARGET lapackpp_test POST_BUILD
-    COMMAND
-        cp ${CMAKE_CURRENT_BINARY_DIR}/lapackpp_test
-           ${CMAKE_CURRENT_BINARY_DIR}/tester
-)
-
-if(LAPACKPP_TEST_DEBUG)
-include(CMakePrintHelpers)
-cmake_print_properties(TARGETS lapackpp_test PROPERTIES
-    INTERFACE_INCLUDE_DIRS INTERFACE_LINK_LIBRARIES COMPILE_DEFINITIONS INTERFACE_COMPILE_DEFINITIONS)
-endif()
-
-# Since we can't do 'make test'...
-add_custom_target(testing DEPENDS lapackpp_test)
-
-# Move test script to build directory
-add_custom_command(TARGET lapackpp_test POST_BUILD
-    COMMAND
-        cp ${CMAKE_CURRENT_SOURCE_DIR}/run_tests.py
-           ${CMAKE_CURRENT_BINARY_DIR}/run_tests.py
-)
-
-#Move test script to build directory
-add_custom_command(TARGET lapackpp_test POST_BUILD
-    COMMAND
-        cp ${CMAKE_CURRENT_BINARY_DIR}/lapackpp_test
-           ${CMAKE_CURRENT_BINARY_DIR}/tester
 )

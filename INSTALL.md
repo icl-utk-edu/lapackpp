@@ -15,10 +15,18 @@ Option 1: Makefile
 
 Option 2: CMake
 
+    # LAPACK++ requires BLAS++, from
+    # https://bitbucket.org/icl/blaspp
+    cd /path/to/blaspp
     mkdir build && cd build
     cmake ..
     make && make install
 
+    # After installing BLAS++ above
+    cd /path/to/lapackpp
+    mkdir build && cd build
+    cmake ..
+    make && make install
 
 Environment variables (Makefile and CMake)
 --------------------------------------------------------------------------------
@@ -26,13 +34,51 @@ Environment variables (Makefile and CMake)
 Standard environment variables affect both Makefile (configure.py) and CMake.
 These include:
 
-CXX                 C++ compiler
-CXXFLAGS            C++ compiler flags
-LDFLAGS             linker flags
-CPATH               compiler include search path
-LIBRARY_PATH        compile-time library search path
-LD_LIBRARY_PATH     runtime library search path
-DYLD_LIBRARY_PATH   runtime library search path on macOS
+    CXX                 C++ compiler
+    CXXFLAGS            C++ compiler flags
+    LDFLAGS             linker flags
+    CPATH               compiler include search path
+    LIBRARY_PATH        compile-time library search path
+    LD_LIBRARY_PATH     runtime library search path
+    DYLD_LIBRARY_PATH   runtime library search path on macOS
+
+
+Options (Makefile and CMake)
+--------------------------------------------------------------------------------
+
+See the BLAS++ INSTALL.md for BLAS++ specific options. Since the LAPACK library
+is often bundled with the BLAS library, such as -lopenblas, it should be specified in BLAS++.
+
+LAPACK++ specific options include (all values are case insensitive):
+
+    lapack
+        LAPACK libraries to search for.
+        LAPACK is often included in the BLAS library (e.g., -lopenblas contains both),
+        so there is usually no need to specify this. One or more of:
+        auto            search for all libraries (default)
+        generic         generic -llapack
+
+    LAPACK_LIBRARIES
+        Specify the exact LAPACK libraries, overriding the built-in search.
+        Again, there is usually no need to specify this. E.g.,
+        cmake -DLAPACK_LIBRARIES='-lopenblas' ..
+
+    color
+        Whether to use ANSI colors in output. One of:
+        auto            uses color if output is a TTY
+                        (default with Makefile; not support with CMake)
+        yes             (default with CMake)
+        no
+
+With Makefile, options are specified as environment variables or on the
+command line using `option=value` syntax, such as:
+
+    python configure.py lapack=generic
+
+With CMake, options are specified on the command line using
+`-Doption=value` syntax (not as environment variables), such as:
+
+    cmake -Dblas=mkl ..
 
 
 Makefile Installation
@@ -55,22 +101,25 @@ Available targets:
 ### Options
 
     make config [options]
+    or
+    python configure.py [options]
 
 Runs the `configure.py` script to detect your compiler and library properties,
 then creates a make.inc configuration file. You can also manually edit the
-make.inc file. Options are name=value pairs to set variables. The configure.py
-script can be invoked directly:
+make.inc file. Options are name=value pairs to set variables.
 
-    python configure.py [options]
-
-Running `configure.py -h` will print a help message with the current options.
-In addition to those listed in the Environment variables section above,
+Besides the Environment variables and Options listed above, additional
 options include:
 
-    static={0,1}        build as shared (default) or static library
-    prefix              where to install, default /opt/slate.
-                       headers go   in ${prefix}/include,
-                       library goes in ${prefix}/lib${LIB_SUFFIX}
+    static
+        Whether to build as a static or shared library.
+        0               shared library (default)
+        1               static library
+
+    prefix
+        Where to install, default /opt/slate.
+        Headers go   in ${prefix}/include,
+        library goes in ${prefix}/lib${LIB_SUFFIX}
 
 These can be set in your environment or on the command line, e.g.,
 
@@ -82,9 +131,7 @@ and LAPACK libraries. For example:
     export LD_LIBRARY_PATH="/opt/my-blas/lib64"  # or DYLD_LIBRARY_PATH on macOS
     export LIBRARY_PATH="/opt/my-blas/lib64"
     export CPATH="/opt/my-blas/include"
-
-or
-
+    or
     export LDFLAGS="-L/opt/my-blas/lib64 -Wl,-rpath,/opt/my-blas/lib64"
     export CXXFLAGS="-I/opt/my-blas/include"
 
@@ -98,9 +145,7 @@ On some systems, loading the appropriate module will set these flags:
 Intel MKL provides scripts to set these flags, e.g.:
 
     source /opt/intel/bin/compilervars.sh intel64
-
-or
-
+    or
     source /opt/intel/mkl/bin/mklvars.sh intel64
 
 IBM ESSL provides only a subset of LAPACK functions,
@@ -136,53 +181,92 @@ test files are in the config directory.
 CMake Installation
 --------------------------------------------------------------------------------
 
-Note that LAPACK++ inherits its dependencies from BLAS++. It requires the
-BLAS++ library to be installed via CMake prior to compilation. Information and
+LAPACK++ requires BLAS++ and inherits its dependencies from BLAS++, so BLAS++ must be
+installed first via CMake, before running CMake for LAPACK++. Information and
 installation instructions can be found at https://bitbucket.org/icl/blaspp.
 
 The CMake script enforces an out-of-source build. Create a build
 directory under the LAPACK++ root directory:
 
+    # After installing BLAS++ above
     cd /path/to/lapackpp
     mkdir build && cd build
     cmake [options] ..
     make
     make install
 
+LAPACK++ uses the TestSweeper library (https://bitbucket.org/icl/testsweeper)
+to run its tests. If CMake doesn't find TestSweeper, it will be
+downloaded and compiled. To use a different TestSweeper build that was
+not installed, you can point to its directory.
+
+    cmake -Dtestsweeper_DIR=/path/to/testsweeper/build [options] ..
+
 
 ### Options
 
-CMake uses the settings in the Environment variables section above.
-Additionally, options include:
+Besides the Environment variables and Options listed above, additional
+options include:
 
-USE_OPENMP={on,off}         use OpenMP, if available
-BLASPP_BUILD_TESTS={on,off} build test suite (test/tester)
-CMAKE_INSTALL_PREFIX        where to install, default /opt/slate
+    build_tests
+        Whether to build test suite (test/tester).
+        Requires TestSweeper, CBLAS, LAPACK, and LAPACKE. One of:
+        yes (default)
+        no
 
-These options are defined on the command line using `-D`, e.g.,
+    use_cmake_find_lapack
+        Whether to use CMake's FindLAPACK, instead of LAPACK++ search.
+        Again, as LAPACK is often included in the BLAS library,
+        there is usually no need to specify this. One of:
+        yes
+        no (default)
+        If BLA_VENDOR is set, it automatically uses CMake's FindLAPACK.
+
+    BLA_VENDOR
+        Use CMake's FindLAPACK, instead of LAPACK++ search. For values, see:
+        https://cmake.org/cmake/help/latest/module/FindLAPACK.html
+
+Standard CMake options include:
+
+    BUILD_SHARED_LIBS
+        Whether to build as a static or shared library. One of:
+        yes             shared library (default)
+        no              static library
+
+    CMAKE_INSTALL_PREFIX
+        Where to install, default /opt/slate.
+        Headers go   in ${prefix}/include,
+        library goes in ${prefix}/lib
+
+    CMAKE_BUILD_TYPE
+        Type of build. One of:
+        [empty]         default compiler optimization          (no flags)
+        Debug           no optimization, with asserts          (-O0 -g)
+        Release         optimized, no asserts, no debug info   (-O3 -DNDEBUG)
+        RelWithDebInfo  optimized, no asserts, with debug info (-O2 -DNDEBUG -g)
+        MinSizeRel      Release, but optimized for size        (-Os -DNDEBUG)
+
+With CMake, options are specified on the command line using
+`-Doption=value` syntax (not as environment variables), such as:
 
     # in build directory
-    cmake -DCOLOR=off -DCMAKE_INSTALL_PREFIX=/usr/local ..
+    cmake -Dbuild_tests=no -DCMAKE_INSTALL_PREFIX=/usr/local ..
 
 Alternatively, use the `ccmake` text-based interface or the CMake app GUI.
 
     # in build directory
     ccmake ..
-    Type 'c' to configure, then 'g' to generate Makefile
+    # Type 'c' to configure, then 'g' to generate Makefile
 
-If `LAPACKPP_BUILD_TESTS` is enabled, the build will require the TestSweeper
-library to be installed via CMake prior to compilation. Information and
-installation instructions can be found at https://bitbucket.org/icl/testsweeper.
+To re-configure CMake, you may need to delete CMake's cache:
 
-### LAPACK library options
+    # in build directory
+    rm CMakeCache.txt
+    # or
+    rm -rf *
+    cmake [options] ..
 
-LAPACK++ inherits its dependencies from BLAS++ as noted above. However, if the
-user wishes to override these options, they may set `USE_OPTIMIZED_LAPACK` to `TRUE`
-to use the CMake included `find_package(LAPACK)`.
+To debug the build, set `VERBOSE`:
 
-The user may also set `LAPACK_LIBRARIES` to the path of their desired LAPACK
-library. LAPACK++ will then attempt to explicitly link to this.
-
-Once the LAPACK library is set or inherited, the CMake script attempts to compile
-several small code snippets to determine what compiler options are necessary for
-LAPACK++.
+    # in build directory, after running cmake
+    make VERBOSE=1

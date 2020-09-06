@@ -1,0 +1,177 @@
+# Copyright (c) 2017-2020, University of Tennessee. All rights reserved.
+# SPDX-License-Identifier: BSD-3-Clause
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
+
+# Convert to list, as lapack_libs is later, to match cached value.
+string( REGEX REPLACE "([^ ])( +|\\\;)" "\\1;"    LAPACK_LIBRARIES "${LAPACK_LIBRARIES}" )
+string( REGEX REPLACE "-framework;" "-framework " LAPACK_LIBRARIES "${LAPACK_LIBRARIES}" )
+
+message( DEBUG "LAPACK_LIBRARIES '${LAPACK_LIBRARIES}'"        )
+message( DEBUG "  cached         '${cached_lapack_libraries}'" )
+message( DEBUG "lapack           '${lapack}'"                  )
+message( DEBUG "  cached         '${cached_lapack}'"           )
+message( DEBUG "" )
+
+#-----------------------------------
+# Check if this file has already been run with these settings.
+if (LAPACK_LIBRARIES
+    AND NOT "${cached_lapack_libraries}" STREQUAL "${LAPACK_LIBRARIES}")
+    # Ignore lapack if LAPACK_LIBRARIES changes.
+    # Set to empty, rather than unset, so when cmake is invoked again
+    # they don't force a search.
+    message( DEBUG "clear lapack" )
+    set( lapack "" CACHE INTERNAL "" )
+elseif (NOT ("${cached_lapack}" STREQUAL "${lapack}"))
+    # Ignore LAPACK_LIBRARIES if lapack* changed.
+    message( DEBUG "unset LAPACK_LIBRARIES" )
+    set( LAPACK_LIBRARIES "" CACHE INTERNAL "" )
+else()
+    message( DEBUG "LAPACK search already done for
+    lapack           = ${lapack}
+    LAPACK_LIBRARIES = ${LAPACK_LIBRARIES}" )
+    return()
+endif()
+
+set( cached_lapack_libraries ${LAPACK_LIBRARIES} CACHE INTERNAL "" )  # updated later
+set( cached_lapack           ${lapack}           CACHE INTERNAL "" )
+
+include( "cmake/util.cmake" )
+
+message( STATUS "Looking for LAPACK libraries and options" )
+
+#-------------------------------------------------------------------------------
+# Parse options: LAPACK_LIBRARIES, lapack.
+
+#---------------------------------------- LAPACK_LIBRARIES
+if (LAPACK_LIBRARIES)
+    set( test_lapack_libraries true )
+endif()
+
+#---------------------------------------- lapack
+string( TOLOWER "${lapack}" lapack_ )
+
+if ("${lapack_}" MATCHES "auto")
+    set( test_all true )
+endif()
+
+if ("${lapack_}" MATCHES "default")
+    set( test_default true )
+endif()
+
+if ("${lapack_}" MATCHES "generic")
+    set( test_generic true )
+endif()
+
+message( DEBUG "
+LAPACK_LIBRARIES      = '${LAPACK_LIBRARIES}'
+lapack                = '${lapack}'
+lapack_               = '${lapack_}'
+test_lapack_libraries = '${test_lapack_libraries}'
+test_default          = '${test_default}'
+test_generic          = '${test_generic}'
+test_all              = '${test_all}'")
+
+#-------------------------------------------------------------------------------
+# Build list of libraries to check.
+# todo: add flame?
+# todo: LAPACK_?(ROOT|DIR)
+
+set( lapack_libs_list "" )
+
+#---------------------------------------- LAPACK_LIBRARIES
+if (test_lapack_libraries)
+    # Escape ; semi-colons so we can append it as one item to a list.
+    string( REPLACE ";" "\\\;" LAPACK_LIBRARIES_ESC "${LAPACK_LIBRARIES}" )
+    message( DEBUG "LAPACK_LIBRARIES ${LAPACK_LIBRARIES}" )
+    message( DEBUG "   =>          ${LAPACK_LIBRARIES_ESC}" )
+    list( APPEND lapack_libs_list "${LAPACK_LIBRARIES_ESC}" )
+endif()
+
+#---------------------------------------- default (in BLAS library)
+if (test_all OR test_default)
+    list( APPEND lapack_libs_list " " )
+endif()
+
+#---------------------------------------- generic -llapack
+if (test_all OR test_generic)
+    list( APPEND lapack_libs_list "-llapack" )
+endif()
+
+message( DEBUG "lapack_libs_list ${lapack_libs_list}" )
+
+#-------------------------------------------------------------------------------
+# Check each LAPACK library.
+# BLAS++ needs only a limited subset of LAPACK, so check for potrf (Cholesky).
+# LAPACK++ checks for pstrf (Cholesky with pivoting) to make sure it is
+# a complete LAPACK library, since some BLAS libraries (ESSL, ATLAS)
+# contain only an optimized subset of LAPACK routines.
+
+unset( LAPACK_FOUND CACHE )
+unset( lapack_defines CACHE )
+
+foreach (lapack_libs IN LISTS lapack_libs_list)
+    if ("${lapack_libs}" MATCHES "^ *$")
+        set( label "   In BLAS library" )
+    else()
+        set( label "   ${lapack_libs}" )
+    endif()
+    pad_string( "${label}" 50 label )
+
+    # Try to link and run LAPACK routine with the library.
+    try_run(
+        run_result compile_result ${CMAKE_CURRENT_BINARY_DIR}
+        SOURCES
+            "${CMAKE_CURRENT_SOURCE_DIR}/config/lapack_pstrf.cc"
+        LINK_LIBRARIES
+            ${lapack_libs} blaspp
+        COMPILE_DEFINITIONS
+            "${blaspp_defines}" "${blaspp_config_defines}"
+        COMPILE_OUTPUT_VARIABLE
+            compile_output
+        RUN_OUTPUT_VARIABLE
+            run_output
+    )
+    debug_try_run( "lapack_pstrf.cc" "${compile_result}" "${compile_output}"
+                                     "${run_result}" "${run_output}" )
+
+    if (NOT compile_result)
+        message( "${label} ${red} no (didn't link: routine not found)${plain}" )
+    elseif ("${run_result}" EQUAL 0 AND "${run_output}" MATCHES "ok")
+        # If it runs (exits 0), we're done, so break loop.
+        message( "${label} ${blue} yes${plain}" )
+
+        set( LAPACK_FOUND true CACHE INTERNAL "" )
+        string( STRIP "${lapack_libs}" lapack_libs )
+        set( LAPACK_LIBRARIES "${lapack_libs}" CACHE STRING "" FORCE )
+        set( lapack_defines "-DHAVE_LAPACK" )
+        break()
+    else()
+        message( "${label} ${red} no (didn't run: int mismatch, etc.)${plain}" )
+    endif()
+endforeach()
+
+# To avoid empty -D, need to strip leading whitespace.
+# This seems painful in CMake.
+string( STRIP "${lapack_defines}" lapack_defines )
+set( lapack_defines "${lapack_defines}"
+     CACHE INTERNAL "Constants defined for LAPACK" )
+
+# Update to found LAPACK library.
+set( cached_lapack_libraries ${LAPACK_LIBRARIES} CACHE INTERNAL "" )
+
+#-------------------------------------------------------------------------------
+if (LAPACK_FOUND)
+    if (NOT LAPACK_LIBRARIES)
+        message( "${blue}   Found LAPACK library in BLAS library${plain}" )
+    else()
+        message( "${blue}   Found LAPACK library: ${LAPACK_LIBRARIES}${plain}" )
+    endif()
+else()
+    message( "${red}   LAPACK library not found.${plain}" )
+endif()
+
+message( DEBUG "
+LAPACK_FOUND        = '${LAPACK_FOUND}'
+LAPACK_LIBRARIES    = '${LAPACK_LIBRARIES}'
+lapack_defines      = '${lapack_defines}'")

@@ -18,7 +18,7 @@ int main( int argc, char** argv )
 {
     lapack_int major, minor, patch;
     LAPACK_ilaver( &major, &minor, &patch );
-    printf( "LAPACK_VERSION=%lld.%lld.%lld\n",
+    printf( "LAPACK_VERSION=%lld.%02lld.%02lld\n",
             (long long) major, (long long) minor, (long long) patch );
     return 0;
 }

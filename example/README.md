@@ -27,11 +27,22 @@ Then, to build `example_gemm` using the Makefile, run:
     
 ## Option 2: CMake
 
-todo: CMake must know where LAPACK++ is installed.
+CMake must know the compiler used to compile LAPACK++. Set CXX to the
+compiler, in your environment.
 
-Then, to build `example_gemm` using the CMakeLists.txt, run:
+It's best (but not required) to compile out-of-source in a build directory:
 
-    mkdir build
-    cd build
+    mkdir build && cd build
+
+If LAPACK++ is installed outside the default search path, tell cmake
+where, for example, in /opt/slate:
+
+    cmake -DCMAKE_PREFIX_PATH=/opt/slate ..
+
+Otherwise, simply run:
+
     cmake ..
+
+Then, to build `example_potrf` using the resulting Makefile, run:
+
     make

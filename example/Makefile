@@ -1,5 +1,5 @@
 # CXX compiler must match the one used to compiler LAPACK++.
-# Set it your environment or here.
+# Set it in your environment or here.
 # Sadly, pkg-config doesn't provide a way to query CXX,
 # CXXFLAGS (only cflags), CPPFLAGS, or LDFLAGS.
 
@@ -7,21 +7,21 @@
 
 #-------------------------------------------------------------------------------
 # Set CXXFLAGS and LIBS
-pkg_exists := $(shell pkg-config --exists lapack++; echo $$?)
+pkg_exists := $(shell pkg-config --exists lapackpp; echo $$?)
 ifeq ($(pkg_exists),0)
 
   # Get flags from pkg-config.
-  CXXFLAGS = $(shell pkg-config --cflags lapack++)
-  LIBS     = $(shell pkg-config --libs   lapack++)
-  
+  CXXFLAGS = $(shell pkg-config --cflags lapackpp)
+  LIBS     = $(shell pkg-config --libs   lapackpp)
+
 else
-  $(warning WARNING: pkg-config couldn't find lapack++. Using hard-coded flags in Makefile.)
+  $(warning WARNING: pkg-config couldn't find lapackpp. Using hard-coded flags in Makefile.)
 
   # LAPACK++ not in pkg-config.
   # Here's a hard-coded example using OpenBLAS.
   CXXFLAGS = -I/usr/local/lapackpp/include -std=c++11
   LIBS     = -L/usr/local/lapackpp/lib$(LIB_SUFFIX) -llapackpp -lopenblas
-  
+
 endif
 
 #-------------------------------------------------------------------------------

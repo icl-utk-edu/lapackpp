@@ -12,19 +12,20 @@ CXXFLAGS, and LIBS. Set CXX to the compiler, either in your environment
 or in the Makefile. For the flags, there are two more options:
 
 a. Using pkg-config to get CXXFLAGS and LIBS for LAPACK++ (recommended).
-pkg-config must be able to locate the lapack++ package. If it is installed
+pkg-config must be able to locate the lapackpp package. If it is installed
 outside the default search path (see `pkg-config --variable pc_path pkg-config`),
-it should be added to `$PKG_CONFIG_PATH`. For instance:
-   
-    export PKG_CONFIG_PATH=/usr/local/lapackpp/lib/pkgconfig  # for sh
-    setenv PKG_CONFIG_PATH /usr/local/lapackpp/lib/pkgconfig  # for csh
-    
+it should be added to `$PKG_CONFIG_PATH`. For instance, if it is installed
+in /opt/slate:
+
+    export PKG_CONFIG_PATH=/opt/slate/lib/pkgconfig  # for sh
+    setenv PKG_CONFIG_PATH /opt/slate/lib/pkgconfig  # for csh
+
 b. Hard-code CXXFLAGS and LIBS for LAPACK++ in the Makefile.
 
-Then, to build `example_gemm` using the Makefile, run:
-    
+Then, to build `example_potrf` using the Makefile, run:
+
     make
-    
+
 ## Option 2: CMake
 
 CMake must know the compiler used to compile LAPACK++. Set CXX to the

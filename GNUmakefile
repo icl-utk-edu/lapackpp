@@ -115,7 +115,7 @@ testsweeper: $(testsweeper)
 
 ifneq ($(wildcard .git),)
     id := $(shell git rev-parse --short HEAD)
-    src/version.o: CXXFLAGS += -DBLASPP_ID='"$(id)"'
+    src/version.o: CXXFLAGS += -DLAPACKPP_ID='"$(id)"'
 endif
 
 last_id := $(shell [ -e .id ] && cat .id || echo 'NA')
@@ -150,22 +150,22 @@ TEST_LIBS    += -llapackpp -lblaspp -ltestsweeper
 
 all: lib tester
 
-pkg = lib/pkgconfig/lapack++.pc
+pkg = lib/pkgconfig/lapackpp.pc
 
 install: lib $(pkg)
 	mkdir -p $(DESTDIR)$(prefix)/include/lapack
 	mkdir -p $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)
 	mkdir -p $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)/pkgconfig
-	cp include/*.hh $(DESTDIR)$(prefix)/include
-	cp include/lapack/*.{h,hh} $(DESTDIR)$(prefix)/include/lapack
-	cp -R lib/lib* $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)
+	cp include/*.hh $(DESTDIR)$(prefix)/include/
+	cp include/lapack/*.{h,hh} $(DESTDIR)$(prefix)/include/lapack/
+	cp -R lib/lib* $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)/
 	cp $(pkg) $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)/pkgconfig/
 
 uninstall:
 	$(RM)    $(DESTDIR)$(prefix)/include/lapack.hh
 	$(RM) -r $(DESTDIR)$(prefix)/include/lapack
 	$(RM) $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)/liblapackpp.*
-	$(RM) $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)/pkgconfig/lapack++.pc
+	$(RM) $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)/pkgconfig/lapackpp.pc
 
 #-------------------------------------------------------------------------------
 # if re-configured, recompile everything
@@ -265,7 +265,7 @@ doc_files = \
 	README.md \
 	INSTALL.md \
 
-docs/html/index.html: $(lib_src) $(tester_src) $(doc_files)
+docs/html/index.html: $(headers) $(lib_src) $(tester_src) $(doc_files)
 	doxygen docs/doxygen/doxyfile.conf
 	@echo ========================================
 	cat docs/doxygen/errors.txt

@@ -18,7 +18,7 @@ int lapackpp_version()
 }
 
 // LAPACKPP_ID is the Mercurial or git commit hash ID, either
-// defined by `hg id` or `git rev-parse --short HEAD` in Makefile,
+// defined by `git rev-parse --short HEAD` in Makefile,
 // or defined here by make_release.py for release tar files. DO NOT EDIT.
 #ifndef LAPACKPP_ID
 #define LAPACKPP_ID "unknown"

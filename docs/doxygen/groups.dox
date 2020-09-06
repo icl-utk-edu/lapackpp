@@ -125,4 +125,4 @@
         @defgroup generate_matrix Test matrix generation
         @defgroup util Utilities
     @}
-**/
+*/

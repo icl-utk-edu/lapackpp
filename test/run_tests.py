@@ -29,6 +29,7 @@ import argparse
 import subprocess
 import xml.etree.ElementTree as ET
 import io
+import time
 
 # ------------------------------------------------------------------------------
 # command line arguments
@@ -41,6 +42,7 @@ group_test.add_argument( '-t', '--test', action='store',
 group_test.add_argument( '--xml', help='generate report.xml for jenkins' )
 
 group_size = parser.add_argument_group( 'matrix dimensions (default is medium)' )
+group_size.add_argument(       '--quick',  action='store_true', help='run quick "sanity check" of few, small tests' )
 group_size.add_argument( '-x', '--xsmall', action='store_true', help='run x-small tests' )
 group_size.add_argument( '-s', '--small',  action='store_true', help='run small tests' )
 group_size.add_argument( '-m', '--medium', action='store_true', help='run medium tests' )
@@ -140,7 +142,7 @@ for t in opts.tests:
         exit(1)
 
 # by default, run medium sizes
-if (not (opts.xsmall or opts.small or opts.medium or opts.large)):
+if (not (opts.quick or opts.xsmall or opts.small or opts.medium or opts.large)):
     opts.medium = True
 
 # by default, run all shapes
@@ -171,6 +173,17 @@ nk_wide  = dim
 nk       = dim
 
 if (not opts.dim):
+    if (opts.quick):
+        n        = ' --dim 100'
+        tall     = ' --dim 100x50'  # 2:1
+        wide     = ' --dim 50x100'  # 1:2
+        mnk      = ' --dim 25x50x75'
+        nk_tall  = ' --dim 1x100x50'  # 2:1
+        nk_wide  = ' --dim 1x50x100'  # 1:2
+        opts.incx  = '1,-1'
+        opts.incy  = '1,-1'
+        opts.batch = '10'
+
     if (opts.xsmall):
         n       += ' --dim 10'
         tall    += ' --dim 20x10'
@@ -738,6 +751,10 @@ def indent_xml( elem, level=0 ):
 
 # ------------------------------------------------------------------------------
 # run each test
+
+start = time.time()
+print_tee( time.ctime() )
+
 failed_tests = []
 passed_tests = []
 ntests = len(opts.tests)
@@ -762,6 +779,8 @@ nfailed = len( failed_tests )
 if (nfailed > 0):
     print_tee( '\n' + str(nfailed) + ' routines FAILED:',
                ', '.join( [x[0] for x in failed_tests] ) )
+else:
+    print_tee( '\n' + 'All routines passed.' )
 
 # generate jUnit compatible test report
 if opts.xml:
@@ -794,5 +813,9 @@ if opts.xml:
     indent_xml( root )
     tree.write( opts.xml )
 # end
+
+elapsed = time.time() - start
+print_tee( 'Elapsed %.2f sec' % elapsed )
+print_tee( time.ctime() )
 
 exit( nfailed )

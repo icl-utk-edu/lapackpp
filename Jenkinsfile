@@ -30,7 +30,7 @@ stages {
                         sload gcc@6.4.0
                         sload intel-mkl
                         sload netlib-lapack
-                                                
+
                         #source /opt/spack/share/spack/setup-env.sh
                         #spack load gcc
                         #spack load intel-mkl

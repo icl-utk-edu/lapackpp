@@ -10,6 +10,7 @@ cmake_minimum_required( VERSION 3.15 )
 # 3.8  target_compile_features( cxx_std_11 )
 # 3.14 install( LIBRARY DESTINATION lib ) default
 # 3.15 $<$COMPILE_LANG_AND_ID  # optional
+# 3.15 message DEBUG, string REPEAT
 
 project(
     lapackpp
@@ -17,16 +18,28 @@ project(
     LANGUAGES CXX
 )
 
+# When built as a sub-project, add a namespace to make targets unique,
+# e.g., `make tester` becomes `make lapackpp_tester`.
+if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+    set( lapackpp_is_project true )
+    set( lapackpp_ "" )
+else()
+    set( lapackpp_is_project false )
+    set( lapackpp_ "lapackpp_" )
+endif()
+
 #-------------------------------------------------------------------------------
 # Options
 option( BUILD_SHARED_LIBS "Build shared libraries" true )
-option( build_tests "Build test suite" true )
+option( build_tests "Build test suite" "${lapackpp_is_project}" )
 option( color "Use ANSI color output" true )
-option( use_openmp "Use OpenMP, if available" true )
 option( use_cmake_find_lapack "Use CMake's find_package( LAPACK ) rather than the search in LAPACK++" false )
+option( use_openmp "Use OpenMP, if available" true )
 
 # Default prefix=/opt/slate
-if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT
+    AND lapackpp_is_project)
+
     set( CMAKE_INSTALL_PREFIX "/opt/slate"
          CACHE PATH
          "Install path prefix, prepended onto install directories."
@@ -545,10 +558,12 @@ endif()
 
 #-------------------------------------------------------------------------------
 # Add 'make lib' target.
-add_custom_target( lib DEPENDS lapackpp )
+if (lapackpp_is_project)
+    add_custom_target( lib DEPENDS lapackpp )
+endif()
 
 #-------------------------------------------------------------------------------
-# GNU Filesystem Convensions
+# GNU Filesystem Conventions
 include( GNUInstallDirs )
 set( INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/lapackpp )
 

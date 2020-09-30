@@ -70,7 +70,7 @@ void test_larfb_work( Params& params, bool run )
         // rowwise
         if (side == lapack::Side::Left)
             size_V = (size_t) ldv * m;
-        else if (side == lapack::Side::Right)
+        else
             size_V = (size_t) ldv * n;
     }
 

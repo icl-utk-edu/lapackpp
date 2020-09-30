@@ -38,7 +38,7 @@ void test_larfy_work( Params& params, bool run )
     // ---------- setup
     scalar_t tau;  // todo value
     int64_t ldc = roundup( blas::max(  1, n  ), align );
-    size_t size_V = (size_t) (1 + (n-1)*abs(incv));
+    size_t size_V = (size_t) (1 + (n-1)*std::abs(incv));
     size_t size_C = (size_t) ldc * n;
 
     std::vector< scalar_t > V( size_V );

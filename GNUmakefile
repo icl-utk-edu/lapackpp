@@ -156,9 +156,10 @@ install: lib $(pkg)
 	mkdir -p $(DESTDIR)$(prefix)/include/lapack
 	mkdir -p $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)
 	mkdir -p $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)/pkgconfig
-	cp include/*.hh $(DESTDIR)$(prefix)/include/
-	cp include/lapack/*.{h,hh} $(DESTDIR)$(prefix)/include/lapack/
-	cp -R lib/lib* $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)/
+	cp include/*.hh $(DESTDIR)$(prefix)/include
+	cp include/lapack/*.h  $(DESTDIR)$(prefix)/include/lapack
+	cp include/lapack/*.hh $(DESTDIR)$(prefix)/include/lapack
+	cp -R lib/lib* $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)
 	cp $(pkg) $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)/pkgconfig/
 
 uninstall:
@@ -191,7 +192,7 @@ $(lib_a): $(lib_obj)
 lib src: $(lib)
 
 lib/clean src/clean:
-	$(RM) lib/*.{a,so} src/*.o
+	$(RM) lib/*.a lib/*.so src/*.o
 
 #-------------------------------------------------------------------------------
 # BLAS++ library

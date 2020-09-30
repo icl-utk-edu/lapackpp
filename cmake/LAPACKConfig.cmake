@@ -22,7 +22,7 @@ try_run(
     SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/config/lapack_version.cc"
     LINK_LIBRARIES
-        "${lapack_libraries}" blaspp
+        "${LAPACK_LIBRARIES}" blaspp
     COMPILE_DEFINITIONS
         "${blas_defines}" "${blas_config_defines}"
     COMPILE_OUTPUT_VARIABLE
@@ -53,7 +53,7 @@ try_run(
     SOURCES
         "${CMAKE_CURRENT_SOURCE_DIR}/config/lapack_xblas.cc"
     LINK_LIBRARIES
-        "${lapack_libraries}" blaspp
+        "${LAPACK_LIBRARIES}" blaspp
     COMPILE_DEFINITIONS
         "${blas_defines}" "${blas_config_defines}"
     COMPILE_OUTPUT_VARIABLE
@@ -86,7 +86,7 @@ foreach (lib IN LISTS lib_list)
         SOURCES
             "${CMAKE_CURRENT_SOURCE_DIR}/config/lapacke_pstrf.cc"
         LINK_LIBRARIES
-            "${lib}" "${lapack_libraries}" blaspp
+            "${lib}" "${LAPACK_LIBRARIES}" blaspp
         COMPILE_DEFINITIONS
             "${blas_defines}" "${blas_config_defines}"
         COMPILE_OUTPUT_VARIABLE

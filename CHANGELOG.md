@@ -1,4 +1,5 @@
-2020.06.00
+2020.09.00
   - Initial release.
     - Supports LAPACK >= 3.2.1.
     - Includes routines through LAPACK 3.7.0.
+    - Makefile and CMake build options

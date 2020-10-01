@@ -24,7 +24,7 @@ try_run(
     LINK_LIBRARIES
         "${LAPACK_LIBRARIES}" blaspp
     COMPILE_DEFINITIONS
-        "${blas_defines}" "${blas_config_defines}"
+        "${blaspp_defines}" "${blaspp_config_defines}"
     COMPILE_OUTPUT_VARIABLE
         compile_output
     RUN_OUTPUT_VARIABLE
@@ -55,7 +55,7 @@ try_run(
     LINK_LIBRARIES
         "${LAPACK_LIBRARIES}" blaspp
     COMPILE_DEFINITIONS
-        "${blas_defines}" "${blas_config_defines}"
+        "${blaspp_defines}" "${blaspp_config_defines}"
     COMPILE_OUTPUT_VARIABLE
         compile_output
     RUN_OUTPUT_VARIABLE
@@ -88,7 +88,7 @@ foreach (lib IN LISTS lib_list)
         LINK_LIBRARIES
             "${lib}" "${LAPACK_LIBRARIES}" blaspp
         COMPILE_DEFINITIONS
-            "${blas_defines}" "${blas_config_defines}"
+            "${blaspp_defines}" "${blaspp_config_defines}"
         COMPILE_OUTPUT_VARIABLE
             compile_output
         RUN_OUTPUT_VARIABLE

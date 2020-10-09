@@ -222,6 +222,11 @@ tester: $(tester)
 test/clean:
 	$(RM) $(tester) test/*.o
 
+test/check: check
+
+check: tester
+	cd test; python run_tests.py --quick
+
 #-------------------------------------------------------------------------------
 # headers
 # precompile headers to verify self-sufficiency

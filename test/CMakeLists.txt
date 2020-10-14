@@ -231,10 +231,13 @@ add_custom_command(
 )
 
 if (lapackpp_is_project)
+    # 'make check' tests subset of routines, to avoid spurious failures
     add_custom_target(
         "check"
         COMMAND
             python run_tests.py --quick
+                gesv getrf posv potrf geqrf ungqr gels
+                geev heev heevd heevr gesvd gesdd
         WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
     )
 endif()

@@ -224,8 +224,11 @@ test/clean:
 
 test/check: check
 
+# 'make check' tests subset of routines, to avoid spurious failures
 check: tester
-	cd test; python run_tests.py --quick
+	cd test; python run_tests.py --quick \
+		gesv getrf posv potrf geqrf ungqr gels \
+		geev heev heevd heevr gesvd gesdd
 
 #-------------------------------------------------------------------------------
 # headers

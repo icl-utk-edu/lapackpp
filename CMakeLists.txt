@@ -44,7 +44,6 @@ option( BUILD_SHARED_LIBS "Build shared libraries" true )
 option( build_tests "Build test suite" "${lapackpp_is_project}" )
 option( color "Use ANSI color output" true )
 option( use_cmake_find_lapack "Use CMake's find_package( LAPACK ) rather than the search in LAPACK++" false )
-option( use_openmp "Use OpenMP, if available" true )
 
 # Default prefix=/opt/slate
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT
@@ -491,17 +490,6 @@ target_include_directories(
         "$<INSTALL_INTERFACE:include>"
 )
 
-# OpenMP support.
-if (NOT use_openmp)
-    message( STATUS "User has requested to NOT use OpenMP" )
-else()
-    find_package( OpenMP )
-    if (OpenMP_CXX_FOUND)
-        set( openmp_lib "OpenMP::OpenMP_CXX" )
-        target_link_libraries( lapackpp PUBLIC "${openmp_lib}" )
-    endif()
-endif()
-
 # Get git commit id.
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.git")
     execute_process( COMMAND git rev-parse --short HEAD
@@ -526,6 +514,7 @@ endif()
 
 #-------------------------------------------------------------------------------
 # Search for BLAS library.
+message( STATUS "Check for BLAS++" )
 find_package( blaspp )
 if (blaspp_FOUND)
     message( STATUS "Found BLAS++: ${blaspp_DIR}" )
@@ -559,8 +548,7 @@ target_link_libraries( lapackpp PUBLIC "${LAPACK_LIBRARIES}" )
 target_link_libraries( lapackpp PUBLIC blaspp )
 
 target_compile_definitions(
-    lapackpp PRIVATE "${blaspp_defines}" "${blaspp_config_defines}"
-                     "${lapack_defines}" "${lapack_config_defines}" )
+    lapackpp PRIVATE "${blaspp_defines}" "${lapackpp_defines}" )
 
 #-------------------------------------------------------------------------------
 if (build_tests)
@@ -576,27 +564,28 @@ endif()
 #-------------------------------------------------------------------------------
 # GNU Filesystem Conventions
 include( GNUInstallDirs )
-set( INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/lapackpp )
+set( install_configdir "${CMAKE_INSTALL_LIBDIR}/lapackpp" )
 
 # Install library and add to <package>Targets.cmake
 install(
     TARGETS lapackpp
     EXPORT lapackppTargets
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}  # no default before 3.14
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+    ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 )
 
 # Install header files
 install(
-    DIRECTORY ${PROJECT_SOURCE_DIR}/include/    # / copies contents, not directory itself
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    # / copies contents, not directory itself
+    DIRECTORY "${PROJECT_SOURCE_DIR}/include/"
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
     FILES_MATCHING REGEX "\\.(h|hh)$"
 )
 
 # Install <package>Targets.cmake
 install(
     EXPORT lapackppTargets
-    DESTINATION ${INSTALL_CONFIGDIR}
+    DESTINATION "${install_configdir}"
 )
 
 # Also export <package>Targets.cmake in build directory
@@ -611,7 +600,7 @@ include( CMakePackageConfigHelpers )
 configure_package_config_file(
     "lapackppConfig.cmake.in"
     "lapackppConfig.cmake"
-    INSTALL_DESTINATION ${INSTALL_CONFIGDIR}
+    INSTALL_DESTINATION "${install_configdir}"
 )
 write_basic_package_version_file(
     "lapackppConfigVersion.cmake"
@@ -621,5 +610,5 @@ write_basic_package_version_file(
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/lapackppConfig.cmake"
           "${CMAKE_CURRENT_BINARY_DIR}/lapackppConfigVersion.cmake"
-    DESTINATION ${INSTALL_CONFIGDIR}
+    DESTINATION "${install_configdir}"
 )

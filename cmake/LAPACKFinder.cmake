@@ -8,21 +8,21 @@ string( REGEX REPLACE "([^ ])( +|\\\;)" "\\1;"    LAPACK_LIBRARIES "${LAPACK_LIB
 string( REGEX REPLACE "-framework;" "-framework " LAPACK_LIBRARIES "${LAPACK_LIBRARIES}" )
 
 message( DEBUG "LAPACK_LIBRARIES '${LAPACK_LIBRARIES}'"        )
-message( DEBUG "  cached         '${cached_lapack_libraries}'" )
+message( DEBUG "  cached         '${lapack_libraries_cached}'" )
 message( DEBUG "lapack           '${lapack}'"                  )
-message( DEBUG "  cached         '${cached_lapack}'"           )
+message( DEBUG "  cached         '${lapack_cached}'"           )
 message( DEBUG "" )
 
 #-----------------------------------
 # Check if this file has already been run with these settings.
 if (LAPACK_LIBRARIES
-    AND NOT "${cached_lapack_libraries}" STREQUAL "${LAPACK_LIBRARIES}")
+    AND NOT "${lapack_libraries_cached}" STREQUAL "${LAPACK_LIBRARIES}")
     # Ignore lapack if LAPACK_LIBRARIES changes.
     # Set to empty, rather than unset, so when cmake is invoked again
     # they don't force a search.
     message( DEBUG "clear lapack" )
     set( lapack "" CACHE INTERNAL "" )
-elseif (NOT ("${cached_lapack}" STREQUAL "${lapack}"))
+elseif (NOT ("${lapack_cached}" STREQUAL "${lapack}"))
     # Ignore LAPACK_LIBRARIES if lapack* changed.
     message( DEBUG "unset LAPACK_LIBRARIES" )
     set( LAPACK_LIBRARIES "" CACHE INTERNAL "" )
@@ -33,8 +33,8 @@ else()
     return()
 endif()
 
-set( cached_lapack_libraries ${LAPACK_LIBRARIES} CACHE INTERNAL "" )  # updated later
-set( cached_lapack           ${lapack}           CACHE INTERNAL "" )
+set( lapack_libraries_cached ${LAPACK_LIBRARIES} CACHE INTERNAL "" )  # updated later
+set( lapack_cached           ${lapack}           CACHE INTERNAL "" )
 
 include( "cmake/util.cmake" )
 
@@ -108,7 +108,7 @@ message( DEBUG "lapack_libs_list ${lapack_libs_list}" )
 # contain only an optimized subset of LAPACK routines.
 
 unset( LAPACK_FOUND CACHE )
-unset( lapack_defines CACHE )
+unset( lapackpp_defines CACHE )
 
 foreach (lapack_libs IN LISTS lapack_libs_list)
     if ("${lapack_libs}" MATCHES "^ *$")
@@ -124,9 +124,9 @@ foreach (lapack_libs IN LISTS lapack_libs_list)
         SOURCES
             "${CMAKE_CURRENT_SOURCE_DIR}/config/lapack_pstrf.cc"
         LINK_LIBRARIES
-            ${lapack_libs} blaspp
+            ${lapack_libs} ${blaspp_libraries}
         COMPILE_DEFINITIONS
-            "${blaspp_defines}" "${blaspp_config_defines}"
+            "${blaspp_defines}"
         COMPILE_OUTPUT_VARIABLE
             compile_output
         RUN_OUTPUT_VARIABLE
@@ -144,7 +144,7 @@ foreach (lapack_libs IN LISTS lapack_libs_list)
         set( LAPACK_FOUND true CACHE INTERNAL "" )
         string( STRIP "${lapack_libs}" lapack_libs )
         set( LAPACK_LIBRARIES "${lapack_libs}" CACHE STRING "" FORCE )
-        set( lapack_defines "-DHAVE_LAPACK" )
+        set( lapackpp_defines "-DHAVE_LAPACK" )
         break()
     else()
         message( "${label} ${red} no (didn't run: int mismatch, etc.)${plain}" )
@@ -153,12 +153,12 @@ endforeach()
 
 # To avoid empty -D, need to strip leading whitespace.
 # This seems painful in CMake.
-string( STRIP "${lapack_defines}" lapack_defines )
-set( lapack_defines "${lapack_defines}"
-     CACHE INTERNAL "Constants defined for LAPACK" )
+string( STRIP "${lapackpp_defines}" lapackpp_defines )
+set( lapackpp_defines "${lapackpp_defines}"
+     CACHE INTERNAL "Constants defined for LAPACK++" )
 
 # Update to found LAPACK library.
-set( cached_lapack_libraries ${LAPACK_LIBRARIES} CACHE INTERNAL "" )
+set( lapack_libraries_cached ${LAPACK_LIBRARIES} CACHE INTERNAL "" )
 
 #-------------------------------------------------------------------------------
 if (LAPACK_FOUND)
@@ -174,4 +174,5 @@ endif()
 message( DEBUG "
 LAPACK_FOUND        = '${LAPACK_FOUND}'
 LAPACK_LIBRARIES    = '${LAPACK_LIBRARIES}'
-lapack_defines      = '${lapack_defines}'")
+lapackpp_defines    = '${lapackpp_defines}'
+")

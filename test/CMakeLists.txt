@@ -209,15 +209,15 @@ target_link_libraries(
 
 target_include_directories(
     ${tester}
-    PUBLIC
+    PRIVATE
         "${blaspp_cblas_include}"
-        "${lapacke_include}" )
+        "${lapacke_include}"
+)
 
 target_compile_definitions(
     ${tester}
     PRIVATE
         "${blaspp_defines}"
-        "${blaspp_config_defines}"
         "${blaspp_cblas_defines}"
         "${lapack_defines}"
 )

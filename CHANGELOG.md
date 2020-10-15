@@ -1,3 +1,7 @@
+2020.10.00
+  - Fixes: CMake version
+  - Add `make check`
+
 2020.09.00
   - Initial release.
     - Supports LAPACK >= 3.2.1.

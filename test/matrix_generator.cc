@@ -263,14 +263,6 @@ void generate_svd(
     Matrix<scalar_t> U( maxmn, minmn );
     Vector<scalar_t> tau( minmn );
 
-    // query for workspace
-    lapack::unmqr( lapack::Side::Left, lapack::Op::NoTrans, A.m, A.n, minmn,
-                   U(0,0), U.ld, tau(0), A(0,0), A.ld );
-    assert( info == 0 );
-    lapack::unmqr( lapack::Side::Right, lapack::Op::ConjTrans, A.m, A.n, minmn,
-                   U(0,0), U.ld, tau(0), A(0,0), A.ld );
-    assert( info == 0 );
-
     // ----------
     generate_sigma( params, dist, false, cond, sigma_max, A, sigma );
 
@@ -368,14 +360,6 @@ void generate_heev(
     int64_t info = 0;
     Matrix<scalar_t> U( n, n );
     Vector<scalar_t> tau( n );
-
-    // query for workspace
-    lapack::unmqr( lapack::Side::Left, lapack::Op::NoTrans, n, n, n,
-                   U(0,0), U.ld, tau(0), A(0,0), A.ld );
-
-    lapack::unmqr( lapack::Side::Right, lapack::Op::ConjTrans, n, n, n,
-                   U(0,0), U.ld, tau(0), A(0,0), A.ld );
-    assert( info == 0 );
 
     // ----------
     generate_sigma( params, dist, rand_sign, cond, sigma_max, A, sigma );

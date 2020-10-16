@@ -115,9 +115,9 @@ real_t check_geev_Vnormalization(
             real_t nrm;
             if (imag( W[j] ) > 0) {
                 // complex eigenvector
-                assert( j < n-1 );
-                assert( real( W[j] ) ==  real( W[j+1] ) );
-                assert( imag( W[j] ) == -imag( W[j+1] ) );
+                require( j < n-1 );
+                require( real( W[j] ) ==  real( W[j+1] ) );
+                require( imag( W[j] ) == -imag( W[j+1] ) );
                 ipair = true;
                 nrm = lapack::lapy2( blas::nrm2( n, &V(0,j  ), 1 ),
                                      blas::nrm2( n, &V(0,j+1), 1 ) );

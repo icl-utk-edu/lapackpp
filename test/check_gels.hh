@@ -138,7 +138,7 @@ void check_gels(
 
         // QR of D
         int64_t info = lapack::geqrf( opAn, opAm + nrhs, &D[0], ldd, &tau[0] );
-        assert( info == 0 );
+        require( info == 0 );
 
         // error = || R_{opAm : opAn-1, opAm : opAm+nrhs-1} ||_max
         error = lapack::lantr( lapack::Norm::Max, lapack::Uplo::Upper,

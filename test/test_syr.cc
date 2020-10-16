@@ -34,7 +34,7 @@ inline CBLAS_LAYOUT cblas_layout_const( blas::Layout layout )
     switch (layout) {
         case blas::Layout::RowMajor:  return CblasRowMajor;
         case blas::Layout::ColMajor:  return CblasColMajor;
-        default: assert( false );
+        default: throw blas::Error();
     }
 }
 
@@ -44,7 +44,7 @@ inline CBLAS_UPLO cblas_uplo_const( blas::Uplo uplo )
     switch (uplo) {
         case blas::Uplo::Lower: return CblasLower;
         case blas::Uplo::Upper: return CblasUpper;
-        default: assert( false );
+        default: throw blas::Error();
     }
 }
 
@@ -53,9 +53,7 @@ inline char lapack_uplo_const( CBLAS_UPLO uplo )
     switch (uplo) {
         case CblasLower: return 'l';
         case CblasUpper: return 'u';
-        default:
-            printf( "%s( %c )\n", __func__, uplo );
-            assert( false );
+        default: throw blas::Error();
     }
 }
 

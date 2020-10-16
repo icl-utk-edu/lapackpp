@@ -141,6 +141,19 @@ inline T roundup( T x, T y )
     }
 
 // -----------------------------------------------------------------------------
+// Like assert(), but throws error and is not disabled by NDEBUG.
+inline
+void require_( bool cond, const char* condstr, const char* file, int line )
+{
+    if (! cond) {
+        throw blas::Error( std::string(condstr) + " failed at "
+                           + file + ":" + std::to_string(line) );
+    }
+}
+
+#define require( cond ) require_( (cond), #cond, __FILE__, __LINE__ )
+
+// -----------------------------------------------------------------------------
 // LAPACK
 // LU, general
 void test_gesv  ( Params& params, bool run );

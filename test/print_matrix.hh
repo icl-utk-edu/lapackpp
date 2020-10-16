@@ -16,9 +16,9 @@ void print_matrix( int64_t m, int64_t n, T *A, int64_t lda,
 {
     #define A(i_, j_) A[ (i_) + size_t(lda)*(j_) ]
 
-    assert( m >= 0 );
-    assert( n >= 0 );
-    assert( lda >= m );
+    require( m >= 0 );
+    require( n >= 0 );
+    require( lda >= m );
     char format2[32];
     snprintf( format2, sizeof(format2), " %s", format );
 
@@ -41,9 +41,9 @@ void print_matrix( int64_t m, int64_t n, std::complex<T>* A, int64_t lda,
 {
     #define A(i_, j_) A[ (i_) + size_t(lda)*(j_) ]
 
-    assert( m >= 0 );
-    assert( n >= 0 );
-    assert( lda >= m );
+    require( m >= 0 );
+    require( n >= 0 );
+    require( lda >= m );
     char format2[32];
     snprintf( format2, sizeof(format2), " %s + %si", format, format );
 
@@ -64,8 +64,8 @@ template< typename T >
 void print_vector( int64_t n, T *x, int64_t incx,
                    const char* format="%9.4f" )
 {
-    assert( n >= 0 );
-    assert( incx != 0 );
+    require( n >= 0 );
+    require( incx != 0 );
     char format2[32];
     snprintf( format2, sizeof(format2), " %s", format );
 
@@ -83,8 +83,8 @@ template< typename T >
 void print_vector( int64_t n, std::complex<T>* x, int64_t incx,
                    const char* format="%9.4f" )
 {
-    assert( n >= 0 );
-    assert( incx != 0 );
+    require( n >= 0 );
+    require( incx != 0 );
     char format2[32];
     snprintf( format2, sizeof(format2), " %s + %si", format, format );
 

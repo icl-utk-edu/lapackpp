@@ -66,7 +66,7 @@ void generate_sigma(
 
     // locals
     int64_t minmn = std::min( A.m, A.n );
-    assert( minmn == sigma.n );
+    require( minmn == sigma.n );
 
     switch (dist) {
         case Dist::arith:
@@ -150,7 +150,7 @@ void generate_sigma(
             break;
 
         case Dist::none:
-            assert( false );
+            throw lapack::Error();
             break;
     }
 
@@ -225,13 +225,13 @@ void generate_correlation_factor( Matrix<scalar_t>& A )
 template<>
 void generate_correlation_factor( Matrix<std::complex<float>>& A )
 {
-    assert( false );
+    throw lapack::Error( "not implemented" );
 }
 
 template<>
 void generate_correlation_factor( Matrix<std::complex<double>>& A )
 {
-    assert( false );
+    throw lapack::Error( "not implemented" );
 }
 
 
@@ -291,7 +291,7 @@ void generate_svd(
     // A = U*A
     lapack::unmqr( lapack::Side::Left, lapack::Op::NoTrans, A.m, A.n, minmn,
                    U(0,0), U.ld, tau(0), A(0,0), A.ld );
-    assert( info == 0 );
+    require( info == 0 );
 
     // random V, n-by-minmn (stored column-wise in U)
     lapack::larnv( idist_randn, params.iseed, sizeU, U(0,0) );
@@ -303,7 +303,7 @@ void generate_svd(
     // A = A*V^H
     lapack::unmqr( lapack::Side::Right, lapack::Op::ConjTrans, A.m, A.n, minmn,
                    U(0,0), U.ld, tau(0), A(0,0), A.ld );
-    assert( info == 0 );
+    require( info == 0 );
 
     if (condD != 1) {
         // A = A*W, W orthogonal, such that A has unit column norms
@@ -352,7 +352,7 @@ void generate_heev(
     using real_t = blas::real_type<scalar_t>;
 
     // check inputs
-    assert( A.m == A.n );
+    require( A.m == A.n );
 
     // locals
     int64_t n = A.n;
@@ -377,12 +377,12 @@ void generate_heev(
     // A = U*A
     lapack::unmqr( lapack::Side::Left, lapack::Op::NoTrans, n, n, n,
                    U(0,0), U.ld, tau(0), A(0,0), A.ld );
-    assert( info == 0 );
+    require( info == 0 );
 
     // A = A*U^H
     lapack::unmqr( lapack::Side::Right, lapack::Op::ConjTrans, n, n, n,
                    U(0,0), U.ld, tau(0), A(0,0), A.ld );
-    assert( info == 0 );
+    require( info == 0 );
 
     // make diagonal real
     // usually LAPACK ignores imaginary part anyway, but Matlab doesn't

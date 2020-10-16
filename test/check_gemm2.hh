@@ -36,11 +36,11 @@ void check_gemm(
 
     using real_t = blas::real_type<T>;
 
-    assert( m >= 0 );
-    assert( n >= 0 );
-    assert( k >= 0 );
-    assert( ldc >= m );
-    assert( ldcref >= m );
+    require( m >= 0 );
+    require( n >= 0 );
+    require( k >= 0 );
+    require( ldc >= m );
+    require( ldcref >= m );
 
     // C -= Cref
     for (int64_t j = 0; j < n; ++j) {
@@ -89,10 +89,10 @@ void check_herk(
 
     using real_t = blas::real_type<T>;
 
-    assert( n >= 0 );
-    assert( k >= 0 );
-    assert( ldc >= n );
-    assert( ldcref >= n );
+    require( n >= 0 );
+    require( k >= 0 );
+    require( ldc >= n );
+    require( ldcref >= n );
 
     // C -= Cref
     if (uplo == blas::Uplo::Lower) {

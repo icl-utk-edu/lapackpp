@@ -513,13 +513,17 @@ if (CMAKE_VERSION VERSION_GREATER_EQUAL 3.15)
 endif()
 
 #-------------------------------------------------------------------------------
-# Search for BLAS library.
+# Search for BLAS library, if not already included (e.g., in SLATE).
 message( STATUS "Check for BLAS++" )
-find_package( blaspp )
-if (blaspp_FOUND)
-    message( STATUS "Found BLAS++: ${blaspp_DIR}" )
+if (NOT TARGET blaspp)
+    find_package( blaspp )
+    if (blaspp_FOUND)
+        message( "   Found BLAS++: ${blaspp_DIR}" )
+    else()
+        message( FATAL_ERROR "BLAS++ not found. LAPACK++ requires BLAS++ to be installed first." )
+    endif()
 else()
-    message( FATAL_ERROR "BLAS++ not found. LAPACK++ requires BLAS++ to be installed first." )
+    message( "   BLAS++ already included" )
 endif()
 
 # Search for LAPACK library.

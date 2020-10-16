@@ -63,7 +63,7 @@ Join by signing in with your Google credentials, then clicking
 *Join group to post*.
 
 Bug reports can be filed directly on Bitbucket's issue tracker:
-<http://bitbucket.org/icl/lapackpp/issues>.
+<http://bitbucket.org/icl/lapackpp/issues?status=new&status=open>.
 
 * * *
 

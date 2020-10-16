@@ -227,7 +227,7 @@ options include:
 
     build_tests
         Whether to build test suite (test/tester).
-        Requires TestSweeper, CBLAS, LAPACK, and LAPACKE. One of:
+        Requires TestSweeper, CBLAS, and LAPACKE. One of:
         yes (default)
         no
 

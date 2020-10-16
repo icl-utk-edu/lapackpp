@@ -124,6 +124,9 @@ foreach (lapack_libs IN LISTS lapack_libs_list)
         SOURCES
             "${CMAKE_CURRENT_SOURCE_DIR}/config/lapack_pstrf.cc"
         LINK_LIBRARIES
+            # Use blaspp_libraries instead of blaspp, when SLATE includes
+            # blaspp and lapackpp, so the blaspp library doesn't exist yet.
+            # Not "quoted"; screws up OpenMP.
             ${lapack_libs} ${blaspp_libraries}
         COMPILE_DEFINITIONS
             "${blaspp_defines}"

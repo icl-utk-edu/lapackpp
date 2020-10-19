@@ -16,6 +16,9 @@
     // define lapack_complex and MKL_Complex to be consistent
     #define MKL_Complex8  lapack_complex_float
     #define MKL_Complex16 lapack_complex_double
+    #if defined(BLAS_ILP64) && ! defined(MKL_ILP64)
+        #define MKL_ILP64
+    #endif
     #include <mkl_lapacke.h>
 #else
     #include <lapacke.h>

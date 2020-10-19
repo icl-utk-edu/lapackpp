@@ -228,7 +228,7 @@ test/check: check
 check: tester
 	cd test; python run_tests.py --quick \
 		gesv getrf posv potrf geqrf ungqr gels \
-		geev heev heevd heevr gesvd gesdd
+		geev heev heevd heevr gesvd
 
 #-------------------------------------------------------------------------------
 # headers

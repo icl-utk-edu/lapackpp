@@ -237,7 +237,7 @@ if (lapackpp_is_project)
         COMMAND
             python run_tests.py --quick
                 gesv getrf posv potrf geqrf ungqr gels
-                geev heev heevd heevr gesvd gesdd
+                geev heev heevd heevr gesvd
         WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
     )
 endif()

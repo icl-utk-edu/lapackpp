@@ -1,3 +1,6 @@
+2020.10.01
+  - Fixes: ILP64, CMake output padding
+
 2020.10.00
   - Fixes: CMake version
   - Add `make check`

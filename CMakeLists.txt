@@ -14,7 +14,7 @@ cmake_minimum_required( VERSION 3.15 )
 
 project(
     lapackpp
-    VERSION 2020.10.00
+    VERSION 2020.10.01
     LANGUAGES CXX
 )
 

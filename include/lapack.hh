@@ -7,8 +7,8 @@
 #define LAPACK_HH
 
 // Version is updated by make_release.py; DO NOT EDIT.
-// Version 2020.10.01
-#define LAPACKPP_VERSION 20201001
+// Version 2020.10.02
+#define LAPACKPP_VERSION 20201002
 
 namespace lapack {
 

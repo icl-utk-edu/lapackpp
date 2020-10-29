@@ -49,7 +49,7 @@ Documentation
 --------------------------------------------------------------------------------
 
 * [INSTALL.md](INSTALL.md) for installation notes.
-* [LAPACK++ Doxygen](https://icl.bitbucket.io/lapackpp/doxygen/html/)
+* [LAPACK++ Doxygen](https://icl.bitbucket.io/lapackpp/)
 * [SLATE Working Note 2: C++ API for BLAS and LAPACK](http://www.icl.utk.edu/publications/swan-002)
 
 * * *

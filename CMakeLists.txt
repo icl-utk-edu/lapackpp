@@ -548,7 +548,7 @@ include( "cmake/LAPACKConfig.cmake" )
 # calls blas, cblas, lapack, lapacke, mkl, essl, etc., it would need to
 # devine the exact same LAPACK_LIBRARIES. For example, the tester calls
 # lapacke. Instead, make it public.
-target_link_libraries( lapackpp PUBLIC "${LAPACK_LIBRARIES}" )
+target_link_libraries( lapackpp PUBLIC ${LAPACK_LIBRARIES} )
 target_link_libraries( lapackpp PUBLIC blaspp )
 
 target_compile_definitions(

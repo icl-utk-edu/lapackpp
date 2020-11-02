@@ -208,8 +208,8 @@ target_link_libraries(
     ${tester}
     testsweeper
     lapackpp
-    "${blaspp_cblas_libraries}"
-    "${lapacke_libraries}"
+    ${blaspp_cblas_libraries}
+    ${lapacke_libraries}
 )
 
 target_include_directories(

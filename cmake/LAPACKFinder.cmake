@@ -82,7 +82,7 @@ set( lapack_libs_list "" )
 #---------------------------------------- LAPACK_LIBRARIES
 if (test_lapack_libraries)
     # Escape ; semi-colons so we can append it as one item to a list.
-    string( REPLACE ";" "\\\;" LAPACK_LIBRARIES_ESC "${LAPACK_LIBRARIES}" )
+    string( REPLACE ";" "\\;" LAPACK_LIBRARIES_ESC "${LAPACK_LIBRARIES}" )
     message( DEBUG "LAPACK_LIBRARIES ${LAPACK_LIBRARIES}" )
     message( DEBUG "   =>          ${LAPACK_LIBRARIES_ESC}" )
     list( APPEND lapack_libs_list "${LAPACK_LIBRARIES_ESC}" )

@@ -9,7 +9,7 @@ stages {
             axes {
                 axis {
                     name 'maker'
-                    values 'make'
+                    values 'make', 'cmake'
                 }
                 axis {
                     name 'host'
@@ -44,10 +44,22 @@ stages {
                             export top=..
 
                             # Modify make.inc to add netlib LAPACKE for bug fixes.
-                            ##export LAPACKDIR=/home/jmfinney/projects/lapack/build/lib
-                            #export LAPACKDIR=/var/lib/jenkins/workspace/jmfinney/netlib-xylitol/build/lib
                             export LAPACKDIR=`spack location -i netlib-lapack`/lib64
                             sed -i -e 's/LIBS *=/LIBS = -L${LAPACKDIR} -llapacke /' make.inc
+                        fi
+                        if [ "${maker}" = "cmake" ]; then
+                            sload cmake
+
+                            git clone git@bitbucket.org:icl/blaspp.git
+                            mkdir blaspp/build
+                            cd blaspp/build
+                            cmake -Dcolor=no -Dbuild_tests=no ..
+
+                            rm -rf build
+                            mkdir build
+                            cd build
+                            cmake -Dcolor=no -Dblaspp_DIR=../blaspp/build -DCMAKE_CXX_FLAGS="-Werror" ..
+                            export top=../..
                         fi
 
                         echo "========================================"

@@ -76,17 +76,25 @@ blaspp_dir = $(wildcard ../blaspp)
 ifeq ($(blaspp_dir),)
     blaspp_dir = $(wildcard ./blaspp)
 endif
-ifeq ($(blaspp_dir),)
-    $(lib_obj):
-		$(error LAPACK++ requires BLAS++, which was not found. Run 'make config' \
-		        or download manually from https://bitbucket.org/icl/blaspp/)
-endif
 
 blaspp_src = $(wildcard $(blaspp_dir)/src/*.cc $(blaspp_dir)/include/*.hh)
 
 libblaspp  = $(blaspp_dir)/lib/libblaspp.$(lib_ext)
 
 blaspp: $(libblaspp)
+
+ifneq ($(blaspp_dir),)
+    $(libblaspp): $(libblaspp_src)
+		cd $(blaspp_dir) && $(MAKE) lib CXX=$(CXX)
+else
+    $(lib_obj):
+		$(error LAPACK++ requires BLAS++, which was not found. Run 'make config' \
+		        or download manually from https://bitbucket.org/icl/blaspp/)
+endif
+
+# Compile BLAS++ before LAPACK++.
+$(lib_obj) $(tester_obj): | $(libblaspp)
+
 
 #-------------------------------------------------------------------------------
 # TestSweeper
@@ -98,17 +106,25 @@ endif
 ifeq ($(testsweeper_dir),)
     testsweeper_dir = $(wildcard ./testsweeper)
 endif
-ifeq ($(testsweeper_dir),)
-    $(tester_obj):
-		$(error Tester requires TestSweeper, which was not found. Run 'make config' \
-		        or download manually from https://bitbucket.org/icl/testsweeper/)
-endif
 
 testsweeper_src = $(wildcard $(testsweeper_dir)/testsweeper.cc $(testsweeper_dir)/testsweeper.hh)
 
 testsweeper = $(testsweeper_dir)/libtestsweeper.$(lib_ext)
 
 testsweeper: $(testsweeper)
+
+ifneq ($(testsweeper_dir),)
+    $(testsweeper): $(testsweeper_src)
+		cd $(testsweeper_dir) && $(MAKE) lib CXX=$(CXX)
+else
+    $(tester_obj):
+		$(error Tester requires TestSweeper, which was not found. Run 'make config' \
+		        or download manually from https://bitbucket.org/icl/testsweeper/)
+endif
+
+# Compile TestSweeper before LAPACK++.
+$(lib_obj) $(tester_obj): | $(libblaspp)
+
 
 #-------------------------------------------------------------------------------
 # Get Mercurial id, and make version.o depend on it via .id file.
@@ -193,20 +209,6 @@ lib src: $(lib)
 
 lib/clean src/clean:
 	$(RM) lib/*.a lib/*.so src/*.o
-
-#-------------------------------------------------------------------------------
-# BLAS++ library
-ifneq ($(blaspp_dir),)
-    $(libblaspp): $(libblaspp_src)
-		cd $(blaspp_dir) && $(MAKE) lib CXX=$(CXX)
-endif
-
-#-------------------------------------------------------------------------------
-# TestSweeper library
-ifneq ($(testsweeper_dir),)
-    $(testsweeper): $(testsweeper_src)
-		cd $(testsweeper_dir) && $(MAKE) lib CXX=$(CXX)
-endif
 
 #-------------------------------------------------------------------------------
 # tester

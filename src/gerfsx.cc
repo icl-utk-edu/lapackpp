@@ -6,7 +6,7 @@
 #include "lapack.hh"
 #include "lapack/fortran.h"
 
-#ifdef HAVE_XBLAS
+#ifdef LAPACK_HAVE_XBLAS
 
 #include <vector>
 

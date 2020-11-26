@@ -7,7 +7,7 @@
 #include "lapack/fortran.h"
 
 #if LAPACK_VERSION >= 30601  // >= 3.6.1
-#ifndef HAVE_MKL  // MKL 2018 lacks trevc3
+#ifndef BLAS_HAVE_MKL  // MKL 2018 lacks trevc3
 
 #include <vector>
 

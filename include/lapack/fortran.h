@@ -16,7 +16,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */
+#endif
 
 /* This is grouped by LAPACK version number -- so new routines are appended --
 *  then by functionality (factor, solve, cond, iterative refinement, ...).
@@ -16664,8 +16664,7 @@ void LAPACK_ztpmlqt(
     );
 
 #ifdef __cplusplus
-}
-#endif /* __cplusplus */
+}  // extern "C"
+#endif
 
 #endif /* LAPACK_FORTRAN_H */
-

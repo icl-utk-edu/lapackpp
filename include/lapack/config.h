@@ -6,6 +6,9 @@
 #ifndef LAPACK_CONFIG_H
 #define LAPACK_CONFIG_H
 
+#include "blas/defines.h"
+#include "lapack/defines.h"
+
 #include <stdlib.h>
 
 #if defined(BLAS_ILP64) && ! defined(LAPACK_ILP64)
@@ -26,7 +29,7 @@
 
 /* f2c, hence MacOS Accelerate, returns double instead of float
  * for sdot, slange, clange, etc. */
-#if defined(HAVE_MACOS_ACCELERATE) || defined(HAVE_F2C)
+#if defined(BLAS_HAVE_ACCELERATE) || defined(BLAS_HAVE_F2C)
     typedef double lapack_float_return;
 #else
     typedef float lapack_float_return;

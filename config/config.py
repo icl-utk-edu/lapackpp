@@ -63,6 +63,18 @@ def debug( value=None ):
 # end
 
 # ------------------------------------------------------------------------------
+namespace_ = None
+
+def namespace( value ):
+    return namespace_
+
+def define( var, value=None ):
+    txt = '-D' + namespace_ + '_' + var
+    if (value):
+        txt += '=' + value
+    return txt
+
+# ------------------------------------------------------------------------------
 # variables to replace instead of appending/prepending
 replace_vars = ['CC', 'CXX', 'NVCC', 'FC', 'AR', 'RANLIB', 'prefix']
 
@@ -605,16 +617,36 @@ def cublas_library():
     Does not actually run the resulting exe, to allow compiling with CUDA on a
     machine without GPUs.
     '''
-    libs = '-lcudart -lcublas'
+    libs = '-lcublas -lcudart'
     print_header( 'CUDA and cuBLAS libraries' )
     print_test( libs )
-    env = {'LIBS': libs, 'CXXFLAGS': '-DHAVE_CUBLAS'}
+    env = {'LIBS': libs, 'CXXFLAGS': define('HAVE_CUBLAS')}
     (rc, out, err) = compile_exe( 'config/cublas.cc', env )
     print_result( libs, rc )
     if (rc == 0):
         environ.merge( env )
     else:
         raise Error( 'cuBLAS not found' )
+# end
+
+#-------------------------------------------------------------------------------
+def rocblas_library():
+    '''
+    Tests for linking ROCm/HIP and rocBLAS libraries.
+    Does not actually run the resulting exe, to allow compiling with ROCm on a
+    machine without GPUs.
+    '''
+    libs = '-lrocblas -lamdhip64'
+    print_header( 'ROCm and rocBLAS libraries' )
+    print_test( libs )
+    env = {'LIBS': libs,
+           'CXXFLAGS': '-D__HIP_PLATFORM_HCC__ ' + define('HAVE_ROCBLAS')}
+    (rc, out, err) = compile_exe( 'config/rocblas.cc', env )
+    print_result( libs, rc )
+    if (rc == 0):
+        environ.merge( env )
+    else:
+        raise Error( 'rocBLAS not found' )
 # end
 
 #-------------------------------------------------------------------------------
@@ -695,7 +727,7 @@ def get_package( name, directories, repo_url, tar_url, tar_filename ):
 # end
 
 #-------------------------------------------------------------------------------
-def extract_defines_from_flags( flags='CXXFLAGS' ):
+def extract_defines_from_flags( flags='CXXFLAGS', var='HEADER_DEFINES' ):
     '''
     Extracts all "-Dname[=value]" defines from the given flags.
     Adds all "-Dname[=value]" defines to DEFINES.
@@ -716,7 +748,7 @@ def extract_defines_from_flags( flags='CXXFLAGS' ):
         else:
             header += '#define '+ name + '\n'
     # end
-    environ['HEADER_DEFINES'] = header
+    environ[ var ] = header
 # end
 
 #-------------------------------------------------------------------------------
@@ -843,12 +875,14 @@ def parse_args():
 # end
 
 #-------------------------------------------------------------------------------
-def init( prefix='/usr/local' ):
+def init( namespace, prefix='/usr/local' ):
     '''
     Initializes config.
     Opens the logfile and deals with OS-specific issues.
     '''
-    global log
+    global log, namespace_
+
+    namespace_ = namespace
 
     # Default prefix.
     if (not environ['prefix']):

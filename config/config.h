@@ -9,13 +9,15 @@
 #include <stdint.h>
 
 // -----------------------------------------------------------------------------
-#if defined(FORTRAN_UPPER)
+#if defined(FORTRAN_UPPER) || defined(BLAS_FORTRAN_UPPER) || defined(LAPACK_FORTRAN_UPPER)
     #define FORTRAN_NAME( lower, UPPER ) UPPER
-#elif defined(FORTRAN_LOWER)
+#elif defined(FORTRAN_LOWER) || defined(BLAS_FORTRAN_LOWER) || defined(LAPACK_FORTRAN_LOWER)
     #define FORTRAN_NAME( lower, UPPER ) lower
-#else
+#elif defined(FORTRAN_ADD_) || defined(BLAS_FORTRAN_ADD_) || defined(LAPACK_FORTRAN_ADD_)
     // default is ADD_
     #define FORTRAN_NAME( lower, UPPER ) lower ## _
+#else
+    #pragma warning("must define one of FORTRAN_ADD_, FORTRAN_LOWER, FORTRAN_UPPER")
 #endif
 
 // -----------------------------------------------------------------------------

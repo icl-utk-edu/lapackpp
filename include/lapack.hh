@@ -6,6 +6,8 @@
 #ifndef LAPACK_HH
 #define LAPACK_HH
 
+#include "lapack/defines.h"
+
 // Version is updated by make_release.py; DO NOT EDIT.
 // Version 2020.10.02
 #define LAPACKPP_VERSION 20201002

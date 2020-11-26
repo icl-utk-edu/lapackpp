@@ -6,19 +6,23 @@
 #ifndef LAPACK_MANGLING_H
 #define LAPACK_MANGLING_H
 
+#include "lapack/defines.h"
+
 // -----------------------------------------------------------------------------
 // Fortran name mangling depends on compiler.
 // Define FORTRAN_UPPER for uppercase,
 // define FORTRAN_LOWER for lowercase (IBM xlf),
-// else the default is lowercase with appended underscore
+// define FORTRAN_ADD_  for lowercase with appended underscore
 // (GNU gcc, Intel icc, PGI pgfortan, Cray ftn).
 #ifndef LAPACK_GLOBAL
-    #if defined(FORTRAN_UPPER) || defined(LAPACK_GLOBAL_PATTERN_UC)
+    #if defined(LAPACK_FORTRAN_UPPER) || defined(LAPACK_GLOBAL_PATTERN_UC)
         #define LAPACK_GLOBAL( lower, UPPER ) UPPER
-    #elif defined(FORTRAN_LOWER) || defined(LAPACK_GLOBAL_PATTERN_MC)
+    #elif defined(LAPACK_FORTRAN_LOWER) || defined(LAPACK_GLOBAL_PATTERN_LC)
         #define LAPACK_GLOBAL( lower, UPPER ) lower
-    #else
+    #elif defined(LAPACK_FORTRAN_ADD_) || defined(LAPACK_GLOBAL_PATTERN_MC)
         #define LAPACK_GLOBAL( lower, UPPER ) lower##_
+    #else
+        #error "One of LAPACK_FORTRAN_ADD_, LAPACK_FORTRAN_LOWER, or LAPACK_FORTRAN_UPPER must be defined to set how Fortran functions are name mangled."
     #endif
 #endif
 

@@ -5,7 +5,7 @@
 
 #include <stdio.h>
 
-#ifdef HAVE_MKL
+#ifdef BLAS_HAVE_MKL
     #include <mkl_lapacke.h>
 #else
     #include <lapacke.h>

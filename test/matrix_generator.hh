@@ -3,8 +3,8 @@
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
-#ifndef MATRIX_GENERATOR_HPP
-#define MATRIX_GENERATOR_HPP
+#ifndef MATRIX_GENERATOR_HH
+#define MATRIX_GENERATOR_HH
 
 #include <algorithm>  // copy, swap
 
@@ -216,4 +216,4 @@ void generate_matrix_usage();
 
 } // namespace lapack
 
-#endif        // #ifndef MATRIX_GENERATOR_HPP
+#endif        // #ifndef MATRIX_GENERATOR_HH

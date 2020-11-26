@@ -6,7 +6,7 @@
 #include "lapack.hh"
 #include "lapack/fortran.h"
 
-#ifdef LAPACK_MATGEN
+#ifdef LAPACK_HAVE_MATGEN
 
 #include <vector>
 
@@ -104,4 +104,4 @@ int64_t laghe(
 
 }  // namespace lapack
 
-#endif  // LAPACK_MATGEN
+#endif  // LAPACK_HAVE_MATGEN

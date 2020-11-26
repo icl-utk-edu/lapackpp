@@ -12,7 +12,7 @@
 #include <complex>
 #include <vector>
 
-#ifdef HAVE_MKL
+#ifdef BLAS_HAVE_MKL
     // define lapack_complex and MKL_Complex to be consistent
     #define MKL_Complex8  lapack_complex_float
     #define MKL_Complex16 lapack_complex_double

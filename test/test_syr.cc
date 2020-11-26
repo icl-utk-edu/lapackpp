@@ -18,7 +18,7 @@
 
 // -----------------------------------------------------------------------------
 // some of this is copied from blaspp/test/cblas.hh
-#ifdef HAVE_MKL
+#ifdef BLAS_HAVE_MKL
     #include <mkl_cblas.h>
 #else
     #include <cblas.h>

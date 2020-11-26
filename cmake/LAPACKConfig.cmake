@@ -24,7 +24,7 @@ try_run(
     LINK_LIBRARIES
         ${LAPACK_LIBRARIES} ${blaspp_libraries}
     COMPILE_DEFINITIONS
-        "${blaspp_defines}" "${blaspp_config_defines}"
+        ${blaspp_defines}
     COMPILE_OUTPUT_VARIABLE
         compile_output
     RUN_OUTPUT_VARIABLE
@@ -39,7 +39,7 @@ if (compile_result
     # comparisons in C preprocessor.
     set( lapack_version "${CMAKE_MATCH_2}${CMAKE_MATCH_3}${CMAKE_MATCH_4}" )
     message( "${blue}   LAPACK version ${CMAKE_MATCH_1} (${lapack_version})${plain}" )
-    set( lapackpp_defines "${lapackpp_defines} -DLAPACK_VERSION=${lapack_version}" )
+    list( APPEND lapackpp_defs_ "-DLAPACK_VERSION=${lapack_version}" )
 else()
     message( "${red}   Unknown LAPACK version${plain}" )
 endif()
@@ -54,7 +54,7 @@ try_run(
     LINK_LIBRARIES
         ${LAPACK_LIBRARIES} ${blaspp_libraries}
     COMPILE_DEFINITIONS
-        "${blaspp_defines}"
+        ${blaspp_defines}
     COMPILE_OUTPUT_VARIABLE
         compile_output
     RUN_OUTPUT_VARIABLE
@@ -65,7 +65,7 @@ debug_try_run( "lapack_xblas.cc" "${compile_result}" "${compile_output}"
 
 if (compile_result AND "${run_output}" MATCHES "ok")
     message( "${blue}   Found XBLAS${plain}" )
-    set( lapackpp_defines "${lapackpp_defines} -DHAVE_XBLAS" )
+    list( APPEND lapackpp_defs_ "-DLAPACK_HAVE_XBLAS" )
 else()
     message( "${red}   XBLAS not found.${plain}" )
 endif()
@@ -87,7 +87,7 @@ foreach (lib IN LISTS lib_list)
         LINK_LIBRARIES
             ${lib} ${LAPACK_LIBRARIES} ${blaspp_libraries}
         COMPILE_DEFINITIONS
-            "${blaspp_defines}"
+            ${blaspp_defines}
         COMPILE_OUTPUT_VARIABLE
             compile_output
         RUN_OUTPUT_VARIABLE
@@ -97,18 +97,12 @@ foreach (lib IN LISTS lib_list)
                                       "${run_result}" "${run_output}" )
 
     if (compile_result AND "${run_output}" MATCHES "ok")
-        set( lapackpp_defines "${lapackpp_defines} -DHAVE_LAPACKE" )
+        list( APPEND lapackpp_defs_ "-DLAPACK_HAVE_LAPACKE" )
         set( lapacke_libraries "${lib}" CACHE INTERNAL "" )
         set( lapacke_found true CACHE INTERNAL "" )
         break()
     endif()
 endforeach()
-
-# To avoid empty -D, need to strip leading whitespace.
-# This seems painful in CMake.
-string( STRIP "${lapackpp_defines}" lapackpp_defines )
-set( lapackpp_defines "${lapackpp_defines}"
-     CACHE INTERNAL "Constants defined for LAPACK++" )
 
 if (lapacke_found)
     if (NOT lapacke_libraries)
@@ -122,7 +116,7 @@ endif()
 
 #-------------------------------------------------------------------------------
 message( DEBUG "
-lapackpp_defines  = '${lapackpp_defines}'
+lapackpp_defs_    = '${lapackpp_defs_}'
 lapacke_found     = '${lapacke_found}'
 lapacke_libraries = '${lapacke_libraries}'
 ")

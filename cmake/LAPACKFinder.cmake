@@ -108,7 +108,7 @@ message( DEBUG "lapack_libs_list ${lapack_libs_list}" )
 # contain only an optimized subset of LAPACK routines.
 
 unset( LAPACK_FOUND CACHE )
-unset( lapackpp_defines CACHE )
+unset( lapackpp_defs_ CACHE )
 
 foreach (lapack_libs IN LISTS lapack_libs_list)
     if ("${lapack_libs}" MATCHES "^ *$")
@@ -129,7 +129,7 @@ foreach (lapack_libs IN LISTS lapack_libs_list)
             # Not "quoted"; screws up OpenMP.
             ${lapack_libs} ${blaspp_libraries}
         COMPILE_DEFINITIONS
-            "${blaspp_defines}"
+            ${blaspp_defines}
         COMPILE_OUTPUT_VARIABLE
             compile_output
         RUN_OUTPUT_VARIABLE
@@ -147,18 +147,12 @@ foreach (lapack_libs IN LISTS lapack_libs_list)
         set( LAPACK_FOUND true CACHE INTERNAL "" )
         string( STRIP "${lapack_libs}" lapack_libs )
         set( LAPACK_LIBRARIES "${lapack_libs}" CACHE STRING "" FORCE )
-        set( lapackpp_defines "-DHAVE_LAPACK" )
+        list( APPEND lapackpp_defs_ "-DLAPACK_HAVE_LAPACK" )
         break()
     else()
         message( "${label} ${red} no (didn't run: int mismatch, etc.)${plain}" )
     endif()
 endforeach()
-
-# To avoid empty -D, need to strip leading whitespace.
-# This seems painful in CMake.
-string( STRIP "${lapackpp_defines}" lapackpp_defines )
-set( lapackpp_defines "${lapackpp_defines}"
-     CACHE INTERNAL "Constants defined for LAPACK++" )
 
 # Update to found LAPACK library.
 set( lapack_libraries_cached ${LAPACK_LIBRARIES} CACHE INTERNAL "" )
@@ -177,5 +171,5 @@ endif()
 message( DEBUG "
 LAPACK_FOUND        = '${LAPACK_FOUND}'
 LAPACK_LIBRARIES    = '${LAPACK_LIBRARIES}'
-lapackpp_defines    = '${lapackpp_defines}'
+lapackpp_defs_        = '${lapackpp_defs_}'
 ")

@@ -17,11 +17,13 @@ if (NOT TARGET testsweeper)
         message( "   Found TestSweeper library: ${testsweeper_DIR}" )
     else()
         set( url "https://bitbucket.org/icl/testsweeper" )
+        set( tag "2020.09.00" )
         message( "" )
         message( "---------- TestSweeper" )
-        message( STATUS "Fetching TestSweeper from ${url}" )
+        message( STATUS "Fetching TestSweeper ${tag} from ${url}" )
         include( FetchContent )
-        FetchContent_Declare( testsweeper GIT_REPOSITORY "${url}" )
+        FetchContent_Declare( testsweeper GIT_REPOSITORY "${url}"
+                                          GIT_TAG "${tag}" )
         FetchContent_MakeAvailable( testsweeper )
         message( "---------- TestSweeper done" )
         message( "" )
@@ -217,14 +219,6 @@ target_include_directories(
     PRIVATE
         "${blaspp_cblas_include}"
         "${lapacke_include}"
-)
-
-target_compile_definitions(
-    ${tester}
-    PRIVATE
-        "${blaspp_defines}"
-        "${blaspp_cblas_defines}"
-        "${lapack_defines}"
 )
 
 # Copy run_tests script to build directory.

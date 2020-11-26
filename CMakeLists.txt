@@ -69,7 +69,7 @@ set_property( CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
 
 # Provide menu of options.
 set( BLA_VENDOR "" CACHE STRING
-     "BLAS Vendor for use in CMake's FindLAPACK. If empty, use LAPACK++ search. Some obsolete options are omitted here." )
+     "LAPACK Vendor for use in CMake's FindLAPACK. If empty, use LAPACK++ search. Some obsolete options are omitted here." )
 set_property(
     CACHE BLA_VENDOR PROPERTY STRINGS
     "" All Goto OpenBLAS FLAME ATLAS IBMESSL
@@ -84,6 +84,20 @@ set( lapack "auto" CACHE STRING
 set_property(
     CACHE lapack PROPERTY STRINGS
     "auto" "generic" )
+
+message( DEBUG "Settings:
+CMAKE_VERSION          = ${CMAKE_VERSION}
+CMAKE_INSTALL_PREFIX   = ${CMAKE_INSTALL_PREFIX}
+CMAKE_BUILD_TYPE       = ${CMAKE_BUILD_TYPE}
+BUILD_SHARED_LIBS      = ${BUILD_SHARED_LIBS}
+BLA_VENDOR             = ${BLA_VENDOR}
+lapack                 = ${lapack}
+build_tests            = ${build_tests}
+color                  = ${color}
+use_cmake_find_lapack  = ${use_cmake_find_lapack}
+lapackpp_is_project    = ${lapackpp_is_project}
+lapackpp_              = ${lapackpp_}
+" )
 
 #-------------------------------------------------------------------------------
 # Enforce out-of-source build
@@ -481,11 +495,15 @@ add_library(
     src/version.cc
 )
 
+# Clean stale defines.h from Makefile-based build.
+file( REMOVE "${CMAKE_CURRENT_SOURCE_DIR}/include/lapack/defines.h" )
+
 # Include directory.
 # During build it's {source}/include; after install it's {prefix}/include.
 target_include_directories(
     lapackpp
     PUBLIC
+        "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>"  # defines.h
         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
         "$<INSTALL_INTERFACE:include>"
 )
@@ -497,6 +515,7 @@ if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.git")
                      OUTPUT_VARIABLE lapackpp_id )
     string( STRIP "${lapackpp_id}" lapackpp_id )
     message( STATUS "lapackpp_id = ${lapackpp_id}" )
+    # Don't put in lapackpp_defs_ as the quotes cause parsing issues.
     target_compile_definitions(
         lapackpp PRIVATE LAPACKPP_ID="${lapackpp_id}" )
 endif()
@@ -541,8 +560,39 @@ if (NOT LAPACK_FOUND)
              " $CPATH, $LIBRARY_PATH, and $LD_LIBRARY_PATH." )
 endif()
 
-# todo: lapacke only needed for tester.
 include( "cmake/LAPACKConfig.cmake" )
+
+# (LAPACK++ treats defs_ the same as BLAS++ for consistency.)
+# Cache lapackpp_defs_ that was built in LAPACKFinder, LAPACKConfig.
+set( lapackpp_defs_ "${lapackpp_defs_}"
+     CACHE INTERNAL "Constants defined for LAPACK" )
+
+# Concat defines.
+set( lapackpp_defines ${lapackpp_defs_} )
+
+if (true)
+    # Extract definitions as #define VAR or #define VAR VALUE.
+    set( lapackpp_header_defines "" )
+    foreach (def IN LISTS lapackpp_defines)
+        string( REGEX REPLACE "^-D" "" def "${def}" )
+        string( REGEX REPLACE "=" " "  def "${def}" )
+        string( APPEND lapackpp_header_defines "#define ${def}\n" )
+    endforeach()
+
+    cmake_host_system_information( RESULT HOSTNAME QUERY HOSTNAME )
+    # ctime format: Mon Nov 16 15:19:47 2020
+    string( TIMESTAMP datetime "%a %b %d %H:%M:%S %Y" )
+
+    # Pass defines via header.
+    configure_file(
+        include/lapack/defines.h.in  # in source dir
+        include/lapack/defines.h     # in binary dir
+    )
+else()
+    # Pass defines via compiler flags.
+    target_compile_definitions(
+        lapackpp PRIVATE ${blaspp_defines} ${lapackpp_defines} )
+endif()
 
 # LAPACK_LIBRARIES could be private, but then if an application directly
 # calls blas, cblas, lapack, lapacke, mkl, essl, etc., it would need to
@@ -551,8 +601,10 @@ include( "cmake/LAPACKConfig.cmake" )
 target_link_libraries( lapackpp PUBLIC ${LAPACK_LIBRARIES} )
 target_link_libraries( lapackpp PUBLIC blaspp )
 
-target_compile_definitions(
-    lapackpp PRIVATE "${blaspp_defines}" "${lapackpp_defines}" )
+# Add 'make lib' target.
+if (lapackpp_is_project)
+    add_custom_target( lib DEPENDS lapackpp )
+endif()
 
 #-------------------------------------------------------------------------------
 if (build_tests)
@@ -560,12 +612,7 @@ if (build_tests)
 endif()
 
 #-------------------------------------------------------------------------------
-# Add 'make lib' target.
-if (lapackpp_is_project)
-    add_custom_target( lib DEPENDS lapackpp )
-endif()
-
-#-------------------------------------------------------------------------------
+# Install rules.
 # GNU Filesystem Conventions
 include( GNUInstallDirs )
 set( install_configdir "${CMAKE_INSTALL_LIBDIR}/lapackpp" )
@@ -584,6 +631,10 @@ install(
     DIRECTORY "${PROJECT_SOURCE_DIR}/include/"
     DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
     FILES_MATCHING REGEX "\\.(h|hh)$"
+)
+install(
+    FILES "${PROJECT_BINARY_DIR}/include/lapack/defines.h"
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/lapack"
 )
 
 # Install <package>Targets.cmake

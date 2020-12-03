@@ -367,7 +367,7 @@ def blas():
         inc = ''
         for p in paths:
             if (os.path.exists( p + '/cblas.h' )):
-                inc = '-I' + p + ' ' + define('HAVE_ACCELERATE_CBLAS_H')
+                inc = '-I' + p + ' ' + define('HAVE_ACCELERATE_CBLAS_H') + ' '
                 break
 
         choices.append(

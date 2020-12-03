@@ -5,7 +5,10 @@
 
 #include <stdio.h>
 
-#ifdef BLAS_HAVE_MKL
+#if defined(BLAS_HAVE_MKL) || defined(LAPACK_HAVE_MKL)
+    #if (defined(BLAS_ILP64) || defined(LAPACK_ILP64)) && ! defined(MKL_ILP64)
+        #define MKL_ILP64
+    #endif
     #include <mkl_lapacke.h>
 #else
     #include <lapacke.h>

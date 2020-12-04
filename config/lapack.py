@@ -521,8 +521,8 @@ def lapacke():
     '''
     print_header( 'LAPACKE library' )
     choices = [
-        ['LAPACKE (LAPACKE_dpotrf) in LAPACK library', {}],
-        ['LAPACKE (LAPACKE_dpotrf) in -llapacke',
+        ['LAPACKE (LAPACKE_dpstrf) in LAPACK library', {}],
+        ['LAPACKE (LAPACKE_dpstrf) in -llapacke',
             {'LIBS': '-llapacke'}],
     ]
 

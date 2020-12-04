@@ -25,6 +25,7 @@ stages {
                         sh '''
                         #!/bin/sh +x
                         hostname && pwd
+                        export top=`pwd`
 
                         source /home/jenkins/spack_setup
                         sload gcc@6.4.0
@@ -41,7 +42,6 @@ stages {
                             export color=no
                             make distclean
                             make config CXXFLAGS="-Werror"
-                            export top=..
 
                             # Modify make.inc to add netlib LAPACKE for bug fixes.
                             export LAPACKDIR=`spack location -i netlib-lapack`/lib64
@@ -50,16 +50,20 @@ stages {
                         if [ "${maker}" = "cmake" ]; then
                             sload cmake
 
-                            git clone git@bitbucket.org:icl/blaspp.git
+                            ls -R
+
+                            rm -rf blaspp
+                            git clone https://bitbucket.org/icl/blaspp
                             mkdir blaspp/build
                             cd blaspp/build
                             cmake -Dcolor=no -Dbuild_tests=no ..
+                            make -j4 lib
+                            cd ../..
 
                             rm -rf build
                             mkdir build
                             cd build
-                            cmake -Dcolor=no -Dblaspp_DIR=../blaspp/build -DCMAKE_CXX_FLAGS="-Werror" ..
-                            export top=../..
+                            cmake -Dcolor=no -Dblaspp_DIR=${top}/blaspp/build -DCMAKE_CXX_FLAGS="-Werror" ..
                         fi
 
                         echo "========================================"

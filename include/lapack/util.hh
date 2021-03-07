@@ -75,13 +75,19 @@ inline void throw_if( bool cond, const char* condstr, const char* func )
     }
 }
 
+#if defined(_MSC_VER)
+    #define LAPACKPP_ATTR_FORMAT(I, F)
+#else
+    #define LAPACKPP_ATTR_FORMAT(I, F) __attribute__((format( printf, I, F )))
+#endif
+
 // -----------------------------------------------------------------------------
 // internal helper function; throws Error if cond is true
 // uses printf-style format for error message
 // called by lapack_error_if_msg macro
 // condstr is ignored, but differentiates this from other version.
 inline void throw_if( bool cond, const char* condstr, const char* func, const char* format, ... )
-    __attribute__((format( printf, 4, 5 )));
+    LAPACKPP_ATTR_FORMAT(4, 5);
 
 inline void throw_if( bool cond, const char* condstr, const char* func, const char* format, ... )
 {
@@ -99,7 +105,7 @@ inline void throw_if( bool cond, const char* condstr, const char* func, const ch
 // uses printf-style format for error message
 // called by lapack_error_if_msg macro
 inline void abort_if( bool cond, const char* func,  const char* format, ... )
-    __attribute__((format( printf, 3, 4 )));
+    LAPACKPP_ATTR_FORMAT(3, 4);
 
 inline void abort_if( bool cond, const char* func,  const char* format, ... )
 {
@@ -113,6 +119,8 @@ inline void abort_if( bool cond, const char* func,  const char* format, ... )
         abort();
     }
 }
+
+#undef LAPACKPP_ATTR_FORMAT
 
 } // namespace internal
 

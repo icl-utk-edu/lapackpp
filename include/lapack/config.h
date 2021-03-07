@@ -47,9 +47,11 @@
      *     lapack_complex_double_imag(z)
      */
 
-#elif defined(LAPACK_COMPLEX_STRUCTURE)
+#elif defined(LAPACK_COMPLEX_STRUCTURE) || defined(_MSC_VER)
 
-    /* If user defines LAPACK_COMPLEX_STRUCTURE, then use a struct. */
+    /* If user defines LAPACK_COMPLEX_STRUCTURE, then use a struct.
+     * Also use this for MSVC, as it has no C99 _Complex.
+     */
     typedef struct { float  real, imag; } lapack_complex_float;
     typedef struct { double real, imag; } lapack_complex_double;
     #define lapack_complex_float_real(z)  ((z).real)

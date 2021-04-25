@@ -597,12 +597,16 @@ else()
         lapackpp PRIVATE ${blaspp_defines} ${lapackpp_defines} )
 endif()
 
-# LAPACK_LIBRARIES could be private, but then if an application directly
+# Export via lapackppConfig.cmake
+list( APPEND LAPACK_LIBRARIES "blaspp" )
+set( lapackpp_libraries "${LAPACK_LIBRARIES}" CACHE INTERNAL "" )
+message( DEBUG "lapackpp_libraries = '${lapackpp_libraries}'" )
+
+# lapackpp_libraries could be private, but then if an application directly
 # calls blas, cblas, lapack, lapacke, mkl, essl, etc., it would need to
 # devine the exact same LAPACK_LIBRARIES. For example, the tester calls
 # lapacke. Instead, make it public.
-target_link_libraries( lapackpp PUBLIC ${LAPACK_LIBRARIES} )
-target_link_libraries( lapackpp PUBLIC blaspp )
+target_link_libraries( lapackpp PUBLIC ${lapackpp_libraries} )
 
 # Add 'make lib' target.
 if (lapackpp_is_project)

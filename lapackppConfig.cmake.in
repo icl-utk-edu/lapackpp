@@ -4,4 +4,8 @@ include( CMakeFindDependencyMacro )
 
 find_dependency( blaspp )
 
+# Export variables.
+set( lapackpp_defines   "@lapackpp_defines@" )
+set( lapackpp_libraries "@lapackpp_libraries@" )
+
 include("${CMAKE_CURRENT_LIST_DIR}/lapackppTargets.cmake")

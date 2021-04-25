@@ -14,10 +14,9 @@
 #elif defined(FORTRAN_LOWER) || defined(BLAS_FORTRAN_LOWER) || defined(LAPACK_FORTRAN_LOWER)
     #define FORTRAN_NAME( lower, UPPER ) lower
 #elif defined(FORTRAN_ADD_) || defined(BLAS_FORTRAN_ADD_) || defined(LAPACK_FORTRAN_ADD_)
-    // default is ADD_
     #define FORTRAN_NAME( lower, UPPER ) lower ## _
 #else
-    #pragma warning("must define one of FORTRAN_ADD_, FORTRAN_LOWER, FORTRAN_UPPER")
+    #error "must define one of FORTRAN_ADD_, FORTRAN_LOWER, FORTRAN_UPPER"
 #endif
 
 // -----------------------------------------------------------------------------

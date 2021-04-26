@@ -8,7 +8,7 @@ def extract_bracketed( txt, start, end ):
     if (txt[0] != start):
         return (None, txt)
     cnt = 0
-    for i in xrange( 0, len( txt )):
+    for i in range( 0, len( txt )):
         if (txt[i] == start):
             cnt += 1
         elif (txt[i] == end):

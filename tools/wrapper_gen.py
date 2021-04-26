@@ -142,8 +142,13 @@ header_bottom = '''\
 # --------------------
 # for src/*.cc wrappers
 wrapper_top1 = '''\
+// Copyright (c) 2017-2021, University of Tennessee. All rights reserved.
+// SPDX-License-Identifier: BSD-3-Clause
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
+
 #include "lapack.hh"
-#include "lapack_fortran.h"
+#include "lapack/fortran.h"
 
 '''
 
@@ -165,11 +170,17 @@ wrapper_bottom = '''\
 # --------------------
 # for test/test_*.cc testers
 tester_top = '''\
+// Copyright (c) 2017-2021, University of Tennessee. All rights reserved.
+// SPDX-License-Identifier: BSD-3-Clause
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
+
 #include "test.hh"
 #include "lapack.hh"
-#include "lapack_flops.hh"
+#include "lapack/flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "lapacke_wrappers.hh"
 
 #include <vector>
 
@@ -1047,7 +1058,7 @@ def parse_lapack( path ):
             arg.is_enum = True
             try:
                 arg.dtype = enum_map[ arg.name ][0]
-            except Exception, e:
+            except Exception as ex:
                 arg.dtype = 'UNKNOWN'
                 print( 'ERROR: unknown enum', arg.name )
 
@@ -1092,8 +1103,9 @@ def sub_enum_short( match ):
             if (char2enum[ val ] != char2enum[ val2 ]):
                 txt += conj + char2enum[ val2 ]
         return txt
-    except Exception, e:
-        print( 'ERROR: unknown enum value, groups: ' + str(match.groups()) + '; exception: ' + str(e) )
+    except Exception as ex:
+        print( 'ERROR: unknown enum value, groups: ' + str(match.groups())
+               + '; exception: ' + str(ex) )
         return match.group(0) + ' [TODO: unknown enum]'
 # end
 
@@ -1116,8 +1128,9 @@ def sub_enum_list( arg, match ):
             if (char2enum[ val ] != char2enum[ val2 ]):
                 txt += conj + char2enum[ val2 ]
         return txt + ':'
-    except Exception, e:
-        print( 'ERROR: unknown enum value, arg: ' + arg.name + ', groups: ' + str(match.groups()) + '; exception: ' + str(e) )
+    except Exception as ex:
+        print( 'ERROR: unknown enum value, arg: ' + arg.name + ', groups: '
+               + str(match.groups()) + '; exception: ' + str(ex) )
         return match.group(0) + ' [TODO: unknown enum]'
 # end
 
@@ -1589,7 +1602,7 @@ def generate_tester( funcs ):
                         if (arg.name in ('m', 'n', 'k')):
                             scalars += tab + arg.ttype + ' ' + arg.name + ' = params.dim.' + arg.name + '();\n'
                         else:
-                            scalars += tab + arg.ttype + ' ' + arg.name + ' = params.' + arg.name + '.value();\n'
+                            scalars += tab + arg.ttype + ' ' + arg.name + ' = params.' + arg.name + '();\n'
                     elif (arg.lbound):
                         if (arg.name.startswith('ld')):
                             scalars2 += tab + arg.ttype + ' ' + arg.name + ' = roundup( ' + arg.lbound + ', align );\n'
@@ -1609,8 +1622,8 @@ def generate_tester( funcs ):
                         ref_args.append( arg.name )
                 else:
                     if (pre_arrays):
-                        scalars += tab + arg.ttype + ' ' + arg.name + '_tst = params.' + arg.name + '.value();\n'
-                        scalars += tab + arg.ttype + ' ' + arg.name + '_ref = params.' + arg.name + '.value();\n'
+                        scalars += tab + arg.ttype + ' ' + arg.name + '_tst = params.' + arg.name + '();\n'
+                        scalars += tab + arg.ttype + ' ' + arg.name + '_ref = params.' + arg.name + '();\n'
                     elif (arg.lbound):
                         scalars2 += tab + arg.ttype + ' ' + arg.name + '_tst = ' + arg.lbound + ';\n'
                         scalars2 += tab + arg.ttype + ' ' + arg.name + '_ref = ' + arg.lbound + ';\n'
@@ -1677,7 +1690,7 @@ def generate_tester( funcs ):
 // -----------------------------------------------------------------------------
 void test_''' + func.name + '''( Params& params, bool run )
 {
-    switch (params.datatype.value()) {
+    switch (params.datatype()) {
         case testsweeper::DataType::Integer:
             throw std::exception();
             break;
@@ -1733,13 +1746,13 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  '\n'
         +  tab + '// get & mark input values\n'
         +  scalars
-        +  tab + 'int64_t align = params.align.value();\n'
-        #+ tab + 'int64_t verbose = params.verbose.value();\n'
+        +  tab + 'int64_t align = params.align();\n'
+        #+ tab + 'int64_t verbose = params.verbose();\n'
         +  '\n'
         +  tab + '// mark non-standard output values\n'
-        +  tab + 'params.ref_time.value();\n'
-        +  tab + 'params.ref_gflops.value();\n'
-        +  tab + 'params.gflops.value();\n'
+        +  tab + 'params.ref_time();\n'
+        +  tab + 'params.ref_gflops();\n'
+        +  tab + 'params.gflops();\n'
         +  '\n'
         +  tab + 'if (! run)\n'
         +  tab*2 + 'return;\n'
@@ -1754,7 +1767,7 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  copy
         +  '\n'
         +  tab + '// ---------- run test\n'
-        +  tab + 'testsweeper::flush_cache( params.cache.value() );\n'
+        +  tab + 'testsweeper::flush_cache( params.cache() );\n'
         +  tab + 'double time = testsweeper::get_wtime();\n'
         +  tab + 'int64_t info_tst = lapack::' + func.name + '( ' + tst_args + ' );\n'
         +  tab + 'time = testsweeper::get_wtime() - time;\n'
@@ -1762,13 +1775,13 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  tab + '    fprintf( stderr, "lapack::' + func.name + ' returned error %lld\\n", (lld) info_tst );\n'
         +  tab + '}\n'
         +  '\n'
-        +  tab + 'params.time.value() = time;\n'
+        +  tab + 'params.time() = time;\n'
         +  tab + 'double gflop = lapack::Gflop< scalar_t >::' + func.name + '( ' + flop_args + ' );\n'
-        +  tab + 'params.gflops.value() = gflop / time;\n'
+        +  tab + 'params.gflops() = gflop / time;\n'
         +  '\n'
-        +  tab + "if (params.ref.value() == 'y' || params.check.value() == 'y') {\n"
+        +  tab + "if (params.ref() == 'y' || params.check() == 'y') {\n"
         +  tab*2 + '// ---------- run reference\n'
-        +  tab*2 + 'testsweeper::flush_cache( params.cache.value() );\n'
+        +  tab*2 + 'testsweeper::flush_cache( params.cache() );\n'
         +  tab*2 + 'time = testsweeper::get_wtime();\n'
         +  tab*2 + 'int64_t info_ref = LAPACKE_'  + func.name + '( ' + ref_args + ' );\n'
         +  tab*2 + 'time = testsweeper::get_wtime() - time;\n'
@@ -1776,8 +1789,8 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  tab*2 + '    fprintf( stderr, "LAPACKE_' + func.name + ' returned error %lld\\n", (lld) info_ref );\n'
         +  tab*2 + '}\n'
         +  '\n'
-        +  tab*2 + 'params.ref_time.value() = time;\n'
-        +  tab*2 + 'params.ref_gflops.value() = gflop / time;\n'
+        +  tab*2 + 'params.ref_time() = time;\n'
+        +  tab*2 + 'params.ref_gflops() = gflop / time;\n'
         +  '\n'
         +  tab*2 + '// ---------- check error compared to reference\n'
         +  tab*2 + 'real_t error = 0;\n'
@@ -1785,8 +1798,8 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  tab*2 + '    error = 1;\n'
         +  tab*2 + '}\n'
         +  verify
-        +  tab*2 + 'params.error.value() = error;\n'
-        +  tab*2 + 'params.okay.value() = (error == 0);  // expect lapackpp == lapacke\n'
+        +  tab*2 + 'params.error() = error;\n'
+        +  tab*2 + 'params.okay() = (error == 0);  // expect lapackpp == lapacke\n'
         +  tab + '}\n'
         +  '}\n'
         +  dispatch
@@ -1909,8 +1922,8 @@ if (args.header):
 for arg in args.argv:
     try:
         process_routine( arg )
-    except Exception, e:
-        print( 'Error:' + arg + ':', e )
+    except Exception as ex:
+        print( 'Error:' + arg + ':', ex )
         traceback.print_exc()
         print()
 # end

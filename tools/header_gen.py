@@ -13,7 +13,7 @@ lapack = os.environ['LAPACKDIR']
 if (len(sys.argv) == 1):
     funcs = []
     #f = open( lapack + '/LAPACKE/include/lapack.h' )
-    f = open( '../include/lapack_fortran.h' )
+    f = open( '../include/lapack/fortran.h' )
     for line in f:
         s = re.search( r' +LAPACK_(\w+) +LAPACK_GLOBAL\( *\1', line )
         #s = re.search( r'(?:void|float|double) +LAPACK_GLOBAL\((\w+),', line )

@@ -1,10 +1,12 @@
-// Copyright (c) 2017-2020, University of Tennessee. All rights reserved.
+// Copyright (c) 2017-2021, University of Tennessee. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+
+#if LAPACK_VERSION >= 30202  // >= 3.2.2
 
 #include <vector>
 
@@ -16,7 +18,7 @@ using blas::real;
 
 // -----------------------------------------------------------------------------
 /// @ingroup unitary_computational
-void larfg(
+void larfgp(
     int64_t n,
     float* alpha,
     float* X, int64_t incx,
@@ -30,14 +32,14 @@ void larfg(
     lapack_int n_ = (lapack_int) n;
     lapack_int incx_ = (lapack_int) incx;
 
-    LAPACK_slarfg(
+    LAPACK_slarfgp(
         &n_, alpha,
         X, &incx_, tau );
 }
 
 // -----------------------------------------------------------------------------
 /// @ingroup unitary_computational
-void larfg(
+void larfgp(
     int64_t n,
     double* alpha,
     double* X, int64_t incx,
@@ -51,14 +53,14 @@ void larfg(
     lapack_int n_ = (lapack_int) n;
     lapack_int incx_ = (lapack_int) incx;
 
-    LAPACK_dlarfg(
+    LAPACK_dlarfgp(
         &n_, alpha,
         X, &incx_, tau );
 }
 
 // -----------------------------------------------------------------------------
 /// @ingroup unitary_computational
-void larfg(
+void larfgp(
     int64_t n,
     std::complex<float>* alpha,
     std::complex<float>* X, int64_t incx,
@@ -72,7 +74,7 @@ void larfg(
     lapack_int n_ = (lapack_int) n;
     lapack_int incx_ = (lapack_int) incx;
 
-    LAPACK_clarfg(
+    LAPACK_clarfgp(
         &n_, (lapack_complex_float*) alpha,
         (lapack_complex_float*) X, &incx_, (lapack_complex_float*) tau );
 }
@@ -93,7 +95,7 @@ void larfg(
 ///     \quad
 ///     H^H H = I.
 /// \]
-/// where $\alpha$ and $\beta$ are scalars, with $\beta$ real,
+/// where $\alpha$ and $\beta$ are scalars, with $\beta$ real and non-negative,
 /// and x is an (n-1)-element vector. H is represented in the form
 /// \[
 ///     H = I - \tau
@@ -111,10 +113,10 @@ void larfg(
 /// If the elements of x are all zero and alpha is real, then $\tau = 0$
 /// and H is taken to be the unit matrix.
 ///
-/// Otherwise $1 \le \text{real}(\tau) \le 2$ and $|\tau - 1| \le 1.$
-///
 /// Overloaded versions are available for
 /// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @since LAPACK 3.2.2
 ///
 /// @param[in] n
 ///     The order of the elementary reflector.
@@ -135,7 +137,7 @@ void larfg(
 ///     The value tau.
 ///
 /// @ingroup unitary_computational
-void larfg(
+void larfgp(
     int64_t n,
     std::complex<double>* alpha,
     std::complex<double>* X, int64_t incx,
@@ -149,9 +151,11 @@ void larfg(
     lapack_int n_ = (lapack_int) n;
     lapack_int incx_ = (lapack_int) incx;
 
-    LAPACK_zlarfg(
+    LAPACK_zlarfgp(
         &n_, (lapack_complex_double*) alpha,
         (lapack_complex_double*) X, &incx_, (lapack_complex_double*) tau );
 }
 
 }  // namespace lapack
+
+#endif  // LAPACK >= 3.2.2

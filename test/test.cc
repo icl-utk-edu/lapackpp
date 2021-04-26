@@ -388,6 +388,7 @@ std::vector< testsweeper::routines_t > routines = {
 
     // auxiliary: Householder
     { "larfg",              test_larfg,     Section::aux_householder },
+    { "larfgp",             test_larfgp,    Section::aux_householder },
     { "larf",               test_larf,      Section::aux_householder },
     { "larfx",              test_larfx,     Section::aux_householder },
     { "larfy",              test_larfy,     Section::aux_householder },

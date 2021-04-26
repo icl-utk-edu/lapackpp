@@ -131,6 +131,7 @@ add_executable(
     test_larf.cc
     test_larfb.cc
     test_larfg.cc
+    test_larfgp.cc
     test_larft.cc
     test_larfx.cc
     test_larfy.cc

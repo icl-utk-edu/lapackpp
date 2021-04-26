@@ -13111,6 +13111,32 @@ void LAPACK_zlarfg(
     lapack_complex_double* x, lapack_int const* incx,
     lapack_complex_double* tau );
 
+/* with beta >= 0 */
+#define LAPACK_slarfgp LAPACK_GLOBAL(slarfgp,SLARFGP)
+void LAPACK_slarfgp(
+    lapack_int const* n,
+    float* alpha,
+    float* x, lapack_int const* incx,
+    float* tau );
+#define LAPACK_dlarfgp LAPACK_GLOBAL(dlarfgp,DLARFGP)
+void LAPACK_dlarfgp(
+    lapack_int const* n,
+    double* alpha,
+    double* x, lapack_int const* incx,
+    double* tau );
+#define LAPACK_clarfgp LAPACK_GLOBAL(clarfgp,CLARFGP)
+void LAPACK_clarfgp(
+    lapack_int const* n,
+    lapack_complex_float* alpha,
+    lapack_complex_float* x, lapack_int const* incx,
+    lapack_complex_float* tau );
+#define LAPACK_zlarfgp LAPACK_GLOBAL(zlarfgp,ZLARFGP)
+void LAPACK_zlarfgp(
+    lapack_int const* n,
+    lapack_complex_double* alpha,
+    lapack_complex_double* x, lapack_int const* incx,
+    lapack_complex_double* tau );
+
 /* ----- sum of squares */
 #define LAPACK_slassq LAPACK_GLOBAL(slassq,SLASSQ)
 void LAPACK_slassq(

@@ -4128,6 +4128,31 @@ void larfg(
     std::complex<double>* tau );
 
 // -----------------------------------------------------------------------------
+void larfgp(
+    int64_t n,
+    float* alpha,
+    float* X, int64_t incx,
+    float* tau );
+
+void larfgp(
+    int64_t n,
+    double* alpha,
+    double* X, int64_t incx,
+    double* tau );
+
+void larfgp(
+    int64_t n,
+    std::complex<float>* alpha,
+    std::complex<float>* X, int64_t incx,
+    std::complex<float>* tau );
+
+void larfgp(
+    int64_t n,
+    std::complex<double>* alpha,
+    std::complex<double>* X, int64_t incx,
+    std::complex<double>* tau );
+
+// -----------------------------------------------------------------------------
 void larft(
     lapack::Direction direction, lapack::StoreV storev, int64_t n, int64_t k,
     float const* V, int64_t ldv,

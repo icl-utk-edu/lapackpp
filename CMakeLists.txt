@@ -296,6 +296,7 @@ add_library(
     src/larf.cc
     src/larfb.cc
     src/larfg.cc
+    src/larfgp.cc
     src/larft.cc
     src/larfx.cc
     src/larfy.cc

@@ -396,6 +396,7 @@ void test_laswp ( Params& params, bool run );
 
 // auxiliary - Householder
 void test_larfg ( Params& params, bool run );
+void test_larfgp( Params& params, bool run );
 void test_larf  ( Params& params, bool run );
 void test_larfx ( Params& params, bool run );
 void test_larfy ( Params& params, bool run );

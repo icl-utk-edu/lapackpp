@@ -27,11 +27,20 @@ void test_sysv_aa_work( Params& params, bool run )
     int64_t nrhs = params.nrhs();
     int64_t align = params.align();
     params.matrix.mark();
+    bool ref = params.ref() == 'y';
+    bool check = params.check() == 'y';
 
     // mark non-standard output values
     params.ref_time();
     // params.ref_gflops();
     // params.gflops();
+
+    #ifdef LAPACK_HAVE_MKL
+        if (! run)
+            printf( "\nNOTICE: Due to issues in MKL 2019-2021, ref and check are disabled.\n" );
+        ref = false;
+        check = false;
+    #endif
 
     if (! run)
         return;
@@ -70,7 +79,7 @@ void test_sysv_aa_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::sysv_aa( n, nrhs );
     // params.gflops() = gflop / time;
 
-    if (params.ref() == 'y' || params.check() == 'y') {
+    if (ref || check) {
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();

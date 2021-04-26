@@ -48,20 +48,52 @@ int64_t sysv_aa(
     // query for workspace size
     float qry_work[1];
     lapack_int ineg_one = -1;
-    LAPACK_ssysv_aa(
-        &uplo_, &n_, &nrhs_,
-        A, &lda_,
-        ipiv_ptr,
-        B, &ldb_,
-        qry_work, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
-    );
-    if (info_ < 0) {
-        throw Error();
-    }
-    lapack_int lwork_ = real(qry_work[0]);
+    // MKL (seen in 2019-2021) has bug in sysv_aa query;
+    // query sytrf_aa and sytrs_aa instead.
+    #ifdef LAPACK_HAVE_MKL
+        LAPACK_ssytrf_aa(
+            &uplo_, &n_,
+            A, &lda_,
+            ipiv_ptr,
+            qry_work, &ineg_one, &info_
+            #ifdef LAPACK_FORTRAN_STRLEN_END
+            , 1
+            #endif
+        );
+        if (info_ < 0) {
+            throw Error();
+        }
+        lapack_int lwork_ = real(qry_work[0]);
+        LAPACK_ssytrs_aa(
+            &uplo_, &n_, &nrhs_,
+            A, &lda_,
+            ipiv_ptr,
+            B, &ldb_,
+            qry_work, &ineg_one, &info_
+            #ifdef LAPACK_FORTRAN_STRLEN_END
+            , 1
+            #endif
+        );
+        if (info_ < 0) {
+            throw Error();
+        }
+        lwork_ = max( lwork_, real(qry_work[0]) );
+    #else
+        LAPACK_ssysv_aa(
+            &uplo_, &n_, &nrhs_,
+            A, &lda_,
+            ipiv_ptr,
+            B, &ldb_,
+            qry_work, &ineg_one, &info_
+            #ifdef LAPACK_FORTRAN_STRLEN_END
+            , 1
+            #endif
+        );
+        if (info_ < 0) {
+            throw Error();
+        }
+        lapack_int lwork_ = real(qry_work[0]);
+    #endif
 
     // allocate workspace
     std::vector< float > work( lwork_ );
@@ -117,20 +149,53 @@ int64_t sysv_aa(
     // query for workspace size
     double qry_work[1];
     lapack_int ineg_one = -1;
-    LAPACK_dsysv_aa(
-        &uplo_, &n_, &nrhs_,
-        A, &lda_,
-        ipiv_ptr,
-        B, &ldb_,
-        qry_work, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
-    );
-    if (info_ < 0) {
-        throw Error();
-    }
-    lapack_int lwork_ = real(qry_work[0]);
+    // MKL (seen in 2019-2021) has bug in sysv_aa query;
+    // query sytrf_aa and sytrs_aa instead.
+    #ifdef LAPACK_HAVE_MKL
+        LAPACK_dsytrf_aa(
+            &uplo_, &n_,
+            A, &lda_,
+            ipiv_ptr,
+            qry_work, &ineg_one, &info_
+            #ifdef LAPACK_FORTRAN_STRLEN_END
+            , 1
+            #endif
+        );
+        if (info_ < 0) {
+            throw Error();
+        }
+        lapack_int lwork_ = real(qry_work[0]);
+        LAPACK_dsytrs_aa(
+            &uplo_, &n_, &nrhs_,
+            A, &lda_,
+            ipiv_ptr,
+            B, &ldb_,
+            qry_work, &ineg_one, &info_
+            #ifdef LAPACK_FORTRAN_STRLEN_END
+            , 1
+            #endif
+        );
+        if (info_ < 0) {
+            throw Error();
+        }
+        lwork_ = max( lwork_, real(qry_work[0]) );
+    #else
+        LAPACK_dsysv_aa(
+            &uplo_, &n_, &nrhs_,
+            A, &lda_,
+            ipiv_ptr,
+            B, &ldb_,
+            qry_work, &ineg_one, &info_
+            #ifdef LAPACK_FORTRAN_STRLEN_END
+            , 1
+            #endif
+        );
+        if (info_ < 0) {
+            throw Error();
+        }
+        lapack_int lwork_ = real(qry_work[0]);
+    #endif
+
 
     // allocate workspace
     std::vector< double > work( lwork_ );
@@ -186,20 +251,52 @@ int64_t sysv_aa(
     // query for workspace size
     std::complex<float> qry_work[1];
     lapack_int ineg_one = -1;
-    LAPACK_csysv_aa(
-        &uplo_, &n_, &nrhs_,
-        (lapack_complex_float*) A, &lda_,
-        ipiv_ptr,
-        (lapack_complex_float*) B, &ldb_,
-        (lapack_complex_float*) qry_work, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
-    );
-    if (info_ < 0) {
-        throw Error();
-    }
-    lapack_int lwork_ = real(qry_work[0]);
+    // MKL (seen in 2019-2021) has bug in sysv_aa query;
+    // query sytrf_aa and sytrs_aa instead.
+    #ifdef LAPACK_HAVE_MKL
+        LAPACK_csytrf_aa(
+            &uplo_, &n_,
+            (lapack_complex_float*) A, &lda_,
+            ipiv_ptr,
+            (lapack_complex_float*) qry_work, &ineg_one, &info_
+            #ifdef LAPACK_FORTRAN_STRLEN_END
+            , 1
+            #endif
+        );
+        if (info_ < 0) {
+            throw Error();
+        }
+        lapack_int lwork_ = real(qry_work[0]);
+        LAPACK_csytrs_aa(
+            &uplo_, &n_, &nrhs_,
+            (lapack_complex_float*) A, &lda_,
+            ipiv_ptr,
+            (lapack_complex_float*) B, &ldb_,
+            (lapack_complex_float*) qry_work, &ineg_one, &info_
+            #ifdef LAPACK_FORTRAN_STRLEN_END
+            , 1
+            #endif
+        );
+        if (info_ < 0) {
+            throw Error();
+        }
+        lwork_ = max( lwork_, real(qry_work[0]) );
+    #else
+        LAPACK_csysv_aa(
+            &uplo_, &n_, &nrhs_,
+            (lapack_complex_float*) A, &lda_,
+            ipiv_ptr,
+            (lapack_complex_float*) B, &ldb_,
+            (lapack_complex_float*) qry_work, &ineg_one, &info_
+            #ifdef LAPACK_FORTRAN_STRLEN_END
+            , 1
+            #endif
+        );
+        if (info_ < 0) {
+            throw Error();
+        }
+        lapack_int lwork_ = real(qry_work[0]);
+    #endif
 
     // allocate workspace
     std::vector< std::complex<float> > work( lwork_ );
@@ -324,20 +421,52 @@ int64_t sysv_aa(
     // query for workspace size
     std::complex<double> qry_work[1];
     lapack_int ineg_one = -1;
-    LAPACK_zsysv_aa(
-        &uplo_, &n_, &nrhs_,
-        (lapack_complex_double*) A, &lda_,
-        ipiv_ptr,
-        (lapack_complex_double*) B, &ldb_,
-        (lapack_complex_double*) qry_work, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
-    );
-    if (info_ < 0) {
-        throw Error();
-    }
-    lapack_int lwork_ = real(qry_work[0]);
+    // MKL (seen in 2019-2021) has bug in sysv_aa query;
+    // query sytrf_aa and sytrs_aa instead.
+    #ifdef LAPACK_HAVE_MKL
+        LAPACK_zsytrf_aa(
+            &uplo_, &n_,
+            (lapack_complex_double*) A, &lda_,
+            ipiv_ptr,
+            (lapack_complex_double*) qry_work, &ineg_one, &info_
+            #ifdef LAPACK_FORTRAN_STRLEN_END
+            , 1
+            #endif
+        );
+        if (info_ < 0) {
+            throw Error();
+        }
+        lapack_int lwork_ = real(qry_work[0]);
+        LAPACK_zsytrs_aa(
+            &uplo_, &n_, &nrhs_,
+            (lapack_complex_double*) A, &lda_,
+            ipiv_ptr,
+            (lapack_complex_double*) B, &ldb_,
+            (lapack_complex_double*) qry_work, &ineg_one, &info_
+            #ifdef LAPACK_FORTRAN_STRLEN_END
+            , 1
+            #endif
+        );
+        if (info_ < 0) {
+            throw Error();
+        }
+        lwork_ = max( lwork_, real(qry_work[0]) );
+    #else
+        LAPACK_zsysv_aa(
+            &uplo_, &n_, &nrhs_,
+            (lapack_complex_double*) A, &lda_,
+            ipiv_ptr,
+            (lapack_complex_double*) B, &ldb_,
+            (lapack_complex_double*) qry_work, &ineg_one, &info_
+            #ifdef LAPACK_FORTRAN_STRLEN_END
+            , 1
+            #endif
+        );
+        if (info_ < 0) {
+            throw Error();
+        }
+        lapack_int lwork_ = real(qry_work[0]);
+    #endif
 
     // allocate workspace
     std::vector< std::complex<double> > work( lwork_ );

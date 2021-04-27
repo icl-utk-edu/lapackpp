@@ -343,4 +343,61 @@ cblas_gbmv(
                  x, incx, &beta, y, incy );
 }
 
+// -----------------------------------------------------------------------------
+inline void
+cblas_hbmv(
+    CBLAS_LAYOUT layout, CBLAS_UPLO uplo,
+    int n, int kd,
+    float alpha,
+    float const *A, int lda,
+    float const *x, int incx,
+    float beta,
+    float *y, int incy )
+{
+    cblas_ssbmv( layout, uplo, n, kd, alpha, A, lda,
+                 x, incx, beta, y, incy );
+}
+
+inline void
+cblas_hbmv(
+    CBLAS_LAYOUT layout, CBLAS_UPLO uplo,
+    int n, int kd,
+    double alpha,
+    double const *A, int lda,
+    double const *x, int incx,
+    double beta,
+    double *y, int incy )
+{
+    cblas_dsbmv( layout, uplo, n, kd, alpha, A, lda,
+                 x, incx, beta, y, incy );
+}
+
+inline void
+cblas_hbmv(
+    CBLAS_LAYOUT layout, CBLAS_UPLO uplo,
+    int n, int kd,
+    std::complex<float> alpha,
+    std::complex<float> const *A, int lda,
+    std::complex<float> const *x, int incx,
+    std::complex<float> beta,
+    std::complex<float> *y, int incy )
+{
+    cblas_chbmv( layout, uplo, n, kd, &alpha, A, lda,
+                 x, incx, &beta, y, incy );
+}
+
+inline void
+cblas_hbmv(
+    CBLAS_LAYOUT layout, CBLAS_UPLO uplo,
+    int n, int kd,
+    std::complex<double> alpha,
+    std::complex<double> const *A, int lda,
+    std::complex<double> const *x, int incx,
+    std::complex<double> beta,
+    std::complex<double> *y, int incy )
+{
+    cblas_zhbmv( layout, uplo, n, kd, &alpha, A, lda,
+                 x, incx, &beta, y, incy );
+}
+
 #endif        //  #ifndef CBLAS_HH

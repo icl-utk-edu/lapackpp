@@ -286,4 +286,61 @@ cblas_syr(
     std::complex<double> const *x, int incx,
     std::complex<double>* A, int lda );
 
+// -----------------------------------------------------------------------------
+inline void
+cblas_gbmv(
+    CBLAS_LAYOUT layout, CBLAS_TRANSPOSE trans,
+    int m, int n, int kl, int ku,
+    float alpha,
+    float const *A, int lda,
+    float const *x, int incx,
+    float beta,
+    float *y, int incy )
+{
+    cblas_sgbmv( layout, trans, m, n, kl, ku, alpha, A, lda,
+                 x, incx, beta, y, incy );
+}
+
+inline void
+cblas_gbmv(
+    CBLAS_LAYOUT layout, CBLAS_TRANSPOSE trans,
+    int m, int n, int kl, int ku,
+    double alpha,
+    double const *A, int lda,
+    double const *x, int incx,
+    double beta,
+    double *y, int incy )
+{
+    cblas_dgbmv( layout, trans, m, n, kl, ku, alpha, A, lda,
+                 x, incx, beta, y, incy );
+}
+
+inline void
+cblas_gbmv(
+    CBLAS_LAYOUT layout, CBLAS_TRANSPOSE trans,
+    int m, int n, int kl, int ku,
+    std::complex<float> alpha,
+    std::complex<float> const *A, int lda,
+    std::complex<float> const *x, int incx,
+    std::complex<float> beta,
+    std::complex<float> *y, int incy )
+{
+    cblas_cgbmv( layout, trans, m, n, kl, ku, &alpha, A, lda,
+                 x, incx, &beta, y, incy );
+}
+
+inline void
+cblas_gbmv(
+    CBLAS_LAYOUT layout, CBLAS_TRANSPOSE trans,
+    int m, int n, int kl, int ku,
+    std::complex<double> alpha,
+    std::complex<double> const *A, int lda,
+    std::complex<double> const *x, int incx,
+    std::complex<double> beta,
+    std::complex<double> *y, int incy )
+{
+    cblas_zgbmv( layout, trans, m, n, kl, ku, &alpha, A, lda,
+                 x, incx, &beta, y, incy );
+}
+
 #endif        //  #ifndef CBLAS_HH

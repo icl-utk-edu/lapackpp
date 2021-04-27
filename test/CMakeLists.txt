@@ -36,6 +36,7 @@ endif()
 set( tester "${lapackpp_}tester" )
 add_executable(
     ${tester}
+    cblas_wrappers.cc
     matrix_generator.cc
     matrix_params.cc
     test.cc

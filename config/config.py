@@ -650,10 +650,12 @@ def rocblas_library():
 # end
 
 #-------------------------------------------------------------------------------
-def get_package( name, directories, repo_url, tar_url, tar_filename ):
+def get_package( name, directories, unique_file, repo_url, tar_url, tar_filename ):
     '''
     Searches for a package, generally used for internal packages.
     Looks for a directory in directories; if found return directory.
+    Ensures that directory contains unique_file, which avoids detecting a
+    directory without the source.
     If not found, tries to 'git clone repo_url' to the last directory.
     If that fails, tries to download tar_url and unpack it to the last directory.
     '''
@@ -662,8 +664,9 @@ def get_package( name, directories, repo_url, tar_url, tar_filename ):
     print_header( name )
 
     for directory in directories:
-        print_test( directory )
-        err = not os.path.exists( directory )
+        path = os.path.join( directory, unique_file )
+        print_test( path )
+        err = not os.path.exists( path )
         print_result( directory, err )
         if (not err):
             return directory

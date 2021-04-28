@@ -71,10 +71,12 @@ tester     = test/tester
 
 #-------------------------------------------------------------------------------
 # BLAS++
+# todo: should configure.py save blaspp_dir & testsweeper_dir in make.inc?
+# Order here (./blaspp, ../blaspp) is reverse of order in configure.py.
 
-blaspp_dir = $(wildcard ../blaspp)
+blaspp_dir = $(wildcard ./blaspp)
 ifeq ($(blaspp_dir),)
-    blaspp_dir = $(wildcard ./blaspp)
+    blaspp_dir = $(wildcard ../blaspp)
 endif
 
 blaspp_src = $(wildcard $(blaspp_dir)/src/*.cc $(blaspp_dir)/include/*.hh)
@@ -99,12 +101,12 @@ $(lib_obj) $(tester_obj): | $(libblaspp)
 #-------------------------------------------------------------------------------
 # TestSweeper
 
-testsweeper_dir = $(wildcard ../testsweeper)
+testsweeper_dir = $(wildcard ./testsweeper)
 ifeq ($(testsweeper_dir),)
     testsweeper_dir = $(wildcard $(blaspp_dir)/testsweeper)
 endif
 ifeq ($(testsweeper_dir),)
-    testsweeper_dir = $(wildcard ./testsweeper)
+    testsweeper_dir = $(wildcard ../testsweeper)
 endif
 
 testsweeper_src = $(wildcard $(testsweeper_dir)/testsweeper.cc $(testsweeper_dir)/testsweeper.hh)

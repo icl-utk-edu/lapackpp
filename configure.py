@@ -87,6 +87,7 @@ def main():
     blaspp = config.get_package(
         'BLAS++',
         ['../blaspp', './blaspp'],
+        'include/blas.hh',
         'https://bitbucket.org/icl/blaspp',
         'https://bitbucket.org/icl/blaspp/get/master.tar.gz',
         'blaspp.tar.gz' )
@@ -94,8 +95,9 @@ def main():
         raise Exception( 'LAPACK++ requires BLAS++.' )
 
     testsweeper = config.get_package(
-        'testsweeper',
+        'TestSweeper',
         ['../testsweeper', blaspp + '/testsweeper', './testsweeper'],
+        'testsweeper.hh',
         'https://bitbucket.org/icl/testsweeper',
         'https://bitbucket.org/icl/testsweeper/get/master.tar.gz',
         'testsweeper.tar.gz' )

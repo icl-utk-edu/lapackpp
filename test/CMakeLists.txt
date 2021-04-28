@@ -1,3 +1,8 @@
+# Copyright (c) 2017-2021, University of Tennessee. All rights reserved.
+# SPDX-License-Identifier: BSD-3-Clause
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
+
 # Can't build testers if CBLAS, LAPACKE, or TestSweeper are not found.
 if (NOT blaspp_cblas_found)
     message( WARNING "CBLAS not found; tester cannot be built." )
@@ -17,7 +22,7 @@ if (NOT TARGET testsweeper)
         message( "   Found TestSweeper library: ${testsweeper_DIR}" )
     else()
         set( url "https://bitbucket.org/icl/testsweeper" )
-        set( tag "2020.09.00" )
+        set( tag "2021.04.00" )
         message( "" )
         message( "---------- TestSweeper" )
         message( STATUS "Fetching TestSweeper ${tag} from ${url}" )

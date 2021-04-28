@@ -24,8 +24,12 @@ void test_hegst_work( Params& params, bool run )
     lapack::Uplo uplo = params.uplo();
     int64_t n = params.dim.n();
     int64_t align = params.align();
+    int64_t verbose = params.verbose();
     params.matrix.mark();
     params.matrixB.mark();
+
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+    real_t tol = params.tol() * eps;
 
     // mark non-standard output values
     params.ref_time();
@@ -45,25 +49,37 @@ void test_hegst_work( Params& params, bool run )
 
     std::vector< scalar_t > A_tst( size_A );
     std::vector< scalar_t > A_ref( size_A );
-    std::vector< scalar_t > B_tst( size_B );
-    std::vector< scalar_t > B_ref( size_B );
+    std::vector< scalar_t > B( size_B );
 
     lapack::generate_matrix( params.matrix,  n, n, &A_tst[0], lda );
-    lapack::generate_matrix( params.matrixB, n, n, &B_tst[0], lda );
+    lapack::generate_matrix( params.matrixB, n, n, &B[0], ldb );
+    A_ref = A_tst;
+
+    if (verbose >= 1) {
+        printf( "\n" );
+        printf( "A n=%5lld, lda=%5lld\n", (lld) n, (lld) lda );
+        printf( "B n=%5lld, ldb=%5lld\n", (lld) n, (lld) ldb );
+    }
+    if (verbose >= 2) {
+        printf( "A = " ); print_matrix( n, n, &A_tst[0], lda );
+        printf( "B = " ); print_matrix( n, n, &B[0], ldb );
+    }
 
     // factor B
-    int64_t info = lapack::potrf( uplo, n, &B_tst[0], ldb );
+    int64_t info = lapack::potrf( uplo, n, &B[0], ldb );
     if (info != 0) {
         fprintf( stderr, "lapack::potrf returned error %lld\n", (lld) info );
     }
 
-    A_ref = A_tst;
-    B_ref = B_tst;
+    if (verbose >= 2) {
+        printf( "Bhat = " ); print_matrix( n, n, &B[0], ldb );
+    }
 
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
-    int64_t info_tst = lapack::hegst( itype, uplo, n, &A_tst[0], lda, &B_tst[0], ldb );
+    int64_t info_tst = lapack::hegst(
+        itype, uplo, n, &A_tst[0], lda, &B[0], ldb );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::hegst returned error %lld\n", (lld) info_tst );
@@ -73,11 +89,16 @@ void test_hegst_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::hegst( itype, n );
     // params.gflops() = gflop / time;
 
+    if (verbose >= 2) {
+        printf( "Ahat = " ); print_matrix( n, n, &A_tst[0], lda );
+    }
+
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_hegst( itype, uplo2char(uplo), n, &A_ref[0], lda, &B_ref[0], ldb );
+        int64_t info_ref = LAPACKE_hegst(
+            itype, uplo2char(uplo), n, &A_ref[0], lda, &B[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_hegst returned error %lld\n", (lld) info_ref );
@@ -87,14 +108,13 @@ void test_hegst_work( Params& params, bool run )
         // params.ref_gflops() = gflop / time;
 
         // ---------- check error compared to reference
-        real_t error = 0;
-        if (info_tst != info_ref) {
-            error = 1;
-        }
-        error += abs_error( A_tst, A_ref );
-        error += abs_error( B_tst, B_ref );
+        // relative forward error = ||A_ref - A_tst|| / ||A_ref||
+        real_t Anorm = lapack::lanhe( lapack::Norm::One, uplo, n, &A_ref[0], lda );
+        blas::axpy( size_A, -1.0, &A_tst[0], 1, &A_ref[0], 1 );
+        real_t error = lapack::lanhe( lapack::Norm::One, uplo, n, &A_ref[0], lda );
+        error /= Anorm;
         params.error() = error;
-        params.okay() = (error == 0);  // expect lapackpp == lapacke
+        params.okay() = (error < tol);
     }
 }
 

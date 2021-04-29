@@ -183,6 +183,8 @@ if (not opts.dim):
         opts.incx  = '1,-1'
         opts.incy  = '1,-1'
         opts.batch = '10'
+        opts.l     = '0,20,50'
+        opts.nb    = '16'
 
     if (opts.xsmall):
         n       += ' --dim 10'

@@ -4,7 +4,7 @@
 # Configuration
 # Variables defined in make.inc, or use make's defaults:
 #   CXX, CXXFLAGS   -- C compiler and flags
-#   LDFLAGS, LIBS   -- Linker options, library paths, and libraries
+#   LD, LDFLAGS, LIBS -- Linker, options, library paths, and libraries
 #   AR, RANLIB      -- Archiver, ranlib updates library TOC
 #   prefix          -- where to install LAPACK++
 
@@ -29,6 +29,11 @@ make.inc:
 # Defaults if not given in make.inc. GNU make doesn't have defaults for these.
 RANLIB   ?= ranlib
 prefix   ?= /opt/slate
+
+# Default LD=ld won't work; use CXX. Can override in make.inc or environment.
+ifeq ($(origin LD),default)
+    LD = $(CXX)
+endif
 
 # auto-detect OS
 # $OSTYPE may not be exported from the shell, so echo it
@@ -100,6 +105,7 @@ $(lib_obj) $(tester_obj): | $(libblaspp)
 
 #-------------------------------------------------------------------------------
 # TestSweeper
+# Order here (./testsweeper, ../testsweeper) is reverse of order in configure.py.
 
 testsweeper_dir = $(wildcard ./testsweeper)
 ifeq ($(testsweeper_dir),)
@@ -107,6 +113,11 @@ ifeq ($(testsweeper_dir),)
 endif
 ifeq ($(testsweeper_dir),)
     testsweeper_dir = $(wildcard ../testsweeper)
+endif
+ifeq ($(testsweeper_dir),)
+    $(tester_obj):
+		$(error Tester requires TestSweeper, which was not found. Run 'make config' \
+		        or download manually from https://bitbucket.org/icl/testsweeper/)
 endif
 
 testsweeper_src = $(wildcard $(testsweeper_dir)/testsweeper.cc $(testsweeper_dir)/testsweeper.hh)
@@ -198,7 +209,7 @@ lib    = lib/liblapackpp.$(lib_ext)
 
 $(lib_so): $(lib_obj)
 	mkdir -p lib
-	$(CXX) $(LDFLAGS) -shared $(install_name) $(lib_obj) $(LIBS) -o $@
+	$(LD) $(LDFLAGS) -shared $(install_name) $(lib_obj) $(LIBS) -o $@
 
 $(lib_a): $(lib_obj)
 	mkdir -p lib
@@ -215,7 +226,7 @@ lib/clean src/clean:
 #-------------------------------------------------------------------------------
 # tester
 $(tester): $(tester_obj) $(lib) $(testsweeper) $(libblaspp)
-	$(CXX) $(TEST_LDFLAGS) $(LDFLAGS) $(tester_obj) \
+	$(LD) $(TEST_LDFLAGS) $(LDFLAGS) $(tester_obj) \
 		$(TEST_LIBS) $(LIBS) -o $@
 
 # sub-directory rules
@@ -293,9 +304,10 @@ test/docs: docs
 #-------------------------------------------------------------------------------
 # general rules
 clean: lib/clean test/clean headers/clean
+	$(RM) $(dep)
 
 distclean: clean
-	$(RM) make.inc $(dep)
+	$(RM) make.inc include/lapack/defines.h
 
 %.o: %.cc
 	$(CXX) $(CXXFLAGS) -c $< -o $@
@@ -355,6 +367,7 @@ echo:
 	@echo "CXX           = $(CXX)"
 	@echo "CXXFLAGS      = $(CXXFLAGS)"
 	@echo
+	@echo "LD            = $(LD)"
 	@echo "LDFLAGS       = $(LDFLAGS)"
 	@echo "LIBS          = $(LIBS)"
 	@echo

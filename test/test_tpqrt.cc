@@ -15,6 +15,9 @@
 #if LAPACK_VERSION >= 30400  // >= 3.4.0
 
 // -----------------------------------------------------------------------------
+// tpqrt is blocked version
+// tpqrt2 is non-blocked version
+// todo: merge test_tpqrt2.cc and test_tpqrt.cc
 template< typename scalar_t >
 void test_tpqrt_work( Params& params, bool run )
 {
@@ -94,7 +97,7 @@ void test_tpqrt_work( Params& params, bool run )
     }
 
     params.time() = time;
-    double gflop = lapack::Gflop< scalar_t >::geqrf( m, n );  // estimate
+    double gflop = lapack::Gflop< scalar_t >::geqrf( m, n );  // under-estimate
     params.gflops() = gflop / time;
 
     if (verbose >= 2) {

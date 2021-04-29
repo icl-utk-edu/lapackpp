@@ -50,7 +50,7 @@ int64_t sysv_aa(
     lapack_int ineg_one = -1;
     // MKL (seen in 2019-2021) has bug in sysv_aa query;
     // query sytrf_aa and sytrs_aa instead.
-    #ifdef LAPACK_HAVE_MKL
+    #ifdef BLAS_HAVE_MKL
         LAPACK_ssytrf_aa(
             &uplo_, &n_,
             A, &lda_,
@@ -151,7 +151,7 @@ int64_t sysv_aa(
     lapack_int ineg_one = -1;
     // MKL (seen in 2019-2021) has bug in sysv_aa query;
     // query sytrf_aa and sytrs_aa instead.
-    #ifdef LAPACK_HAVE_MKL
+    #ifdef BLAS_HAVE_MKL
         LAPACK_dsytrf_aa(
             &uplo_, &n_,
             A, &lda_,
@@ -253,7 +253,7 @@ int64_t sysv_aa(
     lapack_int ineg_one = -1;
     // MKL (seen in 2019-2021) has bug in sysv_aa query;
     // query sytrf_aa and sytrs_aa instead.
-    #ifdef LAPACK_HAVE_MKL
+    #ifdef BLAS_HAVE_MKL
         LAPACK_csytrf_aa(
             &uplo_, &n_,
             (lapack_complex_float*) A, &lda_,
@@ -423,7 +423,7 @@ int64_t sysv_aa(
     lapack_int ineg_one = -1;
     // MKL (seen in 2019-2021) has bug in sysv_aa query;
     // query sytrf_aa and sytrs_aa instead.
-    #ifdef LAPACK_HAVE_MKL
+    #ifdef BLAS_HAVE_MKL
         LAPACK_zsytrf_aa(
             &uplo_, &n_,
             (lapack_complex_double*) A, &lda_,

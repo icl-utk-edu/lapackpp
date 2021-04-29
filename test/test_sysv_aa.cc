@@ -35,7 +35,7 @@ void test_sysv_aa_work( Params& params, bool run )
     // params.ref_gflops();
     // params.gflops();
 
-    #ifdef LAPACK_HAVE_MKL
+    #ifdef BLAS_HAVE_MKL
         if (! run)
             printf( "\nNOTICE: Due to issues in MKL 2019-2021, ref and check are disabled.\n" );
         ref = false;

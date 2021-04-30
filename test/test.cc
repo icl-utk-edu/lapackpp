@@ -606,8 +606,8 @@ void Params::get_range(
     }
 
     this->range() = *range_arg;
-    this->il() = *il_arg;
-    this->iu() = *iu_arg;
+    this->il_out() = *il_arg;
+    this->iu_out() = *iu_arg;
 }
 
 // -----------------------------------------------------------------------------

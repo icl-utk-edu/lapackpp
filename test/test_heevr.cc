@@ -9,6 +9,7 @@
 #include "print_matrix.hh"
 #include "error.hh"
 #include "lapacke_wrappers.hh"
+#include "scale.hh"
 
 #include <vector>
 
@@ -24,50 +25,69 @@ void test_heevr_work( Params& params, bool run )
     lapack::Uplo uplo = params.uplo();
     int64_t n = params.dim.n();
     int64_t align = params.align();
-
-    real_t  vl;  // = params.vl();
-    real_t  vu;  // = params.vu();
-    int64_t il;  // = params.il();
-    int64_t iu;  // = params.iu();
-    lapack::Range range;  // derived from vl,vu,il,iu
-    params.get_range( n, &range, &vl, &vu, &il, &iu );
+    int64_t verbose = params.verbose();
     params.matrix.mark();
+
+    // get_range fills in range, il, iu, vl, vu
+    real_t  vl, vu;
+    int64_t il, iu;
+    lapack::Range range;
+    params.get_range( n, &range, &vl, &vu, &il, &iu );
+
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+    real_t tol = params.tol() * eps;
 
     // mark non-standard output values
     params.ref_time();
     // params.ref_gflops();
     // params.gflops();
+    params.error2();
 
     if (! run)
         return;
 
+    // skip invalid ranges
+    if (il > iu) {
+        params.msg() = "skipping: requires 1 <= il <= iu <= n";
+        return;
+    }
+
     // ---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
-    real_t abstol = 0;  // default value
-    int64_t m_tst;
-    lapack_int m_ref;
-    int64_t ldz = roundup( blas::max( 1, n ), align );
-    size_t size_A = (size_t) ( lda * n );
-    size_t size_W = (size_t) ( n );
-    size_t size_Z = (size_t) ( ldz * blas::max( 1, n ) );
+    int64_t ldz = lda;
+    int64_t ldw = lda;
+    size_t size_A = (size_t) lda * n;
     size_t size_isuppz = (size_t) ( 2 * blas::max( 1, n ) );
+    real_t abstol = 0;  // default value
+    int64_t nfound_tst;
+    lapack_int nfound_ref;
 
     std::vector< scalar_t > A_tst( size_A );
     std::vector< scalar_t > A_ref( size_A );
-    std::vector< real_t > W_tst( size_W );
-    std::vector< real_t > W_ref( size_W );
-    std::vector< scalar_t > Z_tst( size_Z );
-    std::vector< scalar_t > Z_ref( size_Z );
+    std::vector< scalar_t > Z( size_A );  // eigenvectors
+    std::vector< real_t > Lambda_tst( n );
+    std::vector< real_t > Lambda_ref( n );
     std::vector< int64_t > isuppz_tst( size_isuppz );
     std::vector< lapack_int > isuppz_ref( size_isuppz );
 
     lapack::generate_matrix( params.matrix, n, n, &A_tst[0], lda );
     A_ref = A_tst;
 
+    if (verbose >= 1) {
+        printf( "\n" );
+        printf( "A n=%5lld, lda=%5lld\n", (lld) n, (lld) lda );
+    }
+    if (verbose >= 2) {
+        printf( "A = " ); print_matrix( n, n, &A_tst[0], lda );
+    }
+
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
-    int64_t info_tst = lapack::heevr( jobz, range, uplo, n, &A_tst[0], lda, vl, vu, il, iu, abstol, &m_tst, &W_tst[0], &Z_tst[0], ldz, &isuppz_tst[0] );
+    int64_t info_tst = lapack::heevr(
+        jobz, range, uplo, n, &A_tst[0], lda,
+        vl, vu, il, iu, abstol, &nfound_tst,
+        &Lambda_tst[0], &Z[0], ldz, &isuppz_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::heevr returned error %lld\n", (lld) info_tst );
@@ -77,11 +97,46 @@ void test_heevr_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::heevr( jobz, range, n );
     // params.gflops() = gflop / time;
 
+    if (verbose >= 2) {
+        printf( "nfound %lld\n", (lld) nfound_tst );
+        printf( "Z = " ); print_matrix( n, nfound_tst, &Z[0], ldz );
+        printf( "Lambda = " ); print_vector( nfound_tst, &Lambda_tst[0], 1 );
+    }
+
+    if (params.check() == 'y' && jobz == lapack::Job::Vec) {
+        // ---------- check error
+        // Relative backwards error = ||A Z - Z Lambda|| / (n * ||A|| * ||Z||)
+        real_t Anorm = lapack::lanhe( lapack::Norm::One, uplo, n, &A_ref[0], lda );
+        real_t Znorm = lapack::lange( lapack::Norm::One, n, nfound_tst, &Z[0], ldz );
+
+        std::vector< scalar_t > W( ldw * nfound_tst );  // workspace
+        // W = Z Lambda
+        lapack::lacpy( lapack::MatrixType::General, n, nfound_tst, &Z[0], ldz, &W[0], ldw );
+        col_scale( n, nfound_tst, &W[0], ldw, &Lambda_tst[0] );
+        // W = A Z - (Z Lambda)
+        blas::hemm( blas::Layout::ColMajor, blas::Side::Left, uplo, n, nfound_tst,
+                    1.0,  &A_ref[0], lda,
+                          &Z[0], ldz,
+                    -1.0, &W[0], ldw );
+        real_t error = lapack::lange( lapack::Norm::One, n, nfound_tst, &W[0], ldw );
+        if (verbose >= 2) {
+            printf( "W = " ); print_matrix( n, nfound_tst, &W[0], ldw );
+        }
+
+        error /= (n * Anorm * Znorm);
+        params.error() = error;
+        params.okay() = (error < tol);
+    }
+
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_heevr( job2char(jobz), range2char(range), uplo2char(uplo), n, &A_ref[0], lda, vl, vu, il, iu, abstol, &m_ref, &W_ref[0], &Z_ref[0], ldz, &isuppz_ref[0] );
+        int64_t info_ref = LAPACKE_heevr(
+            job2char(jobz), range2char(range), uplo2char(uplo), n,
+            &A_ref[0], lda,
+            vl, vu, il, iu, abstol, &nfound_ref,
+            &Lambda_ref[0], &Z[0], ldz, &isuppz_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_heevr returned error %lld\n", (lld) info_ref );
@@ -95,22 +150,12 @@ void test_heevr_work( Params& params, bool run )
         if (info_tst != info_ref) {
             error = 1;
         }
-        error += abs_error( A_tst, A_ref );
-        error += std::abs( m_tst - m_ref );
-        error += abs_error( W_tst, W_ref );
-        error += abs_error( Z_tst, Z_ref );
-        // Only check valid ifail values
-        // ifail is referenced only if eigenvectors are needed (jobz =
-        // 'V') and all eigenvalues are needed, that is, range = 'A'
-        // or range = 'I' and il = 1 and iu = n.
-        for ( size_t i = 0; i < (size_t)(2*m_ref); i++ )
-            if ( ( jobz == lapack::Job::Vec ) &&
-                 ( ( range == lapack::Range::All ) ||
-                   ( range == lapack::Range::Index && il == 1 && iu == n ) ) )  {
-                error += std::abs( isuppz_tst[i] - isuppz_ref[i] );
-            }
-        params.error() = error;
-        params.okay() = (error == 0);  // expect lapackpp == lapacke
+        error += std::abs( nfound_tst - nfound_ref );
+        error += rel_error( Lambda_tst, Lambda_ref );
+        // Not checking isuppz: it's not really useful, and occasionally it
+        // differs between tst and ref, though all other checks pass.
+        params.error2() = error;
+        params.okay() = params.okay() && (error < tol);
     }
 }
 

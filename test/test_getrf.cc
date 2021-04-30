@@ -25,6 +25,9 @@ void test_getrf_work( Params& params, bool run )
     int64_t align = params.align();
     int64_t verbose = params.verbose();
 
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+    real_t tol = params.tol() * eps;
+
     // mark non-standard output values
     params.ref_time();
     params.ref_gflops();
@@ -77,10 +80,47 @@ void test_getrf_work( Params& params, bool run )
     params.gflops() = gflop / time;
 
     if (verbose >= 2) {
-        printf( "A2 = " ); print_matrix( m, n, &A_tst[0], lda );
+        printf( "A_factor = " ); print_matrix( m, n, &A_tst[0], lda );
     }
 
-    if (params.ref() == 'y' || params.check() == 'y') {
+    if (params.check() == 'y' && m == n) {
+        // ---------- check error
+        // Relative backwards error = ||b - Ax|| / (n * ||A|| * ||x||).
+        // For m != n, could check PA - LU.
+        int64_t nrhs = 1;
+        int64_t ldb = roundup( blas::max( 1, n ), align );
+        size_t size_B = (size_t) ldb * nrhs;
+        std::vector< scalar_t > B_tst( size_B );
+        std::vector< scalar_t > B_ref( size_B );
+        int64_t idist = 1;
+        int64_t iseed[4] = { 0, 1, 2, 3 };
+        lapack::larnv( idist, iseed, B_tst.size(), &B_tst[0] );
+        B_ref = B_tst;
+
+        info_tst = lapack::getrs(
+            lapack::Op::NoTrans, n, nrhs, &A_tst[0], lda, &ipiv_tst[0], &B_tst[0], ldb );
+        if (info_tst != 0) {
+            fprintf( stderr, "lapack::getrs returned error %lld\n", (lld) info_tst );
+        }
+
+        blas::gemm( blas::Layout::ColMajor, blas::Op::NoTrans, blas::Op::NoTrans,
+                    n, nrhs, n,
+                    -1.0, &A_ref[0], lda,
+                          &B_tst[0], ldb,
+                     1.0, &B_ref[0], ldb );
+        if (verbose >= 2) {
+            printf( "R = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
+        }
+
+        real_t error = lapack::lange( lapack::Norm::One, n, nrhs, &B_ref[0], ldb );
+        real_t Xnorm = lapack::lange( lapack::Norm::One, n, nrhs, &B_tst[0], ldb );
+        real_t Anorm = lapack::lange( lapack::Norm::One, n, n,    &A_ref[0], lda );
+        error /= (n * Anorm * Xnorm);
+        params.error() = error;
+        params.okay() = (error < tol);
+    }
+
+    if (params.ref() == 'y') {
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
@@ -94,18 +134,8 @@ void test_getrf_work( Params& params, bool run )
         params.ref_gflops() = gflop / time;
 
         if (verbose >= 2) {
-            printf( "A2ref = " ); print_matrix( m, n, &A_ref[0], lda );
+            printf( "Aref_factor = " ); print_matrix( m, n, &A_ref[0], lda );
         }
-
-        // ---------- check error compared to reference
-        real_t error = 0;
-        if (info_tst != info_ref) {
-            error = 1;
-        }
-        error += abs_error( A_tst, A_ref );
-        error += abs_error( ipiv_tst, ipiv_ref );
-        params.error() = error;
-        params.okay() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 

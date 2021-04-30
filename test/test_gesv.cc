@@ -24,7 +24,9 @@ void test_gesv_work( Params& params, bool run )
     int64_t nrhs = params.nrhs();
     int64_t align = params.align();
     int64_t verbose = params.verbose();
-    params.matrix.mark();
+
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+    real_t tol = params.tol() * eps;
 
     // mark non-standard output values
     params.ref_time();
@@ -58,13 +60,13 @@ void test_gesv_work( Params& params, bool run )
     if (verbose >= 1) {
         printf( "\n"
                 "A n=%5lld, lda=%5lld\n"
-                "B n=%5lld, nrhs=%5lld, ldb=%5lld",
+                "B n=%5lld, nrhs=%5lld, ldb=%5lld\n",
                 (lld) n, (lld) lda,
                 (lld) n, (lld) nrhs, (lld) ldb );
     }
     if (verbose >= 2) {
         printf( "A = " ); print_matrix( n, n, &A_tst[0], lda );
-        printf( "B = " ); print_matrix( n, nrhs, &B_tst[0], lda );
+        printf( "B = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
     }
 
     // test error exits
@@ -78,7 +80,8 @@ void test_gesv_work( Params& params, bool run )
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
-    int64_t info_tst = lapack::gesv( n, nrhs, &A_tst[0], lda, &ipiv_tst[0], &B_tst[0], ldb );
+    int64_t info_tst = lapack::gesv(
+        n, nrhs, &A_tst[0], lda, &ipiv_tst[0], &B_tst[0], ldb );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::gesv returned error %lld\n", (lld) info_tst );
@@ -89,15 +92,40 @@ void test_gesv_work( Params& params, bool run )
     params.gflops() = gflop / time;
 
     if (verbose >= 2) {
-        printf( "A2 = " ); print_matrix( n, n, &A_tst[0], lda );
-        printf( "B2 = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
+        printf( "A_factor = " ); print_matrix( n, n, &A_tst[0], lda );
+        printf( "X = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
     }
 
-    if (params.ref() == 'y' || params.check() == 'y') {
+    if (params.check() == 'y') {
+        // ---------- check error
+        // Relative backwards error = ||b - Ax|| / (n * ||A|| * ||x||).
+        blas::gemm( blas::Layout::ColMajor, blas::Op::NoTrans, blas::Op::NoTrans,
+                    n, nrhs, n,
+                    -1.0, &A_ref[0], lda,
+                          &B_tst[0], ldb,
+                     1.0, &B_ref[0], ldb );
+        if (verbose >= 2) {
+            printf( "R = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
+        }
+
+        real_t error = lapack::lange( lapack::Norm::One, n, nrhs, &B_ref[0], ldb );
+        real_t Xnorm = lapack::lange( lapack::Norm::One, n, nrhs, &B_tst[0], ldb );
+        real_t Anorm = lapack::lange( lapack::Norm::One, n, n,    &A_ref[0], lda );
+        error /= (n * Anorm * Xnorm);
+        params.error() = error;
+        params.okay() = (error < tol);
+    }
+
+    if (params.ref() == 'y') {
         // ---------- run reference
+        // Reset B in case check cleared it.
+        int64_t iseed2[4] = { 0, 1, 2, 3 };
+        lapack::larnv( idist, iseed2, B_ref.size(), &B_ref[0] );
+
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_gesv( n, nrhs, &A_ref[0], lda, &ipiv_ref[0], &B_ref[0], ldb );
+        int64_t info_ref = LAPACKE_gesv(
+            n, nrhs, &A_ref[0], lda, &ipiv_ref[0], &B_ref[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gesv returned error %lld\n", (lld) info_ref );
@@ -107,20 +135,9 @@ void test_gesv_work( Params& params, bool run )
         params.ref_gflops() = gflop / time;
 
         if (verbose >= 2) {
-            printf( "A2ref = " ); print_matrix( n, n, &A_ref[0], lda );
-            printf( "B2ref = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
+            printf( "Aref_factor = " ); print_matrix( n, n, &A_ref[0], lda );
+            printf( "Xref = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
         }
-
-        // ---------- check error compared to reference
-        real_t error = 0;
-        if (info_tst != info_ref) {
-            error = 1;
-        }
-        error += abs_error( A_tst, A_ref );
-        error += abs_error( ipiv_tst, ipiv_ref );
-        error += abs_error( B_tst, B_ref );
-        params.error() = error;
-        params.okay() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 

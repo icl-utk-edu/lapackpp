@@ -25,7 +25,9 @@ void test_posv_work( Params& params, bool run )
     int64_t nrhs = params.nrhs();
     int64_t align = params.align();
     int64_t verbose = params.verbose();
-    params.matrix.mark();
+
+    real_t eps = std::numeric_limits< real_t >::epsilon();
+    real_t tol = params.tol() * eps;
 
     // mark non-standard output values
     params.ref_time();
@@ -52,7 +54,6 @@ void test_posv_work( Params& params, bool run )
     int64_t idist = 1;
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, B_tst.size(), &B_tst[0] );
-
     A_ref = A_tst;
     B_ref = B_tst;
 
@@ -65,7 +66,7 @@ void test_posv_work( Params& params, bool run )
     }
     if (verbose >= 2) {
         printf( "A = " ); print_matrix( n, n, &A_tst[0], lda );
-        printf( "B = " ); print_matrix( n, nrhs, &B_tst[0], lda );
+        printf( "B = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
     }
 
     // test error exits
@@ -81,7 +82,8 @@ void test_posv_work( Params& params, bool run )
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
-    int64_t info_tst = lapack::posv( uplo, n, nrhs, &A_tst[0], lda, &B_tst[0], ldb );
+    int64_t info_tst = lapack::posv(
+        uplo, n, nrhs, &A_tst[0], lda, &B_tst[0], ldb );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::posv returned error %lld\n", (lld) info_tst );
@@ -92,15 +94,36 @@ void test_posv_work( Params& params, bool run )
     params.gflops() = gflop / time;
 
     if (verbose >= 2) {
-        printf( "A2 = " ); print_matrix( n, n, &A_tst[0], lda );
-        printf( "B2 = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
+        printf( "A_factor = " ); print_matrix( n, n, &A_tst[0], lda );
+        printf( "X = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
     }
 
-    if (params.ref() == 'y' || params.check() == 'y') {
+    if (params.check() == 'y') {
+        // ---------- check error
+        // Relative backwards error = ||b - Ax|| / (n * ||A|| * ||x||).
+        blas::hemm( blas::Layout::ColMajor, blas::Side::Left, uplo,
+                    n, nrhs,
+                    -1.0, &A_ref[0], lda,
+                          &B_tst[0], ldb,
+                     1.0, &B_ref[0], ldb );
+        if (verbose >= 2) {
+            printf( "R = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
+        }
+
+        real_t error = lapack::lange( lapack::Norm::One, n, nrhs, &B_ref[0], ldb );
+        real_t Xnorm = lapack::lange( lapack::Norm::One, n, nrhs, &B_tst[0], ldb );
+        real_t Anorm = lapack::lanhe( lapack::Norm::One, uplo, n, &A_ref[0], lda );
+        error /= (n * Anorm * Xnorm);
+        params.error() = error;
+        params.okay() = (error < tol);
+    }
+
+    if (params.ref() == 'y') {
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_posv( uplo2char(uplo), n, nrhs, &A_ref[0], lda, &B_ref[0], ldb );
+        int64_t info_ref = LAPACKE_posv(
+            uplo2char(uplo), n, nrhs, &A_ref[0], lda, &B_ref[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_posv returned error %lld\n", (lld) info_ref );
@@ -110,19 +133,9 @@ void test_posv_work( Params& params, bool run )
         params.ref_gflops() = gflop / time;
 
         if (verbose >= 2) {
-            printf( "A2ref = " ); print_matrix( n, n, &A_ref[0], lda );
-            printf( "B2ref = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
+            printf( "Aref_factor = " ); print_matrix( n, n, &A_ref[0], lda );
+            printf( "Xref = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
         }
-
-        // ---------- check error compared to reference
-        real_t error = 0;
-        if (info_tst != info_ref) {
-            error = 1;
-        }
-        error += abs_error( A_tst, A_ref );
-        error += abs_error( B_tst, B_ref );
-        params.error() = error;
-        params.okay() = (error == 0);  // expect lapackpp == lapacke
     }
 }
 

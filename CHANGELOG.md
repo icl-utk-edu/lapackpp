@@ -1,3 +1,9 @@
+2021.04.00
+  - Add include/lapack/defines.h based on configuration
+  - Add larfgp
+  - More robust backward error checks
+  - Makefile and CMake fixes
+
 2020.10.01
   - Fixes: ILP64, CMake output padding
 

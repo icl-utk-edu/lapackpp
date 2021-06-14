@@ -64,16 +64,16 @@ struct NoConstructAllocator : public NoConstructAllocatorBase<T> {
         if (n > std::numeric_limits<std::size_t>::max() / sizeof(T))
             throw std::bad_array_new_length();
 
-        void* memPtr = NULL;
+        void* memPtr = nullptr;
         #if defined( _WIN32 ) || defined( _WIN64 )
             memPtr = _aligned_malloc( n*sizeof(T, 64 );
-            if ( memPtr != NULL ) {
+            if (memPtr != nullptr) {
                 auto p = static_cast<T*>(memPtr);
                 return p;
             }
         #else
             int err = posix_memalign( &memPtr, 64, n*sizeof(T) );
-            if ( err == 0 ) {
+            if (err == 0) {
                 auto p = static_cast<T*>(memPtr);
                 return p;
             }

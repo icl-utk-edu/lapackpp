@@ -1,3 +1,8 @@
+// Copyright (c) 2017-2020, University of Tennessee. All rights reserved.
+// SPDX-License-Identifier: BSD-3-Clause
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
+
 #include <cstdlib>
 #include <new>
 #include <limits>
@@ -28,21 +33,21 @@ namespace lapack {
 template < typename T, typename = typename std::enable_if< std::is_trivial<T>::value || blas::is_complex<T>::value >::type > // gesvd compiles
 struct NoConstructAllocatorBase {
 
-  using value_type = T;
+    using value_type = T;
 
-  /**
-   *  \brief Construction given an allocated pointer is a null-op.
-   *
-   *  @tparam Args Parameter pack which handles all possible calling
-   *  signatures of construct outlined in the Allocator concept.
-   */
-  template <typename... Args>
-  void construct( T* ptr, Args&&... args ){ }
+    /**
+     *  \brief Construction given an allocated pointer is a null-op.
+     *
+     *  @tparam Args Parameter pack which handles all possible calling
+     *  signatures of construct outlined in the Allocator concept.
+     */
+    template <typename... Args>
+    void construct( T* ptr, Args&& ... args ) { }
 
-  /**
-   *  \brief Destruction of an object in allocated memory is a null-op
-   */
-  void destroy( T* ptr ){ }
+    /**
+     *  \brief Destruction of an object in allocated memory is a null-op
+     */
+    void destroy( T* ptr ) { }
 
 }; // struct NoConstructAllocatorBase
 
@@ -51,20 +56,21 @@ struct NoConstructAllocatorBase {
 template <typename T>
 struct NoConstructAllocator : public NoConstructAllocatorBase<T> {
 
-  using value_type = T;
+    using value_type = T;
 
-  //T* allocate( size_t n ) { return std::allocator<T>().allocate(n); }
-  //void deallocate( T* ptr, size_t n ) { std::allocator<T>().deallocate( ptr, n ); }
+    //T* allocate( size_t n ) { return std::allocator<T>().allocate(n); }
+    //void deallocate( T* ptr, size_t n ) { std::allocator<T>().deallocate( ptr, n ); }
 
-    [[nodiscard]] T* allocate(std::size_t n) {
+    [[nodiscard]] T* allocate(std::size_t n)
+    {
         if (n > std::numeric_limits<std::size_t>::max() / sizeof(T))
             throw std::bad_array_new_length();
 
-        void *memPtr = NULL;
+        void* memPtr = NULL;
         #if defined( _WIN32 ) || defined( _WIN64 )
             memPtr = _aligned_malloc( n*sizeof(T, 64 );
             if ( memPtr != NULL ) {
-                auto p = static_cast<T*>(memPtr);
+            auto p = static_cast<T*>(memPtr);
                 report(p, n);
                 return p;
             }
@@ -86,9 +92,10 @@ struct NoConstructAllocator : public NoConstructAllocatorBase<T> {
         throw std::bad_alloc();
     }
 
-    void deallocate(T* p, std::size_t n) noexcept {
+    void deallocate(T* p, std::size_t n) noexcept
+    {
         #if defined( _WIN32 ) || defined( _WIN64 )
-             _aligned_free( p );
+            _aligned_free( p );
         #else
             std::free( p );
             //report( p, n, 0 );
@@ -100,18 +107,24 @@ private:
     #if 0
         void report(T* p, std::size_t n, bool alloc = true) const {
             std::cout << (alloc ? "Alloc: " : "Dealloc: ")
-                << "nElements = " << n
-                << " bytes = " << sizeof(T)*n
-                << " at " << std::hex << std::showbase << std::dec
-                << reinterpret_cast<void*>(p) << std::dec << '\n';
+                      << "nElements = " << n
+                      << " bytes = " << sizeof(T)*n
+                      << " at " << std::hex << std::showbase << std::dec
+                      << reinterpret_cast<void*>(p) << std::dec << '\n';
         }
     #endif
 };
 
 template <class T, class U>
-bool operator==(const NoConstructAllocator <T>&, const NoConstructAllocator <U>&) { return true; }
+bool operator==(const NoConstructAllocator <T>&, const NoConstructAllocator <U>&)
+{
+    return true;
+}
 template <class T, class U>
-bool operator!=(const NoConstructAllocator <T>&, const NoConstructAllocator <U>&) { return false; }
+bool operator!=(const NoConstructAllocator <T>&, const NoConstructAllocator <U>&)
+{
+    return false;
+}
 
 template <typename T>
 using vector = std::vector< T, NoConstructAllocator<T> >;

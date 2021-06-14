@@ -5,9 +5,10 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
-#include "NoConstructAllocator.hh"
+
 namespace lapack {
 
 using blas::max;

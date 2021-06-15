@@ -47,8 +47,7 @@ int64_t gelqf(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
+    lapack::vector< float > work( lwork_ );
 
     LAPACK_sgelqf(
         &m_, &n_,
@@ -93,8 +92,7 @@ int64_t gelqf(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
+    lapack::vector< double > work( lwork_ );
 
     LAPACK_dgelqf(
         &m_, &n_,
@@ -139,8 +137,7 @@ int64_t gelqf(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( lwork_ );
+    lapack::vector< std::complex<float> > work( lwork_ );
 
     LAPACK_cgelqf(
         &m_, &n_,
@@ -234,8 +231,7 @@ int64_t gelqf(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( lwork_ );
+    lapack::vector< std::complex<double> > work( lwork_ );
 
     LAPACK_zgelqf(
         &m_, &n_,

@@ -44,8 +44,7 @@ float lantr(
     int64_t lwork = (norm == Norm::Inf ? m : 1);
 
     // allocate workspace
-    lapack::vector
-< float > work( max( 1, lwork ) );
+    lapack::vector< float > work( max( 1, lwork ) );
 
     return LAPACK_slantr(
         &norm_, &uplo_, &diag_, &m_, &n_,
@@ -86,8 +85,7 @@ double lantr(
     int64_t lwork = (norm == Norm::Inf ? m : 1);
 
     // allocate workspace
-    lapack::vector
-< double > work( max( 1, lwork ) );
+    lapack::vector< double > work( max( 1, lwork ) );
 
     return LAPACK_dlantr(
         &norm_, &uplo_, &diag_, &m_, &n_,
@@ -128,8 +126,7 @@ float lantr(
     int64_t lwork = (norm == Norm::Inf ? m : 1);
 
     // allocate workspace
-    lapack::vector
-< float > work( max( 1, lwork ) );
+    lapack::vector< float > work( max( 1, lwork ) );
 
     return LAPACK_clantr(
         &norm_, &uplo_, &diag_, &m_, &n_,
@@ -223,8 +220,7 @@ double lantr(
     int64_t lwork = (norm == Norm::Inf ? m : 1);
 
     // allocate workspace
-    lapack::vector
-< double > work( max( 1, lwork ) );
+    lapack::vector< double > work( max( 1, lwork ) );
 
     return LAPACK_zlantr(
         &norm_, &uplo_, &diag_, &m_, &n_,

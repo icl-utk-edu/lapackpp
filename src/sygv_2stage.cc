@@ -58,8 +58,7 @@ int64_t sygv_2stage(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
+    lapack::vector< float > work( lwork_ );
 
     LAPACK_ssygv_2stage(
         &itype_, &jobz_, &uplo_, &n_,
@@ -118,8 +117,7 @@ int64_t sygv_2stage(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
+    lapack::vector< double > work( lwork_ );
 
     LAPACK_dsygv_2stage(
         &itype_, &jobz_, &uplo_, &n_,

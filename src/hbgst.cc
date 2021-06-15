@@ -42,10 +42,8 @@ int64_t hbgst(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( (n) );
-    lapack::vector
-< float > rwork( (n) );
+    lapack::vector< std::complex<float> > work( (n) );
+    lapack::vector< float > rwork( (n) );
 
     LAPACK_chbgst(
         &jobz_, &uplo_, &n_, &ka_, &kb_,
@@ -91,10 +89,8 @@ int64_t hbgst(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( (n) );
-    lapack::vector
-< double > rwork( (n) );
+    lapack::vector< std::complex<double> > work( (n) );
+    lapack::vector< double > rwork( (n) );
 
     LAPACK_zhbgst(
         &jobz_, &uplo_, &n_, &ka_, &kb_,

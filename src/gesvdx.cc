@@ -72,10 +72,8 @@ int64_t gesvdx(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
-    lapack::vector
-< lapack_int > iwork( (12*min(m,n)) );
+    lapack::vector< float > work( lwork_ );
+    lapack::vector< lapack_int > iwork( (12*min(m,n)) );
 
     LAPACK_sgesvdx(
         &jobu_, &jobvt_, &range_, &m_, &n_,
@@ -151,10 +149,8 @@ int64_t gesvdx(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
-    lapack::vector
-< lapack_int > iwork( (12*min(m,n)) );
+    lapack::vector< double > work( lwork_ );
+    lapack::vector< lapack_int > iwork( (12*min(m,n)) );
 
     LAPACK_dgesvdx(
         &jobu_, &jobvt_, &range_, &m_, &n_,
@@ -235,12 +231,9 @@ int64_t gesvdx(
     int64_t lrwork = min(m,n)*(min(m,n)*2 + 15*min(m,n));
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( lwork_ );
-    lapack::vector
-< float > rwork( (max( 1, lrwork )) );
-    lapack::vector
-< lapack_int > iwork( (12*min(m,n)) );
+    lapack::vector< std::complex<float> > work( lwork_ );
+    lapack::vector< float > rwork( (max( 1, lrwork )) );
+    lapack::vector< lapack_int > iwork( (12*min(m,n)) );
 
     LAPACK_cgesvdx(
         &jobu_, &jobvt_, &range_, &m_, &n_,
@@ -449,12 +442,9 @@ int64_t gesvdx(
     int64_t lrwork = min(m,n)*(min(m,n)*2 + 15*min(m,n));
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( lwork_ );
-    lapack::vector
-< double > rwork( (max( 1, lrwork )) );
-    lapack::vector
-< lapack_int > iwork( (12*min(m,n)) );
+    lapack::vector< std::complex<double> > work( lwork_ );
+    lapack::vector< double > rwork( (max( 1, lrwork )) );
+    lapack::vector< lapack_int > iwork( (12*min(m,n)) );
 
     LAPACK_zgesvdx(
         &jobu_, &jobvt_, &range_, &m_, &n_,

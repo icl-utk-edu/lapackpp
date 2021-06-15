@@ -49,8 +49,7 @@ int64_t orgqr(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
+    lapack::vector< float > work( lwork_ );
 
     LAPACK_sorgqr(
         &m_, &n_, &k_,
@@ -98,8 +97,7 @@ int64_t orgqr(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
+    lapack::vector< double > work( lwork_ );
 
     LAPACK_dorgqr(
         &m_, &n_, &k_,

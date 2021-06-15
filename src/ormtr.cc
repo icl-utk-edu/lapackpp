@@ -62,8 +62,7 @@ int64_t ormtr(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
+    lapack::vector< float > work( lwork_ );
 
     LAPACK_sormtr(
         &side_, &uplo_, &trans_, &m_, &n_,
@@ -129,8 +128,7 @@ int64_t ormtr(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
+    lapack::vector< double > work( lwork_ );
 
     LAPACK_dormtr(
         &side_, &uplo_, &trans_, &m_, &n_,

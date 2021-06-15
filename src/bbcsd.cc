@@ -90,8 +90,7 @@ int64_t bbcsd(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
+    lapack::vector< float > work( lwork_ );
 
     LAPACK_sbbcsd(
         &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_,
@@ -193,8 +192,7 @@ int64_t bbcsd(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
+    lapack::vector< double > work( lwork_ );
 
     LAPACK_dbbcsd(
         &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_,
@@ -296,8 +294,7 @@ int64_t bbcsd(
     lapack_int lrwork_ = real(qry_rwork[0]);
 
     // allocate workspace
-    lapack::vector
-< float > rwork( lrwork_ );
+    lapack::vector< float > rwork( lrwork_ );
 
     LAPACK_cbbcsd(
         &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_,
@@ -584,8 +581,7 @@ int64_t bbcsd(
     lapack_int lrwork_ = real(qry_rwork[0]);
 
     // allocate workspace
-    lapack::vector
-< double > rwork( lrwork_ );
+    lapack::vector< double > rwork( lrwork_ );
 
     LAPACK_zbbcsd(
         &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_,

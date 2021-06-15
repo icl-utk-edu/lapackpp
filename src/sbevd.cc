@@ -59,10 +59,8 @@ int64_t sbevd(
     lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
-    lapack::vector
-< lapack_int > iwork( liwork_ );
+    lapack::vector< float > work( lwork_ );
+    lapack::vector< lapack_int > iwork( liwork_ );
 
     LAPACK_ssbevd(
         &jobz_, &uplo_, &n_, &kd_,
@@ -125,10 +123,8 @@ int64_t sbevd(
     lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
-    lapack::vector
-< lapack_int > iwork( liwork_ );
+    lapack::vector< double > work( lwork_ );
+    lapack::vector< lapack_int > iwork( liwork_ );
 
     LAPACK_dsbevd(
         &jobz_, &uplo_, &n_, &kd_,

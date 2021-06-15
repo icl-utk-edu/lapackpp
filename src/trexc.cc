@@ -38,8 +38,7 @@ int64_t trexc(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< float > work( (n) );
+    lapack::vector< float > work( (n) );
 
     LAPACK_strexc(
         &compq_, &n_,
@@ -81,8 +80,7 @@ int64_t trexc(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< double > work( (n) );
+    lapack::vector< double > work( (n) );
 
     LAPACK_dtrexc(
         &compq_, &n_,

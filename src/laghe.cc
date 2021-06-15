@@ -35,8 +35,7 @@ int64_t laghe(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
+        lapack::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
         lapack_int* iseed_ptr = &iseed_[0];
     #else
         lapack_int* iseed_ptr = iseed;
@@ -44,8 +43,7 @@ int64_t laghe(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( (2*n) );
+    lapack::vector< std::complex<float> > work( (2*n) );
 
     LAPACK_claghe(
         &n_, &k_,
@@ -80,8 +78,7 @@ int64_t laghe(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
+        lapack::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
         lapack_int* iseed_ptr = &iseed_[0];
     #else
         lapack_int* iseed_ptr = iseed;
@@ -89,8 +86,7 @@ int64_t laghe(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( (2*n) );
+    lapack::vector< std::complex<double> > work( (2*n) );
 
     LAPACK_zlaghe(
         &n_, &k_,

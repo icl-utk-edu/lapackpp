@@ -49,8 +49,7 @@ int64_t ungrq(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( lwork_ );
+    lapack::vector< std::complex<float> > work( lwork_ );
 
     LAPACK_cungrq(
         &m_, &n_, &k_,
@@ -135,8 +134,7 @@ int64_t ungrq(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( lwork_ );
+    lapack::vector< std::complex<double> > work( lwork_ );
 
     LAPACK_zungrq(
         &m_, &n_, &k_,

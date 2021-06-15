@@ -44,8 +44,7 @@ int64_t heevx(
     lapack_int ldz_ = (lapack_int) ldz;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > ifail_( (n) );
+        lapack::vector< lapack_int > ifail_( (n) );
         lapack_int* ifail_ptr = &ifail_[0];
     #else
         lapack_int* ifail_ptr = ifail;
@@ -76,12 +75,9 @@ int64_t heevx(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( lwork_ );
-    lapack::vector
-< float > rwork( (7*n) );
-    lapack::vector
-< lapack_int > iwork( (5*n) );
+    lapack::vector< std::complex<float> > work( lwork_ );
+    lapack::vector< float > rwork( (7*n) );
+    lapack::vector< lapack_int > iwork( (5*n) );
 
     LAPACK_cheevx(
         &jobz_, &range_, &uplo_, &n_,
@@ -263,8 +259,7 @@ int64_t heevx(
     lapack_int ldz_ = (lapack_int) ldz;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > ifail_( (n) );
+        lapack::vector< lapack_int > ifail_( (n) );
         lapack_int* ifail_ptr = &ifail_[0];
     #else
         lapack_int* ifail_ptr = ifail;
@@ -295,12 +290,9 @@ int64_t heevx(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( lwork_ );
-    lapack::vector
-< double > rwork( (7*n) );
-    lapack::vector
-< lapack_int > iwork( (5*n) );
+    lapack::vector< std::complex<double> > work( lwork_ );
+    lapack::vector< double > rwork( (7*n) );
+    lapack::vector< lapack_int > iwork( (5*n) );
 
     LAPACK_zheevx(
         &jobz_, &range_, &uplo_, &n_,

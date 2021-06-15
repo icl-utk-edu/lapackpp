@@ -47,8 +47,7 @@ int64_t gerqf(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
+    lapack::vector< float > work( lwork_ );
 
     LAPACK_sgerqf(
         &m_, &n_,
@@ -93,8 +92,7 @@ int64_t gerqf(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
+    lapack::vector< double > work( lwork_ );
 
     LAPACK_dgerqf(
         &m_, &n_,
@@ -139,8 +137,7 @@ int64_t gerqf(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( lwork_ );
+    lapack::vector< std::complex<float> > work( lwork_ );
 
     LAPACK_cgerqf(
         &m_, &n_,
@@ -240,8 +237,7 @@ int64_t gerqf(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( lwork_ );
+    lapack::vector< std::complex<double> > work( lwork_ );
 
     LAPACK_zgerqf(
         &m_, &n_,

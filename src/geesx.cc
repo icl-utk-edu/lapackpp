@@ -41,10 +41,8 @@ int64_t geesx(
     lapack_int info_ = 0;
 
     // split-complex representation
-    lapack::vector
-< float > WR( max( 1, n ) );
-    lapack::vector
-< float > WI( max( 1, n ) );
+    lapack::vector< float > WR( max( 1, n ) );
+    lapack::vector< float > WI( max( 1, n ) );
 
     // query for workspace size
     float qry_work[1];
@@ -72,12 +70,9 @@ int64_t geesx(
     lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
-    lapack::vector
-< lapack_int > iwork( liwork_ );
-    lapack::vector
-< lapack_int > bwork( (n) );
+    lapack::vector< float > work( lwork_ );
+    lapack::vector< lapack_int > iwork( liwork_ );
+    lapack::vector< lapack_int > bwork( (n) );
 
     LAPACK_sgeesx(
         &jobvs_, &sort_,
@@ -130,10 +125,8 @@ int64_t geesx(
     lapack_int info_ = 0;
 
     // split-complex representation
-    lapack::vector
-< double > WR( max( 1, n ) );
-    lapack::vector
-< double > WI( max( 1, n ) );
+    lapack::vector< double > WR( max( 1, n ) );
+    lapack::vector< double > WI( max( 1, n ) );
 
     // query for workspace size
     double qry_work[1];
@@ -161,12 +154,9 @@ int64_t geesx(
     lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
-    lapack::vector
-< lapack_int > iwork( liwork_ );
-    lapack::vector
-< lapack_int > bwork( (n) );
+    lapack::vector< double > work( lwork_ );
+    lapack::vector< lapack_int > iwork( liwork_ );
+    lapack::vector< lapack_int > bwork( (n) );
 
     LAPACK_dgeesx(
         &jobvs_, &sort_,
@@ -242,12 +232,9 @@ int64_t geesx(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( lwork_ );
-    lapack::vector
-< float > rwork( (n) );
-    lapack::vector
-< lapack_int > bwork( (n) );
+    lapack::vector< std::complex<float> > work( lwork_ );
+    lapack::vector< float > rwork( (n) );
+    lapack::vector< lapack_int > bwork( (n) );
 
     LAPACK_cgeesx(
         &jobvs_, &sort_,
@@ -318,12 +305,9 @@ int64_t geesx(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( lwork_ );
-    lapack::vector
-< double > rwork( (n) );
-    lapack::vector
-< lapack_int > bwork( (n) );
+    lapack::vector< std::complex<double> > work( lwork_ );
+    lapack::vector< double > rwork( (n) );
+    lapack::vector< lapack_int > bwork( (n) );
 
     LAPACK_zgeesx(
         &jobvs_, &sort_,

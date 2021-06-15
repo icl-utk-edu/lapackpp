@@ -40,10 +40,8 @@ int64_t geev(
     lapack_int info_ = 0;
 
     // split-complex representation
-    lapack::vector
-< float > WR( max( 1, n ) );
-    lapack::vector
-< float > WI( max( 1, n ) );
+    lapack::vector< float > WR( max( 1, n ) );
+    lapack::vector< float > WI( max( 1, n ) );
 
     // query for workspace size
     float qry_work[1];
@@ -65,8 +63,7 @@ int64_t geev(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
+    lapack::vector< float > work( lwork_ );
 
     LAPACK_sgeev(
         &jobvl_, &jobvr_, &n_,
@@ -114,10 +111,8 @@ int64_t geev(
     lapack_int info_ = 0;
 
     // split-complex representation
-    lapack::vector
-< double > WR( max( 1, n ) );
-    lapack::vector
-< double > WI( max( 1, n ) );
+    lapack::vector< double > WR( max( 1, n ) );
+    lapack::vector< double > WI( max( 1, n ) );
 
     // query for workspace size
     double qry_work[1];
@@ -139,8 +134,7 @@ int64_t geev(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
+    lapack::vector< double > work( lwork_ );
 
     LAPACK_dgeev(
         &jobvl_, &jobvr_, &n_,
@@ -209,10 +203,8 @@ int64_t geev(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( lwork_ );
-    lapack::vector
-< float > rwork( (2*n) );
+    lapack::vector< std::complex<float> > work( lwork_ );
+    lapack::vector< float > rwork( (2*n) );
 
     LAPACK_cgeev(
         &jobvl_, &jobvr_, &n_,
@@ -378,10 +370,8 @@ int64_t geev(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( lwork_ );
-    lapack::vector
-< double > rwork( (2*n) );
+    lapack::vector< std::complex<double> > work( lwork_ );
+    lapack::vector< double > rwork( (2*n) );
 
     LAPACK_zgeev(
         &jobvl_, &jobvr_, &n_,

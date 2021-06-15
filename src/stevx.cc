@@ -41,8 +41,7 @@ int64_t stevx(
     lapack_int ldz_ = (lapack_int) ldz;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > ifail_( (n) );
+        lapack::vector< lapack_int > ifail_( (n) );
         lapack_int* ifail_ptr = &ifail_[0];
     #else
         lapack_int* ifail_ptr = ifail;
@@ -50,10 +49,8 @@ int64_t stevx(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< float > work( (5*n) );
-    lapack::vector
-< lapack_int > iwork( (5*n) );
+    lapack::vector< float > work( (5*n) );
+    lapack::vector< lapack_int > iwork( (5*n) );
 
     LAPACK_sstevx(
         &jobz_, &range_, &n_,
@@ -104,8 +101,7 @@ int64_t stevx(
     lapack_int ldz_ = (lapack_int) ldz;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > ifail_( (n) );
+        lapack::vector< lapack_int > ifail_( (n) );
         lapack_int* ifail_ptr = &ifail_[0];
     #else
         lapack_int* ifail_ptr = ifail;
@@ -113,10 +109,8 @@ int64_t stevx(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< double > work( (5*n) );
-    lapack::vector
-< lapack_int > iwork( (5*n) );
+    lapack::vector< double > work( (5*n) );
+    lapack::vector< lapack_int > iwork( (5*n) );
 
     LAPACK_dstevx(
         &jobz_, &range_, &n_,

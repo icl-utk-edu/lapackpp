@@ -57,8 +57,7 @@ int64_t ggglm(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
+    lapack::vector< float > work( lwork_ );
 
     LAPACK_sggglm(
         &n_, &m_, &p_,
@@ -116,8 +115,7 @@ int64_t ggglm(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
+    lapack::vector< double > work( lwork_ );
 
     LAPACK_dggglm(
         &n_, &m_, &p_,
@@ -175,8 +173,7 @@ int64_t ggglm(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( lwork_ );
+    lapack::vector< std::complex<float> > work( lwork_ );
 
     LAPACK_cggglm(
         &n_, &m_, &p_,
@@ -318,8 +315,7 @@ int64_t ggglm(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( lwork_ );
+    lapack::vector< std::complex<double> > work( lwork_ );
 
     LAPACK_zggglm(
         &n_, &m_, &p_,

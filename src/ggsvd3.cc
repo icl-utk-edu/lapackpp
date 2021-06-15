@@ -81,10 +81,8 @@ int64_t ggsvd3(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
-    lapack::vector
-< lapack_int > iwork( (n) );
+    lapack::vector< float > work( lwork_ );
+    lapack::vector< lapack_int > iwork( (n) );
 
     LAPACK_sggsvd3(
         &jobu_, &jobv_, &jobq_, &m_, &n_, &p_, &k_, &l_,
@@ -173,10 +171,8 @@ int64_t ggsvd3(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
-    lapack::vector
-< lapack_int > iwork( (n) );
+    lapack::vector< double > work( lwork_ );
+    lapack::vector< lapack_int > iwork( (n) );
 
     LAPACK_dggsvd3(
         &jobu_, &jobv_, &jobq_, &m_, &n_, &p_, &k_, &l_,
@@ -267,12 +263,9 @@ int64_t ggsvd3(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( lwork_ );
-    lapack::vector
-< float > rwork( (2*n) );
-    lapack::vector
-< lapack_int > iwork( (n) );
+    lapack::vector< std::complex<float> > work( lwork_ );
+    lapack::vector< float > rwork( (2*n) );
+    lapack::vector< lapack_int > iwork( (n) );
 
     LAPACK_cggsvd3(
         &jobu_, &jobv_, &jobq_, &m_, &n_, &p_, &k_, &l_,
@@ -364,12 +357,9 @@ int64_t ggsvd3(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( lwork_ );
-    lapack::vector
-< double > rwork( (2*n) );
-    lapack::vector
-< lapack_int > iwork( (n) );
+    lapack::vector< std::complex<double> > work( lwork_ );
+    lapack::vector< double > rwork( (2*n) );
+    lapack::vector< lapack_int > iwork( (n) );
 
     LAPACK_zggsvd3(
         &jobu_, &jobv_, &jobq_, &m_, &n_, &p_, &k_, &l_,

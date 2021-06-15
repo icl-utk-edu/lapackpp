@@ -38,8 +38,7 @@ float lantb(
     int64_t lwork = (norm == Norm::Inf ? n : 1);
 
     // allocate workspace
-    lapack::vector
-< float > work( max(1,lwork) );
+    lapack::vector< float > work( max(1,lwork) );
 
     return LAPACK_slantb(
         &norm_, &uplo_, &diag_, &n_, &k_,
@@ -74,8 +73,7 @@ double lantb(
     int64_t lwork = (norm == Norm::Inf ? n : 1);
 
     // allocate workspace
-    lapack::vector
-< double > work( max(1,lwork) );
+    lapack::vector< double > work( max(1,lwork) );
 
     return LAPACK_dlantb(
         &norm_, &uplo_, &diag_, &n_, &k_,
@@ -110,8 +108,7 @@ float lantb(
     int64_t lwork = (norm == Norm::Inf ? n : 1);
 
     // allocate workspace
-    lapack::vector
-< float > work( max(1,lwork) );
+    lapack::vector< float > work( max(1,lwork) );
 
     return LAPACK_clantb(
         &norm_, &uplo_, &diag_, &n_, &k_,
@@ -193,8 +190,7 @@ double lantb(
     int64_t lwork = (norm == Norm::Inf ? n : 1);
 
     // allocate workspace
-    lapack::vector
-< double > work( max(1,lwork) );
+    lapack::vector< double > work( max(1,lwork) );
 
     return LAPACK_zlantb(
         &norm_, &uplo_, &diag_, &n_, &k_,

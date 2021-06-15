@@ -58,8 +58,7 @@ int64_t sbev_2stage(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
+    lapack::vector< float > work( lwork_ );
 
     LAPACK_ssbev_2stage(
         &jobz_, &uplo_, &n_, &kd_,
@@ -118,8 +117,7 @@ int64_t sbev_2stage(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
+    lapack::vector< double > work( lwork_ );
 
     LAPACK_dsbev_2stage(
         &jobz_, &uplo_, &n_, &kd_,

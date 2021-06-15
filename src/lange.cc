@@ -36,8 +36,7 @@ float lange(
     int64_t lwork = (norm == Norm::Inf ? m : 1);
 
     // allocate workspace
-    lapack::vector
-< float > work( max( 1, lwork ) );
+    lapack::vector< float > work( max( 1, lwork ) );
 
     return LAPACK_slange(
         &norm_, &m_, &n_,
@@ -70,8 +69,7 @@ double lange(
     int64_t lwork = (norm == Norm::Inf ? m : 1);
 
     // allocate workspace
-    lapack::vector
-< double > work( max( 1, lwork ) );
+    lapack::vector< double > work( max( 1, lwork ) );
 
     return LAPACK_dlange(
         &norm_, &m_, &n_,
@@ -104,8 +102,7 @@ float lange(
     int64_t lwork = (norm == Norm::Inf ? m : 1);
 
     // allocate workspace
-    lapack::vector
-< float > work( max( 1, lwork ) );
+    lapack::vector< float > work( max( 1, lwork ) );
 
     return LAPACK_clange(
         &norm_, &m_, &n_,
@@ -165,8 +162,7 @@ double lange(
     int64_t lwork = (norm == Norm::Inf ? m : 1);
 
     // allocate workspace
-    lapack::vector
-< double > work( max( 1, lwork ) );
+    lapack::vector< double > work( max( 1, lwork ) );
 
     return LAPACK_zlange(
         &norm_, &m_, &n_,

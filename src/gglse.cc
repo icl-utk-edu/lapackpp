@@ -57,8 +57,7 @@ int64_t gglse(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
+    lapack::vector< float > work( lwork_ );
 
     LAPACK_sgglse(
         &m_, &n_, &p_,
@@ -116,8 +115,7 @@ int64_t gglse(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
+    lapack::vector< double > work( lwork_ );
 
     LAPACK_dgglse(
         &m_, &n_, &p_,
@@ -175,8 +173,7 @@ int64_t gglse(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( lwork_ );
+    lapack::vector< std::complex<float> > work( lwork_ );
 
     LAPACK_cgglse(
         &m_, &n_, &p_,
@@ -325,8 +322,7 @@ int64_t gglse(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( lwork_ );
+    lapack::vector< std::complex<double> > work( lwork_ );
 
     LAPACK_zgglse(
         &m_, &n_, &p_,

@@ -33,8 +33,7 @@ int64_t opgtr(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< float > work( (n-1) );
+    lapack::vector< float > work( (n-1) );
 
     LAPACK_sopgtr(
         &uplo_, &n_,
@@ -70,8 +69,7 @@ int64_t opgtr(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< double > work( (n-1) );
+    lapack::vector< double > work( (n-1) );
 
     LAPACK_dopgtr(
         &uplo_, &n_,

@@ -45,10 +45,8 @@ int64_t bdsvdx(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< float > work( (14*n) );
-    lapack::vector
-< lapack_int > iwork( (12*n) );
+    lapack::vector< float > work( (14*n) );
+    lapack::vector< lapack_int > iwork( (12*n) );
 
     LAPACK_sbdsvdx(
         &uplo_, &jobz_, &range_, &n_,
@@ -225,10 +223,8 @@ int64_t bdsvdx(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< double > work( (14*n) );
-    lapack::vector
-< lapack_int > iwork( (12*n) );
+    lapack::vector< double > work( (14*n) );
+    lapack::vector< lapack_int > iwork( (12*n) );
 
     LAPACK_dbdsvdx(
         &uplo_, &jobz_, &range_, &n_,

@@ -33,8 +33,7 @@ int64_t geqp3(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
+        lapack::vector< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
         lapack_int* jpvt_ptr = &jpvt_[0];
     #else
         lapack_int* jpvt_ptr = jpvt;
@@ -56,8 +55,7 @@ int64_t geqp3(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
+    lapack::vector< float > work( lwork_ );
 
     LAPACK_sgeqp3(
         &m_, &n_,
@@ -92,8 +90,7 @@ int64_t geqp3(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
+        lapack::vector< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
         lapack_int* jpvt_ptr = &jpvt_[0];
     #else
         lapack_int* jpvt_ptr = jpvt;
@@ -115,8 +112,7 @@ int64_t geqp3(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
+    lapack::vector< double > work( lwork_ );
 
     LAPACK_dgeqp3(
         &m_, &n_,
@@ -151,8 +147,7 @@ int64_t geqp3(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
+        lapack::vector< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
         lapack_int* jpvt_ptr = &jpvt_[0];
     #else
         lapack_int* jpvt_ptr = jpvt;
@@ -176,10 +171,8 @@ int64_t geqp3(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( lwork_ );
-    lapack::vector
-< float > rwork( (2*n) );
+    lapack::vector< std::complex<float> > work( lwork_ );
+    lapack::vector< float > rwork( (2*n) );
 
     LAPACK_cgeqp3(
         &m_, &n_,
@@ -215,8 +208,7 @@ int64_t geqp3(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
+        lapack::vector< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
         lapack_int* jpvt_ptr = &jpvt_[0];
     #else
         lapack_int* jpvt_ptr = jpvt;
@@ -240,10 +232,8 @@ int64_t geqp3(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( lwork_ );
-    lapack::vector
-< double > rwork( (2*n) );
+    lapack::vector< std::complex<double> > work( lwork_ );
+    lapack::vector< double > rwork( (2*n) );
 
     LAPACK_zgeqp3(
         &m_, &n_,

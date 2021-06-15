@@ -44,8 +44,7 @@ int64_t syevx(
     lapack_int ldz_ = (lapack_int) ldz;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > ifail_( (n) );
+        lapack::vector< lapack_int > ifail_( (n) );
         lapack_int* ifail_ptr = &ifail_[0];
     #else
         lapack_int* ifail_ptr = ifail;
@@ -74,10 +73,8 @@ int64_t syevx(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
-    lapack::vector
-< lapack_int > iwork( (5*n) );
+    lapack::vector< float > work( lwork_ );
+    lapack::vector< lapack_int > iwork( (5*n) );
 
     LAPACK_ssyevx(
         &jobz_, &range_, &uplo_, &n_,
@@ -131,8 +128,7 @@ int64_t syevx(
     lapack_int ldz_ = (lapack_int) ldz;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > ifail_( (n) );
+        lapack::vector< lapack_int > ifail_( (n) );
         lapack_int* ifail_ptr = &ifail_[0];
     #else
         lapack_int* ifail_ptr = ifail;
@@ -161,10 +157,8 @@ int64_t syevx(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
-    lapack::vector
-< lapack_int > iwork( (5*n) );
+    lapack::vector< double > work( lwork_ );
+    lapack::vector< lapack_int > iwork( (5*n) );
 
     LAPACK_dsyevx(
         &jobz_, &range_, &uplo_, &n_,

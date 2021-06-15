@@ -64,8 +64,7 @@ int64_t ormrz(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
+    lapack::vector< float > work( lwork_ );
 
     LAPACK_sormrz(
         &side_, &trans_, &m_, &n_, &k_, &l_,
@@ -132,8 +131,7 @@ int64_t ormrz(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
+    lapack::vector< double > work( lwork_ );
 
     LAPACK_dormrz(
         &side_, &trans_, &m_, &n_, &k_, &l_,

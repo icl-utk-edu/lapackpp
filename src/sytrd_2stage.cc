@@ -61,8 +61,7 @@ int64_t sytrd_2stage(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
+    lapack::vector< float > work( lwork_ );
 
     LAPACK_ssytrd_2stage(
         &jobz_, &uplo_, &n_,
@@ -127,8 +126,7 @@ int64_t sytrd_2stage(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
+    lapack::vector< double > work( lwork_ );
 
     LAPACK_dsytrd_2stage(
         &jobz_, &uplo_, &n_,

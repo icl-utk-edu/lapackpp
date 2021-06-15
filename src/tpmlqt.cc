@@ -57,8 +57,7 @@ int64_t tpmlqt(
 
     // allocate workspace
     int64_t lwork = (side == Side::Left ? n*mb : m*mb);
-    lapack::vector
-< float > work( lwork );
+    lapack::vector< float > work( lwork );
 
     LAPACK_stpmlqt(
         &side_, &trans_, &m_, &n_, &k_, &l_, &mb_,
@@ -117,8 +116,7 @@ int64_t tpmlqt(
 
     // allocate workspace
     int64_t lwork = (side == Side::Left ? n*mb : m*mb);
-    lapack::vector
-< double > work( lwork );
+    lapack::vector< double > work( lwork );
 
     LAPACK_dtpmlqt(
         &side_, &trans_, &m_, &n_, &k_, &l_, &mb_,
@@ -173,8 +171,7 @@ int64_t tpmlqt(
 
     // allocate workspace
     int64_t lwork = (side == Side::Left ? n*mb : m*mb);
-    lapack::vector
-< std::complex<float> > work( lwork );
+    lapack::vector< std::complex<float> > work( lwork );
 
     LAPACK_ctpmlqt(
         &side_, &trans_, &m_, &n_, &k_, &l_, &mb_,
@@ -344,8 +341,7 @@ int64_t tpmlqt(
 
     // allocate workspace
     int64_t lwork = (side == Side::Left ? n*mb : m*mb);
-    lapack::vector
-< std::complex<double> > work( lwork );
+    lapack::vector< std::complex<double> > work( lwork );
 
     LAPACK_ztpmlqt(
         &side_, &trans_, &m_, &n_, &k_, &l_, &mb_,

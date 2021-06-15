@@ -31,8 +31,7 @@ int64_t ptcon(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< float > work( (n) );
+    lapack::vector< float > work( (n) );
 
     LAPACK_sptcon(
         &n_,
@@ -61,8 +60,7 @@ int64_t ptcon(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< double > work( (n) );
+    lapack::vector< double > work( (n) );
 
     LAPACK_dptcon(
         &n_,
@@ -91,8 +89,7 @@ int64_t ptcon(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< float > rwork( (n) );
+    lapack::vector< float > rwork( (n) );
 
     LAPACK_cptcon(
         &n_,
@@ -165,8 +162,7 @@ int64_t ptcon(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< double > rwork( (n) );
+    lapack::vector< double > rwork( (n) );
 
     LAPACK_zptcon(
         &n_,

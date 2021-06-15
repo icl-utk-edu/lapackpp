@@ -41,10 +41,8 @@ int64_t pprfs(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< float > work( (3*n) );
-    lapack::vector
-< lapack_int > iwork( (n) );
+    lapack::vector< float > work( (3*n) );
+    lapack::vector< lapack_int > iwork( (n) );
 
     LAPACK_spprfs(
         &uplo_, &n_, &nrhs_,
@@ -92,10 +90,8 @@ int64_t pprfs(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< double > work( (3*n) );
-    lapack::vector
-< lapack_int > iwork( (n) );
+    lapack::vector< double > work( (3*n) );
+    lapack::vector< lapack_int > iwork( (n) );
 
     LAPACK_dpprfs(
         &uplo_, &n_, &nrhs_,
@@ -143,10 +139,8 @@ int64_t pprfs(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( (2*n) );
-    lapack::vector
-< float > rwork( (n) );
+    lapack::vector< std::complex<float> > work( (2*n) );
+    lapack::vector< float > rwork( (n) );
 
     LAPACK_cpprfs(
         &uplo_, &n_, &nrhs_,
@@ -262,10 +256,8 @@ int64_t pprfs(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( (2*n) );
-    lapack::vector
-< double > rwork( (n) );
+    lapack::vector< std::complex<double> > work( (2*n) );
+    lapack::vector< double > rwork( (n) );
 
     LAPACK_zpprfs(
         &uplo_, &n_, &nrhs_,

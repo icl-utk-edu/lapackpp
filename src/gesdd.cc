@@ -62,10 +62,8 @@ int64_t gesdd(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
-    lapack::vector
-< lapack_int > iwork( (8*min(m,n)) );
+    lapack::vector< float > work( lwork_ );
+    lapack::vector< lapack_int > iwork( (8*min(m,n)) );
 
     LAPACK_sgesdd(
         &jobz_, &m_, &n_,
@@ -132,10 +130,8 @@ int64_t gesdd(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
-    lapack::vector
-< lapack_int > iwork( (8*min(m,n)) );
+    lapack::vector< double > work( lwork_ );
+    lapack::vector< lapack_int > iwork( (8*min(m,n)) );
 
     LAPACK_dgesdd(
         &jobz_, &m_, &n_,
@@ -217,12 +213,9 @@ int64_t gesdd(
     }
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( lwork_ );
-    lapack::vector
-< float > rwork( lrwork_ );
-    lapack::vector
-< lapack_int > iwork( (8*min(m,n)) );
+    lapack::vector< std::complex<float> > work( lwork_ );
+    lapack::vector< float > rwork( lrwork_ );
+    lapack::vector< lapack_int > iwork( (8*min(m,n)) );
 
     LAPACK_cgesdd(
         &jobz_, &m_, &n_,
@@ -411,12 +404,9 @@ int64_t gesdd(
     }
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( lwork_ );
-    lapack::vector
-< double > rwork( lrwork_ );
-    lapack::vector
-< lapack_int > iwork( (8*min(m,n)) );
+    lapack::vector< std::complex<double> > work( lwork_ );
+    lapack::vector< double > rwork( lrwork_ );
+    lapack::vector< lapack_int > iwork( (8*min(m,n)) );
 
     LAPACK_zgesdd(
         &jobz_, &m_, &n_,

@@ -62,8 +62,7 @@ int64_t gemlq(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
+    lapack::vector< float > work( lwork_ );
 
     LAPACK_sgemlq(
         &side_, &trans_, &m_, &n_, &k_,
@@ -126,8 +125,7 @@ int64_t gemlq(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
+    lapack::vector< double > work( lwork_ );
 
     LAPACK_dgemlq(
         &side_, &trans_, &m_, &n_, &k_,
@@ -190,8 +188,7 @@ int64_t gemlq(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( lwork_ );
+    lapack::vector< std::complex<float> > work( lwork_ );
 
     LAPACK_cgemlq(
         &side_, &trans_, &m_, &n_, &k_,
@@ -254,8 +251,7 @@ int64_t gemlq(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( lwork_ );
+    lapack::vector< std::complex<double> > work( lwork_ );
 
     LAPACK_zgemlq(
         &side_, &trans_, &m_, &n_, &k_,

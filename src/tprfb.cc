@@ -55,8 +55,7 @@ void tprfb(
 
     // allocate workspace
     int64_t lwork = (side == Side::Left ? k*n : m*k);
-    lapack::vector
-< float > work( lwork );
+    lapack::vector< float > work( lwork );
 
     LAPACK_stprfb(
         &side_, &trans_, &direction_, &storev_, &m_, &n_, &k_, &l_,
@@ -109,8 +108,7 @@ void tprfb(
 
     // allocate workspace
     int64_t lwork = (side == Side::Left ? k*n : m*k);
-    lapack::vector
-< double > work( lwork );
+    lapack::vector< double > work( lwork );
 
     LAPACK_dtprfb(
         &side_, &trans_, &direction_, &storev_, &m_, &n_, &k_, &l_,
@@ -163,8 +161,7 @@ void tprfb(
 
     // allocate workspace
     int64_t lwork = (side == Side::Left ? k*n : m*k);
-    lapack::vector
-< std::complex<float> > work( lwork );
+    lapack::vector< std::complex<float> > work( lwork );
 
     LAPACK_ctprfb(
         &side_, &trans_, &direction_, &storev_, &m_, &n_, &k_, &l_,
@@ -383,8 +380,7 @@ void tprfb(
 
     // allocate workspace
     int64_t lwork = (side == Side::Left ? k*n : m*k);
-    lapack::vector
-< std::complex<double> > work( lwork );
+    lapack::vector< std::complex<double> > work( lwork );
 
     LAPACK_ztprfb(
         &side_, &trans_, &direction_, &storev_, &m_, &n_, &k_, &l_,

@@ -46,8 +46,7 @@ int64_t bdsqr(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< float > work( (4*n) );
+    lapack::vector< float > work( (4*n) );
 
     LAPACK_sbdsqr(
         &uplo_, &n_, &ncvt_, &nru_, &ncc_,
@@ -98,8 +97,7 @@ int64_t bdsqr(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< double > work( (4*n) );
+    lapack::vector< double > work( (4*n) );
 
     LAPACK_dbdsqr(
         &uplo_, &n_, &ncvt_, &nru_, &ncc_,
@@ -150,8 +148,7 @@ int64_t bdsqr(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< float > rwork( (4*n) );
+    lapack::vector< float > rwork( (4*n) );
 
     LAPACK_cbdsqr(
         &uplo_, &n_, &ncvt_, &nru_, &ncc_,
@@ -301,8 +298,7 @@ int64_t bdsqr(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< double > rwork( (4*n) );
+    lapack::vector< double > rwork( (4*n) );
 
     LAPACK_zbdsqr(
         &uplo_, &n_, &ncvt_, &nru_, &ncc_,

@@ -38,8 +38,7 @@ float langb(
     int64_t lwork = (norm == Norm::Inf ? n : 1);
 
     // allocate workspace
-    lapack::vector
-< float > work( max(1,lwork) );
+    lapack::vector< float > work( max(1,lwork) );
 
     return LAPACK_slangb(
         &norm_, &n_, &kl_, &ku_,
@@ -74,8 +73,7 @@ double langb(
     int64_t lwork = (norm == Norm::Inf ? n : 1);
 
     // allocate workspace
-    lapack::vector
-< double > work( max(1,lwork) );
+    lapack::vector< double > work( max(1,lwork) );
 
     return LAPACK_dlangb(
         &norm_, &n_, &kl_, &ku_,
@@ -110,8 +108,7 @@ float langb(
     int64_t lwork = (norm == Norm::Inf ? n : 1);
 
     // allocate workspace
-    lapack::vector
-< float > work( max(1,lwork) );
+    lapack::vector< float > work( max(1,lwork) );
 
     return LAPACK_clangb(
         &norm_, &n_, &kl_, &ku_,
@@ -180,8 +177,7 @@ double langb(
     int64_t lwork = (norm == Norm::Inf ? n : 1);
 
     // allocate workspace
-    lapack::vector
-< double > work( max(1,lwork) );
+    lapack::vector< double > work( max(1,lwork) );
 
     return LAPACK_zlangb(
         &norm_, &n_, &kl_, &ku_,

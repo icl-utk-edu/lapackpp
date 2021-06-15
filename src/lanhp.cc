@@ -33,8 +33,7 @@ float lanhp(
     int64_t lwork = (norm == Norm::Inf || norm == Norm::One ? n : 1);
 
     // allocate workspace
-    lapack::vector
-< float > work( max(1,lwork) );
+    lapack::vector< float > work( max(1,lwork) );
 
     return LAPACK_clanhp(
         &norm_, &uplo_, &n_,
@@ -100,8 +99,7 @@ double lanhp(
     int64_t lwork = (norm == Norm::Inf || norm == Norm::One ? n : 1);
 
     // allocate workspace
-    lapack::vector
-< double > work( max(1,lwork) );
+    lapack::vector< double > work( max(1,lwork) );
 
     return LAPACK_zlanhp(
         &norm_, &uplo_, &n_,

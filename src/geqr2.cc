@@ -34,8 +34,7 @@ int64_t geqr2(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< float > work( (n) );
+    lapack::vector< float > work( (n) );
 
     LAPACK_sgeqr2(
         &m_, &n_,
@@ -67,8 +66,7 @@ int64_t geqr2(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< double > work( (n) );
+    lapack::vector< double > work( (n) );
 
     LAPACK_dgeqr2(
         &m_, &n_,
@@ -100,8 +98,7 @@ int64_t geqr2(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( (n) );
+    lapack::vector< std::complex<float> > work( (n) );
 
     LAPACK_cgeqr2(
         &m_, &n_,
@@ -185,8 +182,7 @@ int64_t geqr2(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( (n) );
+    lapack::vector< std::complex<double> > work( (n) );
 
     LAPACK_zgeqr2(
         &m_, &n_,

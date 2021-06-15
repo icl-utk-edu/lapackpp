@@ -47,8 +47,7 @@ int64_t gbrfs(
     lapack_int ldafb_ = (lapack_int) ldafb;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        lapack::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int const* ipiv_ptr = ipiv;
@@ -58,10 +57,8 @@ int64_t gbrfs(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< float > work( (3*n) );
-    lapack::vector
-< lapack_int > iwork( (n) );
+    lapack::vector< float > work( (3*n) );
+    lapack::vector< lapack_int > iwork( (n) );
 
     LAPACK_sgbrfs(
         &trans_, &n_, &kl_, &ku_, &nrhs_,
@@ -116,8 +113,7 @@ int64_t gbrfs(
     lapack_int ldafb_ = (lapack_int) ldafb;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        lapack::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int const* ipiv_ptr = ipiv;
@@ -127,10 +123,8 @@ int64_t gbrfs(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< double > work( (3*n) );
-    lapack::vector
-< lapack_int > iwork( (n) );
+    lapack::vector< double > work( (3*n) );
+    lapack::vector< lapack_int > iwork( (n) );
 
     LAPACK_dgbrfs(
         &trans_, &n_, &kl_, &ku_, &nrhs_,
@@ -185,8 +179,7 @@ int64_t gbrfs(
     lapack_int ldafb_ = (lapack_int) ldafb;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        lapack::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int const* ipiv_ptr = ipiv;
@@ -196,10 +189,8 @@ int64_t gbrfs(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( (2*n) );
-    lapack::vector
-< float > rwork( (n) );
+    lapack::vector< std::complex<float> > work( (2*n) );
+    lapack::vector< float > rwork( (n) );
 
     LAPACK_cgbrfs(
         &trans_, &n_, &kl_, &ku_, &nrhs_,
@@ -340,8 +331,7 @@ int64_t gbrfs(
     lapack_int ldafb_ = (lapack_int) ldafb;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        lapack::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int const* ipiv_ptr = ipiv;
@@ -351,10 +341,8 @@ int64_t gbrfs(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( (2*n) );
-    lapack::vector
-< double > rwork( (n) );
+    lapack::vector< std::complex<double> > work( (2*n) );
+    lapack::vector< double > rwork( (n) );
 
     LAPACK_zgbrfs(
         &trans_, &n_, &kl_, &ku_, &nrhs_,

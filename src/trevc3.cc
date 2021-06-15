@@ -40,8 +40,7 @@ int64_t trevc3(
     char howmany_ = howmany2char( howmany );
 
     // lapack_logical (32 or 64-bit) copy
-    lapack::vector
-< lapack_logical > select_( &select[0], &select[(n)] );
+    lapack::vector< lapack_logical > select_( &select[0], &select[(n)] );
     lapack_logical* select_ptr = &select_[0];
 
     lapack_int n_ = (lapack_int) n;
@@ -72,8 +71,7 @@ int64_t trevc3(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
+    lapack::vector< float > work( lwork_ );
 
     LAPACK_strevc3(
         &sides_, &howmany_,
@@ -117,8 +115,7 @@ int64_t trevc3(
     char howmany_ = howmany2char( howmany );
 
     // lapack_logical (32 or 64-bit) copy
-    lapack::vector
-< lapack_logical > select_( &select[0], &select[(n)] );
+    lapack::vector< lapack_logical > select_( &select[0], &select[(n)] );
     lapack_logical* select_ptr = &select_[0];
 
     lapack_int n_ = (lapack_int) n;
@@ -149,8 +146,7 @@ int64_t trevc3(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
+    lapack::vector< double > work( lwork_ );
 
     LAPACK_dtrevc3(
         &sides_, &howmany_,
@@ -194,8 +190,7 @@ int64_t trevc3(
     char howmany_ = howmany2char( howmany );
 
     // lapack_logical (32 or 64-bit) copy
-    lapack::vector
-< lapack_logical > select_( &select[0], &select[(n)] );
+    lapack::vector< lapack_logical > select_( &select[0], &select[(n)] );
     lapack_logical const* select_ptr = &select_[0];
 
     lapack_int n_ = (lapack_int) n;
@@ -229,10 +224,8 @@ int64_t trevc3(
     lapack_int lrwork_ = real(qry_rwork[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( lwork_ );
-    lapack::vector
-< float > rwork( lrwork_ );
+    lapack::vector< std::complex<float> > work( lwork_ );
+    lapack::vector< float > rwork( lrwork_ );
 
     LAPACK_ctrevc3(
         &sides_, &howmany_,
@@ -399,8 +392,7 @@ int64_t trevc3(
     char howmany_ = howmany2char( howmany );
 
     // lapack_logical (32 or 64-bit) copy
-    lapack::vector
-< lapack_logical > select_( &select[0], &select[(n)] );
+    lapack::vector< lapack_logical > select_( &select[0], &select[(n)] );
     lapack_logical const* select_ptr = &select_[0];
 
     lapack_int n_ = (lapack_int) n;
@@ -434,10 +426,8 @@ int64_t trevc3(
     lapack_int lrwork_ = real(qry_rwork[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( lwork_ );
-    lapack::vector
-< double > rwork( lrwork_ );
+    lapack::vector< std::complex<double> > work( lwork_ );
+    lapack::vector< double > rwork( lrwork_ );
 
     LAPACK_ztrevc3(
         &sides_, &howmany_,

@@ -53,10 +53,8 @@ int64_t heev(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( lwork_ );
-    lapack::vector
-< float > rwork( (max( 1, 3*n-2 )) );
+    lapack::vector< std::complex<float> > work( lwork_ );
+    lapack::vector< float > rwork( (max( 1, 3*n-2 )) );
 
     LAPACK_cheev(
         &jobz_, &uplo_, &n_,
@@ -159,10 +157,8 @@ int64_t heev(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( lwork_ );
-    lapack::vector
-< double > rwork( (max( 1, 3*n-2 )) );
+    lapack::vector< std::complex<double> > work( lwork_ );
+    lapack::vector< double > rwork( (max( 1, 3*n-2 )) );
 
     LAPACK_zheev(
         &jobz_, &uplo_, &n_,

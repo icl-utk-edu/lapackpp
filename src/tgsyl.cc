@@ -75,10 +75,8 @@ int64_t tgsyl(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
-    lapack::vector
-< lapack_int > iwork( (m+n+6) );
+    lapack::vector< float > work( lwork_ );
+    lapack::vector< lapack_int > iwork( (m+n+6) );
 
     LAPACK_stgsyl(
         &trans_, &ijob_, &m_, &n_,
@@ -160,10 +158,8 @@ int64_t tgsyl(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
-    lapack::vector
-< lapack_int > iwork( (m+n+6) );
+    lapack::vector< double > work( lwork_ );
+    lapack::vector< lapack_int > iwork( (m+n+6) );
 
     LAPACK_dtgsyl(
         &trans_, &ijob_, &m_, &n_,
@@ -245,10 +241,8 @@ int64_t tgsyl(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( lwork_ );
-    lapack::vector
-< lapack_int > iwork( (m+n+2) );
+    lapack::vector< std::complex<float> > work( lwork_ );
+    lapack::vector< lapack_int > iwork( (m+n+2) );
 
     LAPACK_ctgsyl(
         &trans_, &ijob_, &m_, &n_,
@@ -330,10 +324,8 @@ int64_t tgsyl(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( lwork_ );
-    lapack::vector
-< lapack_int > iwork( (m+n+2) );
+    lapack::vector< std::complex<double> > work( lwork_ );
+    lapack::vector< lapack_int > iwork( (m+n+2) );
 
     LAPACK_ztgsyl(
         &trans_, &ijob_, &m_, &n_,

@@ -46,8 +46,7 @@ int64_t tzrzf(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
+    lapack::vector< float > work( lwork_ );
 
     LAPACK_stzrzf(
         &m_, &n_,
@@ -91,8 +90,7 @@ int64_t tzrzf(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
+    lapack::vector< double > work( lwork_ );
 
     LAPACK_dtzrzf(
         &m_, &n_,
@@ -136,8 +134,7 @@ int64_t tzrzf(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( lwork_ );
+    lapack::vector< std::complex<float> > work( lwork_ );
 
     LAPACK_ctzrzf(
         &m_, &n_,
@@ -181,8 +178,7 @@ int64_t tzrzf(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( lwork_ );
+    lapack::vector< std::complex<double> > work( lwork_ );
 
     LAPACK_ztzrzf(
         &m_, &n_,

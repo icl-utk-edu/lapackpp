@@ -35,8 +35,7 @@ void lapmr(
     lapack_int ldx_ = (lapack_int) ldx;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > K_( &K[0], &K[(m)] );
+        lapack::vector< lapack_int > K_( &K[0], &K[(m)] );
         lapack_int* K_ptr = &K_[0];
     #else
         lapack_int* K_ptr = K;
@@ -69,8 +68,7 @@ void lapmr(
     lapack_int ldx_ = (lapack_int) ldx;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > K_( &K[0], &K[(m)] );
+        lapack::vector< lapack_int > K_( &K[0], &K[(m)] );
         lapack_int* K_ptr = &K_[0];
     #else
         lapack_int* K_ptr = K;
@@ -103,8 +101,7 @@ void lapmr(
     lapack_int ldx_ = (lapack_int) ldx;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > K_( &K[0], &K[(m)] );
+        lapack::vector< lapack_int > K_( &K[0], &K[(m)] );
         lapack_int* K_ptr = &K_[0];
     #else
         lapack_int* K_ptr = K;
@@ -137,8 +134,7 @@ void lapmr(
     lapack_int ldx_ = (lapack_int) ldx;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > K_( &K[0], &K[(m)] );
+        lapack::vector< lapack_int > K_( &K[0], &K[(m)] );
         lapack_int* K_ptr = &K_[0];
     #else
         lapack_int* K_ptr = K;

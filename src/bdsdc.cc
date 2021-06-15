@@ -55,10 +55,8 @@ int64_t bdsdc(
     }
 
     // allocate workspace
-    lapack::vector
-< float > work( (max( 1, lwork )) );
-    lapack::vector
-< lapack_int > iwork( (8*n) );
+    lapack::vector< float > work( (max( 1, lwork )) );
+    lapack::vector< lapack_int > iwork( (8*n) );
 
     LAPACK_sbdsdc(
         &uplo_, &compq_, &n_,
@@ -226,10 +224,8 @@ int64_t bdsdc(
     }
 
     // allocate workspace
-    lapack::vector
-< double > work( (max( 1, lwork )) );
-    lapack::vector
-< lapack_int > iwork( (8*n) );
+    lapack::vector< double > work( (max( 1, lwork )) );
+    lapack::vector< lapack_int > iwork( (8*n) );
 
     LAPACK_dbdsdc(
         &uplo_, &compq_, &n_,

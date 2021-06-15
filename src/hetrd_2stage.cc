@@ -61,8 +61,7 @@ int64_t hetrd_2stage(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( lwork_ );
+    lapack::vector< std::complex<float> > work( lwork_ );
 
     LAPACK_chetrd_2stage(
         &jobz_, &uplo_, &n_,
@@ -237,8 +236,7 @@ int64_t hetrd_2stage(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( lwork_ );
+    lapack::vector< std::complex<double> > work( lwork_ );
 
     LAPACK_zhetrd_2stage(
         &jobz_, &uplo_, &n_,

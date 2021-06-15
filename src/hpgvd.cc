@@ -62,12 +62,9 @@ int64_t hpgvd(
     lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( lwork_ );
-    lapack::vector
-< float > rwork( lrwork_ );
-    lapack::vector
-< lapack_int > iwork( liwork_ );
+    lapack::vector< std::complex<float> > work( lwork_ );
+    lapack::vector< float > rwork( lrwork_ );
+    lapack::vector< lapack_int > iwork( liwork_ );
 
     LAPACK_chpgvd(
         &itype_, &jobz_, &uplo_, &n_,
@@ -135,12 +132,9 @@ int64_t hpgvd(
     lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( lwork_ );
-    lapack::vector
-< double > rwork( lrwork_ );
-    lapack::vector
-< lapack_int > iwork( liwork_ );
+    lapack::vector< std::complex<double> > work( lwork_ );
+    lapack::vector< double > rwork( lrwork_ );
+    lapack::vector< lapack_int > iwork( liwork_ );
 
     LAPACK_zhpgvd(
         &itype_, &jobz_, &uplo_, &n_,

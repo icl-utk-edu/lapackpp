@@ -56,8 +56,7 @@ int64_t sygv(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
+    lapack::vector< float > work( lwork_ );
 
     LAPACK_ssygv(
         &itype_, &jobz_, &uplo_, &n_,
@@ -116,8 +115,7 @@ int64_t sygv(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
+    lapack::vector< double > work( lwork_ );
 
     LAPACK_dsygv(
         &itype_, &jobz_, &uplo_, &n_,

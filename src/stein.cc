@@ -36,16 +36,14 @@ int64_t stein(
     lapack_int m_ = (lapack_int) m;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > iblock_( &iblock[0], &iblock[(n)] );
+        lapack::vector< lapack_int > iblock_( &iblock[0], &iblock[(n)] );
         lapack_int const* iblock_ptr = &iblock_[0];
     #else
         lapack_int const* iblock_ptr = iblock;
     #endif
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > isplit_( &isplit[0], &isplit[(n)] );
+        lapack::vector< lapack_int > isplit_( &isplit[0], &isplit[(n)] );
         lapack_int const* isplit_ptr = &isplit_[0];
     #else
         lapack_int const* isplit_ptr = isplit;
@@ -53,8 +51,7 @@ int64_t stein(
     lapack_int ldz_ = (lapack_int) ldz;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > ifail_( (m) );
+        lapack::vector< lapack_int > ifail_( (m) );
         lapack_int* ifail_ptr = &ifail_[0];
     #else
         lapack_int* ifail_ptr = ifail;
@@ -62,10 +59,8 @@ int64_t stein(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< float > work( (5*n) );
-    lapack::vector
-< lapack_int > iwork( (n) );
+    lapack::vector< float > work( (5*n) );
+    lapack::vector< lapack_int > iwork( (n) );
 
     LAPACK_sstein(
         &n_,
@@ -108,16 +103,14 @@ int64_t stein(
     lapack_int m_ = (lapack_int) m;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > iblock_( &iblock[0], &iblock[(n)] );
+        lapack::vector< lapack_int > iblock_( &iblock[0], &iblock[(n)] );
         lapack_int const* iblock_ptr = &iblock_[0];
     #else
         lapack_int const* iblock_ptr = iblock;
     #endif
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > isplit_( &isplit[0], &isplit[(n)] );
+        lapack::vector< lapack_int > isplit_( &isplit[0], &isplit[(n)] );
         lapack_int const* isplit_ptr = &isplit_[0];
     #else
         lapack_int const* isplit_ptr = isplit;
@@ -125,8 +118,7 @@ int64_t stein(
     lapack_int ldz_ = (lapack_int) ldz;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > ifail_( (m) );
+        lapack::vector< lapack_int > ifail_( (m) );
         lapack_int* ifail_ptr = &ifail_[0];
     #else
         lapack_int* ifail_ptr = ifail;
@@ -134,10 +126,8 @@ int64_t stein(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< double > work( (5*n) );
-    lapack::vector
-< lapack_int > iwork( (n) );
+    lapack::vector< double > work( (5*n) );
+    lapack::vector< lapack_int > iwork( (n) );
 
     LAPACK_dstein(
         &n_,
@@ -180,16 +170,14 @@ int64_t stein(
     lapack_int m_ = (lapack_int) m;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > iblock_( &iblock[0], &iblock[(n)] );
+        lapack::vector< lapack_int > iblock_( &iblock[0], &iblock[(n)] );
         lapack_int const* iblock_ptr = &iblock_[0];
     #else
         lapack_int const* iblock_ptr = iblock;
     #endif
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > isplit_( &isplit[0], &isplit[(n)] );
+        lapack::vector< lapack_int > isplit_( &isplit[0], &isplit[(n)] );
         lapack_int const* isplit_ptr = &isplit_[0];
     #else
         lapack_int const* isplit_ptr = isplit;
@@ -197,8 +185,7 @@ int64_t stein(
     lapack_int ldz_ = (lapack_int) ldz;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > ifail_( (m) );
+        lapack::vector< lapack_int > ifail_( (m) );
         lapack_int* ifail_ptr = &ifail_[0];
     #else
         lapack_int* ifail_ptr = ifail;
@@ -206,10 +193,8 @@ int64_t stein(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< float > work( (5*n) );
-    lapack::vector
-< lapack_int > iwork( (n) );
+    lapack::vector< float > work( (5*n) );
+    lapack::vector< lapack_int > iwork( (n) );
 
     LAPACK_cstein(
         &n_,
@@ -252,16 +237,14 @@ int64_t stein(
     lapack_int m_ = (lapack_int) m;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > iblock_( &iblock[0], &iblock[(n)] );
+        lapack::vector< lapack_int > iblock_( &iblock[0], &iblock[(n)] );
         lapack_int const* iblock_ptr = &iblock_[0];
     #else
         lapack_int const* iblock_ptr = iblock;
     #endif
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > isplit_( &isplit[0], &isplit[(n)] );
+        lapack::vector< lapack_int > isplit_( &isplit[0], &isplit[(n)] );
         lapack_int const* isplit_ptr = &isplit_[0];
     #else
         lapack_int const* isplit_ptr = isplit;
@@ -269,8 +252,7 @@ int64_t stein(
     lapack_int ldz_ = (lapack_int) ldz;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > ifail_( (m) );
+        lapack::vector< lapack_int > ifail_( (m) );
         lapack_int* ifail_ptr = &ifail_[0];
     #else
         lapack_int* ifail_ptr = ifail;
@@ -278,10 +260,8 @@ int64_t stein(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< double > work( (5*n) );
-    lapack::vector
-< lapack_int > iwork( (n) );
+    lapack::vector< double > work( (5*n) );
+    lapack::vector< lapack_int > iwork( (n) );
 
     LAPACK_zstein(
         &n_,

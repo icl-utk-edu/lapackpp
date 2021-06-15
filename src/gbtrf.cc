@@ -37,8 +37,7 @@ int64_t gbtrf(
     lapack_int ldab_ = (lapack_int) ldab;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > ipiv_( (min(m,n)) );
+        lapack::vector< lapack_int > ipiv_( (min(m,n)) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;
@@ -80,8 +79,7 @@ int64_t gbtrf(
     lapack_int ldab_ = (lapack_int) ldab;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > ipiv_( (min(m,n)) );
+        lapack::vector< lapack_int > ipiv_( (min(m,n)) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;
@@ -123,8 +121,7 @@ int64_t gbtrf(
     lapack_int ldab_ = (lapack_int) ldab;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > ipiv_( (min(m,n)) );
+        lapack::vector< lapack_int > ipiv_( (min(m,n)) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;
@@ -234,8 +231,7 @@ int64_t gbtrf(
     lapack_int ldab_ = (lapack_int) ldab;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > ipiv_( (min(m,n)) );
+        lapack::vector< lapack_int > ipiv_( (min(m,n)) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;

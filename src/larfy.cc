@@ -36,8 +36,7 @@ void larfy(
     lapack_int ldc_ = (lapack_int) ldc;
 
     // allocate workspace
-    lapack::vector
-< float > work( (n) );
+    lapack::vector< float > work( (n) );
 
     LAPACK_slarfy(
         &uplo_, &n_,
@@ -69,8 +68,7 @@ void larfy(
     lapack_int ldc_ = (lapack_int) ldc;
 
     // allocate workspace
-    lapack::vector
-< double > work( (n) );
+    lapack::vector< double > work( (n) );
 
     LAPACK_dlarfy(
         &uplo_, &n_,
@@ -102,8 +100,7 @@ void larfy(
     lapack_int ldc_ = (lapack_int) ldc;
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( (n) );
+    lapack::vector< std::complex<float> > work( (n) );
 
     LAPACK_clarfy(
         &uplo_, &n_,
@@ -178,8 +175,7 @@ void larfy(
     lapack_int ldc_ = (lapack_int) ldc;
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( (n) );
+    lapack::vector< std::complex<double> > work( (n) );
 
     LAPACK_zlarfy(
         &uplo_, &n_,

@@ -63,8 +63,7 @@ int64_t ormql(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
+    lapack::vector< float > work( lwork_ );
 
     LAPACK_sormql(
         &side_, &trans_, &m_, &n_, &k_,
@@ -131,8 +130,7 @@ int64_t ormql(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
+    lapack::vector< double > work( lwork_ );
 
     LAPACK_dormql(
         &side_, &trans_, &m_, &n_, &k_,

@@ -53,8 +53,7 @@ int64_t sbgvx(
     lapack_int ldz_ = (lapack_int) ldz;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > ifail_( n );  // was m; n >= m
+        lapack::vector< lapack_int > ifail_( n );  // was m; n >= m
         lapack_int* ifail_ptr = &ifail_[0];
     #else
         lapack_int* ifail_ptr = ifail;
@@ -62,10 +61,8 @@ int64_t sbgvx(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< float > work( (7*n) );
-    lapack::vector
-< lapack_int > iwork( (5*n) );
+    lapack::vector< float > work( (7*n) );
+    lapack::vector< lapack_int > iwork( (5*n) );
 
     LAPACK_ssbgvx(
         &jobz_, &range_, &uplo_, &n_, &ka_, &kb_,
@@ -129,8 +126,7 @@ int64_t sbgvx(
     lapack_int ldz_ = (lapack_int) ldz;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > ifail_( n );  // was m; n >= m
+        lapack::vector< lapack_int > ifail_( n );  // was m; n >= m
         lapack_int* ifail_ptr = &ifail_[0];
     #else
         lapack_int* ifail_ptr = ifail;
@@ -138,10 +134,8 @@ int64_t sbgvx(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< double > work( (7*n) );
-    lapack::vector
-< lapack_int > iwork( (5*n) );
+    lapack::vector< double > work( (7*n) );
+    lapack::vector< lapack_int > iwork( (5*n) );
 
     LAPACK_dsbgvx(
         &jobz_, &range_, &uplo_, &n_, &ka_, &kb_,

@@ -56,10 +56,8 @@ int64_t syevd_2stage(
     lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
-    lapack::vector
-< lapack_int > iwork( liwork_ );
+    lapack::vector< float > work( lwork_ );
+    lapack::vector< lapack_int > iwork( liwork_ );
 
     LAPACK_ssyevd_2stage(
         &jobz_, &uplo_, &n_,
@@ -117,10 +115,8 @@ int64_t syevd_2stage(
     lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
-    lapack::vector
-< lapack_int > iwork( liwork_ );
+    lapack::vector< double > work( lwork_ );
+    lapack::vector< lapack_int > iwork( liwork_ );
 
     LAPACK_dsyevd_2stage(
         &jobz_, &uplo_, &n_,

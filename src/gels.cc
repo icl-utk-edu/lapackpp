@@ -60,8 +60,7 @@ int64_t gels(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
+    lapack::vector< float > work( lwork_ );
 
     LAPACK_sgels(
         &trans_, &m_, &n_, &nrhs_,
@@ -123,8 +122,7 @@ int64_t gels(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
+    lapack::vector< double > work( lwork_ );
 
     LAPACK_dgels(
         &trans_, &m_, &n_, &nrhs_,
@@ -182,8 +180,7 @@ int64_t gels(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( lwork_ );
+    lapack::vector< std::complex<float> > work( lwork_ );
 
     LAPACK_cgels(
         &trans_, &m_, &n_, &nrhs_,
@@ -331,8 +328,7 @@ int64_t gels(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( lwork_ );
+    lapack::vector< std::complex<double> > work( lwork_ );
 
     LAPACK_zgels(
         &trans_, &m_, &n_, &nrhs_,

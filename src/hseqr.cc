@@ -41,10 +41,8 @@ int64_t hseqr(
     lapack_int info_ = 0;
 
     // split-complex representation
-    lapack::vector
-< float > WR( max( 1, n ) );
-    lapack::vector
-< float > WI( max( 1, n ) );
+    lapack::vector< float > WR( max( 1, n ) );
+    lapack::vector< float > WI( max( 1, n ) );
 
     // query for workspace size
     float qry_work[1];
@@ -66,8 +64,7 @@ int64_t hseqr(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork_ );
+    lapack::vector< float > work( lwork_ );
 
     LAPACK_shseqr(
         &jobschur_, &compz_, &n_, &ilo_, &ihi_,
@@ -116,10 +113,8 @@ int64_t hseqr(
     lapack_int info_ = 0;
 
     // split-complex representation
-    lapack::vector
-< double > WR( max( 1, n ) );
-    lapack::vector
-< double > WI( max( 1, n ) );
+    lapack::vector< double > WR( max( 1, n ) );
+    lapack::vector< double > WI( max( 1, n ) );
 
     // query for workspace size
     double qry_work[1];
@@ -141,8 +136,7 @@ int64_t hseqr(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork_ );
+    lapack::vector< double > work( lwork_ );
 
     LAPACK_dhseqr(
         &jobschur_, &compz_, &n_, &ilo_, &ihi_,
@@ -209,8 +203,7 @@ int64_t hseqr(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( lwork_ );
+    lapack::vector< std::complex<float> > work( lwork_ );
 
     LAPACK_chseqr(
         &jobschur_, &compz_, &n_, &ilo_, &ihi_,
@@ -399,8 +392,7 @@ int64_t hseqr(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( lwork_ );
+    lapack::vector< std::complex<double> > work( lwork_ );
 
     LAPACK_zhseqr(
         &jobschur_, &compz_, &n_, &ilo_, &ihi_,

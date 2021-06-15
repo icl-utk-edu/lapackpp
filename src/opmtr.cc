@@ -44,8 +44,7 @@ int64_t opmtr(
     int64_t lwork = (side == Side::Left ? n : m);
 
     // allocate workspace
-    lapack::vector
-< float > work( lwork );
+    lapack::vector< float > work( lwork );
 
     LAPACK_sopmtr(
         &side_, &uplo_, &trans_, &m_, &n_,
@@ -92,8 +91,7 @@ int64_t opmtr(
     int64_t lwork = (side == Side::Left ? n : m);
 
     // allocate workspace
-    lapack::vector
-< double > work( lwork );
+    lapack::vector< double > work( lwork );
 
     LAPACK_dopmtr(
         &side_, &uplo_, &trans_, &m_, &n_,

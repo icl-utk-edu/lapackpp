@@ -38,8 +38,7 @@ int64_t sbev(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< float > work( (max( 1, 3*n-2 )) );
+    lapack::vector< float > work( (max( 1, 3*n-2 )) );
 
     LAPACK_ssbev(
         &jobz_, &uplo_, &n_, &kd_,
@@ -80,8 +79,7 @@ int64_t sbev(
     lapack_int info_ = 0;
 
     // allocate workspace
-    lapack::vector
-< double > work( (max( 1, 3*n-2 )) );
+    lapack::vector< double > work( (max( 1, 3*n-2 )) );
 
     LAPACK_dsbev(
         &jobz_, &uplo_, &n_, &kd_,

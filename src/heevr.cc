@@ -44,8 +44,7 @@ int64_t heevr(
     lapack_int ldz_ = (lapack_int) ldz;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > isuppz_( (2*max( 1, n )) );  // was max(1,nfound), n >= nfound
+        lapack::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was max(1,nfound), n >= nfound
         lapack_int* isuppz_ptr = &isuppz_[0];
     #else
         lapack_int* isuppz_ptr = isuppz;
@@ -78,12 +77,9 @@ int64_t heevr(
     lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<float> > work( lwork_ );
-    lapack::vector
-< float > rwork( lrwork_ );
-    lapack::vector
-< lapack_int > iwork( liwork_ );
+    lapack::vector< std::complex<float> > work( lwork_ );
+    lapack::vector< float > rwork( lrwork_ );
+    lapack::vector< lapack_int > iwork( liwork_ );
 
     LAPACK_cheevr(
         &jobz_, &range_, &uplo_, &n_,
@@ -330,8 +326,7 @@ int64_t heevr(
     lapack_int ldz_ = (lapack_int) ldz;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector
-< lapack_int > isuppz_( (2*max( 1, n )) );  // was max(1,nfound), n >= nfound
+        lapack::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was max(1,nfound), n >= nfound
         lapack_int* isuppz_ptr = &isuppz_[0];
     #else
         lapack_int* isuppz_ptr = isuppz;
@@ -364,12 +359,9 @@ int64_t heevr(
     lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
-    lapack::vector
-< std::complex<double> > work( lwork_ );
-    lapack::vector
-< double > rwork( lrwork_ );
-    lapack::vector
-< lapack_int > iwork( liwork_ );
+    lapack::vector< std::complex<double> > work( lwork_ );
+    lapack::vector< double > rwork( lrwork_ );
+    lapack::vector< lapack_int > iwork( liwork_ );
 
     LAPACK_zheevr(
         &jobz_, &range_, &uplo_, &n_,

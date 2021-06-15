@@ -6,58 +6,30 @@
 #ifndef LAPACK_NO_CONSTRUCT_ALLOCATOR_HH
 #define LAPACK_NO_CONSTRUCT_ALLOCATOR_HH
 
-#include <cstdlib>
-#include <new>
-#include <limits>
-#include <iostream>
-#include <vector>
-#include <type_traits>
-#include <memory>
-
-#include <blas.hh>
-
 namespace lapack {
-
-/// Base type for allocators which allocate typed raw memory
-/// without construction/destruction.
-///
-/// Provides a prototype for allocators which must allocate typed raw
-/// memory without construction / destruction (e.g. on device memory).
-/// NoConstructAllocatorBase does not, in and of itself, satisfy the
-/// Allocator concept.
-///
-/// To satisfy the Allocator concept, the derived class must define
-/// the proper allocate / deallocate semantics outlined in the standard.
-///
-/// @tparam Type of the data to be allocated. Only valid for trivial
-/// types.
-///
-template < typename T, typename =
-                             typename std::enable_if< std::is_trivial<T>::value
-                             || blas::is_complex<T>::value >::type >
-struct NoConstructAllocatorBase {
-
-    using value_type = T;
-
-    // Construction given an allocated pointer is a null-op.
-    //
-    // @tparam Args Parameter pack which handles all possible calling
-    // signatures of construct outlined in the Allocator concept.
-    //
-    template <typename... Args>
-    void construct( T* ptr, Args&& ... args ) { }
-
-    // Destruction of an object in allocated memory is a null-op
-    void destroy( T* ptr ) { }
-
-}; // struct NoConstructAllocatorBase
-
 
 // No-construct allocator type which allocates / deallocates.
 template <typename T>
-struct NoConstructAllocator : public NoConstructAllocatorBase<T> {
-
+struct NoConstructAllocator
+{
     using value_type = T;
+
+    NoConstructAllocator () = default;
+    template <class U> constexpr NoConstructAllocator (const NoConstructAllocator <U>&) noexcept {}
+
+    // Commented out because it causes failures for ./run_tests.py gesvd
+    #if 0
+        // Construction given an allocated pointer is a null-op.
+        //
+        // @tparam Args Parameter pack which handles all possible calling
+        // signatures of construct outlined in the Allocator concept.
+        //
+        template <typename... Args>
+        void construct( T* ptr, Args&& ... args ) { }
+
+        // Destruction of an object in allocated memory is a null-op
+        void destroy( T* ptr ) { }
+    #endif
 
     T* allocate(std::size_t n)
     {

@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -37,7 +38,8 @@ int64_t trexc(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (n) );
+    lapack::vector
+< float > work( (n) );
 
     LAPACK_strexc(
         &compq_, &n_,
@@ -79,7 +81,8 @@ int64_t trexc(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (n) );
+    lapack::vector
+< double > work( (n) );
 
     LAPACK_dtrexc(
         &compq_, &n_,

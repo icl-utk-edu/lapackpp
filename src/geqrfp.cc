@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #if LAPACK_VERSION >= 30202  // >= v3.2.2
 
@@ -47,7 +48,8 @@ int64_t geqrfp(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< float > work( lwork_ );
+    lapack::vector
+< float > work( lwork_ );
 
     LAPACK_sgeqrfp(
         &m_, &n_,
@@ -91,7 +93,8 @@ int64_t geqrfp(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< double > work( lwork_ );
+    lapack::vector
+< double > work( lwork_ );
 
     LAPACK_dgeqrfp(
         &m_, &n_,
@@ -135,7 +138,8 @@ int64_t geqrfp(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< std::complex<float> > work( lwork_ );
+    lapack::vector
+< std::complex<float> > work( lwork_ );
 
     LAPACK_cgeqrfp(
         &m_, &n_,
@@ -179,7 +183,8 @@ int64_t geqrfp(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< std::complex<double> > work( lwork_ );
+    lapack::vector
+< std::complex<double> > work( lwork_ );
 
     LAPACK_zgeqrfp(
         &m_, &n_,

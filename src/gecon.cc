@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -32,8 +33,10 @@ int64_t gecon(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (4*n) );
-    std::vector< lapack_int > iwork( (n) );
+    lapack::vector
+< float > work( (4*n) );
+    lapack::vector
+< lapack_int > iwork( (n) );
 
     LAPACK_sgecon(
         &norm_, &n_,
@@ -68,8 +71,10 @@ int64_t gecon(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (4*n) );
-    std::vector< lapack_int > iwork( (n) );
+    lapack::vector
+< double > work( (4*n) );
+    lapack::vector
+< lapack_int > iwork( (n) );
 
     LAPACK_dgecon(
         &norm_, &n_,
@@ -104,8 +109,10 @@ int64_t gecon(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<float> > work( (2*n) );
-    std::vector< float > rwork( (2*n) );
+    lapack::vector
+< std::complex<float> > work( (2*n) );
+    lapack::vector
+< float > rwork( (2*n) );
 
     LAPACK_cgecon(
         &norm_, &n_,
@@ -178,8 +185,10 @@ int64_t gecon(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (2*n) );
-    std::vector< double > rwork( (2*n) );
+    lapack::vector
+< std::complex<double> > work( (2*n) );
+    lapack::vector
+< double > rwork( (2*n) );
 
     LAPACK_zgecon(
         &norm_, &n_,

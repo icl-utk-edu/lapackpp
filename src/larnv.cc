@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -29,7 +30,8 @@ void larnv(
     lapack_int idist_ = (lapack_int) idist;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
+        lapack::vector
+< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
         lapack_int* iseed_ptr = &iseed_[0];
     #else
         lapack_int* iseed_ptr = iseed;
@@ -60,7 +62,8 @@ void larnv(
     lapack_int idist_ = (lapack_int) idist;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
+        lapack::vector
+< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
         lapack_int* iseed_ptr = &iseed_[0];
     #else
         lapack_int* iseed_ptr = iseed;
@@ -91,7 +94,8 @@ void larnv(
     lapack_int idist_ = (lapack_int) idist;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
+        lapack::vector
+< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
         lapack_int* iseed_ptr = &iseed_[0];
     #else
         lapack_int* iseed_ptr = iseed;
@@ -158,7 +162,8 @@ void larnv(
     lapack_int idist_ = (lapack_int) idist;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
+        lapack::vector
+< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
         lapack_int* iseed_ptr = &iseed_[0];
     #else
         lapack_int* iseed_ptr = iseed;

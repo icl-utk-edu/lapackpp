@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -34,7 +35,8 @@ int64_t gesv(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( max( 1, (n) ) );
+        lapack::vector
+< lapack_int > ipiv_( max( 1, (n) ) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;
@@ -76,7 +78,8 @@ int64_t gesv(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( max( 1, (n) ) );
+        lapack::vector
+< lapack_int > ipiv_( max( 1, (n) ) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;
@@ -118,7 +121,8 @@ int64_t gesv(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( max( 1, (n) ) );
+        lapack::vector
+< lapack_int > ipiv_( max( 1, (n) ) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;
@@ -209,7 +213,8 @@ int64_t gesv(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( max( 1, (n) ) );
+        lapack::vector
+< lapack_int > ipiv_( max( 1, (n) ) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;
@@ -253,7 +258,8 @@ int64_t gesv(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( max( 1, (n) ) );
+        lapack::vector
+< lapack_int > ipiv_( max( 1, (n) ) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;
@@ -264,8 +270,10 @@ int64_t gesv(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (n)*(nrhs) );
-    std::vector< float > swork( (n*(n+nrhs)) );
+    lapack::vector
+< double > work( (n)*(nrhs) );
+    lapack::vector
+< float > swork( (n*(n+nrhs)) );
 
     LAPACK_dsgesv(
         &n_, &nrhs_,
@@ -307,7 +315,8 @@ int64_t gesv(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( max( 1, (n) ) );
+        lapack::vector
+< lapack_int > ipiv_( max( 1, (n) ) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;
@@ -318,9 +327,12 @@ int64_t gesv(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (n)*(nrhs) );
-    std::vector< std::complex<float> > swork( (n*(n+nrhs)) );
-    std::vector< double > rwork( (n) );
+    lapack::vector
+< std::complex<double> > work( (n)*(nrhs) );
+    lapack::vector
+< std::complex<float> > swork( (n*(n+nrhs)) );
+    lapack::vector
+< double > rwork( (n) );
 
     LAPACK_zcgesv(
         &n_, &nrhs_,

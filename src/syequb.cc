@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -34,7 +35,8 @@ int64_t syequb(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (2*n) );
+    lapack::vector
+< float > work( (2*n) );
 
     LAPACK_ssyequb(
         &uplo_, &n_,
@@ -71,7 +73,8 @@ int64_t syequb(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (2*n) );
+    lapack::vector
+< double > work( (2*n) );
 
     LAPACK_dsyequb(
         &uplo_, &n_,
@@ -108,7 +111,8 @@ int64_t syequb(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<float> > work( (2*n) );
+    lapack::vector
+< std::complex<float> > work( (2*n) );
 
     LAPACK_csyequb(
         &uplo_, &n_,
@@ -190,7 +194,8 @@ int64_t syequb(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (2*n) );
+    lapack::vector
+< std::complex<double> > work( (2*n) );
 
     LAPACK_zsyequb(
         &uplo_, &n_,

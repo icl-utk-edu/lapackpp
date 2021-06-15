@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -31,7 +32,8 @@ int64_t pstrf(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > piv_( (n) );
+        lapack::vector
+< lapack_int > piv_( (n) );
         lapack_int* piv_ptr = &piv_[0];
     #else
         lapack_int* piv_ptr = piv;
@@ -40,7 +42,8 @@ int64_t pstrf(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (2*n) );
+    lapack::vector
+< float > work( (2*n) );
 
     LAPACK_spstrf(
         &uplo_, &n_,
@@ -78,7 +81,8 @@ int64_t pstrf(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > piv_( (n) );
+        lapack::vector
+< lapack_int > piv_( (n) );
         lapack_int* piv_ptr = &piv_[0];
     #else
         lapack_int* piv_ptr = piv;
@@ -87,7 +91,8 @@ int64_t pstrf(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (2*n) );
+    lapack::vector
+< double > work( (2*n) );
 
     LAPACK_dpstrf(
         &uplo_, &n_,
@@ -125,7 +130,8 @@ int64_t pstrf(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > piv_( (n) );
+        lapack::vector
+< lapack_int > piv_( (n) );
         lapack_int* piv_ptr = &piv_[0];
     #else
         lapack_int* piv_ptr = piv;
@@ -134,7 +140,8 @@ int64_t pstrf(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (2*n) );
+    lapack::vector
+< float > work( (2*n) );
 
     LAPACK_cpstrf(
         &uplo_, &n_,
@@ -172,7 +179,8 @@ int64_t pstrf(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > piv_( (n) );
+        lapack::vector
+< lapack_int > piv_( (n) );
         lapack_int* piv_ptr = &piv_[0];
     #else
         lapack_int* piv_ptr = piv;
@@ -181,7 +189,8 @@ int64_t pstrf(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (2*n) );
+    lapack::vector
+< double > work( (2*n) );
 
     LAPACK_zpstrf(
         &uplo_, &n_,

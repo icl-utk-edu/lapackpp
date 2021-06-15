@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -38,7 +39,8 @@ int64_t gelsy(
     lapack_int ldb_ = (lapack_int) ldb;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
+        lapack::vector
+< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
         lapack_int* jpvt_ptr = &jpvt_[0];
     #else
         lapack_int* jpvt_ptr = jpvt;
@@ -61,7 +63,8 @@ int64_t gelsy(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< float > work( lwork_ );
+    lapack::vector
+< float > work( lwork_ );
 
     LAPACK_sgelsy(
         &m_, &n_, &nrhs_,
@@ -103,7 +106,8 @@ int64_t gelsy(
     lapack_int ldb_ = (lapack_int) ldb;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
+        lapack::vector
+< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
         lapack_int* jpvt_ptr = &jpvt_[0];
     #else
         lapack_int* jpvt_ptr = jpvt;
@@ -126,7 +130,8 @@ int64_t gelsy(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< double > work( lwork_ );
+    lapack::vector
+< double > work( lwork_ );
 
     LAPACK_dgelsy(
         &m_, &n_, &nrhs_,
@@ -168,7 +173,8 @@ int64_t gelsy(
     lapack_int ldb_ = (lapack_int) ldb;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
+        lapack::vector
+< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
         lapack_int* jpvt_ptr = &jpvt_[0];
     #else
         lapack_int* jpvt_ptr = jpvt;
@@ -193,8 +199,10 @@ int64_t gelsy(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< std::complex<float> > work( lwork_ );
-    std::vector< float > rwork( (2*n) );
+    lapack::vector
+< std::complex<float> > work( lwork_ );
+    lapack::vector
+< float > rwork( (2*n) );
 
     LAPACK_cgelsy(
         &m_, &n_, &nrhs_,
@@ -336,7 +344,8 @@ int64_t gelsy(
     lapack_int ldb_ = (lapack_int) ldb;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
+        lapack::vector
+< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
         lapack_int* jpvt_ptr = &jpvt_[0];
     #else
         lapack_int* jpvt_ptr = jpvt;
@@ -361,8 +370,10 @@ int64_t gelsy(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< std::complex<double> > work( lwork_ );
-    std::vector< double > rwork( (2*n) );
+    lapack::vector
+< std::complex<double> > work( lwork_ );
+    lapack::vector
+< double > rwork( (2*n) );
 
     LAPACK_zgelsy(
         &m_, &n_, &nrhs_,

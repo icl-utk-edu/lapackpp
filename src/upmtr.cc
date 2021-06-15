@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -40,7 +41,8 @@ int64_t upmtr(
     int64_t lwork = (side == Side::Left ? n : m);
 
     // allocate workspace
-    std::vector< std::complex<float> > work( max(1,lwork) );
+    lapack::vector
+< std::complex<float> > work( max(1,lwork) );
 
     LAPACK_cupmtr(
         &side_, &uplo_, &trans_, &m_, &n_,
@@ -147,7 +149,8 @@ int64_t upmtr(
     int64_t lwork = (side == Side::Left ? n : m);
 
     // allocate workspace
-    std::vector< std::complex<double> > work( max(1,lwork) );
+    lapack::vector
+< std::complex<double> > work( max(1,lwork) );
 
     LAPACK_zupmtr(
         &side_, &uplo_, &trans_, &m_, &n_,

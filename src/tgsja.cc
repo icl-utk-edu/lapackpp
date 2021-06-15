@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -56,7 +57,8 @@ int64_t tgsja(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (2*n) );
+    lapack::vector
+< float > work( (2*n) );
 
     LAPACK_stgsja(
         &jobu_, &jobv_, &jobq_, &m_, &p_, &n_, &k_, &l_,
@@ -121,7 +123,8 @@ int64_t tgsja(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (2*n) );
+    lapack::vector
+< double > work( (2*n) );
 
     LAPACK_dtgsja(
         &jobu_, &jobv_, &jobq_, &m_, &p_, &n_, &k_, &l_,
@@ -186,7 +189,8 @@ int64_t tgsja(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<float> > work( (2*n) );
+    lapack::vector
+< std::complex<float> > work( (2*n) );
 
     LAPACK_ctgsja(
         &jobu_, &jobv_, &jobq_, &m_, &p_, &n_, &k_, &l_,
@@ -251,7 +255,8 @@ int64_t tgsja(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (2*n) );
+    lapack::vector
+< std::complex<double> > work( (2*n) );
 
     LAPACK_ztgsja(
         &jobu_, &jobv_, &jobq_, &m_, &p_, &n_, &k_, &l_,

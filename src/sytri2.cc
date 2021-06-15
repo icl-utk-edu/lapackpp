@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #if LAPACK_VERSION >= 30300  // >= 3.3
 
@@ -33,7 +34,8 @@ int64_t sytri2(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        lapack::vector
+< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int const* ipiv_ptr = ipiv;
@@ -58,7 +60,8 @@ int64_t sytri2(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< float > work( lwork_ );
+    lapack::vector
+< float > work( lwork_ );
 
     LAPACK_ssytri2(
         &uplo_, &n_,
@@ -92,7 +95,8 @@ int64_t sytri2(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        lapack::vector
+< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int const* ipiv_ptr = ipiv;
@@ -117,7 +121,8 @@ int64_t sytri2(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< double > work( lwork_ );
+    lapack::vector
+< double > work( lwork_ );
 
     LAPACK_dsytri2(
         &uplo_, &n_,
@@ -150,7 +155,8 @@ int64_t sytri2(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        lapack::vector
+< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int const* ipiv_ptr = ipiv;
@@ -175,7 +181,8 @@ int64_t sytri2(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< std::complex<float> > work( lwork_ );
+    lapack::vector
+< std::complex<float> > work( lwork_ );
 
     LAPACK_csytri2(
         &uplo_, &n_,
@@ -255,7 +262,8 @@ int64_t sytri2(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        lapack::vector
+< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int const* ipiv_ptr = ipiv;
@@ -280,7 +288,8 @@ int64_t sytri2(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< std::complex<double> > work( lwork_ );
+    lapack::vector
+< std::complex<double> > work( lwork_ );
 
     LAPACK_zsytri2(
         &uplo_, &n_,

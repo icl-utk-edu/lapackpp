@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -50,7 +51,8 @@ int64_t syev(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< float > work( lwork_ );
+    lapack::vector
+< float > work( lwork_ );
 
     LAPACK_ssyev(
         &jobz_, &uplo_, &n_,
@@ -104,7 +106,8 @@ int64_t syev(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< double > work( lwork_ );
+    lapack::vector
+< double > work( lwork_ );
 
     LAPACK_dsyev(
         &jobz_, &uplo_, &n_,

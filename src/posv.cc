@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -239,8 +240,10 @@ int64_t posv(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (n)*(nrhs) );
-    std::vector< float > swork( (n*(n+nrhs)) );
+    lapack::vector
+< double > work( (n)*(nrhs) );
+    lapack::vector
+< float > swork( (n*(n+nrhs)) );
 
     LAPACK_dsposv(
         &uplo_, &n_, &nrhs_,
@@ -286,9 +289,12 @@ int64_t posv(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (n)*(nrhs) );
-    std::vector< std::complex<float> > swork( (n*(n+nrhs)) );
-    std::vector< double > rwork( (n) );
+    lapack::vector
+< std::complex<double> > work( (n)*(nrhs) );
+    lapack::vector
+< std::complex<float> > swork( (n*(n+nrhs)) );
+    lapack::vector
+< double > rwork( (n) );
 
     LAPACK_zcposv(
         &uplo_, &n_, &nrhs_,

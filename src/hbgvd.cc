@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -70,9 +71,12 @@ int64_t hbgvd(
     lrwork_ = max( lrwork_, 2*n_ );
 
     // allocate workspace
-    std::vector< std::complex<float> > work( lwork_ );
-    std::vector< float > rwork( lrwork_ );
-    std::vector< lapack_int > iwork( liwork_ );
+    lapack::vector
+< std::complex<float> > work( lwork_ );
+    lapack::vector
+< float > rwork( lrwork_ );
+    lapack::vector
+< lapack_int > iwork( liwork_ );
 
     LAPACK_chbgvd(
         &jobz_, &uplo_, &n_, &ka_, &kb_,
@@ -149,9 +153,12 @@ int64_t hbgvd(
     lrwork_ = max( lrwork_, 2*n_ );
 
     // allocate workspace
-    std::vector< std::complex<double> > work( lwork_ );
-    std::vector< double > rwork( lrwork_ );
-    std::vector< lapack_int > iwork( liwork_ );
+    lapack::vector
+< std::complex<double> > work( lwork_ );
+    lapack::vector
+< double > rwork( lrwork_ );
+    lapack::vector
+< lapack_int > iwork( liwork_ );
 
     LAPACK_zhbgvd(
         &jobz_, &uplo_, &n_, &ka_, &kb_,

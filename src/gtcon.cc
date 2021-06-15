@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -33,7 +34,8 @@ int64_t gtcon(
     lapack_int n_ = (lapack_int) n;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        lapack::vector
+< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int const* ipiv_ptr = ipiv;
@@ -41,8 +43,10 @@ int64_t gtcon(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (2*n) );
-    std::vector< lapack_int > iwork( (n) );
+    lapack::vector
+< float > work( (2*n) );
+    lapack::vector
+< lapack_int > iwork( (n) );
 
     LAPACK_sgtcon(
         &norm_, &n_,
@@ -82,7 +86,8 @@ int64_t gtcon(
     lapack_int n_ = (lapack_int) n;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        lapack::vector
+< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int const* ipiv_ptr = ipiv;
@@ -90,8 +95,10 @@ int64_t gtcon(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (2*n) );
-    std::vector< lapack_int > iwork( (n) );
+    lapack::vector
+< double > work( (2*n) );
+    lapack::vector
+< lapack_int > iwork( (n) );
 
     LAPACK_dgtcon(
         &norm_, &n_,
@@ -131,7 +138,8 @@ int64_t gtcon(
     lapack_int n_ = (lapack_int) n;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        lapack::vector
+< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int const* ipiv_ptr = ipiv;
@@ -139,7 +147,8 @@ int64_t gtcon(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<float> > work( (2*n) );
+    lapack::vector
+< std::complex<float> > work( (2*n) );
 
     LAPACK_cgtcon(
         &norm_, &n_,
@@ -234,7 +243,8 @@ int64_t gtcon(
     lapack_int n_ = (lapack_int) n;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        lapack::vector
+< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int const* ipiv_ptr = ipiv;
@@ -242,7 +252,8 @@ int64_t gtcon(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (2*n) );
+    lapack::vector
+< std::complex<double> > work( (2*n) );
 
     LAPACK_zgtcon(
         &norm_, &n_,

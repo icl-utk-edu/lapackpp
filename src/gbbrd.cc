@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -50,7 +51,8 @@ int64_t gbbrd(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (2*max(m,n)) );
+    lapack::vector
+< float > work( (2*max(m,n)) );
 
     LAPACK_sgbbrd(
         &vect_, &m_, &n_, &ncc_, &kl_, &ku_,
@@ -107,7 +109,8 @@ int64_t gbbrd(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (2*max(m,n)) );
+    lapack::vector
+< double > work( (2*max(m,n)) );
 
     LAPACK_dgbbrd(
         &vect_, &m_, &n_, &ncc_, &kl_, &ku_,
@@ -164,8 +167,10 @@ int64_t gbbrd(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<float> > work( (max(m,n)) );
-    std::vector< float > rwork( (max(m,n)) );
+    lapack::vector
+< std::complex<float> > work( (max(m,n)) );
+    lapack::vector
+< float > rwork( (max(m,n)) );
 
     LAPACK_cgbbrd(
         &vect_, &m_, &n_, &ncc_, &kl_, &ku_,
@@ -308,8 +313,10 @@ int64_t gbbrd(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (max(m,n)) );
-    std::vector< double > rwork( (max(m,n)) );
+    lapack::vector
+< std::complex<double> > work( (max(m,n)) );
+    lapack::vector
+< double > rwork( (max(m,n)) );
 
     LAPACK_zgbbrd(
         &vect_, &m_, &n_, &ncc_, &kl_, &ku_,

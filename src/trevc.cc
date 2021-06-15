@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -36,7 +37,8 @@ int64_t trevc(
     char howmany_ = howmany2char( howmany );
 
     // lapack_logical (32 or 64-bit) copy
-    std::vector< lapack_logical > select_( &select[0], &select[(n)] );
+    lapack::vector
+< lapack_logical > select_( &select[0], &select[(n)] );
     lapack_logical* select_ptr = &select_[0];
 
     lapack_int n_ = (lapack_int) n;
@@ -48,7 +50,8 @@ int64_t trevc(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (3*n) );
+    lapack::vector
+< float > work( (3*n) );
 
     LAPACK_strevc(
         &sides_, &howmany_,
@@ -92,7 +95,8 @@ int64_t trevc(
     char howmany_ = howmany2char( howmany );
 
     // lapack_logical (32 or 64-bit) copy
-    std::vector< lapack_logical > select_( &select[0], &select[(n)] );
+    lapack::vector
+< lapack_logical > select_( &select[0], &select[(n)] );
     lapack_logical* select_ptr = &select_[0];
 
     lapack_int n_ = (lapack_int) n;
@@ -104,7 +108,8 @@ int64_t trevc(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (3*n) );
+    lapack::vector
+< double > work( (3*n) );
 
     LAPACK_dtrevc(
         &sides_, &howmany_,
@@ -148,7 +153,8 @@ int64_t trevc(
     char howmany_ = howmany2char( howmany );
 
     // lapack_logical (32 or 64-bit) copy
-    std::vector< lapack_logical > select_( &select[0], &select[(n)] );
+    lapack::vector
+< lapack_logical > select_( &select[0], &select[(n)] );
     lapack_logical const* select_ptr = &select_[0];
 
     lapack_int n_ = (lapack_int) n;
@@ -160,8 +166,10 @@ int64_t trevc(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<float> > work( (2*n) );
-    std::vector< float > rwork( (n) );
+    lapack::vector
+< std::complex<float> > work( (2*n) );
+    lapack::vector
+< float > rwork( (n) );
 
     LAPACK_ctrevc(
         &sides_, &howmany_,
@@ -326,7 +334,8 @@ int64_t trevc(
     char howmany_ = howmany2char( howmany );
 
     // lapack_logical (32 or 64-bit) copy
-    std::vector< lapack_logical > select_( &select[0], &select[(n)] );
+    lapack::vector
+< lapack_logical > select_( &select[0], &select[(n)] );
     lapack_logical const* select_ptr = &select_[0];
 
     lapack_int n_ = (lapack_int) n;
@@ -338,8 +347,10 @@ int64_t trevc(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (2*n) );
-    std::vector< double > rwork( (n) );
+    lapack::vector
+< std::complex<double> > work( (2*n) );
+    lapack::vector
+< double > rwork( (n) );
 
     LAPACK_ztrevc(
         &sides_, &howmany_,

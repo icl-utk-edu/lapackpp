@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -53,7 +54,8 @@ int64_t sytrd(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< float > work( lwork_ );
+    lapack::vector
+< float > work( lwork_ );
 
     LAPACK_ssytrd(
         &uplo_, &n_,
@@ -112,7 +114,8 @@ int64_t sytrd(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< double > work( lwork_ );
+    lapack::vector
+< double > work( lwork_ );
 
     LAPACK_dsytrd(
         &uplo_, &n_,

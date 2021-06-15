@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #if LAPACK_VERSION >= 30700  // >= 3.7
 
@@ -59,8 +60,10 @@ int64_t hbev_2stage(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< std::complex<float> > work( lwork_ );
-    std::vector< float > rwork( (max( 1, 3*n-2 )) );
+    lapack::vector
+< std::complex<float> > work( lwork_ );
+    lapack::vector
+< float > rwork( (max( 1, 3*n-2 )) );
 
     LAPACK_chbev_2stage(
         &jobz_, &uplo_, &n_, &kd_,
@@ -122,8 +125,10 @@ int64_t hbev_2stage(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< std::complex<double> > work( lwork_ );
-    std::vector< double > rwork( (max( 1, 3*n-2 )) );
+    lapack::vector
+< std::complex<double> > work( lwork_ );
+    lapack::vector
+< double > rwork( (max( 1, 3*n-2 )) );
 
     LAPACK_zhbev_2stage(
         &jobz_, &uplo_, &n_, &kd_,

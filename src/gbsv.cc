@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -38,7 +39,8 @@ int64_t gbsv(
     lapack_int ldab_ = (lapack_int) ldab;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( (n) );
+        lapack::vector
+< lapack_int > ipiv_( (n) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;
@@ -84,7 +86,8 @@ int64_t gbsv(
     lapack_int ldab_ = (lapack_int) ldab;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( (n) );
+        lapack::vector
+< lapack_int > ipiv_( (n) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;
@@ -130,7 +133,8 @@ int64_t gbsv(
     lapack_int ldab_ = (lapack_int) ldab;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( (n) );
+        lapack::vector
+< lapack_int > ipiv_( (n) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;
@@ -258,7 +262,8 @@ int64_t gbsv(
     lapack_int ldab_ = (lapack_int) ldab;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( (n) );
+        lapack::vector
+< lapack_int > ipiv_( (n) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;

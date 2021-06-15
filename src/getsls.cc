@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #if LAPACK_VERSION >= 30700  // >= 3.7
 
@@ -76,7 +77,8 @@ int64_t getsls(
     lwork_ = max( lwork_, real(qry_work[0]) );
 
     // allocate workspace
-    std::vector< float > work( lwork_ );
+    lapack::vector
+< float > work( lwork_ );
 
     LAPACK_sgetsls(
         &trans_, &m_, &n_, &nrhs_,
@@ -153,7 +155,8 @@ int64_t getsls(
     lwork_ = max( lwork_, real(qry_work[0]) );
 
     // allocate workspace
-    std::vector< double > work( lwork_ );
+    lapack::vector
+< double > work( lwork_ );
 
     LAPACK_dgetsls(
         &trans_, &m_, &n_, &nrhs_,
@@ -226,7 +229,8 @@ int64_t getsls(
     lwork_ = max( lwork_, real(qry_work[0]) );
 
     // allocate workspace
-    std::vector< std::complex<float> > work( lwork_ );
+    lapack::vector
+< std::complex<float> > work( lwork_ );
 
     LAPACK_cgetsls(
         &trans_, &m_, &n_, &nrhs_,
@@ -299,7 +303,8 @@ int64_t getsls(
     lwork_ = max( lwork_, real(qry_work[0]) );
 
     // allocate workspace
-    std::vector< std::complex<double> > work( lwork_ );
+    lapack::vector
+< std::complex<double> > work( lwork_ );
 
     LAPACK_zgetsls(
         &trans_, &m_, &n_, &nrhs_,

@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -43,7 +44,8 @@ int64_t hpgvx(
     lapack_int ldz_ = (lapack_int) ldz;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ifail_( (n) );
+        lapack::vector
+< lapack_int > ifail_( (n) );
         lapack_int* ifail_ptr = &ifail_[0];
     #else
         lapack_int* ifail_ptr = ifail;
@@ -51,9 +53,12 @@ int64_t hpgvx(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<float> > work( (2*n) );
-    std::vector< float > rwork( (7*n) );
-    std::vector< lapack_int > iwork( (5*n) );
+    lapack::vector
+< std::complex<float> > work( (2*n) );
+    lapack::vector
+< float > rwork( (7*n) );
+    lapack::vector
+< lapack_int > iwork( (5*n) );
 
     LAPACK_chpgvx(
         &itype_, &jobz_, &range_, &uplo_, &n_,
@@ -108,7 +113,8 @@ int64_t hpgvx(
     lapack_int ldz_ = (lapack_int) ldz;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ifail_( (n) );
+        lapack::vector
+< lapack_int > ifail_( (n) );
         lapack_int* ifail_ptr = &ifail_[0];
     #else
         lapack_int* ifail_ptr = ifail;
@@ -116,9 +122,12 @@ int64_t hpgvx(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (2*n) );
-    std::vector< double > rwork( (7*n) );
-    std::vector< lapack_int > iwork( (5*n) );
+    lapack::vector
+< std::complex<double> > work( (2*n) );
+    lapack::vector
+< double > rwork( (7*n) );
+    lapack::vector
+< lapack_int > iwork( (5*n) );
 
     LAPACK_zhpgvx(
         &itype_, &jobz_, &range_, &uplo_, &n_,

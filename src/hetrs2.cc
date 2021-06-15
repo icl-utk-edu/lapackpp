@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #if LAPACK_VERSION >= 30300  // >= 3.3
 
@@ -37,7 +38,8 @@ int64_t hetrs2(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        lapack::vector
+< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int const* ipiv_ptr = ipiv;
@@ -46,7 +48,8 @@ int64_t hetrs2(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<float> > work( (n) );
+    lapack::vector
+< std::complex<float> > work( (n) );
 
     LAPACK_chetrs2(
         &uplo_, &n_, &nrhs_,
@@ -132,7 +135,8 @@ int64_t hetrs2(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        lapack::vector
+< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int const* ipiv_ptr = ipiv;
@@ -141,7 +145,8 @@ int64_t hetrs2(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (n) );
+    lapack::vector
+< std::complex<double> > work( (n) );
 
     LAPACK_zhetrs2(
         &uplo_, &n_, &nrhs_,

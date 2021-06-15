@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -61,9 +62,12 @@ int64_t hegvd(
     lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
-    std::vector< std::complex<float> > work( lwork_ );
-    std::vector< float > rwork( lrwork_ );
-    std::vector< lapack_int > iwork( liwork_ );
+    lapack::vector
+< std::complex<float> > work( lwork_ );
+    lapack::vector
+< float > rwork( lrwork_ );
+    lapack::vector
+< lapack_int > iwork( liwork_ );
 
     LAPACK_chegvd(
         &itype_, &jobz_, &uplo_, &n_,
@@ -130,9 +134,12 @@ int64_t hegvd(
     lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
-    std::vector< std::complex<double> > work( lwork_ );
-    std::vector< double > rwork( lrwork_ );
-    std::vector< lapack_int > iwork( liwork_ );
+    lapack::vector
+< std::complex<double> > work( lwork_ );
+    lapack::vector
+< double > rwork( lrwork_ );
+    lapack::vector
+< lapack_int > iwork( liwork_ );
 
     LAPACK_zhegvd(
         &itype_, &jobz_, &uplo_, &n_,

@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #if LAPACK_VERSION >= 30700  // >= 3.7
 
@@ -57,7 +58,8 @@ int64_t sbev_2stage(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< float > work( lwork_ );
+    lapack::vector
+< float > work( lwork_ );
 
     LAPACK_ssbev_2stage(
         &jobz_, &uplo_, &n_, &kd_,
@@ -116,7 +118,8 @@ int64_t sbev_2stage(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< double > work( lwork_ );
+    lapack::vector
+< double > work( lwork_ );
 
     LAPACK_dsbev_2stage(
         &jobz_, &uplo_, &n_, &kd_,

@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -47,7 +48,8 @@ int64_t sygvx(
     lapack_int ldz_ = (lapack_int) ldz;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ifail_( (n) );
+        lapack::vector
+< lapack_int > ifail_( (n) );
         lapack_int* ifail_ptr = &ifail_[0];
     #else
         lapack_int* ifail_ptr = ifail;
@@ -77,8 +79,10 @@ int64_t sygvx(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< float > work( lwork_ );
-    std::vector< lapack_int > iwork( (5*n) );
+    lapack::vector
+< float > work( lwork_ );
+    lapack::vector
+< lapack_int > iwork( (5*n) );
 
     LAPACK_ssygvx(
         &itype_, &jobz_, &range_, &uplo_, &n_,
@@ -136,7 +140,8 @@ int64_t sygvx(
     lapack_int ldz_ = (lapack_int) ldz;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ifail_( (n) );
+        lapack::vector
+< lapack_int > ifail_( (n) );
         lapack_int* ifail_ptr = &ifail_[0];
     #else
         lapack_int* ifail_ptr = ifail;
@@ -166,8 +171,10 @@ int64_t sygvx(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< double > work( lwork_ );
-    std::vector< lapack_int > iwork( (5*n) );
+    lapack::vector
+< double > work( lwork_ );
+    lapack::vector
+< lapack_int > iwork( (5*n) );
 
     LAPACK_dsygvx(
         &itype_, &jobz_, &range_, &uplo_, &n_,

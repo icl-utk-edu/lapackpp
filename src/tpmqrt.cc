@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #if LAPACK_VERSION >= 30400  // >= 3.4.0
 
@@ -56,7 +57,8 @@ int64_t tpmqrt(
 
     // allocate workspace
     int64_t lwork = (side == Side::Left ? n*nb : m*nb);
-    std::vector< float > work( lwork );
+    lapack::vector
+< float > work( lwork );
 
     LAPACK_stpmqrt(
         &side_, &trans_, &m_, &n_, &k_, &l_, &nb_,
@@ -115,7 +117,8 @@ int64_t tpmqrt(
 
     // allocate workspace
     int64_t lwork = (side == Side::Left ? n*nb : m*nb);
-    std::vector< double > work( lwork );
+    lapack::vector
+< double > work( lwork );
 
     LAPACK_dtpmqrt(
         &side_, &trans_, &m_, &n_, &k_, &l_, &nb_,
@@ -170,7 +173,8 @@ int64_t tpmqrt(
 
     // allocate workspace
     int64_t lwork = (side == Side::Left ? n*nb : m*nb);
-    std::vector< std::complex<float> > work( lwork );
+    lapack::vector
+< std::complex<float> > work( lwork );
 
     LAPACK_ctpmqrt(
         &side_, &trans_, &m_, &n_, &k_, &l_, &nb_,
@@ -343,7 +347,8 @@ int64_t tpmqrt(
 
     // allocate workspace
     int64_t lwork = (side == Side::Left ? n*nb : m*nb);
-    std::vector< std::complex<double> > work( lwork );
+    lapack::vector
+< std::complex<double> > work( lwork );
 
     LAPACK_ztpmqrt(
         &side_, &trans_, &m_, &n_, &k_, &l_, &nb_,

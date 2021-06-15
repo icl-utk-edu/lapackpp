@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -30,7 +31,8 @@ int64_t ptcon(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (n) );
+    lapack::vector
+< float > work( (n) );
 
     LAPACK_sptcon(
         &n_,
@@ -59,7 +61,8 @@ int64_t ptcon(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (n) );
+    lapack::vector
+< double > work( (n) );
 
     LAPACK_dptcon(
         &n_,
@@ -88,7 +91,8 @@ int64_t ptcon(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > rwork( (n) );
+    lapack::vector
+< float > rwork( (n) );
 
     LAPACK_cptcon(
         &n_,
@@ -161,7 +165,8 @@ int64_t ptcon(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > rwork( (n) );
+    lapack::vector
+< double > rwork( (n) );
 
     LAPACK_zptcon(
         &n_,

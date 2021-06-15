@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -33,7 +34,8 @@ float lantp(
     int64_t lwork = (norm == Norm::Inf ? n : 1);
 
     // allocate workspace
-    std::vector< float > work( max(1,lwork) );
+    lapack::vector
+< float > work( max(1,lwork) );
 
     return LAPACK_slantp(
         &norm_, &uplo_, &diag_, &n_,
@@ -64,7 +66,8 @@ double lantp(
     int64_t lwork = (norm == Norm::Inf ? n : 1);
 
     // allocate workspace
-    std::vector< double > work( max(1,lwork) );
+    lapack::vector
+< double > work( max(1,lwork) );
 
     return LAPACK_dlantp(
         &norm_, &uplo_, &diag_, &n_,
@@ -95,7 +98,8 @@ float lantp(
     int64_t lwork = (norm == Norm::Inf ? n : 1);
 
     // allocate workspace
-    std::vector< float > work( max(1,lwork) );
+    lapack::vector
+< float > work( max(1,lwork) );
 
     return LAPACK_clantp(
         &norm_, &uplo_, &diag_, &n_,
@@ -165,7 +169,8 @@ double lantp(
     int64_t lwork = (norm == Norm::Inf ? n : 1);
 
     // allocate workspace
-    std::vector< double > work( max(1,lwork) );
+    lapack::vector
+< double > work( max(1,lwork) );
 
     return LAPACK_zlantp(
         &norm_, &uplo_, &diag_, &n_,

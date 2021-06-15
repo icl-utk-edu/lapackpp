@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #if LAPACK_VERSION >= 30600  // >= v3.6
 
@@ -34,7 +35,8 @@ int64_t getrf2(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( max( 1, min( m, n )) );
+        lapack::vector
+< lapack_int > ipiv_( max( 1, min( m, n )) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;
@@ -72,7 +74,8 @@ int64_t getrf2(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( max( 1, min( m, n )) );
+        lapack::vector
+< lapack_int > ipiv_( max( 1, min( m, n )) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;
@@ -110,7 +113,8 @@ int64_t getrf2(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( max( 1, min( m, n )) );
+        lapack::vector
+< lapack_int > ipiv_( max( 1, min( m, n )) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;
@@ -218,7 +222,8 @@ int64_t getrf2(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( (min(m,n)) );
+        lapack::vector
+< lapack_int > ipiv_( (min(m,n)) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;

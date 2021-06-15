@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -36,7 +37,8 @@ int64_t spgv(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (3*n) );
+    lapack::vector
+< float > work( (3*n) );
 
     LAPACK_sspgv(
         &itype_, &jobz_, &uplo_, &n_,
@@ -77,7 +79,8 @@ int64_t spgv(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (3*n) );
+    lapack::vector
+< double > work( (3*n) );
 
     LAPACK_dspgv(
         &itype_, &jobz_, &uplo_, &n_,

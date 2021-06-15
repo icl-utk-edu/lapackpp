@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #if LAPACK_VERSION >= 30700  // >= 3.7.0
 
@@ -44,7 +45,8 @@ int64_t tplqt(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (mb*m) );
+    lapack::vector
+< float > work( (mb*m) );
 
     LAPACK_stplqt(
         &m_, &n_, &l_, &mb_,
@@ -86,7 +88,8 @@ int64_t tplqt(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (mb*m) );
+    lapack::vector
+< double > work( (mb*m) );
 
     LAPACK_dtplqt(
         &m_, &n_, &l_, &mb_,
@@ -128,7 +131,8 @@ int64_t tplqt(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<float> > work( (mb*m) );
+    lapack::vector
+< std::complex<float> > work( (mb*m) );
 
     LAPACK_ctplqt(
         &m_, &n_, &l_, &mb_,
@@ -266,7 +270,8 @@ int64_t tplqt(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (mb*m) );
+    lapack::vector
+< std::complex<double> > work( (mb*m) );
 
     LAPACK_ztplqt(
         &m_, &n_, &l_, &mb_,

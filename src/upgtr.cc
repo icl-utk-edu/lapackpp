@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -32,7 +33,8 @@ int64_t upgtr(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<float> > work( (n-1) );
+    lapack::vector
+< std::complex<float> > work( (n-1) );
 
     LAPACK_cupgtr(
         &uplo_, &n_,
@@ -68,7 +70,8 @@ int64_t upgtr(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (n-1) );
+    lapack::vector
+< std::complex<double> > work( (n-1) );
 
     LAPACK_zupgtr(
         &uplo_, &n_,

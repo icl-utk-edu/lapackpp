@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #if LAPACK_VERSION >= 30300  // >= 3.3
 
@@ -89,7 +90,8 @@ int64_t bbcsd(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< float > work( lwork_ );
+    lapack::vector
+< float > work( lwork_ );
 
     LAPACK_sbbcsd(
         &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_,
@@ -191,7 +193,8 @@ int64_t bbcsd(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< double > work( lwork_ );
+    lapack::vector
+< double > work( lwork_ );
 
     LAPACK_dbbcsd(
         &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_,
@@ -293,7 +296,8 @@ int64_t bbcsd(
     lapack_int lrwork_ = real(qry_rwork[0]);
 
     // allocate workspace
-    std::vector< float > rwork( lrwork_ );
+    lapack::vector
+< float > rwork( lrwork_ );
 
     LAPACK_cbbcsd(
         &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_,
@@ -580,7 +584,8 @@ int64_t bbcsd(
     lapack_int lrwork_ = real(qry_rwork[0]);
 
     // allocate workspace
-    std::vector< double > rwork( lrwork_ );
+    lapack::vector
+< double > rwork( lrwork_ );
 
     LAPACK_zbbcsd(
         &jobu1_, &jobu2_, &jobv1t_, &jobv2t_, &trans_, &m_, &p_, &q_,

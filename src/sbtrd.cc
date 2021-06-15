@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -38,7 +39,8 @@ int64_t sbtrd(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (n) );
+    lapack::vector
+< float > work( (n) );
 
     LAPACK_ssbtrd(
         &jobz_, &uplo_, &n_, &kd_,
@@ -81,7 +83,8 @@ int64_t sbtrd(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (n) );
+    lapack::vector
+< double > work( (n) );
 
     LAPACK_dsbtrd(
         &jobz_, &uplo_, &n_, &kd_,

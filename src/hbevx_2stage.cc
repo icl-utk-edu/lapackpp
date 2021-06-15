@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #if LAPACK_VERSION >= 30700  // >= 3.7
 
@@ -49,7 +50,8 @@ int64_t hbevx_2stage(
     lapack_int ldz_ = (lapack_int) ldz;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ifail_( (n) );
+        lapack::vector
+< lapack_int > ifail_( (n) );
         lapack_int* ifail_ptr = &ifail_[0];
     #else
         lapack_int* ifail_ptr = ifail;
@@ -81,9 +83,12 @@ int64_t hbevx_2stage(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< std::complex<float> > work( lwork_ );
-    std::vector< float > rwork( (7*n) );
-    std::vector< lapack_int > iwork( (5*n) );
+    lapack::vector
+< std::complex<float> > work( lwork_ );
+    lapack::vector
+< float > rwork( (7*n) );
+    lapack::vector
+< lapack_int > iwork( (5*n) );
 
     LAPACK_chbevx_2stage(
         &jobz_, &range_, &uplo_, &n_, &kd_,
@@ -142,7 +147,8 @@ int64_t hbevx_2stage(
     lapack_int ldz_ = (lapack_int) ldz;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ifail_( (n) );
+        lapack::vector
+< lapack_int > ifail_( (n) );
         lapack_int* ifail_ptr = &ifail_[0];
     #else
         lapack_int* ifail_ptr = ifail;
@@ -174,9 +180,12 @@ int64_t hbevx_2stage(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< std::complex<double> > work( lwork_ );
-    std::vector< double > rwork( (7*n) );
-    std::vector< lapack_int > iwork( (5*n) );
+    lapack::vector
+< std::complex<double> > work( lwork_ );
+    lapack::vector
+< double > rwork( (7*n) );
+    lapack::vector
+< lapack_int > iwork( (5*n) );
 
     LAPACK_zhbevx_2stage(
         &jobz_, &range_, &uplo_, &n_, &kd_,

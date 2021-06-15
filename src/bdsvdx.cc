@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #if LAPACK_VERSION >= 30600  // >= v3.6
 
@@ -44,8 +45,10 @@ int64_t bdsvdx(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (14*n) );
-    std::vector< lapack_int > iwork( (12*n) );
+    lapack::vector
+< float > work( (14*n) );
+    lapack::vector
+< lapack_int > iwork( (12*n) );
 
     LAPACK_sbdsvdx(
         &uplo_, &jobz_, &range_, &n_,
@@ -222,8 +225,10 @@ int64_t bdsvdx(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (14*n) );
-    std::vector< lapack_int > iwork( (12*n) );
+    lapack::vector
+< double > work( (14*n) );
+    lapack::vector
+< lapack_int > iwork( (12*n) );
 
     LAPACK_dbdsvdx(
         &uplo_, &jobz_, &range_, &n_,

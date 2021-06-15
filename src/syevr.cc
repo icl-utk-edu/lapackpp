@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -43,7 +44,8 @@ int64_t syevr(
     lapack_int ldz_ = (lapack_int) ldz;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was max(1,m), n >= m
+        lapack::vector
+< lapack_int > isuppz_( (2*max( 1, n )) );  // was max(1,m), n >= m
         lapack_int* isuppz_ptr = &isuppz_[0];
     #else
         lapack_int* isuppz_ptr = isuppz;
@@ -73,8 +75,10 @@ int64_t syevr(
     lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
-    std::vector< float > work( lwork_ );
-    std::vector< lapack_int > iwork( liwork_ );
+    lapack::vector
+< float > work( lwork_ );
+    lapack::vector
+< lapack_int > iwork( liwork_ );
 
     LAPACK_ssyevr(
         &jobz_, &range_, &uplo_, &n_,
@@ -128,7 +132,8 @@ int64_t syevr(
     lapack_int ldz_ = (lapack_int) ldz;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was max(1,m), n >= m
+        lapack::vector
+< lapack_int > isuppz_( (2*max( 1, n )) );  // was max(1,m), n >= m
         lapack_int* isuppz_ptr = &isuppz_[0];
     #else
         lapack_int* isuppz_ptr = isuppz;
@@ -158,8 +163,10 @@ int64_t syevr(
     lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
-    std::vector< double > work( lwork_ );
-    std::vector< lapack_int > iwork( liwork_ );
+    lapack::vector
+< double > work( lwork_ );
+    lapack::vector
+< lapack_int > iwork( liwork_ );
 
     LAPACK_dsyevr(
         &jobz_, &range_, &uplo_, &n_,

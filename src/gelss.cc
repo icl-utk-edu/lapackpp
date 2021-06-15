@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -54,7 +55,8 @@ int64_t gelss(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< float > work( lwork_ );
+    lapack::vector
+< float > work( lwork_ );
 
     LAPACK_sgelss(
         &m_, &n_, &nrhs_,
@@ -109,7 +111,8 @@ int64_t gelss(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< double > work( lwork_ );
+    lapack::vector
+< double > work( lwork_ );
 
     LAPACK_dgelss(
         &m_, &n_, &nrhs_,
@@ -166,8 +169,10 @@ int64_t gelss(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< std::complex<float> > work( lwork_ );
-    std::vector< float > rwork( (5*min(m,n)) );
+    lapack::vector
+< std::complex<float> > work( lwork_ );
+    lapack::vector
+< float > rwork( (5*min(m,n)) );
 
     LAPACK_cgelss(
         &m_, &n_, &nrhs_,
@@ -292,8 +297,10 @@ int64_t gelss(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< std::complex<double> > work( lwork_ );
-    std::vector< double > rwork( (5*min(m,n)) );
+    lapack::vector
+< std::complex<double> > work( lwork_ );
+    lapack::vector
+< double > rwork( (5*min(m,n)) );
 
     LAPACK_zgelss(
         &m_, &n_, &nrhs_,

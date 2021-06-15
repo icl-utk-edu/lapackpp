@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #if LAPACK_VERSION >= 30600  // >= v3.6
 
@@ -48,8 +49,10 @@ int64_t gges3(
     lapack_int info_ = 0;
 
     // split-complex representation
-    std::vector< float > alphar( max( 1, n ) );
-    std::vector< float > alphai( max( 1, n ) );
+    lapack::vector
+< float > alphar( max( 1, n ) );
+    lapack::vector
+< float > alphai( max( 1, n ) );
 
     // query for workspace size
     float qry_work[1];
@@ -77,8 +80,10 @@ int64_t gges3(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< float > work( lwork_ );
-    std::vector< lapack_int > bwork( (n) );
+    lapack::vector
+< float > work( lwork_ );
+    lapack::vector
+< lapack_int > bwork( (n) );
 
     LAPACK_sgges3(
         &jobvsl_, &jobvsr_, &sort_,
@@ -139,8 +144,10 @@ int64_t gges3(
     lapack_int info_ = 0;
 
     // split-complex representation
-    std::vector< double > alphar( max( 1, n ) );
-    std::vector< double > alphai( max( 1, n ) );
+    lapack::vector
+< double > alphar( max( 1, n ) );
+    lapack::vector
+< double > alphai( max( 1, n ) );
 
     // query for workspace size
     double qry_work[1];
@@ -168,8 +175,10 @@ int64_t gges3(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< double > work( lwork_ );
-    std::vector< lapack_int > bwork( (n) );
+    lapack::vector
+< double > work( lwork_ );
+    lapack::vector
+< lapack_int > bwork( (n) );
 
     LAPACK_dgges3(
         &jobvsl_, &jobvsr_, &sort_,
@@ -256,9 +265,12 @@ int64_t gges3(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< std::complex<float> > work( lwork_ );
-    std::vector< float > rwork( (8*n) );
-    std::vector< lapack_int > bwork( (n) );
+    lapack::vector
+< std::complex<float> > work( lwork_ );
+    lapack::vector
+< float > rwork( (8*n) );
+    lapack::vector
+< lapack_int > bwork( (n) );
 
     LAPACK_cgges3(
         &jobvsl_, &jobvsr_, &sort_,
@@ -341,9 +353,12 @@ int64_t gges3(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< std::complex<double> > work( lwork_ );
-    std::vector< double > rwork( (8*n) );
-    std::vector< lapack_int > bwork( (n) );
+    lapack::vector
+< std::complex<double> > work( lwork_ );
+    lapack::vector
+< double > rwork( (8*n) );
+    lapack::vector
+< lapack_int > bwork( (n) );
 
     LAPACK_zgges3(
         &jobvsl_, &jobvsr_, &sort_,

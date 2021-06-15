@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #if LAPACK_VERSION >= 30600  // >= v3.6
 
@@ -71,8 +72,10 @@ int64_t gesvdx(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< float > work( lwork_ );
-    std::vector< lapack_int > iwork( (12*min(m,n)) );
+    lapack::vector
+< float > work( lwork_ );
+    lapack::vector
+< lapack_int > iwork( (12*min(m,n)) );
 
     LAPACK_sgesvdx(
         &jobu_, &jobvt_, &range_, &m_, &n_,
@@ -148,8 +151,10 @@ int64_t gesvdx(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< double > work( lwork_ );
-    std::vector< lapack_int > iwork( (12*min(m,n)) );
+    lapack::vector
+< double > work( lwork_ );
+    lapack::vector
+< lapack_int > iwork( (12*min(m,n)) );
 
     LAPACK_dgesvdx(
         &jobu_, &jobvt_, &range_, &m_, &n_,
@@ -230,9 +235,12 @@ int64_t gesvdx(
     int64_t lrwork = min(m,n)*(min(m,n)*2 + 15*min(m,n));
 
     // allocate workspace
-    std::vector< std::complex<float> > work( lwork_ );
-    std::vector< float > rwork( (max( 1, lrwork )) );
-    std::vector< lapack_int > iwork( (12*min(m,n)) );
+    lapack::vector
+< std::complex<float> > work( lwork_ );
+    lapack::vector
+< float > rwork( (max( 1, lrwork )) );
+    lapack::vector
+< lapack_int > iwork( (12*min(m,n)) );
 
     LAPACK_cgesvdx(
         &jobu_, &jobvt_, &range_, &m_, &n_,
@@ -441,9 +449,12 @@ int64_t gesvdx(
     int64_t lrwork = min(m,n)*(min(m,n)*2 + 15*min(m,n));
 
     // allocate workspace
-    std::vector< std::complex<double> > work( lwork_ );
-    std::vector< double > rwork( (max( 1, lrwork )) );
-    std::vector< lapack_int > iwork( (12*min(m,n)) );
+    lapack::vector
+< std::complex<double> > work( lwork_ );
+    lapack::vector
+< double > rwork( (max( 1, lrwork )) );
+    lapack::vector
+< lapack_int > iwork( (12*min(m,n)) );
 
     LAPACK_zgesvdx(
         &jobu_, &jobvt_, &range_, &m_, &n_,

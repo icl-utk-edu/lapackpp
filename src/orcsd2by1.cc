@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #if LAPACK_VERSION >= 30500  // >= 3.5
 
@@ -74,8 +75,10 @@ int64_t orcsd2by1(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< float > work( lwork_ );
-    std::vector< lapack_int > iwork( (m - min( p, min( m-p, min( q, m-q )))) );
+    lapack::vector
+< float > work( lwork_ );
+    lapack::vector
+< lapack_int > iwork( (m - min( p, min( m-p, min( q, m-q )))) );
 
     LAPACK_sorcsd2by1(
         &jobu1_, &jobu2_, &jobv1t_, &m_, &p_, &q_,
@@ -155,8 +158,10 @@ int64_t orcsd2by1(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< double > work( lwork_ );
-    std::vector< lapack_int > iwork( (m - min( p, min( m-p, min( q, m-q )))) );
+    lapack::vector
+< double > work( lwork_ );
+    lapack::vector
+< lapack_int > iwork( (m - min( p, min( m-p, min( q, m-q )))) );
 
     LAPACK_dorcsd2by1(
         &jobu1_, &jobu2_, &jobv1t_, &m_, &p_, &q_,

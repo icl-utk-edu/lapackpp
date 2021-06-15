@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -42,8 +43,10 @@ int64_t ggev(
     lapack_int info_ = 0;
 
     // split-complex representation
-    std::vector< float > alphar( max( 1, n ) );
-    std::vector< float > alphai( max( 1, n ) );
+    lapack::vector
+< float > alphar( max( 1, n ) );
+    lapack::vector
+< float > alphai( max( 1, n ) );
 
     // query for workspace size
     float qry_work[1];
@@ -67,7 +70,8 @@ int64_t ggev(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< float > work( lwork_ );
+    lapack::vector
+< float > work( lwork_ );
 
     LAPACK_sggev(
         &jobvl_, &jobvr_, &n_,
@@ -120,8 +124,10 @@ int64_t ggev(
     lapack_int info_ = 0;
 
     // split-complex representation
-    std::vector< double > alphar( max( 1, n ) );
-    std::vector< double > alphai( max( 1, n ) );
+    lapack::vector
+< double > alphar( max( 1, n ) );
+    lapack::vector
+< double > alphai( max( 1, n ) );
 
     // query for workspace size
     double qry_work[1];
@@ -145,7 +151,8 @@ int64_t ggev(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< double > work( lwork_ );
+    lapack::vector
+< double > work( lwork_ );
 
     LAPACK_dggev(
         &jobvl_, &jobvr_, &n_,
@@ -221,8 +228,10 @@ int64_t ggev(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< std::complex<float> > work( lwork_ );
-    std::vector< float > rwork( (8*n) );
+    lapack::vector
+< std::complex<float> > work( lwork_ );
+    lapack::vector
+< float > rwork( (8*n) );
 
     LAPACK_cggev(
         &jobvl_, &jobvr_, &n_,
@@ -295,8 +304,10 @@ int64_t ggev(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< std::complex<double> > work( lwork_ );
-    std::vector< double > rwork( (8*n) );
+    lapack::vector
+< std::complex<double> > work( lwork_ );
+    lapack::vector
+< double > rwork( (8*n) );
 
     LAPACK_zggev(
         &jobvl_, &jobvr_, &n_,

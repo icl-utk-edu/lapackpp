@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -33,7 +34,8 @@ int64_t gerq2(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (m) );
+    lapack::vector
+< float > work( (m) );
 
     LAPACK_sgerq2(
         &m_, &n_,
@@ -65,7 +67,8 @@ int64_t gerq2(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (m) );
+    lapack::vector
+< double > work( (m) );
 
     LAPACK_dgerq2(
         &m_, &n_,
@@ -97,7 +100,8 @@ int64_t gerq2(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<float> > work( (m) );
+    lapack::vector
+< std::complex<float> > work( (m) );
 
     LAPACK_cgerq2(
         &m_, &n_,
@@ -184,7 +188,8 @@ int64_t gerq2(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (m) );
+    lapack::vector
+< std::complex<double> > work( (m) );
 
     LAPACK_zgerq2(
         &m_, &n_,

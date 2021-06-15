@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -35,7 +36,8 @@ int64_t trsen(
     char compq_ = job_comp2char( compq );
 
     // lapack_logical (32 or 64-bit) copy
-    std::vector< lapack_logical > select_( &select[0], &select[(n)] );
+    lapack::vector
+< lapack_logical > select_( &select[0], &select[(n)] );
     lapack_logical const* select_ptr = &select_[0];
 
     lapack_int n_ = (lapack_int) n;
@@ -45,8 +47,10 @@ int64_t trsen(
     lapack_int info_ = 0;
 
     // split-complex representation
-    std::vector< float > WR( max( 1, n ) );
-    std::vector< float > WI( max( 1, n ) );
+    lapack::vector
+< float > WR( max( 1, n ) );
+    lapack::vector
+< float > WI( max( 1, n ) );
 
     // query for workspace size
     float qry_work[1];
@@ -73,8 +77,10 @@ int64_t trsen(
     lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
-    std::vector< float > work( lwork_ );
-    std::vector< lapack_int > iwork( liwork_ );
+    lapack::vector
+< float > work( lwork_ );
+    lapack::vector
+< lapack_int > iwork( liwork_ );
 
     LAPACK_strsen(
         &sense_, &compq_,
@@ -122,7 +128,8 @@ int64_t trsen(
     char compq_ = job_comp2char( compq );
 
     // lapack_logical (32 or 64-bit) copy
-    std::vector< lapack_logical > select_( &select[0], &select[(n)] );
+    lapack::vector
+< lapack_logical > select_( &select[0], &select[(n)] );
     lapack_logical const* select_ptr = &select_[0];
 
     lapack_int n_ = (lapack_int) n;
@@ -132,8 +139,10 @@ int64_t trsen(
     lapack_int info_ = 0;
 
     // split-complex representation
-    std::vector< double > WR( max( 1, n ) );
-    std::vector< double > WI( max( 1, n ) );
+    lapack::vector
+< double > WR( max( 1, n ) );
+    lapack::vector
+< double > WI( max( 1, n ) );
 
     // query for workspace size
     double qry_work[1];
@@ -160,8 +169,10 @@ int64_t trsen(
     lapack_int liwork_ = real(qry_iwork[0]);
 
     // allocate workspace
-    std::vector< double > work( lwork_ );
-    std::vector< lapack_int > iwork( liwork_ );
+    lapack::vector
+< double > work( lwork_ );
+    lapack::vector
+< lapack_int > iwork( liwork_ );
 
     LAPACK_dtrsen(
         &sense_, &compq_,
@@ -209,7 +220,8 @@ int64_t trsen(
     char compq_ = job_comp2char( compq );
 
     // lapack_logical (32 or 64-bit) copy
-    std::vector< lapack_logical > select_( &select[0], &select[(n)] );
+    lapack::vector
+< lapack_logical > select_( &select[0], &select[(n)] );
     lapack_logical const* select_ptr = &select_[0];
 
     lapack_int n_ = (lapack_int) n;
@@ -238,7 +250,8 @@ int64_t trsen(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< std::complex<float> > work( lwork_ );
+    lapack::vector
+< std::complex<float> > work( lwork_ );
 
     LAPACK_ctrsen(
         &sense_, &compq_,
@@ -279,7 +292,8 @@ int64_t trsen(
     char compq_ = job_comp2char( compq );
 
     // lapack_logical (32 or 64-bit) copy
-    std::vector< lapack_logical > select_( &select[0], &select[(n)] );
+    lapack::vector
+< lapack_logical > select_( &select[0], &select[(n)] );
     lapack_logical const* select_ptr = &select_[0];
 
     lapack_int n_ = (lapack_int) n;
@@ -308,7 +322,8 @@ int64_t trsen(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< std::complex<double> > work( lwork_ );
+    lapack::vector
+< std::complex<double> > work( lwork_ );
 
     LAPACK_ztrsen(
         &sense_, &compq_,

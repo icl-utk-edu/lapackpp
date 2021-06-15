@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -47,8 +48,10 @@ int64_t hgeqz(
     lapack_int info_ = 0;
 
     // split-complex representation
-    std::vector< float > alphar( max( 1, n ) );
-    std::vector< float > alphai( max( 1, n ) );
+    lapack::vector
+< float > alphar( max( 1, n ) );
+    lapack::vector
+< float > alphai( max( 1, n ) );
 
     // query for workspace size
     float qry_work[1];
@@ -73,7 +76,8 @@ int64_t hgeqz(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< float > work( lwork_ );
+    lapack::vector
+< float > work( lwork_ );
 
     LAPACK_shgeqz(
         &jobschur_, &compq_, &compz_, &n_, &ilo_, &ihi_,
@@ -132,8 +136,10 @@ int64_t hgeqz(
     lapack_int info_ = 0;
 
     // split-complex representation
-    std::vector< double > alphar( max( 1, n ) );
-    std::vector< double > alphai( max( 1, n ) );
+    lapack::vector
+< double > alphar( max( 1, n ) );
+    lapack::vector
+< double > alphai( max( 1, n ) );
 
     // query for workspace size
     double qry_work[1];
@@ -158,7 +164,8 @@ int64_t hgeqz(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< double > work( lwork_ );
+    lapack::vector
+< double > work( lwork_ );
 
     LAPACK_dhgeqz(
         &jobschur_, &compq_, &compz_, &n_, &ilo_, &ihi_,
@@ -240,8 +247,10 @@ int64_t hgeqz(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< std::complex<float> > work( lwork_ );
-    std::vector< float > rwork( (n) );
+    lapack::vector
+< std::complex<float> > work( lwork_ );
+    lapack::vector
+< float > rwork( (n) );
 
     LAPACK_chgeqz(
         &jobschur_, &compq_, &compz_, &n_, &ilo_, &ihi_,
@@ -319,8 +328,10 @@ int64_t hgeqz(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< std::complex<double> > work( lwork_ );
-    std::vector< double > rwork( (n) );
+    lapack::vector
+< std::complex<double> > work( lwork_ );
+    lapack::vector
+< double > rwork( (n) );
 
     LAPACK_zhgeqz(
         &jobschur_, &compq_, &compz_, &n_, &ilo_, &ihi_,

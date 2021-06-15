@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #if LAPACK_VERSION >= 30700  // >= 3.7
 
@@ -34,7 +35,8 @@ int64_t hetrf_rk(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( (n) );
+        lapack::vector
+< lapack_int > ipiv_( (n) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;
@@ -60,7 +62,8 @@ int64_t hetrf_rk(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< std::complex<float> > work( lwork_ );
+    lapack::vector
+< std::complex<float> > work( lwork_ );
 
     LAPACK_chetrf_rk(
         &uplo_, &n_,
@@ -256,7 +259,8 @@ int64_t hetrf_rk(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( (n) );
+        lapack::vector
+< lapack_int > ipiv_( (n) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;
@@ -282,7 +286,8 @@ int64_t hetrf_rk(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< std::complex<double> > work( lwork_ );
+    lapack::vector
+< std::complex<double> > work( lwork_ );
 
     LAPACK_zhetrf_rk(
         &uplo_, &n_,

@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -42,7 +43,8 @@ int64_t ggbal(
     int64_t lwork = (balance == Balance::Scale || balance == Balance::Both ? max( 1, 6*n ) : 1);
 
     // allocate workspace
-    std::vector< float > work( (lwork) );
+    lapack::vector
+< float > work( (lwork) );
 
     LAPACK_sggbal(
         &balance_, &n_,
@@ -91,7 +93,8 @@ int64_t ggbal(
     int64_t lwork = (balance == Balance::Scale || balance == Balance::Both ? max( 1, 6*n ) : 1);
 
     // allocate workspace
-    std::vector< double > work( (lwork) );
+    lapack::vector
+< double > work( (lwork) );
 
     LAPACK_dggbal(
         &balance_, &n_,
@@ -140,7 +143,8 @@ int64_t ggbal(
     int64_t lwork = (balance == Balance::Scale || balance == Balance::Both ? max( 1, 6*n ) : 1);
 
     // allocate workspace
-    std::vector< float > work( (lwork) );
+    lapack::vector
+< float > work( (lwork) );
 
     LAPACK_cggbal(
         &balance_, &n_,
@@ -189,7 +193,8 @@ int64_t ggbal(
     int64_t lwork = (balance == Balance::Scale || balance == Balance::Both ? max( 1, 6*n ) : 1);
 
     // allocate workspace
-    std::vector< double > work( (lwork) );
+    lapack::vector
+< double > work( (lwork) );
 
     LAPACK_zggbal(
         &balance_, &n_,

@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -45,7 +46,8 @@ int64_t gtsvx(
     lapack_int nrhs_ = (lapack_int) nrhs;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        lapack::vector
+< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;
@@ -55,8 +57,10 @@ int64_t gtsvx(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (3*n) );
-    std::vector< lapack_int > iwork( (n) );
+    lapack::vector
+< float > work( (3*n) );
+    lapack::vector
+< lapack_int > iwork( (n) );
 
     LAPACK_sgtsvx(
         &fact_, &trans_, &n_, &nrhs_,
@@ -118,7 +122,8 @@ int64_t gtsvx(
     lapack_int nrhs_ = (lapack_int) nrhs;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        lapack::vector
+< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;
@@ -128,8 +133,10 @@ int64_t gtsvx(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (3*n) );
-    std::vector< lapack_int > iwork( (n) );
+    lapack::vector
+< double > work( (3*n) );
+    lapack::vector
+< lapack_int > iwork( (n) );
 
     LAPACK_dgtsvx(
         &fact_, &trans_, &n_, &nrhs_,
@@ -191,7 +198,8 @@ int64_t gtsvx(
     lapack_int nrhs_ = (lapack_int) nrhs;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        lapack::vector
+< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;
@@ -201,8 +209,10 @@ int64_t gtsvx(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<float> > work( (2*n) );
-    std::vector< float > rwork( (n) );
+    lapack::vector
+< std::complex<float> > work( (2*n) );
+    lapack::vector
+< float > rwork( (n) );
 
     LAPACK_cgtsvx(
         &fact_, &trans_, &n_, &nrhs_,
@@ -420,7 +430,8 @@ int64_t gtsvx(
     lapack_int nrhs_ = (lapack_int) nrhs;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        lapack::vector
+< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int* ipiv_ptr = ipiv;
@@ -430,8 +441,10 @@ int64_t gtsvx(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (2*n) );
-    std::vector< double > rwork( (n) );
+    lapack::vector
+< std::complex<double> > work( (2*n) );
+    lapack::vector
+< double > rwork( (n) );
 
     LAPACK_zgtsvx(
         &fact_, &trans_, &n_, &nrhs_,

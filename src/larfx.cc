@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -36,7 +37,8 @@ void larfx(
     int64_t lwork = (side == Side::Left ? n : m);
 
     // allocate workspace
-    std::vector< float > work( lwork );
+    lapack::vector
+< float > work( lwork );
 
     LAPACK_slarfx(
         &side_, &m_, &n_,
@@ -71,7 +73,8 @@ void larfx(
     int64_t lwork = (side == Side::Left ? n : m);
 
     // allocate workspace
-    std::vector< double > work( lwork );
+    lapack::vector
+< double > work( lwork );
 
     LAPACK_dlarfx(
         &side_, &m_, &n_,
@@ -106,7 +109,8 @@ void larfx(
     int64_t lwork = (side == Side::Left ? n : m);
 
     // allocate workspace
-    std::vector< std::complex<float> > work( lwork );
+    lapack::vector
+< std::complex<float> > work( lwork );
 
     LAPACK_clarfx(
         &side_, &m_, &n_,
@@ -182,7 +186,8 @@ void larfx(
     int64_t lwork = (side == Side::Left ? n : m);
 
     // allocate workspace
-    std::vector< std::complex<double> > work( lwork );
+    lapack::vector
+< std::complex<double> > work( lwork );
 
     LAPACK_zlarfx(
         &side_, &m_, &n_,

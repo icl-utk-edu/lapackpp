@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #if LAPACK_VERSION >= 30600  // >= v3.6
 
@@ -78,8 +79,10 @@ int64_t ggsvp3(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< lapack_int > iwork( (n) );
-    std::vector< float > work( lwork_ );
+    lapack::vector
+< lapack_int > iwork( (n) );
+    lapack::vector
+< float > work( lwork_ );
 
     LAPACK_sggsvp3(
         &jobu_, &jobv_, &jobq_, &m_, &p_, &n_,
@@ -165,8 +168,10 @@ int64_t ggsvp3(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< lapack_int > iwork( (n) );
-    std::vector< double > work( lwork_ );
+    lapack::vector
+< lapack_int > iwork( (n) );
+    lapack::vector
+< double > work( lwork_ );
 
     LAPACK_dggsvp3(
         &jobu_, &jobv_, &jobq_, &m_, &p_, &n_,
@@ -254,9 +259,12 @@ int64_t ggsvp3(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< lapack_int > iwork( (n) );
-    std::vector< float > rwork( (2*n) );
-    std::vector< std::complex<float> > work( lwork_ );
+    lapack::vector
+< lapack_int > iwork( (n) );
+    lapack::vector
+< float > rwork( (2*n) );
+    lapack::vector
+< std::complex<float> > work( lwork_ );
 
     LAPACK_cggsvp3(
         &jobu_, &jobv_, &jobq_, &m_, &p_, &n_,
@@ -345,9 +353,12 @@ int64_t ggsvp3(
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
-    std::vector< lapack_int > iwork( (n) );
-    std::vector< double > rwork( (2*n) );
-    std::vector< std::complex<double> > work( lwork_ );
+    lapack::vector
+< lapack_int > iwork( (n) );
+    lapack::vector
+< double > rwork( (2*n) );
+    lapack::vector
+< std::complex<double> > work( lwork_ );
 
     LAPACK_zggsvp3(
         &jobu_, &jobv_, &jobq_, &m_, &p_, &n_,

@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -34,7 +35,8 @@ int64_t heequb(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<float> > work( (2*n) );
+    lapack::vector
+< std::complex<float> > work( (2*n) );
 
     LAPACK_cheequb(
         &uplo_, &n_,
@@ -116,7 +118,8 @@ int64_t heequb(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (2*n) );
+    lapack::vector
+< std::complex<double> > work( (2*n) );
 
     LAPACK_zheequb(
         &uplo_, &n_,

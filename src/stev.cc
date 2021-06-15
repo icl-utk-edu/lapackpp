@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -32,7 +33,8 @@ int64_t stev(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (max( 1, 2*n-2 )) );
+    lapack::vector
+< float > work( (max( 1, 2*n-2 )) );
 
     LAPACK_sstev(
         &jobz_, &n_,
@@ -68,7 +70,8 @@ int64_t stev(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (max( 1, 2*n-2 )) );
+    lapack::vector
+< double > work( (max( 1, 2*n-2 )) );
 
     LAPACK_dstev(
         &jobz_, &n_,

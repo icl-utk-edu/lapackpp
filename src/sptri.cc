@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -28,7 +29,8 @@ int64_t sptri(
     lapack_int n_ = (lapack_int) n;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        lapack::vector
+< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int const* ipiv_ptr = ipiv;
@@ -36,7 +38,8 @@ int64_t sptri(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (n) );
+    lapack::vector
+< float > work( (n) );
 
     LAPACK_ssptri(
         &uplo_, &n_,
@@ -67,7 +70,8 @@ int64_t sptri(
     lapack_int n_ = (lapack_int) n;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        lapack::vector
+< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int const* ipiv_ptr = ipiv;
@@ -75,7 +79,8 @@ int64_t sptri(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (n) );
+    lapack::vector
+< double > work( (n) );
 
     LAPACK_dsptri(
         &uplo_, &n_,
@@ -106,7 +111,8 @@ int64_t sptri(
     lapack_int n_ = (lapack_int) n;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        lapack::vector
+< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int const* ipiv_ptr = ipiv;
@@ -114,7 +120,8 @@ int64_t sptri(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<float> > work( (n) );
+    lapack::vector
+< std::complex<float> > work( (n) );
 
     LAPACK_csptri(
         &uplo_, &n_,
@@ -145,7 +152,8 @@ int64_t sptri(
     lapack_int n_ = (lapack_int) n;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        lapack::vector
+< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int const* ipiv_ptr = ipiv;
@@ -153,7 +161,8 @@ int64_t sptri(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (n) );
+    lapack::vector
+< std::complex<double> > work( (n) );
 
     LAPACK_zsptri(
         &uplo_, &n_,

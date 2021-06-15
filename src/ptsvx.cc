@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -43,7 +44,8 @@ int64_t ptsvx(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (2*n) );
+    lapack::vector
+< float > work( (2*n) );
 
     LAPACK_sptsvx(
         &fact_, &n_, &nrhs_,
@@ -95,7 +97,8 @@ int64_t ptsvx(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (2*n) );
+    lapack::vector
+< double > work( (2*n) );
 
     LAPACK_dptsvx(
         &fact_, &n_, &nrhs_,
@@ -147,8 +150,10 @@ int64_t ptsvx(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<float> > work( (n) );
-    std::vector< float > rwork( (n) );
+    lapack::vector
+< std::complex<float> > work( (n) );
+    lapack::vector
+< float > rwork( (n) );
 
     LAPACK_cptsvx(
         &fact_, &n_, &nrhs_,
@@ -304,8 +309,10 @@ int64_t ptsvx(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (n) );
-    std::vector< double > rwork( (n) );
+    lapack::vector
+< std::complex<double> > work( (n) );
+    lapack::vector
+< double > rwork( (n) );
 
     LAPACK_zptsvx(
         &fact_, &n_, &nrhs_,

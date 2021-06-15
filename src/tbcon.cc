@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -35,8 +36,10 @@ int64_t tbcon(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (3*n) );
-    std::vector< lapack_int > iwork( (n) );
+    lapack::vector
+< float > work( (3*n) );
+    lapack::vector
+< lapack_int > iwork( (n) );
 
     LAPACK_stbcon(
         &norm_, &uplo_, &diag_, &n_, &kd_,
@@ -74,8 +77,10 @@ int64_t tbcon(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (3*n) );
-    std::vector< lapack_int > iwork( (n) );
+    lapack::vector
+< double > work( (3*n) );
+    lapack::vector
+< lapack_int > iwork( (n) );
 
     LAPACK_dtbcon(
         &norm_, &uplo_, &diag_, &n_, &kd_,
@@ -113,8 +118,10 @@ int64_t tbcon(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<float> > work( (2*n) );
-    std::vector< float > rwork( (n) );
+    lapack::vector
+< std::complex<float> > work( (2*n) );
+    lapack::vector
+< float > rwork( (n) );
 
     LAPACK_ctbcon(
         &norm_, &uplo_, &diag_, &n_, &kd_,
@@ -152,8 +159,10 @@ int64_t tbcon(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< std::complex<double> > work( (2*n) );
-    std::vector< double > rwork( (n) );
+    lapack::vector
+< std::complex<double> > work( (2*n) );
+    lapack::vector
+< double > rwork( (n) );
 
     LAPACK_ztbcon(
         &norm_, &uplo_, &diag_, &n_, &kd_,

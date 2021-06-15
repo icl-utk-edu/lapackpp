@@ -5,6 +5,7 @@
 
 #include "lapack.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #include <vector>
 
@@ -32,7 +33,8 @@ int64_t opgtr(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< float > work( (n-1) );
+    lapack::vector
+< float > work( (n-1) );
 
     LAPACK_sopgtr(
         &uplo_, &n_,
@@ -68,7 +70,8 @@ int64_t opgtr(
     lapack_int info_ = 0;
 
     // allocate workspace
-    std::vector< double > work( (n-1) );
+    lapack::vector
+< double > work( (n-1) );
 
     LAPACK_dopgtr(
         &uplo_, &n_,

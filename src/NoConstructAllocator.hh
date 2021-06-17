@@ -15,21 +15,18 @@ struct NoConstructAllocator
     using value_type = T;
 
     NoConstructAllocator () = default;
-    template <class U> constexpr NoConstructAllocator (const NoConstructAllocator <U>&) noexcept {}
+    //template <class U> constexpr NoConstructAllocator (const NoConstructAllocator <U>&) noexcept {}
 
-    // Commented out because it causes failures for ./run_tests.py gesvd
-    #if 0
-        // Construction given an allocated pointer is a null-op.
-        //
-        // @tparam Args Parameter pack which handles all possible calling
-        // signatures of construct outlined in the Allocator concept.
-        //
-        template <typename... Args>
-        void construct( T* ptr, Args&& ... args ) { }
+    // Construction given an allocated pointer is a null-op.
+    //
+    // @tparam Args Parameter pack which handles all possible calling
+    // signatures of construct outlined in the Allocator concept.
+    //
+    template <typename... Args>
+    void construct( T* ptr, Args&& ... args ) { }
 
-        // Destruction of an object in allocated memory is a null-op
-        void destroy( T* ptr ) { }
-    #endif
+    // Destruction of an object in allocated memory is a null-op
+    void destroy( T* ptr ) { }
 
     T* allocate(std::size_t n)
     {
@@ -38,7 +35,7 @@ struct NoConstructAllocator
 
         void* memPtr = nullptr;
         #if defined( _WIN32 ) || defined( _WIN64 )
-            memPtr = _aligned_malloc( n*sizeof(T, 64 );
+            memPtr = _aligned_malloc( n*sizeof(T, 64) );
             if (memPtr != nullptr) {
                 auto p = static_cast<T*>(memPtr);
                 return p;
@@ -59,7 +56,7 @@ struct NoConstructAllocator
         #if defined( _WIN32 ) || defined( _WIN64 )
             _aligned_free( p );
         #else
-            std::free( p );
+            free( p );
         #endif
     }
 };

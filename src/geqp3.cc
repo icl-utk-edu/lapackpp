@@ -33,7 +33,7 @@ int64_t geqp3(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
+        std::vector< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
         lapack_int* jpvt_ptr = &jpvt_[0];
     #else
         lapack_int* jpvt_ptr = jpvt;
@@ -90,7 +90,7 @@ int64_t geqp3(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
+        std::vector< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
         lapack_int* jpvt_ptr = &jpvt_[0];
     #else
         lapack_int* jpvt_ptr = jpvt;
@@ -147,7 +147,7 @@ int64_t geqp3(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
+        std::vector< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
         lapack_int* jpvt_ptr = &jpvt_[0];
     #else
         lapack_int* jpvt_ptr = jpvt;
@@ -208,7 +208,7 @@ int64_t geqp3(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
+        std::vector< lapack_int > jpvt_( &jpvt[0], &jpvt[(n)] );
         lapack_int* jpvt_ptr = &jpvt_[0];
     #else
         lapack_int* jpvt_ptr = jpvt;

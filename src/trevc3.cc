@@ -40,7 +40,7 @@ int64_t trevc3(
     char howmany_ = howmany2char( howmany );
 
     // lapack_logical (32 or 64-bit) copy
-    lapack::vector< lapack_logical > select_( &select[0], &select[(n)] );
+    std::vector< lapack_logical > select_( &select[0], &select[(n)] );
     lapack_logical* select_ptr = &select_[0];
 
     lapack_int n_ = (lapack_int) n;
@@ -115,7 +115,7 @@ int64_t trevc3(
     char howmany_ = howmany2char( howmany );
 
     // lapack_logical (32 or 64-bit) copy
-    lapack::vector< lapack_logical > select_( &select[0], &select[(n)] );
+    std::vector< lapack_logical > select_( &select[0], &select[(n)] );
     lapack_logical* select_ptr = &select_[0];
 
     lapack_int n_ = (lapack_int) n;
@@ -190,7 +190,7 @@ int64_t trevc3(
     char howmany_ = howmany2char( howmany );
 
     // lapack_logical (32 or 64-bit) copy
-    lapack::vector< lapack_logical > select_( &select[0], &select[(n)] );
+    std::vector< lapack_logical > select_( &select[0], &select[(n)] );
     lapack_logical const* select_ptr = &select_[0];
 
     lapack_int n_ = (lapack_int) n;
@@ -392,7 +392,7 @@ int64_t trevc3(
     char howmany_ = howmany2char( howmany );
 
     // lapack_logical (32 or 64-bit) copy
-    lapack::vector< lapack_logical > select_( &select[0], &select[(n)] );
+    std::vector< lapack_logical > select_( &select[0], &select[(n)] );
     lapack_logical const* select_ptr = &select_[0];
 
     lapack_int n_ = (lapack_int) n;

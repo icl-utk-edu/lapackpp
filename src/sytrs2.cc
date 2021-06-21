@@ -38,7 +38,7 @@ int64_t sytrs2(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int const* ipiv_ptr = ipiv;
@@ -86,7 +86,7 @@ int64_t sytrs2(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int const* ipiv_ptr = ipiv;
@@ -134,7 +134,7 @@ int64_t sytrs2(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int const* ipiv_ptr = ipiv;
@@ -234,7 +234,7 @@ int64_t sytrs2(
     lapack_int lda_ = (lapack_int) lda;
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
+        std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
         lapack_int const* ipiv_ptr = ipiv;

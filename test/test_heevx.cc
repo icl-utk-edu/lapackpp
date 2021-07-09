@@ -36,8 +36,8 @@ void test_heevx_work( Params& params, bool run )
 
     // mark non-standard output values
     params.ref_time();
-    //params.ref_gflops();
-    //params.gflops();
+    // params.ref_gflops();
+    // params.gflops();
 
     if (! run)
         return;
@@ -72,15 +72,18 @@ void test_heevx_work( Params& params, bool run )
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
-    int64_t info_tst = lapack::heevx( jobz, range, uplo, n, &A_tst[0], lda, vl, vu, il, iu, abstol, &nfound_tst, &W_tst[0], &Z_tst[0], ldz, &ifail_tst[0] );
+    int64_t info_tst = lapack::heevx(
+        jobz, range, uplo,
+        n, &A_tst[0], lda, vl, vu, il, iu, abstol, &nfound_tst, &W_tst[0],
+        &Z_tst[0], ldz, &ifail_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::heevx returned error %lld\n", (lld) info_tst );
     }
 
     params.time() = time;
-    //double gflop = lapack::Gflop< scalar_t >::heevx( jobz, range, n );
-    //params.gflops() = gflop / time;
+    // double gflop = lapack::Gflop< scalar_t >::heevx( jobz, range, n );
+    // params.gflops() = gflop / time;
 
     if (verbose >= 2) {
         printf( "Aout = " ); print_matrix( n, n, &A_tst[0], lda );
@@ -91,14 +94,17 @@ void test_heevx_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_heevx( job2char(jobz), range2char(range), uplo2char(uplo), n, &A_ref[0], lda, vl, vu, il, iu, abstol, &nfound_ref, &W_ref[0], &Z_ref[0], ldz, &ifail_ref[0] );
+        int64_t info_ref = LAPACKE_heevx(
+            job2char(jobz), range2char(range), uplo2char(uplo),
+            n, &A_ref[0], lda, vl, vu, il, iu, abstol, &nfound_ref, &W_ref[0],
+            &Z_ref[0], ldz, &ifail_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_heevx returned error %lld\n", (lld) info_ref );
         }
 
         params.ref_time() = time;
-        //params.ref_gflops() = gflop / time;
+        // params.ref_gflops() = gflop / time;
 
         if (verbose >= 2) {
             printf( "Aref = " ); print_matrix( n, n, &A_ref[0], lda );
@@ -110,13 +116,14 @@ void test_heevx_work( Params& params, bool run )
         if (info_tst != info_ref) {
             error = 1;
         }
-        error += abs_error( A_tst, A_ref );
         error += std::abs( nfound_tst - nfound_ref );
         error += abs_error( W_tst, W_ref );
-        error += abs_error( Z_tst, Z_ref );
-        // for ifail, just compare the first nfound values
-        for ( size_t i = 0; i < (size_t)nfound_tst; i++ )
-            error += std::abs( ifail_tst[i] - ifail_ref[i] );
+        if (jobz != lapack::Job::NoVec) {
+            error += abs_error( Z_tst, Z_ref );
+            // for ifail, just compare the first nfound values
+            for (int64_t i = 0; i < nfound_tst; ++i)
+                error += std::abs( ifail_tst[i] - ifail_ref[i] );
+        }
 
         params.error() = error;
         params.okay() = (error == 0);  // expect lapackpp == lapacke

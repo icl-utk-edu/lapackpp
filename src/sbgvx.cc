@@ -83,7 +83,9 @@ int64_t sbgvx(
     }
     *m = m_;
     #ifndef LAPACK_ILP64
-        std::copy( &ifail_[0], &ifail_[m_], ifail );  // was begin to end
+        if (jobz != Job::NoVec) {
+            std::copy( &ifail_[ 0 ], &ifail_[ m_ ], ifail );
+        }
     #endif
     return info_;
 }
@@ -156,7 +158,9 @@ int64_t sbgvx(
     }
     *m = m_;
     #ifndef LAPACK_ILP64
-        std::copy( &ifail_[0], &ifail_[m_], ifail );  // was begin to end
+        if (jobz != Job::NoVec) {
+            std::copy( &ifail_[ 0 ], &ifail_[ m_ ], ifail );
+        }
     #endif
     return info_;
 }

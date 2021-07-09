@@ -77,7 +77,9 @@ int64_t sbevx(
     }
     *m = m_;
     #ifndef LAPACK_ILP64
-        std::copy( ifail_.begin(), ifail_.end(), ifail );
+        if (jobz != Job::NoVec) {
+            std::copy( &ifail_[ 0 ], &ifail_[ m_ ], ifail );
+        }
     #endif
     return info_;
 }
@@ -144,7 +146,9 @@ int64_t sbevx(
     }
     *m = m_;
     #ifndef LAPACK_ILP64
-        std::copy( ifail_.begin(), ifail_.end(), ifail );
+        if (jobz != Job::NoVec) {
+            std::copy( &ifail_[ 0 ], &ifail_[ m_ ], ifail );
+        }
     #endif
     return info_;
 }

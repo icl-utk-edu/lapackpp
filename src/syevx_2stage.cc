@@ -95,7 +95,9 @@ int64_t syevx_2stage(
     }
     *nfound = nfound_;
     #ifndef LAPACK_ILP64
-        std::copy( ifail_.begin(), ifail_.end(), ifail );
+        if (jobz != Job::NoVec) {
+            std::copy( &ifail_[ 0 ], &ifail_[ nfound_ ], ifail );
+        }
     #endif
     return info_;
 }
@@ -179,7 +181,9 @@ int64_t syevx_2stage(
     }
     *nfound = nfound_;
     #ifndef LAPACK_ILP64
-        std::copy( ifail_.begin(), ifail_.end(), ifail );
+        if (jobz != Job::NoVec) {
+            std::copy( &ifail_[ 0 ], &ifail_[ nfound_ ], ifail );
+        }
     #endif
     return info_;
 }

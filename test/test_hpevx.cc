@@ -31,6 +31,7 @@ void test_hpevx_work( Params& params, bool run )
     int64_t il;  // = params.il();
     int64_t iu;  // = params.iu();
     params.get_range( n, &range, &vl, &vu, &il, &iu );
+    int verbose = params.verbose();
 
     // mark non-standard output values
     params.ref_time();
@@ -64,6 +65,10 @@ void test_hpevx_work( Params& params, bool run )
     lapack::larnv( idist, iseed, AP_tst.size(), &AP_tst[0] );
     AP_ref = AP_tst;
 
+    if (verbose >= 2) {
+        printf( "A = " ); print_vector( size_AP, &AP_tst[0], 1 );
+    }
+
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
@@ -77,6 +82,11 @@ void test_hpevx_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::hpevx( jobz, range, n );
     // params.gflops() = gflop / time;
 
+    if (verbose >= 2) {
+        printf( "Aout = " ); print_vector( size_AP, &AP_tst[0], 1 );
+        printf( "Wout = " ); print_vector( n, &W_tst[0], 1 );
+    }
+
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
@@ -89,6 +99,11 @@ void test_hpevx_work( Params& params, bool run )
 
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
+
+        if (verbose >= 2) {
+            printf( "Aref = " ); print_vector( size_AP, &AP_ref[0], 1 );
+            printf( "Wref = " ); print_vector( n, &W_ref[0], 1 );
+        }
 
         // ---------- check error compared to reference
         real_t error = 0;

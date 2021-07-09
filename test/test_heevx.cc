@@ -32,6 +32,7 @@ void test_heevx_work( Params& params, bool run )
     int64_t iu;  // = params.iu();
     params.get_range( n, &range, &vl, &vu, &il, &iu );
     params.matrix.mark();
+    int verbose = params.verbose();
 
     // mark non-standard output values
     params.ref_time();
@@ -64,6 +65,10 @@ void test_heevx_work( Params& params, bool run )
     lapack::generate_matrix( params.matrix, n, n, &A_tst[0], lda );
     A_ref = A_tst;
 
+    if (verbose >= 2) {
+        printf( "A = " ); print_matrix( n, n, &A_tst[0], lda );
+    }
+
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
@@ -77,6 +82,11 @@ void test_heevx_work( Params& params, bool run )
     //double gflop = lapack::Gflop< scalar_t >::heevx( jobz, range, n );
     //params.gflops() = gflop / time;
 
+    if (verbose >= 2) {
+        printf( "Aout = " ); print_matrix( n, n, &A_tst[0], lda );
+        printf( "Wout = " ); print_vector( n, &W_tst[0], 1 );
+    }
+
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
@@ -89,6 +99,11 @@ void test_heevx_work( Params& params, bool run )
 
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
+
+        if (verbose >= 2) {
+            printf( "Aref = " ); print_matrix( n, n, &A_ref[0], lda );
+            printf( "Wref = " ); print_vector( n, &W_ref[0], 1 );
+        }
 
         // ---------- check error compared to reference
         real_t error = 0;

@@ -10,4 +10,4 @@ Cflags: #CXXFLAGS -I${includedir}
 Libs: -L${libdir} -Wl,-rpath,${libdir} -llapackpp
 Libs.private: #LDFLAGS #LIBS
 Requires:
-Requires.private: blas++
+Requires.private: blaspp

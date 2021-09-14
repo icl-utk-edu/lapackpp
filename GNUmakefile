@@ -190,6 +190,7 @@ install: lib $(pkg)
 	cp include/lapack/*.hh $(DESTDIR)$(prefix)/include/lapack
 	cp -R lib/lib* $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)
 	cp $(pkg) $(DESTDIR)$(prefix)/lib$(LIB_SUFFIX)/pkgconfig/
+	cd $(blaspp_dir) && make install prefix=$(prefix)
 
 uninstall:
 	$(RM)    $(DESTDIR)$(prefix)/include/lapack.hh

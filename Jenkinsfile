@@ -34,10 +34,11 @@ sload intel-mkl
 
 echo "========================================"
 echo "maker ${maker}"
+rm -rf ${top}/install
 if [ "${maker}" = "make" ]; then
     export color=no
     make distclean
-    make config CXXFLAGS="-Werror"
+    make config CXXFLAGS="-Werror" prefix=${top}/install
 
     # Used to need LAPACKE from Netlib, but MKL has been fixed.
     ## Modify make.inc to add netlib LAPACKE for bug fixes.
@@ -49,20 +50,20 @@ if [ "${maker}" = "cmake" ]; then
 
     rm -rf blaspp
     git clone https://bitbucket.org/icl/blaspp
-    mkdir blaspp/build
-    cd blaspp/build
-    cmake -Dcolor=no -Dbuild_tests=no ..
-    make -j4 lib
+    mkdir blaspp/build && cd blaspp/build
+    cmake -Dcolor=no -Dbuild_tests=no -DCMAKE_INSTALL_PREFIX=${top}/install ..
+    make -j8 install
     cd ../..
 
-    rm -rf build
-    mkdir build
-    cd build
-    cmake -Dcolor=no -Dblaspp_DIR=${top}/blaspp/build -DCMAKE_CXX_FLAGS="-Werror" ..
+    rm -rf build && mkdir build && cd build
+    cmake -Dcolor=no -DCMAKE_CXX_FLAGS="-Werror" -DCMAKE_INSTALL_PREFIX=${top}/install \
+          -DCMAKE_PREFIX_PATH=${top}/install/lib64/blaspp ..
 fi
 
 echo "========================================"
 make -j8
+make -j8 install
+ls -R ${top}/install
 
 echo "========================================"
 ldd test/tester
@@ -71,6 +72,22 @@ echo "========================================"
 cd test
 export OMP_NUM_THREADS=8
 ./run_tests.py --quick --xml ${top}/report-${maker}.xml
+
+echo "========================================"
+echo "Verify install with smoke tests."
+cd ${top}/example
+
+if [ "${maker}" = "make" ]; then
+    export PKG_CONFIG_PATH=${top}/install/lib/pkgconfig
+    make clean
+fi
+if [ "${maker}" = "cmake" ]; then
+    rm -rf build && mkdir build && cd build
+    cmake "-DCMAKE_PREFIX_PATH=${top}/install/lib64/blaspp;${top}/install/lib64/lapackpp" ..
+fi
+
+make
+./example_potrf || exit 1
 '''
                     } // steps
 

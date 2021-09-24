@@ -8,7 +8,8 @@ Name: LAPACK++
 Description: C++ API to LAPACK (linear algebra package)
 Version: #VERSION
 Cflags: #CXXFLAGS -I${includedir}
-Libs: -L${libdir} -Wl,-rpath,${libdir} -llapackpp
-Libs.private: #LDFLAGS #LIBS
-Requires:
-Requires.private: blaspp
+# Some platforms require CUDA LIBS to be public.
+Libs: -L${libdir} -Wl,-rpath,${libdir} -llapackpp #LDFLAGS #LIBS
+Libs.private:
+Requires: blaspp
+Requires.private:

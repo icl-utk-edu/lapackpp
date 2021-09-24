@@ -575,7 +575,7 @@ inline lapack::StoreV char2storev( char storev )
 inline const char* storev2str( lapack::StoreV storev )
 {
     switch (storev) {
-        case lapack::StoreV::Columnwise: return "columnwise";
+        case lapack::StoreV::Columnwise: return "colwise";
         case lapack::StoreV::Rowwise:    return "rowwise";
     }
     return "?";

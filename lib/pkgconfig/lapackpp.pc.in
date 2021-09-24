@@ -2,6 +2,7 @@ prefix=#PREFIX
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
+CXX=#CXX
 
 Name: LAPACK++
 Description: C++ API to LAPACK (linear algebra package)

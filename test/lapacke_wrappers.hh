@@ -4651,6 +4651,56 @@ inline lapack_int LAPACKE_lacpy(
 extern "C" {
 
 /* ----- matrix norm - general banded */
+#ifndef LAPACK_slaed4
+#define LAPACK_slaed4 LAPACK_GLOBAL(slaed4,SLAED4)
+void LAPACK_slaed4(
+    lapack_int const* n, lapack_int const* i,
+    float const* d, float const* z,
+    float* delta, float const* rho, float* lambda, lapack_int* info );
+#endif
+
+#ifndef LAPACK_dlaed4
+#define LAPACK_dlaed4 LAPACK_GLOBAL(dlaed4,DLAED4)
+void LAPACK_dlaed4(
+    lapack_int const* n, lapack_int const* i,
+    double const* d, double const* z,
+    double* delta, double const* rho, double* lambda, lapack_int* info );
+#endif
+
+}  // extern "C"
+
+// -----------------------------------------------------------------------------
+inline lapack_int LAPACKE_laed4(
+    lapack_int n, lapack_int i,
+    float const* d, float const* z,
+    float* delta, float rho, float* lambda )
+{
+    i += 1;  // change to 1-based
+    lapack_int info = 0;
+    LAPACK_slaed4( &n, &i, d, z, delta, &rho, lambda, &info );
+    return info;
+
+    //return LAPACKE_slaed4( n, i, d, z, delta, rho, lambda );
+}
+
+inline lapack_int LAPACKE_laed4(
+    lapack_int n, lapack_int i,
+    double const* d, double const* z,
+    double* delta, double rho, double* lambda )
+{
+    i += 1;  // change to 1-based
+    lapack_int info = 0;
+    LAPACK_dlaed4( &n, &i, d, z, delta, &rho, lambda, &info );
+    return info;
+
+    //return LAPACKE_dlaed4( n, i, d, z, delta, rho, lambda );
+}
+
+// -----------------------------------------------------------------------------
+// Fortran prototypes if not given via lapacke.h
+extern "C" {
+
+/* ----- matrix norm - general banded */
 #ifndef LAPACK_slangb
 #define LAPACK_slangb LAPACK_GLOBAL(slangb,SLANGB)
 lapack_float_return LAPACK_slangb(

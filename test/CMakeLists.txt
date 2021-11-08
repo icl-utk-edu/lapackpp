@@ -119,6 +119,7 @@ add_executable(
     test_hptri.cc
     test_hptrs.cc
     test_lacpy.cc
+    test_laed4.cc
     test_langb.cc
     test_lange.cc
     test_langt.cc
@@ -126,10 +127,10 @@ add_executable(
     test_lanhe.cc
     test_lanhp.cc
     test_lanhs.cc
-    test_lanst.cc
     test_lanht.cc
     test_lansb.cc
     test_lansp.cc
+    test_lanst.cc
     test_lansy.cc
     test_lantb.cc
     test_lantp.cc

@@ -12290,6 +12290,17 @@ void LAPACK_zlacgv(
     lapack_int const* n,
     lapack_complex_double* x, lapack_int const* incx );
 
+#define LAPACK_slaed4 LAPACK_GLOBAL(slaed4,SLAED4)
+void LAPACK_slaed4(
+    lapack_int const* n, lapack_int const* i,
+    float const* d, float const* z, float* delta,
+    float const* rho, float* lambda, lapack_int* info );
+#define LAPACK_dlaed4 LAPACK_GLOBAL(dlaed4,DLAED4)
+void LAPACK_dlaed4(
+    lapack_int const* n, lapack_int const* i,
+    double const* d, double const* z, double* delta,
+    double const* rho, double* lambda, lapack_int* info );
+
 /* ----- random */
 #define LAPACK_slarnv LAPACK_GLOBAL(slarnv,SLARNV)
 void LAPACK_slarnv(

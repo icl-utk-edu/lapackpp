@@ -3613,6 +3613,23 @@ void lacpy(
     std::complex<double>* B, int64_t ldb );
 
 // -----------------------------------------------------------------------------
+int64_t laed4(
+    int64_t n, int64_t i,
+    float const* d,
+    float const* z,
+    float* delta,
+    float rho,
+    float* lambda );
+
+int64_t laed4(
+    int64_t n, int64_t i,
+    double const* d,
+    double const* z,
+    double* delta,
+    double rho,
+    double* lambda );
+
+// -----------------------------------------------------------------------------
 int64_t lag2c(
     int64_t m, int64_t n,
     std::complex<double> const* A, int64_t lda,

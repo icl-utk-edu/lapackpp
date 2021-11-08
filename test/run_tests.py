@@ -644,6 +644,7 @@ if (opts.svd):
 if (opts.aux):
     cmds += [
     [ 'lacpy', gen + dtype + align + mn + mtype ],
+    [ 'laed4', gen + dtype_real + n ],
     [ 'laset', gen + dtype + align + mn + mtype ],
     [ 'laswp', gen + dtype + align + mn ],
     ]

@@ -72,6 +72,7 @@ public:
     testsweeper::ParamEnum< lapack::Equed >     equed;
 
     testsweeper::ParamInt3   dim;
+    testsweeper::ParamInt    i;
     testsweeper::ParamInt    l;
     testsweeper::ParamInt    ka;
     testsweeper::ParamInt    kb;
@@ -391,6 +392,7 @@ void test_gesvj ( Params& params, bool run );
 
 // auxiliary
 void test_lacpy ( Params& params, bool run );
+void test_laed4 ( Params& params, bool run );
 void test_laset ( Params& params, bool run );
 void test_laswp ( Params& params, bool run );
 

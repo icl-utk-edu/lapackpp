@@ -13,12 +13,12 @@ stages {
                 }
                 axis {
                     name 'host'
-                    values 'caffeine'
+                    values 'cpu_intel'
                 }
             } // axes
             stages {
                 stage('Build') {
-                    agent { node "${host}.icl.utk.edu" }
+                    agent { label "${host}" }
 
                     //----------------------------------------------------------
                     steps {

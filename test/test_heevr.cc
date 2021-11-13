@@ -20,12 +20,17 @@ void test_heevr_work( Params& params, bool run )
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
+    // Constants
+    const scalar_t one  = 1.0;
+    const real_t   eps  = std::numeric_limits< real_t >::epsilon();
+
     // get & mark input values
     lapack::Job jobz = params.jobz();
     lapack::Uplo uplo = params.uplo();
     int64_t n = params.dim.n();
     int64_t align = params.align();
     int64_t verbose = params.verbose();
+    real_t tol = params.tol() * eps;
     params.matrix.mark();
 
     // get_range fills in range, il, iu, vl, vu
@@ -33,9 +38,6 @@ void test_heevr_work( Params& params, bool run )
     int64_t il, iu;
     lapack::Range range;
     params.get_range( n, &range, &vl, &vu, &il, &iu );
-
-    real_t eps = std::numeric_limits< real_t >::epsilon();
-    real_t tol = params.tol() * eps;
 
     // mark non-standard output values
     params.ref_time();
@@ -54,17 +56,19 @@ void test_heevr_work( Params& params, bool run )
 
     // ---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
-    int64_t ldz = lda;
-    int64_t ldw = lda;
-    size_t size_A = (size_t) lda * n;
-    size_t size_isuppz = (size_t) ( 2 * blas::max( 1, n ) );
     real_t abstol = 0;  // default value
-    int64_t nfound_tst;
+    int64_t nfound;
     lapack_int nfound_ref;
+    int64_t ldz = (jobz == lapack::Job::Vec
+                   ? roundup( blas::max( 1, n ), align )
+                   : 1 );
+    size_t size_A = (size_t) lda * n;
+    size_t size_Z = (size_t) ldz * n;
+    size_t size_isuppz = (size_t) ( 2 * blas::max( 1, n ) );
 
     std::vector< scalar_t > A_tst( size_A );
     std::vector< scalar_t > A_ref( size_A );
-    std::vector< scalar_t > Z( size_A );  // eigenvectors
+    std::vector< scalar_t > Z( size_Z );  // eigenvectors
     std::vector< real_t > Lambda_tst( n );
     std::vector< real_t > Lambda_ref( n );
     std::vector< int64_t > isuppz_tst( size_isuppz );
@@ -78,16 +82,17 @@ void test_heevr_work( Params& params, bool run )
         printf( "A n=%5lld, lda=%5lld\n", (lld) n, (lld) lda );
     }
     if (verbose >= 2) {
-        printf( "A = " ); print_matrix( n, n, &A_tst[0], lda );
+        printf( "A = " );
+        print_matrix( n, n, &A_tst[0], lda );
     }
 
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::heevr(
-        jobz, range, uplo, n, &A_tst[0], lda,
-        vl, vu, il, iu, abstol, &nfound_tst,
-        &Lambda_tst[0], &Z[0], ldz, &isuppz_tst[0] );
+                           jobz, range, uplo, n, &A_tst[0], lda,
+                           vl, vu, il, iu, abstol, &nfound,
+                           &Lambda_tst[0], &Z[0], ldz, &isuppz_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::heevr returned error %lld\n", (lld) info_tst );
@@ -98,29 +103,39 @@ void test_heevr_work( Params& params, bool run )
     // params.gflops() = gflop / time;
 
     if (verbose >= 2) {
-        printf( "nfound %lld\n", (lld) nfound_tst );
-        printf( "Z = " ); print_matrix( n, nfound_tst, &Z[0], ldz );
-        printf( "Lambda = " ); print_vector( nfound_tst, &Lambda_tst[0], 1 );
+        printf( "nfound = %lld\n", (lld) nfound );
+        printf( "Lambda = " );
+        print_vector( n, &Lambda_tst[0], 1 );
+        if (jobz == lapack::Job::Vec) {
+            printf( "Z = " );
+            print_matrix( n, nfound, &Z[0], ldz );
+        }
     }
 
     if (params.check() == 'y' && jobz == lapack::Job::Vec) {
         // ---------- check error
-        // Relative backwards error = ||A Z - Z Lambda|| / (n * ||A|| * ||Z||)
+        // Relative backwards error =
+        //     ||A Z - Z Lambda|| / (n * ||A|| * ||Z||)
         real_t Anorm = lapack::lanhe( lapack::Norm::One, uplo, n, &A_ref[0], lda );
-        real_t Znorm = lapack::lange( lapack::Norm::One, n, nfound_tst, &Z[0], ldz );
+        real_t Znorm = lapack::lange( lapack::Norm::One, n, nfound, &Z[0], ldz );
 
-        std::vector< scalar_t > W( ldw * nfound_tst );  // workspace
+        std::vector< scalar_t > W( size_Z );  // workspace
+        int64_t ldw = ldz;
+        // W = Z
+        lapack::lacpy( lapack::MatrixType::General, n, nfound,
+                       &Z[0], ldz,
+                       &W[0], ldw );
         // W = Z Lambda
-        lapack::lacpy( lapack::MatrixType::General, n, nfound_tst, &Z[0], ldz, &W[0], ldw );
-        col_scale( n, nfound_tst, &W[0], ldw, &Lambda_tst[0] );
+        col_scale( n, nfound, &W[0], ldw, &Lambda_tst[0] );
         // W = A Z - (Z Lambda)
-        blas::hemm( blas::Layout::ColMajor, blas::Side::Left, uplo, n, nfound_tst,
-                    1.0,  &A_ref[0], lda,
+        blas::hemm( blas::Layout::ColMajor, blas::Side::Left, uplo, n, nfound,
+                    one,  &A_ref[0], lda,
                           &Z[0], ldz,
-                    -1.0, &W[0], ldw );
-        real_t error = lapack::lange( lapack::Norm::One, n, nfound_tst, &W[0], ldw );
+                    -one, &W[0], ldw );
+        real_t error = lapack::lange( lapack::Norm::One, n, nfound, &W[0], ldw );
         if (verbose >= 2) {
-            printf( "W = " ); print_matrix( n, nfound_tst, &W[0], ldw );
+            printf( "W = " );
+            print_matrix( n, nfound, &W[0], ldw );
         }
 
         error /= (n * Anorm * Znorm);
@@ -133,10 +148,10 @@ void test_heevr_work( Params& params, bool run )
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_heevr(
-            job2char(jobz), range2char(range), uplo2char(uplo), n,
-            &A_ref[0], lda,
-            vl, vu, il, iu, abstol, &nfound_ref,
-            &Lambda_ref[0], &Z[0], ldz, &isuppz_ref[0] );
+                               job2char(jobz), range2char(range), uplo2char(uplo), n,
+                               &A_ref[0], lda,
+                               vl, vu, il, iu, abstol, &nfound_ref,
+                               &Lambda_ref[0], &Z[0], ldz, &isuppz_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_heevr returned error %lld\n", (lld) info_ref );
@@ -150,7 +165,7 @@ void test_heevr_work( Params& params, bool run )
         if (info_tst != info_ref) {
             error = 1;
         }
-        error += std::abs( nfound_tst - nfound_ref );
+        error += std::abs( nfound - nfound_ref );
         error += rel_error( Lambda_tst, Lambda_ref );
         // Not checking isuppz: it's not really useful, and occasionally it
         // differs between tst and ref, though all other checks pass.

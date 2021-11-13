@@ -19,14 +19,17 @@ void test_gesv_work( Params& params, bool run )
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
+    // Constants
+    const scalar_t one = 1.0;
+    const real_t   eps = std::numeric_limits< real_t >::epsilon();
+
     // get & mark input values
     int64_t n = params.dim.n();
     int64_t nrhs = params.nrhs();
     int64_t align = params.align();
     int64_t verbose = params.verbose();
-
-    real_t eps = std::numeric_limits< real_t >::epsilon();
     real_t tol = params.tol() * eps;
+    params.matrix.mark();
 
     // mark non-standard output values
     params.ref_time();
@@ -65,8 +68,10 @@ void test_gesv_work( Params& params, bool run )
                 (lld) n, (lld) nrhs, (lld) ldb );
     }
     if (verbose >= 2) {
-        printf( "A = " ); print_matrix( n, n, &A_tst[0], lda );
-        printf( "B = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
+        printf( "A = " );
+        print_matrix( n, n, &A_tst[0], lda );
+        printf( "B = " );
+        print_matrix( n, nrhs, &B_tst[0], ldb );
     }
 
     // test error exits
@@ -80,8 +85,8 @@ void test_gesv_work( Params& params, bool run )
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
-    int64_t info_tst = lapack::gesv(
-        n, nrhs, &A_tst[0], lda, &ipiv_tst[0], &B_tst[0], ldb );
+    int64_t info_tst = lapack::gesv( n, nrhs, &A_tst[0], lda, &ipiv_tst[0],
+                                     &B_tst[0], ldb );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::gesv returned error %lld\n", (lld) info_tst );
@@ -92,8 +97,10 @@ void test_gesv_work( Params& params, bool run )
     params.gflops() = gflop / time;
 
     if (verbose >= 2) {
-        printf( "A_factor = " ); print_matrix( n, n, &A_tst[0], lda );
-        printf( "X = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
+        printf( "A_factor = " );
+        print_matrix( n, n, &A_tst[0], lda );
+        printf( "X = " );
+        print_matrix( n, nrhs, &B_tst[0], ldb );
     }
 
     if (params.check() == 'y') {
@@ -101,11 +108,12 @@ void test_gesv_work( Params& params, bool run )
         // Relative backwards error = ||b - Ax|| / (n * ||A|| * ||x||).
         blas::gemm( blas::Layout::ColMajor, blas::Op::NoTrans, blas::Op::NoTrans,
                     n, nrhs, n,
-                    -1.0, &A_ref[0], lda,
+                    -one, &A_ref[0], lda,
                           &B_tst[0], ldb,
-                     1.0, &B_ref[0], ldb );
+                    one,  &B_ref[0], ldb );
         if (verbose >= 2) {
-            printf( "R = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
+            printf( "R = " );
+            print_matrix( n, nrhs, &B_ref[0], ldb );
         }
 
         real_t error = lapack::lange( lapack::Norm::One, n, nrhs, &B_ref[0], ldb );
@@ -124,8 +132,8 @@ void test_gesv_work( Params& params, bool run )
 
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_gesv(
-            n, nrhs, &A_ref[0], lda, &ipiv_ref[0], &B_ref[0], ldb );
+        int64_t info_ref = LAPACKE_gesv( n, nrhs, &A_ref[0], lda, &ipiv_ref[0],
+                                         &B_ref[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gesv returned error %lld\n", (lld) info_ref );
@@ -135,8 +143,10 @@ void test_gesv_work( Params& params, bool run )
         params.ref_gflops() = gflop / time;
 
         if (verbose >= 2) {
-            printf( "Aref_factor = " ); print_matrix( n, n, &A_ref[0], lda );
-            printf( "Xref = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
+            printf( "Aref_factor = " );
+            print_matrix( n, n, &A_ref[0], lda );
+            printf( "Xref = " );
+            print_matrix( n, nrhs, &B_ref[0], ldb );
         }
     }
 }

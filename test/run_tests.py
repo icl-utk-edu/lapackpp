@@ -335,7 +335,8 @@ cmds = []
 if (opts.lu):
     cmds += [
     [ 'gesv',  gen + dtype + align + n ],
-    [ 'gesvx', gen + dtype + align + n + factored + trans + equed ],
+    # todo: equed
+    [ 'gesvx', gen + dtype + align + n + factored + trans ],
     [ 'getrf', gen + dtype + align + mn ],
     [ 'getrs', gen + dtype + align + n + trans ],
     [ 'getri', gen + dtype + align + n ],

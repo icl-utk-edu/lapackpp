@@ -20,6 +20,11 @@ void test_hegv_work( Params& params, bool run )
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
+    // Constants
+    const scalar_t zero = 0.0;
+    const scalar_t one  = 1.0;
+    const real_t   eps  = std::numeric_limits< real_t >::epsilon();
+
     // get & mark input values
     int64_t itype = params.itype();
     lapack::Job jobz = params.jobz();
@@ -27,11 +32,9 @@ void test_hegv_work( Params& params, bool run )
     int64_t n = params.dim.n();
     int64_t align = params.align();
     int64_t verbose = params.verbose();
+    real_t tol = params.tol() * eps;
     params.matrix.mark();
     params.matrixB.mark();
-
-    real_t eps = std::numeric_limits< real_t >::epsilon();
-    real_t tol = params.tol() * eps;
 
     // mark non-standard output values
     params.ref_time();
@@ -46,16 +49,16 @@ void test_hegv_work( Params& params, bool run )
 
     // ---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
-    int64_t ldz = lda;
-    int64_t ldw = lda;
     int64_t ldb = roundup( blas::max( 1, n ), align );
+    int64_t ldz = lda;  // vectors overwrite matrix A
     size_t size_A = (size_t) lda * n;
     size_t size_B = (size_t) ldb * n;
+    size_t size_Z = size_A;
 
     std::vector< scalar_t > A( size_A );
-    std::vector< scalar_t > Z( size_A );  // eigenvectors
     std::vector< scalar_t > B_tst( size_B );
     std::vector< scalar_t > B_ref( size_B );
+    std::vector< scalar_t > Z( size_Z );  // eigenvectors
     std::vector< real_t > Lambda_tst( n );
     std::vector< real_t > Lambda_ref( n );
 
@@ -70,15 +73,20 @@ void test_hegv_work( Params& params, bool run )
         printf( "B n=%5lld, ldb=%5lld\n", (lld) n, (lld) ldb );
     }
     if (verbose >= 2) {
-        printf( "A = " ); print_matrix( n, n, &A[0], lda );
-        printf( "B = " ); print_matrix( n, n, &B_tst[0], ldb );
+        printf( "A = " );
+        print_matrix( n, n, &A[0], lda );
+        printf( "B = " );
+        print_matrix( n, n, &B_tst[0], ldb );
     }
 
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::hegv(
-        itype, jobz, uplo, n, &Z[0], ldz, &B_tst[0], ldb, &Lambda_tst[0] );
+                           itype, jobz, uplo, n,
+                           &Z[0], ldz,
+                           &B_tst[0], ldb,
+                           &Lambda_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::hegv returned error %lld\n", (lld) info_tst );
@@ -89,8 +97,12 @@ void test_hegv_work( Params& params, bool run )
     // params.gflops() = gflop / time;
 
     if (verbose >= 2) {
-        printf( "Z = " ); print_matrix( n, n, &Z[0], ldz );
-        printf( "Lambda = " ); print_vector( n, &Lambda_tst[0], 1 );
+        printf( "Lambda = " );
+        print_vector( n, &Lambda_tst[0], 1 );
+        if (jobz == lapack::Job::Vec) {
+            printf( "Z = " );
+            print_matrix( n, n, &Z[0], ldz );
+        }
     }
 
     if (params.check() == 'y' && jobz == lapack::Job::Vec) {
@@ -103,57 +115,60 @@ void test_hegv_work( Params& params, bool run )
         real_t Znorm = lapack::lange( lapack::Norm::One, n, n, &Z[0], ldz );
 
         real_t error = 0;
-        std::vector< scalar_t > W( size_A );  // workspace
+        std::vector< scalar_t > W( size_Z );  // workspace
+        int64_t ldw = ldz;
         switch (itype) {
             case 1:
                 // W = B Z
                 blas::hemm( blas::Layout::ColMajor, blas::Side::Left, uplo, n, n,
-                            1.0, &B_ref[0], ldb,
-                                 &Z[0], ldz,
-                            0.0, &W[0], ldw );
+                            one,  &B_ref[0], ldb,
+                                  &Z[0], ldz,
+                            zero, &W[0], ldw );
                 // W = (B Z) Lambda
                 col_scale( n, n, &W[0], ldw, &Lambda_tst[0] );
                 // W = A Z - (B Z Lambda)
                 blas::hemm( blas::Layout::ColMajor, blas::Side::Left, uplo, n, n,
-                            1.0,  &A[0], lda,
+                            one,  &A[0], lda,
                                   &Z[0], ldz,
-                            -1.0, &W[0], ldw );
+                            -one, &W[0], ldw );
                 error = lapack::lange( lapack::Norm::One, n, n, &W[0], ldw );
                 break;
+
             case 2:
                 // W = B Z
                 blas::hemm( blas::Layout::ColMajor, blas::Side::Left, uplo, n, n,
-                            1.0, &B_ref[0], ldb,
-                                 &Z[0], ldz,
-                            0.0, &W[0], ldw );
+                            one,  &B_ref[0], ldb,
+                                  &Z[0], ldz,
+                            zero, &W[0], ldw );
                 // Z = Z Lambda
                 col_scale( n, n, &Z[0], ldz, &Lambda_tst[0] );
                 // Z = A (B Z) - (Z Lambda)
                 blas::hemm( blas::Layout::ColMajor, blas::Side::Left, uplo, n, n,
-                            1.0,  &A[0], lda,
+                            one,  &A[0], lda,
                                   &W[0], ldw,
-                            -1.0, &Z[0], ldz );
+                            -one, &Z[0], ldz );
                 error = lapack::lange( lapack::Norm::One, n, n, &Z[0], ldz );
                 break;
+
             case 3:
                 // W = A Z
                 blas::hemm( blas::Layout::ColMajor, blas::Side::Left, uplo, n, n,
-                            1.0, &A[0], lda,
-                                 &Z[0], ldz,
-                            0.0, &W[0], ldw );
+                            one,  &A[0], lda,
+                                  &Z[0], ldz,
+                            zero, &W[0], ldw );
                 // Z = Z Lambda
                 col_scale( n, n, &Z[0], ldz, &Lambda_tst[0] );
                 // Z = B (A Z) - (Z Lambda)
                 blas::hemm( blas::Layout::ColMajor, blas::Side::Left, uplo, n, n,
-                            1.0,  &B_ref[0], ldb,
+                            one,  &B_ref[0], ldb,
                                   &W[0], ldw,
-                            -1.0, &Z[0], ldz );
+                            -one, &Z[0], ldz );
                 error = lapack::lange( lapack::Norm::One, n, n, &Z[0], ldz );
                 break;
         }
         if (verbose >= 2) {
-            printf( "Zhat = " ); print_matrix( n, n, &Z[0], ldz );
-            printf( "W = " ); print_matrix( n, n, &W[0], ldw );
+            printf( "W = " );
+            print_matrix( n, n, &W[0], ldw );
         }
 
         error /= (n * Anorm * Znorm);
@@ -166,8 +181,10 @@ void test_hegv_work( Params& params, bool run )
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_hegv(
-            itype, job2char(jobz), uplo2char(uplo), n,
-            &A[0], lda, &B_ref[0], ldb, &Lambda_ref[0] );
+                               itype, job2char(jobz), uplo2char(uplo), n,
+                               &A[0], lda,
+                               &B_ref[0], ldb,
+                               &Lambda_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_hegv returned error %lld\n", (lld) info_ref );
@@ -176,12 +193,20 @@ void test_hegv_work( Params& params, bool run )
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
+        if (verbose >= 2) {
+            printf( "Lambda_ref" );
+            print_vector( n, &Lambda_ref[0], 1 );
+            if (jobz == lapack::Job::Vec) {
+                printf( "Zref" );
+                print_matrix( n, n, &Z[0], ldz );
+            }
+        }
+
         // ---------- check error compared to reference
-        real_t error = 0;
+        real_t error = rel_error( Lambda_tst, Lambda_ref );
         if (info_tst != info_ref) {
             error = 1;
         }
-        error += rel_error( Lambda_tst, Lambda_ref );
         params.error2() = error;
         params.okay() = params.okay() && (error < tol);
     }

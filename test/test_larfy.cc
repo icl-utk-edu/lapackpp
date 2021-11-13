@@ -21,11 +21,15 @@ void test_larfy_work( Params& params, bool run )
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
+    // Constants
+    real_t eps = std::numeric_limits<real_t>::epsilon();
+
     // get & mark input values
     lapack::Uplo uplo = params.uplo();
     int64_t n = params.dim.n();
     int64_t incv = params.incx();
     int64_t align = params.align();
+    real_t tol = params.tol() * eps;
 
     // mark non-standard output values
     params.ref_time();
@@ -76,10 +80,9 @@ void test_larfy_work( Params& params, bool run )
         //params.ref_gflops() = gflop / time;
 
         // ---------- check error compared to reference
-        real_t error = 0;
-        error += abs_error( C_tst, C_ref );
+        real_t error = rel_error( C_tst, C_ref );
         params.error() = error;
-        params.okay() = (error == 0);  // expect lapackpp == lapacke
+        params.okay() = (error < tol);
     }
 }
 

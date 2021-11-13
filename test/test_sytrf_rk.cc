@@ -21,10 +21,14 @@ void test_sytrf_rk_work( Params& params, bool run )
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
 
+    // Constants
+    real_t eps = std::numeric_limits<real_t>::epsilon();
+
     // get & mark input values
     lapack::Uplo uplo = params.uplo();
     int64_t n = params.dim.n();
     int64_t align = params.align();
+    real_t tol = params.tol() * eps;
     params.matrix.mark();
 
     // mark non-standard output values
@@ -82,11 +86,11 @@ void test_sytrf_rk_work( Params& params, bool run )
         if (info_tst != info_ref) {
             error = 1;
         }
-        error += abs_error( A_tst, A_ref );
-        error += abs_error( E_tst, E_ref );
-        error += abs_error( ipiv_tst, ipiv_ref );
+        error = blas::max( error, rel_error( A_tst, A_ref ) );
+        error = blas::max( error, rel_error( E_tst, E_ref ) );
+        error = blas::max( error, rel_error( ipiv_tst, ipiv_ref ) );
         params.error() = error;
-        params.okay() = (error == 0);  // expect lapackpp == lapacke
+        params.okay() = (error < tol);
     }
 }
 

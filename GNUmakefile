@@ -114,11 +114,6 @@ endif
 ifeq ($(testsweeper_dir),)
     testsweeper_dir = $(wildcard ../testsweeper)
 endif
-ifeq ($(testsweeper_dir),)
-    $(tester_obj):
-		$(error Tester requires TestSweeper, which was not found. Run 'make config' \
-		        or download manually from https://bitbucket.org/icl/testsweeper/)
-endif
 
 testsweeper_src = $(wildcard $(testsweeper_dir)/testsweeper.cc $(testsweeper_dir)/testsweeper.hh)
 

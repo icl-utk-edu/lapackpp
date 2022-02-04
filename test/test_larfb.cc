@@ -46,6 +46,14 @@ void test_larfb_work( Params& params, bool run )
         return;
     }
 
+    // skip invalid configuration
+    if ((blas::is_complex<scalar_t>::value) &&
+        (trans == lapack::Op::Trans))
+    {
+        params.msg() = "skipping: requires Op::NoTrans or Op::ConjTrans if complex";
+        return;
+    }
+
     // ---------- setup
     int64_t ldv;
     if (storev == lapack::StoreV::Columnwise) {
@@ -111,12 +119,13 @@ void test_larfb_work( Params& params, bool run )
 
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
+        real_t tol = std::numeric_limits< real_t >::epsilon();
 
         // ---------- check error compared to reference
         real_t error = 0;
         error += rel_error( C_tst, C_ref );
         params.error() = error;
-        params.okay() = (error == 0);  // expect lapackpp == lapacke
+        params.okay() = (error <= tol);  // expect lapackpp == lapacke
     }
 }
 

@@ -114,7 +114,7 @@ void test_larfb_work( Params& params, bool run )
 
         // ---------- check error compared to reference
         real_t error = 0;
-        error += abs_error( C_tst, C_ref );
+        error += rel_error( C_tst, C_ref );
         params.error() = error;
         params.okay() = (error == 0);  // expect lapackpp == lapacke
     }

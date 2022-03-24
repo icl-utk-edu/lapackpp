@@ -275,6 +275,7 @@ add_library(
     src/laghe.cc
     src/lagsy.cc
     src/lamch.cc
+    src/laneg2.cc
     src/langb.cc
     src/lange.cc
     src/langt.cc

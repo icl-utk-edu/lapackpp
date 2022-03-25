@@ -3717,6 +3717,15 @@ int64_t lagsy(
     int64_t* iseed );
 
 // -----------------------------------------------------------------------------
+int64_t laneg2(
+    int64_t const n, float const* diag,
+    float const* offd, float const u);
+
+int64_t laneg2(
+    int64_t const n, double const* diag,
+    double const* offd, double const u);
+
+// -----------------------------------------------------------------------------
 float langb(
     lapack::Norm norm, int64_t n, int64_t kl, int64_t ku,
     float const* AB, int64_t ldab );

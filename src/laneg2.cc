@@ -15,7 +15,7 @@ namespace lapack {
 /// matrix. NOTE this calls no LAPACK routine; the code is here. Only single
 /// and double precision code exist.
 ///
-/// Parameters:
+/// Parameters: All parameters are read-only by this routine.
 ///  @param[in]  diag: a vector of 'n' diagonal elements.
 ///  @param[in]  offd: a vector of 'n-1' off-diagonal elements.
 ///  @param[in]     n: The order of the matrix.
@@ -97,7 +97,8 @@ namespace lapack {
 //-----------------------------------------------------------------------------
 
 template <typename scalar_t>
-int64_t laneg2(scalar_t* diag, scalar_t* offd, int64_t n, scalar_t u)
+int64_t laneg2(scalar_t const* diag, scalar_t const* offd, int64_t const n, 
+        scalar_t const u)
 {
     int64_t i, isneg=0;
     scalar_t s, w, v0, v1, Pm1_0, Pm1_1, phi, upsilon;
@@ -151,9 +152,11 @@ int64_t laneg2(scalar_t* diag, scalar_t* offd, int64_t n, scalar_t u)
 //------------------------------------------------------------------------------
 // Explicit instantiations.
 template
-int64_t laneg2<float>(float* diag, float* offd, int64_t n, float u);
+int64_t laneg2<float>(float const* diag, float const* offd, int64_t const n, 
+        float const u);
 
 template
-int64_t laneg2<double>(double* diag, double* offd, int64_t n, double u);
+int64_t laneg2<double>(double const* diag, double const* offd, int64_t const n, 
+        double const u);
 
 } // namespace lapack

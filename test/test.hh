@@ -324,6 +324,7 @@ void test_heevx ( Params& params, bool run );
 void test_heevd ( Params& params, bool run );
 void test_heevr ( Params& params, bool run );
 void test_hetrd ( Params& params, bool run );
+void test_sturm ( Params& params, bool run );
 void test_ungtr ( Params& params, bool run );
 void test_unmtr ( Params& params, bool run );
 

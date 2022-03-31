@@ -175,6 +175,7 @@ add_executable(
     test_sptrf.cc
     test_sptri.cc
     test_sptrs.cc
+    test_sturm.cc
     test_sycon.cc
     test_syr.cc
     test_syrfs.cc

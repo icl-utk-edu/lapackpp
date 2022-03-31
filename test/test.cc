@@ -284,6 +284,7 @@ std::vector< testsweeper::routines_t > routines = {
     { "heev",               test_heev,      Section::heev }, // tested via LAPACKE
     { "hpev",               test_hpev,      Section::heev }, // tested via LAPACKE
     { "hbev",               test_hbev,      Section::heev }, // tested via LAPACKE
+    { "sturm",              test_sturm,     Section::heev }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },
 
     { "heevx",              test_heevx,     Section::heev }, // tested via LAPACKE

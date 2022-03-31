@@ -11,7 +11,7 @@
 namespace lapack {
 //------------------------------------------------------------------------------
 /// @ingroup heev_computational
-/// laneg2 computes a Scaled Sturm Sequence using a real symmetric tri-diagonal
+/// sturm computes a Scaled Sturm Sequence using a real symmetric tri-diagonal
 /// matrix. NOTE this calls no LAPACK routine; the code is here. Only single
 /// and double precision code exist.
 ///
@@ -97,7 +97,7 @@ namespace lapack {
 //------------------------------------------------------------------------------
 
 template <typename scalar_t>
-int64_t laneg2(int64_t const n, scalar_t const* diag, scalar_t const* offd,
+int64_t sturm(int64_t const n, scalar_t const* diag, scalar_t const* offd,
                scalar_t const u)
 {
     int64_t i, isneg=0;
@@ -152,11 +152,10 @@ int64_t laneg2(int64_t const n, scalar_t const* diag, scalar_t const* offd,
 //------------------------------------------------------------------------------
 // Explicit instantiations.
 template
-int64_t laneg2<float>(int64_t const n, float const* diag, float const* offd,
-                      float const u);
+int64_t sturm<float>(int64_t n, float const* diag, float const* offd, float u);
 
 template
-int64_t laneg2<double>(int64_t const n, double const* diag, double const* offd,
-                       double const u);
+int64_t sturm<double>(int64_t n, double const* diag, double const* offd,
+                       double u);
 
 } // namespace lapack

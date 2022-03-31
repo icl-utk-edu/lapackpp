@@ -3717,15 +3717,6 @@ int64_t lagsy(
     int64_t* iseed );
 
 // -----------------------------------------------------------------------------
-int64_t laneg2(
-    int64_t const n, float const* diag,
-    float const* offd, float const u);
-
-int64_t laneg2(
-    int64_t const n, double const* diag,
-    double const* offd, double const u);
-
-// -----------------------------------------------------------------------------
 float langb(
     lapack::Norm norm, int64_t n, int64_t kl, int64_t ku,
     float const* AB, int64_t ldab );
@@ -7400,6 +7391,12 @@ int64_t stevx(
     double* W,
     double* Z, int64_t ldz,
     int64_t* ifail );
+
+// -----------------------------------------------------------------------------
+template <typename scalar_t>
+int64_t sturm(
+    int64_t n, scalar_t const* diag,
+    scalar_t const* offd, scalar_t u);
 
 // -----------------------------------------------------------------------------
 int64_t sycon(

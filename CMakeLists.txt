@@ -275,7 +275,6 @@ add_library(
     src/laghe.cc
     src/lagsy.cc
     src/lamch.cc
-    src/laneg2.cc
     src/langb.cc
     src/lange.cc
     src/langt.cc
@@ -405,6 +404,7 @@ add_library(
     src/stevd.cc
     src/stevr.cc
     src/stevx.cc
+    src/sturm.cc
     src/sycon_rk.cc
     src/sycon.cc
     src/syequb.cc

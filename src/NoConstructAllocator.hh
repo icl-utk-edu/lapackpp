@@ -24,8 +24,7 @@ struct NoConstructAllocator
 {
     using value_type = T;
 
-    NoConstructAllocator () = default;
-    //template <class U> constexpr NoConstructAllocator (const NoConstructAllocator <U>&) noexcept {}
+    NoConstructAllocator() = default;
 
     // Construction given an allocated pointer is a null-op.
     //
@@ -72,13 +71,15 @@ struct NoConstructAllocator
 };
 
 template <class T, class U>
-bool operator==(const NoConstructAllocator <T>&, const NoConstructAllocator <U>&)
+bool operator == ( NoConstructAllocator<T> const& a,
+                   NoConstructAllocator<U> const& b )
 {
     return true;
 }
 
 template <class T, class U>
-bool operator!=(const NoConstructAllocator <T>&, const NoConstructAllocator <U>&)
+bool operator != ( NoConstructAllocator<T> const& a,
+                   NoConstructAllocator<U> const& b)
 {
     return false;
 }

@@ -1711,7 +1711,8 @@ inline lapack_int LAPACKE_getsls(
     std::complex<float>* A, lapack_int lda,
     std::complex<float>* B, lapack_int ldb )
 {
-    if ( trans == 'T' ) trans = 'C';
+    if (trans == 'T')
+        trans = 'C';
     return LAPACKE_cgetsls(
         LAPACK_COL_MAJOR, trans, m, n, nrhs,
         (lapack_complex_float*) A, lda,
@@ -1723,7 +1724,8 @@ inline lapack_int LAPACKE_getsls(
     std::complex<double>* A, lapack_int lda,
     std::complex<double>* B, lapack_int ldb )
 {
-    if ( trans == 'T' ) trans = 'C';
+    if (trans == 'T')
+        trans = 'C';
     return LAPACKE_zgetsls(
         LAPACK_COL_MAJOR, trans, m, n, nrhs,
         (lapack_complex_double*) A, lda,

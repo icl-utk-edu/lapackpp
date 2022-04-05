@@ -5906,7 +5906,7 @@ inline int64_t ptrfs(
     float* ferr,
     float* berr )
 {
-	return ptrfs( n, nrhs, D, E, DF, EF, B, ldb, X, ldx, ferr, berr );
+    return ptrfs( n, nrhs, D, E, DF, EF, B, ldb, X, ldx, ferr, berr );
 }
 
 int64_t ptrfs(
@@ -5922,7 +5922,7 @@ int64_t ptrfs(
 
 // alias to match complex version (ignoring uplo)
 inline int64_t ptrfs(
-	lapack::Uplo uplo,
+    lapack::Uplo uplo,
     int64_t n, int64_t nrhs,
     double const* D,
     double const* E,
@@ -5933,7 +5933,7 @@ inline int64_t ptrfs(
     double* ferr,
     double* berr )
 {
-	return ptrfs( n, nrhs, D, E, DF, EF, B, ldb, X, ldx, ferr, berr );
+    return ptrfs( n, nrhs, D, E, DF, EF, B, ldb, X, ldx, ferr, berr );
 }
 
 int64_t ptrfs(

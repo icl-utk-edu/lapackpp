@@ -97,7 +97,7 @@ void test_gerqf_work( Params& params, bool run )
 
         // Copy R
         lapack::laset( lapack::MatrixType::General, m, n, 0, 0, &R[0], ldr );
-        if ( m <= n ) {
+        if (m <= n) {
             lapack::lacpy( lapack::MatrixType::Upper, m, m, &A_tst[n_m*lda], lda, &R[n_m*ldr], ldr );
         }
         else {

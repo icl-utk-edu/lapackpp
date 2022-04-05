@@ -78,8 +78,8 @@ std::vector< testsweeper::routines_t > routines = {
     { "",                   nullptr,        Section::newline },
 
     { "gesvx",              test_gesvx,     Section::gesv }, // TODO Set up fact equed, (work array)=(LAPACKE rpivot)
-  //{ "gbsvx",              test_gbsvx,     Section::gesv },
-  //{ "gtsvx",              test_gtsvx,     Section::gesv },
+    //{ "gbsvx",              test_gbsvx,     Section::gesv },
+    //{ "gtsvx",              test_gtsvx,     Section::gesv },
     { "",                   nullptr,        Section::newline },
 
     { "getrf",              test_getrf,     Section::gesv },
@@ -180,23 +180,23 @@ std::vector< testsweeper::routines_t > routines = {
     { "sysv_rook",          test_sysv_rook,          Section::sysv }, // tested via LAPACKE using gcc/MKL
     { "sysv_rk",            test_sysv_rk,            Section::sysv }, // tested via LAPACKE using gcc/MKL
     { "sysv_aa",            test_sysv_aa,            Section::sysv }, // tested via LAPACKE using gcc/MKL
-  //{ "sysv_aa_2stage",     test_sysv_aa_2stage,     Section::sysv }, // TODO No automagic generation.  No src. New call.
+    //{ "sysv_aa_2stage",     test_sysv_aa_2stage,     Section::sysv }, // TODO No automagic generation.  No src. New call.
     { "",                   nullptr,                 Section::newline },
 
     { "sytrf_rook",         test_sytrf_rook,         Section::sysv }, // tested via LAPACKE using gcc/MKL
     { "sytrf_rk",           test_sytrf_rk,           Section::sysv }, // tested via LAPACKE using gcc/MKL
     { "sytrf_aa",           test_sytrf_aa,           Section::sysv }, // TODO LAPACKE wrapper broken/bugreport. Call LAPACK. Passes.
-  //{ "sytrf_aa_2stage",    test_sytrf_aa_2stage,    Section::sysv }, // TODO No automagic generation.  No src. New call.
+    //{ "sytrf_aa_2stage",    test_sytrf_aa_2stage,    Section::sysv }, // TODO No automagic generation.  No src. New call.
     { "",                   nullptr,                 Section::newline },
 
     { "sytrs_rook",         test_sytrs_rook,         Section::sysv }, // tested via LAPACKE using gcc/MKL
-  //{ "sytrs_rk",           test_sytrs_rk,           Section::sysv }, // TODO the LAPACKE wrapper seems to be missing
+    //{ "sytrs_rk",           test_sytrs_rk,           Section::sysv }, // TODO the LAPACKE wrapper seems to be missing
     { "",                   nullptr,                 Section::sysv }, // space for sytrs_rk
     { "sytrs_aa",           test_sytrs_aa,           Section::sysv }, // tested via LAPACKE using gcc/MKL
-  //{ "sytrs_aa_2stage",    test_sytrs_aa_2stage,    Section::sysv }, // TODO No automagic generation.  No src. New call.
+    //{ "sytrs_aa_2stage",    test_sytrs_aa_2stage,    Section::sysv }, // TODO No automagic generation.  No src. New call.
     { "",                   nullptr,                 Section::newline },
 
-  //{ "sytri_rook",         test_sytri_rook,         Section::sysv }, // TODO lapack_fortran.h header missing
+    //{ "sytri_rook",         test_sytri_rook,         Section::sysv }, // TODO lapack_fortran.h header missing
     { "",                   nullptr,                 Section::newline },
 
     // -----
@@ -249,9 +249,9 @@ std::vector< testsweeper::routines_t > routines = {
     { "",                   nullptr,        Section::newline },
 
     { "ggqrf",              test_ggqrf,     Section::qr }, // tested via LAPACKE using gcc/MKL, TODO for now use p=param.k
-  //{ "gglqf",              test_gglqf,     Section::qr }, // TODO No automagic generation.  No src
+    //{ "gglqf",              test_gglqf,     Section::qr }, // TODO No automagic generation.  No src
     { "",                   nullptr,        Section::qr }, // space for gglqf
-  //{ "ggqlf",              test_ggqlf,     Section::qr }, // TODO No automagic generation.  No src
+    //{ "ggqlf",              test_ggqlf,     Section::qr }, // TODO No automagic generation.  No src
     { "",                   nullptr,        Section::qr }, // space for ggqlf
     { "ggrqf",              test_ggrqf,     Section::qr }, // tested via LAPACKE using gcc/MKL, TODO for now use p=param.k
     { "",                   nullptr,        Section::newline },
@@ -262,11 +262,11 @@ std::vector< testsweeper::routines_t > routines = {
     { "ungrq",              test_ungrq,     Section::qr }, // tested numerically based on lapack; R, Q full sizes
     { "",                   nullptr,        Section::newline },
 
-  //{ "unmqr",              test_unmqr,     Section::qr }, // TODO segfaults
-  //{ "unmlq",              test_unmlq,     Section::qr },
-  //{ "unmql",              test_unmql,     Section::qr },
-  //{ "unmrq",              test_unmrq,     Section::qr },
-  //{ "",                   nullptr,        Section::newline },
+    //{ "unmqr",              test_unmqr,     Section::qr }, // TODO segfaults
+    //{ "unmlq",              test_unmlq,     Section::qr },
+    //{ "unmql",              test_unmql,     Section::qr },
+    //{ "unmrq",              test_unmrq,     Section::qr },
+    //{ "",                   nullptr,        Section::newline },
 
     { "tpqrt",              test_tpqrt,     Section::qr },
     { "tplqt",              test_tplqt,     Section::qr },
@@ -306,7 +306,7 @@ std::vector< testsweeper::routines_t > routines = {
 
     { "hetrd",              test_hetrd,     Section::heev }, // tested via LAPACKE using gcc/MKL
     { "hptrd",              test_hptrd,     Section::heev }, // tested via LAPACKE using gcc/MKL
-  //{ "hbtrd",              test_hbtrd,     Section::heev }, // Need to add to test.cc params a new vect option v,n,u for forming Q
+    //{ "hbtrd",              test_hbtrd,     Section::heev }, // Need to add to test.cc params a new vect option v,n,u for forming Q
     { "",                   nullptr,        Section::newline },
 
     { "ungtr",              test_ungtr,     Section::heev }, // tested via LAPACKE using gcc/MKL
@@ -336,9 +336,9 @@ std::vector< testsweeper::routines_t > routines = {
 
     { "hegst",              test_hegst,     Section::sygv }, // tested via LAPACKE using gcc/MKL
     { "hpgst",              test_hpgst,     Section::sygv }, // tested via LAPACKE using gcc/MKL
-  //{ "hbgst",              test_hbgst,     Section::sygv }, // TODO This test requires non-working --vect flag
+    //{ "hbgst",              test_hbgst,     Section::sygv }, // TODO This test requires non-working --vect flag
 
-  //{ "hgeqz",              test_hgeqz,     Section::sygv }, // TODO Needs params job compq compz...
+    //{ "hgeqz",              test_hgeqz,     Section::sygv }, // TODO Needs params job compq compz...
     { "",                   nullptr,        Section::newline },
 
     // -----
@@ -347,41 +347,41 @@ std::vector< testsweeper::routines_t > routines = {
     { "ggev",               test_ggev,      Section::geev }, // tested via LAPACKE using gcc/MKL. NOTE: No doxygen in src/ggev.cc
     { "",                   nullptr,        Section::newline },
 
-  //{ "geevx",              test_geevx,     Section::geev }, // TODO No src
-  //{ "ggevx",              test_ggevx,     Section::geev }, // TODO No src
+    //{ "geevx",              test_geevx,     Section::geev }, // TODO No src
+    //{ "ggevx",              test_ggevx,     Section::geev }, // TODO No src
     { "",                   nullptr,        Section::newline },
 
-  //{ "gees",               test_gees,      Section::geev }, // TODO needs --sort --select, external SELECT logical function
-  //{ "gges",               test_gges,      Section::geev }, // TODO needs SELCTG (external sort procedure) LOGICAL FUNCTION
+    //{ "gees",               test_gees,      Section::geev }, // TODO needs --sort --select, external SELECT logical function
+    //{ "gges",               test_gges,      Section::geev }, // TODO needs SELCTG (external sort procedure) LOGICAL FUNCTION
     { "",                   nullptr,        Section::newline },
 
-  //{ "geesx",              test_geesx,     Section::geev }, // TODO needs external select function
-  //{ "ggesx",              test_ggesx,     Section::geev }, // TODO needs external select function
+    //{ "geesx",              test_geesx,     Section::geev }, // TODO needs external select function
+    //{ "ggesx",              test_ggesx,     Section::geev }, // TODO needs external select function
     { "",                   nullptr,        Section::newline },
 
     { "gehrd",              test_gehrd,     Section::geev }, // TODO Fixed ilo=1, ihi=n, should these vary?
     { "unghr",              test_unghr,     Section::geev }, // TODO Fixed ilo=1, ihi=n, should these vary?
     { "unmhr",              test_unmhr,     Section::geev },
-  //{ "hsein",              test_hsein,     Section::geev }, // TODO error in automagic generation KeyError eigsrc
-  //{ "trevc",              test_trevc,     Section::geev }, // TODO --howmany, need to setup a bool select array
+    //{ "hsein",              test_hsein,     Section::geev }, // TODO error in automagic generation KeyError eigsrc
+    //{ "trevc",              test_trevc,     Section::geev }, // TODO --howmany, need to setup a bool select array
     { "",                   nullptr,        Section::newline },
 
     // -----
     // driver: singular value decomposition
     { "gesvd",              test_gesvd,         Section::svd },
-  //{ "gesvd_2stage",       test_gesvd_2stage,  Section::svd }, // TODO No src
+    //{ "gesvd_2stage",       test_gesvd_2stage,  Section::svd }, // TODO No src
     { "",                   nullptr,            Section::newline },
 
     { "gesdd",              test_gesdd,         Section::svd },
-  //{ "gesdd_2stage",       test_gesdd_2stage,  Section::svd }, // TODO No src
+    //{ "gesdd_2stage",       test_gesdd_2stage,  Section::svd }, // TODO No src
     { "",                   nullptr,            Section::newline },
 
     { "gesvdx",             test_gesvdx,        Section::svd }, // tested via LAPACKE using gcc/MKL
-  //{ "gesvdx_2stage",      test_gesvdx_2stage, Section::svd }, // TODO No src
+    //{ "gesvdx_2stage",      test_gesvdx_2stage, Section::svd }, // TODO No src
     { "",                   nullptr,            Section::newline },
 
-  //{ "gejsv",              test_gejsv,     Section::svd }, // TODO No src
-  //{ "gesvj",              test_gesvj,     Section::svd }, // TODO No src
+    //{ "gejsv",              test_gejsv,     Section::svd }, // TODO No src
+    //{ "gesvj",              test_gesvj,     Section::svd }, // TODO No src
     { "",                   nullptr,        Section::newline },
 
     // -----
@@ -431,10 +431,10 @@ std::vector< testsweeper::routines_t > routines = {
     { "",                   nullptr,        Section::newline },
 
     // auxiliary: matrix generation
-  //{ "lagge",              test_lagge,     Section::aux_gen },
-  //{ "lagsy",              test_lagsy,     Section::aux_gen },
-  //{ "laghe",              test_laghe,     Section::aux_gen },
-  //{ "lagtr",              test_lagtr,     Section::aux_gen },
+    //{ "lagge",              test_lagge,     Section::aux_gen },
+    //{ "lagsy",              test_lagsy,     Section::aux_gen },
+    //{ "laghe",              test_laghe,     Section::aux_gen },
+    //{ "lagtr",              test_lagtr,     Section::aux_gen },
     { "",                   nullptr,        Section::newline },
 
     // additional BLAS

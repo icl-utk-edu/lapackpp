@@ -46,8 +46,8 @@ void test_gesvdx_work( Params& params, bool run )
         return;
 
     // skip invalid sizes
-    if ( ( range == lapack::Range::Index ) &&
-         ! ( ( 1 <= il ) && ( il < iu ) && ( iu < blas::min( m, n ) ) ) ) {
+    if (range == lapack::Range::Index
+        && ! (1 <= il && il < iu && iu < blas::min( m, n ))) {
         params.msg() = "skipping: requires 1 <= il <= iu <= min(m,n)";
         return;
     }

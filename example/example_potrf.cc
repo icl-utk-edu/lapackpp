@@ -9,13 +9,13 @@ void run( int n )
 {
     int lda = n;
     std::vector<T> A( lda*n, 1.0 );  // m-by-k
-    
+
     // Make diagonally dominant to be positive definite.
     for (int i = 0; i < n; ++i)
         A[ i + i*lda ] += n;
-    
+
     // ... fill in application data into A ...
-    
+
     // Cholesky factorization of A.
     int info = lapack::potrf( lapack::Uplo::Lower, n, A.data(), lda );
     if (info != 0)

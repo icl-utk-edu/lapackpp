@@ -97,23 +97,24 @@ namespace lapack {
 //------------------------------------------------------------------------------
 
 template <typename scalar_t>
-int64_t sturm(int64_t const n, scalar_t const* diag, scalar_t const* offd,
-               scalar_t const u)
+int64_t sturm(
+    int64_t n, scalar_t const* diag, scalar_t const* offd, scalar_t u )
 {
     int64_t i, isneg=0;
     scalar_t s, w, v0, v1, Pm1_0, Pm1_1, phi, upsilon;
-    if (n==0) return 0;
+    if (n == 0)
+        return 0;
 
-    // Note we don't check for overflow vs. lapack_int; because we don't call
-    // any lapack routines.
-
+    // todo: adjust for float. Use constants like epsilon.
     phi = ((scalar_t)(((long long) 1)<<34)); // Roughly 1.718e+10.
     const scalar_t one=1.0;
     upsilon = one/phi;
 
     Pm1_1 = one;
     Pm1_0 = (diag[0]-u);
-    if (Pm1_0 < 0) isneg = 1;  // our first test.
+    // Our first test.
+    if (Pm1_0 < 0)
+        isneg = 1;
     for (i = 1; i < n; ++i) {
         // first part of scaling, just get w.
         v0 = fabs(Pm1_0);
@@ -152,10 +153,11 @@ int64_t sturm(int64_t const n, scalar_t const* diag, scalar_t const* offd,
 //------------------------------------------------------------------------------
 // Explicit instantiations.
 template
-int64_t sturm<float>(int64_t n, float const* diag, float const* offd, float u);
+int64_t sturm<float>(
+    int64_t n, float const* diag, float const* offd, float u );
 
 template
-int64_t sturm<double>(int64_t n, double const* diag, double const* offd,
-                       double u);
+int64_t sturm<double>(
+    int64_t n, double const* diag, double const* offd, double u );
 
 } // namespace lapack

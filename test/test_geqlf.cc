@@ -78,7 +78,7 @@ void test_geqlf_work( Params& params, bool run )
         // copy M by K matrix V to Q (copying diagonal, which isn't needed)
         // copy K by N matrix L
         lapack::laset( lapack::MatrixType::General, minmn, n, 0, 0, &L[0], ldl );
-        if ( m >= n ) {
+        if (m >= n) {
             int64_t m_n = m - n;
             lapack::lacpy( lapack::MatrixType::General, m_n, minmn, &A_tst[0], lda, &Q[0], ldq );
             lapack::lacpy( lapack::MatrixType::Upper, n, minmn, &A_tst[m_n], lda, &Q[m_n], ldq );

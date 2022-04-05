@@ -1,3 +1,8 @@
+# Copyright (c) 2017-2022, University of Tennessee. All rights reserved.
+# SPDX-License-Identifier: BSD-3-Clause
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
+#
 # See INSTALL.md for usage.
 
 #-------------------------------------------------------------------------------
@@ -169,10 +174,10 @@ TEST_LIBS    += -llapackpp -lblaspp -ltestsweeper
 # Rules
 .DELETE_ON_ERROR:
 .SUFFIXES:
-.PHONY: all lib src test tester headers include docs clean distclean
-.DEFAULT_GOAL = all
+.PHONY: all docs hooks lib src test tester headers include clean distclean
+.DEFAULT_GOAL := all
 
-all: lib tester
+all: lib tester hooks
 
 pkg = lib/pkgconfig/lapackpp.pc
 
@@ -305,6 +310,17 @@ clean: lib/clean test/clean headers/clean
 
 distclean: clean
 	$(RM) make.inc include/lapack/defines.h
+
+# Install git hooks
+hooks = .git/hooks/pre-commit
+
+hooks: ${hooks}
+
+.git/hooks/%: tools/hooks/%
+	@if [ -e .git/hooks ]; then \
+		echo cp $< $@ ; \
+		cp $< $@ ; \
+	fi
 
 %.o: %.cc
 	$(CXX) $(CXXFLAGS) -c $< -o $@

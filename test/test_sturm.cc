@@ -68,7 +68,7 @@ template< typename scalar_t >
 void test_sturm_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
+    using llong = long long;
 
     // get & mark input values
     int64_t n = params.dim.n();
@@ -141,8 +141,8 @@ void test_sturm_work( Params& params, bool run )
 
     if (verbose >= 2) {
         printf( "\n"
-                "r_minbefore=%i r_minafter=%i. Expected =0, >=1\n",
-                r_min_before, r_min_after);
+                "r_minbefore=%lld r_minafter=%lld. Expected =0, >=1\n",
+                llong(r_min_before), llong(r_min_after));
     }
 
     if (r_min_before > 0) {
@@ -158,9 +158,10 @@ void test_sturm_work( Params& params, bool run )
 
     if (verbose >= 2) {
         printf( "\n"
-                "r_midbefore=%i r_midafter=%i."
-                " Expected <%i, >=%i\n",
-                r_mid_before, r_mid_after, eig_mid_idx+1, eig_mid_idx+1);
+                "r_midbefore=%lld r_midafter=%lld."
+                " Expected <%lld, >=%i\n",
+                llong(r_mid_before), llong(r_mid_after), llong(eig_mid_idx+1),
+                llong(eig_mid_idx+1));
     }
 
     // The number of eigenvalues less than mid should be the middle index itself.
@@ -179,9 +180,9 @@ void test_sturm_work( Params& params, bool run )
 
     if (verbose >= 2) {
         printf( "\n"
-                "r_maxbefore=%i r_maxafter=%i."
-                " Expected <%i, =%i\n",
-                r_max_before, r_max_after, n, n);
+                "r_maxbefore=%lld r_maxafter=%lld."
+                " Expected <%lld, =%lld\n",
+                llong(r_max_before), llong(r_max_after), llong(n), llong(n));
     }
 
     if (r_max_before > (n-1)) {
@@ -199,14 +200,6 @@ void test_sturm_work( Params& params, bool run )
     params.okay() = (error == 0);
 }
 
-//------------------------------------------------------------------------------
-// Explicit instantiations.
-template
-void test_sturm_work<float>( Params& params, bool run );
-
-template
-void test_sturm_work<double>( Params& params, bool run );
-
 // -----------------------------------------------------------------------------
 void test_sturm( Params& params, bool run )
 {
@@ -217,6 +210,10 @@ void test_sturm( Params& params, bool run )
 
         case testsweeper::DataType::Double:
             test_sturm_work< double >( params, run );
+            break;
+
+        default:
+            throw std::runtime_error( "unsupported datatype" );
             break;
     }
 }

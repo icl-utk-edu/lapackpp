@@ -159,7 +159,7 @@ void test_sturm_work( Params& params, bool run )
     if (verbose >= 2) {
         printf( "\n"
                 "r_midbefore=%lld r_midafter=%lld."
-                " Expected <%lld, >=%i\n",
+                " Expected <%lld, >=%lld\n",
                 llong(r_mid_before), llong(r_mid_after), llong(eig_mid_idx+1),
                 llong(eig_mid_idx+1));
     }

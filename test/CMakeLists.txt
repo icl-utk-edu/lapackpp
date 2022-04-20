@@ -155,6 +155,7 @@ add_executable(
     test_porfs.cc
     test_posv.cc
     test_potrf.cc
+    test_potrf_device.cc
     test_potri.cc
     test_potrs.cc
     test_ppcon.cc

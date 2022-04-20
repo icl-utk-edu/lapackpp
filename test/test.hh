@@ -97,6 +97,7 @@ public:
     testsweeper::ParamInt    incx;
     testsweeper::ParamInt    incy;
     testsweeper::ParamInt    align;
+    testsweeper::ParamInt    device;
 
     // ----- output parameters
     testsweeper::ParamScientific error;
@@ -443,5 +444,9 @@ void test_lagtr ( Params& params, bool run );
 // additional BLAS
 void test_syr   ( Params& params, bool run );
 void test_symv  ( Params& params, bool run );
+
+//----------------------------------------
+// GPU device functions
+void test_potrf_device ( Params& params, bool run );
 
 #endif  //  #ifndef TEST_HH

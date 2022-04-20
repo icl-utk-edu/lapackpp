@@ -437,6 +437,11 @@ std::vector< testsweeper::routines_t > routines = {
     { "syr",                test_syr,       Section::blas2 },
     { "symv",               test_symv,      Section::blas2 },
     { "",                   nullptr,        Section::newline },
+
+    //----------------------------------------
+    // GPU device functions
+    { "dev-potrf",          test_potrf_device,  Section::posv },
+    { "",                   nullptr,            Section::newline },
 };
 
 // -----------------------------------------------------------------------------
@@ -521,6 +526,7 @@ Params::Params():
     incx      ( "incx",    4,    ParamType::List,   1, -1000,    1000, "stride of x vector" ),
     incy      ( "incy",    4,    ParamType::List,   1, -1000,    1000, "stride of y vector" ),
     align     ( "align",   0,    ParamType::List,   1,     1,    1024, "column alignment (sets lda, ldb, etc. to multiple of align)" ),
+    device    ( "device",  6,    ParamType::List,   0,     0,     100, "device id" ),
 
     // ----- output parameters
     // min, max are ignored

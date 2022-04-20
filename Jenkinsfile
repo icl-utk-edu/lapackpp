@@ -17,7 +17,7 @@ stages {
                 }
                 axis {
                     name 'host'
-                    values 'cpu_intel'
+                    values 'gpu_amd', 'gpu_nvidia'
                 }
             } // axes
             stages {
@@ -63,6 +63,24 @@ run sload gcc@7.3.0
 run spack compiler find
 run sload intel-mkl
 #run sload netlib-lapack
+
+print "======================================== load CUDA or ROCm"
+# Load CUDA.
+if [ "${host}" = "gpu_nvidia" ]; then
+    # Load CUDA. LD_LIBRARY_PATH set by Spack.
+    run sload cuda@10.2.89
+    export CPATH=${CPATH}:${CUDA_HOME}/include
+    export LIBRARY_PATH=${LIBRARY_PATH}:${CUDA_HOME}/lib64
+fi
+
+# Load HIP.
+if [ "${host}" = "gpu_amd" ]; then
+    # Load ROCm/HIP.
+    export PATH=${PATH}:/opt/rocm/bin
+    export CPATH=${CPATH}:/opt/rocm/include
+    export LIBRARY_PATH=${LIBRARY_PATH}:/opt/rocm/lib:/opt/rocm/lib64
+    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/opt/rocm/lib:/opt/rocm/lib64
+fi
 
 print "======================================== verify spack"
 # Check what is loaded.
@@ -126,7 +144,7 @@ ls -R ${top}/install
 print "======================================== verify build"
 print "Verify that tester linked with cublas or rocblas as intended."
 date
-ldd test/tester
+ldd test/tester || exit 1
 if [ "${host}" = "gpu_nvidia" ]; then
     ldd test/tester | grep cublas || exit 1
 fi
@@ -139,7 +157,8 @@ print "Run tests."
 date
 cd test
 export OMP_NUM_THREADS=8
-./run_tests.py --quick --xml ${top}/report-${maker}.xml
+./run_tests.py --host   --quick --xml ${top}/report-${maker}-host.xml
+./run_tests.py --device --quick --xml ${top}/report-${maker}-dev.xml
 
 print "======================================== smoke tests"
 print "Verify install with smoke tests."

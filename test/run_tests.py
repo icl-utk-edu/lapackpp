@@ -40,6 +40,7 @@ group_test.add_argument( '-t', '--test', action='store',
     help='test command to run, e.g., --test "mpirun -np 4 ./test"; default "%(default)s"',
     default='./tester' )
 group_test.add_argument( '--xml', help='generate report.xml for jenkins' )
+group_test.add_argument( '--dry-run', action='store_true', help='print commands, but do not execute them' )
 
 group_size = parser.add_argument_group( 'matrix dimensions (default is medium)' )
 group_size.add_argument(       '--quick',  action='store_true', help='run quick "sanity check" of few, small tests' )
@@ -76,9 +77,14 @@ categories = [
     group_cat.add_argument( '--aux-house',     action='store_true', help='run auxiliary Householder tests' ),
     group_cat.add_argument( '--aux-norm',      action='store_true', help='run auxiliary norm tests' ),
     group_cat.add_argument( '--blas',          action='store_true', help='run additional BLAS tests' ),
+
 ]
 # map category objects to category names: ['lu', 'chol', ...]
 categories = list( map( lambda x: x.dest, categories ) )
+
+group_target = parser.add_argument_group( 'target' )
+group_target.add_argument( '--host',          action='store_true', help='run all CPU host routines' ),
+group_target.add_argument( '--device',        action='store_true', help='run all GPU device routines' ),
 
 group_opt = parser.add_argument_group( 'options' )
 # BLAS and LAPACK
@@ -152,7 +158,13 @@ if (not (opts.square or opts.tall or opts.wide or opts.mnk)):
     opts.wide   = True
     opts.mnk    = True
 
-# by default, run all categories
+# By default, run both host and device.
+if (not opts.host and not opts.device):
+    opts.host   = True
+    opts.device = True
+
+# By default, or if specific test routines given, enable all categories
+# to get whichever has the routines.
 if (opts.tests or not any( map( lambda c: opts.__dict__[ c ], categories ))):
     for c in categories:
         opts.__dict__[ c ] = True
@@ -332,7 +344,7 @@ incy_pos = ' --incy ' + filter_csv( ('1', '2'), opts.incy )
 cmds = []
 
 # LU
-if (opts.lu):
+if (opts.lu and opts.host):
     cmds += [
     [ 'gesv',  gen + dtype + align + n ],
     # todo: equed
@@ -346,7 +358,7 @@ if (opts.lu):
     ]
 
 # General Banded
-if (opts.gb):
+if (opts.gb and opts.host):
     cmds += [
     [ 'gbsv',  gen + dtype + align + n  + kl + ku ],
     [ 'gbtrf', gen + dtype + align + mn + kl + ku ],
@@ -357,7 +369,7 @@ if (opts.gb):
     ]
 
 # General Tri-Diagonal
-if (opts.gt):
+if (opts.gt and opts.host):
     cmds += [
     [ 'gtsv',  gen + dtype + align + n ],
     [ 'gttrf', gen + dtype +         n ],
@@ -367,7 +379,7 @@ if (opts.gt):
     ]
 
 # Cholesky
-if (opts.chol):
+if (opts.chol and opts.host):
     cmds += [
     [ 'posv',  gen + dtype + align + n + uplo ],
     [ 'potrf', gen + dtype + align + n + uplo ],
@@ -402,8 +414,14 @@ if (opts.chol):
     [ 'ptrfs', gen + dtype + align + n + uplo ],
     ]
 
+if (opts.chol and opts.device):
+    # GPU
+    cmds += [
+    [ 'dev-potrf', gen + dtype + align + n + uplo ],
+    ]
+
 # symmetric indefinite, Bunch-Kaufman
-if (opts.sysv):
+if (opts.sysv and opts.host):
     cmds += [
     [ 'sysv',  gen + dtype + align + n + uplo ],
     [ 'sytrf', gen + dtype + align + n + uplo ],
@@ -422,7 +440,7 @@ if (opts.sysv):
     ]
 
 # symmetric indefinite, rook
-if (opts.rook):
+if (opts.rook and opts.host):
     cmds += [
     # original Rook
     [ 'sysv_rook',  gen + dtype + align + n + uplo ],
@@ -438,7 +456,7 @@ if (opts.rook):
     ]
 
 # symmetric indefinite, Aasen
-if (opts.aasen):
+if (opts.aasen and opts.host):
     cmds += [
     [ 'sysv_aa',  gen + dtype + align + n + uplo ],
     [ 'sytrf_aa', gen + dtype + align + n + uplo ],
@@ -452,7 +470,7 @@ if (opts.aasen):
     ]
 
 # Hermitian indefinite
-if (opts.hesv):
+if (opts.hesv and opts.host):
     cmds += [
     [ 'hesv',  gen + dtype + align + n + uplo ],
     [ 'hetrf', gen + dtype + align + n + uplo ],
@@ -471,7 +489,7 @@ if (opts.hesv):
     ]
 
 # least squares
-if (opts.least_squares):
+if (opts.least_squares and opts.host):
     cmds += [
     [ 'gels',   gen + dtype + align + mn + trans_nc ],
     [ 'gelsy',  gen + dtype + align + mn ],
@@ -487,7 +505,7 @@ if (opts.least_squares):
     ]
 
 # QR
-if (opts.qr):
+if (opts.qr and opts.host):
     cmds += [
     [ 'geqrf', gen + dtype + align + n + wide + tall ],
     # todo: ggqrf is failing
@@ -505,7 +523,7 @@ if (opts.qr):
     ]
 
 # LQ
-if (opts.lq):
+if (opts.lq and opts.host):
     cmds += [
     [ 'gelqf', gen + dtype + align + mn ],
     #[ 'gglqf', gen + dtype + align + mn ],
@@ -521,7 +539,7 @@ if (opts.lq):
     ]
 
 # QL
-if (opts.ql):
+if (opts.ql and opts.host):
     cmds += [
     [ 'geqlf', gen + dtype + align + mn ],
     #[ 'ggqlf', gen + dtype + align + mn ],
@@ -531,7 +549,7 @@ if (opts.ql):
     ]
 
 # RQ
-if (opts.rq):
+if (opts.rq and opts.host):
     cmds += [
     [ 'gerqf', gen + dtype + align + mn ],
     # todo: ggrqf is failing
@@ -542,7 +560,7 @@ if (opts.rq):
     ]
 
 # symmetric eigenvalues
-if (opts.syev):
+if (opts.syev and opts.host):
     cmds += [
     [ 'heev',  gen + dtype + align + n + jobz + uplo ],
     [ 'heevx', gen + dtype + align + n + jobz + uplo + vl + vu ],
@@ -580,7 +598,7 @@ if (opts.syev):
     ]
 
 # generalized symmetric eigenvalues
-if (opts.sygv):
+if (opts.sygv and opts.host):
     cmds += [
     [ 'hegv',  gen + dtype + align + n + itype + jobz + uplo ],
     [ 'hegvx', gen + dtype + align + n + itype + jobz + uplo + vl + vu ],
@@ -607,7 +625,7 @@ if (opts.sygv):
     ]
 
 # non-symmetric eigenvalues
-if (opts.geev):
+if (opts.geev and opts.host):
     cmds += [
     [ 'geev',  gen + dtype + align + n + jobvl + jobvr ],
     # todo: ggev is failing
@@ -622,7 +640,7 @@ if (opts.geev):
     ]
 
 # svd
-if (opts.svd):
+if (opts.svd and opts.host):
     cmds += [
     # todo: MKL seems to have a bug with jobu=o,s and jobvt=o,s,a
     # for tall matrices, e.g., dim=100x50. Skip failing combinations for now.
@@ -641,7 +659,7 @@ if (opts.svd):
     ]
 
 # auxilary
-if (opts.aux):
+if (opts.aux and opts.host):
     cmds += [
     [ 'lacpy', gen + dtype + align + mn + mtype ],
     [ 'laed4', gen + dtype_real + n ],
@@ -650,7 +668,7 @@ if (opts.aux):
     ]
 
 # auxilary - householder
-if (opts.aux_house):
+if (opts.aux_house and opts.host):
     cmds += [
     [ 'larfg', dtype         + n   + incx_pos ],
     [ 'larfgp', dtype        + n   + incx_pos ],
@@ -662,7 +680,7 @@ if (opts.aux_house):
     ]
 
 # auxilary - norms
-if (opts.aux_norm):
+if (opts.aux_norm and opts.host):
     cmds += [
     [ 'lange', gen + dtype + align + mn + norm ],
     # todo: lanhe is failing
@@ -689,7 +707,7 @@ if (opts.aux_norm):
     ]
 
 # additional blas
-if (opts.blas):
+if (opts.blas and opts.host):
     cmds += [
     [ 'syr',   gen + dtype + align + n + uplo ],
     [ 'symv',  gen + dtype + layout + align + uplo + n + incx + incy ],
@@ -716,6 +734,9 @@ def print_tee( *args ):
 def run_test( cmd ):
     cmd = opts.test +' '+ cmd[1] +' '+ cmd[0]
     print_tee( cmd )
+    if (opts.dry_run):
+        return (None, None)
+
     output = ''
     p = subprocess.Popen( cmd.split(), stdout=subprocess.PIPE,
                                        stderr=subprocess.STDOUT )

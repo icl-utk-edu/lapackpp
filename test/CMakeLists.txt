@@ -62,6 +62,7 @@ add_executable(
     test_gelsy.cc
     test_geqlf.cc
     test_geqrf.cc
+    test_geqrf_device.cc
     test_gerfs.cc
     test_gerqf.cc
     test_gesdd.cc
@@ -70,6 +71,7 @@ add_executable(
     test_gesvdx.cc
     test_gesvx.cc
     test_getrf.cc
+    test_getrf_device.cc
     test_getri.cc
     test_getrs.cc
     test_getsls.cc

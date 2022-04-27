@@ -357,6 +357,12 @@ if (opts.lu and opts.host):
     [ 'geequ', gen + dtype + align + n ],
     ]
 
+if (opts.lu and opts.device):
+    # GPU
+    cmds += [
+    [ 'dev-getrf', gen + dtype + align + n ],
+    ]
+
 # General Banded
 if (opts.gb and opts.host):
     cmds += [
@@ -520,6 +526,12 @@ if (opts.qr and opts.host):
     [ 'tpmqrt', gen + dtype_real    + align + mn + l + nb + side + trans    ],  # real does trans = N, T, C
     [ 'tpmqrt', gen + dtype_complex + align + mn + l + nb + side + trans_nc ],  # complex does trans = N, C, not T
     #[ 'tprfb',  gen + dtype + align + mn + l ],  # TODO: bug in LAPACKE crashes tester
+    ]
+
+if (opts.qr and opts.device):
+    # GPU
+    cmds += [
+    [ 'dev-geqrf', gen + dtype + align + n + wide + tall ],
     ]
 
 # LQ

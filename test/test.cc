@@ -42,6 +42,7 @@ enum Section {
     blas1,
     blas2,
     blas3,
+    gpu,
     num_sections,  // last
 };
 
@@ -64,6 +65,7 @@ const char* section_names[] = {
    "Level 1 BLAS (additional)",
    "Level 2 BLAS (additional)",
    "Level 3 BLAS (additional)",
+   "GPU device functions",
 };
 
 // { "", nullptr, Section::newline } entries force newline in help
@@ -440,7 +442,9 @@ std::vector< testsweeper::routines_t > routines = {
 
     //----------------------------------------
     // GPU device functions
-    { "dev-potrf",          test_potrf_device,  Section::posv },
+    { "dev-potrf",          test_potrf_device,  Section::gpu },
+    { "dev-getrf",          test_getrf_device,  Section::gpu },
+    { "dev-geqrf",          test_geqrf_device,  Section::gpu },
     { "",                   nullptr,            Section::newline },
 };
 

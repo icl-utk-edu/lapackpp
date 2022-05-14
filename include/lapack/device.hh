@@ -18,8 +18,12 @@ namespace lapack {
 // Since we pass pointers to these integers, their types have to match
 // the vendor libraries.
 #if defined(LAPACK_HAVE_CUBLAS)
-    typedef int     device_info_int;
-    typedef int64_t device_pivot_int;
+    typedef int device_info_int;
+    #if CUSOLVER_VERSION >= 11000
+        typedef int64_t device_pivot_int;
+    #else
+        typedef int device_pivot_int;
+    #endif
 
 #elif defined(LAPACK_HAVE_ROCBLAS)
     typedef rocblas_int device_info_int;
@@ -38,17 +42,22 @@ public:
       : blas::Queue( device, batch_size )
         #if defined(LAPACK_HAVE_CUBLAS)
             , solver_( nullptr )
-            , solver_params_( nullptr )
+            #if CUSOLVER_VERSION >= 11000
+                , solver_params_( nullptr )
+            #endif
         #endif
     {}
 
     ~Queue()
     {
         #if defined(LAPACK_HAVE_CUBLAS)
-            if (solver_params_) {
-                cusolverDnDestroyParams( solver_params_ );
-                solver_params_ = nullptr;
-            }
+            #if CUSOLVER_VERSION >= 11000
+                if (solver_params_) {
+                    cusolverDnDestroyParams( solver_params_ );
+                    solver_params_ = nullptr;
+                }
+            #endif
+
             if (solver_) {
                 cusolverDnDestroy( solver_ );
                 solver_ = nullptr;
@@ -77,23 +86,27 @@ public:
             return solver_;
         }
 
-        /// @return cuSolver params, allocating it on first use.
-        cusolverDnParams_t solver_params()
-        {
-            if (solver_params_ == nullptr) {
-                // todo: error handler
-                cusolverStatus_t status;
-                status = cusolverDnCreateParams( &solver_params_ );
-                assert( status == CUSOLVER_STATUS_SUCCESS );
+        #if CUSOLVER_VERSION >= 11000
+            /// @return cuSolver params, allocating it on first use.
+            cusolverDnParams_t solver_params()
+            {
+                if (solver_params_ == nullptr) {
+                    // todo: error handler
+                    cusolverStatus_t status;
+                    status = cusolverDnCreateParams( &solver_params_ );
+                    assert( status == CUSOLVER_STATUS_SUCCESS );
+                }
+                return solver_params_;
             }
-            return solver_params_;
-        }
+        #endif
     #endif
 
 private:
     #if defined(LAPACK_HAVE_CUBLAS)
         cusolverDnHandle_t solver_;
-        cusolverDnParams_t solver_params_;
+        #if CUSOLVER_VERSION >= 11000
+            cusolverDnParams_t solver_params_;
+        #endif
     #endif
 };
 

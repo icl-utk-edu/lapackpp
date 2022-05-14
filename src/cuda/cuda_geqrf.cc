@@ -14,6 +14,92 @@
 namespace lapack {
 
 //------------------------------------------------------------------------------
+// Intermediate wrappers around cuSolver to deal with precisions.
+cusolverStatus_t cusolver_geqrf_bufferSize(
+    cusolverDnHandle_t solver, int m, int n,
+    float* dA, int ldda, int* lwork )
+{
+    return cusolverDnSgeqrf_bufferSize(
+        solver, m, n, dA, ldda, lwork );
+}
+
+//----------
+cusolverStatus_t cusolver_geqrf_bufferSize(
+    cusolverDnHandle_t solver, int m, int n,
+    double* dA, int ldda, int* lwork )
+{
+    return cusolverDnDgeqrf_bufferSize(
+        solver, m, n, dA, ldda, lwork );
+}
+
+//----------
+cusolverStatus_t cusolver_geqrf_bufferSize(
+    cusolverDnHandle_t solver, int m, int n,
+    std::complex<float>* dA, int ldda, int* lwork )
+{
+    return cusolverDnCgeqrf_bufferSize(
+        solver, m, n,
+        (cuFloatComplex*) dA, ldda, lwork );
+}
+
+//----------
+cusolverStatus_t cusolver_geqrf_bufferSize(
+    cusolverDnHandle_t solver, int m, int n,
+    std::complex<double>* dA, int ldda, int* lwork )
+{
+    return cusolverDnZgeqrf_bufferSize(
+        solver, m, n,
+        (cuDoubleComplex*) dA, ldda, lwork );
+}
+
+//------------------------------------------------------------------------------
+// Intermediate wrappers around cuSolver to deal with precisions.
+cusolverStatus_t cusolver_geqrf(
+    cusolverDnHandle_t solver, int m, int n,
+    float* dA, int ldda, float* dtau,
+    float* dev_work, int lwork, int* info )
+{
+    return cusolverDnSgeqrf(
+        solver, m, n, dA, ldda, dtau, dev_work, lwork, info );
+}
+
+//----------
+cusolverStatus_t cusolver_geqrf(
+    cusolverDnHandle_t solver, int m, int n,
+    double* dA, int ldda, double* dtau,
+    double* dev_work, int lwork, int* info )
+{
+    return cusolverDnDgeqrf(
+        solver, m, n, dA, ldda, dtau, dev_work, lwork, info );
+}
+
+//----------
+cusolverStatus_t cusolver_geqrf(
+    cusolverDnHandle_t solver, int m, int n,
+    std::complex<float>* dA, int ldda, std::complex<float>* dtau,
+    std::complex<float>* dev_work, int lwork, int* info )
+{
+    return cusolverDnCgeqrf(
+        solver, m, n,
+        (cuFloatComplex*) dA, ldda,
+        (cuFloatComplex*) dtau,
+        (cuFloatComplex*) dev_work, lwork, info );
+}
+
+//----------
+cusolverStatus_t cusolver_geqrf(
+    cusolverDnHandle_t solver, int m, int n,
+    std::complex<double>* dA, int ldda, std::complex<double>* dtau,
+    std::complex<double>* dev_work, int lwork, int* info )
+{
+    return cusolverDnZgeqrf(
+        solver, m, n,
+        (cuDoubleComplex*) dA, ldda,
+        (cuDoubleComplex*) dtau,
+        (cuDoubleComplex*) dev_work, lwork, info );
+}
+
+//------------------------------------------------------------------------------
 // Wrapper around cuSolver workspace query.
 // dA is only for templating scalar_t; it isn't referenced.
 template <typename scalar_t>
@@ -24,15 +110,23 @@ void geqrf_work_size_bytes(
     lapack::Queue& queue )
 {
     auto solver = queue.solver();
-    auto params = queue.solver_params();
 
     // query for workspace size
-    blas_dev_call(
-        cusolverDnXgeqrf_bufferSize(
-            solver, params, m, n,
-            CudaTraits<scalar_t>::datatype, dA, ldda,
-            CudaTraits<scalar_t>::datatype, nullptr,
-            CudaTraits<scalar_t>::datatype, dev_work_size, host_work_size ));
+    #if CUSOLVER_VERSION >= 11000
+        auto params = queue.solver_params();
+        blas_dev_call(
+            cusolverDnXgeqrf_bufferSize(
+                solver, params, m, n,
+                CudaTraits<scalar_t>::datatype, dA, ldda,
+                CudaTraits<scalar_t>::datatype, nullptr,
+                CudaTraits<scalar_t>::datatype, dev_work_size, host_work_size ));
+    #else
+        int lwork;
+        blas_dev_call(
+            cusolver_geqrf_bufferSize( solver, m, n, dA, ldda, &lwork ));
+        *dev_work_size = lwork * sizeof(scalar_t);
+        *host_work_size = 0;
+    #endif
 
     //printf( "%s m %lld, n %lld, ldda %lld, buffer ldda*n %lld, dev %lld, host %lld\n",
     //        __func__, llong( m ), llong( n ), llong( ldda ), llong( ldda * n ),
@@ -52,17 +146,25 @@ void geqrf(
     device_info_int* dev_info, lapack::Queue& queue )
 {
     auto solver = queue.solver();
-    auto params = queue.solver_params();
 
     // launch kernel
-    blas_dev_call(
-        cusolverDnXgeqrf(
-            solver, params, m, n,
-            CudaTraits<scalar_t>::datatype, dA, ldda,
-            CudaTraits<scalar_t>::datatype, dtau,
-            CudaTraits<scalar_t>::datatype,
-            dev_work, dev_work_size,
-            host_work, host_work_size, dev_info ));
+    #if CUSOLVER_VERSION >= 11000
+        auto params = queue.solver_params();
+        blas_dev_call(
+            cusolverDnXgeqrf(
+                solver, params, m, n,
+                CudaTraits<scalar_t>::datatype, dA, ldda,
+                CudaTraits<scalar_t>::datatype, dtau,
+                CudaTraits<scalar_t>::datatype,
+                dev_work, dev_work_size,
+                host_work, host_work_size, dev_info ));
+    #else
+        int lwork = dev_work_size / sizeof(scalar_t);
+        blas_dev_call(
+            cusolver_geqrf(
+                solver, m, n, dA, ldda, dtau,
+                (scalar_t*) dev_work, lwork, dev_info ));
+    #endif
 }
 
 //------------------------------------------------------------------------------

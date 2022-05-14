@@ -54,44 +54,46 @@ const char* device_error_string( cusolverStatus_t error )
         case CUSOLVER_STATUS_INVALID_LICENSE:
             return "cusolver: invalid license";
 
-        case CUSOLVER_STATUS_IRS_PARAMS_NOT_INITIALIZED:
-            return "cusolver: IRS params not initialized";
+        #if CUSOLVER_VERSION >= 11000
+            case CUSOLVER_STATUS_IRS_PARAMS_NOT_INITIALIZED:
+                return "cusolver: IRS params not initialized";
 
-        case CUSOLVER_STATUS_IRS_PARAMS_INVALID:
-            return "cusolver: IRS params invalid";
+            case CUSOLVER_STATUS_IRS_PARAMS_INVALID:
+                return "cusolver: IRS params invalid";
 
-        case CUSOLVER_STATUS_IRS_PARAMS_INVALID_PREC:
-            return "cusolver: IRS params invalid precision";
+            case CUSOLVER_STATUS_IRS_PARAMS_INVALID_PREC:
+                return "cusolver: IRS params invalid precision";
 
-        case CUSOLVER_STATUS_IRS_PARAMS_INVALID_REFINE:
-            return "cusolver: IRS params invalid refine";
+            case CUSOLVER_STATUS_IRS_PARAMS_INVALID_REFINE:
+                return "cusolver: IRS params invalid refine";
 
-        case CUSOLVER_STATUS_IRS_PARAMS_INVALID_MAXITER:
-            return "cusolver: IRS params invalid maxiter";
+            case CUSOLVER_STATUS_IRS_PARAMS_INVALID_MAXITER:
+                return "cusolver: IRS params invalid maxiter";
 
-        case CUSOLVER_STATUS_IRS_INTERNAL_ERROR:
-            return "cusolver: IRS internal error";
+            case CUSOLVER_STATUS_IRS_INTERNAL_ERROR:
+                return "cusolver: IRS internal error";
 
-        case CUSOLVER_STATUS_IRS_NOT_SUPPORTED:
-            return "cusolver: IRS not supported";
+            case CUSOLVER_STATUS_IRS_NOT_SUPPORTED:
+                return "cusolver: IRS not supported";
 
-        case CUSOLVER_STATUS_IRS_OUT_OF_RANGE:
-            return "cusolver: IRS out of range";
+            case CUSOLVER_STATUS_IRS_OUT_OF_RANGE:
+                return "cusolver: IRS out of range";
 
-        case CUSOLVER_STATUS_IRS_NRHS_NOT_SUPPORTED_FOR_REFINE_GMRES:
-            return "cusolver: IRS NRHS not supported for refine GMRES";
+            case CUSOLVER_STATUS_IRS_NRHS_NOT_SUPPORTED_FOR_REFINE_GMRES:
+                return "cusolver: IRS NRHS not supported for refine GMRES";
 
-        case CUSOLVER_STATUS_IRS_INFOS_NOT_INITIALIZED:
-            return "cusolver: IRS infos not initialized";
+            case CUSOLVER_STATUS_IRS_INFOS_NOT_INITIALIZED:
+                return "cusolver: IRS infos not initialized";
 
-        case CUSOLVER_STATUS_IRS_INFOS_NOT_DESTROYED:
-            return "cusolver: IRS infos not destroyed";
+            case CUSOLVER_STATUS_IRS_INFOS_NOT_DESTROYED:
+                return "cusolver: IRS infos not destroyed";
 
-        case CUSOLVER_STATUS_IRS_MATRIX_SINGULAR:
-            return "cusolver: IRS matrix singular";
+            case CUSOLVER_STATUS_IRS_MATRIX_SINGULAR:
+                return "cusolver: IRS matrix singular";
 
-        case CUSOLVER_STATUS_INVALID_WORKSPACE:
-            return "cusolver: invalid workspace";
+            case CUSOLVER_STATUS_INVALID_WORKSPACE:
+                return "cusolver: invalid workspace";
+        #endif
 
         default:
             return "cusolver: unknown error code";

@@ -4258,6 +4258,31 @@ void larnv(
     std::complex<double>* X );
 
 // -----------------------------------------------------------------------------
+void lartg(
+    float f, float g,
+    float* cs,
+    float* sn,
+    float* r );
+
+void lartg(
+    double f, double g,
+    double* cs,
+    double* sn,
+    double* r );
+
+void lartg(
+    std::complex<float> f, std::complex<float> g,
+    float* cs,
+    std::complex<float>* sn,
+    std::complex<float>* r );
+
+void lartg(
+    std::complex<double> f, std::complex<double> g,
+    double* cs,
+    std::complex<double>* sn,
+    std::complex<double>* r );
+
+// -----------------------------------------------------------------------------
 void lartgp(
     float f, float g,
     float* cs,

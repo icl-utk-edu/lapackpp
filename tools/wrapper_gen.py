@@ -142,7 +142,7 @@ header_bottom = '''\
 # --------------------
 # for src/*.cc wrappers
 wrapper_top1 = '''\
-// Copyright (c) 2017-2021, University of Tennessee. All rights reserved.
+// Copyright (c) 2017-2022, University of Tennessee. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
@@ -170,7 +170,7 @@ wrapper_bottom = '''\
 # --------------------
 # for test/test_*.cc testers
 tester_top = '''\
-// Copyright (c) 2017-2021, University of Tennessee. All rights reserved.
+// Copyright (c) 2017-2022, University of Tennessee. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.

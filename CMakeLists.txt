@@ -14,7 +14,7 @@ cmake_minimum_required( VERSION 3.15 )
 
 project(
     lapackpp
-    VERSION 2021.04.00
+    VERSION 2022.05.00
     LANGUAGES CXX
 )
 

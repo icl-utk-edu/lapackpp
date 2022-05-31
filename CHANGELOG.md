@@ -1,6 +1,11 @@
+2022.05.00
+  - Added laed4, sturm
+  - Use custom allocator to avoid workspace initialization overhead
+  - Backward error checks for more routines
+
 2021.04.00
-  - Add include/lapack/defines.h based on configuration
-  - Add larfgp
+  - Added include/lapack/defines.h based on configuration
+  - Added larfgp
   - More robust backward error checks
   - Makefile and CMake fixes
 
@@ -9,7 +14,7 @@
 
 2020.10.00
   - Fixes: CMake version
-  - Add `make check`
+  - Added `make check`
 
 2020.09.00
   - Initial release.

@@ -38,13 +38,7 @@ void test_lantr_work( Params& params, bool run )
     if (! run)
         return;
 
-    // skip invalid sizes
-    if ((uplo == blas::Uplo::Lower && m < n) ||
-        (uplo == blas::Uplo::Upper && m > n))
-    {
-        params.msg() = "skipping: requires m >= n (lower) or m <= n (upper)";
-        return;
-    }
+    // Any m, n actually works, despite the LAPACK documentation.
 
     // ---------- setup
     int64_t lda = roundup( blas::max( m, 1 ), align );

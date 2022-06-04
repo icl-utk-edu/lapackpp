@@ -22,10 +22,12 @@ float lantr(
     float const* A, int64_t lda )
 {
     lapack_error_if( lda < m );
+
+    // Safeguard m, n.
     if (uplo == Uplo::Lower)
-        lapack_error_if( m < n );
-    else if (uplo == Uplo::Upper)
-        lapack_error_if( m > n );
+        n = min( m, n );
+    else
+        m = min( m, n );
 
     // check for overflow
     if (sizeof(int64_t) > sizeof(lapack_int)) {
@@ -63,10 +65,12 @@ double lantr(
     double const* A, int64_t lda )
 {
     lapack_error_if( lda < m );
+
+    // Safeguard m, n.
     if (uplo == Uplo::Lower)
-        lapack_error_if( m < n );
-    else if (uplo == Uplo::Upper)
-        lapack_error_if( m > n );
+        n = min( m, n );
+    else
+        m = min( m, n );
 
     // check for overflow
     if (sizeof(int64_t) > sizeof(lapack_int)) {
@@ -104,10 +108,12 @@ float lantr(
     std::complex<float> const* A, int64_t lda )
 {
     lapack_error_if( lda < m );
+
+    // Safeguard m, n.
     if (uplo == Uplo::Lower)
-        lapack_error_if( m < n );
-    else if (uplo == Uplo::Upper)
-        lapack_error_if( m > n );
+        n = min( m, n );
+    else
+        m = min( m, n );
 
     // check for overflow
     if (sizeof(int64_t) > sizeof(lapack_int)) {
@@ -168,8 +174,12 @@ float lantr(
 /// @param[in] m
 ///     The number of rows of the matrix A. m >= 0.
 ///     When m = 0, returns zero.
-///     - If uplo == Upper, m <= n;
-///     - if uplo == Lower, m >= n.
+///     For upper, only the first min( m, n ) rows are accessed.
+///     For lower, only the first min( m, n ) cols are accessed.
+///     (LAPACK documentation says upper requires m <= n,
+///     lower requires m >= n, but the code works for any m, n.
+///     Other implementations may crash. LAPACK++ safeguards m, n to
+///     work for any m, n.)
 ///
 /// @param[in] n
 ///     The number of columns of the matrix A.
@@ -198,10 +208,12 @@ double lantr(
     std::complex<double> const* A, int64_t lda )
 {
     lapack_error_if( lda < m );
+
+    // Safeguard m, n.
     if (uplo == Uplo::Lower)
-        lapack_error_if( m < n );
-    else if (uplo == Uplo::Upper)
-        lapack_error_if( m > n );
+        n = min( m, n );
+    else
+        m = min( m, n );
 
     // check for overflow
     if (sizeof(int64_t) > sizeof(lapack_int)) {

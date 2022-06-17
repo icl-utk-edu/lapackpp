@@ -24,6 +24,9 @@ jobs:
   
     steps:
       - uses: actions/checkout@v2
-      - name: Test build
+      - name: Configure
+        run: .github/workflows/configure.sh ${{matrix.maker}}
+      - name: Build
         run: .github/workflows/build.sh ${{matrix.maker}}
-        
+      - name: Test
+        run: .github/workflows/test.sh ${{matrix.maker}}       

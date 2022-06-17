@@ -2,7 +2,8 @@
 
 maker=$1
 
-source .github/workflows/setup_env.sh
+mydir=`dirname $0`
+source $mydir/setup_env.sh
 
 section "======================================== build"
 make -j8

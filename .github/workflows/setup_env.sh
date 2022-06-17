@@ -32,7 +32,7 @@ if [ "${maker}" = "cmake" ]; then
     module load cmake
     which cmake
     cmake --version
-    rm -rf build && mkdir -p build && cd build
+    cd build
 fi
 
 

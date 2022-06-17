@@ -4,12 +4,12 @@ maker=$1
 
 source .github/workflows/setup_env.sh
 
-section"======================================== Run tests"
+section "======================================== Run tests"
 cd test
 export OMP_NUM_THREADS=8
 ./run_tests.py --quick --xml ${top}/report-${maker}.xml
 
-echo "======================================== Smoke tests"
+section "======================================== Smoke tests"
 cd ${top}/example
 
 if [ "${maker}" = "make" ]; then

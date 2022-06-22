@@ -501,9 +501,18 @@ add_library(
     src/upgtr.cc
     src/upmtr.cc
     src/version.cc
+
     src/cuda/cuda_common.cc
+    src/cuda/cuda_geqrf.cc
+    src/cuda/cuda_getrf.cc
     src/cuda/cuda_potrf.cc
+
+    src/rocm/rocm_geqrf.cc
+    src/rocm/rocm_getrf.cc
     src/rocm/rocm_potrf.cc
+
+    src/stub/stub_geqrf.cc
+    src/stub/stub_getrf.cc
     src/stub/stub_potrf.cc
 )
 

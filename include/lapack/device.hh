@@ -15,6 +15,21 @@
 
 namespace lapack {
 
+// Since we pass pointers to these integers, their types have to match
+// the vendor libraries.
+#if defined(LAPACK_HAVE_CUBLAS)
+    typedef int     device_info_int;
+    typedef int64_t device_pivot_int;
+
+#elif defined(LAPACK_HAVE_ROCBLAS)
+    typedef rocblas_int device_info_int;
+    typedef rocblas_int device_pivot_int;
+
+#else
+    typedef int64_t device_info_int;   ///< int type for returned info
+    typedef int64_t device_pivot_int;  ///< int type for pivot vector (getrf, etc.)
+#endif
+
 //------------------------------------------------------------------------------
 class Queue: public blas::Queue
 {
@@ -87,7 +102,39 @@ template <typename scalar_t>
 void potrf(
     lapack::Uplo uplo, int64_t n,
     scalar_t* dA, int64_t ldda,
-    int* dev_info, lapack::Queue& queue );
+    device_info_int* dev_info, lapack::Queue& queue );
+
+//------------------------------------------------------------------------------
+template <typename scalar_t>
+void getrf_work_size_bytes(
+    int64_t m, int64_t n,
+    scalar_t* dA, int64_t ldda,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue );
+
+template <typename scalar_t>
+void getrf(
+    int64_t m, int64_t n,
+    scalar_t* dA, int64_t ldda, device_pivot_int* dev_ipiv,
+    void*  dev_work, size_t  dev_work_size,
+    void* host_work, size_t host_work_size,
+    device_info_int* dev_info, lapack::Queue& queue );
+
+//------------------------------------------------------------------------------
+template <typename scalar_t>
+void geqrf_work_size_bytes(
+    int64_t m, int64_t n,
+    scalar_t* dA, int64_t ldda,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue );
+
+template <typename scalar_t>
+void geqrf(
+    int64_t m, int64_t n,
+    scalar_t* dA, int64_t ldda, scalar_t* dtau,
+    void*  dev_work, size_t  dev_work_size,
+    void* host_work, size_t host_work_size,
+    device_info_int* dev_info, lapack::Queue& queue );
 
 }  // namespace lapack
 

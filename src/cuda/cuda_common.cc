@@ -22,76 +22,76 @@ const char* device_error_string( cusolverStatus_t error )
             return "cusolver: success";
 
         case CUSOLVER_STATUS_NOT_INITIALIZED:
-            return "cusolver: NOT_INITIALIZED";
+            return "cusolver: not initialized";
 
         case CUSOLVER_STATUS_ALLOC_FAILED:
-            return "cusolver: alloc_failed";
+            return "cusolver: alloc failed";
 
         case CUSOLVER_STATUS_INVALID_VALUE:
-            return "cusolver: invalid_value";
+            return "cusolver: invalid value";
 
         case CUSOLVER_STATUS_ARCH_MISMATCH:
-            return "cusolver: arch_mismatch";
+            return "cusolver: arch mismatch";
 
         case CUSOLVER_STATUS_MAPPING_ERROR:
-            return "cusolver: mapping_error";
+            return "cusolver: mapping error";
 
         case CUSOLVER_STATUS_EXECUTION_FAILED:
-            return "cusolver: execution_failed";
+            return "cusolver: execution failed";
 
         case CUSOLVER_STATUS_INTERNAL_ERROR:
-            return "cusolver: internal_error";
+            return "cusolver: internal error";
 
         case CUSOLVER_STATUS_MATRIX_TYPE_NOT_SUPPORTED:
-            return "cusolver: matrix_type_not_supported";
+            return "cusolver: matrix type not supported";
 
         case CUSOLVER_STATUS_NOT_SUPPORTED:
-            return "cusolver: not_supported";
+            return "cusolver: not supported";
 
         case CUSOLVER_STATUS_ZERO_PIVOT:
-            return "cusolver: zero_pivot";
+            return "cusolver: zero pivot";
 
         case CUSOLVER_STATUS_INVALID_LICENSE:
-            return "cusolver: invalid_license";
+            return "cusolver: invalid license";
 
         case CUSOLVER_STATUS_IRS_PARAMS_NOT_INITIALIZED:
-            return "cusolver: irs_params_not_initialized";
+            return "cusolver: IRS params not initialized";
 
         case CUSOLVER_STATUS_IRS_PARAMS_INVALID:
-            return "cusolver: irs_params_invalid";
+            return "cusolver: IRS params invalid";
 
         case CUSOLVER_STATUS_IRS_PARAMS_INVALID_PREC:
-            return "cusolver: irs_params_invalid_prec";
+            return "cusolver: IRS params invalid precision";
 
         case CUSOLVER_STATUS_IRS_PARAMS_INVALID_REFINE:
-            return "cusolver: irs_params_invalid_refine";
+            return "cusolver: IRS params invalid refine";
 
         case CUSOLVER_STATUS_IRS_PARAMS_INVALID_MAXITER:
-            return "cusolver: irs_params_invalid_maxiter";
+            return "cusolver: IRS params invalid maxiter";
 
         case CUSOLVER_STATUS_IRS_INTERNAL_ERROR:
-            return "cusolver: irs_internal_error";
+            return "cusolver: IRS internal error";
 
         case CUSOLVER_STATUS_IRS_NOT_SUPPORTED:
-            return "cusolver: irs_not_supported";
+            return "cusolver: IRS not supported";
 
         case CUSOLVER_STATUS_IRS_OUT_OF_RANGE:
-            return "cusolver: irs_out_of_range";
+            return "cusolver: IRS out of range";
 
         case CUSOLVER_STATUS_IRS_NRHS_NOT_SUPPORTED_FOR_REFINE_GMRES:
-            return "cusolver: irs_nrhs_not_supported_for_refine_gmres";
+            return "cusolver: IRS NRHS not supported for refine GMRES";
 
         case CUSOLVER_STATUS_IRS_INFOS_NOT_INITIALIZED:
-            return "cusolver: irs_infos_not_initialized";
+            return "cusolver: IRS infos not initialized";
 
         case CUSOLVER_STATUS_IRS_INFOS_NOT_DESTROYED:
-            return "cusolver: irs_infos_not_destroyed";
+            return "cusolver: IRS infos not destroyed";
 
         case CUSOLVER_STATUS_IRS_MATRIX_SINGULAR:
-            return "cusolver: irs_matrix_singular";
+            return "cusolver: IRS matrix singular";
 
         case CUSOLVER_STATUS_INVALID_WORKSPACE:
-            return "cusolver: invalid_workspace";
+            return "cusolver: invalid workspace";
 
         default:
             return "cusolver: unknown error code";

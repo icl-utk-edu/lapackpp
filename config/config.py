@@ -621,7 +621,7 @@ def cublas_library():
     Does not actually run the resulting exe, to allow compiling with CUDA on a
     machine without GPUs.
     '''
-    libs = '-lcublas -lcudart'
+    libs = '-lcusolver -lcublas -lcudart'
     print_subhead( 'CUDA and cuBLAS libraries' )
     print_test( '    ' + libs )
     env = {'LIBS': libs, 'CXXFLAGS': define('HAVE_CUBLAS')}
@@ -640,7 +640,7 @@ def rocblas_library():
     Does not actually run the resulting exe, to allow compiling with ROCm on a
     machine without GPUs.
     '''
-    libs = '-lrocblas -lamdhip64'
+    libs = '-lrocsolver -lrocblas -lamdhip64'
     print_subhead( 'HIP/ROCm and rocBLAS libraries' )
     print_test( '    ' + libs )
     env = {'LIBS': libs,

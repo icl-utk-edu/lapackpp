@@ -45,6 +45,10 @@ option( build_tests "Build test suite" "${lapackpp_is_project}" )
 option( color "Use ANSI color output" true )
 option( use_cmake_find_lapack "Use CMake's find_package( LAPACK ) rather than the search in LAPACK++" false )
 
+set( gpu_backend "auto" CACHE STRING "GPU backend to use" )
+set_property( CACHE gpu_backend PROPERTY STRINGS
+              auto cuda hip none )
+
 # Default prefix=/opt/slate
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT
     AND lapackpp_is_project)
@@ -95,6 +99,7 @@ lapack                 = ${lapack}
 build_tests            = ${build_tests}
 color                  = ${color}
 use_cmake_find_lapack  = ${use_cmake_find_lapack}
+gpu_backend            = ${gpu_backend}
 lapackpp_is_project    = ${lapackpp_is_project}
 lapackpp_              = ${lapackpp_}
 " )
@@ -496,8 +501,78 @@ add_library(
     src/upgtr.cc
     src/upmtr.cc
     src/version.cc
+    src/cuda/cuda_common.cc
+    src/cuda/cuda_potrf.cc
+    src/rocm/rocm_potrf.cc
+    src/stub/stub_potrf.cc
 )
 
+#-------------------------------------------------------------------------------
+# CUDA support.
+set( lapackpp_use_cuda false )  # output in lapackppConfig.cmake.in
+if (gpu_backend MATCHES "^(auto|cuda)$")
+    include( CheckLanguage )
+    check_language( CUDA )
+    if (gpu_backend STREQUAL "cuda" AND NOT CMAKE_CUDA_COMPILER)
+        message( FATAL_ERROR "gpu_backend = ${gpu_backend}, but CUDA was not found")
+    endif()
+else()
+    message( STATUS "Skipping CUDA search. gpu_backend = ${gpu_backend}" )
+endif()
+if (CMAKE_CUDA_COMPILER)
+    enable_language( CUDA )
+
+    # todo: check for cuda 10.0+ and force newer CMake version - if possible
+
+    # CMake 3.17 adds find_package( CUDAToolkit )
+    # with CUDA::cudart and CUDA::cublas targets.
+    # For compatibility with older CMake, for now do search ourselves.
+    find_library( cudart_lib cudart ${CMAKE_CUDA_IMPLICIT_LINK_DIRECTORIES} )
+    find_library( cublas_lib cublas ${CMAKE_CUDA_IMPLICIT_LINK_DIRECTORIES} )
+    find_library( cusolver_lib cusolver ${CMAKE_CUDA_IMPLICIT_LINK_DIRECTORIES} )
+
+    set( lapackpp_defs_cuda_ "-DLAPACK_HAVE_CUBLAS" )
+    set( lapackpp_use_cuda true )
+
+    # Some platforms need these to be public libraries.
+    target_link_libraries(
+        lapackpp PUBLIC "${cusolver_lib}" "${cublas_lib}" "${cudart_lib}"  )
+    target_include_directories(
+        lapackpp PUBLIC "${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES}" )
+    message( STATUS "Building CUDA support in LAPACK++" )
+else()
+    message( STATUS "Not building CUDA support in LAPACK++" )
+endif()
+
+#-------------------------------------------------------------------------------
+# HIP/ROCm support.
+set( lapackpp_use_hip false )  # output in lapackppConfig.cmake.in
+if (NOT CMAKE_CUDA_COMPILER
+    AND gpu_backend MATCHES "^(auto|hip)$")
+
+    message( STATUS "Looking for HIP/ROCm" )
+    if (gpu_backend STREQUAL "hip")
+        find_package( rocblas   REQUIRED )
+        find_package( rocsolver REQUIRED )
+    else()
+        find_package( rocblas   QUIET )
+        find_package( rocsolver QUIET )
+    endif()
+else()
+    message( STATUS "Skipping HIP/ROCm search. gpu_backend = ${gpu_backend}" )
+endif()
+if (rocblas_FOUND AND rocsolver_FOUND)
+    set( lapackpp_defs_hip_ "-DLAPACK_HAVE_ROCBLAS" )
+    set( lapackpp_use_hip true )
+
+    # Some platforms need these to be public libraries.
+    target_link_libraries( lapackpp PUBLIC roc::rocblas roc::rocsolver )
+    message( STATUS "Building HIP/ROCm support in LAPACK++" )
+else()
+    message( STATUS "Not building HIP/ROCm support in LAPACK++" )
+endif()
+
+#-------------------------------------------------------------------------------
 # Clean stale defines.h from Makefile-based build.
 file( REMOVE "${CMAKE_CURRENT_SOURCE_DIR}/include/lapack/defines.h" )
 
@@ -574,7 +649,8 @@ set( lapackpp_defs_ "${lapackpp_defs_}"
      CACHE INTERNAL "Constants defined for LAPACK" )
 
 # Concat defines.
-set( lapackpp_defines ${lapackpp_defs_} )
+set( lapackpp_defines ${lapackpp_defs_} ${lapackpp_defs_cuda_} ${lapackpp_defs_hip_}
+     CACHE INTERNAL "")
 
 if (true)
     # Extract definitions as #define VAR or #define VAR VALUE.

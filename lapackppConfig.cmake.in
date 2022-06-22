@@ -1,8 +1,16 @@
 cmake_minimum_required( VERSION 3.15 )
 
+set( lapackpp_use_cuda   "@lapackpp_use_cuda@" )
+set( lapackpp_use_hip    "@lapackpp_use_hip@" )
+
 include( CMakeFindDependencyMacro )
 
 find_dependency( blaspp )
+
+if (lapackpp_use_hip)
+    find_dependency( rocblas   )
+    find_dependency( rocsolver )
+endif()
 
 # Export variables.
 set( lapackpp_defines   "@lapackpp_defines@" )

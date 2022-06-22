@@ -12,6 +12,9 @@
 #include "matrix_generator.hh"
 
 // -----------------------------------------------------------------------------
+using llong = long long;
+
+// -----------------------------------------------------------------------------
 class Params: public testsweeper::ParamsBase
 {
 public:

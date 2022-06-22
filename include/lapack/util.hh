@@ -869,6 +869,10 @@ inline const char* rowcol2str( lapack::RowCol rowcol )
     return "?";
 }
 
+//------------------------------------------------------------------------------
+// For %lld printf-style printing, cast to llong; guaranteed >= 64 bits.
+using llong = long long;
+
 }  // namespace lapack
 
 #endif  // LAPACK_UTIL_HH

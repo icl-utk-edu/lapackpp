@@ -240,6 +240,7 @@ std::vector< testsweeper::routines_t > routines = {
 
     // -----
     // QR, LQ, RQ, QL
+    { "geqr",               test_geqr,      Section::qr }, // tested numerically
     { "geqrf",              test_geqrf,     Section::qr }, // tested numerically
     { "gelqf",              test_gelqf,     Section::qr }, // tested numerically
     { "geqlf",              test_geqlf,     Section::qr }, // tested numerically

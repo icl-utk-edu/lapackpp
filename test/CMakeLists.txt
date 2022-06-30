@@ -61,6 +61,7 @@ add_executable(
     test_gelss.cc
     test_gelsy.cc
     test_geqlf.cc
+    test_geqr.cc
     test_geqrf.cc
     test_geqrf_device.cc
     test_gerfs.cc

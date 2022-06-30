@@ -813,6 +813,8 @@ state_details       = i; i += 1
 state_details_verb  = i; i += 1
 state_details_desc  = i; i += 1
 
+state_further_verb  = i; i += 1
+
 state_done          = i; i += 1
 
 # ------------------------------------------------------------------------------

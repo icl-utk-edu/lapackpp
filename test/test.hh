@@ -290,6 +290,7 @@ void test_gglse ( Params& params, bool run );
 void test_ggglm ( Params& params, bool run );
 
 // QR, LQ, QL, RQ
+void test_geqr  ( Params& params, bool run );
 void test_geqrf ( Params& params, bool run );
 void test_gelqf ( Params& params, bool run );
 void test_geqlf ( Params& params, bool run );

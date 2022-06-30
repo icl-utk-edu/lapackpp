@@ -943,6 +943,51 @@ inline lapack_int LAPACKE_geqlf(
 }
 
 // -----------------------------------------------------------------------------
+inline lapack_int LAPACKE_geqr(
+    lapack_int m, lapack_int n,
+    float* A, lapack_int lda,
+    float* T, lapack_int tsize )
+{
+    return LAPACKE_sgeqr(
+        LAPACK_COL_MAJOR, m, n,
+        A, lda,
+        T, tsize );
+}
+
+inline lapack_int LAPACKE_geqr(
+    lapack_int m, lapack_int n,
+    double* A, lapack_int lda,
+    double* T, lapack_int tsize )
+{
+    return LAPACKE_dgeqr(
+        LAPACK_COL_MAJOR, m, n,
+        A, lda,
+        T, tsize );
+}
+
+inline lapack_int LAPACKE_geqr(
+    lapack_int m, lapack_int n,
+    std::complex<float>* A, lapack_int lda,
+    std::complex<float>* T, lapack_int tsize )
+{
+    return LAPACKE_cgeqr(
+        LAPACK_COL_MAJOR, m, n,
+        (lapack_complex_float*) A, lda,
+        (lapack_complex_float*) T, tsize );
+}
+
+inline lapack_int LAPACKE_geqr(
+    lapack_int m, lapack_int n,
+    std::complex<double>* A, lapack_int lda,
+    std::complex<double>* T, lapack_int tsize )
+{
+    return LAPACKE_zgeqr(
+        LAPACK_COL_MAJOR, m, n,
+        (lapack_complex_double*) A, lda,
+        (lapack_complex_double*) T, tsize );
+}
+
+// -----------------------------------------------------------------------------
 inline lapack_int LAPACKE_geqrf(
     lapack_int m, lapack_int n,
     float* A, lapack_int lda,

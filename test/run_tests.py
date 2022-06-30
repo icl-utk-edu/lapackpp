@@ -513,6 +513,7 @@ if (opts.least_squares and opts.host):
 # QR
 if (opts.qr and opts.host):
     cmds += [
+    [ 'geqr',  gen + dtype + align + n + wide + tall ],
     [ 'geqrf', gen + dtype + align + n + wide + tall ],
     # todo: ggqrf is failing
     #[ 'ggqrf', gen + dtype + align + mnk ],

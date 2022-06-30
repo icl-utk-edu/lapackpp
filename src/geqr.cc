@@ -7,7 +7,7 @@
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
-#if LAPACK_VERSION >= 30700  // >= 3.7
+#if LAPACK_VERSION >= 30700  // >= 3.7.0
 
 #include <vector>
 
@@ -18,6 +18,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
+/// @ingroup geqrf
 int64_t geqr(
     int64_t m, int64_t n,
     float* A, int64_t lda,
@@ -47,6 +48,10 @@ int64_t geqr(
     if (info_ < 0) {
         throw Error();
     }
+    // tsize == -1 or -2 is query
+    if (tsize < 0) {
+        return info_;
+    }
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
@@ -64,6 +69,7 @@ int64_t geqr(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup geqrf
 int64_t geqr(
     int64_t m, int64_t n,
     double* A, int64_t lda,
@@ -93,6 +99,10 @@ int64_t geqr(
     if (info_ < 0) {
         throw Error();
     }
+    // tsize == -1 or -2 is query
+    if (tsize < 0) {
+        return info_;
+    }
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
@@ -110,6 +120,7 @@ int64_t geqr(
 }
 
 // -----------------------------------------------------------------------------
+/// @ingroup geqrf
 int64_t geqr(
     int64_t m, int64_t n,
     std::complex<float>* A, int64_t lda,
@@ -139,6 +150,10 @@ int64_t geqr(
     if (info_ < 0) {
         throw Error();
     }
+    // tsize == -1 or -2 is query
+    if (tsize < 0) {
+        return info_;
+    }
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
@@ -156,6 +171,61 @@ int64_t geqr(
 }
 
 // -----------------------------------------------------------------------------
+/// Computes a QR factorization of an m-by-n matrix A:
+/// \[
+///     A = Q \begin{bmatrix} R
+///           \\              0
+///           \end{bmatrix},
+/// \]
+/// Q is a m-by-m orthogonal matrix;
+/// R is an upper-triangular n-by-n matrix;
+/// 0 is a (m - n)-by-n zero matrix, if m > n.
+///
+/// Overloaded versions are available for
+/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+///
+/// @since LAPACK 3.7.0
+///
+/// @param[in] m
+///     The number of rows of the matrix A. m >= 0.
+///
+/// @param[in] n
+///     The number of columns of the matrix A. n >= 0.
+///
+/// @param[in,out] A
+///     The m-by-n matrix A, stored in an lda-by-n array.
+///     On entry, the m-by-n matrix A.
+///     On exit, the elements on and above the diagonal of the array
+///     contain the min(m,n)-by-n upper trapezoidal matrix R
+///     (R is upper triangular if m >= n);
+///     the elements below the diagonal are used to store part of the
+///     data structure to represent Q.
+///
+/// @param[in] lda
+///     The leading dimension of the array A. lda >= max(1,m).
+///
+/// @param[out] T
+///     The vector T of length max(5,tsize).
+///     On successful exit, T(1) returns optimal (or either minimal
+///     or optimal, if query is assumed) tsize. See tsize for details.
+///     Remaining T contains part of the data structure used to represent Q.
+///     If one wants to apply or construct Q, then one needs to keep T
+///     (in addition to A) and pass it to further subroutines.
+///
+/// @param[in] tsize
+///     If tsize >= 5, the dimension of the array T.
+///     If tsize = -1 or -2, then a workspace query is assumed. The routine
+///     only calculates the sizes of the T and work arrays, returns these
+///     values as the first entries of the T and work arrays, and no error
+///     message related to T or work is issued by XERBLA.
+///     If tsize = -1, the routine calculates optimal size of T for the
+///     optimum performance and returns this value in T(1).
+///     If tsize = -2, the routine calculates minimal size of T and
+///     returns this value in T(1).
+///
+/// @retval = 0: successful exit
+///
+/// @ingroup geqrf
 int64_t geqr(
     int64_t m, int64_t n,
     std::complex<double>* A, int64_t lda,
@@ -185,6 +255,10 @@ int64_t geqr(
     if (info_ < 0) {
         throw Error();
     }
+    // tsize == -1 or -2 is query
+    if (tsize < 0) {
+        return info_;
+    }
     lapack_int lwork_ = real(qry_work[0]);
 
     // allocate workspace
@@ -203,4 +277,4 @@ int64_t geqr(
 
 }  // namespace lapack
 
-#endif  // LAPACK >= 3.7
+#endif  // LAPACK >= 3.7.0

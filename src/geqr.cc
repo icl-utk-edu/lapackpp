@@ -206,7 +206,7 @@ int64_t geqr(
 ///
 /// @param[out] T
 ///     The vector T of length max(5,tsize).
-///     On successful exit, T(1) returns optimal (or either minimal
+///     On successful exit, T[0] returns optimal (or either minimal
 ///     or optimal, if query is assumed) tsize. See tsize for details.
 ///     Remaining T contains part of the data structure used to represent Q.
 ///     If one wants to apply or construct Q, then one needs to keep T
@@ -215,15 +215,50 @@ int64_t geqr(
 /// @param[in] tsize
 ///     If tsize >= 5, the dimension of the array T.
 ///     If tsize = -1 or -2, then a workspace query is assumed. The routine
-///     only calculates the sizes of the T and work arrays, returns these
-///     values as the first entries of the T and work arrays, and no error
-///     message related to T or work is issued by XERBLA.
+///     only calculates the sizes of the T array, returns this
+///     value as the first entries of the T array, and no error
+///     message related to T is issued.
 ///     If tsize = -1, the routine calculates optimal size of T for the
-///     optimum performance and returns this value in T(1).
+///     optimum performance and returns this value in T[0].
 ///     If tsize = -2, the routine calculates minimal size of T and
-///     returns this value in T(1).
+///     returns this value in T[0].
 ///
 /// @retval = 0: successful exit
+///
+// -----------------------------------------------------------------------------
+/// @par Further Details
+///
+/// The goal of the interface is to give maximum freedom to the developers for
+/// creating any QR factorization algorithm they wish. The
+/// trapezoidal R has to be stored in the upper part of A. The lower part of A
+/// and the array T can be used to store any relevant information for applying or
+/// constructing the Q factor.
+///
+/// Caution: One should not expect the size of T to be the same from one
+/// LAPACK implementation to the other, or even from one execution to the other.
+/// A workspace query for T is needed at each execution. However,
+/// for a given execution, the size of T are fixed and will not change
+/// from one query to the next.
+///
+// -----------------------------------------------------------------------------
+/// @par Further Details particular to the Netlib LAPACK implementation
+///
+/// These details are particular for the Netlib LAPACK implementation.
+/// Users should not take them for granted. These details may change in
+/// the future, and are not likely true for another LAPACK
+/// implementation. These details are relevant if one wants to try to
+/// understand the code. They are not part of the interface.
+///
+/// In this version,
+///
+///     T[1]: row block size (mb)
+///     T[2]: column block size (nb)
+///     T[5:TSIZE-1]: data structure needed for Q, computed by latsqr or geqrt
+///
+/// Depending on the matrix dimensions m and n, and row and column
+/// block sizes mb and nb returned by ilaenv, geqr will use either
+/// latsqr (if the matrix is tall-and-skinny) or geqrt to compute
+/// the QR factorization.
 ///
 /// @ingroup geqrf
 int64_t geqr(

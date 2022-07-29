@@ -150,6 +150,8 @@ void potrf(
     auto solver = queue.solver();
     auto uplo_ = blas::device::uplo2cublas( uplo );
 
+    blas::set_device( queue.device() );
+
     // query for workspace size
     size_t dev_work_size, host_work_size;
     potrf_work_size_bytes(

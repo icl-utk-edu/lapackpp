@@ -85,6 +85,8 @@ void geqrf(
     // todo: check for overflow
     auto solver = queue.handle();
 
+    blas::set_device( queue.device() );
+
     rocsolver_geqrf( solver, m, n, dA, ldda, dtau );
     device_memset( dev_info, 0, 1, queue );
 }

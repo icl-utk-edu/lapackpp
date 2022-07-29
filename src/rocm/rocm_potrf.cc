@@ -77,6 +77,8 @@ void potrf(
     auto solver = queue.handle();
     auto uplo_ = blas::device::uplo2rocblas( uplo );
 
+    blas::set_device( queue.device() );
+
     rocsolver_potrf( solver, uplo_, n, dA, ldda, dev_info );
 }
 

@@ -86,6 +86,8 @@ void getrf(
     // todo: check for overflow
     auto solver = queue.handle();
 
+    blas::set_device( queue.device() );
+
     rocsolver_getrf( solver, m, n, dA, ldda, dipiv, dev_info );
 }
 

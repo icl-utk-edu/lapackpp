@@ -51,6 +51,7 @@ public:
     ~Queue()
     {
         #if defined(LAPACK_HAVE_CUBLAS)
+            blas::set_device( device() );
             #if CUSOLVER_VERSION >= 11000
                 if (solver_params_) {
                     cusolverDnDestroyParams( solver_params_ );
@@ -74,6 +75,7 @@ public:
         cusolverDnHandle_t solver()
         {
             if (solver_ == nullptr) {
+                blas::set_device( device() );
                 // todo: error handler
                 cusolverStatus_t status;
                 status = cusolverDnCreate( &solver_ );
@@ -91,6 +93,7 @@ public:
             cusolverDnParams_t solver_params()
             {
                 if (solver_params_ == nullptr) {
+                    blas::set_device( device() );
                     // todo: error handler
                     cusolverStatus_t status;
                     status = cusolverDnCreateParams( &solver_params_ );

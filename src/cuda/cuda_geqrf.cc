@@ -111,6 +111,8 @@ void geqrf_work_size_bytes(
 {
     auto solver = queue.solver();
 
+    blas::set_device( queue.device() );
+
     // query for workspace size
     #if CUSOLVER_VERSION >= 11000
         auto params = queue.solver_params();
@@ -146,6 +148,8 @@ void geqrf(
     device_info_int* dev_info, lapack::Queue& queue )
 {
     auto solver = queue.solver();
+
+    blas::set_device( queue.device() );
 
     // launch kernel
     #if CUSOLVER_VERSION >= 11000

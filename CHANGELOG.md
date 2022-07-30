@@ -1,3 +1,7 @@
+2022.07.00
+  - Added device queue and Cholesky (potrf), LU (getrf), and QR (geqrf) on GPU
+  - Added geqr tester
+
 2022.05.00
   - Added laed4, sturm
   - Use custom allocator to avoid workspace initialization overhead

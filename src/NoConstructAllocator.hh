@@ -45,7 +45,7 @@ struct NoConstructAllocator
 
         void* memPtr = nullptr;
         #if defined( _WIN32 ) || defined( _WIN64 )
-            memPtr = _aligned_malloc( n*sizeof(T, 64) );
+            memPtr = _aligned_malloc( n*sizeof(T), 64 );
             if (memPtr != nullptr) {
                 auto p = static_cast<T*>(memPtr);
                 return p;

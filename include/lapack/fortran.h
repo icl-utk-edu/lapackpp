@@ -13784,6 +13784,24 @@ void LAPACK_dlartgp(
     double const* f, double const* g,
     double* cs, double* sn, double* r );
 
+/* ----- generate Givens rotation (more accurate than rotg) */
+#define LAPACK_slartg LAPACK_GLOBAL(slartg,SLARTG)
+void LAPACK_slartg(
+    float const* f, float const* g,
+    float* cs, float* sn, float* r );
+#define LAPACK_dlartg LAPACK_GLOBAL(dlartg,DLARTG)
+void LAPACK_dlartg(
+    double const* f, double const* g,
+    double* cs, double* sn, double* r );
+#define LAPACK_clartg LAPACK_GLOBAL(clartg,CLARTG)
+void LAPACK_clartg(
+    lapack_complex_float const* f, lapack_complex_float const* g,
+    float* cs, lapack_complex_float* sn, lapack_complex_float* r );
+#define LAPACK_zlartg LAPACK_GLOBAL(zlartg,ZLARTG)
+void LAPACK_zlartg(
+    lapack_complex_double const* f, lapack_complex_double const* g,
+    double* cs, lapack_complex_double* sn, lapack_complex_double* r );
+
 /* ----- generate plane rotation for implicit QR */
 #define LAPACK_slartgs LAPACK_GLOBAL(slartgs,SLARTGS)
 void LAPACK_slartgs(

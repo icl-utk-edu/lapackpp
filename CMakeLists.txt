@@ -308,6 +308,7 @@ add_library(
     src/larfy.cc
     src/larfy.cc
     src/larnv.cc
+    src/lartg.cc
     src/lartgp.cc
     src/lartgs.cc
     src/lascl.cc

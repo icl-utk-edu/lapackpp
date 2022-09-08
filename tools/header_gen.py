@@ -1,7 +1,32 @@
 #!/usr/bin/env python
-#
-# generate C prototypes for the LAPACK Fortran functions by parsing
-# doxygen comments in LAPACK's SRC *.f files.
+
+'''
+Generate C prototypes for the LAPACK Fortran functions by parsing
+doxygen comments in LAPACK's SRC *.f files. Looks for routines in
+LAPACK's SRC, INSTALL, and MATGEN directories. (Because MATGEN is the
+last directory checked, error messages show that file not found.)
+
+Example usage:
+
+    # Assumes $LAPACKDIR is set
+    lapackpp> echo $LAPACKDIR
+    /Users/mgates/Documents/lapack
+
+    lapackpp> ./tools/header_gen.py {s,d,c,z}posv {s,d}ormqr {c,z}unmqr
+    generating gen/fortran.h
+
+    lapackpp> ./tools/header_gen.py all
+    reading include/lapack/fortran.h to re-generate all prototypes
+    generating gen/fortran.h
+    // skipping, file not found: /Users/mgates/Documents/lapack/TESTING/MATGEN/slassq.f
+    // skipping, file not found: /Users/mgates/Documents/lapack/TESTING/MATGEN/dlassq.f
+    // skipping, file not found: /Users/mgates/Documents/lapack/TESTING/MATGEN/classq.f
+    // skipping, file not found: /Users/mgates/Documents/lapack/TESTING/MATGEN/zlassq.f
+    // skipping, file not found: /Users/mgates/Documents/lapack/TESTING/MATGEN/slartg.f
+    // skipping, file not found: /Users/mgates/Documents/lapack/TESTING/MATGEN/dlartg.f
+    // skipping, file not found: /Users/mgates/Documents/lapack/TESTING/MATGEN/clartg.f
+    // skipping, file not found: /Users/mgates/Documents/lapack/TESTING/MATGEN/zlartg.f
+'''
 
 from __future__ import print_function
 
@@ -10,21 +35,33 @@ import re
 import os
 
 lapack = os.environ['LAPACKDIR']
-if (len(sys.argv) == 1):
+
+if (len( sys.argv ) == 1):
+    print( 'Usage:', sys.argv[0], '[routine ...]\n' +
+           '      ', sys.argv[0], 'all\n' +
+           'See script for more details' )
+    exit(1)
+# end
+
+if (sys.argv[1] == 'all'):
+    #header = lapack + '/LAPACKE/include/lapack.h'
+    header = 'include/lapack/fortran.h'
+    print( 'reading', header, 'to re-generate all prototypes' )
     funcs = []
-    #f = open( lapack + '/LAPACKE/include/lapack.h' )
-    f = open( '../include/lapack/fortran.h' )
+    f = open( header )
     for line in f:
         s = re.search( r' +LAPACK_(\w+) +LAPACK_GLOBAL\( *\1', line )
         #s = re.search( r'(?:void|float|double) +LAPACK_GLOBAL\((\w+),', line )
         if (s):
             funcs.append( s.group(1) )
     # end
-    output = open( 'lapack_parse.h', 'w' )
 else:
     funcs = sys.argv[1:]
-    output = sys.stdout
 # end
+
+output = 'gen/fortran.h'
+print( 'generating', output )
+output = open( output, 'w' )
 
 intent = None
 var    = None
@@ -109,11 +146,12 @@ for func in funcs:
             # end
         # end
         print( '#define LAPACK_' + func + ' LAPACK_GLOBAL(' + func + ',' + func.upper() + ')', file=output )
-        print( retval + ' LAPACK_' + func + '( ' + ', '.join( args ) + ' );', file=output )
+        print( retval + ' LAPACK_' + func + '(\n    ' + ', '.join( args ) + '\n);\n', file=output )
     else:
-        print( 'skipping, file not found:', filename )
-        print( '#define LAPACK_' + func + ' LAPACK_GLOBAL(' + func + ',' + func.upper() + ')', file=output )
-        print( 'void LAPACK_' + func + '( ... );', file=output )
+        print( '// skipping, file not found:', filename )
+        print( '// skipping, file not found:', filename, file=output )
+        print( '// #define LAPACK_' + func + ' LAPACK_GLOBAL(' + func + ',' + func.upper() + ')', file=output )
+        print( '// void LAPACK_' + func + '( ... );\n', file=output )
     # end
 # end
 

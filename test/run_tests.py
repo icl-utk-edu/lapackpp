@@ -520,6 +520,7 @@ if (opts.qr and opts.host):
     [ 'ungqr', gen + dtype + align + mn ],  # m >= n
     #[ 'unmqr', gen + dtype_real    + align + mnk + side + trans    ],  # real does trans = N, T, C
     #[ 'unmqr', gen + dtype_complex + align + mnk + side + trans_nc ],  # complex does trans = N, C, not T
+    [ 'unhr_col', gen + dtype + align + n + tall ],
 
     # Triangle-pentagon
     [ 'tpqrt',  gen + dtype + align + mn + l + nb ],

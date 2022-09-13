@@ -310,6 +310,7 @@ void test_unmqr ( Params& params, bool run );
 void test_unmlq ( Params& params, bool run );
 void test_unmql ( Params& params, bool run );
 void test_unmrq ( Params& params, bool run );
+void test_unhr_col( Params& params, bool run );
 
 // triangle-pentagon QR, LQ
 void test_tpqrt ( Params& params, bool run );

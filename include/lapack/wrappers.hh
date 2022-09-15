@@ -10187,6 +10187,52 @@ int64_t upmtr(
     std::complex<double> const* tau,
     std::complex<double>* C, int64_t ldc );
 
+// -----------------------------------------------------------------------------
+int64_t orhr_col(
+    int64_t m, int64_t n, int64_t nb,
+    float* A, int64_t lda,
+    float* T, int64_t ldt,
+    float* D );
+
+// unhr_col alias to orhr_col
+inline int64_t unhr_col(
+    int64_t m, int64_t n, int64_t nb,
+    float* A, int64_t lda,
+    float* T, int64_t ldt,
+    float* D )
+{
+    return orhr_col( m, n, nb, A, lda, T, ldt, D );
+}
+
+int64_t orhr_col(
+    int64_t m, int64_t n, int64_t nb,
+    double* A, int64_t lda,
+    double* T, int64_t ldt,
+    double* D );
+
+// unhr_col alias to orhr_col
+inline int64_t unhr_col(
+    int64_t m, int64_t n, int64_t nb,
+    double* A, int64_t lda,
+    double* T, int64_t ldt,
+    double* D )
+{
+    return orhr_col( m, n, nb, A, lda, T, ldt, D );
+}
+
+// -----------------------------------------------------------------------------
+int64_t unhr_col(
+    int64_t m, int64_t n, int64_t nb,
+    std::complex<float>* A, int64_t lda,
+    std::complex<float>* T, int64_t ldt,
+    std::complex<float>* D );
+
+int64_t unhr_col(
+    int64_t m, int64_t n, int64_t nb,
+    std::complex<double>* A, int64_t lda,
+    std::complex<double>* T, int64_t ldt,
+    std::complex<double>* D );
+
 }  // namespace lapack
 
 #endif // LAPACK_WRAPPERS_HH

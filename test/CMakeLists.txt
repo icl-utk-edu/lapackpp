@@ -202,6 +202,7 @@ add_executable(
     test_ungrq.cc
     test_ungtr.cc
     test_unmhr.cc
+    test_unhr_col.cc
     test_unmtr.cc
     test_upgtr.cc
     test_upmtr.cc

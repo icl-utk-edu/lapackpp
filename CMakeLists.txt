@@ -326,6 +326,7 @@ add_library(
     src/orgqr.cc
     src/orgrq.cc
     src/orgtr.cc
+    src/orhr_col.cc
     src/ormbr.cc
     src/ormhr.cc
     src/ormlq.cc
@@ -491,6 +492,7 @@ add_library(
     src/ungqr.cc
     src/ungrq.cc
     src/ungtr.cc
+    src/unhr_col.cc
     src/unmbr.cc
     src/unmhr.cc
     src/unmlq.cc

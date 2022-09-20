@@ -1,4 +1,4 @@
-#!/bin/bash -e 
+#!/bin/bash -e
 
 maker=$1
 
@@ -24,7 +24,7 @@ if [ "${maker}" = "cmake" ]; then
     cmake --version
 
     (  # Build blaspp first
-       git clone https://bitbucket.org/icl/blaspp
+       git clone https://github.com/icl-utk-edu/blaspp
        mkdir blaspp/build && cd blaspp/build
        cmake -Dcolor=no -Dbuild_tests=no -DCMAKE_INSTALL_PREFIX=${top}/install ..
        make -j8 install

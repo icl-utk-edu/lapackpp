@@ -68,7 +68,7 @@ def main():
     try:
         config.lapack.cblas()
     except Error:
-        print_warn( 'LAPACK++ needs CBLAS only in testers.' )
+        print_warn( 'LAPACK++ needs CBLAS for testers.' )
 
     config.lapack.lapack()
     config.lapack.lapack_version()
@@ -87,7 +87,7 @@ def main():
     try:
         config.lapack.lapacke()
     except Error:
-        print_warn( 'LAPACK++ needs LAPACKE only in testers.' )
+        print_warn( 'LAPACK++ needs LAPACKE for testers.' )
 
     config.gpu_blas()
 
@@ -95,8 +95,8 @@ def main():
         'BLAS++',
         ['../blaspp', './blaspp'],
         'include/blas.hh',
-        'https://bitbucket.org/icl/blaspp',
-        'https://bitbucket.org/icl/blaspp/get/master.tar.gz',
+        'https://github.com/icl-utk-edu/blaspp',
+        'https://github.com/icl-utk-edu/blaspp/tarball/master',
         'blaspp.tar.gz' )
     if (not blaspp):
         raise Exception( 'LAPACK++ requires BLAS++.' )
@@ -105,11 +105,11 @@ def main():
         'TestSweeper',
         ['../testsweeper', blaspp + '/testsweeper', './testsweeper'],
         'testsweeper.hh',
-        'https://bitbucket.org/icl/testsweeper',
-        'https://bitbucket.org/icl/testsweeper/get/master.tar.gz',
+        'https://github.com/icl-utk-edu/testsweeper',
+        'https://github.com/icl-utk-edu/testsweeper/tarball/master',
         'testsweeper.tar.gz' )
     if (not testsweeper):
-        print_warn( 'LAPACK++ needs TestSweeper only in testers.' )
+        print_warn( 'LAPACK++ needs TestSweeper for testers.' )
 
     config.extract_defines_from_flags( 'CXXFLAGS', 'lapackpp_header_defines' )
     config.output_files( ['make.inc', 'include/lapack/defines.h'] )

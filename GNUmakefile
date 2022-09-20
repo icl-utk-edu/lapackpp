@@ -96,7 +96,7 @@ ifneq ($(blaspp_dir),)
 else
     $(lib_obj):
 		$(error LAPACK++ requires BLAS++, which was not found. Run 'make config' \
-		        or download manually from https://bitbucket.org/icl/blaspp/)
+		        or download manually from https://github.com/icl-utk-edu/blaspp)
 endif
 
 # Compile BLAS++ before LAPACK++.
@@ -127,7 +127,7 @@ ifneq ($(testsweeper_dir),)
 else
     $(tester_obj):
 		$(error Tester requires TestSweeper, which was not found. Run 'make config' \
-		        or download manually from https://bitbucket.org/icl/testsweeper/)
+		        or download manually from https://github.com/icl-utk-edu/testsweeper)
 endif
 
 # Compile TestSweeper before LAPACK++.

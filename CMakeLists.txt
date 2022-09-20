@@ -1,9 +1,9 @@
-# CMake script for LAPACK++ library
-# repo: http://bitbucket.org/icl/lapackpp
-# Requires BLAS++ library from
-#     http://bitbucket.org/icl/blaspp
-# Tests require TestSweeper library from
-#     http://bitbucket.org/icl/testsweeper
+# Copyright (c) 2017-2022, University of Tennessee. All rights reserved.
+# SPDX-License-Identifier: BSD-3-Clause
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
+#
+# CMake script for LAPACK++ library.
 
 cmake_minimum_required( VERSION 3.15 )
 # 3.1  target_compile_features

@@ -16,7 +16,7 @@ Option 1: Makefile
 Option 2: CMake
 
     # LAPACK++ requires BLAS++, from
-    # https://bitbucket.org/icl/blaspp
+    # https://github.com/icl-utk-edu/blaspp
     cd /path/to/blaspp
     mkdir build && cd build
     cmake ..
@@ -185,11 +185,11 @@ CMake Installation
 
 LAPACK++ requires BLAS++ and inherits its dependencies from BLAS++, so BLAS++ must be
 installed first via CMake, before running CMake for LAPACK++. Information and
-installation instructions can be found at https://bitbucket.org/icl/blaspp.
+installation instructions can be found at https://github.com/icl-utk-edu/blaspp.
 Briefly:
 
     # LAPACK++ requires BLAS++, from
-    # https://bitbucket.org/icl/blaspp
+    # https://github.com/icl-utk-edu/blaspp
     cd /path/to/blaspp
     cmake [-DCMAKE_INSTALL_PREFIX=/path/to/install] [options] ..
     make
@@ -213,7 +213,7 @@ LAPACK++ can't find BLAS++, you can point to its directory:
     or
     cmake -Dblaspp_DIR=/path/to/install/lib/blaspp [options] ..
 
-LAPACK++ uses the TestSweeper library (https://bitbucket.org/icl/testsweeper)
+LAPACK++ uses the TestSweeper library (https://github.com/icl-utk-edu/testsweeper)
 to run its tests. If CMake doesn't find TestSweeper, it will be
 downloaded and compiled. To use a different TestSweeper build that was
 not installed, you can point to its directory.

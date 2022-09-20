@@ -12,7 +12,7 @@ from __future__ import print_function
 import sys
 import re
 import config
-from   config import Error, font, print_warn
+from   config import Error, font, print_warn, print_header
 import config.lapack
 
 #-------------------------------------------------------------------------------
@@ -40,17 +40,22 @@ are set so your compiler can find libraries. See INSTALL.md for more details.
 def main():
     config.init( namespace='LAPACK', prefix='/opt/slate' )
     config.prog_cxx()
-    config.prog_cxx_flags([
-        '-O2', '-std=c++11', '-MMD',
-        '-Wall',
-        # '-pedantic',  # todo: conflict with ROCm 3.9.0
-        # '-Wshadow',   # todo: conflict with ROCm 3.9.0
-        '-Wno-unused-local-typedefs',
-        '-Wno-unused-function',
-        #'-Wmissing-declarations',
-        #'-Wconversion',
-        #'-Werror',
-    ])
+
+    print_header( 'C++ compiler flags' )
+    # Pick highest level supported. oneAPI needs C++17.
+    config.prog_cxx_flag(
+        ['-std=c++20', '-std=c++17', '-std=c++14', '-std=c++11'])
+    config.prog_cxx_flag( '-O2' )
+    config.prog_cxx_flag( '-MMD' )
+    config.prog_cxx_flag( '-Wall' )
+    config.prog_cxx_flag( '-Wno-unused-local-typedefs' )
+    config.prog_cxx_flag( '-Wno-unused-function' )
+   #config.prog_cxx_flag( '-pedantic',  # todo: conflict with ROCm 3.9.0
+   #config.prog_cxx_flag( '-Wshadow',   # todo: conflict with ROCm 3.9.0
+   #config.prog_cxx_flag( '-Wmissing-declarations' )
+   #config.prog_cxx_flag( '-Wconversion' )
+   #config.prog_cxx_flag( '-Werror' )
+
     config.openmp()
 
     config.lapack.blas()
@@ -83,6 +88,8 @@ def main():
         config.lapack.lapacke()
     except Error:
         print_warn( 'LAPACK++ needs LAPACKE only in testers.' )
+
+    config.gpu_blas()
 
     blaspp = config.get_package(
         'BLAS++',

@@ -12,6 +12,9 @@
 #include "matrix_generator.hh"
 
 // -----------------------------------------------------------------------------
+using llong = long long;
+
+// -----------------------------------------------------------------------------
 class Params: public testsweeper::ParamsBase
 {
 public:
@@ -94,6 +97,7 @@ public:
     testsweeper::ParamInt    incx;
     testsweeper::ParamInt    incy;
     testsweeper::ParamInt    align;
+    testsweeper::ParamInt    device;
 
     // ----- output parameters
     testsweeper::ParamScientific error;
@@ -286,6 +290,7 @@ void test_gglse ( Params& params, bool run );
 void test_ggglm ( Params& params, bool run );
 
 // QR, LQ, QL, RQ
+void test_geqr  ( Params& params, bool run );
 void test_geqrf ( Params& params, bool run );
 void test_gelqf ( Params& params, bool run );
 void test_geqlf ( Params& params, bool run );
@@ -305,6 +310,7 @@ void test_unmqr ( Params& params, bool run );
 void test_unmlq ( Params& params, bool run );
 void test_unmql ( Params& params, bool run );
 void test_unmrq ( Params& params, bool run );
+void test_unhr_col( Params& params, bool run );
 
 // triangle-pentagon QR, LQ
 void test_tpqrt ( Params& params, bool run );
@@ -440,5 +446,11 @@ void test_lagtr ( Params& params, bool run );
 // additional BLAS
 void test_syr   ( Params& params, bool run );
 void test_symv  ( Params& params, bool run );
+
+//----------------------------------------
+// GPU device functions
+void test_potrf_device ( Params& params, bool run );
+void test_getrf_device ( Params& params, bool run );
+void test_geqrf_device ( Params& params, bool run );
 
 #endif  //  #ifndef TEST_HH

@@ -6,6 +6,16 @@
 #ifndef LAPACK_NO_CONSTRUCT_ALLOCATOR_HH
 #define LAPACK_NO_CONSTRUCT_ALLOCATOR_HH
 
+#include <cstddef>  // std::size_t
+#include <limits>   // std::numeric_limits
+#include <new>      // std::bad_alloc, std::bad_array_new_length
+#include <vector>   // std::vector
+#if defined( _WIN32 ) || defined( _WIN64 )
+#   include <malloc.h>  // _aligned_malloc, _aligned_free
+#else
+#   include <stdlib.h>  // posix_memalign, free
+#endif
+
 namespace lapack {
 
 // No-construct allocator type which allocates / deallocates.
@@ -35,7 +45,7 @@ struct NoConstructAllocator
 
         void* memPtr = nullptr;
         #if defined( _WIN32 ) || defined( _WIN64 )
-            memPtr = _aligned_malloc( n*sizeof(T, 64) );
+            memPtr = _aligned_malloc( n*sizeof(T), 64 );
             if (memPtr != nullptr) {
                 auto p = static_cast<T*>(memPtr);
                 return p;

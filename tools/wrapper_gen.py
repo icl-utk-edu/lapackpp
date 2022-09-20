@@ -8,84 +8,76 @@ It takes a list of routines, without precision prefix (so "getrf" instead of "sg
 It generates files in lapackpp/gen/ directory, which can then be manually moved to the appropriate place.
 
 Arguments:
-    -H, --header   generate header   in ../gen/lapack_wrappers.hh to go in ../include
-    -w, --wrapper  generate wrappers in ../gen/foo.cc             to go in ../src
-    -t, --tester   generate testers  in ../gen/test_foo.cc        to go in ../test
+    -H, --header   generate header   in gen/wrappers.hh to go in include/lapack/wrappers.hh
+    -w, --wrapper  generate wrappers in gen/foo.cc      to go in src
+    -t, --tester   generate testers  in gen/test_foo.cc to go in test
 
 Example creating tester:
-    slate> cd lapackpp/test
 
-    # assume $LAPACKDIR is set
-    slate/lapackpp/test> echo $LAPACKDIR
+    # Assumes $LAPACKDIR is set
+    lapackpp> echo $LAPACKDIR
     /Users/mgates/Documents/lapack
 
-    slate/lapackpp/test> ../tools/wrapper_gen.py -t posv
-    generating ../gen/test_posv.cc
+    # Generate Fortran prototypes. Need to reformat nicely.
+    lapackpp> ./tools/header_gen.py {s,d,c,z}posv > gen/fortran.h
+
+    # If necessary, add the routine to tools/first_version.py,
+    # which is first version of LAPACK to include the routine.
+    lapackpp> edit test/first_version.py
+
+    # Generate LAPACK++ wrapper and tester.
+    lapackpp> ./tools/wrapper_gen.py posv
+    generating gen/wrappers.hh
+    generating gen/posv.cc
+    generating gen/test_posv.cc
         /Users/mgates/Documents/lapack/SRC/sposv.f
         /Users/mgates/Documents/lapack/SRC/dposv.f
         /Users/mgates/Documents/lapack/SRC/cposv.f
         /Users/mgates/Documents/lapack/SRC/zposv.f
 
-    slate/lapackpp/test> mv ../gen/test_posv.cc .
-    slate/lapackpp/test> edit test.cc     # uncomment posv line
-    slate/lapackpp/test> edit run_all.sh  # add posv line
+    lapackpp> mv gen/test_posv.cc test/
+    lapackpp> mv gen/posv.cc      src/
 
-    slate/lapackpp/test> make
-    g++ ... -c -o test.o test.cc
-    g++ ... -c -o test_posv.o test_posv.cc
-    g++ ... -o test ...
+    lapackpp> edit include/lapack/wrappers.hh  # add gen/wrappers.hh
+    lapackpp> edit CMakeLists.txt      # add posv.cc line
+    lapackpp> edit test/CMakeLists.txt # add test_posv.cc line
+    lapackpp> edit test/test.cc        # add posv line
+    lapackpp> edit test/test.hh        # add posv line
+    lapackpp> edit test/run_tests.sh   # add posv line
 
-    # initial version fails because matrix isn't positive definite
-    slate/lapackpp/test> ./test posv
+    lapackpp> make
+
+    # Test. Initial version fails because matrix isn't positive definite.
+    lapackpp> ./test/run_tests.py posv
     input: ./test posv
                                                LAPACK++     LAPACK++     LAPACK++         Ref.         Ref.
       type    uplo       n    nrhs   align        error     time (s)      Gflop/s     time (s)      Gflop/s  status
     lapack::posv returned error 2
     LAPACKE_posv returned error 2
          d   lower     100      10       1   0.0000e+00       0.0000      20.7156       0.0000      14.2013  pass
-    lapack::posv returned error 3
-    LAPACKE_posv returned error 3
-         d   lower     200      10       1   0.0000e+00       0.0001      23.7022       0.0001      27.6451  pass
-    lapack::posv returned error 2
-    LAPACKE_posv returned error 2
-         d   lower     300      10       1   0.0000e+00       0.0001     135.7834       0.0002      65.2617  pass
-    lapack::posv returned error 3
-    LAPACKE_posv returned error 3
-         d   lower     400      10       1   0.0000e+00       0.0001     300.1049       0.0002     121.8844  pass
-    lapack::posv returned error 3
-    LAPACKE_posv returned error 3
-         d   lower     500      10       1   0.0000e+00       0.0001     676.7546       0.0002     195.6718  pass
+    ...
     All tests passed.
 
-    # add code to make matrix positive definite (e.g., diagonally dominant)
-    slate/lapackpp/test> edit test_posv.cc
-    slate/lapackpp/test> make
-    g++ ... -c -o test_posv.o test_posv.cc
-    g++ ... -o test ...
+    # Resolve tests. In this case, add code to make matrix positive
+    # definite (e.g., diagonally dominant)
+    lapackpp> edit test_posv.cc
+    lapackpp> make
 
     # now tests pass; commit changes.
-    slate/lapackpp/test> ./test posv --type s,d,c,z --dim 100:300:100
+    lapackpp/test> ./test posv --type s,d,c,z --dim 100:300:100
     input: ./test posv --type s,d,c,z --dim 100:300:100
                                                LAPACK++     LAPACK++     LAPACK++         Ref.         Ref.
       type    uplo       n    nrhs   align        error     time (s)      Gflop/s     time (s)      Gflop/s  status
          s   lower     100      10       1   0.0000e+00       0.0002       2.6913       0.0001       4.2364  pass
          s   lower     200      10       1   0.0000e+00       0.0005       6.4226       0.0004       7.9437  pass
          s   lower     300      10       1   0.0000e+00       0.0008      14.2683       0.0008      14.0091  pass
-
-         d   lower     100      10       1   0.0000e+00       0.0002       2.7205       0.0001       3.8142  pass
-         d   lower     200      10       1   0.0000e+00       0.0007       5.0169       0.0006       5.5775  pass
-         d   lower     300      10       1   0.0000e+00       0.0009      11.4896       0.0009      11.7115  pass
-
-         c   lower     100      10       1   0.0000e+00       0.0004       5.5265       0.0004       5.6153  pass
-         c   lower     200      10       1   0.0000e+00       0.0011      12.7330       0.0012      11.9307  pass
-         c   lower     300      10       1   0.0000e+00       0.0025      17.1538       0.0026      16.9923  pass
-
-         z   lower     100      10       1   0.0000e+00       0.0005       4.4325       0.0005       4.4412  pass
-         z   lower     200      10       1   0.0000e+00       0.0015       9.0585       0.0014      10.1714  pass
-         z   lower     300      10       1   0.0000e+00       0.0035      12.3321       0.0032      13.7915  pass
+    ...
     All tests passed.
 
-    slate/lapackpp/test> hg commit -m 'test posv' test.cc test_posv.cc
+    # Add new files, see what changed, and commit it.
+    lapackpp> git add src/posv.cc test/test_posv.cc
+    lapackpp> git diff
+    lapackpp> git commit -m 'add posv' .
 '''
 
 from __future__ import print_function
@@ -100,20 +92,36 @@ from text_balanced import extract_bracketed
 from first_version import first_version
 
 parser = argparse.ArgumentParser()
-parser.add_argument( '-H', '--header',  help='generate header   in ../gen/lapack_wrappers.hh to go in ../include', action='store_true' )
-parser.add_argument( '-w', '--wrapper', help='generate wrappers in ../gen/foo.cc             to go in ../src',     action='store_true' )
-parser.add_argument( '-t', '--tester',  help='generate testers  in ../gen/test_foo.cc        to go in ../test',    action='store_true' )
-parser.add_argument( '-d', '--debug',   help='debug mode', action='store_true' )
+parser.add_argument( '-H', '--header',  action='store_true',
+                     help='generate header   in gen/wrappers.hh to go in include/lapack/wrappers.hh' )
+
+parser.add_argument( '-w', '--wrapper', action='store_true',
+                     help='generate wrappers in gen/foo.cc      to go in src' )
+
+parser.add_argument( '-t', '--tester',  action='store_true',
+                     help='generate testers  in gen/test_foo.cc to go in test' )
+
+parser.add_argument( '-d', '--debug',   action='store_true',
+                     help='debug mode' )
+
 parser.add_argument( 'argv', nargs=argparse.REMAINDER )
 args = parser.parse_args()
 
-# default
+if (len( args.argv ) == 0):
+    parser.print_help()
+    print( '\nBy default does all three (-H -w -t). See script for more details' )
+    exit(1)
+# end
+
+# default: do all
 if (not (args.header or args.tester or args.wrapper)):
+    args.header  = True
+    args.tester  = True
     args.wrapper = True
 
 debug = args.debug
 
-gen = '../gen'
+gen = 'gen'
 if (not os.path.exists( gen )):
     os.mkdir( gen )
 
@@ -121,12 +129,12 @@ if (not os.path.exists( gen )):
 # configuration
 
 # --------------------
-# for lapack_wrappers.hh
+# for wrappers.hh
 header_top = '''\
-#ifndef ICL_LAPACK_WRAPPERS_HH
-#define ICL_LAPACK_WRAPPERS_HH
+#ifndef LAPACK_WRAPPERS_HH
+#define LAPACK_WRAPPERS_HH
 
-#include "lapack_util.hh"
+#include "lapack/util.hh"
 
 namespace lapack {
 
@@ -136,7 +144,7 @@ header_bottom = '''\
 
 }  // namespace lapack
 
-#endif // ICL_LAPACK_WRAPPERS_HH
+#endif // LAPACK_WRAPPERS_HH
 '''
 
 # --------------------
@@ -813,6 +821,8 @@ state_details       = i; i += 1
 state_details_verb  = i; i += 1
 state_details_desc  = i; i += 1
 
+state_further_verb  = i; i += 1
+
 state_done          = i; i += 1
 
 # ------------------------------------------------------------------------------
@@ -1215,7 +1225,9 @@ def generate_docs( func ):
         d = arg.desc
 
         # remove "VAR is INTEGER" line
-        d = re.sub( r'^ *' + arg.name.upper() + ' +is +(CHARACTER|INTEGER|REAL|DOUBLE PRECISION|COMPLEX\*16|COMPLEX|LOGICAL).*\n', r'', d )
+        d = re.sub( r'^ *' + arg.name.upper()
+                    + ' +is +(CHARACTER|INTEGER|REAL|DOUBLE PRECISION|COMPLEX\*16|COMPLEX|LOGICAL).*\n',
+                    r'', d )
 
         # change "Specifies the ..." => "The ..."
         d = re.sub( r'^ *' + 'Specifies (\w)',
@@ -1223,7 +1235,8 @@ def generate_docs( func ):
 
         if (arg.name == 'info'):
             # @retval
-            d = re.sub( r'^ *< *0: *if INFO *= *-i, the i-th argument.*\n', r'', d, 0, re.M | re.I )
+            d = re.sub( r'^ *< *0: *if INFO *= *-i, the i-th argument.*\n', r'',
+                        d, 0, re.M | re.I )
             d = re.sub( r'^ *(=|<|<=|>|>=) ', r'@retval \1 ', d, 0, re.M )
 
             # increase indented lines
@@ -1642,7 +1655,8 @@ def generate_tester( funcs ):
     # end
 
     lapacke  = ('// -----------------------------------------------------------------------------\n'
-             +  '// simple overloaded wrappers around LAPACKE\n')
+             +  '// Simple overloaded wrappers around LAPACKE (assuming routines in LAPACKE).\n'
+             +  '// These should go in test/lapacke_wrappers.hh.\n' )
     for func in funcs:
         lapacke_proto = []
         lapacke_args  = []
@@ -1674,7 +1688,7 @@ def generate_tester( funcs ):
         # end
         lapacke_proto = ', '.join( lapacke_proto )
         lapacke_args  = ', '.join( lapacke_args )
-        lapacke += ('static lapack_int LAPACKE_' + func.name + '(\n'
+        lapacke += ('inline lapack_int LAPACKE_' + func.name + '(\n'
                 +   tab + lapacke_proto + ' )\n'
                 +   '{\n'
                 +   tab + 'return LAPACKE_' + func.xname + '(\n' + tab*2 + 'LAPACK_COL_MAJOR, ' + lapacke_args + ' );\n'
@@ -1685,11 +1699,35 @@ def generate_tester( funcs ):
     tst_args = ', '.join( tst_args )
     ref_args = ', '.join( ref_args )
 
+    #----------
+    version = first_version[ func.name ]
+    v = version[0]*10000 + version[1]*100 + version[2]
+    if (v > 30201):
+        # requires_if2 ... requires_end  goes around test_xyz_work routine.
+        # requires_if  ... requires_else goes inside test_xyz dispatch routine.
+        requires_if   = '#if LAPACK_VERSION >= %d%02d%02d  // >= %d.%d.%d\n' % (version + version)
+        requires_if2  = requires_if + '\n'
+        requires_end  = '\n#endif  // LAPACK >= %d.%d.%d\n' % (version)
+        requires_else = '''\
+#else
+    fprintf( stderr, "''' + func.name + ''' requires LAPACK >= %d.%d.%d\\n\\n" );
+    exit(0);
+#endif
+''' % (version)
+    else:
+        requires_if   = ''
+        requires_if2  = ''
+        requires_end  = ''
+        requires_else = ''
+    # end
+
+    #----------
     # todo: only dispatch for precisions in funcs
     dispatch = ('''
 // -----------------------------------------------------------------------------
 void test_''' + func.name + '''( Params& params, bool run )
 {
+''' + requires_if + '''\
     switch (params.datatype()) {
         case testsweeper::DataType::Integer:
             throw std::exception();
@@ -1711,31 +1749,11 @@ void test_''' + func.name + '''( Params& params, bool run )
             test_''' + func.name + '''_work< std::complex<double> >( params, run );
             break;
     }
+''' + requires_else + '''\
 }
 ''')
 
-    version = first_version[ func.name ]
-    v = version[0]*10000 + version[1]*100 + version[2]
-    if (v > 30201):
-        requires_if = '#if LAPACK_VERSION >= %d%02d%02d  // >= %d.%d.%d\n\n' % (version + version)
-        requires_else = ('''
-#else
-
-// -----------------------------------------------------------------------------
-void test_''' + func.name + '''( Params& params, bool run )
-{
-    fprintf( stderr, "''' + func.name + ''' requires LAPACK >= %d.%d.%d\\n\\n" );
-    exit(0);
-}
-
-#endif  // LAPACK >= %d.%d.%d
-''' % (version + version))
-    else:
-        requires_if   = ''
-        requires_else = ''
-    # end
-
-    txt = (requires_if
+    txt = (requires_if2
         +  lapacke
         +  '// -----------------------------------------------------------------------------\n'
         +  'template< typename scalar_t >\n'
@@ -1802,8 +1820,8 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  tab*2 + 'params.okay() = (error == 0);  // expect lapackpp == lapacke\n'
         +  tab + '}\n'
         +  '}\n'
+        +  requires_end
         +  dispatch
-        +  requires_else
     )
 
     # post renaming
@@ -1910,11 +1928,11 @@ def process_routine( arg ):
 # ------------------------------------------------------------------------------
 # Process each function on the command line, given as a base name like "getrf".
 # Finds LAPACK functions with that base name and some precision prefix.
-# Outputs to ../gen/basename.cc
+# Outputs to gen/basename.cc
 lapack = os.environ['LAPACKDIR']
 
 if (args.header):
-    header_file = os.path.join( gen, 'lapack_wrappers.hh' )
+    header_file = os.path.join( gen, 'wrappers.hh' )
     print( 'generating', header_file )
     header = open( header_file, 'w' )
     print( header_top, file=header, end='' )

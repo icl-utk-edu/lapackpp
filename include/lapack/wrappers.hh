@@ -4258,6 +4258,31 @@ void larnv(
     std::complex<double>* X );
 
 // -----------------------------------------------------------------------------
+void lartg(
+    float f, float g,
+    float* cs,
+    float* sn,
+    float* r );
+
+void lartg(
+    double f, double g,
+    double* cs,
+    double* sn,
+    double* r );
+
+void lartg(
+    std::complex<float> f, std::complex<float> g,
+    float* cs,
+    std::complex<float>* sn,
+    std::complex<float>* r );
+
+void lartg(
+    std::complex<double> f, std::complex<double> g,
+    double* cs,
+    std::complex<double>* sn,
+    std::complex<double>* r );
+
+// -----------------------------------------------------------------------------
 void lartgp(
     float f, float g,
     float* cs,
@@ -10161,6 +10186,52 @@ int64_t upmtr(
     std::complex<double> const* AP,
     std::complex<double> const* tau,
     std::complex<double>* C, int64_t ldc );
+
+// -----------------------------------------------------------------------------
+int64_t orhr_col(
+    int64_t m, int64_t n, int64_t nb,
+    float* A, int64_t lda,
+    float* T, int64_t ldt,
+    float* D );
+
+// unhr_col alias to orhr_col
+inline int64_t unhr_col(
+    int64_t m, int64_t n, int64_t nb,
+    float* A, int64_t lda,
+    float* T, int64_t ldt,
+    float* D )
+{
+    return orhr_col( m, n, nb, A, lda, T, ldt, D );
+}
+
+int64_t orhr_col(
+    int64_t m, int64_t n, int64_t nb,
+    double* A, int64_t lda,
+    double* T, int64_t ldt,
+    double* D );
+
+// unhr_col alias to orhr_col
+inline int64_t unhr_col(
+    int64_t m, int64_t n, int64_t nb,
+    double* A, int64_t lda,
+    double* T, int64_t ldt,
+    double* D )
+{
+    return orhr_col( m, n, nb, A, lda, T, ldt, D );
+}
+
+// -----------------------------------------------------------------------------
+int64_t unhr_col(
+    int64_t m, int64_t n, int64_t nb,
+    std::complex<float>* A, int64_t lda,
+    std::complex<float>* T, int64_t ldt,
+    std::complex<float>* D );
+
+int64_t unhr_col(
+    int64_t m, int64_t n, int64_t nb,
+    std::complex<double>* A, int64_t lda,
+    std::complex<double>* T, int64_t ldt,
+    std::complex<double>* D );
 
 }  // namespace lapack
 

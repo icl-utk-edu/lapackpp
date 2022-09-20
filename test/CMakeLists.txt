@@ -61,7 +61,9 @@ add_executable(
     test_gelss.cc
     test_gelsy.cc
     test_geqlf.cc
+    test_geqr.cc
     test_geqrf.cc
+    test_geqrf_device.cc
     test_gerfs.cc
     test_gerqf.cc
     test_gesdd.cc
@@ -70,6 +72,7 @@ add_executable(
     test_gesvdx.cc
     test_gesvx.cc
     test_getrf.cc
+    test_getrf_device.cc
     test_getri.cc
     test_getrs.cc
     test_getsls.cc
@@ -155,6 +158,7 @@ add_executable(
     test_porfs.cc
     test_posv.cc
     test_potrf.cc
+    test_potrf_device.cc
     test_potri.cc
     test_potrs.cc
     test_ppcon.cc
@@ -198,6 +202,7 @@ add_executable(
     test_ungrq.cc
     test_ungtr.cc
     test_unmhr.cc
+    test_unhr_col.cc
     test_unmtr.cc
     test_upgtr.cc
     test_upmtr.cc

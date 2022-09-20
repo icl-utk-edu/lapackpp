@@ -5,7 +5,11 @@ options {
     // Required to clean before build
     skipDefaultCheckout( true )
 }
-triggers { pollSCM 'H/10 * * * *' }
+
+// cron syntax: minute hour day-of-month month day-of-week
+// run hourly
+triggers { pollSCM 'H * * * *' }
+
 stages {
     //======================================================================
     stage('Parallel Build') {
@@ -17,7 +21,7 @@ stages {
                 }
                 axis {
                     name 'host'
-                    values 'cpu_intel'
+                    values 'gpu_amd', 'gpu_nvidia'
                 }
             } // axes
             stages {
@@ -58,15 +62,33 @@ alias print='{ save_flags="$-"; set +x; } 2> /dev/null; echo_and_restore'
 
 print "======================================== load compiler"
 date
-run source /home/jenkins/spack_setup
-run sload gcc@7.3.0
-run spack compiler find
-run sload intel-mkl
-#run sload netlib-lapack
+module load gcc/7.3.0
+module load intel-oneapi-mkl/2022
 
-print "======================================== verify spack"
+# hipcc needs /usr/sbin/lsmod
+export PATH=${PATH}:/usr/sbin
+
+print "======================================== load CUDA or ROCm"
+# Load CUDA.
+if [ "${host}" = "gpu_nvidia" ]; then
+    # Load CUDA. LD_LIBRARY_PATH set by module.
+    module load cuda/11
+    export CPATH=${CPATH}:${CUDA_HOME}/include
+    export LIBRARY_PATH=${LIBRARY_PATH}:${CUDA_HOME}/lib64
+fi
+
+# Load HIP.
+if [ "${host}" = "gpu_amd" ]; then
+    # Load ROCm/HIP.
+    export PATH=${PATH}:/opt/rocm/bin
+    export CPATH=${CPATH}:/opt/rocm/include
+    export LIBRARY_PATH=${LIBRARY_PATH}:/opt/rocm/lib:/opt/rocm/lib64
+    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/opt/rocm/lib:/opt/rocm/lib64
+fi
+
+print "======================================== verify modules"
 # Check what is loaded.
-run spack find --loaded
+module list
 
 which g++
 g++ --version
@@ -82,7 +104,7 @@ print "MKLROOT ${MKLROOT}"
 print "======================================== env"
 env
 
-print "======================================== setup build"
+print "======================================== configure"
 date
 print "maker ${maker}"
 export color=no
@@ -97,7 +119,7 @@ if [ "${maker}" = "make" ]; then
     #sed -i -e 's/LIBS *=/LIBS = -L${LAPACKDIR} -llapacke /' make.inc
 fi
 if [ "${maker}" = "cmake" ]; then
-    run sload cmake
+    module load cmake/3.18
     which cmake
     cmake --version
 
@@ -126,7 +148,7 @@ ls -R ${top}/install
 print "======================================== verify build"
 print "Verify that tester linked with cublas or rocblas as intended."
 date
-ldd test/tester
+ldd test/tester || exit 1
 if [ "${host}" = "gpu_nvidia" ]; then
     ldd test/tester | grep cublas || exit 1
 fi
@@ -139,7 +161,8 @@ print "Run tests."
 date
 cd test
 export OMP_NUM_THREADS=8
-./run_tests.py --quick --xml ${top}/report-${maker}.xml
+./run_tests.py --host   --quick --xml ${top}/report-${maker}-host.xml
+./run_tests.py --device --quick --xml ${top}/report-${maker}-dev.xml
 
 print "======================================== smoke tests"
 print "Verify install with smoke tests."
@@ -165,7 +188,7 @@ date
                     //----------------------------------------------------------
                     post {
                         failure {
-                            mail to: 'slate-dev@icl.utk.edu',
+                            mail to: 'slate-test@icl.utk.edu',
                                 subject: "${currentBuild.fullDisplayName} >> ${STAGE_NAME} >> ${maker} ${host} failed",
                                 body: "See more at ${env.BUILD_URL}"
                         }

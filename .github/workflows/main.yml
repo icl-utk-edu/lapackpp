@@ -14,14 +14,14 @@ on:
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:          
+jobs:
   ICL:
     runs-on: [self-hosted]
     strategy:
       matrix:
         maker: [make, cmake]
       fail-fast: false
-  
+
     steps:
       - uses: actions/checkout@v2
       - name: Configure
@@ -29,4 +29,4 @@ jobs:
       - name: Build
         run: .github/workflows/build.sh ${{matrix.maker}}
       - name: Test
-        run: .github/workflows/test.sh ${{matrix.maker}}       
+        run: .github/workflows/test.sh ${{matrix.maker}}

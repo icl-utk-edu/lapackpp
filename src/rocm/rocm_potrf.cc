@@ -7,9 +7,7 @@
 
 #if defined(LAPACK_HAVE_ROCBLAS)
 
-#include "lapack/device.hh"
-
-#include <rocsolver.h>
+#include "rocm_common.hh"
 
 //==============================================================================
 // todo: put into BLAS++ header somewhere.

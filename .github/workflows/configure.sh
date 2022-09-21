@@ -1,6 +1,7 @@
 #!/bin/bash -xe
 
 maker=$1
+device=$2
 
 if [ "${maker}" = "cmake" ]; then
     rm -rf build

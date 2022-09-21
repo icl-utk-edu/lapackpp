@@ -37,6 +37,26 @@ section "======================================== Load compiler"
 quiet module load gcc@7.3.0
 quiet module load intel-mkl
 
+if [ "${device}" = "gpu_nvidia" ]; then
+    section "======================================== Load CUDA"
+    export CUDA_HOME=/usr/local/cuda/
+    export PATH=${PATH}:${CUDA_HOME}/bin
+    export CPATH=${CPATH}:${CUDA_HOME}/include
+    export LIBRARY_PATH=${LIBRARY_PATH}:${CUDA_HOME}/lib64
+    which nvcc
+    nvcc --version
+fi
+
+if [ "${device}" = "gpu_amd" ]; then
+    section "======================================== Load ROCm"
+    export PATH=${PATH}:/opt/rocm/bin
+    export CPATH=${CPATH}:/opt/rocm/include
+    export LIBRARY_PATH=${LIBRARY_PATH}:/opt/rocm/lib:/opt/rocm/lib64
+    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/opt/rocm/lib:/opt/rocm/lib64
+    which hipcc
+    hipcc --version
+fi
+
 if [ "${maker}" = "cmake" ]; then
     section "======================================== Load cmake"
     quiet module load cmake

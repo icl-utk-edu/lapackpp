@@ -1,6 +1,7 @@
 #!/bin/bash -xe
 
 maker=$1
+device=$2
 
 mydir=`dirname $0`
 source $mydir/setup_env.sh
@@ -8,7 +9,11 @@ source $mydir/setup_env.sh
 section "======================================== Tests"
 cd test
 export OMP_NUM_THREADS=8
-./run_tests.py --quick --xml ${top}/report-${maker}.xml
+./run_tests.py --host --quick --xml ${top}/report-${maker}.xml
+
+# CUDA or HIP
+./run_tests.py --device --quick --xml ${top}/report-${maker}-device.xml
+
 
 section "======================================== Smoke tests"
 cd ${top}/example

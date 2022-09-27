@@ -9,7 +9,7 @@
 
 #include "lapack/device.hh"
 
-#include <rocsolver.h>
+#include <rocsolver/rocsolver.h>
 
 //==============================================================================
 // todo: put into BLAS++ header somewhere.

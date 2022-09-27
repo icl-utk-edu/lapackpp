@@ -11,6 +11,8 @@
 
 #if defined(LAPACK_HAVE_CUBLAS)
     #include <cusolverDn.h>
+#elif defined(LAPACK_HAVE_ROCBLAS)
+    #include "rocblas/rocblas.h"
 #endif
 
 namespace lapack {

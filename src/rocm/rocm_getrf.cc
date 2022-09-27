@@ -9,7 +9,7 @@
 
 #include "lapack/device.hh"
 
-#include <rocsolver.h>
+#include <rocsolver/rocsolver.h>
 
 //==============================================================================
 namespace lapack {

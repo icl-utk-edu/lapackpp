@@ -8,7 +8,7 @@
 #endif
 
 #include <hip/hip_runtime.h>
-#include <rocblas.h>
+#include <rocblas/rocblas.h>
 
 #include <stdexcept>
 #include <cassert>

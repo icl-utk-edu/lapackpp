@@ -248,7 +248,7 @@ if (lapackpp_is_project)
     add_custom_target(
         "check"
         COMMAND
-            python run_tests.py --quick
+            python3 run_tests.py --quick
                 gesv getrf posv potrf geqrf ungqr gels
                 geev heev heevd heevr gesvd
         WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"

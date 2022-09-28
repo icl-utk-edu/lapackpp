@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # Usage: ./gen.py basenames
 # where basenames are like getrf, gesv, posv, ...

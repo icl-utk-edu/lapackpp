@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 '''
 wrapper_gen.py generates C++ wrappers, header prototypes, and testers for the

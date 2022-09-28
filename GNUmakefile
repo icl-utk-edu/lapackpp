@@ -26,10 +26,12 @@ else ifneq ($(findstring clean,$(MAKECMDGOALS)),clean)
     include make.inc
 endif
 
+python ?= python3
+
 force: ;
 
 make.inc:
-	python configure.py
+	${python} configure.py
 
 # Defaults if not given in make.inc. GNU make doesn't have defaults for these.
 RANLIB   ?= ranlib
@@ -242,7 +244,7 @@ test/check: check
 
 # 'make check' tests subset of routines, to avoid spurious failures
 check: tester
-	cd test; python run_tests.py --quick \
+	cd test; ${python} run_tests.py --quick \
 		gesv getrf posv potrf geqrf ungqr gels \
 		geev heev heevd heevr gesvd
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 '''
 Generate C prototypes for the LAPACK Fortran functions by parsing

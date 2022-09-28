@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # Attempts to find equations in Doxygen code and replace them with $...$.
 # For instance:

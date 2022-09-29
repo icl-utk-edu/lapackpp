@@ -64,6 +64,14 @@ LAPACK++ specific options include (all values are case insensitive):
         Again, there is usually no need to specify this. E.g.,
         cmake -DLAPACK_LIBRARIES='-lopenblas' ..
 
+    gpu_backend
+        BLAS++ must be built with the same GPU backend.
+        auto            auto-detect CUDA, HIP/ROCm, or oneMKL (default)
+        cuda            build with CUDA support
+        hip             build with HIP/ROCm support
+        onemkl          build with SYCL and oneMKL support (not yet implemented)
+        none            do not build with GPU backend
+
     color
         Whether to use ANSI colors in output. One of:
         auto            uses color if output is a TTY

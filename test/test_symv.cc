@@ -40,8 +40,8 @@ void test_symv_work( Params& params, bool run )
     params.ref_gbytes();
 
     // adjust header to msec
-    params.time.name( "BLAS++\ntime (ms)" );
-    params.ref_time.name( "Ref.\ntime (ms)" );
+    params.time.name( "time (ms)" );
+    params.ref_time.name( "time (ms)" );
 
     if (! run)
         return;

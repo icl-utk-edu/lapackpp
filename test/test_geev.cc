@@ -49,11 +49,17 @@ void test_geev_work( Params& params, bool run )
     //params.ref_gflops();
     //params.gflops();
 
-    params.error .name( "A' Vl-Vl W'\nerror" );
-    params.error2.name( "Vl(j) norm\nerror" );
-    params.error3.name( "A Vr-Vr W\nerror" );
-    params.error4.name( "Vr(j) norm\nerror" );
-    params.error5.name( "W - Wref\nerror" );
+    params.error .name( "A' Vl - Vl W'" );
+    params.error2.name( "Vl(j) norm" );
+    params.error3.name( "A Vr - Vr W" );
+    params.error4.name( "Vr(j) norm" );
+    params.error5.name( "W - Wref" );
+
+    params.error .width( 13 );
+    params.error2.width( 10 );
+    params.error3.width( 11 );
+    params.error4.width( 10 );
+    params.error5.width(  8 );
 
     if (! run)
         return;

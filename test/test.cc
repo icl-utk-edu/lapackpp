@@ -21,6 +21,12 @@ using testsweeper::ansi_bold;
 using testsweeper::ansi_red;
 using testsweeper::ansi_normal;
 
+const double no_data = testsweeper::no_data_flag;
+
+const ParamType PT_Value  = ParamType::Value;
+const ParamType PT_List   = ParamType::List;
+const ParamType PT_Output = ParamType::Output;
+
 // -----------------------------------------------------------------------------
 // each section must have a corresponding entry in section_names
 enum Section {
@@ -536,29 +542,43 @@ Params::Params():
 
     // ----- output parameters
     // min, max are ignored
-    //           name,                    w, p, type,              default,               min, max, help
-    error      ( "error",                 9, 2, ParamType::Output, testsweeper::no_data_flag,   0,   0, "numerical error" ),
-    error2     ( "error2",                9, 2, ParamType::Output, testsweeper::no_data_flag,   0,   0, "numerical error" ),
-    error3     ( "error3",                9, 2, ParamType::Output, testsweeper::no_data_flag,   0,   0, "numerical error" ),
-    error4     ( "error4",                9, 2, ParamType::Output, testsweeper::no_data_flag,   0,   0, "numerical error" ),
-    error5     ( "error5",                9, 2, ParamType::Output, testsweeper::no_data_flag,   0,   0, "numerical error" ),
-    ortho      ( "ortho.\nerror",         9, 2, ParamType::Output, testsweeper::no_data_flag,   0,   0, "orthogonality error" ),
-    ortho_U    ( "U ortho.\nerror",       9, 2, ParamType::Output, testsweeper::no_data_flag,   0,   0, "U orthogonality error" ),
-    ortho_V    ( "V ortho.\nerror",       9, 2, ParamType::Output, testsweeper::no_data_flag,   0,   0, "V orthogonality error" ),
-    error_sigma( "Sigma\nerror",          9, 2, ParamType::Output, testsweeper::no_data_flag,   0,   0, "Sigma error" ),
+    //          name,            w, p, type,      default, min, max, help
+    // error: %8.2e allows 9.99e-99
+    error     ( "error",         8, 2, PT_Output, no_data, 0, 0, "numerical error" ),
+    error2    ( "error2",        8, 2, PT_Output, no_data, 0, 0, "numerical error 2" ),
+    error3    ( "error3",        8, 2, PT_Output, no_data, 0, 0, "numerical error 3" ),
+    error4    ( "error4",        8, 2, PT_Output, no_data, 0, 0, "numerical error 4" ),
+    error5    ( "error5",        8, 2, PT_Output, no_data, 0, 0, "numerical error 5" ),
+    ortho     ( "orth.",         8, 2, PT_Output, no_data, 0, 0, "orthogonality error" ),
+    ortho_U   ( "U orth.",       8, 2, PT_Output, no_data, 0, 0, "U orthogonality error" ),
+    ortho_V   ( "V orth.",       8, 2, PT_Output, no_data, 0, 0, "V orthogonality error" ),
 
-    time      ( "LAPACK++\ntime (s)",    10, 4, ParamType::Output, testsweeper::no_data_flag,   0,   0, "time to solution" ),
-    gflops    ( "LAPACK++\nGflop/s",     11, 4, ParamType::Output, testsweeper::no_data_flag,   0,   0, "Gflop/s rate" ),
-    gbytes    ( "LAPACK++\nGbyte/s",     11, 4, ParamType::Output, testsweeper::no_data_flag,   0,   0, "Gbyte/s rate" ),
-    iters     ( "LAPACK++\niters",        6,    ParamType::Output,                     0,   0,   0, "iterations to solution" ),
+    // time:    %9.3f allows 99999.999 s = 2.9 days (ref headers need %12)
+    // gflops: %12.3f allows 99999999.999 Gflop/s = 100 Pflop/s
+    time      ( "time (s)",      9, 3, PT_Output, no_data, 0, 0, "time to solution" ),
+    gflops    ( "gflop/s",      12, 3, PT_Output, no_data, 0, 0, "Gflop/s rate" ),
+    gbytes    ( "gbyte/s",      12, 3, PT_Output, no_data, 0, 0, "Gbyte/s rate" ),
+    iters     ( "iters",         5,    PT_Output, 0,       0, 0, "iterations to solution" ),
 
-    ref_time  ( "Ref.\ntime (s)",        10, 4, ParamType::Output, testsweeper::no_data_flag,   0,   0, "reference time to solution" ),
-    ref_gflops( "Ref.\nGflop/s",         11, 4, ParamType::Output, testsweeper::no_data_flag,   0,   0, "reference Gflop/s rate" ),
-    ref_gbytes( "Ref.\nGbyte/s",         11, 4, ParamType::Output, testsweeper::no_data_flag,   0,   0, "reference Gbyte/s rate" ),
-    ref_iters ( "Ref.\niters",            6,    ParamType::Output,                     0,   0,   0, "reference iterations to solution" ),
+    time2     ( "time (s)",      9, 3, PT_Output, no_data, 0, 0, "time to solution (2)" ),
+    gflops2   ( "gflop/s",      12, 3, PT_Output, no_data, 0, 0, "Gflop/s rate (2)" ),
+    gbytes2   ( "gbyte/s",      12, 3, PT_Output, no_data, 0, 0, "Gbyte/s rate (2)" ),
+
+    time3     ( "time (s)",      9, 3, PT_Output, no_data, 0, 0, "time to solution (3)" ),
+    gflops3   ( "gflop/s",      12, 3, PT_Output, no_data, 0, 0, "Gflop/s rate (3)" ),
+    gbytes3   ( "gbyte/s",      12, 3, PT_Output, no_data, 0, 0, "Gbyte/s rate (3)" ),
+
+    time4     ( "time (s)",      9, 3, PT_Output, no_data, 0, 0, "time to solution (4)" ),
+    gflops4   ( "gflop/s",      12, 3, PT_Output, no_data, 0, 0, "Gflop/s rate (4)" ),
+    gbytes4   ( "gbyte/s",      12, 3, PT_Output, no_data, 0, 0, "Gbyte/s rate (4)" ),
+
+    ref_time  ( "ref time (s)", 12, 3, PT_Output, no_data, 0, 0, "reference time to solution" ),
+    ref_gflops( "ref gflop/s",  12, 3, PT_Output, no_data, 0, 0, "reference Gflop/s rate" ),
+    ref_gbytes( "ref gbyte/s",  12, 3, PT_Output, no_data, 0, 0, "reference Gbyte/s rate" ),
+    ref_iters ( "ref iters",     9,    PT_Output, 0,       0, 0, "reference iterations to solution" ),
 
     // default -1 means "no check"
-    //          name,     w, type,              def, min, max, help
+    //          name,     w, type,          default, min, max, help
     okay      ( "status", 6, ParamType::Output,  -1,   0,   0, "success indicator" ),
     msg       ( "",       1, ParamType::Output,  "",           "error message" )
 {

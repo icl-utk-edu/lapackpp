@@ -36,7 +36,8 @@ void test_gesdd_work( Params& params, bool run )
     //params.gflops();
     params.ortho_U();
     params.ortho_V();
-    params.error_sigma();
+    params.error2();
+    params.error2.name( "Sigma" );
 
     if (! run)
         return;
@@ -125,10 +126,10 @@ void test_gesdd_work( Params& params, bool run )
         }
         errors[3] += rel_error( S_tst, S_ref );
     }
-    params.error()       = errors[0];
-    params.ortho_U()     = errors[1];
-    params.ortho_V()     = errors[2];
-    params.error_sigma() = errors[3];
+    params.error()   = errors[0];
+    params.ortho_U() = errors[1];
+    params.ortho_V() = errors[2];
+    params.error2()  = errors[3];
     params.okay() = (
         (jobu == lapack::Job::NoVec || errors[0] < tol) &&
         (jobu == lapack::Job::NoVec || errors[1] < tol) &&

@@ -108,12 +108,23 @@ public:
     testsweeper::ParamScientific ortho;
     testsweeper::ParamScientific ortho_U;
     testsweeper::ParamScientific ortho_V;
-    testsweeper::ParamScientific error_sigma;
 
     testsweeper::ParamDouble     time;
     testsweeper::ParamDouble     gflops;
     testsweeper::ParamDouble     gbytes;
     testsweeper::ParamInt        iters;
+
+    testsweeper::ParamDouble     time2;
+    testsweeper::ParamDouble     gflops2;
+    testsweeper::ParamDouble     gbytes2;
+
+    testsweeper::ParamDouble     time3;
+    testsweeper::ParamDouble     gflops3;
+    testsweeper::ParamDouble     gbytes3;
+
+    testsweeper::ParamDouble     time4;
+    testsweeper::ParamDouble     gflops4;
+    testsweeper::ParamDouble     gbytes4;
 
     testsweeper::ParamDouble     ref_time;
     testsweeper::ParamDouble     ref_gflops;

@@ -59,9 +59,9 @@ void test_potrf_device_work( Params& params, bool run )
 
     // Allocate and copy to GPU.
     lapack::Queue queue( device, 0 );
-    scalar_t*        dA_tst = blas::device_malloc< scalar_t >( size_A );
-    device_info_int* d_info = blas::device_malloc< device_info_int >( 1 );
-    blas::device_setmatrix( n, n, A_tst.data(), lda, dA_tst, lda, queue );
+    scalar_t*        dA_tst = blas::device_malloc< scalar_t >( size_A ,queue );
+    device_info_int* d_info = blas::device_malloc< device_info_int >( 1, queue );
+    blas::device_copy_matrix( n, n, A_tst.data(), lda, dA_tst, lda, queue );
 
     if (verbose >= 1) {
         printf( "\n"
@@ -96,7 +96,7 @@ void test_potrf_device_work( Params& params, bool run )
 
     // Copy result back to CPU.
     device_info_int info_tst;
-    blas::device_getmatrix( n, n, dA_tst, lda, A_tst.data(), lda, queue );
+    blas::device_copy_matrix( n, n, dA_tst, lda, A_tst.data(), lda, queue );
     blas::device_memcpy( &info_tst, d_info, 1, queue );
     queue.sync();
 
@@ -105,8 +105,8 @@ void test_potrf_device_work( Params& params, bool run )
     }
 
     // Cleanup GPU memory.
-    blas::device_free( dA_tst );
-    blas::device_free( d_info );
+    blas::device_free( dA_tst, queue );
+    blas::device_free( d_info, queue );
 
     if (verbose >= 2) {
         printf( "A_factor = " ); print_matrix( n, n, &A_tst[0], lda );

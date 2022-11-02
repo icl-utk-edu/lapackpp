@@ -62,10 +62,10 @@ void test_geqrf_device_work( Params& params, bool run )
 
     // Allocate and copy to GPU.
     lapack::Queue queue( device, 0 );
-    scalar_t*        dA_tst = blas::device_malloc< scalar_t >( size_A );
-    scalar_t*        d_tau  = blas::device_malloc< scalar_t >( size_tau );
-    device_info_int* d_info = blas::device_malloc< device_info_int >( 1 );
-    blas::device_setmatrix( m, n, A_tst.data(), lda, dA_tst, lda, queue );
+    scalar_t*        dA_tst = blas::device_malloc< scalar_t >( size_A, queue );
+    scalar_t*        d_tau  = blas::device_malloc< scalar_t >( size_tau, queue );
+    device_info_int* d_info = blas::device_malloc< device_info_int >( 1, queue );
+    blas::device_copy_matrix( m, n, A_tst.data(), lda, dA_tst, lda, queue );
 
     if (verbose >= 1) {
         printf( "\n"
@@ -79,7 +79,7 @@ void test_geqrf_device_work( Params& params, bool run )
     // Allocate workspace
     size_t d_size, h_size;
     lapack::geqrf_work_size_bytes( m, n, dA_tst, lda, &d_size, &h_size, queue );
-    char* d_work = blas::device_malloc< char >( d_size );
+    char* d_work = blas::device_malloc< char >( d_size, queue );
     std::vector<char> h_work_vector( h_size );
     char* h_work = h_work_vector.data();
 
@@ -107,7 +107,7 @@ void test_geqrf_device_work( Params& params, bool run )
 
     // Copy result back to CPU.
     device_info_int info_tst;
-    blas::device_getmatrix( m, n, dA_tst, lda, A_tst.data(), lda, queue );
+    blas::device_copy_matrix( m, n, dA_tst, lda, A_tst.data(), lda, queue );
     blas::device_memcpy( &info_tst, d_info, 1, queue );
     blas::device_memcpy( &tau_tst[0], d_tau, size_tau, queue );
     queue.sync();
@@ -117,10 +117,10 @@ void test_geqrf_device_work( Params& params, bool run )
     }
 
     // Cleanup GPU memory.
-    blas::device_free( dA_tst );
-    blas::device_free( d_tau  );
-    blas::device_free( d_info );
-    blas::device_free( d_work );
+    blas::device_free( dA_tst, queue );
+    blas::device_free( d_tau, queue  );
+    blas::device_free( d_info, queue );
+    blas::device_free( d_work, queue );
 
     if (verbose >= 2) {
         printf( "A_factor = " ); print_matrix( m, n, &A_tst[0], lda );

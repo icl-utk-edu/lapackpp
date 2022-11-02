@@ -109,7 +109,8 @@ void getrf_work_size_bytes(
 {
     auto solver = queue.solver();
 
-    blas::set_device( queue.device() );
+    // for cuda, rocm, call set_device; for oneapi, do nothing.
+    blas::internal_set_device( queue.device() );
 
     // query for workspace size
     #if CUSOLVER_VERSION >= 11000
@@ -146,7 +147,8 @@ void getrf(
 {
     auto solver = queue.solver();
 
-    blas::set_device( queue.device() );
+    // for cuda, rocm, call set_device; for oneapi, do nothing.
+    blas::internal_set_device( queue.device() );
 
     // launch kernel
     #if CUSOLVER_VERSION >= 11000

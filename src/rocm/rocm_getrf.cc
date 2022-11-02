@@ -84,7 +84,8 @@ void getrf(
     // todo: check for overflow
     auto solver = queue.handle();
 
-    blas::set_device( queue.device() );
+    // for cuda, rocm, call set_device; for oneapi, do nothing.
+    blas::internal_set_device( queue.device() );
 
     rocsolver_getrf( solver, m, n, dA, ldda, dipiv, dev_info );
 }

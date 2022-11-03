@@ -38,9 +38,6 @@ void test_gehrd_work( Params& params, bool run )
     params.gflops();
     params.ortho();
 
-    params.error.name( "A-UHU^H" );
-    params.ortho.name( "I-UU^H" );
-
     if (! run)
         return;
 

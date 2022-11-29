@@ -9271,6 +9271,88 @@ int64_t tfttr(
     std::complex<double>* A, int64_t lda );
 
 // -----------------------------------------------------------------------------
+int64_t tgexc(
+    bool wantq, bool wantz, int64_t n,
+    float* A, int64_t lda,
+    float* B, int64_t ldb,
+    float* Q, int64_t ldq,
+    float* Z, int64_t ldz,
+    int64_t* ifst, int64_t* ilst );
+
+int64_t tgexc(
+    bool wantq, bool wantz, int64_t n,
+    double* A, int64_t lda,
+    double* B, int64_t ldb,
+    double* Q, int64_t ldq,
+    double* Z, int64_t ldz,
+    int64_t* ifst, int64_t* ilst );
+
+int64_t tgexc(
+    bool wantq, bool wantz, int64_t n,
+    std::complex<float>* A, int64_t lda,
+    std::complex<float>* B, int64_t ldb,
+    std::complex<float>* Q, int64_t ldq,
+    std::complex<float>* Z, int64_t ldz,
+    int64_t* ifst, int64_t* ilst );
+
+int64_t tgexc(
+    bool wantq, bool wantz, int64_t n,
+    std::complex<double>* A, int64_t lda,
+    std::complex<double>* B, int64_t ldb,
+    std::complex<double>* Q, int64_t ldq,
+    std::complex<double>* Z, int64_t ldz,
+    int64_t* ifst, int64_t* ilst );
+
+// -----------------------------------------------------------------------------
+int64_t tgsen(
+    int64_t ijob, bool wantq, bool wantz,
+    lapack_logical const* select, int64_t n,
+    float* A, int64_t lda,
+    float* B, int64_t ldb,
+    std::complex<float>* alpha,
+    float* beta,
+    float* Q, int64_t ldq,
+    float* Z, int64_t ldz,
+    int64_t* sdim,
+    float* pl, float* pr, float* dif );
+
+int64_t tgsen(
+    int64_t ijob, bool wantq, bool wantz,
+    lapack_logical const* select, int64_t n,
+    double* A, int64_t lda,
+    double* B, int64_t ldb,
+    std::complex<double>* alpha,
+    double* beta,
+    double* Q, int64_t ldq,
+    double* Z, int64_t ldz,
+    int64_t* sdim,
+    double* pl, double* pr, double* dif );
+
+int64_t tgsen(
+    int64_t ijob, bool wantq, bool wantz,
+    lapack_logical const* select, int64_t n,
+    std::complex<float>* A, int64_t lda,
+    std::complex<float>* B, int64_t ldb,
+    std::complex<float>* alpha,
+    std::complex<float>* beta,
+    std::complex<float>* Q, int64_t ldq,
+    std::complex<float>* Z, int64_t ldz,
+    int64_t* sdim,
+    float* pl, float* pr, float* dif );
+
+int64_t tgsen(
+    int64_t ijob, bool wantq, bool wantz,
+    lapack_logical const* select, int64_t n,
+    std::complex<double>* A, int64_t lda,
+    std::complex<double>* B, int64_t ldb,
+    std::complex<double>* alpha,
+    std::complex<double>* beta,
+    std::complex<double>* Q, int64_t ldq,
+    std::complex<double>* Z, int64_t ldz,
+    int64_t* sdim,
+    double* pl, double* pr, double* dif );
+
+// -----------------------------------------------------------------------------
 int64_t tgsja(
     lapack::Job jobu, lapack::Job jobv, lapack::Job jobq, int64_t m, int64_t p, int64_t n, int64_t k, int64_t l,
     float* A, int64_t lda,

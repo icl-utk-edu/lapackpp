@@ -8774,6 +8774,268 @@ inline lapack_int LAPACKE_sytrs_rook(
 }
 #endif // 30500
 
+//------------------------------------------------------------------------------
+inline lapack_int LAPACKE_tgexc(
+    bool wantq, bool wantz, lapack_int n,
+    float* A, lapack_int lda,
+    float* B, lapack_int ldb,
+    float* Q, lapack_int ldq,
+    float* Z, lapack_int ldz,
+    lapack_int* ifst, lapack_int* ilst )
+{
+    return LAPACKE_stgexc(
+        LAPACK_COL_MAJOR, wantq, wantz, n,
+        A, lda,
+        B, ldb,
+        Q, ldq,
+        Z, ldz,
+        ifst, ilst );
+}
+
+inline lapack_int LAPACKE_tgexc(
+    bool wantq, bool wantz, lapack_int n,
+    double* A, lapack_int lda,
+    double* B, lapack_int ldb,
+    double* Q, lapack_int ldq,
+    double* Z, lapack_int ldz,
+    lapack_int* ifst, lapack_int* ilst )
+{
+    return LAPACKE_dtgexc(
+        LAPACK_COL_MAJOR, wantq, wantz, n,
+        A, lda,
+        B, ldb,
+        Q, ldq,
+        Z, ldz,
+        ifst, ilst );
+}
+
+inline lapack_int LAPACKE_tgexc(
+    bool wantq, bool wantz, lapack_int n,
+    std::complex<float>* A, lapack_int lda,
+    std::complex<float>* B, lapack_int ldb,
+    std::complex<float>* Q, lapack_int ldq,
+    std::complex<float>* Z, lapack_int ldz,
+    lapack_int* ifst, lapack_int* ilst )
+{
+    // In complex, ifst, ilst are scalars instead of pointers.
+    // Actually, ilst should be pointer; it is [in,out] in LAPACK.
+    return LAPACKE_ctgexc(
+        LAPACK_COL_MAJOR, wantq, wantz, n,
+        (lapack_complex_float*) A, lda,
+        (lapack_complex_float*) B, ldb,
+        (lapack_complex_float*) Q, ldq,
+        (lapack_complex_float*) Z, ldz,
+        *ifst, *ilst );
+}
+
+inline lapack_int LAPACKE_tgexc(
+    bool wantq, bool wantz, lapack_int n,
+    std::complex<double>* A, lapack_int lda,
+    std::complex<double>* B, lapack_int ldb,
+    std::complex<double>* Q, lapack_int ldq,
+    std::complex<double>* Z, lapack_int ldz,
+    lapack_int* ifst, lapack_int* ilst )
+{
+    // In complex, ifst, ilst are scalars instead of pointers.
+    // Actually, ilst should be pointer; it is [in,out] in LAPACK.
+    return LAPACKE_ztgexc(
+        LAPACK_COL_MAJOR, wantq, wantz, n,
+        (lapack_complex_double*) A, lda,
+        (lapack_complex_double*) B, ldb,
+        (lapack_complex_double*) Q, ldq,
+        (lapack_complex_double*) Z, ldz,
+        *ifst, *ilst );
+}
+
+//------------------------------------------------------------------------------
+inline lapack_int LAPACKE_tgsen(
+    lapack_int ijob, bool wantq, bool wantz,
+    lapack_int* select, lapack_int n,
+    float* A, lapack_int lda,
+    float* B, lapack_int ldb,
+    std::complex<float>* alpha,
+    float* beta,
+    float* Q, lapack_int ldq,
+    float* Z, lapack_int ldz,
+    lapack_int* sdim, float* pl, float* pr, float* dif )
+{
+    std::vector<float> alphar( n ), alphai( n );
+
+    // query workspace
+    float work_query;
+    lapack_int liwork;
+    lapack_int info = LAPACKE_stgsen_work(
+        LAPACK_COL_MAJOR, ijob, wantq, wantz, select, n,
+        A, lda, B, ldb,
+        &alphar[0], &alphai[0], beta,
+        Q, ldq, Z, ldz,
+        sdim, pl, pr, dif,
+        &work_query, -1, &liwork, -1 );
+    assert( info == 0 );
+
+    // allocate workspace
+    // LAPACK <= 3.11 has query & documentation error in workspace size; add 1.
+    lapack_int lwork = work_query + 1;
+    assert( lwork >= 1 );
+    assert( liwork >= 1 );
+    std::vector<float> work( lwork );
+    std::vector<lapack_int> iwork( liwork );
+
+    info = LAPACKE_stgsen_work(
+        LAPACK_COL_MAJOR, ijob, wantq, wantz, select, n,
+        A, lda, B, ldb,
+        &alphar[0], &alphai[0], beta,
+        Q, ldq, Z, ldz,
+        sdim, pl, pr, dif,
+        &work[0], lwork, &iwork[0], liwork );
+
+    // Merge split-complex representation.
+    for (int64_t i = 0; i < n; ++i) {
+        alpha[ i ] = std::complex<float>( alphar[ i ], alphai[ i ] );
+    }
+    return info;
+}
+
+inline lapack_int LAPACKE_tgsen(
+    lapack_int ijob, bool wantq, bool wantz,
+    lapack_int* select, lapack_int n,
+    double* A, lapack_int lda,
+    double* B, lapack_int ldb,
+    std::complex<double>* alpha,
+    double* beta,
+    double* Q, lapack_int ldq,
+    double* Z, lapack_int ldz,
+    lapack_int* sdim, double* pl, double* pr, double* dif )
+{
+    std::vector<double> alphar( n ), alphai( n );
+
+    // query workspace
+    double work_query;
+    lapack_int liwork;
+    lapack_int info = LAPACKE_dtgsen_work(
+        LAPACK_COL_MAJOR, ijob, wantq, wantz, select, n,
+        A, lda, B, ldb,
+        &alphar[0], &alphai[0], beta,
+        Q, ldq, Z, ldz,
+        sdim, pl, pr, dif,
+        &work_query, -1, &liwork, -1 );
+    assert( info == 0 );
+
+    // allocate workspace
+    // LAPACK <= 3.11 has query & documentation error in workspace size; add 1.
+    lapack_int lwork = work_query + 1;
+    assert( lwork >= 1 );
+    assert( liwork >= 1 );
+    std::vector<double> work( lwork );
+    std::vector<lapack_int> iwork( liwork );
+
+    info = LAPACKE_dtgsen_work(
+        LAPACK_COL_MAJOR, ijob, wantq, wantz, select, n,
+        A, lda, B, ldb,
+        &alphar[0], &alphai[0], beta,
+        Q, ldq, Z, ldz,
+        sdim, pl, pr, dif,
+        &work[0], lwork, &iwork[0], liwork );
+
+    // Merge split-complex representation.
+    for (int64_t i = 0; i < n; ++i) {
+        alpha[ i ] = std::complex<double>( alphar[ i ], alphai[ i ] );
+    }
+    return info;
+}
+
+inline lapack_int LAPACKE_tgsen(
+    lapack_int ijob, bool wantq, bool wantz,
+    lapack_int* select, lapack_int n,
+    std::complex<float>* A, lapack_int lda,
+    std::complex<float>* B, lapack_int ldb,
+    std::complex<float>* alpha,
+    std::complex<float>* beta,
+    std::complex<float>* Q, lapack_int ldq,
+    std::complex<float>* Z, lapack_int ldz,
+    lapack_int* sdim, float* pl, float* pr, float* dif )
+{
+    // query workspace
+    std::complex<float> work_query;
+    lapack_int liwork;
+    lapack_int info = LAPACKE_ctgsen_work(
+        LAPACK_COL_MAJOR, ijob, wantq, wantz, select, n,
+        (lapack_complex_float*) A, lda,
+        (lapack_complex_float*) B, ldb,
+        (lapack_complex_float*) alpha,
+        (lapack_complex_float*) beta,
+        (lapack_complex_float*) Q, ldq,
+        (lapack_complex_float*) Z, ldz,
+        sdim, pl, pr, dif,
+        (lapack_complex_float*) &work_query, -1, &liwork, -1 );
+    assert( info == 0 );
+
+    // allocate workspace
+    // LAPACK <= 3.11 has query & documentation error in workspace size; add 1.
+    lapack_int lwork = real( work_query ) + 1;
+    assert( lwork >= 1 );
+    assert( liwork >= 1 );
+    std::vector<lapack_complex_float> work( lwork );
+    std::vector<lapack_int> iwork( liwork );
+
+    return LAPACKE_ctgsen_work(
+        LAPACK_COL_MAJOR, ijob, wantq, wantz, select, n,
+        (lapack_complex_float*) A, lda,
+        (lapack_complex_float*) B, ldb,
+        (lapack_complex_float*) alpha,
+        (lapack_complex_float*) beta,
+        (lapack_complex_float*) Q, ldq,
+        (lapack_complex_float*) Z, ldz,
+        sdim, pl, pr, dif,
+        &work[0], lwork, &iwork[0], liwork );
+}
+
+inline lapack_int LAPACKE_tgsen(
+    lapack_int ijob, bool wantq, bool wantz,
+    lapack_int* select, lapack_int n,
+    std::complex<double>* A, lapack_int lda,
+    std::complex<double>* B, lapack_int ldb,
+    std::complex<double>* alpha,
+    std::complex<double>* beta,
+    std::complex<double>* Q, lapack_int ldq,
+    std::complex<double>* Z, lapack_int ldz,
+    lapack_int* sdim, double* pl, double* pr, double* dif )
+{
+    // query workspace
+    std::complex<double> work_query;
+    lapack_int liwork;
+    lapack_int info = LAPACKE_ztgsen_work(
+        LAPACK_COL_MAJOR, ijob, wantq, wantz, select, n,
+        (lapack_complex_double*) A, lda,
+        (lapack_complex_double*) B, ldb,
+        (lapack_complex_double*) alpha,
+        (lapack_complex_double*) beta,
+        (lapack_complex_double*) Q, ldq,
+        (lapack_complex_double*) Z, ldz,
+        sdim, pl, pr, dif,
+        (lapack_complex_double*) &work_query, -1, &liwork, -1 );
+    assert( info == 0 );
+
+    // allocate workspace
+    // LAPACK <= 3.11 has query & documentation error in workspace size; add 1.
+    lapack_int lwork = real( work_query ) + 1;
+    assert( lwork >= 1 );
+    assert( liwork >= 1 );
+    std::vector<lapack_complex_double> work( lwork );
+    std::vector<lapack_int> iwork( liwork );
+
+    return LAPACKE_ztgsen_work(
+        LAPACK_COL_MAJOR, ijob, wantq, wantz, select, n,
+        (lapack_complex_double*) A, lda,
+        (lapack_complex_double*) B, ldb,
+        (lapack_complex_double*) alpha,
+        (lapack_complex_double*) beta,
+        (lapack_complex_double*) Q, ldq,
+        (lapack_complex_double*) Z, ldz,
+        sdim, pl, pr, dif,
+        &work[0], lwork, &iwork[0], liwork );
+}
+
 // -----------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30700
 

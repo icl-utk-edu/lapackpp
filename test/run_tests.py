@@ -113,6 +113,7 @@ group_opt.add_argument( '--equed',  action='store', help='default=%(default)s', 
 group_opt.add_argument( '--direction', action='store', help='default=%(default)s', default='f,b' )
 group_opt.add_argument( '--storev', action='store', help='default=%(default)s', default='c,r' )
 group_opt.add_argument( '--norm',   action='store', help='default=%(default)s', default='max,1,inf,fro' )
+group_opt.add_argument( '--ijob',   action='store', help='default=%(default)s', default='0:5' )
 group_opt.add_argument( '--jobz',   action='store', help='default=%(default)s', default='n,v' )
 group_opt.add_argument( '--jobvl',  action='store', help='default=%(default)s', default='n,v' )
 group_opt.add_argument( '--jobvr',  action='store', help='default=%(default)s', default='n,v' )
@@ -291,6 +292,7 @@ equed  = ' --equed '  + opts.equed  if (opts.equed)  else ''
 direction = ' --direction ' + opts.direction if (opts.direction) else ''
 storev = ' --storev ' + opts.storev if (opts.storev) else ''
 norm   = ' --norm '   + opts.norm   if (opts.norm)   else ''
+ijob   = ' --ijob '   + opts.ijob   if (opts.ijob)   else ''
 jobz   = ' --jobz '   + opts.jobz   if (opts.jobz)   else ''
 jobu   = ' --jobu '   + opts.jobu   if (opts.jobu)   else ''
 jobvt  = ' --jobvt '  + opts.jobvt  if (opts.jobvt)  else ''
@@ -651,6 +653,8 @@ if (opts.geev and opts.host):
     [ 'unmhr', gen + dtype_complex + align + mn + side + trans_nc ],  # complex does trans = N, C, not T
     #[ 'trevc', gen + dtype + align + n + side + howmany + select ],
     #[ 'geesx', gen + dtype + align + n + jobvs + sort + select + sense ],
+    [ 'tgexc', gen + dtype + align + n + jobvl + jobvr ],
+    [ 'tgsen', gen + dtype + align + n + jobvl + jobvr + ijob ],
     ]
 
 # svd

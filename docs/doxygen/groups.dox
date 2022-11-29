@@ -89,6 +89,7 @@
         @defgroup ggev Generalized, AV = BV Lambda
         @defgroup gees Schur form, A = ZTZ^H
         @defgroup gges Generalized Schur form
+        @defgroup gges_internal Generalized Schur form, internal
         @defgroup geev_computational Computational routines
     @}
 

@@ -41,6 +41,7 @@ void print_matrix( int64_t m, int64_t n, T *A, int64_t lda,
 }
 
 // -----------------------------------------------------------------------------
+/// Overload for complex.
 template< typename T >
 void print_matrix( int64_t m, int64_t n, std::complex<T>* A, int64_t lda,
                    const char* format="%9.4f",
@@ -80,6 +81,18 @@ void print_matrix( int64_t m, int64_t n, std::complex<T>* A, int64_t lda,
 }
 
 // -----------------------------------------------------------------------------
+/// Overload with name.
+template< typename T >
+void print_matrix( const char* name,
+                   int64_t m, int64_t n, T *A, int64_t lda,
+                   const char* format="%9.4f",
+                   const char* format_int="%9.0f" )
+{
+    printf( "%s = ", name );
+    print_matrix( m, n, A, lda, format, format_int );
+}
+
+// -----------------------------------------------------------------------------
 template< typename T >
 void print_vector( int64_t n, T *x, int64_t incx,
                    const char* format="%9.4f",
@@ -106,6 +119,7 @@ void print_vector( int64_t n, T *x, int64_t incx,
 }
 
 // -----------------------------------------------------------------------------
+/// Overload for complex.
 template< typename T >
 void print_vector( int64_t n, std::complex<T>* x, int64_t incx,
                    const char* format="%9.4f",
@@ -137,6 +151,18 @@ void print_vector( int64_t n, std::complex<T>* x, int64_t incx,
         ix += incx;
     }
     printf( " ]';\n" );
+}
+
+// -----------------------------------------------------------------------------
+/// Overload with name.
+template< typename T >
+void print_vector( const char* name,
+                   int64_t n, T *x, int64_t incx,
+                   const char* format="%9.4f",
+                   const char* format_int="%9.0f" )
+{
+    printf( "%s = ", name );
+    print_vector( n, x, incx, format, format_int );
 }
 
 #endif        //  #ifndef PRINT_HH

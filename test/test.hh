@@ -62,8 +62,9 @@ public:
     testsweeper::ParamEnum< lapack::Op >        transB;
     testsweeper::ParamEnum< lapack::Diag >      diag;
     testsweeper::ParamEnum< lapack::Norm >      norm;
-    testsweeper::ParamEnum< lapack::Direction >    direction;
+    testsweeper::ParamEnum< lapack::Direction > direction;
     testsweeper::ParamEnum< lapack::StoreV >    storev;
+    testsweeper::ParamInt                       ijob;   // tgsen
     testsweeper::ParamEnum< lapack::Job >       jobz;   // heev
     testsweeper::ParamEnum< lapack::Job >       jobvl;  // geev
     testsweeper::ParamEnum< lapack::Job >       jobvr;  // geev
@@ -393,6 +394,8 @@ void test_unghr ( Params& params, bool run );
 void test_unmhr ( Params& params, bool run );
 void test_hsein ( Params& params, bool run );
 void test_trevc ( Params& params, bool run );
+void test_tgexc ( Params& params, bool run );
+void test_tgsen ( Params& params, bool run );
 
 // generalized nonsymmetric eigenvalues
 void test_ggev  ( Params& params, bool run );

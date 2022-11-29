@@ -195,6 +195,8 @@ add_executable(
     test_sytrs.cc
     test_sytrs_aa.cc
     test_sytrs_rook.cc
+    test_tgexc.cc
+    test_tgsen.cc
     test_unghr.cc
     test_unglq.cc
     test_ungql.cc

@@ -19,7 +19,8 @@ Example creating tester:
     /Users/mgates/Documents/lapack
 
     # Generate Fortran prototypes. Need to reformat nicely.
-    lapackpp> ./tools/header_gen.py {s,d,c,z}posv > gen/fortran.h
+    lapackpp> ./tools/header_gen.py {s,d,c,z}posv
+    generating gen/fortran.h
 
     # If necessary, add the routine to tools/first_version.py,
     # which is first version of LAPACK to include the routine.
@@ -1296,7 +1297,7 @@ def generate_docs( func ):
     # Further Details section
     d = func.details
     if (d):
-        txt += '// -----------------------------------------------------------------------------\n'
+        txt += '//------------------------------------------------------------------------------\n'
         txt += '/// @par Further Details\n'
         txt += parse_docs( func, d, variables, indent=4 )
     # end
@@ -1654,7 +1655,7 @@ def generate_tester( funcs ):
         # end
     # end
 
-    lapacke  = ('// -----------------------------------------------------------------------------\n'
+    lapacke  = ('//------------------------------------------------------------------------------\n'
              +  '// Simple overloaded wrappers around LAPACKE (assuming routines in LAPACKE).\n'
              +  '// These should go in test/lapacke_wrappers.hh.\n' )
     for func in funcs:
@@ -1724,7 +1725,7 @@ def generate_tester( funcs ):
     #----------
     # todo: only dispatch for precisions in funcs
     dispatch = ('''
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_''' + func.name + '''( Params& params, bool run )
 {
 ''' + requires_if + '''\
@@ -1755,7 +1756,7 @@ void test_''' + func.name + '''( Params& params, bool run )
 
     txt = (requires_if2
         +  lapacke
-        +  '// -----------------------------------------------------------------------------\n'
+        +  '//------------------------------------------------------------------------------\n'
         +  'template< typename scalar_t >\n'
         +  'void test_' + func.name + '_work( Params& params, bool run )\n'
         +  '{\n'
@@ -1775,7 +1776,7 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  tab + 'if (! run)\n'
         +  tab*2 + 'return;\n'
         +  '\n'
-        +  tab + '// ---------- setup\n'
+        +  tab + '//---------- setup\n'
         +  scalars2
         +  sizes
         +  '\n'
@@ -1784,7 +1785,7 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  init
         +  copy
         +  '\n'
-        +  tab + '// ---------- run test\n'
+        +  tab + '//---------- run test\n'
         +  tab + 'testsweeper::flush_cache( params.cache() );\n'
         +  tab + 'double time = testsweeper::get_wtime();\n'
         +  tab + 'int64_t info_tst = lapack::' + func.name + '( ' + tst_args + ' );\n'
@@ -1798,7 +1799,7 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  tab + 'params.gflops() = gflop / time;\n'
         +  '\n'
         +  tab + "if (params.ref() == 'y' || params.check() == 'y') {\n"
-        +  tab*2 + '// ---------- run reference\n'
+        +  tab*2 + '//---------- run reference\n'
         +  tab*2 + 'testsweeper::flush_cache( params.cache() );\n'
         +  tab*2 + 'time = testsweeper::get_wtime();\n'
         +  tab*2 + 'int64_t info_ref = LAPACKE_'  + func.name + '( ' + ref_args + ' );\n'
@@ -1810,7 +1811,7 @@ void test_''' + func.name + '''( Params& params, bool run )
         +  tab*2 + 'params.ref_time() = time;\n'
         +  tab*2 + 'params.ref_gflops() = gflop / time;\n'
         +  '\n'
-        +  tab*2 + '// ---------- check error compared to reference\n'
+        +  tab*2 + '//---------- check error compared to reference\n'
         +  tab*2 + 'real_t error = 0;\n'
         +  tab*2 + 'if (info_tst != info_ref) {\n'
         +  tab*2 + '    error = 1;\n'

@@ -459,6 +459,8 @@ add_library(
     src/tftri.cc
     src/tfttp.cc
     src/tfttr.cc
+    src/tgexc.cc
+    src/tgsen.cc
     src/tgsja.cc
     src/tgsyl.cc
     src/tpcon.cc

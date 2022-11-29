@@ -372,6 +372,10 @@ std::vector< testsweeper::routines_t > routines = {
     //{ "trevc",              test_trevc,     Section::geev }, // TODO --howmany, need to setup a bool select array
     { "",                   nullptr,        Section::newline },
 
+    { "tgexc",              test_tgexc,     Section::geev },
+    { "tgsen",              test_tgsen,     Section::geev },
+    { "",                   nullptr,        Section::newline },
+
     // -----
     // driver: singular value decomposition
     { "gesvd",              test_gesvd,         Section::svd },
@@ -494,6 +498,7 @@ Params::Params():
     norm      ( "norm",    7,    ParamType::List, lapack::Norm::One,      lapack::char2norm, lapack::norm2char, lapack::norm2str, "norm: o=one, 2=two, i=inf, f=fro, m=max" ),
     direction ( "direction", 8,  ParamType::List, lapack::Direction::Forward, lapack::char2direction, lapack::direction2char, lapack::direction2str, "direction: f=forward, b=backward" ),
     storev    ( "storev", 10,    ParamType::List, lapack::StoreV::Columnwise, lapack::char2storev, lapack::storev2char, lapack::storev2str, "store vectors: c=columnwise, r=rowwise" ),
+    ijob      ( "ijob",    5,    ParamType::List,   0,   0,   5, "condition numbers to compute, 0 to 5; see tgsen docs" ),
     jobz      ( "jobz",    5,    ParamType::List, lapack::Job::NoVec, lapack::char2job, lapack::job2char, lapack::job2str, "eigenvectors: n=no vectors, v=vectors" ),
     jobvl     ( "jobvl",   5,    ParamType::List, lapack::Job::NoVec, lapack::char2job, lapack::job2char, lapack::job2str, "left eigenvectors: n=no vectors, v=vectors" ),
     jobvr     ( "jobvr",   5,    ParamType::List, lapack::Job::NoVec, lapack::char2job, lapack::job2char, lapack::job2str, "right eigenvectors: n=no vectors, v=vectors" ),
@@ -507,8 +512,7 @@ Params::Params():
                 lapack::char2matrixtype, lapack::matrixtype2char, lapack::matrixtype2str,
                 "matrix type: g=general, l=lower, u=upper, h=Hessenberg, z=band-general, b=band-lower, q=band-upper" ),
     factored  ( "factored",    11,    ParamType::List, lapack::Factored::NotFactored, lapack::char2factored, lapack::factored2char, lapack::factored2str, "f=Factored, n=NotFactored, e=Equilibrate" ),
-    equed  ( "equed",    9,    ParamType::List, lapack::Equed::None, lapack::char2equed, lapack::equed2char, lapack::equed2str, "n=None, r=Row, c=Col, b=Both, y=Yes" ),
-
+    equed     ( "equed",   9,    ParamType::List, lapack::Equed::None, lapack::char2equed, lapack::equed2char, lapack::equed2str, "n=None, r=Row, c=Col, b=Both, y=Yes" ),
 
     //          name,      w, p, type,            def,   min,     max, help
     dim       ( "dim",     6,    ParamType::List,          0, 1000000, "m by n by k dimensions" ),

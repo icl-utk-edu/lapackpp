@@ -1,4 +1,4 @@
-#!/bin/bash -xe
+#!/bin/bash -x
 
 maker=$1
 device=$2
@@ -11,32 +11,40 @@ fi
 mydir=$(dirname $0)
 source ${mydir}/setup_env.sh
 
-section "======================================== Verify dependencies"
+print "======================================== Verify dependencies"
 quiet module list
 quiet which g++
 quiet g++ --version
 
 echo "MKLROOT=${MKLROOT}"
 
-section "======================================== Environment"
+print "======================================== Environment"
 env
 
-section "======================================== Setup build"
+print "======================================== Setup build"
 export color=no
 rm -rf ${top}/install
 if [ "${maker}" = "make" ]; then
     make distclean
-    make config CXXFLAGS="-Werror" prefix=${top}/install
+    make config CXXFLAGS="-Werror" prefix=${top}/install \
+         || exit 10
 fi
 if [ "${maker}" = "cmake" ]; then
     (  # Build blaspp first
        git clone https://github.com/icl-utk-edu/blaspp
        mkdir blaspp/build && cd blaspp/build
-       cmake -Dcolor=no -Dbuild_tests=no -DCMAKE_INSTALL_PREFIX=${top}/install ..
+       cmake -Dcolor=no -Dbuild_tests=no \
+             -DCMAKE_INSTALL_PREFIX=${top}/install \
+             -Dgpu_backend=${gpu_backend} .. \
+             || exit 11
        make -j8 install
     )
 
     cmake -Dcolor=no -DCMAKE_CXX_FLAGS="-Werror" \
-          -DCMAKE_INSTALL_PREFIX=${top}/install ..
+          -DCMAKE_INSTALL_PREFIX=${top}/install \
+          -Dgpu_backend=${gpu_backend} .. \
+          || exit 12
 fi
 
+print "======================================== Finished configure"
+exit 0

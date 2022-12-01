@@ -12,16 +12,16 @@ quiet() {
     set -x
 }
 
-# `section` is like `echo`, but suppresses output of the command itself.
+# `print` is like `echo`, but suppresses output of the command itself.
 # https://superuser.com/a/1141026
-print_section() {
+echo_and_restore() {
     builtin echo "$*"
     date
     case "${save_flags}" in
         (*x*)  set -x
     esac
 }
-alias section='{ save_flags="$-"; set +x; } 2> /dev/null; print_section'
+alias print='{ save_flags="$-"; set +x; } 2> /dev/null; echo_and_restore'
 
 
 #-------------------------------------------------------------------------------
@@ -33,34 +33,40 @@ export top=$(pwd)
 shopt -s expand_aliases
 
 
-section "======================================== Load compiler"
+print "======================================== Load compiler"
 quiet module load gcc@7.3.0
 quiet module load intel-mkl
 
+# CMake will find CUDA in /usr/local/cuda, so need to explicitly set
+# gpu_backend.
+export gpu_backend=none
+
 if [ "${device}" = "gpu_nvidia" ]; then
-    section "======================================== Load CUDA"
+    print "======================================== Load CUDA"
     export CUDA_HOME=/usr/local/cuda/
     export PATH=${PATH}:${CUDA_HOME}/bin
     export CPATH=${CPATH}:${CUDA_HOME}/include
     export LIBRARY_PATH=${LIBRARY_PATH}:${CUDA_HOME}/lib64
-    which nvcc
+    export gpu_backend=cuda
+    quiet which nvcc
     nvcc --version
 fi
 
 if [ "${device}" = "gpu_amd" ]; then
-    section "======================================== Load ROCm"
+    print "======================================== Load ROCm"
     export PATH=${PATH}:/opt/rocm/bin
     export CPATH=${CPATH}:/opt/rocm/include
     export LIBRARY_PATH=${LIBRARY_PATH}:/opt/rocm/lib:/opt/rocm/lib64
     export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/opt/rocm/lib:/opt/rocm/lib64
-    which hipcc
+    export gpu_backend=hip
+    quiet which hipcc
     hipcc --version
 fi
 
 if [ "${maker}" = "cmake" ]; then
-    section "======================================== Load cmake"
+    print "======================================== Load cmake"
     quiet module load cmake
-    which cmake
+    quiet which cmake
     cmake --version
     cd build
 fi

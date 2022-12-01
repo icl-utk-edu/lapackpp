@@ -1,4 +1,4 @@
-#!/bin/bash -xe
+#!/bin/bash -x
 
 maker=$1
 device=$2
@@ -6,16 +6,22 @@ device=$2
 mydir=$(dirname $0)
 source ${mydir}/setup_env.sh
 
-section "======================================== Tests"
+print "======================================== Tests"
+
+# Instead of exiting on the first failed test (bash -e),
+# run all the tests and accumulate failures into $err.
+err=0
+
 cd test
 export OMP_NUM_THREADS=8
 ./run_tests.py --host --quick --xml ${top}/report-${maker}.xml
+(( err += $? ))
 
 # CUDA or HIP
 ./run_tests.py --device --quick --xml ${top}/report-${maker}-device.xml
+(( err += $? ))
 
-
-section "======================================== Smoke tests"
+print "======================================== Smoke tests"
 cd ${top}/example
 
 if [ "${maker}" = "make" ]; then
@@ -28,6 +34,8 @@ if [ "${maker}" = "cmake" ]; then
 fi
 
 make
-./example_potrf || exit 1
+./example_potrf
+(( err += $? ))
 
-section "======================================== Finished"
+print "======================================== Finished test"
+exit ${err}

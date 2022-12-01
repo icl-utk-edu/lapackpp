@@ -15,7 +15,7 @@
 
 // -----------------------------------------------------------------------------
 template< typename scalar_t >
-void test_unhr_col_work( Params& params, bool run )
+void test_orhr_col_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
     typedef long long lld;
@@ -54,10 +54,10 @@ void test_unhr_col_work( Params& params, bool run )
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
-    int64_t info_tst = lapack::unhr_col( m, n, nb, &A_tst[0], lda, &T_tst[0], ldt, &D_tst[0] );
+    int64_t info_tst = lapack::orhr_col( m, n, nb, &A_tst[0], lda, &T_tst[0], ldt, &D_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::unhr_col returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::orhr_col returned error %lld\n", (lld) info_tst );
     }
 
     params.time() = time;
@@ -67,10 +67,10 @@ void test_unhr_col_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_unhr_col( m, n, nb, &A_ref[0], lda, &T_ref[0], ldt, &D_ref[0] );
+        int64_t info_ref = LAPACKE_orhr_col( m, n, nb, &A_ref[0], lda, &T_ref[0], ldt, &D_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_unhr_col returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_orhr_col returned error %lld\n", (lld) info_ref );
         }
 
         params.ref_time() = time;
@@ -92,24 +92,16 @@ void test_unhr_col_work( Params& params, bool run )
 #endif  // LAPACK >= 3.9.0
 
 // -----------------------------------------------------------------------------
-void test_unhr_col( Params& params, bool run )
+void test_orhr_col( Params& params, bool run )
 {
 #if LAPACK_VERSION >= 30900  // >= 3.9.0
     switch (params.datatype()) {
         case testsweeper::DataType::Single:
-            test_unhr_col_work< float >( params, run );
+            test_orhr_col_work< float >( params, run );
             break;
 
         case testsweeper::DataType::Double:
-            test_unhr_col_work< double >( params, run );
-            break;
-
-        case testsweeper::DataType::SingleComplex:
-            test_unhr_col_work< std::complex<float> >( params, run );
-            break;
-
-        case testsweeper::DataType::DoubleComplex:
-            test_unhr_col_work< std::complex<double> >( params, run );
+            test_orhr_col_work< double >( params, run );
             break;
 
         default:
@@ -117,7 +109,7 @@ void test_unhr_col( Params& params, bool run )
             break;
     }
 #else
-    fprintf( stderr, "unhr_col requires LAPACK >= 3.9.0\n\n" );
+    fprintf( stderr, "orhr_col requires LAPACK >= 3.9.0\n\n" );
     exit(0);
 #endif
 }

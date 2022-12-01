@@ -9949,6 +9949,85 @@ inline lapack_int LAPACKE_ungtr(
 }
 
 // -----------------------------------------------------------------------------
+// LAPACKE_*unhr_col only in Intel MKL, not yet Netlib LAPACK as of 3.10.
+#if LAPACK_VERSION >= 30900 && defined( LAPACK_HAVE_MKL ) // >= 3.9.0
+
+inline lapack_int LAPACKE_orhr_col(
+    lapack_int m, lapack_int n, lapack_int nb,
+    float* A, lapack_int lda,
+    float* T, lapack_int ldt,
+    float* D )
+{
+    return LAPACKE_sorhr_col(
+        LAPACK_COL_MAJOR, m, n, nb,
+        A, lda,
+        T, ldt,
+        D );
+}
+
+inline lapack_int LAPACKE_orhr_col(
+    lapack_int m, lapack_int n, lapack_int nb,
+    double* A, lapack_int lda,
+    double* T, lapack_int ldt,
+    double* D )
+{
+    return LAPACKE_dorhr_col(
+        LAPACK_COL_MAJOR, m, n, nb,
+        A, lda,
+        T, ldt,
+        D );
+}
+
+// In real, unhr is an alias for orhr.
+inline lapack_int LAPACKE_unhr_col(
+    lapack_int m, lapack_int n, lapack_int nb,
+    float* A, lapack_int lda,
+    float* T, lapack_int ldt,
+    float* D )
+{
+    return LAPACKE_orhr_col( m, n, nb, A, lda, T, ldt, D );
+}
+
+// In real, unhr is an alias for orhr.
+inline lapack_int LAPACKE_unhr_col(
+    lapack_int m, lapack_int n, lapack_int nb,
+    double* A, lapack_int lda,
+    double* T, lapack_int ldt,
+    double* D )
+{
+    return LAPACKE_orhr_col( m, n, nb, A, lda, T, ldt, D );
+}
+
+inline lapack_int LAPACKE_unhr_col(
+    lapack_int m, lapack_int n, lapack_int nb,
+    std::complex<float>* A, lapack_int lda,
+    std::complex<float>* T, lapack_int ldt,
+    std::complex<float>* D )
+{
+    return LAPACKE_cunhr_col(
+        LAPACK_COL_MAJOR, m, n, nb,
+        (lapack_complex_float*) A, lda,
+        (lapack_complex_float*) T, ldt,
+        (lapack_complex_float*) D );
+}
+
+inline lapack_int LAPACKE_unhr_col(
+    lapack_int m, lapack_int n, lapack_int nb,
+    std::complex<double>* A, lapack_int lda,
+    std::complex<double>* T, lapack_int ldt,
+    std::complex<double>* D )
+{
+    return LAPACKE_zunhr_col(
+        LAPACK_COL_MAJOR, m, n, nb,
+        (lapack_complex_double*) A, lda,
+        (lapack_complex_double*) T, ldt,
+        (lapack_complex_double*) D );
+}
+
+#endif  // 3.9.0 and LAPACK_HAVE_MKL
+
+
+// -----------------------------------------------------------------------------
 inline lapack_int LAPACKE_unmhr(
     char side, char trans, lapack_int m, lapack_int n, lapack_int ilo, lapack_int ihi,
     float* A, lapack_int lda,

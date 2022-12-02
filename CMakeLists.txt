@@ -612,10 +612,15 @@ if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.git")
         lapackpp PRIVATE LAPACKPP_ID="${lapackpp_id}" )
 endif()
 
-# Use and export -std=c++11; don't allow -std=gnu++11 extensions.
-target_compile_features( lapackpp PUBLIC cxx_std_11 )
-set_target_properties( lapackpp PROPERTIES
-    CXX_EXTENSIONS OFF
+# Use and export -std=c++17.
+# CMake inexplicably allows gnu++17 or "decay" to c++11 or 14; prohibit those.
+target_compile_features(
+    lapackpp PUBLIC cxx_std_17
+)
+set_target_properties(
+    lapackpp PROPERTIES
+    CXX_STANDARD_REQUIRED true  # prohibit < c++17
+    CXX_EXTENSIONS false        # prohibit gnu++17
     WINDOWS_EXPORT_ALL_SYMBOLS ON
 )
 

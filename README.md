@@ -100,10 +100,14 @@ Nuclear Security Administration, responsible for delivering a capable exascale
 ecosystem, including software, applications, and hardware technology, to support
 the nation’s exascale computing imperative.
 
-This research uses resources of the Oak Ridge Leadership Computing Facility,
-which is a DOE Office of Science User Facility supported under Contract DE-AC05-00OR22725.
-This research also uses resources of the Argonne Leadership Computing Facility,
-which is a DOE Office of Science User Facility supported under Contract DE-AC02-06CH11357.
+This research uses resources of the
+Oak Ridge Leadership Computing Facility (OLCF),
+a DOE Office of Science User Facility supported under Contract DE-AC05-00OR22725;
+Argonne Leadership Computing Facility (ALCF),
+a DOE Office of Science User Facility supported under Contract DE-AC02-06CH11357;
+and
+National Energy Research Scientific Computing Center (NERSC),
+a DOE Office of Science User Facility supported under Contract DE-AC02-05CH11231.
 
 * * *
 

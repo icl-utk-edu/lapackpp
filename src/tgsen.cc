@@ -173,14 +173,6 @@ int64_t tgsen(
     lapack_int sdim_ = (lapack_int) *sdim;
     lapack_int info_ = 0;
 
-    #if 0
-        // 32-bit copy
-        std::vector< lapack_logical > select_( &select[ 0 ], &select[ n ] );
-        lapack_logical const* select_ptr = &select_[ 0 ];
-    #else
-        lapack_logical const* select_ptr = select;
-    #endif
-
     // For real, create vectors for split-complex representation.
     // For complex, creates as dummy `int` type to be optimized away.
     std::conditional_t< is_complex<scalar_t>::value, int, std::vector<scalar_t> >
@@ -197,14 +189,14 @@ int64_t tgsen(
         alphar.resize( n );
         alphai.resize( n );
         internal::tgsen(
-            ijob_, wantq_, wantz_, select_ptr, n_,
+            ijob_, wantq_, wantz_, select, n_,
             A, lda_, B, ldb_, &alphar[ 0 ], &alphai[ 0 ], beta,
             Q, ldq_, Z, ldz_, &sdim_, pl, pr, dif,
             qry_work, ineg_one, qry_iwork, ineg_one, &info_ );
     }
     else {
         internal::tgsen(
-            ijob_, wantq_, wantz_, select_ptr, n_,
+            ijob_, wantq_, wantz_, select, n_,
             A, lda_, B, ldb_, alpha, beta,
             Q, ldq_, Z, ldz_, &sdim_, pl, pr, dif,
             qry_work, ineg_one, qry_iwork, ineg_one, &info_ );
@@ -224,7 +216,7 @@ int64_t tgsen(
     if constexpr (! is_complex<scalar_t>::value) {
         // For real, use split-complex alpha.
         internal::tgsen(
-            ijob_, wantq_, wantz_, select_ptr, n_,
+            ijob_, wantq_, wantz_, select, n_,
             A, lda_, B, ldb_, &alphar[0], &alphai[0], beta,
             Q, ldq_, Z, ldz_, &sdim_, pl, pr, dif,
             &work[0], lwork_, &iwork[0], liwork_, &info_ );
@@ -235,7 +227,7 @@ int64_t tgsen(
     }
     else {
         internal::tgsen(
-            ijob_, wantq_, wantz_, select_ptr, n_,
+            ijob_, wantq_, wantz_, select, n_,
             A, lda_, B, ldb_, alpha, beta,
             Q, ldq_, Z, ldz_, &sdim_, pl, pr, dif,
             &work[0], lwork_, &iwork[0], liwork_, &info_ );

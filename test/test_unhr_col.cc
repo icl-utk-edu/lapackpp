@@ -86,6 +86,9 @@ void test_unhr_col_work( Params& params, bool run )
         params.error() = error;
         params.okay() = (error == 0);  // expect lapackpp == lapacke
     }
+    #else
+        // LAPACKE_unhr_col not yet in LAPACK
+        params.msg() = "check requires Intel MKL, as of LAPACK 3.11";
     #endif  // LAPACK_HAVE_MKL
 }
 

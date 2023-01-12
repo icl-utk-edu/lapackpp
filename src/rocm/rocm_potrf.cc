@@ -11,13 +11,14 @@
 
 //==============================================================================
 // todo: put into BLAS++ header somewhere.
+// changed from blas::device to blas::internal in 5ca8ad35 2022-11-28
 
 namespace blas {
-namespace device {
+namespace internal {
 
 rocblas_fill uplo2rocblas(blas::Uplo uplo);
 
-} // namespace device
+} // namespace internal
 } // namespace blas
 
 //==============================================================================
@@ -73,7 +74,7 @@ void potrf(
 {
     // todo: check for overflow
     auto solver = queue.handle();
-    auto uplo_ = blas::device::uplo2rocblas( uplo );
+    auto uplo_ = blas::internal::uplo2rocblas( uplo );
 
     // for cuda, rocm, call set_device; for oneapi, do nothing.
     blas::internal_set_device( queue.device() );

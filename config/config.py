@@ -671,7 +671,8 @@ def onemkl_library():
         inc = '-I' + root + '/linux/include ' \
             + '-I' + root + '/linux/include/sycl '
     env = {'LIBS': libs,
-           'CXXFLAGS': inc + define('HAVE_ONEMKL') + ' -Wno-deprecated-declarations'}
+           'CXXFLAGS': inc + define('HAVE_ONEMKL')
+           + ' -fsycl -Wno-deprecated-declarations -fhonor-nan-compares'}
     (rc, out, err) = compile_exe( 'config/onemkl.cc', env )
     print_result( libs, rc )
     if (rc == 0):
@@ -714,16 +715,15 @@ def gpu_blas():
         print_msg( font.red( 'skipping HIP/ROCm search' ) )
 
     #----- oneMKL
-    # Disable oneMKL until BLAS++ oneMKL support is finished.
-    #if (not gpu_blas_found and test_onemkl):
-    #    try:
-    #        onemkl_library()
-    #        gpu_blas_found = True
-    #    except Error as ex:
-    #        if (gpu_backend == 'onemkl'):
-    #            raise ex  # fatal
-    #else:
-    #    print_msg( font.red( 'skipping oneMKL search' ) )
+    if (not gpu_blas_found and test_onemkl):
+        try:
+            onemkl_library()
+            gpu_blas_found = True
+        except Error as ex:
+            if (gpu_backend == 'onemkl'):
+                raise ex  # fatal
+    else:
+        print_msg( font.red( 'skipping oneMKL search' ) )
 
     if (not gpu_blas_found):
         print_warn( 'No GPU BLAS library found' )

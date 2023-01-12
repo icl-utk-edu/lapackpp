@@ -11,13 +11,6 @@ fi
 mydir=$(dirname $0)
 source ${mydir}/setup_env.sh
 
-print "======================================== Verify dependencies"
-quiet module list
-quiet which g++
-quiet g++ --version
-
-echo "MKLROOT=${MKLROOT}"
-
 print "======================================== Environment"
 env
 

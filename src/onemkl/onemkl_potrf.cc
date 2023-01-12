@@ -13,11 +13,11 @@
 // todo: put into BLAS++ header somewhere.
 
 namespace blas {
-namespace device {
+namespace internal {
 
 oneapi::mkl::uplo uplo2onemkl(blas::Uplo uplo);
 
-} // namespace device
+} // namespace internal
 } // namespace blas
 
 //==============================================================================

@@ -32,7 +32,7 @@ void potrf_work_size_bytes(
     size_t* dev_work_size, size_t* host_work_size,
     lapack::Queue& queue )
 {
-    auto solver = queue.handle();
+    auto solver = queue.stream();
     auto uplo_ = blas::device::uplo2onemkl( uplo );
 
     // for cuda, rocm, call set_device; for oneapi, do nothing.
@@ -56,7 +56,7 @@ void potrf(
     scalar_t* dA, int64_t ldda,
     device_info_int* dev_info, lapack::Queue& queue )
 {
-    auto solver = queue.handle();
+    auto solver = queue.stream();
     auto uplo_ = blas::device::uplo2onemkl( uplo );
 
     // for cuda, rocm, call set_device; for oneapi, do nothing.

@@ -22,7 +22,7 @@ void geqrf_work_size_bytes(
     size_t* dev_work_size, size_t* host_work_size,
     lapack::Queue& queue )
 {
-    auto solver = queue.handle();
+    auto solver = queue.stream();
 
     int64_t lwork = 0;
     blas_dev_call(
@@ -44,7 +44,7 @@ void geqrf(
     void* host_work, size_t host_work_size,
     device_info_int* dev_info, lapack::Queue& queue )
 {
-    auto solver = queue.handle();
+    auto solver = queue.stream();
 
     // for cuda, rocm, call set_device; for oneapi, do nothing.
     blas::internal_set_device( queue.device() );

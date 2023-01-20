@@ -71,7 +71,7 @@ endif
 #-------------------------------------------------------------------------------
 # Files
 
-lib_src  = $(wildcard src/*.cc src/cuda/*.cc src/rocm/*.cc src/stub/*.cc)
+lib_src  = $(wildcard src/*.cc src/cuda/*.cc src/rocm/*.cc src/onemkl/*.cc src/stub/*.cc)
 lib_obj  = $(addsuffix .o, $(basename $(lib_src)))
 dep     += $(addsuffix .d, $(basename $(lib_src)))
 

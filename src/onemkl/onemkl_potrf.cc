@@ -57,7 +57,7 @@ void potrf(
     device_info_int* dev_info, lapack::Queue& queue )
 {
     auto solver = queue.stream();
-    auto uplo_ = blas::device::uplo2onemkl( uplo );
+    auto uplo_ = blas::internal::uplo2onemkl( uplo );
 
     // for cuda, rocm, call set_device; for oneapi, do nothing.
     blas::internal_set_device( queue.device() );

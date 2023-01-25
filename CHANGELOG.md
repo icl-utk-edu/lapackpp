@@ -1,5 +1,14 @@
+2023.01.00
+  - Added oneAPI port (currently Makefile only)
+  - Added `{or,un}hr_col` Householder reconstruction
+  - Added `tgexc, tgsen` to reorder generalized Schur form
+  - Added `lartg` to generate plane rotation
+  - Moved main repo to https://github.com/icl-utk-edu/lapackpp/
+  - Use python3
+
 2022.07.00
   - Added device queue and Cholesky (potrf), LU (getrf), and QR (geqrf) on GPU
+    for CUDA (cuSolver) and ROCm (rocSolver)
   - Added geqr tester
 
 2022.05.00

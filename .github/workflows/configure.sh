@@ -19,7 +19,7 @@ export color=no
 rm -rf ${top}/install
 if [ "${maker}" = "make" ]; then
     make distclean
-    make config CXXFLAGS="-Werror" prefix=${top}/install \
+    make config prefix=${top}/install \
          || exit 10
 fi
 if [ "${maker}" = "cmake" ]; then

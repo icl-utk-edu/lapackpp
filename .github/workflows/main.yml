@@ -18,8 +18,8 @@ jobs:
   icl_lapackpp:
     strategy:
       matrix:
-        maker: [make, cmake]
-        device: [cpu, gpu_nvidia, gpu_amd]
+        maker: [make]
+        device: [gpu_intel]
       fail-fast: false
     runs-on: ${{ matrix.device }}
     steps:

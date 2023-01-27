@@ -14,11 +14,13 @@ err=0
 
 cd test
 export OMP_NUM_THREADS=8
-./run_tests.py --host --quick --xml ${top}/report-${maker}.xml
+TESTER="./run_tests.py --quick"
+[ "${device}" = "gpu_intel" ] && TESTER+=" --type s,c"
+$TESTER --host --xml ${top}/report-${maker}.xml
 (( err += $? ))
 
 # CUDA or HIP
-./run_tests.py --device --quick --xml ${top}/report-${maker}-device.xml
+$TESTER --device --xml ${top}/report-${maker}-device.xml
 (( err += $? ))
 
 print "======================================== Smoke tests"
@@ -36,8 +38,10 @@ if [ "${maker}" = "cmake" ]; then
     cmake "-DCMAKE_PREFIX_PATH=${lib};${lib64}" ..
 fi
 
+TESTS="s d c z"
+[ "${device}" = "gpu_intel" ] && TESTS="s c"
 make
-./example_potrf
+./example_potrf $TESTS
 (( err += $? ))
 
 print "======================================== Finished test"

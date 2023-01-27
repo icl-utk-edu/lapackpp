@@ -3,6 +3,8 @@
 #include <vector>
 #include <stdio.h>
 
+#include "util.hh"
+
 //------------------------------------------------------------------------------
 template <typename T>
 void run( int n )
@@ -25,18 +27,30 @@ void run( int n )
 //------------------------------------------------------------------------------
 int main( int argc, char** argv )
 {
+    // Parse command line to set types for s, d, c, z precisions.
+    bool types[ 4 ];
+    parse_args( argc, argv, types );
+
     int n = 100;
-    printf( "run< float >( %d )\n", n );
-    run< float  >( n );
+    if (types[ 0 ]) {
+        printf( "run< float >( %d )\n", n );
+        run< float  >( n );
+    }
 
-    printf( "run< double >( %d )\n", n );
-    run< double >( n );
+    if (types[ 1 ]) {
+        printf( "run< double >( %d )\n", n );
+        run< double >( n );
+    }
 
-    printf( "run< complex<float> >( %d )\n", n );
-    run< std::complex<float>  >( n );
+    if (types[ 2 ]) {
+        printf( "run< complex<float> >( %d )\n", n );
+        run< std::complex<float>  >( n );
+    }
 
-    printf( "run< complex<double> >( %d )\n", n );
-    run< std::complex<double> >( n );
+    if (types[ 3 ]) {
+        printf( "run< complex<double> >( %d )\n", n );
+        run< std::complex<double> >( n );
+    }
 
     return 0;
 }

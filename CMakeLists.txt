@@ -5,12 +5,13 @@
 #
 # CMake script for LAPACK++ library.
 
-cmake_minimum_required( VERSION 3.15 )
+cmake_minimum_required( VERSION 3.17 )
 # 3.1  target_compile_features
-# 3.8  target_compile_features( cxx_std_11 )
+# 3.8  target_compile_features( cxx_std_17 )
 # 3.14 install( LIBRARY DESTINATION lib ) default
 # 3.15 $<$COMPILE_LANG_AND_ID  # optional
 # 3.15 message DEBUG, string REPEAT
+# 3.17 find_package( CUDAToolkit )
 
 project(
     lapackpp
@@ -48,6 +49,14 @@ option( use_cmake_find_lapack "Use CMake's find_package( LAPACK ) rather than th
 set( gpu_backend "auto" CACHE STRING "GPU backend to use" )
 set_property( CACHE gpu_backend PROPERTY STRINGS
               auto cuda hip none )
+
+# After color.
+include( "cmake/util.cmake" )
+
+# Recognize CTest's BUILD_TESTING flag. (Quotes required.)
+if (NOT "${BUILD_TESTING}" STREQUAL "")
+    set( build_tests "${BUILD_TESTING}" )
+endif()
 
 # Default prefix=/opt/slate
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT
@@ -523,48 +532,39 @@ add_library(
 
 #-------------------------------------------------------------------------------
 # CUDA support.
+message( "" )
 set( lapackpp_use_cuda false )  # output in lapackppConfig.cmake.in
 if (gpu_backend MATCHES "^(auto|cuda)$")
-    include( CheckLanguage )
-    check_language( CUDA )
-    if (gpu_backend STREQUAL "cuda" AND NOT CMAKE_CUDA_COMPILER)
-        message( FATAL_ERROR "gpu_backend = ${gpu_backend}, but CUDA was not found")
+    message( STATUS "${bold}Looking for CUDA${not_bold} (gpu_backend = ${gpu_backend})" )
+    if (gpu_backend STREQUAL "cuda")
+        find_package( CUDAToolkit REQUIRED )
+    else()
+        find_package( CUDAToolkit QUIET )
+    endif()
+    if (CUDAToolkit_FOUND)
+        set( gpu_backend "cuda" )
+        set( lapackpp_defs_cuda_ "-DLAPACK_HAVE_CUBLAS" )
+        set( lapackpp_use_cuda true )
+
+        # Some platforms need these to be public libraries.
+        target_link_libraries(
+            lapackpp PUBLIC CUDA::cudart CUDA::cusolver )
+        message( STATUS "${blue}Building CUDA support${plain}" )
+    else()
+        message( STATUS "${red}No CUDA support: CUDA not found${plain}" )
     endif()
 else()
-    message( STATUS "Skipping CUDA search. gpu_backend = ${gpu_backend}" )
-endif()
-if (CMAKE_CUDA_COMPILER)
-    enable_language( CUDA )
-
-    # todo: check for cuda 10.0+ and force newer CMake version - if possible
-
-    # CMake 3.17 adds find_package( CUDAToolkit )
-    # with CUDA::cudart and CUDA::cublas targets.
-    # For compatibility with older CMake, for now do search ourselves.
-    find_library( cudart_lib cudart ${CMAKE_CUDA_IMPLICIT_LINK_DIRECTORIES} )
-    find_library( cublas_lib cublas ${CMAKE_CUDA_IMPLICIT_LINK_DIRECTORIES} )
-    find_library( cusolver_lib cusolver ${CMAKE_CUDA_IMPLICIT_LINK_DIRECTORIES} )
-
-    set( lapackpp_defs_cuda_ "-DLAPACK_HAVE_CUBLAS" )
-    set( lapackpp_use_cuda true )
-
-    # Some platforms need these to be public libraries.
-    target_link_libraries(
-        lapackpp PUBLIC "${cusolver_lib}" "${cublas_lib}" "${cudart_lib}"  )
-    target_include_directories(
-        lapackpp PUBLIC "${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES}" )
-    message( STATUS "Building CUDA support in LAPACK++" )
-else()
-    message( STATUS "Not building CUDA support in LAPACK++" )
+    message( STATUS "${red}No CUDA support: gpu_backend = ${gpu_backend}${plain}" )
 endif()
 
 #-------------------------------------------------------------------------------
 # HIP/ROCm support.
+message( "" )
 set( lapackpp_use_hip false )  # output in lapackppConfig.cmake.in
-if (NOT CMAKE_CUDA_COMPILER
+if (NOT CUDAToolkit_FOUND
     AND gpu_backend MATCHES "^(auto|hip)$")
 
-    message( STATUS "Looking for HIP/ROCm" )
+    message( STATUS "${bold}Looking for HIP/ROCm${not_bold} (gpu_backend = ${gpu_backend})" )
     if (gpu_backend STREQUAL "hip")
         find_package( rocblas   REQUIRED )
         find_package( rocsolver REQUIRED )
@@ -572,22 +572,25 @@ if (NOT CMAKE_CUDA_COMPILER
         find_package( rocblas   QUIET )
         find_package( rocsolver QUIET )
     endif()
-else()
-    message( STATUS "Skipping HIP/ROCm search. gpu_backend = ${gpu_backend}" )
-endif()
-if (rocblas_FOUND AND rocsolver_FOUND)
-    set( lapackpp_defs_hip_ "-DLAPACK_HAVE_ROCBLAS" )
-    set( lapackpp_use_hip true )
+    if (rocblas_FOUND AND rocsolver_FOUND)
+        set( gpu_backend "hip" )
+        set( lapackpp_defs_hip_ "-DLAPACK_HAVE_ROCBLAS" )
+        set( lapackpp_use_hip true )
 
-    # Some platforms need these to be public libraries.
-    target_link_libraries( lapackpp PUBLIC roc::rocblas roc::rocsolver )
-    message( STATUS "Building HIP/ROCm support in LAPACK++" )
+        # Some platforms need these to be public libraries.
+        target_link_libraries(
+            lapackpp PUBLIC roc::rocblas roc::rocsolver )
+        message( STATUS "${blue}Building HIP/ROCm support${plain}" )
+    else()
+        message( STATUS "${red}No HIP/ROCm support: ROCm not found${plain}" )
+    endif()
 else()
-    message( STATUS "Not building HIP/ROCm support in LAPACK++" )
+    message( STATUS "${red}No HIP/ROCm support: gpu_backend = ${gpu_backend}${plain}" )
 endif()
 
 #-------------------------------------------------------------------------------
 # Clean stale defines.h from Makefile-based build.
+message( "" )
 file( REMOVE "${CMAKE_CURRENT_SOURCE_DIR}/include/lapack/defines.h" )
 
 # Include directory.
@@ -646,6 +649,7 @@ else()
 endif()
 
 # Search for LAPACK library.
+message( "" )
 if (BLA_VENDOR OR use_cmake_find_lapack)
     message( DEBUG "Using CMake's FindLAPACK" )
     find_package( LAPACK )

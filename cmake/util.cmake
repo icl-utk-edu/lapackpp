@@ -1,3 +1,8 @@
+# Copyright (c) 2017-2022, University of Tennessee. All rights reserved.
+# SPDX-License-Identifier: BSD-3-Clause
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
+
 if (color)
     string( ASCII 27 Esc )
     set( ansi_reset    "${Esc}[0m"  )
@@ -51,4 +56,13 @@ function( debug_try_run msg compile_result compile_output run_result run_output 
     message( DEBUG "${msg}: compile_result '${compile_result}', run_result '${run_result}'" )
     message( TRACE "compile_output: '''\n${compile_output}'''" )
     message( TRACE "run_output: '''\n${run_output}'''" )
+endfunction()
+
+#-------------------------------------------------------------------------------
+# assert( condition )
+# Aborts if condition is not true.
+function( assert var )
+    if (NOT ${var})
+        message( FATAL_ERROR "\n${red}Assertion failed: ${var} (value is '${${var}}')${default_color}\n" )
+    endif()
 endfunction()

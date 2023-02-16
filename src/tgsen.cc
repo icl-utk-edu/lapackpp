@@ -154,8 +154,6 @@ int64_t tgsen(
     // convert arguments
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(ijob) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(wantq) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(wantz) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );

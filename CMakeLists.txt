@@ -48,7 +48,7 @@ option( use_cmake_find_lapack "Use CMake's find_package( LAPACK ) rather than th
 
 set( gpu_backend "auto" CACHE STRING "GPU backend to use" )
 set_property( CACHE gpu_backend PROPERTY STRINGS
-              auto cuda hip none )
+              auto cuda hip onemkl none )
 
 # After color.
 include( "cmake/util.cmake" )
@@ -525,6 +525,10 @@ add_library(
     src/rocm/rocm_getrf.cc
     src/rocm/rocm_potrf.cc
 
+    src/onemkl/onemkl_geqrf.cc
+    src/onemkl/onemkl_getrf.cc
+    src/onemkl/onemkl_potrf.cc
+
     src/stub/stub_geqrf.cc
     src/stub/stub_getrf.cc
     src/stub/stub_potrf.cc
@@ -586,6 +590,42 @@ if (NOT CUDAToolkit_FOUND
     endif()
 else()
     message( STATUS "${red}No HIP/ROCm support: gpu_backend = ${gpu_backend}${plain}" )
+endif()
+
+#-------------------------------------------------------------------------------
+# OneMKL/SYCL support.
+message( "" )
+set( lapackpp_use_onemkl false )  # output in lapackppConfig.cmake.in
+if (NOT gpu_backend MATCHES "^(cuda|hip)$"
+    AND gpu_backend MATCHES "^(onemkl|auto)$" )
+
+    message( STATUS "${bold}Looking for OneMKL${not_bold} (gpu_backend = ${gpu_backend})" )
+    if (gpu_backend STREQUAL "onemkl")
+        find_package( MKL CONFIG REQUIRED HINTS "$ENV{MKL_ROOT}")
+    else()
+        find_package( MKL CONFIG QUIET HINTS "$ENV{MKL_ROOT}")
+    endif()
+    # message(STATUS "Available targets: ${MKL_IMPORTED_TARGETS}")
+
+    if (MKL_FOUND)
+        set( gpu_backend "onemkl" )
+        set( lapackpp_defs_onemkl_ "-DLAPACK_HAVE_ONEMKL" )
+        set( lapackpp_use_onemkl true )
+
+        # Uncomment to use CMake FindBLAS using BLA_VENDOR
+        # if (NOT BLA_VENDOR)
+        #    set( BLA_VENDOR Intel10_64lp )
+        # endif()
+
+        target_compile_options( lapackpp PUBLIC -std=c++17 -fsycl )
+        target_link_options( lapackpp PUBLIC -fsycl )
+        target_link_libraries( lapackpp PUBLIC -lmkl_sycl -lsycl -lOpenCL )
+        message( STATUS "${blue}Building OneMKL support${plain}" )
+    else()
+        message( STATUS "${red}No OneMKL support: OneMKL not found${plain}" )
+    endif()
+else()
+    message( STATUS "${red}No OneMKL support: gpu_backend = ${gpu_backend}${plain}" )
 endif()
 
 #-------------------------------------------------------------------------------
@@ -672,7 +712,8 @@ set( lapackpp_defs_ "${lapackpp_defs_}"
      CACHE INTERNAL "Constants defined for LAPACK" )
 
 # Concat defines.
-set( lapackpp_defines ${lapackpp_defs_} ${lapackpp_defs_cuda_} ${lapackpp_defs_hip_}
+set( lapackpp_defines ${lapackpp_defs_} ${lapackpp_defs_cuda_}
+     ${lapackpp_defs_hip_} ${lapackpp_defs_onemkl_}
      CACHE INTERNAL "")
 
 if (true)
@@ -700,6 +741,7 @@ else()
 endif()
 
 # Export via lapackppConfig.cmake
+list( REMOVE_DUPLICATES LAPACK_LIBRARIES )
 list( APPEND LAPACK_LIBRARIES "blaspp" )
 set( lapackpp_libraries "${LAPACK_LIBRARIES}" CACHE INTERNAL "" )
 message( DEBUG "lapackpp_libraries = '${lapackpp_libraries}'" )

@@ -596,8 +596,7 @@ endif()
 # OneMKL/SYCL support.
 message( "" )
 set( lapackpp_use_onemkl false )  # output in lapackppConfig.cmake.in
-if (NOT gpu_backend MATCHES "^(cuda|hip)$"
-    AND gpu_backend MATCHES "^(onemkl|auto)$" )
+if (gpu_backend MATCHES "^(onemkl|auto)$" )
 
     message( STATUS "${bold}Looking for OneMKL${not_bold} (gpu_backend = ${gpu_backend})" )
     if (gpu_backend STREQUAL "onemkl")

@@ -160,7 +160,7 @@ void potrf(
         uplo, n, dA, ldda, &dev_work_size, &host_work_size, queue );
 
     // alloc workspace in queue
-    queue.work_resize< char >( dev_work_size );  // syncs if needed
+    queue.work_ensure_size< char >( dev_work_size );  // syncs if needed
     void* dev_work = queue.work();
     blas_error_if( host_work_size != 0 );
 

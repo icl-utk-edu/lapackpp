@@ -1,3 +1,6 @@
+2023.06.00
+  - Updates for BLAS++ changes to Queue class
+
 2023.01.00
   - Added oneAPI port (currently Makefile only)
   - Added `{or,un}hr_col` Householder reconstruction

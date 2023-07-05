@@ -61,7 +61,7 @@ void test_getrf_device_work( Params& params, bool run )
     A_ref = A_tst;
 
     // Allocate and copy to GPU.
-    lapack::Queue queue( device, 0 );
+    lapack::Queue queue( device );
     scalar_t*         dA_tst = blas::device_malloc< scalar_t >( size_A, queue );
     device_pivot_int* d_ipiv = blas::device_malloc< device_pivot_int >( size_ipiv, queue );
     device_info_int*  d_info = blas::device_malloc< device_info_int >( 1, queue );

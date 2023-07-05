@@ -38,8 +38,8 @@ namespace lapack {
 class Queue: public blas::Queue
 {
 public:
-    Queue( int device=-1, int64_t batch_size=30000 )
-      : blas::Queue( device, batch_size )
+    Queue()
+      : blas::Queue()
         #if defined(LAPACK_HAVE_CUBLAS)
             , solver_( nullptr )
             #if CUSOLVER_VERSION >= 11000
@@ -47,6 +47,32 @@ public:
             #endif
         #endif
     {}
+
+    Queue( int device )
+      : blas::Queue( device )
+        #if defined(LAPACK_HAVE_CUBLAS)
+            , solver_( nullptr )
+            #if CUSOLVER_VERSION >= 11000
+                , solver_params_( nullptr )
+            #endif
+        #endif
+    {}
+
+    // Pragmas so g++ ignores use of blas::Queue's deprecated constructor
+    // in lapack::Queue's deprecated constructor. clang already ignores it.
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+    [[deprecated("use Queue( device ). Batch chunk size is handled automatically. To be removed 2024-05.")]]
+    Queue( int device, int64_t batch_chunk )
+      : blas::Queue( device, batch_chunk )
+        #if defined(LAPACK_HAVE_CUBLAS)
+            , solver_( nullptr )
+            #if CUSOLVER_VERSION >= 11000
+                , solver_params_( nullptr )
+            #endif
+        #endif
+    {}
+    #pragma GCC diagnostic pop
 
     ~Queue()
     {

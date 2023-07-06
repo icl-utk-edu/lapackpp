@@ -599,12 +599,17 @@ set( lapackpp_use_onemkl false )  # output in lapackppConfig.cmake.in
 if (gpu_backend MATCHES "^(onemkl|auto)$" )
 
     message( STATUS "${bold}Looking for OneMKL${not_bold} (gpu_backend = ${gpu_backend})" )
-    if (gpu_backend STREQUAL "onemkl")
-        find_package( MKL CONFIG REQUIRED HINTS "$ENV{MKL_ROOT}")
-    else()
-        find_package( MKL CONFIG QUIET HINTS "$ENV{MKL_ROOT}")
+    if ( TARGET MKL::MKL_DPCPP ) # Search for MKL only if not already been found
+        set( MKL_FOUND true )
     endif()
-    # message(STATUS "Available targets: ${MKL_IMPORTED_TARGETS}")
+    if ( NOT MKL_FOUND ) # Search for MKL only if not already been found
+        if (gpu_backend STREQUAL "onemkl")
+            find_package( MKL CONFIG REQUIRED HINTS "$ENV{MKL_ROOT}")
+        else()
+            find_package( MKL CONFIG QUIET HINTS "$ENV{MKL_ROOT}")
+        endif()
+        # message(STATUS "Available targets: ${MKL_IMPORTED_TARGETS}")
+    endif()
 
     if (MKL_FOUND)
         set( gpu_backend "onemkl" )
@@ -616,7 +621,7 @@ if (gpu_backend MATCHES "^(onemkl|auto)$" )
         #    set( BLA_VENDOR Intel10_64lp )
         # endif()
 
-        target_compile_options( lapackpp PUBLIC -std=c++17 -fsycl )
+        target_compile_options( lapackpp PUBLIC -fsycl )
         target_link_options( lapackpp PUBLIC -fsycl )
         target_link_libraries( lapackpp PUBLIC -lmkl_sycl -lsycl -lOpenCL )
         message( STATUS "${blue}Building OneMKL support${plain}" )

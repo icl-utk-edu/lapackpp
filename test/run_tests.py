@@ -115,7 +115,7 @@ group_opt.add_argument( '--equed',  action='store', help='default=%(default)s', 
 group_opt.add_argument( '--direction', action='store', help='default=%(default)s', default='f,b' )
 group_opt.add_argument( '--storev', action='store', help='default=%(default)s', default='c,r' )
 group_opt.add_argument( '--norm',   action='store', help='default=%(default)s', default='max,1,inf,fro' )
-group_opt.add_argument( '--ijob',   action='store', help='default=%(default)s', default='0:5' )
+group_opt.add_argument( '--ijob',   action='store', help='default=%(default)s', default='0:5:1' )
 group_opt.add_argument( '--jobz',   action='store', help='default=%(default)s', default='n,v' )
 group_opt.add_argument( '--jobvl',  action='store', help='default=%(default)s', default='n,v' )
 group_opt.add_argument( '--jobvr',  action='store', help='default=%(default)s', default='n,v' )

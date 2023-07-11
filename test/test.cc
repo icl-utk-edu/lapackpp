@@ -251,7 +251,7 @@ std::vector< testsweeper::routines_t > routines = {
     { "gelqf",              test_gelqf,     Section::qr }, // tested numerically
     { "geqlf",              test_geqlf,     Section::qr }, // tested numerically
     { "gerqf",              test_gerqf,     Section::qr }, // tested numerically; R, Q are full sizeof(A), could be smaller
-    { "geqrt",              test_gemqrt,    Section::qr }, // tested numerically
+    { "gemqrt",             test_gemqrt,    Section::qr }, // tested numerically
     { "",                   nullptr,        Section::newline },
 
     { "ggqrf",              test_ggqrf,     Section::qr }, // tested via LAPACKE using gcc/MKL, TODO for now use p=param.k

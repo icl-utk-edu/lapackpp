@@ -623,7 +623,6 @@ if (gpu_backend MATCHES "^(onemkl|auto)$" )
 
         target_compile_options( lapackpp PUBLIC -fsycl )
         target_link_options( lapackpp PUBLIC -fsycl )
-        target_compile_options( lapackpp PUBLIC -fp-model=precise )
         target_link_libraries( lapackpp PUBLIC -lmkl_sycl -lsycl -lOpenCL )
         message( STATUS "${blue}Building oneMKL support${plain}" )
     else()

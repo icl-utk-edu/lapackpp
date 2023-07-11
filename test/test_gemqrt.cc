@@ -15,61 +15,6 @@
 #if LAPACK_VERSION >= 30400  // >= 3.4.0
 
 //------------------------------------------------------------------------------
-// Simple overloaded wrappers around LAPACKE (assuming routines in LAPACKE).
-// These should go in test/lapacke_wrappers.hh.
-inline lapack_int LAPACKE_gemqrt(
-    char side, char trans, lapack_int m, lapack_int n, lapack_int k, lapack_int nb,
-    float* V, lapack_int ldv,
-    float* T, lapack_int ldt,
-    float* C, lapack_int ldc )
-{
-    return LAPACKE_sgemqrt(
-        LAPACK_COL_MAJOR, side, trans, m, n, k, nb,
-        V, ldv,
-        T, ldt,
-        C, ldc );
-}
-
-inline lapack_int LAPACKE_gemqrt(
-    char side, char trans, lapack_int m, lapack_int n, lapack_int k, lapack_int nb,
-    double* V, lapack_int ldv,
-    double* T, lapack_int ldt,
-    double* C, lapack_int ldc )
-{
-    return LAPACKE_dgemqrt(
-        LAPACK_COL_MAJOR, side, trans, m, n, k, nb,
-        V, ldv,
-        T, ldt,
-        C, ldc );
-}
-
-inline lapack_int LAPACKE_gemqrt(
-    char side, char trans, lapack_int m, lapack_int n, lapack_int k, lapack_int nb,
-    std::complex<float>* V, lapack_int ldv,
-    std::complex<float>* T, lapack_int ldt,
-    std::complex<float>* C, lapack_int ldc )
-{
-    return LAPACKE_cgemqrt(
-        LAPACK_COL_MAJOR, side, trans, m, n, k, nb,
-        (lapack_complex_float*) V, ldv,
-        (lapack_complex_float*) T, ldt,
-        (lapack_complex_float*) C, ldc );
-}
-
-inline lapack_int LAPACKE_gemqrt(
-    char side, char trans, lapack_int m, lapack_int n, lapack_int k, lapack_int nb,
-    std::complex<double>* V, lapack_int ldv,
-    std::complex<double>* T, lapack_int ldt,
-    std::complex<double>* C, lapack_int ldc )
-{
-    return LAPACKE_zgemqrt(
-        LAPACK_COL_MAJOR, side, trans, m, n, k, nb,
-        (lapack_complex_double*) V, ldv,
-        (lapack_complex_double*) T, ldt,
-        (lapack_complex_double*) C, ldc );
-}
-
-//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_gemqrt_work( Params& params, bool run )
 {

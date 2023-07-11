@@ -94,7 +94,12 @@ void test_gemqrt_work( Params& params, bool run )
         return;
 
     //---------- setup
-    int64_t ldv;  // todo value
+    int64_t ldv;
+    if (side == lapack::Side::Right) {
+        ldv = roundup( blas::max( 1, m ), align );
+    } else {
+        ldv = roundup( blas::max( 1, n ), align );
+    }
     int64_t ldt = roundup( nb, align );
     int64_t ldc = roundup( blas::max( 1, m ), align );
     size_t size_V = (size_t) ldv * k;

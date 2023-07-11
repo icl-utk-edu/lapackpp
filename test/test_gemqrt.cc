@@ -96,7 +96,7 @@ void test_gemqrt_work( Params& params, bool run )
     //---------- setup
     int64_t ldv;  // todo value
     int64_t ldt = roundup( nb, align );
-    int64_t ldc = roundup( max( 1, m ), align );
+    int64_t ldc = roundup( blas::max( 1, m ), align );
     size_t size_V = (size_t) ldv * k;
     size_t size_T = (size_t) ldt * k;
     size_t size_C = (size_t) ldc * n;

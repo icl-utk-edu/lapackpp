@@ -63,6 +63,9 @@ void test_gemqrt_work( Params& params, bool run )
     lapack::larnv( idist, iseed, C_tst.size(), &C_tst[0] );
     C_ref = C_tst;
 
+    // Calling this to set up the matrices
+    lapack::geqrt( m, n, nb, &V[0], ldv, &T[0], ldt );
+
     //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();

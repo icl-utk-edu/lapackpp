@@ -237,6 +237,13 @@ target_include_directories(
         "${lapacke_include}"
 )
 
+if (gpu_backend STREQUAL "onemkl" )
+    # Avoid "comparison with NaN" warnings from the IntelLLVM compiler
+    # while compiling test/matrix_generator.cc (the compiler uses fast
+    # floating point mode by default).
+   target_compile_options( ${tester} PRIVATE -fp-model=precise )
+endif()
+
 # Copy run_tests script to build directory.
 add_custom_command(
     TARGET ${tester} POST_BUILD

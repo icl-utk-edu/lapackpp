@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2022, University of Tennessee. All rights reserved.
+// Copyright (c) 2017-2023, University of Tennessee. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
@@ -1093,6 +1093,31 @@ int64_t gemqr(
     lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k,
     std::complex<double> const* A, int64_t lda,
     std::complex<double> const* T, int64_t tsize,
+    std::complex<double>* C, int64_t ldc );
+
+// -----------------------------------------------------------------------------
+int64_t gemqrt(
+    lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k, int64_t nb,
+    float const* V, int64_t ldv,
+    float const* T, int64_t ldt,
+    float* C, int64_t ldc );
+
+int64_t gemqrt(
+    lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k, int64_t nb,
+    double const* V, int64_t ldv,
+    double const* T, int64_t ldt,
+    double* C, int64_t ldc );
+
+int64_t gemqrt(
+    lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k, int64_t nb,
+    std::complex<float> const* V, int64_t ldv,
+    std::complex<float> const* T, int64_t ldt,
+    std::complex<float>* C, int64_t ldc );
+
+int64_t gemqrt(
+    lapack::Side side, lapack::Op trans, int64_t m, int64_t n, int64_t k, int64_t nb,
+    std::complex<double> const* V, int64_t ldv,
+    std::complex<double> const* T, int64_t ldt,
     std::complex<double>* C, int64_t ldc );
 
 // -----------------------------------------------------------------------------

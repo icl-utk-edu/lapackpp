@@ -65,6 +65,7 @@ void test_gemqrt_work( Params& params, bool run )
 
     // Calling this to set up the matrices
     lapack::geqrt( m, n, nb, &V[0], ldv, &T[0], ldt );
+    int64_t info_tst = lapack::gemqrt( side, trans, m, n, k, nb, &V[0], ldv, &T[0], ldt, &C_tst[0], ldc );
 /*
     //---------- run test
     testsweeper::flush_cache( params.cache() );

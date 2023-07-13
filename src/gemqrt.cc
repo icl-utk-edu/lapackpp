@@ -46,7 +46,8 @@ int64_t gemqrt(
     lapack_int info_ = 0;
 
     // query for workspace size
-    float qry_work[1];
+    int64_t work_sz = (side == lapack::Side::Right) ? (m * nb) : (n * nb);
+    float qry_work[work_sz];
     LAPACK_sgemqrt(
         &side_, &trans_, &m_, &n_, &k_, &nb_,
         V, &ldv_,
@@ -111,7 +112,8 @@ int64_t gemqrt(
     lapack_int info_ = 0;
 
     // query for workspace size
-    double qry_work[1];
+    int64_t work_sz = (side == lapack::Side::Right) ? (m * nb) : (n * nb);
+    double qry_work[work_sz];
     LAPACK_dgemqrt(
         &side_, &trans_, &m_, &n_, &k_, &nb_,
         V, &ldv_,
@@ -176,7 +178,8 @@ int64_t gemqrt(
     lapack_int info_ = 0;
 
     // query for workspace size
-    std::complex<float> qry_work[1];
+    int64_t work_sz = (side == lapack::Side::Right) ? (m * nb) : (n * nb);
+    std::complex<float> qry_work[work_sz];
     LAPACK_cgemqrt(
         &side_, &trans_, &m_, &n_, &k_, &nb_,
         (lapack_complex_float*) V, &ldv_,
@@ -315,7 +318,8 @@ int64_t gemqrt(
     lapack_int info_ = 0;
 
     // query for workspace size
-    std::complex<double> qry_work[1];
+    int64_t work_sz = (side == lapack::Side::Right) ? (m * nb) : (n * nb);
+    std::complex<double> qry_work[work_sz];
     LAPACK_zgemqrt(
         &side_, &trans_, &m_, &n_, &k_, &nb_,
         (lapack_complex_double*) V, &ldv_,

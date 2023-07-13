@@ -24,6 +24,10 @@ int64_t gemqrt(
     float const* T, int64_t ldt,
     float* C, int64_t ldc )
 {
+    // for real, map ConjTrans to Trans
+    if (trans == Op::ConjTrans)
+        trans = Op::Trans;
+
     // check for overflow
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
@@ -75,6 +79,10 @@ int64_t gemqrt(
     double const* T, int64_t ldt,
     double* C, int64_t ldc )
 {
+    // for real, map ConjTrans to Trans
+    if (trans == Op::ConjTrans)
+        trans = Op::Trans;
+
     // check for overflow
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
@@ -126,6 +134,10 @@ int64_t gemqrt(
     std::complex<float> const* T, int64_t ldt,
     std::complex<float>* C, int64_t ldc )
 {
+    // for complex, map Trans to ConjTrans
+    if (trans == Op::Trans)
+        trans = Op::ConjTrans;
+
     // check for overflow
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
@@ -251,6 +263,10 @@ int64_t gemqrt(
     std::complex<double> const* T, int64_t ldt,
     std::complex<double>* C, int64_t ldc )
 {
+    // for complex, map Trans to ConjTrans
+    if (trans == Op::Trans)
+        trans = Op::ConjTrans;
+
     // check for overflow
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );

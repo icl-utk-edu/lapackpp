@@ -530,7 +530,7 @@ if (opts.qr and opts.host):
     [ 'orhr_col', gen + dtype_real + align + n + tall ],
     [ 'unhr_col', gen + dtype      + align + n + tall ],
 
-    [ 'gemqrt', gen + dtype + align + n + nb + side + trans ],
+    [ 'gemqrt', gen + dtype_real + align + n + nb + side + trans ],
 
     # Triangle-pentagon
     [ 'tpqrt',  gen + dtype + align + mn + l + nb ],

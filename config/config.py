@@ -672,7 +672,7 @@ def onemkl_library():
             + '-I' + root + '/linux/include/sycl '
     env = {'LIBS': libs,
            'CXXFLAGS': inc + define('HAVE_ONEMKL')
-           + '-fsycl -fp-model=precise' }
+           + ' -fsycl -fp-model=precise' }
     (rc, out, err) = compile_exe( 'config/onemkl.cc', env )
     print_result( libs, rc )
     if (rc == 0):

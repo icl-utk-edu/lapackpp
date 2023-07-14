@@ -2,7 +2,7 @@ cmake_minimum_required( VERSION 3.15 )
 
 set( lapackpp_use_cuda   "@lapackpp_use_cuda@" )
 set( lapackpp_use_hip    "@lapackpp_use_hip@" )
-set( lapackpp_use_onemkl "@lapackpp_use_onemkl@" )
+set( lapackpp_use_sycl   "@lapackpp_use_sycl@" )
 
 include( CMakeFindDependencyMacro )
 

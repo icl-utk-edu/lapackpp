@@ -69,10 +69,10 @@ LAPACK++ specific options include (all values are case insensitive):
 
     gpu_backend
         BLAS++ must be built with the same GPU backend.
-        auto            auto-detect CUDA, HIP/ROCm, or oneMKL (default)
+        auto            (default) auto-detect CUDA, HIP/ROCm, or SYCL
         cuda            build with CUDA support
         hip             build with HIP/ROCm support
-        onemkl          build with SYCL and oneMKL support (not yet implemented)
+        sycl            build with SYCL and oneMKL support
         none            do not build with GPU backend
 
     color

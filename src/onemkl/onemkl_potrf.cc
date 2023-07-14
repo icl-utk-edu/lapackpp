@@ -5,7 +5,7 @@
 
 #include "lapack/defines.h"
 
-#if defined(LAPACK_HAVE_ONEMKL)
+#if defined(LAPACK_HAVE_SYCL)
 
 #include "onemkl_common.hh"
 
@@ -110,4 +110,4 @@ void potrf(
 
 } // namespace lapack
 
-#endif // LAPACK_HAVE_ONEMKL
+#endif // LAPACK_HAVE_SYCL

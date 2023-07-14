@@ -67,7 +67,7 @@ fi
 
 if [ "${device}" = "gpu_intel" ]; then
     print "======================================== Load Intel oneAPI"
-    export gpu_backend=onemkl
+    export gpu_backend=sycl
     quiet module load intel-oneapi-compilers
     quiet which icpx
     icpx --version

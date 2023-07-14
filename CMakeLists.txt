@@ -48,7 +48,7 @@ option( use_cmake_find_lapack "Use CMake's find_package( LAPACK ) rather than th
 
 set( gpu_backend "auto" CACHE STRING "GPU backend to use" )
 set_property( CACHE gpu_backend PROPERTY STRINGS
-              auto cuda hip onemkl none )
+              auto cuda hip sycl none )
 
 # After color.
 include( "cmake/util.cmake" )
@@ -593,17 +593,17 @@ else()
 endif()
 
 #-------------------------------------------------------------------------------
-# oneMKL/SYCL support.
+# SYCL support.
 message( "" )
-set( lapackpp_use_onemkl false )  # output in lapackppConfig.cmake.in
-if (gpu_backend MATCHES "^(onemkl|auto)$" )
+set( lapackpp_use_sycl false )  # output in lapackppConfig.cmake.in
+if (gpu_backend MATCHES "^(sycl|auto)$" )
 
-    message( STATUS "${bold}Looking for oneMKL${not_bold} (gpu_backend = ${gpu_backend})" )
+    message( STATUS "${bold}Looking for SYCL${not_bold} (gpu_backend = ${gpu_backend})" )
     if ( TARGET MKL::MKL_DPCPP ) # Search for MKL only if not already been found
         set( MKL_FOUND true )
     endif()
     if ( NOT MKL_FOUND ) # Search for MKL only if not already been found
-        if (gpu_backend STREQUAL "onemkl")
+        if (gpu_backend STREQUAL "sycl")
             find_package( MKL CONFIG REQUIRED HINTS "$ENV{MKL_ROOT}")
         else()
             find_package( MKL CONFIG QUIET HINTS "$ENV{MKL_ROOT}")
@@ -612,9 +612,9 @@ if (gpu_backend MATCHES "^(onemkl|auto)$" )
     endif()
 
     if (MKL_FOUND)
-        set( gpu_backend "onemkl" )
-        set( lapackpp_defs_onemkl_ "-DLAPACK_HAVE_ONEMKL" )
-        set( lapackpp_use_onemkl true )
+        set( gpu_backend "sycl" )
+        set( lapackpp_defs_sycl_ "-DLAPACK_HAVE_SYCL" )
+        set( lapackpp_use_sycl true )
 
         # Uncomment to use CMake FindBLAS using BLA_VENDOR
         # if (NOT BLA_VENDOR)
@@ -624,12 +624,12 @@ if (gpu_backend MATCHES "^(onemkl|auto)$" )
         target_compile_options( lapackpp PUBLIC -fsycl )
         target_link_options( lapackpp PUBLIC -fsycl )
         target_link_libraries( lapackpp PUBLIC -lmkl_sycl -lsycl -lOpenCL )
-        message( STATUS "${blue}Building oneMKL support${plain}" )
+        message( STATUS "${blue}Building SYCL support${plain}" )
     else()
-        message( STATUS "${red}No oneMKL support: oneMKL not found${plain}" )
+        message( STATUS "${red}No SYCL support: oneMKL not found${plain}" )
     endif()
 else()
-    message( STATUS "${red}No oneMKL support: gpu_backend = ${gpu_backend}${plain}" )
+    message( STATUS "${red}No SYCL support: gpu_backend = ${gpu_backend}${plain}" )
 endif()
 
 #-------------------------------------------------------------------------------
@@ -717,7 +717,7 @@ set( lapackpp_defs_ "${lapackpp_defs_}"
 
 # Concat defines.
 set( lapackpp_defines ${lapackpp_defs_} ${lapackpp_defs_cuda_}
-     ${lapackpp_defs_hip_} ${lapackpp_defs_onemkl_}
+     ${lapackpp_defs_hip_} ${lapackpp_defs_sycl_}
      CACHE INTERNAL "")
 
 if (true)

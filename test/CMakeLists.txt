@@ -237,7 +237,7 @@ target_include_directories(
         "${lapacke_include}"
 )
 
-if (gpu_backend STREQUAL "onemkl" )
+if (gpu_backend STREQUAL "sycl" )
     # Avoid "comparison with NaN" warnings from the IntelLLVM compiler
     # while compiling test/matrix_generator.cc (the compiler uses fast
     # floating point mode by default).

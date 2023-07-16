@@ -19,7 +19,6 @@ void test_potrf_device_work( Params& params, bool run )
 {
     using lapack::device_info_int;
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Uplo uplo = params.uplo();
@@ -66,7 +65,7 @@ void test_potrf_device_work( Params& params, bool run )
     if (verbose >= 1) {
         printf( "\n"
                 "A n=%5lld, lda=%5lld\n",
-                (lld) n, (lld) lda );
+                llong( n ), llong( lda ) );
     }
     if (verbose >= 2) {
         printf( "A = " ); print_matrix( n, n, &A_tst[0], lda );
@@ -101,7 +100,7 @@ void test_potrf_device_work( Params& params, bool run )
     queue.sync();
 
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::potrf returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::potrf returned error %lld\n", llong( info_tst ) );
     }
 
     // Cleanup GPU memory.
@@ -128,7 +127,7 @@ void test_potrf_device_work( Params& params, bool run )
         info_tst = lapack::potrs(
             uplo, n, nrhs, &A_tst[0], lda, &B_tst[0], ldb );
         if (info_tst != 0) {
-            fprintf( stderr, "lapack::potrs returned error %lld\n", (lld) info_tst );
+            fprintf( stderr, "lapack::potrs returned error %lld\n", llong( info_tst ) );
         }
 
         blas::hemm( blas::Layout::ColMajor, blas::Side::Left, uplo,
@@ -155,7 +154,7 @@ void test_potrf_device_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_potrf( uplo2char(uplo), n, &A_ref[0], lda );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_potrf returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_potrf returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_lanhp_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Norm norm = params.norm();

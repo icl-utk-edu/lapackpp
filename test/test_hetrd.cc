@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_hetrd_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Uplo uplo = params.uplo();
@@ -58,7 +57,7 @@ void test_hetrd_work( Params& params, bool run )
     int64_t info_tst = lapack::hetrd( uplo, n, &A_tst[0], lda, &D_tst[0], &E_tst[0], &tau_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::hetrd returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::hetrd returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -72,7 +71,7 @@ void test_hetrd_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_hetrd( uplo2char(uplo), n, &A_ref[0], lda, &D_ref[0], &E_ref[0], &tau_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_hetrd returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_hetrd returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

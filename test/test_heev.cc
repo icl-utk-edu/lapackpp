@@ -18,7 +18,6 @@ template< typename scalar_t >
 void test_heev_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // Constants
     const scalar_t one  = 1.0;
@@ -58,7 +57,7 @@ void test_heev_work( Params& params, bool run )
 
     if (verbose >= 1) {
         printf( "\n" );
-        printf( "A n=%5lld, lda=%5lld\n", (lld) n, (lld) lda );
+        printf( "A n=%5lld, lda=%5lld\n", llong( n ), llong( lda ) );
     }
     if (verbose >= 2) {
         printf( "A = " ); print_matrix( n, n, &A[0], lda );
@@ -71,7 +70,7 @@ void test_heev_work( Params& params, bool run )
         jobz, uplo, n, &Z[0], lda, &Lambda_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::heev returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::heev returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -122,7 +121,7 @@ void test_heev_work( Params& params, bool run )
             &A[0], lda, &Lambda_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_heev returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_heev returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

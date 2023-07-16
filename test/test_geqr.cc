@@ -19,7 +19,6 @@ template< typename scalar_t >
 void test_geqr_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     int64_t m = params.dim.m();
@@ -45,7 +44,7 @@ void test_geqr_work( Params& params, bool run )
     // query for T size (pass tsize = -1 for optimal, tsize = -2 for minimum)
     int64_t info_tst = lapack::geqr( m, n, &A_tst[0], lda, &T_tst[0], -1 );
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::geqr query returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::geqr query returned error %lld\n", llong( info_tst ) );
     }
     int64_t tsize = std::real( T_tst[0] );
     assert( tsize >= 5 );
@@ -63,7 +62,7 @@ void test_geqr_work( Params& params, bool run )
     info_tst = lapack::geqr( m, n, &A_tst[0], lda, &T_tst[0], tsize );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::geqr returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::geqr returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -77,7 +76,7 @@ void test_geqr_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_geqr( m, n, &A_ref[0], lda, &T_ref[0], tsize );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_geqr returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_geqr returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

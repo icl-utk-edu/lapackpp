@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_upgtr_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // Constants
     real_t eps = std::numeric_limits<real_t>::epsilon();
@@ -59,7 +58,7 @@ void test_upgtr_work( Params& params, bool run )
     // reduce to tridiagonal form to use the tau later
     int64_t info = lapack::hptrd( uplo, n, &AP[0], &D[0], &E[0], &tau[0] );
     if (info != 0) {
-        fprintf( stderr, "lapack::upgtr returned error %lld\n", (lld) info );
+        fprintf( stderr, "lapack::upgtr returned error %lld\n", llong( info ) );
     }
 
     // ---------- run test
@@ -68,7 +67,7 @@ void test_upgtr_work( Params& params, bool run )
     int64_t info_tst = lapack::upgtr( uplo, n, &AP[0], &tau[0], &Q_tst[0], ldq );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::upgtr returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::upgtr returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -82,7 +81,7 @@ void test_upgtr_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_upgtr( uplo2char(uplo), n, &AP[0], &tau[0], &Q_ref[0], ldq );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_upgtr returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_upgtr returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

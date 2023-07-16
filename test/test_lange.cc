@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_lange_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Norm norm = params.norm();
@@ -46,7 +45,7 @@ void test_lange_work( Params& params, bool run )
     if (verbose >= 1) {
         printf( "\n"
                 "A m=%5lld, n=%5lld, lda=%5lld\n",
-                (lld) m, (lld) n, (lld) lda );
+                llong( m ), llong( n ), llong( lda ) );
     }
     if (verbose >= 2) {
         printf( "A = " ); print_matrix( m, n, &A[0], lda );

@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_herfs_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Uplo uplo = params.uplo();
@@ -69,13 +68,13 @@ void test_herfs_work( Params& params, bool run )
     // factor AF to initialize ipiv_tst
     int64_t info_trf = lapack::hetrf( uplo, n, &AF[0], lda, &ipiv_tst[0] );
     if (info_trf != 0) {
-        fprintf( stderr, "lapack::hetrf returned error %lld\n", (lld) info_trf );
+        fprintf( stderr, "lapack::hetrf returned error %lld\n", llong( info_trf ) );
     }
 
     // solve AF
     int64_t info_trs = lapack::hetrs( uplo, n, nrhs, &AF[0], lda, &ipiv_tst[0], &X_tst[0], ldb );
     if (info_trs != 0) {
-        fprintf( stderr, "lapack::hetrs returned error %lld\n", (lld) info_trs );
+        fprintf( stderr, "lapack::hetrs returned error %lld\n", llong( info_trs ) );
     }
 
     // Use results from lapackpp for the reference LAPACKE run
@@ -88,7 +87,7 @@ void test_herfs_work( Params& params, bool run )
     int64_t info_tst = lapack::herfs( uplo, n, nrhs, &A[0], lda, &AF[0], ldaf, &ipiv_tst[0], &B[0], ldb, &X_tst[0], ldx, &ferr_tst[0], &berr_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::herfs returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::herfs returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -103,7 +102,7 @@ void test_herfs_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_herfs( uplo2char(uplo), n, nrhs, &A[0], lda, &AF[0], ldaf, &ipiv_ref[0], &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_herfs returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_herfs returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

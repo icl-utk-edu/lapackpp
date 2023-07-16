@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_upmtr_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // Constants
     real_t eps = std::numeric_limits<real_t>::epsilon();
@@ -64,7 +63,7 @@ void test_upmtr_work( Params& params, bool run )
 
     int64_t info = lapack::hptrd( uplo, r, &AP[0], &D[0], &E[0], &tau[0] );
     if (info != 0) {
-        fprintf( stderr, "lapack::hptrd returned error %lld\n", (lld) info );
+        fprintf( stderr, "lapack::hptrd returned error %lld\n", llong( info ) );
     }
 
     // ---------- run test
@@ -73,7 +72,7 @@ void test_upmtr_work( Params& params, bool run )
     int64_t info_tst = lapack::upmtr( side, uplo, trans, m, n, &AP[0], &tau[0], &C_tst[0], ldc );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::upmtr returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::upmtr returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -87,7 +86,7 @@ void test_upmtr_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_upmtr( side2char(side), uplo2char(uplo), op2char(trans), m, n, &AP[0], &tau[0], &C_ref[0], ldc );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_upmtr returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_upmtr returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

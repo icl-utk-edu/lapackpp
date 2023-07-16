@@ -19,7 +19,6 @@ template< typename scalar_t >
 void test_gesvdx_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Job jobu = params.jobz();
@@ -81,7 +80,7 @@ void test_gesvdx_work( Params& params, bool run )
     int64_t info_tst = lapack::gesvdx( jobu, jobvt, range, m, n, &A_tst[0], lda, vl, vu, il, iu, &ns_tst, &S_tst[0], &U_tst[0], ldu, &VT_tst[0], ldvt );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::gesvdx returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::gesvdx returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -95,7 +94,7 @@ void test_gesvdx_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_gesvdx( job2char(jobu), job2char(jobvt), range2char(range), m, n, &A_ref[0], lda, vl, vu, il, iu, &ns_ref, &S_ref[0], &U_ref[0], ldu, &VT_ref[0], ldvt );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_gesvdx returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_gesvdx returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

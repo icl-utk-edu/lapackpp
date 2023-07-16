@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_gecon_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Norm norm = params.norm();
@@ -52,7 +51,7 @@ void test_gecon_work( Params& params, bool run )
     int64_t info_tst = lapack::gecon( norm, n, &A[0], lda, anorm, &rcond_tst );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::gecon returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::gecon returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -66,7 +65,7 @@ void test_gecon_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_gecon( norm2char(norm), n, &A[0], lda, anorm, &rcond_ref );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_gecon returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_gecon returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

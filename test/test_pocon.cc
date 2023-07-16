@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_pocon_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Uplo uplo = params.uplo();
@@ -54,13 +53,13 @@ void test_pocon_work( Params& params, bool run )
     if (verbose >= 1) {
         printf( "\n"
                 "A n %lld, lda %lld, Anorm %.2e\n",
-                (lld) n, (lld) lda, anorm );
+                llong( n ), llong( lda ), anorm );
     }
 
     // factor A into LL^T
     int64_t info = lapack::potrf( uplo, n, &A[0], lda );
     if (info != 0) {
-        fprintf( stderr, "lapack::potrf returned error %lld\n", (lld) info );
+        fprintf( stderr, "lapack::potrf returned error %lld\n", llong( info ) );
     }
 
     // ---------- run test
@@ -69,7 +68,7 @@ void test_pocon_work( Params& params, bool run )
     int64_t info_tst = lapack::pocon( uplo, n, &A[0], lda, anorm, &rcond_tst );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::pocon returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::pocon returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -83,7 +82,7 @@ void test_pocon_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_pocon( uplo2char(uplo), n, &A[0], lda, anorm, &rcond_ref );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_pocon returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_pocon returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

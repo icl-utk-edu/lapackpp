@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_pttrs_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Uplo uplo = params.uplo();
@@ -58,7 +57,7 @@ void test_pttrs_work( Params& params, bool run )
 
     int64_t info = lapack::pttrf( n, &D[0], &E[0] );
     if (info != 0) {
-        fprintf( stderr, "lapack::pttrf returned error %lld\n", (lld) info );
+        fprintf( stderr, "lapack::pttrf returned error %lld\n", llong( info ) );
     }
 
     // ---------- run test
@@ -67,7 +66,7 @@ void test_pttrs_work( Params& params, bool run )
     int64_t info_tst = lapack::pttrs( uplo, n, nrhs, &D[0], &E[0], &B_tst[0], ldb );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::pttrs returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::pttrs returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -81,7 +80,7 @@ void test_pttrs_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_pttrs( uplo2char(uplo), n, nrhs, &D[0], &E[0], &B_ref[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_pttrs returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_pttrs returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

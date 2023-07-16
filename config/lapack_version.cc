@@ -16,9 +16,10 @@ void LAPACK_ilaver( lapack_int* major, lapack_int* minor, lapack_int* patch );
 
 int main( int argc, char** argv )
 {
+    using llong = long long;
     lapack_int major, minor, patch;
     LAPACK_ilaver( &major, &minor, &patch );
     printf( "LAPACK_VERSION=%lld.%02lld.%02lld\n",
-            (long long) major, (long long) minor, (long long) patch );
+            llong( major ), llong( minor ), llong( patch ) );
     return 0;
 }

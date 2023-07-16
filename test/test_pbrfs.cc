@@ -18,7 +18,6 @@ template< typename scalar_t >
 void test_pbrfs_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Uplo uplo = params.uplo();
@@ -86,13 +85,13 @@ void test_pbrfs_work( Params& params, bool run )
     // Factor
     int64_t info = lapack::pbtrf( uplo, n, kd, &AFB[0], ldafb );
     if (info != 0) {
-        fprintf( stderr, "lapack::pbtrf returned error %lld\n", (lld) info );
+        fprintf( stderr, "lapack::pbtrf returned error %lld\n", llong( info ) );
     }
 
     // Solve in X_tst
     info = lapack::pbtrs ( uplo, n, kd, nrhs, &AFB[0], ldab, &X_tst[0], ldx );
     if (info != 0) {
-        fprintf( stderr, "lapack::pbtrs returned error %lld\n", (lld) info );
+        fprintf( stderr, "lapack::pbtrs returned error %lld\n", llong( info ) );
     }
     X_ref = X_tst;
 
@@ -111,7 +110,7 @@ void test_pbrfs_work( Params& params, bool run )
         &B[0], ldb, &X_tst[0], ldx, &ferr_tst[0], &berr_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::pbrfs returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::pbrfs returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -159,7 +158,7 @@ void test_pbrfs_work( Params& params, bool run )
             &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_pbrfs returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_pbrfs returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

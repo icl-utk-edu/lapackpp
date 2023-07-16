@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_larfb_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Side side = params.side();
@@ -114,7 +113,7 @@ void test_larfb_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_larfb( side2char(side), op2char(trans), direction2char(direction), storev2char(storev), m, n, k, &V[0], ldv, &T[0], ldt, &C_ref[0], ldc );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_larfb returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_larfb returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

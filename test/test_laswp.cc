@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_laswp_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     int64_t m = params.dim.m();
@@ -52,7 +51,7 @@ void test_laswp_work( Params& params, bool run )
     // factor first panel of A, to get ipiv
     int64_t info = lapack::getrf( m, nb, &A_tst[0], lda, &ipiv_tst[0] );
     if (info != 0) {
-        fprintf( stderr, "lapack::getrf returned error %lld\n", (lld) info );
+        fprintf( stderr, "lapack::getrf returned error %lld\n", llong( info ) );
     }
     A_ref = A_tst;
     std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
@@ -74,7 +73,7 @@ void test_laswp_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_laswp( n, &A_ref[0], lda, k1, k2, &ipiv_ref[0], incx );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_laswp returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_laswp returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

@@ -18,7 +18,6 @@ template< typename scalar_t >
 void test_ggev_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Job jobvl = params.jobvl();
@@ -74,7 +73,7 @@ void test_ggev_work( Params& params, bool run )
     int64_t info_tst = lapack::ggev( jobvl, jobvr, n, &A_tst[0], lda, &B_tst[0], ldb, &alpha_tst[0], &beta_tst[0], &VL_tst[0], ldvl, &VR_tst[0], ldvr );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::ggev returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::ggev returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -88,7 +87,7 @@ void test_ggev_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_ggev( job2char(jobvl), job2char(jobvr), n, &A_ref[0], lda, &B_ref[0], ldb, &alpha_ref[0], &beta_ref[0], &VL_ref[0], ldvl, &VR_ref[0], ldvr );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_ggev returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_ggev returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

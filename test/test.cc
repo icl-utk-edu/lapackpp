@@ -617,7 +617,6 @@ void Params::get_range(
     double* vl_arg, double* vu_arg,
     int64_t* il_arg, int64_t* iu_arg )
 {
-    typedef long long lld;
 
     // default assume All
     *vl_arg = this->vl();

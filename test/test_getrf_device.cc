@@ -20,7 +20,6 @@ void test_getrf_device_work( Params& params, bool run )
     using lapack::device_info_int;
     using lapack::device_pivot_int;
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     int64_t m = params.dim.m();
@@ -70,7 +69,7 @@ void test_getrf_device_work( Params& params, bool run )
     if (verbose >= 1) {
         printf( "\n"
                 "A m=%5lld, n=%5lld, lda=%5lld\n",
-                (lld) m, (lld) n, (lld) lda );
+                llong( m ), llong( n ), llong( lda ) );
     }
     if (verbose >= 2) {
         printf( "A = " ); print_matrix( m, n, &A_tst[0], lda );
@@ -113,7 +112,7 @@ void test_getrf_device_work( Params& params, bool run )
     queue.sync();
 
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::getrf returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::getrf returned error %lld\n", llong( info_tst ) );
     }
 
     // Cleanup GPU memory.
@@ -150,7 +149,7 @@ void test_getrf_device_work( Params& params, bool run )
         info_tst = lapack::getrs(
             lapack::Op::NoTrans, n, nrhs, &A_tst[0], lda, &ipiv_tst_i64[0], &B_tst[0], ldb );
         if (info_tst != 0) {
-            fprintf( stderr, "lapack::getrs returned error %lld\n", (lld) info_tst );
+            fprintf( stderr, "lapack::getrs returned error %lld\n", llong( info_tst ) );
         }
 
         blas::gemm( blas::Layout::ColMajor, blas::Op::NoTrans, blas::Op::NoTrans,
@@ -177,7 +176,7 @@ void test_getrf_device_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_getrf( m, n, &A_ref[0], lda, &ipiv_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_getrf returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_getrf returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

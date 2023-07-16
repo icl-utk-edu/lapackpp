@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_gelqf_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     int64_t m = params.dim.m();
@@ -58,7 +57,7 @@ void test_gelqf_work( Params& params, bool run )
     int64_t info_tst = lapack::gelqf( m, n, &A_tst[0], lda, &tau_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::gelqf returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::gelqf returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -83,7 +82,7 @@ void test_gelqf_work( Params& params, bool run )
         // Generate the m-by-m matrix Q
         int64_t info_unglq = lapack::unglq( minmn, n, minmn, &Q[0], ldq, &tau_tst[0] );
         if (info_unglq != 0) {
-            fprintf( stderr, "lapack::unglq returned error %lld\n", (lld) info_unglq );
+            fprintf( stderr, "lapack::unglq returned error %lld\n", llong( info_unglq ) );
         }
 
         // Copy L
@@ -123,7 +122,7 @@ void test_gelqf_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_gelqf( m, n, &A_ref[0], lda, &tau_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_gelqf returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_gelqf returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

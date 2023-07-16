@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_porfs_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Uplo uplo = params.uplo();
@@ -71,13 +70,13 @@ void test_porfs_work( Params& params, bool run )
     X_tst = B;
     int64_t info = lapack::potrf( uplo, n, &AF[0], lda );
     if (info != 0) {
-        fprintf( stderr, "lapack::potrf returned error %lld\n", (lld) info );
+        fprintf( stderr, "lapack::potrf returned error %lld\n", llong( info ) );
     }
 
     // initial solve of AF X = B
     info = lapack::potrs( uplo, n, nrhs, &AF[0], lda, &X_tst[0], ldx );
     if (info != 0) {
-        fprintf( stderr, "lapack::potrs returned error %lld\n", (lld) info );
+        fprintf( stderr, "lapack::potrs returned error %lld\n", llong( info ) );
     }
     X_ref = X_tst;
 
@@ -87,7 +86,7 @@ void test_porfs_work( Params& params, bool run )
     int64_t info_tst = lapack::porfs( uplo, n, nrhs, &A[0], lda, &AF[0], ldaf, &B[0], ldb, &X_tst[0], ldx, &ferr_tst[0], &berr_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::porfs returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::porfs returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -101,7 +100,7 @@ void test_porfs_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_porfs( uplo2char(uplo), n, nrhs, &A[0], lda, &AF[0], ldaf, &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_porfs returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_porfs returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

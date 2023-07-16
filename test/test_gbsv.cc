@@ -18,7 +18,6 @@ template< typename scalar_t >
 void test_gbsv_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     int64_t n = params.dim.n();
@@ -65,8 +64,8 @@ void test_gbsv_work( Params& params, bool run )
         printf( "\n"
                 "AB n=%5lld, kl=%5lld, ku=%5lld, kd=%5lld, ldab=%5lld\n"
                 "B n=%5lld, nrhs=%5lld, ldb=%5lld\n",
-                (lld) n, (lld) kl, (lld) ku, (lld) kd, (lld) ldab,
-                (lld) n, (lld) nrhs, (lld) ldb );
+                llong( n ), llong( kl ), llong( ku ), llong( kd ), llong( ldab ),
+                llong( n ), llong( nrhs ), llong( ldb ) );
     }
     if (verbose >= 2) {
         printf( "Input data in rows 0 to kl-1 are ignored.\n" );
@@ -80,7 +79,7 @@ void test_gbsv_work( Params& params, bool run )
     int64_t info_tst = lapack::gbsv( n, kl, ku, nrhs, &AB_tst[0], ldab, &ipiv_tst[0], &B_tst[0], ldb );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::gbsv returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::gbsv returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -123,7 +122,7 @@ void test_gbsv_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_gbsv( n, kl, ku, nrhs, &AB_ref[0], ldab, &ipiv_ref[0], &B_ref[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_gbsv returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_gbsv returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

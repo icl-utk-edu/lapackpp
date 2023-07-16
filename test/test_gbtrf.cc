@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_gbtrf_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     int64_t m = params.dim.m();
@@ -55,7 +54,7 @@ void test_gbtrf_work( Params& params, bool run )
     int64_t info_tst = lapack::gbtrf( m, n, kl, ku, &AB_tst[0], ldab, &ipiv_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::gbtrf returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::gbtrf returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -69,7 +68,7 @@ void test_gbtrf_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_gbtrf( m, n, kl, ku, &AB_ref[0], ldab, &ipiv_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_gbtrf returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_gbtrf returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

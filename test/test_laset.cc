@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_laset_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::MatrixType matrixtype = params.matrixtype();
@@ -63,7 +62,7 @@ void test_laset_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_laset( matrixtype2char(matrixtype), m, n, alpha, beta, &A_ref[0], lda );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_laset returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_laset returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

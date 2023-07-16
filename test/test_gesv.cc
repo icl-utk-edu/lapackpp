@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_gesv_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // Constants
     const scalar_t one = 1.0;
@@ -64,8 +63,8 @@ void test_gesv_work( Params& params, bool run )
         printf( "\n"
                 "A n=%5lld, lda=%5lld\n"
                 "B n=%5lld, nrhs=%5lld, ldb=%5lld\n",
-                (lld) n, (lld) lda,
-                (lld) n, (lld) nrhs, (lld) ldb );
+                llong( n ), llong( lda ),
+                llong( n ), llong( nrhs ), llong( ldb ) );
     }
     if (verbose >= 2) {
         printf( "A = " );
@@ -89,7 +88,7 @@ void test_gesv_work( Params& params, bool run )
                                      &B_tst[0], ldb );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::gesv returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::gesv returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -136,7 +135,7 @@ void test_gesv_work( Params& params, bool run )
                                          &B_ref[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_gesv returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_gesv returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

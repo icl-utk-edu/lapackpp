@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_gtsv_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     int64_t n = params.dim.n();
@@ -65,7 +64,7 @@ void test_gtsv_work( Params& params, bool run )
     int64_t info_tst = lapack::gtsv( n, nrhs, &DL_tst[0], &D_tst[0], &DU_tst[0], &B_tst[0], ldb );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::gtsv returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::gtsv returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -79,7 +78,7 @@ void test_gtsv_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_gtsv( n, nrhs, &DL_ref[0], &D_ref[0], &DU_ref[0], &B_ref[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_gtsv returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_gtsv returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

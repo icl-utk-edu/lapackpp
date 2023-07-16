@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_gerqf_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     int64_t m = params.dim.m();
@@ -57,7 +56,7 @@ void test_gerqf_work( Params& params, bool run )
     int64_t info_tst = lapack::gerqf( m, n, &A_tst[0], lda, &tau_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::gerqf returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::gerqf returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -92,7 +91,7 @@ void test_gerqf_work( Params& params, bool run )
         // Generate the n-by-n matrix Q
         int64_t info_ungrq = lapack::ungrq( n, n, minmn, &Q[0], ldq, &tau_tst[0] );
         if (info_ungrq != 0) {
-            fprintf( stderr, "lapack::ungqr returned error %lld\n", (lld) info_ungrq );
+            fprintf( stderr, "lapack::ungqr returned error %lld\n", llong( info_ungrq ) );
         }
 
         // Copy R
@@ -138,7 +137,7 @@ void test_gerqf_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_gerqf( m, n, &A_ref[0], lda, &tau_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_gerqf returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_gerqf returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

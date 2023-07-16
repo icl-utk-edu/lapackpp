@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_gtrfs_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Op trans = params.trans();
@@ -87,13 +86,13 @@ void test_gtrfs_work( Params& params, bool run )
     // factor using gttrf
     int64_t info = lapack::gttrf( n, &DL[0], &D[0], &DU[0], &DU2[0], &ipiv_tst[0] );
     if (info != 0) {
-        fprintf( stderr, "lapack::gttrf returned error %lld\n", (lld) info );
+        fprintf( stderr, "lapack::gttrf returned error %lld\n", llong( info ) );
     }
 
     // solve using gttrf
     info = lapack::gttrf( n, &DL[0], &D[0], &DU[0], &DU2[0], &ipiv_tst[0] );
     if (info != 0) {
-        fprintf( stderr, "lapack::gttrf returned error %lld\n", (lld) info );
+        fprintf( stderr, "lapack::gttrf returned error %lld\n", llong( info ) );
     }
 
     std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
@@ -104,7 +103,7 @@ void test_gtrfs_work( Params& params, bool run )
     int64_t info_tst = lapack::gtrfs( trans, n, nrhs, &DL[0], &D[0], &DU[0], &DLF[0], &DF[0], &DUF[0], &DU2[0], &ipiv_tst[0], &B[0], ldb, &X_tst[0], ldx, &ferr_tst[0], &berr_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::gtrfs returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::gtrfs returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -118,7 +117,7 @@ void test_gtrfs_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_gtrfs( op2char(trans), n, nrhs, &DL[0], &D[0], &DU[0], &DLF[0], &DF[0], &DUF[0], &DU2[0], &ipiv_ref[0], &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_gtrfs returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_gtrfs returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

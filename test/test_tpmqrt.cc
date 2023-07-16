@@ -20,7 +20,6 @@ template< typename scalar_t >
 void test_tpmqrt_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Side side = params.side();
@@ -118,7 +117,7 @@ void test_tpmqrt_work( Params& params, bool run )
     // Using random data, without factoring, can lead to nan in tpmqrt.
     int64_t info = lapack::tpqrt( Vm, k, l, nb, &W0[0], ldw, &V[0], ldv, &T[0], ldt );
     if (info != 0) {
-        fprintf( stderr, "lapack::tpqrt returned error %lld\n", (lld) info );
+        fprintf( stderr, "lapack::tpqrt returned error %lld\n", llong( info ) );
     }
 
     if (verbose > 1) {
@@ -134,7 +133,7 @@ void test_tpmqrt_work( Params& params, bool run )
     int64_t info_tst = lapack::tpmqrt( side, trans, m, n, k, l, nb, &V[0], ldv, &T[0], ldt, &A_tst[0], lda, &B_tst[0], ldb );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::tpmqrt returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::tpmqrt returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -153,7 +152,7 @@ void test_tpmqrt_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_tpmqrt( side2char(side), op2char(trans), m, n, k, l, nb, &V[0], ldv, &T[0], ldt, &A_ref[0], lda, &B_ref[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_tpmqrt returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_tpmqrt returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

@@ -68,7 +68,6 @@ template< typename scalar_t >
 void test_sturm_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    using llong = long long;
 
     // get & mark input values
     int64_t n = params.dim.n();

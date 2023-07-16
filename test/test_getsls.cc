@@ -20,7 +20,6 @@ template< typename scalar_t >
 void test_getsls_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Op trans = params.trans();
@@ -67,7 +66,7 @@ void test_getsls_work( Params& params, bool run )
     int64_t info_tst = lapack::getsls( trans, m, n, nrhs, &A_tst[0], lda, &B_tst[0], ldb );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::getsls returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::getsls returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -94,7 +93,7 @@ void test_getsls_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_getsls( op2char(trans), m, n, nrhs, &A_ref[0], lda, &B_ref[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_getsls returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_getsls returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

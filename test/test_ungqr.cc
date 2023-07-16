@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_ungqr_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     int64_t m = params.dim.m();
@@ -65,7 +64,7 @@ void test_ungqr_work( Params& params, bool run )
     // ---------- factor matrix
     int64_t info_qrf = lapack::geqrf( m, n, &A_tst[0], lda, &tau[0] );
     if (info_qrf != 0) {
-        fprintf( stderr, "lapack::unqrf returned error %lld\n", (lld) info_qrf );
+        fprintf( stderr, "lapack::unqrf returned error %lld\n", llong( info_qrf ) );
     }
     // save matrix
     A_factored = A_tst;
@@ -76,7 +75,7 @@ void test_ungqr_work( Params& params, bool run )
     int64_t info_tst = lapack::ungqr( m, n, k, &A_tst[0], lda, &tau[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::ungqr returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::ungqr returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -102,7 +101,7 @@ void test_ungqr_work( Params& params, bool run )
         // Generate the first n columns of the matrix Q
         int64_t info_ungqr = lapack::ungqr( m, n, k, &Q[0], ldq, &tau[0] );
         if (info_ungqr != 0) {
-            fprintf( stderr, "lapack::ungqr returned error %lld\n", (lld) info_ungqr );
+            fprintf( stderr, "lapack::ungqr returned error %lld\n", llong( info_ungqr ) );
         }
 
         // Copy R(1:n,1:k)
@@ -142,7 +141,7 @@ void test_ungqr_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_ungqr( m, n, k, &A_ref[0], lda, &tau[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_ungqr returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_ungqr returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

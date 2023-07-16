@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_pttrf_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     int64_t n = params.dim.n();
@@ -57,7 +56,7 @@ void test_pttrf_work( Params& params, bool run )
     int64_t info_tst = lapack::pttrf( n, &D_tst[0], &E_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::pttrf returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::pttrf returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -71,7 +70,7 @@ void test_pttrf_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_pttrf( n, &D_ref[0], &E_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_pttrf returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_pttrf returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_hptri_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // Constants
     real_t eps = std::numeric_limits<real_t>::epsilon();
@@ -52,7 +51,7 @@ void test_hptri_work( Params& params, bool run )
     // initialize ipiv_tst and ipiv_ref
     int64_t info_trf = lapack::hptrf( uplo, n, &AP_tst[0], &ipiv_tst[0] );
     if (info_trf != 0) {
-        fprintf( stderr, "lapack::hptrf returned error %lld\n", (lld) info_trf );
+        fprintf( stderr, "lapack::hptrf returned error %lld\n", llong( info_trf ) );
     }
     std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
     AP_ref = AP_tst;
@@ -63,7 +62,7 @@ void test_hptri_work( Params& params, bool run )
     int64_t info_tst = lapack::hptri( uplo, n, &AP_tst[0], &ipiv_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::hptri returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::hptri returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -77,7 +76,7 @@ void test_hptri_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_hptri( uplo2char(uplo), n, &AP_ref[0], &ipiv_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_hptri returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_hptri returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_geqlf_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     int64_t m = params.dim.m();
@@ -57,7 +56,7 @@ void test_geqlf_work( Params& params, bool run )
     int64_t info_tst = lapack::geqlf( m, n, &A_tst[0], lda, &tau_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::geqlf returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::geqlf returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -94,7 +93,7 @@ void test_geqlf_work( Params& params, bool run )
         // generate M by K matrix Q, where K = min(M,N)
         int64_t info_ungql = lapack::ungql( m, minmn, minmn, &Q[0], ldq, &tau_tst[0] );
         if (info_ungql != 0) {
-            fprintf( stderr, "lapack::ungqr returned error %lld\n", (lld) info_ungql );
+            fprintf( stderr, "lapack::ungqr returned error %lld\n", llong( info_ungql ) );
         }
 
         // compute L - Q'*A
@@ -131,7 +130,7 @@ void test_geqlf_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_geqlf( m, n, &A_ref[0], lda, &tau_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_geqlf returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_geqlf returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

@@ -17,7 +17,6 @@ void test_tgsen_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
     using complex_t = blas::complex_type< scalar_t >;
-    typedef long long lld;
 
     // Constants
     const real_t eps = std::numeric_limits<real_t>::epsilon();
@@ -82,7 +81,7 @@ void test_tgsen_work( Params& params, bool run )
         &sdim_tst, &alpha_tst[0], &beta_tst[0],
         &Q_tst[0], ldq, &Z_tst[0], ldz );
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::gges returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::gges returned error %lld\n", llong( info_tst ) );
         throw blas::Error();
     }
 
@@ -110,7 +109,7 @@ void test_tgsen_work( Params& params, bool run )
 
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::tgsen returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::tgsen returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -128,7 +127,7 @@ void test_tgsen_work( Params& params, bool run )
 
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_tgsen returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_tgsen returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_ppequ_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Uplo uplo = params.uplo();
@@ -65,7 +64,7 @@ void test_ppequ_work( Params& params, bool run )
     int64_t info_tst = lapack::ppequ( uplo, n, &AP[0], &S_tst[0], &scond_tst, &amax_tst );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::ppequ returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::ppequ returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -79,7 +78,7 @@ void test_ppequ_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_ppequ( uplo2char(uplo), n, &AP[0], &S_ref[0], &scond_ref, &amax_ref );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_ppequ returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_ppequ returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

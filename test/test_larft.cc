@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_larft_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Direction direction = params.direction();
@@ -130,7 +129,7 @@ void test_larft_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_larft( direction2char(direction), storev2char(storev), n, k, &V[0], ldv, &tau[0], &T_ref[0], ldt );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_larft returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_larft returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

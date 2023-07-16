@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_poequ_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     int64_t n = params.dim.n();
@@ -55,7 +54,7 @@ void test_poequ_work( Params& params, bool run )
     int64_t info_tst = lapack::poequ( n, &A[0], lda, &S_tst[0], &scond_tst, &amax_tst );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::poequ returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::poequ returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -69,7 +68,7 @@ void test_poequ_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_poequ( n, &A[0], lda, &S_ref[0], &scond_ref, &amax_ref );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_poequ returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_poequ returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

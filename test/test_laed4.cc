@@ -16,7 +16,6 @@ template< typename scalar_t >
 void test_laed4_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     int64_t n = params.dim.n();
@@ -60,7 +59,7 @@ void test_laed4_work( Params& params, bool run )
                                       &delta_tst[0], rho, &lambda_tst );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::laed4 returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::laed4 returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -73,7 +72,7 @@ void test_laed4_work( Params& params, bool run )
                                           &delta_ref[0], rho, &lambda_ref );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_laed4 returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_laed4 returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

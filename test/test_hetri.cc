@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_hetri_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // Constants
     real_t eps = std::numeric_limits<real_t>::epsilon();
@@ -53,7 +52,7 @@ void test_hetri_work( Params& params, bool run )
     // initialize ipiv_tst and ipiv_ref
     int64_t info_trf = lapack::hetrf( uplo, n, &A_tst[0], lda, &ipiv_tst[0] );
     if (info_trf != 0) {
-        fprintf( stderr, "lapack::hetrf returned error %lld\n", (lld) info_trf );
+        fprintf( stderr, "lapack::hetrf returned error %lld\n", llong( info_trf ) );
     }
     std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
 
@@ -63,7 +62,7 @@ void test_hetri_work( Params& params, bool run )
     int64_t info_tst = lapack::hetri( uplo, n, &A_tst[0], lda, &ipiv_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::hetri returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::hetri returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -75,7 +74,7 @@ void test_hetri_work( Params& params, bool run )
         // ---------- factor reference
         int64_t info_ref_trf = LAPACKE_hetrf( uplo2char(uplo), n, &A_ref[0], lda, &ipiv_ref[0] );
         if (info_ref_trf != 0) {
-            fprintf( stderr, "LAPACKE_hetrf returned error %lld\n", (lld) info_ref_trf );
+            fprintf( stderr, "LAPACKE_hetrf returned error %lld\n", llong( info_ref_trf ) );
         }
 
         // ---------- run reference
@@ -83,7 +82,7 @@ void test_hetri_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_hetri( uplo2char(uplo), n, &A_ref[0], lda, &ipiv_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_hetri returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_hetri returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

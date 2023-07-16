@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_unmhr_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // Constants
     real_t eps = std::numeric_limits<real_t>::epsilon();
@@ -68,7 +67,7 @@ void test_unmhr_work( Params& params, bool run )
     // reduce A to Hessenberg form
     int64_t info_hrd = lapack::gehrd( r, ilo, ihi, &A[0], lda, &tau[0] );
     if (info_hrd != 0) {
-        fprintf( stderr, "lapack::gehrd returned error %lld\n", (lld) info_hrd );
+        fprintf( stderr, "lapack::gehrd returned error %lld\n", llong( info_hrd ) );
     }
 
     C_ref = C_tst;
@@ -79,7 +78,7 @@ void test_unmhr_work( Params& params, bool run )
     int64_t info_tst = lapack::unmhr( side, trans, m, n, ilo, ihi, &A[0], lda, &tau[0], &C_tst[0], ldc );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::unmhr returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::unmhr returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -93,7 +92,7 @@ void test_unmhr_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_unmhr( side2char(side), op2char(trans), m, n, ilo, ihi, &A[0], lda, &tau[0], &C_ref[0], ldc );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_unmhr returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_unmhr returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_hprfs_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Uplo uplo = params.uplo();
@@ -66,13 +65,13 @@ void test_hprfs_work( Params& params, bool run )
     // factor to initialize ipiv_tst
     int64_t info_trf = lapack::hptrf( uplo, n, &AFP[0], &ipiv_tst[0] );
     if (info_trf != 0) {
-        fprintf( stderr, "lapack::hptrf returned error %lld\n", (lld) info_trf );
+        fprintf( stderr, "lapack::hptrf returned error %lld\n", llong( info_trf ) );
     }
 
     // solve
     int64_t info_trs = lapack::hptrs( uplo, n, nrhs, &AFP[0], &ipiv_tst[0], &X_tst[0], ldb );
     if (info_trs != 0) {
-        fprintf( stderr, "lapack::hptrs returned error %lld\n", (lld) info_trs );
+        fprintf( stderr, "lapack::hptrs returned error %lld\n", llong( info_trs ) );
     }
 
     // Use results from lapackpp for the reference LAPACKE run
@@ -85,7 +84,7 @@ void test_hprfs_work( Params& params, bool run )
     int64_t info_tst = lapack::hprfs( uplo, n, nrhs, &AP[0], &AFP[0], &ipiv_tst[0], &B[0], ldb, &X_tst[0], ldx, &ferr_tst[0], &berr_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::hprfs returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::hprfs returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -99,7 +98,7 @@ void test_hprfs_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_hprfs( uplo2char(uplo), n, nrhs, &AP[0], &AFP[0], &ipiv_ref[0], &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_hprfs returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_hprfs returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

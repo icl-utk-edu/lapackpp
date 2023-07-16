@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_ungrq_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     int64_t m = params.dim.m();
@@ -71,7 +70,7 @@ void test_ungrq_work( Params& params, bool run )
     // (Compare with QR, which would factor the left m-by-k portion.)
     int64_t info_rqf = lapack::gerqf( k, n, &A_tst[(m-k)], lda, &tau[0] );
     if (info_rqf != 0) {
-        fprintf( stderr, "lapack::gerqf returned error %lld\n", (lld) info_rqf );
+        fprintf( stderr, "lapack::gerqf returned error %lld\n", llong( info_rqf ) );
     }
     // Copy R(m-k+1:m, 1:n) from factored A for check.
     lapack::laset( lapack::MatrixType::General, k, m, 0.0, 0.0,
@@ -86,7 +85,7 @@ void test_ungrq_work( Params& params, bool run )
     int64_t info_tst = lapack::ungrq( m, n, k, &A_tst[0], lda, &tau[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::ungrq returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::ungrq returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -136,7 +135,7 @@ void test_ungrq_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_ungrq( m, n, k, &A_ref[0], lda, &tau[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_ungrq returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_ungrq returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

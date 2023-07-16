@@ -22,7 +22,6 @@ template< typename scalar_t >
 void test_tpqrt_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     int64_t m = params.dim.m();
@@ -76,8 +75,8 @@ void test_tpqrt_work( Params& params, bool run )
         printf( "\n"
                 "A n-by-n=%5lld, lda=%5lld triangle\n"
                 "B m=%5lld, n=%5lld, ldb=%5lld, rows m-L=%5lld rect, L=%5lld trapezoid\n",
-                (lld) n, (lld) lda,
-                (lld) m, (lld) n, (lld) ldb, (lld) (m-L), (lld) L );
+                llong( n ), llong( lda ),
+                llong( m ), llong( n ), llong( ldb ), llong( (m-L) ), llong( L ) );
     }
     if (verbose >= 2) {
         printf( "A  = " ); print_matrix( n,   n, &A_tst[0],   lda );
@@ -93,7 +92,7 @@ void test_tpqrt_work( Params& params, bool run )
         m, n, L, nb, &A_tst[0], lda, &B_tst[0], ldb, &T_tst[0], ldt );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::tpqrt returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::tpqrt returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -176,7 +175,7 @@ void test_tpqrt_work( Params& params, bool run )
             m, n, L, nb, &A_ref[0], lda, &B_ref[0], ldb, &T_ref[0], ldt );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_tpqrt returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_tpqrt returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

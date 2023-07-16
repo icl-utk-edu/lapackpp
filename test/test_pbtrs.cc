@@ -18,7 +18,6 @@ template< typename scalar_t >
 void test_pbtrs_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Uplo uplo = params.uplo();
@@ -74,8 +73,8 @@ void test_pbtrs_work( Params& params, bool run )
         printf( "\n"
                 "AB n=%5lld, kd=%5lld, ldab=%5lld\n"
                 "B n=%5lld, nrhs=%5lld, ldb=%5lld\n",
-                (lld) n, (lld) kd, (lld) ldab,
-                (lld) n, (lld) nrhs, (lld) ldb );
+                llong( n ), llong( kd ), llong( ldab ),
+                llong( n ), llong( nrhs ), llong( ldb ) );
     }
     if (verbose >= 2) {
         printf( "AB = " ); print_matrix( kd+1, n, &AB_tst[0], ldab );
@@ -85,7 +84,7 @@ void test_pbtrs_work( Params& params, bool run )
     // factor AB
     int64_t info = lapack::pbtrf( uplo, n, kd, &AB_tst[0], ldab );
     if (info != 0) {
-        fprintf( stderr, "lapack::pbtrf returned error %lldpn", (lld) info );
+        fprintf( stderr, "lapack::pbtrf returned error %lldpn", llong( info ) );
     }
 
     // ---------- run test
@@ -94,7 +93,7 @@ void test_pbtrs_work( Params& params, bool run )
     int64_t info_tst = lapack::pbtrs( uplo, n, kd, nrhs, &AB_tst[0], ldab, &B_tst[0], ldb );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::pbtrs returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::pbtrs returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -136,7 +135,7 @@ void test_pbtrs_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_pbtrs( uplo2char(uplo), n, kd, nrhs, &AB_tst[0], ldab, &B_ref[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_pbtrs returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_pbtrs returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

@@ -21,7 +21,6 @@ void test_larfgp_work( Params& params, bool run )
     using std::real;
     using std::imag;
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     int64_t n = params.dim.n();
@@ -52,7 +51,7 @@ void test_larfgp_work( Params& params, bool run )
     X_ref = X_tst;
 
     if (verbose >= 1) {
-        printf( "x incx %lld, size %lld\n", (lld) incx, (lld) size_X );
+        printf( "x incx %lld, size %lld\n", llong( incx ), llong( size_X ) );
     }
     if (verbose >= 2) {
         printf( "alpha = %.4e + %.4ei\n", real(alpha_tst), imag(alpha_tst) );
@@ -85,7 +84,7 @@ void test_larfgp_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_larfgp( n, &alpha_ref, &X_ref[0], incx, &tau_ref );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_larfgp returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_larfgp returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

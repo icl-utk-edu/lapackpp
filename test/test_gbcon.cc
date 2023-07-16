@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_gbcon_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Norm norm = params.norm();
@@ -55,7 +54,7 @@ void test_gbcon_work( Params& params, bool run )
 
     int64_t info = lapack::gbtrf( n, n, kl, ku, &AB[0], ldab, &ipiv_tst[0] );
     if (info != 0) {
-        fprintf( stderr, "lapack::gbtrf returned error %lld\n", (lld) info );
+        fprintf( stderr, "lapack::gbtrf returned error %lld\n", llong( info ) );
     }
 
     std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
@@ -66,7 +65,7 @@ void test_gbcon_work( Params& params, bool run )
     int64_t info_tst = lapack::gbcon( norm, n, kl, ku, &AB[0], ldab, &ipiv_tst[0], anorm, &rcond_tst );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::gbcon returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::gbcon returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -80,7 +79,7 @@ void test_gbcon_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_gbcon( norm2char(norm), n, kl, ku, &AB[0], ldab, &ipiv_ref[0], anorm, &rcond_ref );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_gbcon returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_gbcon returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

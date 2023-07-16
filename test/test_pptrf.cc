@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_pptrf_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Uplo uplo = params.uplo();
@@ -60,7 +59,7 @@ void test_pptrf_work( Params& params, bool run )
     int64_t info_tst = lapack::pptrf( uplo, n, &AP_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::pptrf returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::pptrf returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -74,7 +73,7 @@ void test_pptrf_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_pptrf( uplo2char(uplo), n, &AP_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_pptrf returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_pptrf returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

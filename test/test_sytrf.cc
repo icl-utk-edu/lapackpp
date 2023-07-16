@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_sytrf_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Uplo uplo = params.uplo();
@@ -52,7 +51,7 @@ void test_sytrf_work( Params& params, bool run )
     int64_t info_tst = lapack::sytrf( uplo, n, &A_tst[0], lda, &ipiv_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::sytrf returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::sytrf returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -66,7 +65,7 @@ void test_sytrf_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_sytrf( uplo2char(uplo), n, &A_ref[0], lda, &ipiv_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_sytrf returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_sytrf returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_ppcon_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Uplo uplo = params.uplo();
@@ -62,7 +61,7 @@ void test_ppcon_work( Params& params, bool run )
     // factor A into LL^T
     int64_t info = lapack::pptrf( uplo, n, &AP[0] );
     if (info != 0) {
-        fprintf( stderr, "lapack::pptrf returned error %lld\n", (lld) info );
+        fprintf( stderr, "lapack::pptrf returned error %lld\n", llong( info ) );
     }
 
     // ---------- run test
@@ -71,7 +70,7 @@ void test_ppcon_work( Params& params, bool run )
     int64_t info_tst = lapack::ppcon( uplo, n, &AP[0], anorm, &rcond_tst );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::ppcon returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::ppcon returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -85,7 +84,7 @@ void test_ppcon_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_ppcon( uplo2char(uplo), n, &AP[0], anorm, &rcond_ref );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_ppcon returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_ppcon returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

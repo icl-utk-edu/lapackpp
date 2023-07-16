@@ -18,7 +18,6 @@ void test_potri_work( Params& params, bool run )
 {
     using blas::conj;
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Uplo uplo = params.uplo();
@@ -52,7 +51,7 @@ void test_potri_work( Params& params, bool run )
     if (verbose >= 1) {
         printf( "\n"
                 "A n=%5lld, lda=%5lld\n",
-                (lld) n, (lld) lda );
+                llong( n ), llong( lda ) );
     }
     if (verbose >= 2) {
         printf( "A = " ); print_matrix( n, n, &A_tst[0], lda );
@@ -61,7 +60,7 @@ void test_potri_work( Params& params, bool run )
     // factor A into LL^T
     int64_t info = lapack::potrf( uplo, n, &A_tst[0], lda );
     if (info != 0) {
-        fprintf( stderr, "lapack::potrf returned error %lld\n", (lld) info );
+        fprintf( stderr, "lapack::potrf returned error %lld\n", llong( info ) );
     }
 
     // test error exits
@@ -78,7 +77,7 @@ void test_potri_work( Params& params, bool run )
     int64_t info_tst = lapack::potri( uplo, n, &A_tst[0], lda );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::potri returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::potri returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -139,7 +138,7 @@ void test_potri_work( Params& params, bool run )
         // factor A into LL^T
         info = LAPACKE_potrf( uplo2char(uplo), n, &A_ref[0], lda );
         if (info != 0) {
-            fprintf( stderr, "LAPACKE_potrf returned error %lld\n", (lld) info );
+            fprintf( stderr, "LAPACKE_potrf returned error %lld\n", llong( info ) );
         }
 
         // ---------- run reference
@@ -148,7 +147,7 @@ void test_potri_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_potri( uplo2char(uplo), n, &A_ref[0], lda );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_potri returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_potri returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

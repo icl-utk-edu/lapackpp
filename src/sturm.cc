@@ -106,7 +106,7 @@ int64_t sturm(
         return 0;
 
     // todo: adjust for float. Use constants like epsilon.
-    phi = ((scalar_t)(((long long) 1)<<34)); // Roughly 1.718e+10.
+    phi = scalar_t( int64_t( 1 ) << 34 );  // Roughly 1.718e+10.
     const scalar_t one=1.0;
     upsilon = one/phi;
 

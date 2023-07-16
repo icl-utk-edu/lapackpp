@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_ggglm_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     int64_t n = params.dim.n();
@@ -81,7 +80,7 @@ void test_ggglm_work( Params& params, bool run )
     int64_t info_tst = lapack::ggglm( n, m, p, &A_tst[0], lda, &B_tst[0], ldb, &D_tst[0], &X_tst[0], &Y_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::ggglm returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::ggglm returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -95,7 +94,7 @@ void test_ggglm_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_ggglm( n, m, p, &A_ref[0], lda, &B_ref[0], ldb, &D_ref[0], &X_ref[0], &Y_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_ggglm returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_ggglm returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

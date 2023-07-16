@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_gesvx_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // Constants
     const scalar_t one = 1.0;
@@ -94,7 +93,7 @@ void test_gesvx_work( Params& params, bool run )
     AF_tst = A_tst;
     int64_t info_trf = lapack::getrf( n, n, &AF_tst[0], lda, &ipiv_tst[0] );
     if (info_trf != 0) {
-        fprintf( stderr, "lapack::getrf returned error %lld\n", (lld) info_trf );
+        fprintf( stderr, "lapack::getrf returned error %lld\n", llong( info_trf ) );
     }
     std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
 
@@ -116,7 +115,7 @@ void test_gesvx_work( Params& params, bool run )
                            &rcond_tst, &ferr_tst[0], &berr_tst[0], &rpivot_tst );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::gesvx returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::gesvx returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -161,7 +160,7 @@ void test_gesvx_work( Params& params, bool run )
         time = testsweeper::get_wtime() - time;
         equed_ref = lapack::char2equed( equed_ref_char );
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_gesvx returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_gesvx returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

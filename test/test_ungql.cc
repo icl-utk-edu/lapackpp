@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_ungql_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     int64_t m = params.dim.m();
@@ -64,7 +63,7 @@ void test_ungql_work( Params& params, bool run )
     // ---------- factor matrix
     int64_t info_qlf = lapack::geqlf( m, n, &A_tst[0], lda, &tau[0] );
     if (info_qlf != 0) {
-        fprintf( stderr, "lapack::unqlf returned error %lld\n", (lld) info_qlf );
+        fprintf( stderr, "lapack::unqlf returned error %lld\n", llong( info_qlf ) );
     }
     // ---------- save matrix after factorization as the reference matrix
     A_factorized = A_tst;
@@ -75,7 +74,7 @@ void test_ungql_work( Params& params, bool run )
     int64_t info_tst = lapack::ungql( m, n, k, &A_tst[0], lda, &tau[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::ungql returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::ungql returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -102,7 +101,7 @@ void test_ungql_work( Params& params, bool run )
         // Generate the last n columns of the matrix Q
         int64_t info_ungql = lapack::ungql( m, n, k, &Q[0], ldq, &tau[0] );
         if (info_ungql != 0) {
-            fprintf( stderr, "lapack::ungql returned error %lld\n", (lld) info_ungql );
+            fprintf( stderr, "lapack::ungql returned error %lld\n", llong( info_ungql ) );
         }
 
         // Copy L(m-n+1:m,n-k+1:n)
@@ -142,7 +141,7 @@ void test_ungql_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_ungql( m, n, k, &A_ref[0], lda, &tau[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_ungql returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_ungql returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

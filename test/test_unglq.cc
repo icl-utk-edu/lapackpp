@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_unglq_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     int64_t m = params.dim.m();
@@ -64,7 +63,7 @@ void test_unglq_work( Params& params, bool run )
     // ---------- factor matrix
     int64_t info_lqf = lapack::gelqf( m, n, &A_tst[0], lda, &tau[0] );
     if (info_lqf != 0) {
-        fprintf( stderr, "lapack::unlqf returned error %lld\n", (lld) info_lqf );
+        fprintf( stderr, "lapack::unlqf returned error %lld\n", llong( info_lqf ) );
     }
     // ---------- save matrix after factorization as the reference matrix
     A_factorized = A_tst;
@@ -75,7 +74,7 @@ void test_unglq_work( Params& params, bool run )
     int64_t info_tst = lapack::unglq( m, n, k, &A_tst[0], lda, &tau[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::unglq returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::unglq returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -99,7 +98,7 @@ void test_unglq_work( Params& params, bool run )
         // Generate the first n columns of the matrix Q
         int64_t info_unglq = lapack::unglq( m, n, k, &Q[0], ldq, &tau[0] );
         if (info_unglq != 0) {
-            fprintf( stderr, "lapack::unglq returned error %lld\n", (lld) info_unglq );
+            fprintf( stderr, "lapack::unglq returned error %lld\n", llong( info_unglq ) );
         }
 
         // Copy L(1:k,1:m)
@@ -139,7 +138,7 @@ void test_unglq_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_unglq( m, n, k, &A_ref[0], lda, &tau[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_unglq returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_unglq returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

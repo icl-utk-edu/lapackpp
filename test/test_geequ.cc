@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_geequ_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     int64_t m = params.dim.m();
@@ -59,7 +58,7 @@ void test_geequ_work( Params& params, bool run )
     int64_t info_tst = lapack::geequ( m, n, &A[0], lda, &R_tst[0], &C_tst[0], &rowcnd_tst, &colcnd_tst, &amax_tst );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::geequ returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::geequ returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -73,7 +72,7 @@ void test_geequ_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_geequ( m, n, &A[0], lda, &R_ref[0], &C_ref[0], &rowcnd_ref, &colcnd_ref, &amax_ref );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_geequ returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_geequ returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

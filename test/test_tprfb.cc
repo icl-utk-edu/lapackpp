@@ -19,7 +19,6 @@ template< typename scalar_t >
 void test_tprfb_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     lapack::Side side = params.side();
@@ -99,7 +98,7 @@ void test_tprfb_work( Params& params, bool run )
     time = testsweeper::get_wtime() - time;
     // internal routine: no argument check so no info.
     //if (info_tst != 0) {
-    //    fprintf( stderr, "lapack::tprfb returned error %lld\n", (lld) info_tst );
+    //    fprintf( stderr, "lapack::tprfb returned error %lld\n", llong( info_tst ) );
     //}
 
     params.time() = time;
@@ -113,7 +112,7 @@ void test_tprfb_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_tprfb( side2char(side), op2char(trans), direction2char(direction), storev2char(storev), m, n, k, l, &V[0], ldv, &T[0], ldt, &A_ref[0], lda, &B_ref[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_tprfb returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_tprfb returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

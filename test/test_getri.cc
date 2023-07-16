@@ -17,7 +17,6 @@ template< typename scalar_t >
 void test_getri_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
 
     // get & mark input values
     int64_t n = params.dim.n();
@@ -52,7 +51,7 @@ void test_getri_work( Params& params, bool run )
     if (verbose >= 1) {
         printf( "\n"
                 "A n=%5lld, lda=%5lld\n",
-                (lld) n, (lld) lda );
+                llong( n ), llong( lda ) );
     }
     if (verbose >= 2) {
         printf( "A = " ); print_matrix( n, n, &A_tst[0], lda );
@@ -61,7 +60,7 @@ void test_getri_work( Params& params, bool run )
     // factor A into LU
     int64_t info = lapack::getrf( n, n, &A_tst[0], lda, &ipiv_tst[0] );
     if (info != 0) {
-        fprintf( stderr, "lapack::getrf returned error %lld\n", (lld) info );
+        fprintf( stderr, "lapack::getrf returned error %lld\n", llong( info ) );
     }
 
     // test error exits
@@ -76,7 +75,7 @@ void test_getri_work( Params& params, bool run )
     int64_t info_tst = lapack::getri( n, &A_tst[0], lda, &ipiv_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::getri returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::getri returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -123,7 +122,7 @@ void test_getri_work( Params& params, bool run )
         // factor A into LU
         info = LAPACKE_getrf( n, n, &A_ref[0], lda, &ipiv_ref[0] );
         if (info != 0) {
-            fprintf( stderr, "LAPACKE_getrf returned error %lld\n", (lld) info );
+            fprintf( stderr, "LAPACKE_getrf returned error %lld\n", llong( info ) );
         }
 
         // ---------- run reference
@@ -132,7 +131,7 @@ void test_getri_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_getri( n, &A_ref[0], lda, &ipiv_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_getri returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_getri returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;

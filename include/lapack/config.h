@@ -17,10 +17,12 @@
 
 #ifndef lapack_int
     #ifdef LAPACK_ILP64
-        #define lapack_int int64_t
+        typedef int64_t lapack_int;
     #else
-        #define lapack_int int
+        typedef int lapack_int;
     #endif
+    /* #define so that #ifdef works. */
+    #define lapack_int lapack_int
 #endif
 
 #ifndef lapack_logical

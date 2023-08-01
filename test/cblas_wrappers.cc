@@ -22,10 +22,10 @@ cblas_symv(
     std::complex<float> beta,
     std::complex<float>* yref, int incy )
 {
-    int n_ = n;
-    int incx_ = incx;
-    int incy_ = incy;
-    int lda_ = lda;
+    lapack_int n_    = lapack_int( n );
+    lapack_int incx_ = lapack_int( incx );
+    lapack_int incy_ = lapack_int( incy );
+    lapack_int lda_  = lapack_int( lda );
     char uplo_ = lapack_uplo_const( uplo );
     if (layout == CblasRowMajor) {
         uplo_ = (uplo == CblasUpper ? 'l' : 'u');  // switch upper <=> lower
@@ -55,10 +55,10 @@ cblas_symv(
     std::complex<double> beta,
     std::complex<double>* yref, int incy )
 {
-    int n_ = n;
-    int incx_ = incx;
-    int incy_ = incy;
-    int lda_ = lda;
+    lapack_int n_    = lapack_int( n );
+    lapack_int incx_ = lapack_int( incx );
+    lapack_int incy_ = lapack_int( incy );
+    lapack_int lda_  = lapack_int( lda );
     char uplo_ = lapack_uplo_const( uplo );
     if (layout == CblasRowMajor) {
         uplo_ = (uplo == CblasUpper ? 'l' : 'u');  // switch upper <=> lower
@@ -84,9 +84,9 @@ cblas_syr(
     std::complex<float> const *x, int incx,
     std::complex<float>* A, int lda )
 {
-    int n_ = n;
-    int incx_ = incx;
-    int lda_ = lda;
+    lapack_int n_    = lapack_int( n );
+    lapack_int incx_ = lapack_int( incx );
+    lapack_int lda_  = lapack_int( lda );
     char uplo_ = lapack_uplo_const( uplo );
     if (layout == CblasRowMajor) {
         uplo_ = (uplo == CblasUpper ? 'l' : 'u');  // switch upper <=> lower
@@ -110,9 +110,9 @@ cblas_syr(
     std::complex<double> const *x, int incx,
     std::complex<double>* A, int lda )
 {
-    int n_ = n;
-    int incx_ = incx;
-    int lda_ = lda;
+    lapack_int n_    = lapack_int( n );
+    lapack_int incx_ = lapack_int( incx );
+    lapack_int lda_  = lapack_int( lda );
     char uplo_ = lapack_uplo_const( uplo );
     if (layout == CblasRowMajor) {
         uplo_ = (uplo == CblasUpper ? 'l' : 'u');  // switch upper <=> lower

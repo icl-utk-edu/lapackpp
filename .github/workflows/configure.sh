@@ -15,18 +15,8 @@ print "======================================== Environment"
 env
 
 print "======================================== Setup build"
-export color=no
-export CXXFLAGS="-Werror -Wno-unused-command-line-argument"
-
-# Test int64 build with make/cuda and cmake/amd.
-# Test int32 build with cmake/cuda and make/amd and all others.
-if [ "${maker}" = "make" -a "${device}" = "gpu_nvidia" ]; then
-    export blas_int=int64
-elif [ "${maker}" = "cmake" -a "${device}" = "gpu_amd" ]; then
-    export blas_int=int64
-else
-    export blas_int=int32
-fi
+# Note: set all env variables in setup_env.sh,
+# else build.sh and test.sh won't see them.
 
 rm -rf ${top}/install
 if [ "${maker}" = "make" ]; then

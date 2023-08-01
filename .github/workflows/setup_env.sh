@@ -44,9 +44,20 @@ echo "MKLROOT=${MKLROOT}"
 quiet module load pkgconf
 quiet which pkg-config
 
-# CMake will find CUDA in /usr/local/cuda, so need to explicitly set
-# gpu_backend.
+# CMake finds CUDA in /usr/local/cuda, so need to explicitly set gpu_backend.
 export gpu_backend=none
+export color=no
+export CXXFLAGS="-Werror -Wno-unused-command-line-argument"
+
+# Test int64 build with make/cuda and cmake/amd.
+# Test int32 build with cmake/cuda and make/amd and all others.
+if [ "${maker}" = "make" -a "${device}" = "gpu_nvidia" ]; then
+    export blas_int=int64
+elif [ "${maker}" = "cmake" -a "${device}" = "gpu_amd" ]; then
+    export blas_int=int64
+else
+    export blas_int=int32
+fi
 
 if [ "${device}" = "gpu_nvidia" ]; then
     print "======================================== Load CUDA"

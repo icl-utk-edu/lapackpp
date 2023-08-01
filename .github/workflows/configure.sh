@@ -12,7 +12,21 @@ mydir=$(dirname $0)
 source ${mydir}/setup_env.sh
 
 print "======================================== Environment"
-env
+# Show environment variables, excluding functions.
+(set -o posix; set)
+
+print "======================================== Modules"
+quiet module list -l
+
+print "======================================== Query GPUs"
+if   [ "${device}" = "gpu_nvidia" ]; then
+    nvidia-smi
+elif [ "${device}" = "gpu_amd" ]; then
+    rocm-smi
+elif [ "${device}" = "gpu_intel" ]; then
+    clinfo
+    sycl-ls
+fi
 
 print "======================================== Setup build"
 # Note: set all env variables in setup_env.sh,
@@ -23,8 +37,8 @@ if [ "${maker}" = "make" ]; then
     make distclean
     make config prefix=${top}/install \
          || exit 10
-fi
-if [ "${maker}" = "cmake" ]; then
+
+elif [ "${maker}" = "cmake" ]; then
     (  # Build blaspp first
        git clone https://github.com/icl-utk-edu/blaspp
        mkdir blaspp/build && cd blaspp/build
@@ -42,6 +56,8 @@ if [ "${maker}" = "cmake" ]; then
           -Dgpu_backend=${gpu_backend} .. \
           || exit 12
 fi
+
+cat include/lapack/defines.h
 
 print "======================================== Finished configure"
 exit 0

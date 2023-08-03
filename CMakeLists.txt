@@ -782,7 +782,7 @@ include( GNUInstallDirs )
 if (WIN32)
     set( install_configdir "lapackpp" )
 else()
-    set( install_configdir "${CMAKE_INSTALL_LIBDIR}/lapackpp" )
+    set( install_configdir "${CMAKE_INSTALL_LIBDIR}/cmake/lapackpp" )
 endif()
 
 # Install library and add to <package>Targets.cmake

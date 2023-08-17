@@ -543,7 +543,7 @@ if (opts.qr and opts.host):
 if (opts.qr and opts.device):
     # GPU
     cmds += [
-    [ 'dev-geqrf', gen + dtype + align + mnk + wide + tall ],
+    [ 'dev-geqrf', gen + dtype + align + n + wide + tall ],
     ]
 
 # LQ

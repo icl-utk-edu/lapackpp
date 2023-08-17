@@ -184,11 +184,12 @@ int64_t gemqrt(
 // -----------------------------------------------------------------------------
 /// Overwrites the general complex m-by-n matrix C with
 ///
-///     side = Left side = Right
-/// trans = NoTrans: Q C C Q
-/// trans = ConjTrans: Q^H C C Q^H
+/// - side = Left,  trans = NoTrans:   $Q C$
+/// - side = Right, trans = NoTrans:   $C Q$
+/// - side = Left,  trans = ConjTrans: $Q^H C$
+/// - side = Right, trans = ConjTrans: $C Q^H$
 ///
-/// where Q is a complex orthogonal matrix defined as the product of k
+/// where Q is a unitary matrix defined as the product of k
 /// elementary reflectors:
 ///
 ///     Q = H(1) H(2) . . . H(k) = I - V T V^H

@@ -469,5 +469,6 @@ void test_symv  ( Params& params, bool run );
 void test_potrf_device ( Params& params, bool run );
 void test_getrf_device ( Params& params, bool run );
 void test_geqrf_device ( Params& params, bool run );
+void test_heevd_device ( Params& params, bool run );
 
 #endif  //  #ifndef TEST_HH

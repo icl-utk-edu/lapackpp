@@ -523,6 +523,7 @@ add_library(
     src/cuda/cuda_geqrf.cc
     src/cuda/cuda_getrf.cc
     src/cuda/cuda_potrf.cc
+    src/cuda/cuda_heevd.cc
 
     src/rocm/rocm_geqrf.cc
     src/rocm/rocm_getrf.cc

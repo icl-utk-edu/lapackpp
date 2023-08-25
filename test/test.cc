@@ -461,6 +461,7 @@ std::vector< testsweeper::routines_t > routines = {
     { "dev-potrf",          test_potrf_device,  Section::gpu },
     { "dev-getrf",          test_getrf_device,  Section::gpu },
     { "dev-geqrf",          test_geqrf_device,  Section::gpu },
+    { "dev-heevd",          test_heevd_device,  Section::gpu },
     { "",                   nullptr,            Section::newline },
 };
 

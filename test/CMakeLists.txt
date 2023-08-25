@@ -96,6 +96,7 @@ add_executable(
     test_hecon.cc
     test_heev.cc
     test_heevd.cc
+    test_heevd_device.cc
     test_heevr.cc
     test_heevx.cc
     test_hegst.cc

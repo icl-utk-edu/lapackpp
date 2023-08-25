@@ -45,6 +45,8 @@ public:
     static constexpr cudaDataType datatype = CUDA_C_64F;
 };
 
+cusolverEigMode_t job2eigmode_cusolver(lapack::Job job);
+
 } // namespace lapack
 
 //==============================================================================

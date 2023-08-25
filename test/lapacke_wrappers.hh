@@ -1171,6 +1171,8 @@ inline lapack_int LAPACKE_gemqrt(
     float* T, lapack_int ldt,
     float* C, lapack_int ldc )
 {
+    if (trans == 'C')
+        trans = 'T';
     return LAPACKE_sgemqrt(
         LAPACK_COL_MAJOR, side, trans, m, n, k, nb,
         V, ldv,
@@ -1184,6 +1186,8 @@ inline lapack_int LAPACKE_gemqrt(
     double* T, lapack_int ldt,
     double* C, lapack_int ldc )
 {
+    if (trans == 'C')
+        trans = 'T';
     return LAPACKE_dgemqrt(
         LAPACK_COL_MAJOR, side, trans, m, n, k, nb,
         V, ldv,

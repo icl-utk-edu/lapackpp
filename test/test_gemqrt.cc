@@ -19,7 +19,8 @@ template< typename scalar_t >
 void test_gemqrt_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
-    typedef long long lld;
+    using blas::min;
+    using blas::max;
 
     // get & mark input values
     lapack::Side side = params.side();
@@ -29,6 +30,12 @@ void test_gemqrt_work( Params& params, bool run )
     int64_t k = params.dim.k();
     int64_t nb = params.nb();
     int64_t align = params.align();
+
+    // geqrt requires min( m, n ) >= nb; use nb = 0.5 min( m, n ).
+    if (nb > min( m, n )) {
+        nb = max( 1, min( m, n ) / 2 );
+        params.nb() = nb;
+    }
 
     // mark non-standard output values
     params.ref_time();
@@ -42,7 +49,8 @@ void test_gemqrt_work( Params& params, bool run )
     int64_t ldv;
     if (side == lapack::Side::Right) {
         ldv = roundup( blas::max( 1, m ), align );
-    } else {
+    }
+    else {
         ldv = roundup( blas::max( 1, n ), align );
     }
     int64_t ldt = roundup( nb, align );
@@ -65,15 +73,14 @@ void test_gemqrt_work( Params& params, bool run )
 
     // Calling this to set up the matrices
     lapack::geqrt( m, n, nb, &V[0], ldv, &T[0], ldt );
-    lapack::gemqrt( side, trans, m, n, k, nb, &V[0], ldv, &T[0], ldt, &C_tst[0], ldc );
-/*
+
     //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::gemqrt( side, trans, m, n, k, nb, &V[0], ldv, &T[0], ldt, &C_tst[0], ldc );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::gemqrt returned error %lld\n", (lld) info_tst );
+        fprintf( stderr, "lapack::gemqrt returned error %lld\n", llong( info_tst ) );
     }
 
     params.time() = time;
@@ -87,7 +94,7 @@ void test_gemqrt_work( Params& params, bool run )
         int64_t info_ref = LAPACKE_gemqrt( side2char(side), op2char(trans), m, n, k, nb, &V[0], ldv, &T[0], ldt, &C_ref[0], ldc );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_gemqrt returned error %lld\n", (lld) info_ref );
+            fprintf( stderr, "LAPACKE_gemqrt returned error %lld\n", llong( info_ref ) );
         }
 
         params.ref_time() = time;
@@ -102,7 +109,6 @@ void test_gemqrt_work( Params& params, bool run )
         params.error() = error;
         params.okay() = (error == 0);  // expect lapackpp == lapacke
     }
-*/
 }
 
 #endif  // LAPACK >= 3.4.0

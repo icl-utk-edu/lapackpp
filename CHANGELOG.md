@@ -1,3 +1,11 @@
+2023.08.25
+  - Use yyyy.mm.dd version scheme, instead of yyyy.mm.release
+  - Added oneAPI support to CMake
+  - Fixed int64 support
+  - More robust Makefile configure doesn't require CUDA or ROCm to be in
+    compiler search paths (CPATH, LIBRARY_PATH, etc.)
+  - Added `gemqrt` to multiply by Q from QR
+
 2023.06.00
   - Updates for BLAS++ changes to Queue class
 
@@ -33,7 +41,7 @@
   - Added `make check`
 
 2020.09.00
-  - Initial release.
-    - Supports LAPACK >= 3.2.1.
-    - Includes routines through LAPACK 3.7.0.
+  - Initial release
+    - Supports LAPACK >= 3.2.1
+    - Includes routines through LAPACK 3.7.0
     - Makefile and CMake build options

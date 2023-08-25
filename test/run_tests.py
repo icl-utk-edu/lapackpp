@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright (c) 2017-2022, University of Tennessee. All rights reserved.
+# Copyright (c) 2017-2023, University of Tennessee. All rights reserved.
 # SPDX-License-Identifier: BSD-3-Clause
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
@@ -529,6 +529,9 @@ if (opts.qr and opts.host):
 
     [ 'orhr_col', gen + dtype_real + align + n + tall ],
     [ 'unhr_col', gen + dtype      + align + n + tall ],
+
+    [ 'gemqrt', gen + dtype_real    + align + n + nb + side + trans    ],  # real does trans = N, T, C
+    [ 'gemqrt', gen + dtype_complex + align + n + nb + side + trans_nc ],  # complex does trans = N, C, not T
 
     # Triangle-pentagon
     [ 'tpqrt',  gen + dtype + align + mn + l + nb ],

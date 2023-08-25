@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2022, University of Tennessee. All rights reserved.
+// Copyright (c) 2017-2023, University of Tennessee. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
@@ -251,6 +251,7 @@ std::vector< testsweeper::routines_t > routines = {
     { "gelqf",              test_gelqf,     Section::qr }, // tested numerically
     { "geqlf",              test_geqlf,     Section::qr }, // tested numerically
     { "gerqf",              test_gerqf,     Section::qr }, // tested numerically; R, Q are full sizeof(A), could be smaller
+    { "gemqrt",             test_gemqrt,    Section::qr }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },
 
     { "ggqrf",              test_ggqrf,     Section::qr }, // tested via LAPACKE using gcc/MKL, TODO for now use p=param.k

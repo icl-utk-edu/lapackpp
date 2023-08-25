@@ -1162,6 +1162,65 @@ inline lapack_int LAPACKE_gerqf(
         (lapack_complex_double*) tau );
 }
 
+//------------------------------------------------------------------------------
+// Simple overloaded wrappers around LAPACKE (assuming routines in LAPACKE).
+// These should go in test/lapacke_wrappers.hh.
+inline lapack_int LAPACKE_gemqrt(
+    char side, char trans, lapack_int m, lapack_int n, lapack_int k, lapack_int nb,
+    float* V, lapack_int ldv,
+    float* T, lapack_int ldt,
+    float* C, lapack_int ldc )
+{
+    if (trans == 'C')
+        trans = 'T';
+    return LAPACKE_sgemqrt(
+        LAPACK_COL_MAJOR, side, trans, m, n, k, nb,
+        V, ldv,
+        T, ldt,
+        C, ldc );
+}
+
+inline lapack_int LAPACKE_gemqrt(
+    char side, char trans, lapack_int m, lapack_int n, lapack_int k, lapack_int nb,
+    double* V, lapack_int ldv,
+    double* T, lapack_int ldt,
+    double* C, lapack_int ldc )
+{
+    if (trans == 'C')
+        trans = 'T';
+    return LAPACKE_dgemqrt(
+        LAPACK_COL_MAJOR, side, trans, m, n, k, nb,
+        V, ldv,
+        T, ldt,
+        C, ldc );
+}
+
+inline lapack_int LAPACKE_gemqrt(
+    char side, char trans, lapack_int m, lapack_int n, lapack_int k, lapack_int nb,
+    std::complex<float>* V, lapack_int ldv,
+    std::complex<float>* T, lapack_int ldt,
+    std::complex<float>* C, lapack_int ldc )
+{
+    return LAPACKE_cgemqrt(
+        LAPACK_COL_MAJOR, side, trans, m, n, k, nb,
+        (lapack_complex_float*) V, ldv,
+        (lapack_complex_float*) T, ldt,
+        (lapack_complex_float*) C, ldc );
+}
+
+inline lapack_int LAPACKE_gemqrt(
+    char side, char trans, lapack_int m, lapack_int n, lapack_int k, lapack_int nb,
+    std::complex<double>* V, lapack_int ldv,
+    std::complex<double>* T, lapack_int ldt,
+    std::complex<double>* C, lapack_int ldc )
+{
+    return LAPACKE_zgemqrt(
+        LAPACK_COL_MAJOR, side, trans, m, n, k, nb,
+        (lapack_complex_double*) V, ldv,
+        (lapack_complex_double*) T, ldt,
+        (lapack_complex_double*) C, ldc );
+}
+
 // -----------------------------------------------------------------------------
 inline lapack_int LAPACKE_gesdd(
     char jobz, lapack_int m, lapack_int n,

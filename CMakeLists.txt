@@ -536,6 +536,7 @@ add_library(
     src/stub/stub_geqrf.cc
     src/stub/stub_getrf.cc
     src/stub/stub_potrf.cc
+    src/stub/stub_heevd.cc
 )
 
 #-------------------------------------------------------------------------------

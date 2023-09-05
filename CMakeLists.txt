@@ -532,6 +532,7 @@ add_library(
     src/onemkl/onemkl_geqrf.cc
     src/onemkl/onemkl_getrf.cc
     src/onemkl/onemkl_potrf.cc
+    src/onemkl/onemkl_heevd.cc
 
     src/stub/stub_geqrf.cc
     src/stub/stub_getrf.cc

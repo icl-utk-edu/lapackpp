@@ -16,4 +16,19 @@
 
 #include <oneapi/mkl.hpp>
 
+namespace lapack {
+
+// todo: Move to blaspp/src/onemkl_wrappers.cc as blas::internal::jobz2onemkl()?
+inline const oneapi::mkl::job jobz2onemkl(lapack::Job jobz) {
+    if (jobz == lapack::Job::NoVec) return oneapi::mkl::job::novec;
+    if (jobz == lapack::Job::Vec) return oneapi::mkl::job::vec;
+    if (jobz == lapack::Job::UpdateVec) return oneapi::mkl::job::updatevec;
+    if (jobz == lapack::Job::AllVec) return oneapi::mkl::job::allvec;
+    if (jobz == lapack::Job::SomeVec) return oneapi::mkl::job::somevec;
+    if (jobz == lapack::Job::OverwriteVec) return oneapi::mkl::job::overwritevec;
+    return oneapi::mkl::job::novec;
+}
+
+} // namespace lapack
+
 #endif // LAPACK_ONEMKL_COMMON_H

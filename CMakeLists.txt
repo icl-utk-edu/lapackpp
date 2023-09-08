@@ -528,6 +528,7 @@ add_library(
     src/rocm/rocm_geqrf.cc
     src/rocm/rocm_getrf.cc
     src/rocm/rocm_potrf.cc
+    src/rocm/rocm_heevd.cc
 
     src/onemkl/onemkl_geqrf.cc
     src/onemkl/onemkl_getrf.cc

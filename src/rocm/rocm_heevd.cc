@@ -26,7 +26,6 @@ void heevd_work_size_bytes(
     lapack::Queue& queue )
 {
     // query for workspace size
-    auto solver = queue.stream();
     *dev_work_size = n * sizeof(float);
     *host_work_size = 0;
 }
@@ -40,7 +39,6 @@ void heevd_work_size_bytes(
     lapack::Queue& queue )
 {
     // query for workspace size
-    auto solver = queue.stream();
     *dev_work_size = n * sizeof(double);
     *host_work_size = 0;
 }
@@ -54,7 +52,6 @@ void heevd_work_size_bytes(
     lapack::Queue& queue )
 {
     // query for workspace size
-    auto solver = queue.stream();
     *dev_work_size = n * sizeof(std::complex<float>);
     *host_work_size = 0;
 }
@@ -68,7 +65,6 @@ void heevd_work_size_bytes(
     lapack::Queue& queue )
 {
     // query for workspace size
-    auto solver = queue.stream();
     *dev_work_size = n * sizeof(std::complex<double>);
     *host_work_size = 0;
 }

@@ -19,7 +19,6 @@
 
 namespace lapack {
 
-// todo: Move to blaspp/src/onemkl_wrappers.cc as blas::internal::jobz2onemkl()?
 // should we call it job2evect_rocsolver ??
 inline const rocblas_evect  job2eigmode_rocsolver(lapack::Job jobz) {
     if (jobz == lapack::Job::NoVec) return rocblas_evect_none;

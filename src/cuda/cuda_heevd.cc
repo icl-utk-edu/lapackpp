@@ -1,3 +1,7 @@
+// Copyright (c) 2017-2023, University of Tennessee. All rights reserved.
+// SPDX-License-Identifier: BSD-3-Clause
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack/defines.h"
 
@@ -6,12 +10,14 @@
 #include "lapack/device.hh"
 #include "cuda_common.hh"
 
+//==============================================================================
 namespace blas {
 namespace internal {
-cublasFillMode_t uplo2cublas(blas::Uplo uplo);
-}
-}
 
+cublasFillMode_t uplo2cublas(blas::Uplo uplo);
+
+} // namespace internal
+} // namespace blas
 
 //==============================================================================
 namespace lapack {
@@ -20,7 +26,7 @@ namespace lapack {
 // Intermediate wrappers around cuSolver to deal with precisions.
 cusolverStatus_t cusolver_heevd_bufferSize(
     cusolverDnHandle_t solver, cusolverEigMode_t jobz,
-    cublasFillMode_t uplo, int n, float* dA, 
+    cublasFillMode_t uplo, int n, float* dA,
     int ldda, float* dW, int* lwork )
 {
     return cusolverDnSsyevd_bufferSize(
@@ -30,7 +36,7 @@ cusolverStatus_t cusolver_heevd_bufferSize(
 //----------
 cusolverStatus_t cusolver_heevd_bufferSize(
     cusolverDnHandle_t solver, cusolverEigMode_t jobz,
-    cublasFillMode_t uplo,int n, double* dA, 
+    cublasFillMode_t uplo, int n, double* dA,
     int ldda, double* dW, int* lwork )
 {
     return cusolverDnDsyevd_bufferSize(
@@ -40,7 +46,7 @@ cusolverStatus_t cusolver_heevd_bufferSize(
 //----------
 cusolverStatus_t cusolver_heevd_bufferSize(
     cusolverDnHandle_t solver, cusolverEigMode_t jobz,
-    cublasFillMode_t uplo,int n, std::complex<float>* dA, 
+    cublasFillMode_t uplo, int n, std::complex<float>* dA,
     int ldda, float* dW, int* lwork )
 {
     return cusolverDnCheevd_bufferSize(
@@ -51,7 +57,7 @@ cusolverStatus_t cusolver_heevd_bufferSize(
 //----------
 cusolverStatus_t cusolver_heevd_bufferSize(
     cusolverDnHandle_t solver, cusolverEigMode_t jobz,
-    cublasFillMode_t uplo,int n, std::complex<double>* dA, 
+    cublasFillMode_t uplo, int n, std::complex<double>* dA,
     int ldda, double* dW, int* lwork )
 {
     return cusolverDnZheevd_bufferSize(
@@ -63,7 +69,7 @@ cusolverStatus_t cusolver_heevd_bufferSize(
 // Intermediate wrappers around cuSolver to deal with precisions.
 cusolverStatus_t cusolver_heevd(
     cusolverDnHandle_t solver, cusolverEigMode_t jobz,
-    cublasFillMode_t uplo, int n, float* dA, 
+    cublasFillMode_t uplo, int n, float* dA,
     int ldda, float* dW, float* dev_work, int lwork, int* info )
 {
     return cusolverDnSsyevd(
@@ -73,7 +79,7 @@ cusolverStatus_t cusolver_heevd(
 //----------
 cusolverStatus_t cusolver_heevd(
     cusolverDnHandle_t solver, cusolverEigMode_t jobz,
-    cublasFillMode_t uplo, int n, double* dA, 
+    cublasFillMode_t uplo, int n, double* dA,
     int ldda, double* dW, double* dev_work, int lwork, int* info )
 {
     return cusolverDnDsyevd(
@@ -83,7 +89,7 @@ cusolverStatus_t cusolver_heevd(
 //----------
 cusolverStatus_t cusolver_heevd(
     cusolverDnHandle_t solver, cusolverEigMode_t jobz,
-    cublasFillMode_t uplo, int n, std::complex<float>* dA, 
+    cublasFillMode_t uplo, int n, std::complex<float>* dA,
     int ldda, float* dW, float* dev_work, int lwork, int* info )
 {
     return cusolverDnCheevd(
@@ -96,7 +102,7 @@ cusolverStatus_t cusolver_heevd(
 //----------
 cusolverStatus_t cusolver_heevd(
     cusolverDnHandle_t solver, cusolverEigMode_t jobz,
-    cublasFillMode_t uplo, int n, std::complex<double>* dA, 
+    cublasFillMode_t uplo, int n, std::complex<double>* dA,
     int ldda, double* dW, double* dev_work, int lwork, int* info )
 {
     return cusolverDnZheevd(
@@ -111,7 +117,7 @@ cusolverStatus_t cusolver_heevd(
 // dA is only for templating scalar_t; it isn't referenced.
 template <typename scalar_t>
 void heevd_work_size_bytes(
-    lapack::Job jobz, lapack::Uplo uplo, 
+    lapack::Job jobz, lapack::Uplo uplo,
     int64_t n, scalar_t* dA, int64_t ldda, blas::real_type<scalar_t>* dW,
     size_t* dev_work_size, size_t* host_work_size,
     lapack::Queue& queue )
@@ -127,7 +133,7 @@ void heevd_work_size_bytes(
         auto params = queue.solver_params();
         blas_dev_call(
             cusolverDnXsyevd_bufferSize(
-                solver, params, job2eigmode_cusolver(jobz), 
+                solver, params, job2eigmode_cusolver(jobz),
                 blas::internal::uplo2cublas(uplo), n,
                 CudaTraits<scalar_t>::datatype, dA, ldda,
                 CudaTraits<real_t>  ::datatype, dW,
@@ -164,7 +170,7 @@ void heevd(
         auto params = queue.solver_params();
         blas_dev_call(
             cusolverDnXsyevd(
-                solver, params, job2eigmode_cusolver(jobz), 
+                solver, params, job2eigmode_cusolver(jobz),
                 blas::internal::uplo2cublas(uplo), n,
                 CudaTraits<scalar_t>::datatype, dA, ldda,
                 CudaTraits<real_t>  ::datatype, dW,
@@ -184,28 +190,28 @@ void heevd(
 // Explicit instantiations.
 template
 void heevd_work_size_bytes(
-    lapack::Job jobz, lapack::Uplo uplo, 
+    lapack::Job jobz, lapack::Uplo uplo,
     int64_t n, float* dA, int64_t ldda, float* dW,
     size_t* dev_work_size, size_t* host_work_size,
     lapack::Queue& queue );
 
 template
 void heevd_work_size_bytes(
-    lapack::Job jobz, lapack::Uplo uplo, 
+    lapack::Job jobz, lapack::Uplo uplo,
     int64_t n, double* dA, int64_t ldda, double* dW,
     size_t* dev_work_size, size_t* host_work_size,
     lapack::Queue& queue );
 
 template
 void heevd_work_size_bytes(
-    lapack::Job jobz, lapack::Uplo uplo, 
+    lapack::Job jobz, lapack::Uplo uplo,
     int64_t n, std::complex<float>* dA, int64_t ldda, float* dW,
     size_t* dev_work_size, size_t* host_work_size,
     lapack::Queue& queue );
 
 template
 void heevd_work_size_bytes(
-    lapack::Job jobz, lapack::Uplo uplo, 
+    lapack::Job jobz, lapack::Uplo uplo,
     int64_t n, std::complex<double>* dA, int64_t ldda, double* dW,
     size_t* dev_work_size, size_t* host_work_size,
     lapack::Queue& queue );

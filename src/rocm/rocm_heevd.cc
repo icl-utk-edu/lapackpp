@@ -1,3 +1,7 @@
+// Copyright (c) 2017-2023, University of Tennessee. All rights reserved.
+// SPDX-License-Identifier: BSD-3-Clause
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack/defines.h"
 
@@ -5,69 +9,17 @@
 
 #include "rocm_common.hh"
 
+//==============================================================================
 namespace blas {
 namespace internal {
 
 rocblas_fill uplo2rocblas(blas::Uplo uplo);
 
-}
-}
-
+} // namespace internal
+} // namespace blas
 
 //==============================================================================
 namespace lapack {
-
-//------------------------------------------------------------------------------
-// Specified scalar_t float -> syevd
-void heevd_work_size_bytes(
-    lapack::Job jobz, lapack::Uplo uplo, int64_t n,
-    float* dA, int64_t ldda, float* dW,
-    size_t* dev_work_size, size_t* host_work_size,
-    lapack::Queue& queue )
-{
-    // query for workspace size
-    *dev_work_size = n * sizeof(float);
-    *host_work_size = 0;
-}
-
-//----------
-// Specified scalar_t double -> dyevd
-void heevd_work_size_bytes(
-    lapack::Job jobz, lapack::Uplo uplo, int64_t n,
-    double* dA, int64_t ldda, double* dW,
-    size_t* dev_work_size, size_t* host_work_size,
-    lapack::Queue& queue )
-{
-    // query for workspace size
-    *dev_work_size = n * sizeof(double);
-    *host_work_size = 0;
-}
-
-//----------
-// Specified scalar_t std::complex<float> -> heevd
-void heevd_work_size_bytes(
-    lapack::Job jobz, lapack::Uplo uplo, int64_t n,
-    std::complex<float>* dA, int64_t ldda, float* dW,
-    size_t* dev_work_size, size_t* host_work_size,
-    lapack::Queue& queue )
-{
-    // query for workspace size
-    *dev_work_size = n * sizeof(std::complex<float>);
-    *host_work_size = 0;
-}
-
-//----------
-// Specified scalar_t std::complex<double> -> heevd
-void heevd_work_size_bytes(
-    lapack::Job jobz, lapack::Uplo uplo, int64_t n,
-    std::complex<double>* dA, int64_t ldda, double* dW,
-    size_t* dev_work_size, size_t* host_work_size,
-    lapack::Queue& queue )
-{
-    // query for workspace size
-    *dev_work_size = n * sizeof(std::complex<double>);
-    *host_work_size = 0;
-}
 
 //------------------------------------------------------------------------------
 // Templated for scalar_t
@@ -78,9 +30,8 @@ void heevd_work_size_bytes(
     size_t* dev_work_size, size_t* host_work_size,
     lapack::Queue& queue )
 {
-    // call scalar_t specified routines
-    heevd_work_size_bytes(
-        jobz, uplo, n, dA, ldda, dW, dev_work_size, host_work_size, queue );
+    *dev_work_size = n * sizeof( scalar_t );
+    *host_work_size = 0;
 }
 
 //------------------------------------------------------------------------------
@@ -127,7 +78,7 @@ rocblas_status  rocsolver_heevd(
 }
 
 //------------------------------------------------------------------------------
-// Wrapper around cuSolver.
+// Wrapper around rocSolver.
 // This is async. Once finished, the return info is in dev_info on the device.
 template <typename scalar_t>
 void heevd(
@@ -143,7 +94,6 @@ void heevd(
     // for cuda, rocm, call set_device; for oneapi, do nothing.
     blas::internal_set_device( queue.device() );
 
-    //int lwork = dev_work_size / sizeof(scalar_t);
     blas_dev_call(
         rocsolver_heevd(
             solver, job2eigmode_rocsolver(jobz), blas::internal::uplo2rocblas(uplo), n, dA, ldda, dW,
@@ -215,5 +165,5 @@ void heevd(
 
 } // namespace lapack
 
-#endif // LAPACK_HAVE_CUBLAS
+#endif // LAPACK_HAVE_ROCBLAS
 

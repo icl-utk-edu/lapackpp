@@ -181,7 +181,7 @@ void geqrf(
 //------------------------------------------------------------------------------
 template <typename scalar_t>
 void heevd_work_size_bytes(
-    lapack::Job jobz, lapack::Uplo uplo, 
+    lapack::Job jobz, lapack::Uplo uplo,
     int64_t n, scalar_t* dA, int64_t ldda, blas::real_type<scalar_t>* dW,
     size_t* dev_work_size, size_t* host_work_size,
     lapack::Queue& queue );

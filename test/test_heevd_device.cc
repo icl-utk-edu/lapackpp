@@ -1,3 +1,4 @@
+// Copyright (c) 2017-2023, University of Tennessee. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
@@ -72,8 +73,8 @@ void test_heevd_device_work( Params& params, bool run )
 
     // Allocate workspace
     size_t d_size, h_size;
-    lapack::heevd_work_size_bytes( jobz, uplo, n, dA_tst, lda, dW_tst, 
-      &d_size, &h_size, queue );
+    lapack::heevd_work_size_bytes( jobz, uplo, n, dA_tst, lda, dW_tst,
+                                   &d_size, &h_size, queue );
     char* d_work = blas::device_malloc< char >( d_size, queue );
     std::vector<char> h_work_vector( h_size );
     char* h_work = h_work_vector.data();
@@ -93,7 +94,7 @@ void test_heevd_device_work( Params& params, bool run )
     double time = testsweeper::get_wtime();
 
     lapack::heevd( jobz, uplo, n, dA_tst, lda, dW_tst, d_work, d_size,
-      h_work, h_size, d_info, queue );
+                   h_work, h_size, d_info, queue );
 
     queue.sync();
     time = testsweeper::get_wtime() - time;
@@ -105,7 +106,7 @@ void test_heevd_device_work( Params& params, bool run )
     // Copy result back to CPU.
     device_info_int info_tst;
     blas::device_copy_matrix( n, n, dA_tst, lda, Z.data(), ldz, queue );
-    blas::device_copy_matrix( n, 1, dW_tst, n,   Lambda_tst.data(), n, queue );
+    blas::device_copy_vector( n, dW_tst, 1, Lambda_tst.data(), 1, queue );
     blas::device_memcpy( &info_tst, d_info, 1, queue );
     queue.sync();
 

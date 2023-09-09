@@ -102,4 +102,18 @@ const char* device_error_string( cusolverStatus_t error )
 
 } // namespace blas
 
+
+namespace lapack {
+
+cusolverEigMode_t job2eigmode_cusolver(lapack::Job job)
+{
+    switch (job) {
+        case lapack::Job::NoVec : return CUSOLVER_EIG_MODE_NOVECTOR;
+        case lapack::Job::Vec   : return CUSOLVER_EIG_MODE_VECTOR;
+        default: throw blas::Error( "unknown job" );
+    }
+}
+
+} // namespace lapack
+
 #endif // LAPACK_HAVE_CUBLAS

@@ -622,6 +622,12 @@ if (opts.syev and opts.host):
     #[ 'ubmtr', gen + dtype_complex + la + mn + uplo + side + trans_nc ],
     ]
 
+if (opts.syev and opts.device):
+    # GPU
+    cmds += [
+    [ 'dev-heevd', gen + dtype + align + n + jobz + uplo ],
+    ]
+
 # generalized symmetric eigenvalues
 if (opts.sygv and opts.host):
     cmds += [

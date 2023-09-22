@@ -759,7 +759,6 @@ else()
 endif()
 
 # Export via lapackppConfig.cmake
-list( REMOVE_DUPLICATES LAPACK_LIBRARIES )
 list( APPEND LAPACK_LIBRARIES "blaspp" )
 set( lapackpp_libraries "${LAPACK_LIBRARIES}" CACHE INTERNAL "" )
 message( DEBUG "lapackpp_libraries = '${lapackpp_libraries}'" )

@@ -102,6 +102,34 @@ cusolverStatus_t cusolver_heevd(
 //----------
 cusolverStatus_t cusolver_heevd(
     cusolverDnHandle_t solver, cusolverEigMode_t jobz,
+    cublasFillMode_t uplo, int n, std::complex<float>* dA,
+    int ldda, float* dW, std::complex<float>* dev_work,
+    int lwork, int* info )
+{
+    return cusolverDnCheevd(
+        solver, jobz, uplo, n,
+        (cuFloatComplex*) dA, ldda,
+        dW,
+        (cuFloatComplex*) dev_work, lwork, info );
+}
+
+//----------
+cusolverStatus_t cusolver_heevd(
+    cusolverDnHandle_t solver, cusolverEigMode_t jobz,
+    cublasFillMode_t uplo, int n, std::complex<double>* dA,
+    int ldda, double* dW, std::complex<double>* dev_work,
+    int lwork, int* info )
+{
+    return cusolverDnZheevd(
+        solver, jobz, uplo, n,
+        (cuDoubleComplex*) dA, ldda,
+        dW,
+        (cuDoubleComplex*) dev_work, lwork, info );
+}
+
+//----------
+cusolverStatus_t cusolver_heevd(
+    cusolverDnHandle_t solver, cusolverEigMode_t jobz,
     cublasFillMode_t uplo, int n, std::complex<double>* dA,
     int ldda, double* dW, double* dev_work, int lwork, int* info )
 {
@@ -181,7 +209,7 @@ void heevd(
         int lwork = dev_work_size / sizeof(scalar_t);
         blas_dev_call(
             cusolver_heevd(
-                solver, params, job2eigmode_cusolver(jobz), blas::internal::uplo2cublas(uplo), n, dA, ldda, dW,
+                solver, job2eigmode_cusolver(jobz), blas::internal::uplo2cublas(uplo), n, dA, ldda, dW,
                 (scalar_t*) dev_work, lwork, dev_info ));
     #endif
 }

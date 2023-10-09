@@ -32,9 +32,6 @@ float lanht(
         &norm_, &n_,
         D,
         (lapack_complex_float*) E
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -84,9 +81,6 @@ double lanht(
         &norm_, &n_,
         D,
         (lapack_complex_double*) E
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 

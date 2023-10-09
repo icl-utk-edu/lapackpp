@@ -53,9 +53,6 @@ int64_t sysv(
         ipiv_ptr,
         B, &ldb_,
         qry_work, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -71,9 +68,6 @@ int64_t sysv(
         ipiv_ptr,
         B, &ldb_,
         &work[0], &lwork_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -122,9 +116,6 @@ int64_t sysv(
         ipiv_ptr,
         B, &ldb_,
         qry_work, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -140,9 +131,6 @@ int64_t sysv(
         ipiv_ptr,
         B, &ldb_,
         &work[0], &lwork_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -191,9 +179,6 @@ int64_t sysv(
         ipiv_ptr,
         (lapack_complex_float*) B, &ldb_,
         (lapack_complex_float*) qry_work, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -209,9 +194,6 @@ int64_t sysv(
         ipiv_ptr,
         (lapack_complex_float*) B, &ldb_,
         (lapack_complex_float*) &work[0], &lwork_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -339,9 +321,6 @@ int64_t sysv(
         ipiv_ptr,
         (lapack_complex_double*) B, &ldb_,
         (lapack_complex_double*) qry_work, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -357,9 +336,6 @@ int64_t sysv(
         ipiv_ptr,
         (lapack_complex_double*) B, &ldb_,
         (lapack_complex_double*) &work[0], &lwork_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

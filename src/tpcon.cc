@@ -40,9 +40,6 @@ int64_t tpcon(
         AP, rcond,
         &work[0],
         &iwork[0], &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -75,9 +72,6 @@ int64_t tpcon(
         AP, rcond,
         &work[0],
         &iwork[0], &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -110,9 +104,6 @@ int64_t tpcon(
         (lapack_complex_float*) AP, rcond,
         (lapack_complex_float*) &work[0],
         &rwork[0], &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -145,9 +136,6 @@ int64_t tpcon(
         (lapack_complex_double*) AP, rcond,
         (lapack_complex_double*) &work[0],
         &rwork[0], &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

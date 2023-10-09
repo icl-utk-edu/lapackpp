@@ -61,9 +61,6 @@ int64_t stevr(
         isuppz_ptr,
         qry_work, &ineg_one,
         qry_iwork, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -84,9 +81,6 @@ int64_t stevr(
         isuppz_ptr,
         &work[0], &lwork_,
         &iwork[0], &liwork_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -144,9 +138,6 @@ int64_t stevr(
         isuppz_ptr,
         qry_work, &ineg_one,
         qry_iwork, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -167,9 +158,6 @@ int64_t stevr(
         isuppz_ptr,
         &work[0], &lwork_,
         &iwork[0], &liwork_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

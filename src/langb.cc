@@ -44,9 +44,6 @@ float langb(
         &norm_, &n_, &kl_, &ku_,
         AB, &ldab_,
         &work[0]
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -79,9 +76,6 @@ double langb(
         &norm_, &n_, &kl_, &ku_,
         AB, &ldab_,
         &work[0]
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -114,9 +108,6 @@ float langb(
         &norm_, &n_, &kl_, &ku_,
         (lapack_complex_float*) AB, &ldab_,
         &work[0]
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -183,9 +174,6 @@ double langb(
         &norm_, &n_, &kl_, &ku_,
         (lapack_complex_double*) AB, &ldab_,
         &work[0]
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 

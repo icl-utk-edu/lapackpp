@@ -80,9 +80,6 @@ int64_t bbcsd(
         B22D,
         B22E,
         qry_work, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -109,9 +106,6 @@ int64_t bbcsd(
         B22D,
         B22E,
         &work[0], &lwork_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -182,9 +176,6 @@ int64_t bbcsd(
         B22D,
         B22E,
         qry_work, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -211,9 +202,6 @@ int64_t bbcsd(
         B22D,
         B22E,
         &work[0], &lwork_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -284,9 +272,6 @@ int64_t bbcsd(
         B22D,
         B22E,
         qry_rwork, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -313,9 +298,6 @@ int64_t bbcsd(
         B22D,
         B22E,
         &rwork[0], &lrwork_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -571,9 +553,6 @@ int64_t bbcsd(
         B22D,
         B22E,
         qry_rwork, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -600,9 +579,6 @@ int64_t bbcsd(
         B22D,
         B22E,
         &rwork[0], &lrwork_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

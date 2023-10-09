@@ -33,9 +33,6 @@ int64_t tpttf(
         &transr_, &uplo_, &n_,
         AP,
         ARF, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -62,9 +59,6 @@ int64_t tpttf(
         &transr_, &uplo_, &n_,
         AP,
         ARF, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -91,9 +85,6 @@ int64_t tpttf(
         &transr_, &uplo_, &n_,
         (lapack_complex_float*) AP,
         (lapack_complex_float*) ARF, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -120,9 +111,6 @@ int64_t tpttf(
         &transr_, &uplo_, &n_,
         (lapack_complex_double*) AP,
         (lapack_complex_double*) ARF, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

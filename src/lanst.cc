@@ -29,9 +29,6 @@ float lanst(
     lapack_int n_ = (lapack_int) n;
 
     return LAPACK_slanst( &norm_, &n_, D, E
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -78,9 +75,6 @@ double lanst(
     lapack_int n_ = (lapack_int) n;
 
     return LAPACK_dlanst( &norm_, &n_, D, E
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 

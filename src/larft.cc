@@ -42,9 +42,6 @@ void larft(
         V, &ldv_,
         tau,
         T, &ldt_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
 }
 
@@ -76,9 +73,6 @@ void larft(
         V, &ldv_,
         tau,
         T, &ldt_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
 }
 
@@ -110,9 +104,6 @@ void larft(
         (lapack_complex_float*) V, &ldv_,
         (lapack_complex_float*) tau,
         (lapack_complex_float*) T, &ldt_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
 }
 
@@ -236,9 +227,6 @@ void larft(
         (lapack_complex_double*) V, &ldv_,
         (lapack_complex_double*) tau,
         (lapack_complex_double*) T, &ldt_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
 }
 

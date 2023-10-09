@@ -34,9 +34,6 @@ int64_t disna(
         &jobcond_, &m_, &n_,
         D,
         SEP, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -64,9 +61,6 @@ int64_t disna(
         &jobcond_, &m_, &n_,
         D,
         SEP, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

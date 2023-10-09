@@ -37,9 +37,6 @@ void sfrk(
         &transr_, &uplo_, &trans_, &n_, &k_, &alpha,
         A, &lda_, &beta,
         C
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
 }
 
@@ -66,9 +63,6 @@ void sfrk(
         &transr_, &uplo_, &trans_, &n_, &k_, &alpha,
         A, &lda_, &beta,
         C
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
 }
 

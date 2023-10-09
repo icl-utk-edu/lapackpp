@@ -43,9 +43,6 @@ float lanhb(
         &norm_, &uplo_, &n_, &kd_,
         (lapack_complex_float*) AB, &ldab_,
         &work[0]
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
 }
 
@@ -120,9 +117,6 @@ double lanhb(
         &norm_, &uplo_, &n_, &kd_,
         (lapack_complex_double*) AB, &ldab_,
         &work[0]
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
 }
 

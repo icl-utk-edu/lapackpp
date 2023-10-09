@@ -42,9 +42,6 @@ int64_t tbtrs(
         &uplo_, &trans_, &diag_, &n_, &kd_, &nrhs_,
         AB, &ldab_,
         B, &ldb_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -80,9 +77,6 @@ int64_t tbtrs(
         &uplo_, &trans_, &diag_, &n_, &kd_, &nrhs_,
         AB, &ldab_,
         B, &ldb_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -118,9 +112,6 @@ int64_t tbtrs(
         &uplo_, &trans_, &diag_, &n_, &kd_, &nrhs_,
         (lapack_complex_float*) AB, &ldab_,
         (lapack_complex_float*) B, &ldb_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -156,9 +147,6 @@ int64_t tbtrs(
         &uplo_, &trans_, &diag_, &n_, &kd_, &nrhs_,
         (lapack_complex_double*) AB, &ldab_,
         (lapack_complex_double*) B, &ldb_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

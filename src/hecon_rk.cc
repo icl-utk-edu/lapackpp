@@ -53,9 +53,6 @@ int64_t hecon_rk(
         ipiv_ptr, &anorm, rcond,
         (lapack_complex_float*) &work[0],
         &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -176,9 +173,6 @@ int64_t hecon_rk(
         ipiv_ptr, &anorm, rcond,
         (lapack_complex_double*) &work[0],
         &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

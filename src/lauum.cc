@@ -33,9 +33,6 @@ int64_t lauum(
     LAPACK_slauum(
         &uplo_, &n_,
         A, &lda_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -62,9 +59,6 @@ int64_t lauum(
     LAPACK_dlauum(
         &uplo_, &n_,
         A, &lda_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -91,9 +85,6 @@ int64_t lauum(
     LAPACK_clauum(
         &uplo_, &n_,
         (lapack_complex_float*) A, &lda_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -158,9 +149,6 @@ int64_t lauum(
     LAPACK_zlauum(
         &uplo_, &n_,
         (lapack_complex_double*) A, &lda_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

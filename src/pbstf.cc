@@ -35,9 +35,6 @@ int64_t pbstf(
     LAPACK_spbstf(
         &uplo_, &n_, &kd_,
         AB, &ldab_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -66,9 +63,6 @@ int64_t pbstf(
     LAPACK_dpbstf(
         &uplo_, &n_, &kd_,
         AB, &ldab_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -97,9 +91,6 @@ int64_t pbstf(
     LAPACK_cpbstf(
         &uplo_, &n_, &kd_,
         (lapack_complex_float*) AB, &ldab_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -224,9 +215,6 @@ int64_t pbstf(
     LAPACK_zpbstf(
         &uplo_, &n_, &kd_,
         (lapack_complex_double*) AB, &ldab_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

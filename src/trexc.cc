@@ -45,9 +45,6 @@ int64_t trexc(
         T, &ldt_,
         Q, &ldq_, &ifst_, &ilst_,
         &work[0], &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -87,9 +84,6 @@ int64_t trexc(
         T, &ldt_,
         Q, &ldq_, &ifst_, &ilst_,
         &work[0], &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -125,9 +119,6 @@ int64_t trexc(
         &compq_, &n_,
         (lapack_complex_float*) T, &ldt_,
         (lapack_complex_float*) Q, &ldq_, &ifst_, &ilst_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -161,9 +152,6 @@ int64_t trexc(
         &compq_, &n_,
         (lapack_complex_double*) T, &ldt_,
         (lapack_complex_double*) Q, &ldq_, &ifst_, &ilst_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

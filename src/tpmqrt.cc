@@ -66,9 +66,6 @@ int64_t tpmqrt(
         A, &lda_,
         B, &ldb_,
         &work[0], &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -125,9 +122,6 @@ int64_t tpmqrt(
         A, &lda_,
         B, &ldb_,
         &work[0], &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -180,9 +174,6 @@ int64_t tpmqrt(
         (lapack_complex_float*) A, &lda_,
         (lapack_complex_float*) B, &ldb_,
         (lapack_complex_float*) &work[0], &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -353,9 +344,6 @@ int64_t tpmqrt(
         (lapack_complex_double*) A, &lda_,
         (lapack_complex_double*) B, &ldb_,
         (lapack_complex_double*) &work[0], &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

@@ -39,9 +39,6 @@ float lansp(
         &norm_, &uplo_, &n_,
         AP,
         &work[0]
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
 }
 
@@ -69,9 +66,6 @@ double lansp(
         &norm_, &uplo_, &n_,
         AP,
         &work[0]
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
 }
 
@@ -99,9 +93,6 @@ float lansp(
         &norm_, &uplo_, &n_,
         (lapack_complex_float*) AP,
         &work[0]
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
 }
 
@@ -163,9 +154,6 @@ double lansp(
         &norm_, &uplo_, &n_,
         (lapack_complex_double*) AP,
         &work[0]
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
 }
 

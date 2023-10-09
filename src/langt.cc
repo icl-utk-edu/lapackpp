@@ -34,9 +34,6 @@ float langt(
         DL,
         D,
         DU
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -60,9 +57,6 @@ double langt(
         DL,
         D,
         DU
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -86,9 +80,6 @@ float langt(
         (lapack_complex_float*) DL,
         (lapack_complex_float*) D,
         (lapack_complex_float*) DU
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -142,9 +133,6 @@ double langt(
         (lapack_complex_double*) DL,
         (lapack_complex_double*) D,
         (lapack_complex_double*) DU
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 

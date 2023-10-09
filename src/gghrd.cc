@@ -49,9 +49,6 @@ int64_t gghrd(
         B, &ldb_,
         Q, &ldq_,
         Z, &ldz_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -94,9 +91,6 @@ int64_t gghrd(
         B, &ldb_,
         Q, &ldq_,
         Z, &ldz_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -139,9 +133,6 @@ int64_t gghrd(
         (lapack_complex_float*) B, &ldb_,
         (lapack_complex_float*) Q, &ldq_,
         (lapack_complex_float*) Z, &ldz_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -184,9 +175,6 @@ int64_t gghrd(
         (lapack_complex_double*) B, &ldb_,
         (lapack_complex_double*) Q, &ldq_,
         (lapack_complex_double*) Z, &ldz_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

@@ -36,9 +36,6 @@ int64_t sptrd(
         D,
         E,
         tau, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -68,9 +65,6 @@ int64_t sptrd(
         D,
         E,
         tau, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

@@ -40,9 +40,6 @@ float lanhs(
         &norm_, &n_,
         A, &lda_,
         &work[0]
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -71,9 +68,6 @@ double lanhs(
         &norm_, &n_,
         A, &lda_,
         &work[0]
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -102,9 +96,6 @@ float lanhs(
         &norm_, &n_,
         (lapack_complex_float*) A, &lda_,
         &work[0]
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -159,9 +150,6 @@ double lanhs(
         &norm_, &n_,
         (lapack_complex_double*) A, &lda_,
         &work[0]
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 

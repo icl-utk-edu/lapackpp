@@ -38,9 +38,6 @@ void lacpy(
         &matrixtype_, &m_, &n_,
         A, &lda_,
         B, &ldb_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -68,9 +65,6 @@ void lacpy(
         &matrixtype_, &m_, &n_,
         A, &lda_,
         B, &ldb_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -98,9 +92,6 @@ void lacpy(
         &matrixtype_, &m_, &n_,
         (lapack_complex_float*) A, &lda_,
         (lapack_complex_float*) B, &ldb_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -162,9 +153,6 @@ void lacpy(
         &matrixtype_, &m_, &n_,
         (lapack_complex_double*) A, &lda_,
         (lapack_complex_double*) B, &ldb_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 

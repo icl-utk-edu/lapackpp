@@ -37,9 +37,6 @@ int64_t pftrs(
         &transr_, &uplo_, &n_, &nrhs_,
         A,
         B, &ldb_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -70,9 +67,6 @@ int64_t pftrs(
         &transr_, &uplo_, &n_, &nrhs_,
         A,
         B, &ldb_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -103,9 +97,6 @@ int64_t pftrs(
         &transr_, &uplo_, &n_, &nrhs_,
         (lapack_complex_float*) A,
         (lapack_complex_float*) B, &ldb_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -136,9 +127,6 @@ int64_t pftrs(
         &transr_, &uplo_, &n_, &nrhs_,
         (lapack_complex_double*) A,
         (lapack_complex_double*) B, &ldb_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

@@ -71,9 +71,6 @@ int64_t gbrfs(
         berr,
         &work[0],
         &iwork[0], &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -137,9 +134,6 @@ int64_t gbrfs(
         berr,
         &work[0],
         &iwork[0], &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -203,9 +197,6 @@ int64_t gbrfs(
         berr,
         (lapack_complex_float*) &work[0],
         &rwork[0], &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -355,9 +346,6 @@ int64_t gbrfs(
         berr,
         (lapack_complex_double*) &work[0],
         &rwork[0], &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

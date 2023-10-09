@@ -64,9 +64,6 @@ int64_t hgeqz(
         Q, &ldq_,
         Z, &ldz_,
         qry_work, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -86,9 +83,6 @@ int64_t hgeqz(
         Q, &ldq_,
         Z, &ldz_,
         &work[0], &lwork_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -149,9 +143,6 @@ int64_t hgeqz(
         Q, &ldq_,
         Z, &ldz_,
         qry_work, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -171,9 +162,6 @@ int64_t hgeqz(
         Q, &ldq_,
         Z, &ldz_,
         &work[0], &lwork_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -231,9 +219,6 @@ int64_t hgeqz(
         (lapack_complex_float*) Z, &ldz_,
         (lapack_complex_float*) qry_work, &ineg_one,
         qry_rwork, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -254,9 +239,6 @@ int64_t hgeqz(
         (lapack_complex_float*) Z, &ldz_,
         (lapack_complex_float*) &work[0], &lwork_,
         &rwork[0], &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -310,9 +292,6 @@ int64_t hgeqz(
         (lapack_complex_double*) Z, &ldz_,
         (lapack_complex_double*) qry_work, &ineg_one,
         qry_rwork, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -333,9 +312,6 @@ int64_t hgeqz(
         (lapack_complex_double*) Z, &ldz_,
         (lapack_complex_double*) &work[0], &lwork_,
         &rwork[0], &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

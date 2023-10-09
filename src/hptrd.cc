@@ -36,9 +36,6 @@ int64_t hptrd(
         D,
         E,
         (lapack_complex_float*) tau, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -68,9 +65,6 @@ int64_t hptrd(
         D,
         E,
         (lapack_complex_double*) tau, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

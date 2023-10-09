@@ -53,9 +53,6 @@ int64_t gbtrs(
         AB, &ldab_,
         ipiv_ptr,
         B, &ldb_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -101,9 +98,6 @@ int64_t gbtrs(
         AB, &ldab_,
         ipiv_ptr,
         B, &ldb_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -149,9 +143,6 @@ int64_t gbtrs(
         (lapack_complex_float*) AB, &ldab_,
         ipiv_ptr,
         (lapack_complex_float*) B, &ldb_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -259,9 +250,6 @@ int64_t gbtrs(
         (lapack_complex_double*) AB, &ldab_,
         ipiv_ptr,
         (lapack_complex_double*) B, &ldb_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

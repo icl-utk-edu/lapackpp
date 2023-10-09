@@ -37,9 +37,6 @@ cblas_symv(
         (lapack_complex_float*) x, &incx_,
         (lapack_complex_float*) &beta,
         (lapack_complex_float*) yref, &incy_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -70,9 +67,6 @@ cblas_symv(
         (lapack_complex_double*) x, &incx_,
         (lapack_complex_double*) &beta,
         (lapack_complex_double*) yref, &incy_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -96,9 +90,6 @@ cblas_syr(
         (lapack_complex_float*) &alpha,
         (lapack_complex_float*) x, &incx_,
         (lapack_complex_float*) A, &lda_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -122,8 +113,5 @@ cblas_syr(
         (lapack_complex_double*) &alpha,
         (lapack_complex_double*) x, &incx_,
         (lapack_complex_double*) A, &lda_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }

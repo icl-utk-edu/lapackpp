@@ -59,9 +59,6 @@ int64_t geesx(
         qry_work, &ineg_one,
         qry_iwork, &ineg_one,
         qry_bwork, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -84,9 +81,6 @@ int64_t geesx(
         &work[0], &lwork_,
         &iwork[0], &liwork_,
         &bwork[0], &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -143,9 +137,6 @@ int64_t geesx(
         qry_work, &ineg_one,
         qry_iwork, &ineg_one,
         qry_bwork, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -168,9 +159,6 @@ int64_t geesx(
         &work[0], &lwork_,
         &iwork[0], &liwork_,
         &bwork[0], &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -222,9 +210,6 @@ int64_t geesx(
         (lapack_complex_float*) qry_work, &ineg_one,
         qry_rwork,
         qry_bwork, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -245,9 +230,6 @@ int64_t geesx(
         (lapack_complex_float*) &work[0], &lwork_,
         &rwork[0],
         &bwork[0], &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -295,9 +277,6 @@ int64_t geesx(
         (lapack_complex_double*) qry_work, &ineg_one,
         qry_rwork,
         qry_bwork, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -318,9 +297,6 @@ int64_t geesx(
         (lapack_complex_double*) &work[0], &lwork_,
         &rwork[0],
         &bwork[0], &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

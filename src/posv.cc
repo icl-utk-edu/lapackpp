@@ -40,9 +40,6 @@ int64_t posv(
         &uplo_, &n_, &nrhs_,
         A, &lda_,
         B, &ldb_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -75,9 +72,6 @@ int64_t posv(
         &uplo_, &n_, &nrhs_,
         A, &lda_,
         B, &ldb_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -110,9 +104,6 @@ int64_t posv(
         &uplo_, &n_, &nrhs_,
         (lapack_complex_float*) A, &lda_,
         (lapack_complex_float*) B, &ldb_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -204,9 +195,6 @@ int64_t posv(
         &uplo_, &n_, &nrhs_,
         (lapack_complex_double*) A, &lda_,
         (lapack_complex_double*) B, &ldb_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -250,9 +238,6 @@ int64_t posv(
         X, &ldx_,
         &work[0],
         &swork[0], &iter_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -299,9 +284,6 @@ int64_t posv(
         (lapack_complex_double*) &work[0],
         (lapack_complex_float*) &swork[0],
         &rwork[0], &iter_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

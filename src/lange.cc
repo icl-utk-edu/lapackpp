@@ -42,9 +42,6 @@ float lange(
         &norm_, &m_, &n_,
         A, &lda_,
         &work[0]
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -75,9 +72,6 @@ double lange(
         &norm_, &m_, &n_,
         A, &lda_,
         &work[0]
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -108,9 +102,6 @@ float lange(
         &norm_, &m_, &n_,
         (lapack_complex_float*) A, &lda_,
         &work[0]
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -168,9 +159,6 @@ double lange(
         &norm_, &m_, &n_,
         (lapack_complex_double*) A, &lda_,
         &work[0]
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 

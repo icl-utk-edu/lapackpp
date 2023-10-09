@@ -37,9 +37,6 @@ void hfrk(
         &transr_, &uplo_, &trans_, &n_, &k_, &alpha,
         (lapack_complex_float*) A, &lda_, &beta,
         (lapack_complex_float*) C
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
 }
 
@@ -66,9 +63,6 @@ void hfrk(
         &transr_, &uplo_, &trans_, &n_, &k_, &alpha,
         (lapack_complex_double*) A, &lda_, &beta,
         (lapack_complex_double*) C
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1, 1
-        #endif
     );
 }
 

@@ -41,9 +41,6 @@ int64_t syev(
         A, &lda_,
         W,
         qry_work, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -58,9 +55,6 @@ int64_t syev(
         A, &lda_,
         W,
         &work[0], &lwork_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -95,9 +89,6 @@ int64_t syev(
         A, &lda_,
         W,
         qry_work, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -112,9 +103,6 @@ int64_t syev(
         A, &lda_,
         W,
         &work[0], &lwork_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

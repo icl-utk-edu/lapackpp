@@ -43,9 +43,6 @@ int64_t ggbak(
         lscale,
         rscale, &m_,
         V, &ldv_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -82,9 +79,6 @@ int64_t ggbak(
         lscale,
         rscale, &m_,
         V, &ldv_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -121,9 +115,6 @@ int64_t ggbak(
         lscale,
         rscale, &m_,
         (lapack_complex_float*) V, &ldv_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -160,9 +151,6 @@ int64_t ggbak(
         lscale,
         rscale, &m_,
         (lapack_complex_double*) V, &ldv_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

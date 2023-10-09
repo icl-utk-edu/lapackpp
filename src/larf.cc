@@ -46,9 +46,6 @@ void larf(
         v, &incv_, &tau,
         C, &ldc_,
         &work[0]
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -83,9 +80,6 @@ void larf(
         v, &incv_, &tau,
         C, &ldc_,
         &work[0]
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -120,9 +114,6 @@ void larf(
         (lapack_complex_float*) v, &incv_, (lapack_complex_float*) &tau,
         (lapack_complex_float*) C, &ldc_,
         (lapack_complex_float*) &work[0]
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 
@@ -202,9 +193,6 @@ void larf(
         (lapack_complex_double*) v, &incv_, (lapack_complex_double*) &tau,
         (lapack_complex_double*) C, &ldc_,
         (lapack_complex_double*) &work[0]
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
 }
 

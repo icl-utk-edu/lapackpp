@@ -63,9 +63,6 @@ int64_t trsen(
         &m_, s, sep,
         qry_work, &ineg_one,
         qry_iwork, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -87,9 +84,6 @@ int64_t trsen(
         &m_, s, sep,
         &work[0], &lwork_,
         &iwork[0], &liwork_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -150,9 +144,6 @@ int64_t trsen(
         &m_, s, sep,
         qry_work, &ineg_one,
         qry_iwork, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -174,9 +165,6 @@ int64_t trsen(
         &m_, s, sep,
         &work[0], &lwork_,
         &iwork[0], &liwork_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -229,9 +217,6 @@ int64_t trsen(
         (lapack_complex_float*) Q, &ldq_,
         (lapack_complex_float*) W, &m_, s, sep,
         (lapack_complex_float*) qry_work, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -248,9 +233,6 @@ int64_t trsen(
         (lapack_complex_float*) Q, &ldq_,
         (lapack_complex_float*) W, &m_, s, sep,
         (lapack_complex_float*) &work[0], &lwork_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -299,9 +281,6 @@ int64_t trsen(
         (lapack_complex_double*) Q, &ldq_,
         (lapack_complex_double*) W, &m_, s, sep,
         (lapack_complex_double*) qry_work, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -318,9 +297,6 @@ int64_t trsen(
         (lapack_complex_double*) Q, &ldq_,
         (lapack_complex_double*) W, &m_, s, sep,
         (lapack_complex_double*) &work[0], &lwork_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1, 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

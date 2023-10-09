@@ -51,9 +51,6 @@ int64_t sytrf_rk(
         E,
         ipiv_ptr,
         qry_work, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -69,9 +66,6 @@ int64_t sytrf_rk(
         E,
         ipiv_ptr,
         &work[0], &lwork_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -116,9 +110,6 @@ int64_t sytrf_rk(
         E,
         ipiv_ptr,
         qry_work, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -134,9 +125,6 @@ int64_t sytrf_rk(
         E,
         ipiv_ptr,
         &work[0], &lwork_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -181,9 +169,6 @@ int64_t sytrf_rk(
         (lapack_complex_float*) E,
         ipiv_ptr,
         (lapack_complex_float*) qry_work, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -199,9 +184,6 @@ int64_t sytrf_rk(
         (lapack_complex_float*) E,
         ipiv_ptr,
         (lapack_complex_float*) &work[0], &lwork_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -403,9 +385,6 @@ int64_t sytrf_rk(
         (lapack_complex_double*) E,
         ipiv_ptr,
         (lapack_complex_double*) qry_work, &ineg_one, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();
@@ -421,9 +400,6 @@ int64_t sytrf_rk(
         (lapack_complex_double*) E,
         ipiv_ptr,
         (lapack_complex_double*) &work[0], &lwork_, &info_
-        #ifdef LAPACK_FORTRAN_STRLEN_END
-        , 1
-        #endif
     );
     if (info_ < 0) {
         throw Error();

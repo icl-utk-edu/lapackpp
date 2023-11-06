@@ -1,3 +1,8 @@
+2023.11.05
+  - Add heevd GPU wrapper for CUDA, ROCm, oneMKL
+  - Update Fortran strlen handling
+  - Fix CMake library ordering
+
 2023.08.25
   - Use yyyy.mm.dd version scheme, instead of yyyy.mm.release
   - Added oneAPI support to CMake

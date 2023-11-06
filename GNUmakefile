@@ -273,7 +273,7 @@ LDFLAGS_clean  = $(filter-out -fPIC, $(LDFLAGS))
 
 .PHONY: $(pkg)
 $(pkg):
-	perl -pe "s'#VERSION'2023.08.25'; \
+	perl -pe "s'#VERSION'2023.11.05'; \
 	          s'#PREFIX'${prefix}'; \
 	          s'#CXX\b'${CXX}'; \
 	          s'#CXXFLAGS'${CXXFLAGS_clean}'; \

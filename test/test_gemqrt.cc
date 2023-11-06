@@ -118,10 +118,6 @@ void test_gemqrt( Params& params, bool run )
 {
 #if LAPACK_VERSION >= 30400  // >= 3.4.0
     switch (params.datatype()) {
-        case testsweeper::DataType::Integer:
-            throw std::exception();
-            break;
-
         case testsweeper::DataType::Single:
             test_gemqrt_work< float >( params, run );
             break;
@@ -136,6 +132,10 @@ void test_gemqrt( Params& params, bool run )
 
         case testsweeper::DataType::DoubleComplex:
             test_gemqrt_work< std::complex<double> >( params, run );
+            break;
+
+        default:
+            throw std::runtime_error( "unknown datatype" );
             break;
     }
 #else

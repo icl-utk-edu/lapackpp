@@ -107,10 +107,6 @@ void test_upmtr_work( Params& params, bool run )
 void test_upmtr( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case testsweeper::DataType::Integer:
-            throw std::exception();
-            break;
-
         case testsweeper::DataType::Single:
             test_upmtr_work< float >( params, run );
             break;
@@ -125,6 +121,10 @@ void test_upmtr( Params& params, bool run )
 
         case testsweeper::DataType::DoubleComplex:
             test_upmtr_work< std::complex<double> >( params, run );
+            break;
+
+        default:
+            throw std::runtime_error( "unknown datatype" );
             break;
     }
 }

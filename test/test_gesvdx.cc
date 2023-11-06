@@ -119,10 +119,6 @@ void test_gesvdx_work( Params& params, bool run )
 void test_gesvdx( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case testsweeper::DataType::Integer:
-            throw std::exception();
-            break;
-
         case testsweeper::DataType::Single:
             test_gesvdx_work< float >( params, run );
             break;
@@ -137,6 +133,10 @@ void test_gesvdx( Params& params, bool run )
 
         case testsweeper::DataType::DoubleComplex:
             test_gesvdx_work< std::complex<double> >( params, run );
+            break;
+
+        default:
+            throw std::runtime_error( "unknown datatype" );
             break;
     }
 }

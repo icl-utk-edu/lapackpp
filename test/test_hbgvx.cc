@@ -226,10 +226,6 @@ void test_hbgvx_work( Params& params, bool run )
 void test_hbgvx( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case testsweeper::DataType::Integer:
-            throw std::exception();
-            break;
-
         case testsweeper::DataType::Single:
             test_hbgvx_work< float >( params, run );
             break;
@@ -244,6 +240,10 @@ void test_hbgvx( Params& params, bool run )
 
         case testsweeper::DataType::DoubleComplex:
             test_hbgvx_work< std::complex<double> >( params, run );
+            break;
+
+        default:
+            throw std::runtime_error( "unknown datatype" );
             break;
     }
 }

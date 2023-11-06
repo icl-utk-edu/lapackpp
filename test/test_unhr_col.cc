@@ -115,7 +115,7 @@ void test_unhr_col( Params& params, bool run )
             break;
 
         default:
-            throw std::exception();
+            throw std::runtime_error( "unknown datatype" );
             break;
     }
 #else

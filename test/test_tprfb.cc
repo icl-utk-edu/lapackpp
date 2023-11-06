@@ -134,10 +134,6 @@ void test_tprfb_work( Params& params, bool run )
 void test_tprfb( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case testsweeper::DataType::Integer:
-            throw std::exception();
-            break;
-
         case testsweeper::DataType::Single:
             test_tprfb_work< float >( params, run );
             break;
@@ -152,6 +148,10 @@ void test_tprfb( Params& params, bool run )
 
         case testsweeper::DataType::DoubleComplex:
             test_tprfb_work< std::complex<double> >( params, run );
+            break;
+
+        default:
+            throw std::runtime_error( "unknown datatype" );
             break;
     }
 }

@@ -107,10 +107,6 @@ void test_gtcon_work( Params& params, bool run )
 void test_gtcon( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case testsweeper::DataType::Integer:
-            throw std::exception();
-            break;
-
         case testsweeper::DataType::Single:
             test_gtcon_work< float >( params, run );
             break;
@@ -125,6 +121,10 @@ void test_gtcon( Params& params, bool run )
 
         case testsweeper::DataType::DoubleComplex:
             test_gtcon_work< std::complex<double> >( params, run );
+            break;
+
+        default:
+            throw std::runtime_error( "unknown datatype" );
             break;
     }
 }

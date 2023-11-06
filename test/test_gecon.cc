@@ -86,10 +86,6 @@ void test_gecon_work( Params& params, bool run )
 void test_gecon( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case testsweeper::DataType::Integer:
-            throw std::exception();
-            break;
-
         case testsweeper::DataType::Single:
             test_gecon_work< float >( params, run );
             break;
@@ -104,6 +100,10 @@ void test_gecon( Params& params, bool run )
 
         case testsweeper::DataType::DoubleComplex:
             test_gecon_work< std::complex<double> >( params, run );
+            break;
+
+        default:
+            throw std::runtime_error( "unknown datatype" );
             break;
     }
 }

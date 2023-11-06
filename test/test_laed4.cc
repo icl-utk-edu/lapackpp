@@ -93,10 +93,6 @@ void test_laed4_work( Params& params, bool run )
 void test_laed4( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case testsweeper::DataType::Integer:
-            throw std::exception();
-            break;
-
         case testsweeper::DataType::Single:
             test_laed4_work< float >( params, run );
             break;
@@ -108,6 +104,10 @@ void test_laed4( Params& params, bool run )
         case testsweeper::DataType::SingleComplex:
         case testsweeper::DataType::DoubleComplex:
             params.msg() = "skipping: no complex version";
+            break;
+
+        default:
+            throw std::runtime_error( "unknown datatype" );
             break;
     }
 }

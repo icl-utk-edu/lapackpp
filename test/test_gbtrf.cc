@@ -90,10 +90,6 @@ void test_gbtrf_work( Params& params, bool run )
 void test_gbtrf( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case testsweeper::DataType::Integer:
-            throw std::exception();
-            break;
-
         case testsweeper::DataType::Single:
             test_gbtrf_work< float >( params, run );
             break;
@@ -108,6 +104,10 @@ void test_gbtrf( Params& params, bool run )
 
         case testsweeper::DataType::DoubleComplex:
             test_gbtrf_work< std::complex<double> >( params, run );
+            break;
+
+        default:
+            throw std::runtime_error( "unknown datatype" );
             break;
     }
 }

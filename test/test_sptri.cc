@@ -96,10 +96,6 @@ void test_sptri_work( Params& params, bool run )
 void test_sptri( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case testsweeper::DataType::Integer:
-            throw std::exception();
-            break;
-
         case testsweeper::DataType::Single:
             test_sptri_work< float >( params, run );
             break;
@@ -114,6 +110,10 @@ void test_sptri( Params& params, bool run )
 
         case testsweeper::DataType::DoubleComplex:
             test_sptri_work< std::complex<double> >( params, run );
+            break;
+
+        default:
+            throw std::runtime_error( "unknown datatype" );
             break;
     }
 }

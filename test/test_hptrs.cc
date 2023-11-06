@@ -99,10 +99,6 @@ void test_hptrs_work( Params& params, bool run )
 void test_hptrs( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case testsweeper::DataType::Integer:
-            throw std::exception();
-            break;
-
         case testsweeper::DataType::Single:
             test_hptrs_work< float >( params, run );
             break;
@@ -117,6 +113,10 @@ void test_hptrs( Params& params, bool run )
 
         case testsweeper::DataType::DoubleComplex:
             test_hptrs_work< std::complex<double> >( params, run );
+            break;
+
+        default:
+            throw std::runtime_error( "unknown datatype" );
             break;
     }
 }

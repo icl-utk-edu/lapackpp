@@ -142,10 +142,6 @@ void test_geqlf_work( Params& params, bool run )
 void test_geqlf( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case testsweeper::DataType::Integer:
-            throw std::exception();
-            break;
-
         case testsweeper::DataType::Single:
             test_geqlf_work< float >( params, run );
             break;
@@ -160,6 +156,10 @@ void test_geqlf( Params& params, bool run )
 
         case testsweeper::DataType::DoubleComplex:
             test_geqlf_work< std::complex<double> >( params, run );
+            break;
+
+        default:
+            throw std::runtime_error( "unknown datatype" );
             break;
     }
 }

@@ -129,11 +129,6 @@ void test_syr_work( Params& params, bool run )
 void test_syr( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case testsweeper::DataType::Integer:
-            //test_syr_work< int64_t >( params, run );
-            throw std::exception();
-            break;
-
         case testsweeper::DataType::Single:
             test_syr_work< float, float >( params, run );
             break;
@@ -150,6 +145,10 @@ void test_syr( Params& params, bool run )
         case testsweeper::DataType::DoubleComplex:
             test_syr_work< std::complex<double>, std::complex<double> >
                 ( params, run );
+            break;
+
+        default:
+            throw std::runtime_error( "unknown datatype" );
             break;
     }
 }

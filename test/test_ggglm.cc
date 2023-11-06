@@ -119,10 +119,6 @@ void test_ggglm_work( Params& params, bool run )
 void test_ggglm( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case testsweeper::DataType::Integer:
-            throw std::exception();
-            break;
-
         case testsweeper::DataType::Single:
             test_ggglm_work< float >( params, run );
             break;
@@ -137,6 +133,10 @@ void test_ggglm( Params& params, bool run )
 
         case testsweeper::DataType::DoubleComplex:
             test_ggglm_work< std::complex<double> >( params, run );
+            break;
+
+        default:
+            throw std::runtime_error( "unknown datatype" );
             break;
     }
 }

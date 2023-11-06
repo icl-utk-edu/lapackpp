@@ -153,10 +153,6 @@ void test_larft_work( Params& params, bool run )
 void test_larft( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case testsweeper::DataType::Integer:
-            throw std::exception();
-            break;
-
         case testsweeper::DataType::Single:
             test_larft_work< float >( params, run );
             break;
@@ -171,6 +167,10 @@ void test_larft( Params& params, bool run )
 
         case testsweeper::DataType::DoubleComplex:
             test_larft_work< std::complex<double> >( params, run );
+            break;
+
+        default:
+            throw std::runtime_error( "unknown datatype" );
             break;
     }
 }

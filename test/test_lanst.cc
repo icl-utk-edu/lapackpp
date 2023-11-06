@@ -91,10 +91,6 @@ void test_lanst_work( Params& params, bool run )
 void test_lanst( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case testsweeper::DataType::Integer:
-            throw std::exception();
-            break;
-
         case testsweeper::DataType::Single:
             test_lanst_work< float >( params, run );
             break;
@@ -106,6 +102,10 @@ void test_lanst( Params& params, bool run )
         case testsweeper::DataType::SingleComplex:
         case testsweeper::DataType::DoubleComplex:
             params.msg() = "skipping: no complex version";
+            break;
+
+        default:
+            throw std::runtime_error( "unknown datatype" );
             break;
     }
 }

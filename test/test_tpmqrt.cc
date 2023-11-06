@@ -179,10 +179,6 @@ void test_tpmqrt_work( Params& params, bool run )
 void test_tpmqrt( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case testsweeper::DataType::Integer:
-            throw std::exception();
-            break;
-
         case testsweeper::DataType::Single:
             test_tpmqrt_work< float >( params, run );
             break;
@@ -197,6 +193,10 @@ void test_tpmqrt( Params& params, bool run )
 
         case testsweeper::DataType::DoubleComplex:
             test_tpmqrt_work< std::complex<double> >( params, run );
+            break;
+
+        default:
+            throw std::runtime_error( "unknown datatype" );
             break;
     }
 }

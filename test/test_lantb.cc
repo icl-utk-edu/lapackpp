@@ -100,10 +100,6 @@ void test_lantb_work( Params& params, bool run )
 void test_lantb( Params& params, bool run )
 {
     switch (params.datatype()) {
-        case testsweeper::DataType::Integer:
-            throw std::exception();
-            break;
-
         case testsweeper::DataType::Single:
             test_lantb_work< float >( params, run );
             break;
@@ -118,6 +114,10 @@ void test_lantb( Params& params, bool run )
 
         case testsweeper::DataType::DoubleComplex:
             test_lantb_work< std::complex<double> >( params, run );
+            break;
+
+        default:
+            throw std::runtime_error( "unknown datatype" );
             break;
     }
 }

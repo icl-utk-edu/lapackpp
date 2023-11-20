@@ -9,10 +9,12 @@
 #include "lapack/config.h"
 #include "lapack/mangling.h"
 
-/* It seems all current Fortran compilers put strlen at end.
-*  Some historical compilers put strlen after the str argument
-*  or make the str argument into a struct. */
+// It seems all current Fortran compilers put strlen at end.
+// Some historical compilers put strlen after the str argument
+// or make the str argument into a struct.
+#ifndef LAPACK_FORTRAN_STRLEN_END
 #define LAPACK_FORTRAN_STRLEN_END
+#endif
 
 #ifdef __cplusplus
 extern "C" {

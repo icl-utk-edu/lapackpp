@@ -8,7 +8,7 @@
 
 #include <stdint.h>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 #if defined(FORTRAN_UPPER) || defined(BLAS_FORTRAN_UPPER) || defined(LAPACK_FORTRAN_UPPER)
     #define FORTRAN_NAME( lower, UPPER ) UPPER
 #elif defined(FORTRAN_LOWER) || defined(BLAS_FORTRAN_LOWER) || defined(LAPACK_FORTRAN_LOWER)
@@ -19,13 +19,22 @@
     #error "must define one of FORTRAN_ADD_, FORTRAN_LOWER, FORTRAN_UPPER"
 #endif
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 #if defined(BLAS_ILP64) || defined(LAPACK_ILP64)
     typedef int64_t blas_int;
     typedef int64_t lapack_int;
 #else
     typedef int blas_int;
     typedef int lapack_int;
+#endif
+
+//------------------------------------------------------------------------------
+#ifndef BLAS_FORTRAN_STRLEN_END
+#define BLAS_FORTRAN_STRLEN_END
+#endif
+
+#ifndef LAPACK_FORTRAN_STRLEN_END
+#define LAPACK_FORTRAN_STRLEN_END
 #endif
 
 #endif // CONFIG_H

@@ -216,7 +216,7 @@ inline Sides char2sides( char sides )
 }
 
 // -----------------------------------------------------------------------------
-enum class Norm {
+enum class Norm : char {
     One = '1',  // or 'O'
     Two = '2',
     Inf = 'I',
@@ -256,7 +256,7 @@ inline const char* norm2str( lapack::Norm norm )
 // -----------------------------------------------------------------------------
 // Job for computing eigenvectors and singular vectors
 // # needs custom map
-enum class Job {
+enum class Job : char {
     NoVec        = 'N',
     Vec          = 'V',  // geev, syev, ...
     UpdateVec    = 'U',  // gghrd#, hbtrd, hgeqz#, hseqr#, ... (many compq or compz)
@@ -387,7 +387,7 @@ inline const char* job2str( lapack::Job job )
 
 // -----------------------------------------------------------------------------
 // hseqr
-enum class JobSchur {
+enum class JobSchur : char {
     Eigenvalues  = 'E',
     Schur        = 'S',
 };
@@ -416,7 +416,7 @@ inline const char* jobschur2str( lapack::JobSchur jobschur )
 // -----------------------------------------------------------------------------
 // gees
 // todo: generic yes/no
-enum class Sort {
+enum class Sort : char {
     NotSorted   = 'N',
     Sorted      = 'S',
 };
@@ -444,7 +444,7 @@ inline const char* sort2str( lapack::Sort sort )
 
 // -----------------------------------------------------------------------------
 // syevx
-enum class Range {
+enum class Range : char {
     All         = 'A',
     Value       = 'V',
     Index       = 'I',
@@ -473,7 +473,7 @@ inline const char* range2str( lapack::Range range )
 }
 
 // -----------------------------------------------------------------------------
-enum class Vect {
+enum class Vect : char {
     Q           = 'Q',  // orgbr, ormbr
     P           = 'P',  // orgbr, ormbr
     None        = 'N',  // orgbr, ormbr, gbbrd
@@ -505,7 +505,7 @@ inline const char* vect2str( lapack::Vect vect )
 
 // -----------------------------------------------------------------------------
 // larfb
-enum class Direction {
+enum class Direction : char {
     Forward     = 'F',
     Backward    = 'B',
 };
@@ -555,7 +555,7 @@ inline lapack::Direction char2direct( char direction )
 
 // -----------------------------------------------------------------------------
 // larfb
-enum class StoreV {
+enum class StoreV : char {
     Columnwise  = 'C',
     Rowwise     = 'R',
 };
@@ -583,7 +583,7 @@ inline const char* storev2str( lapack::StoreV storev )
 
 // -----------------------------------------------------------------------------
 // lascl, laset
-enum class MatrixType {
+enum class MatrixType : char {
     General     = 'G',
     Lower       = 'L',
     Upper       = 'U',
@@ -622,7 +622,7 @@ inline const char* matrixtype2str( lapack::MatrixType type )
 
 // -----------------------------------------------------------------------------
 // trevc
-enum class HowMany {
+enum class HowMany : char {
     All           = 'A',
     Backtransform = 'B',
     Select        = 'S',
@@ -652,7 +652,7 @@ inline const char* howmany2str( lapack::HowMany howmany )
 
 // -----------------------------------------------------------------------------
 // *svx, *rfsx
-enum class Equed {
+enum class Equed : char {
     None        = 'N',
     Row         = 'R',
     Col         = 'C',
@@ -688,7 +688,7 @@ inline const char* equed2str( lapack::Equed equed )
 // -----------------------------------------------------------------------------
 // *svx
 // todo: what's good name for this?
-enum class Factored {
+enum class Factored : char {
     Factored    = 'F',
     NotFactored = 'N',
     Equilibrate = 'E',
@@ -718,7 +718,7 @@ inline const char* factored2str( lapack::Factored factored )
 
 // -----------------------------------------------------------------------------
 // geesx, trsen
-enum class Sense {
+enum class Sense : char {
     None        = 'N',
     Eigenvalues = 'E',
     Subspace    = 'V',
@@ -751,7 +751,7 @@ inline const char* sense2str( lapack::Sense sense )
 
 // -----------------------------------------------------------------------------
 // disna
-enum class JobCond {
+enum class JobCond : char {
     EigenVec         = 'E',
     LeftSingularVec  = 'L',
     RightSingularVec = 'R',
@@ -782,7 +782,7 @@ inline const char* jobcond2str( lapack::JobCond jobcond )
 
 // -----------------------------------------------------------------------------
 // {ge,gg}{bak,bal}
-enum class Balance {
+enum class Balance : char {
     None        = 'N',
     Permute     = 'P',
     Scale       = 'S',
@@ -815,7 +815,7 @@ inline const char* balance2str( lapack::Balance balance )
 
 // -----------------------------------------------------------------------------
 // stebz, larrd, stein docs
-enum class Order {
+enum class Order : char {
     Block       = 'B',
     Entire      = 'E',
 };
@@ -843,7 +843,7 @@ inline const char* order2str( lapack::Order order )
 
 // -----------------------------------------------------------------------------
 // check_ortho (LAPACK testing zunt01)
-enum class RowCol {
+enum class RowCol : char {
     Col = 'C',
     Row = 'R',
 };

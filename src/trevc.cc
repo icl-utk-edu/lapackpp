@@ -33,8 +33,8 @@ int64_t trevc(
         lapack_error_if( std::abs(ldvr) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(mm) > std::numeric_limits<lapack_int>::max() );
     }
-    char sides_ = sides2char( sides );
-    char howmany_ = howmany2char( howmany );
+    char sides_ = to_char( sides );
+    char howmany_ = to_char( howmany );
 
     // lapack_logical (32 or 64-bit) copy
     std::vector< lapack_logical > select_( &select[0], &select[(n)] );
@@ -86,8 +86,8 @@ int64_t trevc(
         lapack_error_if( std::abs(ldvr) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(mm) > std::numeric_limits<lapack_int>::max() );
     }
-    char sides_ = sides2char( sides );
-    char howmany_ = howmany2char( howmany );
+    char sides_ = to_char( sides );
+    char howmany_ = to_char( howmany );
 
     // lapack_logical (32 or 64-bit) copy
     std::vector< lapack_logical > select_( &select[0], &select[(n)] );
@@ -139,8 +139,8 @@ int64_t trevc(
         lapack_error_if( std::abs(ldvr) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(mm) > std::numeric_limits<lapack_int>::max() );
     }
-    char sides_ = sides2char( sides );
-    char howmany_ = howmany2char( howmany );
+    char sides_ = to_char( sides );
+    char howmany_ = to_char( howmany );
 
     // lapack_logical (32 or 64-bit) copy
     std::vector< lapack_logical > select_( &select[0], &select[(n)] );
@@ -314,8 +314,8 @@ int64_t trevc(
         lapack_error_if( std::abs(ldvr) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(mm) > std::numeric_limits<lapack_int>::max() );
     }
-    char sides_ = sides2char( sides );
-    char howmany_ = howmany2char( howmany );
+    char sides_ = to_char( sides );
+    char howmany_ = to_char( howmany );
 
     // lapack_logical (32 or 64-bit) copy
     std::vector< lapack_logical > select_( &select[0], &select[(n)] );

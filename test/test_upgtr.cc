@@ -78,7 +78,7 @@ void test_upgtr_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_upgtr( uplo2char(uplo), n, &AP[0], &tau[0], &Q_ref[0], ldq );
+        int64_t info_ref = LAPACKE_upgtr( to_char( uplo ), n, &AP[0], &tau[0], &Q_ref[0], ldq );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_upgtr returned error %lld\n", llong( info_ref ) );

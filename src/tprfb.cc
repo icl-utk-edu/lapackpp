@@ -39,10 +39,10 @@ void tprfb(
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    char side_ = side2char( side );
-    char trans_ = op2char( trans );
-    char direction_ = direction2char( direction );
-    char storev_ = storev2char( storev );
+    char side_ = to_char( side );
+    char trans_ = to_char( trans );
+    char direction_ = to_char( direction );
+    char storev_ = to_char( storev );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int k_ = (lapack_int) k;
@@ -89,10 +89,10 @@ void tprfb(
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    char side_ = side2char( side );
-    char trans_ = op2char( trans );
-    char direction_ = direction2char( direction );
-    char storev_ = storev2char( storev );
+    char side_ = to_char( side );
+    char trans_ = to_char( trans );
+    char direction_ = to_char( direction );
+    char storev_ = to_char( storev );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int k_ = (lapack_int) k;
@@ -139,10 +139,10 @@ void tprfb(
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    char side_ = side2char( side );
-    char trans_ = op2char( trans );
-    char direction_ = direction2char( direction );
-    char storev_ = storev2char( storev );
+    char side_ = to_char( side );
+    char trans_ = to_char( trans );
+    char direction_ = to_char( direction );
+    char storev_ = to_char( storev );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int k_ = (lapack_int) k;
@@ -355,10 +355,10 @@ void tprfb(
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    char side_ = side2char( side );
-    char trans_ = op2char( trans );
-    char direction_ = direction2char( direction );
-    char storev_ = storev2char( storev );
+    char side_ = to_char( side );
+    char trans_ = to_char( trans );
+    char direction_ = to_char( direction );
+    char storev_ = to_char( storev );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int k_ = (lapack_int) k;

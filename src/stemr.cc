@@ -34,8 +34,8 @@ int64_t stemr(
         lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(nzc) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobz_ = job2char( jobz );
-    char range_ = range2char( range );
+    char jobz_ = to_char( jobz );
+    char range_ = to_char( range );
     lapack_int n_ = (lapack_int) n;
     lapack_int il_ = (lapack_int) il;
     lapack_int iu_ = (lapack_int) iu;
@@ -116,8 +116,8 @@ int64_t stemr(
         lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(nzc) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobz_ = job2char( jobz );
-    char range_ = range2char( range );
+    char jobz_ = to_char( jobz );
+    char range_ = to_char( range );
     lapack_int n_ = (lapack_int) n;
     lapack_int il_ = (lapack_int) il;
     lapack_int iu_ = (lapack_int) iu;
@@ -198,8 +198,8 @@ int64_t stemr(
         lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(nzc) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobz_ = job2char( jobz );
-    char range_ = range2char( range );
+    char jobz_ = to_char( jobz );
+    char range_ = to_char( range );
     lapack_int n_ = (lapack_int) n;
     lapack_int il_ = (lapack_int) il;
     lapack_int iu_ = (lapack_int) iu;
@@ -280,8 +280,8 @@ int64_t stemr(
         lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(nzc) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobz_ = job2char( jobz );
-    char range_ = range2char( range );
+    char jobz_ = to_char( jobz );
+    char range_ = to_char( range );
     lapack_int n_ = (lapack_int) n;
     lapack_int il_ = (lapack_int) il;
     lapack_int iu_ = (lapack_int) iu;

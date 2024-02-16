@@ -74,7 +74,7 @@ void test_pbtrf_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_pbtrf( uplo2char(uplo), n, kd, &AB_ref[0], ldab );
+        int64_t info_ref = LAPACKE_pbtrf( to_char( uplo ), n, kd, &AB_ref[0], ldab );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_pbtrf returned error %lld\n", llong( info_ref ) );

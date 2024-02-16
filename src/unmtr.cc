@@ -30,9 +30,9 @@ int64_t unmtr(
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
-    char side_ = side2char( side );
-    char uplo_ = uplo2char( uplo );
-    char trans_ = op2char( trans );
+    char side_ = to_char( side );
+    char uplo_ = to_char( uplo );
+    char trans_ = to_char( trans );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
@@ -151,9 +151,9 @@ int64_t unmtr(
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
-    char side_ = side2char( side );
-    char uplo_ = uplo2char( uplo );
-    char trans_ = op2char( trans );
+    char side_ = to_char( side );
+    char uplo_ = to_char( uplo );
+    char trans_ = to_char( trans );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;

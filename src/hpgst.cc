@@ -26,7 +26,7 @@ int64_t hpgst(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     lapack_int itype_ = (lapack_int) itype;
-    char uplo_ = uplo2char( uplo );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int info_ = 0;
 
@@ -53,7 +53,7 @@ int64_t hpgst(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
     lapack_int itype_ = (lapack_int) itype;
-    char uplo_ = uplo2char( uplo );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int info_ = 0;
 

@@ -25,7 +25,7 @@ int64_t hptrf(
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     #ifndef LAPACK_ILP64
         // 32-bit copy
@@ -60,7 +60,7 @@ int64_t hptrf(
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     #ifndef LAPACK_ILP64
         // 32-bit copy

@@ -49,7 +49,7 @@ void syr(
         uplo = (uplo == Uplo::Lower ? Uplo::Upper : Uplo::Lower);
     }
 
-    char uplo_ = uplo2char( uplo );
+    char uplo_ = to_char( uplo );
     LAPACK_csyr( &uplo_, &n_,
                  (lapack_complex_float*) &alpha,
                  (lapack_complex_float*) x, &incx_,
@@ -92,7 +92,7 @@ void syr(
         uplo = (uplo == Uplo::Lower ? Uplo::Upper : Uplo::Lower);
     }
 
-    char uplo_ = uplo2char( uplo );
+    char uplo_ = to_char( uplo );
     LAPACK_zsyr( &uplo_, &n_,
                  (lapack_complex_double*) &alpha,
                  (lapack_complex_double*) x, &incx_,

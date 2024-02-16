@@ -62,7 +62,7 @@ void test_langb_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        real_t norm_ref = LAPACKE_langb( norm2char(norm), n, kl, ku, &AB[0], ldab );
+        real_t norm_ref = LAPACKE_langb( to_char( norm ), n, kl, ku, &AB[0], ldab );
         time = testsweeper::get_wtime() - time;
 
         params.ref_time() = time;

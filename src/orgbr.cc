@@ -29,7 +29,7 @@ int64_t orgbr(
         lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char vect_ = vect2char( vect );
+    char vect_ = to_char( vect );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int k_ = (lapack_int) k;
@@ -80,7 +80,7 @@ int64_t orgbr(
         lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char vect_ = vect2char( vect );
+    char vect_ = to_char( vect );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int k_ = (lapack_int) k;

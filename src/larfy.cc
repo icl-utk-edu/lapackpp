@@ -30,7 +30,7 @@ void larfy(
         lapack_error_if( std::abs(incv) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int incv_ = (lapack_int) incv;
     lapack_int ldc_ = (lapack_int) ldc;
@@ -59,7 +59,7 @@ void larfy(
         lapack_error_if( std::abs(incv) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int incv_ = (lapack_int) incv;
     lapack_int ldc_ = (lapack_int) ldc;
@@ -88,7 +88,7 @@ void larfy(
         lapack_error_if( std::abs(incv) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int incv_ = (lapack_int) incv;
     lapack_int ldc_ = (lapack_int) ldc;
@@ -160,7 +160,7 @@ void larfy(
         lapack_error_if( std::abs(incv) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int incv_ = (lapack_int) incv;
     lapack_int ldc_ = (lapack_int) ldc;

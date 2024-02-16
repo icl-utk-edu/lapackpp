@@ -83,7 +83,7 @@ void test_pbcon_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_pbcon( uplo2char(uplo), n, kd, &AB[0], ldab, anorm, &rcond_ref );
+        int64_t info_ref = LAPACKE_pbcon( to_char( uplo ), n, kd, &AB[0], ldab, anorm, &rcond_ref );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_pbcon returned error %lld\n", llong( info_ref ) );

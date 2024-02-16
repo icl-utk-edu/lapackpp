@@ -30,8 +30,8 @@ int64_t hegvd(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
     lapack_int itype_ = (lapack_int) itype;
-    char jobz_ = job2char( jobz );
-    char uplo_ = uplo2char( uplo );
+    char jobz_ = to_char( jobz );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ldb_ = (lapack_int) ldb;
@@ -93,8 +93,8 @@ int64_t hegvd(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
     lapack_int itype_ = (lapack_int) itype;
-    char jobz_ = job2char( jobz );
-    char uplo_ = uplo2char( uplo );
+    char jobz_ = to_char( jobz );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ldb_ = (lapack_int) ldb;

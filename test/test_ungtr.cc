@@ -77,7 +77,7 @@ void test_ungtr_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_ungtr( uplo2char(uplo), n, &A_ref[0], lda, &tau[0] );
+        int64_t info_ref = LAPACKE_ungtr( to_char( uplo ), n, &A_ref[0], lda, &tau[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_ungtr returned error %lld\n", llong( info_ref ) );

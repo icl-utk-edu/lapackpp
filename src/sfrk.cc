@@ -26,9 +26,9 @@ void sfrk(
         lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char transr_ = op2char( transr );
-    char uplo_ = uplo2char( uplo );
-    char trans_ = op2char( trans );
+    char transr_ = to_char( transr );
+    char uplo_ = to_char( uplo );
+    char trans_ = to_char( trans );
     lapack_int n_ = (lapack_int) n;
     lapack_int k_ = (lapack_int) k;
     lapack_int lda_ = (lapack_int) lda;
@@ -52,9 +52,9 @@ void sfrk(
         lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char transr_ = op2char( transr );
-    char uplo_ = uplo2char( uplo );
-    char trans_ = op2char( trans );
+    char transr_ = to_char( transr );
+    char uplo_ = to_char( uplo );
+    char trans_ = to_char( trans );
     lapack_int n_ = (lapack_int) n;
     lapack_int k_ = (lapack_int) k;
     lapack_int lda_ = (lapack_int) lda;

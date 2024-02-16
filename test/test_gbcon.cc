@@ -76,7 +76,7 @@ void test_gbcon_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_gbcon( norm2char(norm), n, kl, ku, &AB[0], ldab, &ipiv_ref[0], anorm, &rcond_ref );
+        int64_t info_ref = LAPACKE_gbcon( to_char( norm ), n, kl, ku, &AB[0], ldab, &ipiv_ref[0], anorm, &rcond_ref );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gbcon returned error %lld\n", llong( info_ref ) );

@@ -29,7 +29,7 @@ void larf(
         lapack_error_if( std::abs(incv) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
-    char side_ = side2char( side );
+    char side_ = to_char( side );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int incv_ = (lapack_int) incv;
@@ -63,7 +63,7 @@ void larf(
         lapack_error_if( std::abs(incv) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
-    char side_ = side2char( side );
+    char side_ = to_char( side );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int incv_ = (lapack_int) incv;
@@ -97,7 +97,7 @@ void larf(
         lapack_error_if( std::abs(incv) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
-    char side_ = side2char( side );
+    char side_ = to_char( side );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int incv_ = (lapack_int) incv;
@@ -176,7 +176,7 @@ void larf(
         lapack_error_if( std::abs(incv) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
-    char side_ = side2char( side );
+    char side_ = to_char( side );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int incv_ = (lapack_int) incv;

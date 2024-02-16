@@ -31,8 +31,8 @@ int64_t hseqr(
         lapack_error_if( std::abs(ldh) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobschur_ = jobschur2char( jobschur );
-    char compz_ = job_comp2char( compz );
+    char jobschur_ = to_char( jobschur );
+    char compz_ = to_char_comp( compz );
     lapack_int n_ = (lapack_int) n;
     lapack_int ilo_ = (lapack_int) ilo;
     lapack_int ihi_ = (lapack_int) ihi;
@@ -97,8 +97,8 @@ int64_t hseqr(
         lapack_error_if( std::abs(ldh) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobschur_ = jobschur2char( jobschur );
-    char compz_ = job_comp2char( compz );
+    char jobschur_ = to_char( jobschur );
+    char compz_ = to_char_comp( compz );
     lapack_int n_ = (lapack_int) n;
     lapack_int ilo_ = (lapack_int) ilo;
     lapack_int ihi_ = (lapack_int) ihi;
@@ -163,8 +163,8 @@ int64_t hseqr(
         lapack_error_if( std::abs(ldh) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobschur_ = jobschur2char( jobschur );
-    char compz_ = job_comp2char( compz );
+    char jobschur_ = to_char( jobschur );
+    char compz_ = to_char_comp( compz );
     lapack_int n_ = (lapack_int) n;
     lapack_int ilo_ = (lapack_int) ilo;
     lapack_int ihi_ = (lapack_int) ihi;
@@ -346,8 +346,8 @@ int64_t hseqr(
         lapack_error_if( std::abs(ldh) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobschur_ = jobschur2char( jobschur );
-    char compz_ = job_comp2char( compz );
+    char jobschur_ = to_char( jobschur );
+    char compz_ = to_char_comp( compz );
     lapack_int n_ = (lapack_int) n;
     lapack_int ilo_ = (lapack_int) ilo;
     lapack_int ihi_ = (lapack_int) ihi;

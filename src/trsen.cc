@@ -32,8 +32,8 @@ int64_t trsen(
         lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
     }
-    char sense_ = sense2char( sense );
-    char compq_ = job_comp2char( compq );
+    char sense_ = to_char( sense );
+    char compq_ = to_char_comp( compq );
 
     // lapack_logical (32 or 64-bit) copy
     std::vector< lapack_logical > select_( &select[0], &select[(n)] );
@@ -113,8 +113,8 @@ int64_t trsen(
         lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
     }
-    char sense_ = sense2char( sense );
-    char compq_ = job_comp2char( compq );
+    char sense_ = to_char( sense );
+    char compq_ = to_char_comp( compq );
 
     // lapack_logical (32 or 64-bit) copy
     std::vector< lapack_logical > select_( &select[0], &select[(n)] );
@@ -194,8 +194,8 @@ int64_t trsen(
         lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
     }
-    char sense_ = sense2char( sense );
-    char compq_ = job_comp2char( compq );
+    char sense_ = to_char( sense );
+    char compq_ = to_char_comp( compq );
 
     // lapack_logical (32 or 64-bit) copy
     std::vector< lapack_logical > select_( &select[0], &select[(n)] );
@@ -258,8 +258,8 @@ int64_t trsen(
         lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
     }
-    char sense_ = sense2char( sense );
-    char compq_ = job_comp2char( compq );
+    char sense_ = to_char( sense );
+    char compq_ = to_char_comp( compq );
 
     // lapack_logical (32 or 64-bit) copy
     std::vector< lapack_logical > select_( &select[0], &select[(n)] );

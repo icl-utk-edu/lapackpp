@@ -40,8 +40,8 @@ int64_t gtsvx(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char fact_ = factored2char( fact );
-    char trans_ = op2char( trans );
+    char fact_ = to_char( fact );
+    char trans_ = to_char( trans );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     #ifndef LAPACK_ILP64
@@ -110,8 +110,8 @@ int64_t gtsvx(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char fact_ = factored2char( fact );
-    char trans_ = op2char( trans );
+    char fact_ = to_char( fact );
+    char trans_ = to_char( trans );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     #ifndef LAPACK_ILP64
@@ -180,8 +180,8 @@ int64_t gtsvx(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char fact_ = factored2char( fact );
-    char trans_ = op2char( trans );
+    char fact_ = to_char( fact );
+    char trans_ = to_char( trans );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     #ifndef LAPACK_ILP64
@@ -406,8 +406,8 @@ int64_t gtsvx(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char fact_ = factored2char( fact );
-    char trans_ = op2char( trans );
+    char fact_ = to_char( fact );
+    char trans_ = to_char( trans );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     #ifndef LAPACK_ILP64

@@ -38,9 +38,9 @@ int64_t orcsd2by1(
         lapack_error_if( std::abs(ldu2) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldv1t) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobu1_ = job_csd2char( jobu1 );
-    char jobu2_ = job_csd2char( jobu2 );
-    char jobv1t_ = job_csd2char( jobv1t );
+    char jobu1_ = to_char_csd( jobu1 );
+    char jobu2_ = to_char_csd( jobu2 );
+    char jobv1t_ = to_char_csd( jobv1t );
     lapack_int m_ = (lapack_int) m;
     lapack_int p_ = (lapack_int) p;
     lapack_int q_ = (lapack_int) q;
@@ -113,9 +113,9 @@ int64_t orcsd2by1(
         lapack_error_if( std::abs(ldu2) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldv1t) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobu1_ = job_csd2char( jobu1 );
-    char jobu2_ = job_csd2char( jobu2 );
-    char jobv1t_ = job_csd2char( jobv1t );
+    char jobu1_ = to_char_csd( jobu1 );
+    char jobu2_ = to_char_csd( jobu2 );
+    char jobv1t_ = to_char_csd( jobv1t );
     lapack_int m_ = (lapack_int) m;
     lapack_int p_ = (lapack_int) p;
     lapack_int q_ = (lapack_int) q;

@@ -37,9 +37,9 @@ int64_t gges3(
         lapack_error_if( std::abs(ldvsl) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldvsr) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobvsl_ = job2char( jobvsl );
-    char jobvsr_ = job2char( jobvsr );
-    char sort_ = sort2char( sort );
+    char jobvsl_ = to_char( jobvsl );
+    char jobvsr_ = to_char( jobvsr );
+    char sort_ = to_char( sort );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ldb_ = (lapack_int) ldb;
@@ -122,9 +122,9 @@ int64_t gges3(
         lapack_error_if( std::abs(ldvsl) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldvsr) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobvsl_ = job2char( jobvsl );
-    char jobvsr_ = job2char( jobvsr );
-    char sort_ = sort2char( sort );
+    char jobvsl_ = to_char( jobvsl );
+    char jobvsr_ = to_char( jobvsr );
+    char sort_ = to_char( sort );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ldb_ = (lapack_int) ldb;
@@ -207,9 +207,9 @@ int64_t gges3(
         lapack_error_if( std::abs(ldvsl) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldvsr) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobvsl_ = job2char( jobvsl );
-    char jobvsr_ = job2char( jobvsr );
-    char sort_ = sort2char( sort );
+    char jobvsl_ = to_char( jobvsl );
+    char jobvsr_ = to_char( jobvsr );
+    char sort_ = to_char( sort );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ldb_ = (lapack_int) ldb;
@@ -286,9 +286,9 @@ int64_t gges3(
         lapack_error_if( std::abs(ldvsl) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldvsr) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobvsl_ = job2char( jobvsl );
-    char jobvsr_ = job2char( jobvsr );
-    char sort_ = sort2char( sort );
+    char jobvsl_ = to_char( jobvsl );
+    char jobvsr_ = to_char( jobvsr );
+    char sort_ = to_char( sort );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ldb_ = (lapack_int) ldb;

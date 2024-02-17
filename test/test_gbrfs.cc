@@ -164,7 +164,7 @@ void test_gbrfs_work( Params& params, bool run )
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_gbrfs(
-            op2char(trans), n, kl, ku, nrhs,
+            to_char( trans ), n, kl, ku, nrhs,
             &AB[ kl ], ldab, &AFB[0], ldafb, &ipiv_ref[0],
             &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
         time = testsweeper::get_wtime() - time;

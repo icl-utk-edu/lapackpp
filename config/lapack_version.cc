@@ -7,12 +7,26 @@
 
 #include "config.h"
 
-#define LAPACK_ilaver FORTRAN_NAME( ilaver, ILAVER )
-
-#ifdef __cplusplus
-extern "C"
+#ifdef ACCELERATE_NEW_LAPACK
+    #pragma message "include Accelerate.h"
+    #include <Accelerate/Accelerate.h>
 #endif
-void LAPACK_ilaver( lapack_int* major, lapack_int* minor, lapack_int* patch );
+
+#ifndef LAPACK_ilaver
+#pragma message "Fortran name"
+#define LAPACK_ilaver FORTRAN_NAME( ilaver, ILAVER )
+#endif
+
+#ifndef ACCELERATE_NEW_LAPACK
+    #pragma message "self-defined"
+    #ifdef __cplusplus
+    extern "C"
+    #endif
+    void LAPACK_ilaver( lapack_int* major, lapack_int* minor, lapack_int* patch );
+#endif
+
+    #pragma message "ready"
+
 
 int main( int argc, char** argv )
 {

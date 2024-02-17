@@ -128,7 +128,7 @@ void test_gbtrs_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_gbtrs( op2char(trans), n, kl, ku, nrhs, &AB_tst[0], ldab, &ipiv_ref[0], &B_ref[0], ldb );
+        int64_t info_ref = LAPACKE_gbtrs( to_char( trans ), n, kl, ku, nrhs, &AB_tst[0], ldab, &ipiv_ref[0], &B_ref[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gbtrs returned error %lld\n", llong( info_ref ) );

@@ -30,8 +30,8 @@ void larft(
         lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
     }
-    char direction_ = direction2char( direction );
-    char storev_ = storev2char( storev );
+    char direction_ = to_char( direction );
+    char storev_ = to_char( storev );
     lapack_int n_ = (lapack_int) n;
     lapack_int k_ = (lapack_int) k;
     lapack_int ldv_ = (lapack_int) ldv;
@@ -61,8 +61,8 @@ void larft(
         lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
     }
-    char direction_ = direction2char( direction );
-    char storev_ = storev2char( storev );
+    char direction_ = to_char( direction );
+    char storev_ = to_char( storev );
     lapack_int n_ = (lapack_int) n;
     lapack_int k_ = (lapack_int) k;
     lapack_int ldv_ = (lapack_int) ldv;
@@ -92,8 +92,8 @@ void larft(
         lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
     }
-    char direction_ = direction2char( direction );
-    char storev_ = storev2char( storev );
+    char direction_ = to_char( direction );
+    char storev_ = to_char( storev );
     lapack_int n_ = (lapack_int) n;
     lapack_int k_ = (lapack_int) k;
     lapack_int ldv_ = (lapack_int) ldv;
@@ -215,8 +215,8 @@ void larft(
         lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
     }
-    char direction_ = direction2char( direction );
-    char storev_ = storev2char( storev );
+    char direction_ = to_char( direction );
+    char storev_ = to_char( storev );
     lapack_int n_ = (lapack_int) n;
     lapack_int k_ = (lapack_int) k;
     lapack_int ldv_ = (lapack_int) ldv;

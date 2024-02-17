@@ -66,7 +66,7 @@ inline void hbmv(
     float beta,
     float       *C, int64_t incc )
 {
-    char uplo_     = uplo2char( uplo );
+    char uplo_     = to_char( uplo );
     blas_int n_    = n;
     blas_int kd_   = kd;
     blas_int ldab_ = ldab;
@@ -86,7 +86,7 @@ inline void hbmv(
     double beta,
     double       *C, int64_t incc )
 {
-    char uplo_     = uplo2char( uplo );
+    char uplo_     = to_char( uplo );
     blas_int n_    = n;
     blas_int kd_   = kd;
     blas_int ldab_ = ldab;
@@ -106,7 +106,7 @@ inline void hbmv(
     std::complex<float> beta,
     std::complex<float>       *C, int64_t incc )
 {
-    char uplo_     = uplo2char( uplo );
+    char uplo_     = to_char( uplo );
     blas_int n_    = n;
     blas_int kd_   = kd;
     blas_int ldab_ = ldab;
@@ -130,7 +130,7 @@ inline void hbmv(
     std::complex<double> beta,
     std::complex<double>       *C, int64_t incc )
 {
-    char uplo_     = uplo2char( uplo );
+    char uplo_     = to_char( uplo );
     blas_int n_    = n;
     blas_int kd_   = kd;
     blas_int ldab_ = ldab;
@@ -224,7 +224,7 @@ inline void hpmv(
     float beta,
     float       *C, int64_t incc )
 {
-    char uplo_     = uplo2char( uplo );
+    char uplo_     = to_char( uplo );
     blas_int n_    = n;
     blas_int incb_ = incb;
     blas_int incc_ = incc;
@@ -242,7 +242,7 @@ inline void hpmv(
     double beta,
     double       *C, int64_t incc )
 {
-    char uplo_     = uplo2char( uplo );
+    char uplo_     = to_char( uplo );
     blas_int n_    = n;
     blas_int incb_ = incb;
     blas_int incc_ = incc;
@@ -260,7 +260,7 @@ inline void hpmv(
     std::complex<float> beta,
     std::complex<float>       *C, int64_t incc )
 {
-    char uplo_     = uplo2char( uplo );
+    char uplo_     = to_char( uplo );
     blas_int n_    = n;
     blas_int incb_ = incb;
     blas_int incc_ = incc;
@@ -282,7 +282,7 @@ inline void hpmv(
     std::complex<double> beta,
     std::complex<double>       *C, int64_t incc )
 {
-    char uplo_     = uplo2char( uplo );
+    char uplo_     = to_char( uplo );
     blas_int n_    = n;
     blas_int incb_ = incb;
     blas_int incc_ = incc;

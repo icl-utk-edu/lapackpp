@@ -72,14 +72,14 @@ void test_hetri_work( Params& params, bool run )
     if (params.ref() == 'y' || params.check() == 'y') {
         testsweeper::flush_cache( params.cache() );
         // ---------- factor reference
-        int64_t info_ref_trf = LAPACKE_hetrf( uplo2char(uplo), n, &A_ref[0], lda, &ipiv_ref[0] );
+        int64_t info_ref_trf = LAPACKE_hetrf( to_char( uplo ), n, &A_ref[0], lda, &ipiv_ref[0] );
         if (info_ref_trf != 0) {
             fprintf( stderr, "LAPACKE_hetrf returned error %lld\n", llong( info_ref_trf ) );
         }
 
         // ---------- run reference
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_hetri( uplo2char(uplo), n, &A_ref[0], lda, &ipiv_ref[0] );
+        int64_t info_ref = LAPACKE_hetri( to_char( uplo ), n, &A_ref[0], lda, &ipiv_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_hetri returned error %lld\n", llong( info_ref ) );

@@ -126,7 +126,7 @@ void test_pbsv_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_pbsv( uplo2char(uplo), n, kd, nrhs, &AB_ref[0], ldab, &B_ref[0], ldb );
+        int64_t info_ref = LAPACKE_pbsv( to_char( uplo ), n, kd, nrhs, &AB_ref[0], ldab, &B_ref[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_pbsv returned error %lld\n", llong( info_ref ) );

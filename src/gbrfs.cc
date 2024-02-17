@@ -38,7 +38,7 @@ int64_t gbrfs(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char trans_ = op2char( trans );
+    char trans_ = to_char( trans );
     lapack_int n_ = (lapack_int) n;
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;
@@ -101,7 +101,7 @@ int64_t gbrfs(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char trans_ = op2char( trans );
+    char trans_ = to_char( trans );
     lapack_int n_ = (lapack_int) n;
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;
@@ -164,7 +164,7 @@ int64_t gbrfs(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char trans_ = op2char( trans );
+    char trans_ = to_char( trans );
     lapack_int n_ = (lapack_int) n;
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;
@@ -313,7 +313,7 @@ int64_t gbrfs(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char trans_ = op2char( trans );
+    char trans_ = to_char( trans );
     lapack_int n_ = (lapack_int) n;
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;

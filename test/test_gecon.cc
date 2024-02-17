@@ -62,7 +62,7 @@ void test_gecon_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_gecon( norm2char(norm), n, &A[0], lda, anorm, &rcond_ref );
+        int64_t info_ref = LAPACKE_gecon( to_char( norm ), n, &A[0], lda, anorm, &rcond_ref );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gecon returned error %lld\n", llong( info_ref ) );

@@ -41,7 +41,7 @@ int64_t ggsvp3(
         lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
     }
     char jobu_ = jobu2char( jobu );
-    char jobv_ = job2char( jobv );
+    char jobv_ = to_char( jobv );
     char jobq_ = jobq2char( jobq );
     lapack_int m_ = (lapack_int) m;
     lapack_int p_ = (lapack_int) p;
@@ -122,7 +122,7 @@ int64_t ggsvp3(
         lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
     }
     char jobu_ = jobu2char( jobu );
-    char jobv_ = job2char( jobv );
+    char jobv_ = to_char( jobv );
     char jobq_ = jobq2char( jobq );
     lapack_int m_ = (lapack_int) m;
     lapack_int p_ = (lapack_int) p;
@@ -203,7 +203,7 @@ int64_t ggsvp3(
         lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
     }
     char jobu_ = jobu2char( jobu );
-    char jobv_ = job2char( jobv );
+    char jobv_ = to_char( jobv );
     char jobq_ = jobq2char( jobq );
     lapack_int m_ = (lapack_int) m;
     lapack_int p_ = (lapack_int) p;
@@ -288,7 +288,7 @@ int64_t ggsvp3(
         lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
     }
     char jobu_ = jobu2char( jobu );
-    char jobv_ = job2char( jobv );
+    char jobv_ = to_char( jobv );
     char jobq_ = jobq2char( jobq );
     lapack_int m_ = (lapack_int) m;
     lapack_int p_ = (lapack_int) p;

@@ -36,9 +36,9 @@ int64_t ppsvx(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char fact_ = factored2char( fact );
-    char uplo_ = uplo2char( uplo );
-    char equed_ = equed2char( *equed );
+    char fact_ = to_char( fact );
+    char uplo_ = to_char( uplo );
+    char equed_ = to_char( *equed );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int ldb_ = (lapack_int) ldb;
@@ -90,9 +90,9 @@ int64_t ppsvx(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char fact_ = factored2char( fact );
-    char uplo_ = uplo2char( uplo );
-    char equed_ = equed2char( *equed );
+    char fact_ = to_char( fact );
+    char uplo_ = to_char( uplo );
+    char equed_ = to_char( *equed );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int ldb_ = (lapack_int) ldb;
@@ -144,9 +144,9 @@ int64_t ppsvx(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char fact_ = factored2char( fact );
-    char uplo_ = uplo2char( uplo );
-    char equed_ = equed2char( *equed );
+    char fact_ = to_char( fact );
+    char uplo_ = to_char( uplo );
+    char equed_ = to_char( *equed );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int ldb_ = (lapack_int) ldb;
@@ -375,9 +375,9 @@ int64_t ppsvx(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char fact_ = factored2char( fact );
-    char uplo_ = uplo2char( uplo );
-    char equed_ = equed2char( *equed );
+    char fact_ = to_char( fact );
+    char uplo_ = to_char( uplo );
+    char equed_ = to_char( *equed );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int ldb_ = (lapack_int) ldb;

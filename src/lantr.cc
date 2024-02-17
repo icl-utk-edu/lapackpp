@@ -35,9 +35,9 @@ float lantr(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
-    char uplo_ = uplo2char( uplo );
-    char diag_ = diag2char( diag );
+    char norm_ = to_char( norm );
+    char uplo_ = to_char( uplo );
+    char diag_ = to_char( diag );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
@@ -75,9 +75,9 @@ double lantr(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
-    char uplo_ = uplo2char( uplo );
-    char diag_ = diag2char( diag );
+    char norm_ = to_char( norm );
+    char uplo_ = to_char( uplo );
+    char diag_ = to_char( diag );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
@@ -115,9 +115,9 @@ float lantr(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
-    char uplo_ = uplo2char( uplo );
-    char diag_ = diag2char( diag );
+    char norm_ = to_char( norm );
+    char uplo_ = to_char( uplo );
+    char diag_ = to_char( diag );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
@@ -212,9 +212,9 @@ double lantr(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
-    char uplo_ = uplo2char( uplo );
-    char diag_ = diag2char( diag );
+    char norm_ = to_char( norm );
+    char uplo_ = to_char( uplo );
+    char diag_ = to_char( diag );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;

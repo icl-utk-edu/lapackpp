@@ -69,7 +69,7 @@ void test_lange_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        real_t norm_ref = LAPACKE_lange( norm2char(norm), m, n, &A[0], lda );
+        real_t norm_ref = LAPACKE_lange( to_char( norm ), m, n, &A[0], lda );
         time = testsweeper::get_wtime() - time;
 
         params.ref_time() = time;

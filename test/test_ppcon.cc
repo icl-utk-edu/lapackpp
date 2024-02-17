@@ -81,7 +81,7 @@ void test_ppcon_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_ppcon( uplo2char(uplo), n, &AP[0], anorm, &rcond_ref );
+        int64_t info_ref = LAPACKE_ppcon( to_char( uplo ), n, &AP[0], anorm, &rcond_ref );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_ppcon returned error %lld\n", llong( info_ref ) );

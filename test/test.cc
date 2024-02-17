@@ -13,18 +13,36 @@
 
 // -----------------------------------------------------------------------------
 using testsweeper::ParamType;
-using testsweeper::DataType;
-using testsweeper::char2datatype;
-using testsweeper::datatype2char;
-using testsweeper::datatype2str;
+using testsweeper::DataType, testsweeper::DataType_help;
 using testsweeper::ansi_bold;
 using testsweeper::ansi_red;
 using testsweeper::ansi_normal;
 
+using blas::Layout, blas::Layout_help;
+using blas::Uplo,   blas::Uplo_help;
+using blas::Side,   blas::Side_help;
+using blas::Op,     blas::Op_help;
+using blas::Diag,   blas::Diag_help;
+
+using lapack::Norm,       lapack::Norm_help;
+using lapack::Direction,  lapack::Direction_help;
+using lapack::StoreV,     lapack::StoreV_help;
+using lapack::Job,        lapack::Job_help;
+using lapack::Range,      lapack::Range_help;
+using lapack::MatrixType, lapack::MatrixType_help;
+using lapack::Factored,   lapack::Factored_help;
+using lapack::Equed,      lapack::Equed_help;
+
+using lapack::Job_eig_help;
+using lapack::Job_eig_left_help;
+using lapack::Job_eig_right_help;
+using lapack::Job_svd_left_help;
+using lapack::Job_svd_right_help;
+
 const double no_data = testsweeper::no_data_flag;
 
-// const ParamType PT_Value  = ParamType::Value; currently unused
-// const ParamType PT_List   = ParamType::List; currently unused
+const ParamType PT_Value  = ParamType::Value;
+const ParamType PT_List   = ParamType::List;
 const ParamType PT_Output = ParamType::Output;
 
 // -----------------------------------------------------------------------------
@@ -476,78 +494,79 @@ Params::Params():
 
     // w = width
     // p = precision
-    // def = default
     // ----- test framework parameters
-    //         name,       w,    type,             def, valid, help
-    check     ( "check",   0,    ParamType::Value, 'y', "ny",  "check the results" ),
-    error_exit( "error-exit", 0, ParamType::Value, 'n', "ny",  "check error exits" ),
-    ref       ( "ref",     0,    ParamType::Value, 'n', "ny",  "run reference; sometimes check implies ref" ),
+    //         name,       w,    type,         default, valid, help
+    check     ( "check",   0,    PT_Value, 'y', "ny",  "check the results" ),
+    error_exit( "error-exit", 0, PT_Value, 'n', "ny",  "check error exits" ),
+    ref       ( "ref",     0,    PT_Value, 'n', "ny",  "run reference; sometimes check implies ref" ),
 
-    //          name,      w, p, type,             def, min,  max, help
-    tol       ( "tol",     0, 0, ParamType::Value,  50,   1, 1000, "tolerance (e.g., error < tol*epsilon to pass)" ),
-    repeat    ( "repeat",  0,    ParamType::Value,   1,   1, 1000, "number of times to repeat each test" ),
-    verbose   ( "verbose", 0,    ParamType::Value,   0,   0,   10, "verbose level" ),
-    cache     ( "cache",   0,    ParamType::Value,  20,   1, 1024, "total cache size, in MiB" ),
+    //          name,      w, p, type,         default, min,  max, help
+    tol       ( "tol",     0, 0, PT_Value,  50,   1, 1000, "tolerance (e.g., error < tol*epsilon to pass)" ),
+    repeat    ( "repeat",  0,    PT_Value,   1,   1, 1000, "number of times to repeat each test" ),
+    verbose   ( "verbose", 0,    PT_Value,   0,   0,   10, "verbose level" ),
+    cache     ( "cache",   0,    PT_Value,  20,   1, 1024, "total cache size, in MiB" ),
 
     // ----- routine parameters
-    //          name,      w,    type,            def,                    char2enum,         enum2char,         enum2str,         help
-    datatype  ( "type",    4,    ParamType::List, DataType::Double,       char2datatype,     datatype2char,     datatype2str,     "s=single (float), d=double, c=complex-single, z=complex-double" ),
-    layout    ( "layout",  6,    ParamType::List, blas::Layout::ColMajor, blas::char2layout, blas::layout2char, blas::layout2str, "layout: r=row major, c=column major" ),
-    side      ( "side",    6,    ParamType::List, blas::Side::Left,       blas::char2side,   blas::side2char,   blas::side2str,   "side: l=left, r=right" ),
-    itype     ( "itype",   5,    ParamType::List,   1,     1,    3,       "Must be 1 or 2 or 3, specifies problem type to be solved" ),
-    uplo      ( "uplo",    6,    ParamType::List, blas::Uplo::Lower,      blas::char2uplo,   blas::uplo2char,   blas::uplo2str,   "triangle: l=lower, u=upper" ),
-    trans     ( "trans",   7,    ParamType::List, blas::Op::NoTrans,      blas::char2op,     blas::op2char,     blas::op2str,     "transpose: n=no-trans, t=trans, c=conj-trans" ),
-    transA    ( "transA",  7,    ParamType::List, blas::Op::NoTrans,      blas::char2op,     blas::op2char,     blas::op2str,     "transpose of A: n=no-trans, t=trans, c=conj-trans" ),
-    transB    ( "transB",  7,    ParamType::List, blas::Op::NoTrans,      blas::char2op,     blas::op2char,     blas::op2str,     "transpose of B: n=no-trans, t=trans, c=conj-trans" ),
-    diag      ( "diag",    7,    ParamType::List, blas::Diag::NonUnit,    blas::char2diag,   blas::diag2char,   blas::diag2str,   "diagonal: n=non-unit, u=unit" ),
-    norm      ( "norm",    7,    ParamType::List, lapack::Norm::One,      lapack::char2norm, lapack::norm2char, lapack::norm2str, "norm: o=one, 2=two, i=inf, f=fro, m=max" ),
-    direction ( "direction", 8,  ParamType::List, lapack::Direction::Forward, lapack::char2direction, lapack::direction2char, lapack::direction2str, "direction: f=forward, b=backward" ),
-    storev    ( "storev", 10,    ParamType::List, lapack::StoreV::Columnwise, lapack::char2storev, lapack::storev2char, lapack::storev2str, "store vectors: c=columnwise, r=rowwise" ),
-    ijob      ( "ijob",    5,    ParamType::List,   0,   0,   5, "condition numbers to compute, 0 to 5; see tgsen docs" ),
-    jobz      ( "jobz",    5,    ParamType::List, lapack::Job::NoVec, lapack::char2job, lapack::job2char, lapack::job2str, "eigenvectors: n=no vectors, v=vectors" ),
-    jobvl     ( "jobvl",   5,    ParamType::List, lapack::Job::NoVec, lapack::char2job, lapack::job2char, lapack::job2str, "left eigenvectors: n=no vectors, v=vectors" ),
-    jobvr     ( "jobvr",   5,    ParamType::List, lapack::Job::NoVec, lapack::char2job, lapack::job2char, lapack::job2str, "right eigenvectors: n=no vectors, v=vectors" ),
-    jobu      ( "jobu",    9,    ParamType::List, lapack::Job::NoVec, lapack::char2job, lapack::job2char, lapack::job2str, "left singular vectors (U): n=no vectors, s=some vectors, o=overwrite, a=all vectors" ),
-    jobvt     ( "jobvt",   9,    ParamType::List, lapack::Job::NoVec, lapack::char2job, lapack::job2char, lapack::job2str, "right singular vectors (V^T): n=no vectors, s=some vectors, o=overwrite, a=all vectors" ),
+    //          name,         w, type,    default,            help
+    datatype  ( "type",       4, PT_List, DataType::Double,   DataType_help ),
+    layout    ( "layout",     6, PT_List, Layout::ColMajor,   Layout_help ),
+    side      ( "side",       6, PT_List, Side::Left,         Side_help ),
+    itype     ( "itype",      5, PT_List, 1, 1, 3,
+                "problem type to be solved: 1, 2, or 3" ),
+    uplo      ( "uplo",       6, PT_List, Uplo::Lower,        Uplo_help ),
+    trans     ( "trans",      7, PT_List, Op::NoTrans,        Op_help ),
+    transA    ( "transA",     7, PT_List, Op::NoTrans,        Op_help ),
+    transB    ( "transB",     7, PT_List, Op::NoTrans,        Op_help ),
+    diag      ( "diag",       7, PT_List, Diag::NonUnit,      Diag_help ),
+    norm      ( "norm",       7, PT_List, Norm::One,          Norm_help ),
+    direction ( "direction",  8, PT_List, Direction::Forward, Direction_help ),
+    storev    ( "storev",    10, PT_List, StoreV::Columnwise, StoreV_help ),
+    ijob      ( "ijob",       5, PT_List, 0, 0, 5,
+                "condition numbers to compute, 0 to 5; see tgsen docs" ),
+    jobz      ( "jobz",       5, PT_List, Job::NoVec, Job_eig_help ),
+    jobvl     ( "jobvl",      5, PT_List, Job::NoVec, Job_eig_left_help ),
+    jobvr     ( "jobvr",      5, PT_List, Job::NoVec, Job_eig_right_help ),
+    jobu      ( "jobu",       9, PT_List, Job::NoVec, Job_svd_left_help ),
+    jobvt     ( "jobvt",      9, PT_List, Job::NoVec, Job_svd_right_help ),
 
     // range is set by vl, vu, il, iu, fraction
-    range     ( "range",   9,    ParamType::Output, lapack::Range::All, lapack::char2range, lapack::range2char, lapack::range2str, "range of eigen/singular values to find; set (vl, vu), (il, iu), or (fraction_start, fraction)" ),
+    range     ( "range",      9, PT_Output, Range::All, "range of eigen/singular values to find; set (vl, vu), (il, iu), or (fraction_start, fraction)" ),
 
-    matrixtype( "matrixtype", 10, ParamType::List, lapack::MatrixType::General,
-                lapack::char2matrixtype, lapack::matrixtype2char, lapack::matrixtype2str,
-                "matrix type: g=general, l=lower, u=upper, h=Hessenberg, z=band-general, b=band-lower, q=band-upper" ),
-    factored  ( "factored",    11,    ParamType::List, lapack::Factored::NotFactored, lapack::char2factored, lapack::factored2char, lapack::factored2str, "f=Factored, n=NotFactored, e=Equilibrate" ),
-    equed     ( "equed",   9,    ParamType::List, lapack::Equed::None, lapack::char2equed, lapack::equed2char, lapack::equed2str, "n=None, r=Row, c=Col, b=Both, y=Yes" ),
+    matrixtype( "matrixtype", 10, PT_List, MatrixType::General,
+                "g=general, l=lower, u=upper, h=Hessenberg, z=band-general,"
+                " b=band-lower, q=band-upper" ),
+    factored  ( "factored",   11, PT_List, Factored::NotFactored, "f=Factored, n=NotFactored, e=Equilibrate" ),
+    equed     ( "equed",       9, PT_List, Equed::None, "n=None, r=Row, c=Col, b=Both, y=Yes" ),
 
-    //          name,      w, p, type,            def,   min,     max, help
-    dim       ( "dim",     6,    ParamType::List,          0, 1000000, "m by n by k dimensions" ),
-    i         ( "i",       6,    ParamType::List,   1,     0, 1000000, "i index (e.g., laed4)" ),
-    l         ( "l",       6,    ParamType::List, 100,     0, 1000000, "l dimension (e.g., tpqrt)" ),
-    ka        ( "ka",      6,    ParamType::List, 100,     0, 1000000, "bandwidth of A" ),
-    kb        ( "kb",      6,    ParamType::List, 100,     0, 1000000, "bandwidth of B" ),
-    kd        ( "kd",      6,    ParamType::List, 100,     0, 1000000, "bandwidth" ),
-    kl        ( "kl",      6,    ParamType::List, 100,     0, 1000000, "lower bandwidth" ),
-    ku        ( "ku",      6,    ParamType::List, 100,     0, 1000000, "upper bandwidth" ),
-    nrhs      ( "nrhs",    6,    ParamType::List,  10,     0, 1000000, "number of right hand sides" ),
-    nb        ( "nb",      4,    ParamType::List,  64,     0, 1000000, "block size" ),
-    vl        ( "vl",      7, 2, ParamType::List, -inf, -inf,     inf, "lower bound of eigen/singular values to find" ),
-    vu        ( "vu",      7, 2, ParamType::List,  inf, -inf,     inf, "upper bound of eigen/singular values to find" ),
+    //          name,      w, p, type,         default,   min,     max, help
+    dim       ( "dim",     6,    PT_List,          0, 1000000, "m by n by k dimensions" ),
+    i         ( "i",       6,    PT_List,   1,     0, 1000000, "i index (e.g., laed4)" ),
+    l         ( "l",       6,    PT_List, 100,     0, 1000000, "l dimension (e.g., tpqrt)" ),
+    ka        ( "ka",      6,    PT_List, 100,     0, 1000000, "bandwidth of A" ),
+    kb        ( "kb",      6,    PT_List, 100,     0, 1000000, "bandwidth of B" ),
+    kd        ( "kd",      6,    PT_List, 100,     0, 1000000, "bandwidth" ),
+    kl        ( "kl",      6,    PT_List, 100,     0, 1000000, "lower bandwidth" ),
+    ku        ( "ku",      6,    PT_List, 100,     0, 1000000, "upper bandwidth" ),
+    nrhs      ( "nrhs",    6,    PT_List,  10,     0, 1000000, "number of right hand sides" ),
+    nb        ( "nb",      4,    PT_List,  64,     0, 1000000, "block size" ),
+    vl        ( "vl",      7, 2, PT_List, -inf, -inf,     inf, "lower bound of eigen/singular values to find" ),
+    vu        ( "vu",      7, 2, PT_List,  inf, -inf,     inf, "upper bound of eigen/singular values to find" ),
 
     // input il, iu, or fraction; output {il, iu}_out adjusted for matrix size or set by fraction
-    il        ( "il",      0,    ParamType::List,   1,     1, 1000000, "1-based index of smallest eigen/singular value to find" ),
-    il_out    ( "il",      6,    ParamType::Output, 1,     1, 1000000, "1-based index of smallest eigen/singular value to find (actual value used)" ),
-    iu        ( "iu",      0,    ParamType::List,  -1,    -1, 1000000, "1-based index of largest  eigen/singular value to find; -1 is all" ),
-    iu_out    ( "iu",      6,    ParamType::Output,-1,    -1, 1000000, "1-based index of largest  eigen/singular value to find (actual value used)" ),
+    il        ( "il",      0,    PT_List,   1,     1, 1000000, "1-based index of smallest eigen/singular value to find" ),
+    il_out    ( "il",      6,    PT_Output, 1,     1, 1000000, "1-based index of smallest eigen/singular value to find (actual value used)" ),
+    iu        ( "iu",      0,    PT_List,  -1,    -1, 1000000, "1-based index of largest  eigen/singular value to find; -1 is all" ),
+    iu_out    ( "iu",      6,    PT_Output,-1,    -1, 1000000, "1-based index of largest  eigen/singular value to find (actual value used)" ),
     fraction_start( "fraction_start",
-                           0, 0, ParamType::List,   0,     0,       1, "index of smallest eigen/singular value to find, as fraction of n; sets il = 1 + fraction_start*n" ),
-    fraction  ( "fraction",0, 0, ParamType::List,   1,     0,       1, "fraction of eigen/singular values to find; sets iu = il - 1 + fraction*n" ),
+                           0, 0, PT_List,   0,     0,       1, "index of smallest eigen/singular value to find, as fraction of n; sets il = 1 + fraction_start*n" ),
+    fraction  ( "fraction",0, 0, PT_List,   1,     0,       1, "fraction of eigen/singular values to find; sets iu = il - 1 + fraction*n" ),
 
-    alpha     ( "alpha",   9, 4, ParamType::List,  pi,  -inf,     inf, "scalar alpha" ),
-    beta      ( "beta",    9, 4, ParamType::List,   e,  -inf,     inf, "scalar beta" ),
-    incx      ( "incx",    4,    ParamType::List,   1, -1000,    1000, "stride of x vector" ),
-    incy      ( "incy",    4,    ParamType::List,   1, -1000,    1000, "stride of y vector" ),
-    align     ( "align",   0,    ParamType::List,   1,     1,    1024, "column alignment (sets lda, ldb, etc. to multiple of align)" ),
-    device    ( "device",  6,    ParamType::List,   0,     0,     100, "device id" ),
+    alpha     ( "alpha",   9, 4, PT_List,  pi,  -inf,     inf, "scalar alpha" ),
+    beta      ( "beta",    9, 4, PT_List,   e,  -inf,     inf, "scalar beta" ),
+    incx      ( "incx",    4,    PT_List,   1, -1000,    1000, "stride of x vector" ),
+    incy      ( "incy",    4,    PT_List,   1, -1000,    1000, "stride of y vector" ),
+    align     ( "align",   0,    PT_List,   1,     1,    1024, "column alignment (sets lda, ldb, etc. to multiple of align)" ),
+    device    ( "device",  6,    PT_List,   0,     0,     100, "device id" ),
 
     // ----- output parameters
     // min, max are ignored
@@ -588,8 +607,8 @@ Params::Params():
 
     // default -1 means "no check"
     //          name,     w, type,          default, min, max, help
-    okay      ( "status", 6, ParamType::Output,  -1,   0,   0, "success indicator" ),
-    msg       ( "",       1, ParamType::Output,  "",           "error message" )
+    okay      ( "status", 6, PT_Output,  -1,   0,   0, "success indicator" ),
+    msg       ( "",       1, PT_Output,  "",           "error message" )
 {
     // change names of matrix B's params
     matrixB.kind.name( "matrixB" );

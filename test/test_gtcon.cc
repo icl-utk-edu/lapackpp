@@ -83,7 +83,7 @@ void test_gtcon_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_gtcon( norm2char(norm), n, &DL[0], &D[0], &DU[0], &DU2[0], &ipiv_ref[0], anorm, &rcond_ref );
+        int64_t info_ref = LAPACKE_gtcon( to_char( norm ), n, &DL[0], &D[0], &DU[0], &DU2[0], &ipiv_ref[0], anorm, &rcond_ref );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gtcon returned error %lld\n", llong( info_ref ) );

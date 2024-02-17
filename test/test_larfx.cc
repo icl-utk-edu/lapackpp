@@ -71,7 +71,7 @@ void test_larfx_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_larfx( side2char(side), m, n, &V[0], tau, &C_ref[0], ldc );
+        int64_t info_ref = LAPACKE_larfx( to_char( side ), m, n, &V[0], tau, &C_ref[0], ldc );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_larfx returned error %lld\n", llong( info_ref ) );

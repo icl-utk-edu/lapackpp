@@ -40,9 +40,9 @@ int64_t tgsja(
         lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobu_ = job_compu2char( jobu );
-    char jobv_ = job_comp2char( jobv );
-    char jobq_ = job_compq2char( jobq );
+    char jobu_ = to_char_compu( jobu );
+    char jobv_ = to_char_comp( jobv );
+    char jobq_ = to_char_compq( jobq );
     lapack_int m_ = (lapack_int) m;
     lapack_int p_ = (lapack_int) p;
     lapack_int n_ = (lapack_int) n;
@@ -102,9 +102,9 @@ int64_t tgsja(
         lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobu_ = job_compu2char( jobu );
-    char jobv_ = job_comp2char( jobv );
-    char jobq_ = job_compq2char( jobq );
+    char jobu_ = to_char_compu( jobu );
+    char jobv_ = to_char_comp( jobv );
+    char jobq_ = to_char_compq( jobq );
     lapack_int m_ = (lapack_int) m;
     lapack_int p_ = (lapack_int) p;
     lapack_int n_ = (lapack_int) n;
@@ -164,9 +164,9 @@ int64_t tgsja(
         lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobu_ = job_compu2char( jobu );
-    char jobv_ = job_comp2char( jobv );
-    char jobq_ = job_compq2char( jobq );
+    char jobu_ = to_char_compu( jobu );
+    char jobv_ = to_char_comp( jobv );
+    char jobq_ = to_char_compq( jobq );
     lapack_int m_ = (lapack_int) m;
     lapack_int p_ = (lapack_int) p;
     lapack_int n_ = (lapack_int) n;
@@ -226,9 +226,9 @@ int64_t tgsja(
         lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobu_ = job_compu2char( jobu );
-    char jobv_ = job_comp2char( jobv );
-    char jobq_ = job_compq2char( jobq );
+    char jobu_ = to_char_compu( jobu );
+    char jobv_ = to_char_comp( jobv );
+    char jobq_ = to_char_compq( jobq );
     lapack_int m_ = (lapack_int) m;
     lapack_int p_ = (lapack_int) p;
     lapack_int n_ = (lapack_int) n;

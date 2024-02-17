@@ -79,14 +79,14 @@ void test_sytrs_work( Params& params, bool run )
 
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- factor
-        info = LAPACKE_sytrf( uplo2char(uplo), n, &A_ref[0], lda, &ipiv_ref[0] );
+        info = LAPACKE_sytrf( to_char( uplo ), n, &A_ref[0], lda, &ipiv_ref[0] );
         if (info != 0) {
             fprintf( stderr, "LAPACKE_sytrf returned error %lld\n", llong( info ) );
         }
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_sytrs( uplo2char(uplo), n, nrhs, &A_ref[0], lda, &ipiv_ref[0], &B_ref[0], ldb );
+        int64_t info_ref = LAPACKE_sytrs( to_char( uplo ), n, nrhs, &A_ref[0], lda, &ipiv_ref[0], &B_ref[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_sytrs returned error %lld\n", llong( info_ref ) );

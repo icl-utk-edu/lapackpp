@@ -35,7 +35,7 @@ int64_t bdsqr(
         lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int ncvt_ = (lapack_int) ncvt;
     lapack_int nru_ = (lapack_int) nru;
@@ -83,7 +83,7 @@ int64_t bdsqr(
         lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int ncvt_ = (lapack_int) ncvt;
     lapack_int nru_ = (lapack_int) nru;
@@ -131,7 +131,7 @@ int64_t bdsqr(
         lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int ncvt_ = (lapack_int) ncvt;
     lapack_int nru_ = (lapack_int) nru;
@@ -278,7 +278,7 @@ int64_t bdsqr(
         lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int ncvt_ = (lapack_int) ncvt;
     lapack_int nru_ = (lapack_int) nru;

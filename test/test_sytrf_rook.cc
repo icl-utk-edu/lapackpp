@@ -68,7 +68,7 @@ void test_sytrf_rook_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_sytrf_rook( uplo2char(uplo), n, &A_ref[0], lda, &ipiv_ref[0] );
+        int64_t info_ref = LAPACKE_sytrf_rook( to_char( uplo ), n, &A_ref[0], lda, &ipiv_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_sytrf_rook returned error %lld\n", llong( info_ref ) );

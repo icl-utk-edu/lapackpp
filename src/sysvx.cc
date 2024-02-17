@@ -37,8 +37,8 @@ int64_t sysvx(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char fact_ = factored2char( fact );
-    char uplo_ = uplo2char( uplo );
+    char fact_ = to_char( fact );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int lda_ = (lapack_int) lda;
@@ -122,8 +122,8 @@ int64_t sysvx(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char fact_ = factored2char( fact );
-    char uplo_ = uplo2char( uplo );
+    char fact_ = to_char( fact );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int lda_ = (lapack_int) lda;
@@ -207,8 +207,8 @@ int64_t sysvx(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char fact_ = factored2char( fact );
-    char uplo_ = uplo2char( uplo );
+    char fact_ = to_char( fact );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int lda_ = (lapack_int) lda;
@@ -427,8 +427,8 @@ int64_t sysvx(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char fact_ = factored2char( fact );
-    char uplo_ = uplo2char( uplo );
+    char fact_ = to_char( fact );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int lda_ = (lapack_int) lda;

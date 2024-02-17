@@ -100,7 +100,7 @@ void test_ptrfs_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_ptrfs( uplo2char(uplo), n, nrhs, &D[0], &E[0], &DF[0], &EF[0], &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
+        int64_t info_ref = LAPACKE_ptrfs( to_char( uplo ), n, nrhs, &D[0], &E[0], &DF[0], &EF[0], &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_ptrfs returned error %lld\n", llong( info_ref ) );

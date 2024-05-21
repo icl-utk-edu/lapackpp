@@ -11,17 +11,14 @@
 #include "matrix_params.hh"
 #include "matrix_generator.hh"
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 using llong = long long;
 
-// -----------------------------------------------------------------------------
-class Params: public testsweeper::ParamsBase
-{
+//------------------------------------------------------------------------------
+class Params: public testsweeper::ParamsBase {
 public:
     const double inf = std::numeric_limits<double>::infinity();
     const double nan = std::numeric_limits<double>::quiet_NaN();
-    const double pi  = 3.141592653589793;
-    const double e   = 2.718281828459045;
 
     Params();
 
@@ -37,12 +34,7 @@ public:
 
     // Field members are explicitly public.
     // Order here determines output order.
-
-    // ----- test matrix parameters
-    MatrixParams matrix;
-    MatrixParams matrixB;
-
-    // ----- test framework parameters
+    //----- test framework parameters
     testsweeper::ParamChar   check;
     testsweeper::ParamChar   error_exit;
     testsweeper::ParamChar   ref;
@@ -51,56 +43,73 @@ public:
     testsweeper::ParamInt    verbose;
     testsweeper::ParamInt    cache;
 
-    // ----- routine parameters
+    //----- test matrix parameters
+    MatrixParams matrix;
+    MatrixParams matrixB;
+
+    //----- routine parameters, enums
     testsweeper::ParamEnum< testsweeper::DataType > datatype;
-    testsweeper::ParamEnum< blas::Layout >      layout;
-    testsweeper::ParamEnum< lapack::Side >      side;
-    testsweeper::ParamInt                       itype;
-    testsweeper::ParamEnum< lapack::Uplo >      uplo;
-    testsweeper::ParamEnum< lapack::Op >        trans;
-    testsweeper::ParamEnum< lapack::Op >        transA;
-    testsweeper::ParamEnum< lapack::Op >        transB;
-    testsweeper::ParamEnum< lapack::Diag >      diag;
-    testsweeper::ParamEnum< lapack::Norm >      norm;
-    testsweeper::ParamEnum< lapack::Direction > direction;
-    testsweeper::ParamEnum< lapack::StoreV >    storev;
-    testsweeper::ParamInt                       ijob;   // tgsen
-    testsweeper::ParamEnum< lapack::Job >       jobz;   // heev
-    testsweeper::ParamEnum< lapack::Job >       jobvl;  // geev
-    testsweeper::ParamEnum< lapack::Job >       jobvr;  // geev
-    testsweeper::ParamEnum< lapack::Job >       jobu;   // gesvd, gesdd
-    testsweeper::ParamEnum< lapack::Job >       jobvt;  // gesvd
-    testsweeper::ParamEnum< lapack::Range >     range;
-    testsweeper::ParamEnum< lapack::MatrixType > matrixtype;
-    testsweeper::ParamEnum< lapack::Factored >  factored;
-    testsweeper::ParamEnum< lapack::Equed >     equed;
 
-    testsweeper::ParamInt3   dim;
-    testsweeper::ParamInt    i;
-    testsweeper::ParamInt    l;
-    testsweeper::ParamInt    ka;
-    testsweeper::ParamInt    kb;
-    testsweeper::ParamInt    kd;
-    testsweeper::ParamInt    kl;
-    testsweeper::ParamInt    ku;
-    testsweeper::ParamInt    nrhs;
-    testsweeper::ParamInt    nb;
-    testsweeper::ParamDouble vl;
-    testsweeper::ParamDouble vu;
-    testsweeper::ParamInt    il;
-    testsweeper::ParamInt    il_out;
-    testsweeper::ParamInt    iu;
-    testsweeper::ParamInt    iu_out;
-    testsweeper::ParamDouble fraction_start;
-    testsweeper::ParamDouble fraction;
-    testsweeper::ParamDouble alpha;
-    testsweeper::ParamDouble beta;
-    testsweeper::ParamInt    incx;
-    testsweeper::ParamInt    incy;
-    testsweeper::ParamInt    align;
-    testsweeper::ParamInt    device;
+    // BLAS & LAPACK options
+    // The order here matches the order in most LAPACK functions, e.g.,
+    // hegv ( itype, jobz, uplo, n, ... )
+    // syevx( jobz, range, uplo, n, ..., vl, vu, il, iu, ... )
+    // larfb( side, trans, direction, storev, m, n, k, ... )
+    // lanhe( norm, uplo, n, ... )
+    // pbsv ( uplo, n, kd, nrhs, ... )
+    // gbsv ( n, kl, ku, nrhs, ... )
+    // trsm ( side, uplo, transa, diag, m, n, alpha, ... )
+    // gesvx( fact, trans, n, nrhs, ..., equed, ... )
+    // ijob, itype are classified as enums due to their limited values.
+    testsweeper::ParamEnum< blas::Layout >          layout;
+    testsweeper::ParamInt                           ijob;   // tgsen
+    testsweeper::ParamInt                           itype;  // hegv
+    testsweeper::ParamEnum< lapack::Job >           jobz;   // heev
+    testsweeper::ParamEnum< lapack::Job >           jobvl;  // geev
+    testsweeper::ParamEnum< lapack::Job >           jobvr;  // geev
+    testsweeper::ParamEnum< lapack::Job >           jobu;   // svd
+    testsweeper::ParamEnum< lapack::Job >           jobvt;  // svd
+    testsweeper::ParamEnum< lapack::Range >         range;  // heevx
+    testsweeper::ParamEnum< lapack::Norm >          norm;
+    testsweeper::ParamEnum< lapack::MatrixType >    matrixtype; // lascl
+    testsweeper::ParamEnum< lapack::Factored >      factored;   // gesvx
+    testsweeper::ParamEnum< blas::Side >            side;
+    testsweeper::ParamEnum< blas::Uplo >            uplo;
+    testsweeper::ParamEnum< blas::Op >              trans;
+    testsweeper::ParamEnum< blas::Op >              transA;
+    testsweeper::ParamEnum< blas::Op >              transB;
+    testsweeper::ParamEnum< blas::Diag >            diag;
+    testsweeper::ParamEnum< lapack::Direction >     direction;  // larfb
+    testsweeper::ParamEnum< lapack::StoreV >        storev;     // larfb
+    testsweeper::ParamEnum< lapack::Equed >         equed;      // gesvx
 
-    // ----- output parameters
+    //----- routine parameters, numeric
+    testsweeper::ParamInt3    dim;  // m, n, k
+    testsweeper::ParamInt     i;
+    testsweeper::ParamInt     l;
+    testsweeper::ParamInt     ka;
+    testsweeper::ParamInt     kb;
+    testsweeper::ParamInt     kd;
+    testsweeper::ParamInt     kl;
+    testsweeper::ParamInt     ku;
+    testsweeper::ParamInt     nrhs;
+    testsweeper::ParamInt     nb;
+    testsweeper::ParamDouble  vl;
+    testsweeper::ParamDouble  vu;
+    testsweeper::ParamInt     il;
+    testsweeper::ParamInt     iu;
+    testsweeper::ParamInt     il_out;
+    testsweeper::ParamInt     iu_out;
+    testsweeper::ParamDouble  fraction_start;
+    testsweeper::ParamDouble  fraction;
+    testsweeper::ParamComplex alpha;
+    testsweeper::ParamComplex beta;
+    testsweeper::ParamInt     incx;
+    testsweeper::ParamInt     incy;
+    testsweeper::ParamInt     align;
+    testsweeper::ParamInt     device;
+
+    //----- output parameters
     testsweeper::ParamScientific error;
     testsweeper::ParamScientific error2;
     testsweeper::ParamScientific error3;
@@ -115,18 +124,6 @@ public:
     testsweeper::ParamDouble     gbytes;
     testsweeper::ParamInt        iters;
 
-    testsweeper::ParamDouble     time2;
-    testsweeper::ParamDouble     gflops2;
-    testsweeper::ParamDouble     gbytes2;
-
-    testsweeper::ParamDouble     time3;
-    testsweeper::ParamDouble     gflops3;
-    testsweeper::ParamDouble     gbytes3;
-
-    testsweeper::ParamDouble     time4;
-    testsweeper::ParamDouble     gflops4;
-    testsweeper::ParamDouble     gbytes4;
-
     testsweeper::ParamDouble     ref_time;
     testsweeper::ParamDouble     ref_gflops;
     testsweeper::ParamDouble     ref_gbytes;
@@ -136,14 +133,14 @@ public:
     testsweeper::ParamString     msg;
 };
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename T >
 inline T roundup( T x, T y )
 {
     return T( (x + y - 1) / y ) * y;
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 #ifndef assert_throw
     #define assert_throw( expr, exception_type ) \
         try { \
@@ -159,7 +156,7 @@ inline T roundup( T x, T y )
         }
 #endif
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Like assert(), but throws error and is not disabled by NDEBUG.
 inline
 void require_( bool cond, const char* condstr, const char* file, int line )
@@ -172,7 +169,7 @@ void require_( bool cond, const char* condstr, const char* file, int line )
 
 #define require( cond ) require_( (cond), #cond, __FILE__, __LINE__ )
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // LAPACK
 // LU, general
 void test_gesv  ( Params& params, bool run );

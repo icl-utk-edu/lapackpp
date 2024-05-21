@@ -154,7 +154,7 @@ void test_pbrfs_work( Params& params, bool run )
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_pbrfs(
-            uplo2char(uplo), n, kd, nrhs, &AB[0], ldab, &AFB[0], ldafb,
+            to_char( uplo ), n, kd, nrhs, &AB[0], ldab, &AFB[0], ldafb,
             &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {

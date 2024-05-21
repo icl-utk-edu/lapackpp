@@ -29,7 +29,7 @@ void syswapr(
         lapack_error_if( std::abs(i1) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(i2) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int i1_ = (lapack_int) i1;
@@ -54,7 +54,7 @@ void syswapr(
         lapack_error_if( std::abs(i1) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(i2) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int i1_ = (lapack_int) i1;
@@ -79,7 +79,7 @@ void syswapr(
         lapack_error_if( std::abs(i1) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(i2) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int i1_ = (lapack_int) i1;
@@ -134,7 +134,7 @@ void syswapr(
         lapack_error_if( std::abs(i1) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(i2) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int i1_ = (lapack_int) i1;

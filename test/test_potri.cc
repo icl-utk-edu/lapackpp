@@ -136,7 +136,7 @@ void test_potri_work( Params& params, bool run )
 
     if (params.ref() == 'y') {
         // factor A into LL^T
-        info = LAPACKE_potrf( uplo2char(uplo), n, &A_ref[0], lda );
+        info = LAPACKE_potrf( to_char( uplo ), n, &A_ref[0], lda );
         if (info != 0) {
             fprintf( stderr, "LAPACKE_potrf returned error %lld\n", llong( info ) );
         }
@@ -144,7 +144,7 @@ void test_potri_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_potri( uplo2char(uplo), n, &A_ref[0], lda );
+        int64_t info_ref = LAPACKE_potri( to_char( uplo ), n, &A_ref[0], lda );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_potri returned error %lld\n", llong( info_ref ) );

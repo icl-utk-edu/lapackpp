@@ -153,7 +153,7 @@ void test_geev_work( Params& params, bool run )
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
     //printf (" ref start\n");
-        int64_t info_ref = LAPACKE_geev( job2char(jobvl), job2char(jobvr), n, &A_ref[0], lda, &W_ref[0], &VL_ref[0], ldvl, &VR_ref[0], ldvr );
+        int64_t info_ref = LAPACKE_geev( to_char( jobvl ), to_char( jobvr ), n, &A_ref[0], lda, &W_ref[0], &VL_ref[0], ldvl, &VR_ref[0], ldvr );
     //printf (" ref done\n");
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {

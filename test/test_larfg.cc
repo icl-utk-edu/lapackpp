@@ -23,7 +23,7 @@ void test_larfg_work( Params& params, bool run )
     // get & mark input values
     int64_t n = params.dim.n();
     int64_t incx = params.incx();
-    scalar_t alpha_tst = params.alpha();
+    scalar_t alpha_tst = params.alpha.get<scalar_t>();
     scalar_t alpha_ref = alpha_tst;
     int64_t verbose = params.verbose();
 

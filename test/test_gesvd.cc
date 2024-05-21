@@ -138,7 +138,7 @@ void test_gesvd_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_gesvd( job2char(jobu), job2char(jobvt), m, n, &A_ref[0], lda, &S_ref[0], &U_ref[0], ldu, &VT_ref[0], ldvt );
+        int64_t info_ref = LAPACKE_gesvd( to_char( jobu ), to_char( jobvt ), m, n, &A_ref[0], lda, &S_ref[0], &U_ref[0], ldu, &VT_ref[0], ldvt );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gesvd returned error %lld\n", llong( info_ref ) );

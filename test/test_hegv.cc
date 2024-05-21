@@ -180,7 +180,7 @@ void test_hegv_work( Params& params, bool run )
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_hegv(
-                               itype, job2char(jobz), uplo2char(uplo), n,
+                               itype, to_char( jobz ), to_char( uplo ), n,
                                &A[0], lda,
                                &B_ref[0], ldb,
                                &Lambda_ref[0] );

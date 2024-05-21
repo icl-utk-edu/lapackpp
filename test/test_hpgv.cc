@@ -179,7 +179,7 @@ void test_hpgv_work( Params& params, bool run )
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_hpgv(
-                               itype, job2char(jobz), uplo2char(uplo), n,
+                               itype, to_char( jobz ), to_char( uplo ), n,
                                &Apack_ref[0],
                                &Bpack_ref[0],
                                &Lambda_ref[0], &Z[0], ldz );

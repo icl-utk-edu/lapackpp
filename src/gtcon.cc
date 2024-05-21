@@ -30,7 +30,7 @@ int64_t gtcon(
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
+    char norm_ = to_char( norm );
     lapack_int n_ = (lapack_int) n;
     #ifndef LAPACK_ILP64
         // 32-bit copy
@@ -76,7 +76,7 @@ int64_t gtcon(
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
+    char norm_ = to_char( norm );
     lapack_int n_ = (lapack_int) n;
     #ifndef LAPACK_ILP64
         // 32-bit copy
@@ -122,7 +122,7 @@ int64_t gtcon(
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
+    char norm_ = to_char( norm );
     lapack_int n_ = (lapack_int) n;
     #ifndef LAPACK_ILP64
         // 32-bit copy
@@ -222,7 +222,7 @@ int64_t gtcon(
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
+    char norm_ = to_char( norm );
     lapack_int n_ = (lapack_int) n;
     #ifndef LAPACK_ILP64
         // 32-bit copy

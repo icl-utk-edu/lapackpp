@@ -70,7 +70,7 @@ void test_sycon_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_sycon( uplo2char(uplo), n, &A[0], lda, &ipiv_ref[0], anorm, &rcond_ref );
+        int64_t info_ref = LAPACKE_sycon( to_char( uplo ), n, &A[0], lda, &ipiv_ref[0], anorm, &rcond_ref );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_sycon returned error %lld\n", llong( info_ref ) );

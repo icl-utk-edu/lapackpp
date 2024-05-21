@@ -32,8 +32,8 @@ int64_t gesvd(
         lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldvt) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobu_ = job2char( jobu );
-    char jobvt_ = job2char( jobvt );
+    char jobu_ = to_char( jobu );
+    char jobvt_ = to_char( jobvt );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
@@ -91,8 +91,8 @@ int64_t gesvd(
         lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldvt) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobu_ = job2char( jobu );
-    char jobvt_ = job2char( jobvt );
+    char jobu_ = to_char( jobu );
+    char jobvt_ = to_char( jobvt );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
@@ -150,8 +150,8 @@ int64_t gesvd(
         lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldvt) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobu_ = job2char( jobu );
-    char jobvt_ = job2char( jobvt );
+    char jobu_ = to_char( jobu );
+    char jobvt_ = to_char( jobvt );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
@@ -322,8 +322,8 @@ int64_t gesvd(
         lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldvt) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobu_ = job2char( jobu );
-    char jobvt_ = job2char( jobvt );
+    char jobu_ = to_char( jobu );
+    char jobvt_ = to_char( jobvt );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;

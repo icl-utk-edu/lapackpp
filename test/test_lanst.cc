@@ -62,7 +62,7 @@ void test_lanst_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        real_t norm_ref = LAPACKE_lanst( norm2char(norm), n, &D[0], &E[0] );
+        real_t norm_ref = LAPACKE_lanst( to_char( norm ), n, &D[0], &E[0] );
         time = testsweeper::get_wtime() - time;
 
         params.ref_time() = time;

@@ -63,7 +63,7 @@ void test_lantb_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        real_t norm_ref = LAPACKE_lantb( norm2char(norm), uplo2char(uplo), diag2char(diag), n, k, &AB[0], ldab );
+        real_t norm_ref = LAPACKE_lantb( to_char( norm ), to_char( uplo ), to_char( diag ), n, k, &AB[0], ldab );
         time = testsweeper::get_wtime() - time;
 
         params.ref_time() = time;

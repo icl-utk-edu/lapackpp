@@ -38,7 +38,7 @@ int64_t gbbrd(
         lapack_error_if( std::abs(ldpt) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
-    char vect_ = vect2char( vect );
+    char vect_ = to_char( vect );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int ncc_ = (lapack_int) ncc;
@@ -92,7 +92,7 @@ int64_t gbbrd(
         lapack_error_if( std::abs(ldpt) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
-    char vect_ = vect2char( vect );
+    char vect_ = to_char( vect );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int ncc_ = (lapack_int) ncc;
@@ -146,7 +146,7 @@ int64_t gbbrd(
         lapack_error_if( std::abs(ldpt) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
-    char vect_ = vect2char( vect );
+    char vect_ = to_char( vect );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int ncc_ = (lapack_int) ncc;
@@ -287,7 +287,7 @@ int64_t gbbrd(
         lapack_error_if( std::abs(ldpt) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
     }
-    char vect_ = vect2char( vect );
+    char vect_ = to_char( vect );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int ncc_ = (lapack_int) ncc;

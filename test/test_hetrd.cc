@@ -68,7 +68,7 @@ void test_hetrd_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_hetrd( uplo2char(uplo), n, &A_ref[0], lda, &D_ref[0], &E_ref[0], &tau_ref[0] );
+        int64_t info_ref = LAPACKE_hetrd( to_char( uplo ), n, &A_ref[0], lda, &D_ref[0], &E_ref[0], &tau_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_hetrd returned error %lld\n", llong( info_ref ) );

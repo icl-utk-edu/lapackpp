@@ -26,11 +26,11 @@ void tfsm(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    char transr_ = op2char( transr );
-    char side_ = side2char( side );
-    char uplo_ = uplo2char( uplo );
-    char trans_ = op2char( trans );
-    char diag_ = diag2char( diag );
+    char transr_ = to_char( transr );
+    char side_ = to_char( side );
+    char uplo_ = to_char( uplo );
+    char trans_ = to_char( trans );
+    char diag_ = to_char( diag );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int ldb_ = (lapack_int) ldb;
@@ -54,11 +54,11 @@ void tfsm(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    char transr_ = op2char( transr );
-    char side_ = side2char( side );
-    char uplo_ = uplo2char( uplo );
-    char trans_ = op2char( trans );
-    char diag_ = diag2char( diag );
+    char transr_ = to_char( transr );
+    char side_ = to_char( side );
+    char uplo_ = to_char( uplo );
+    char trans_ = to_char( trans );
+    char diag_ = to_char( diag );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int ldb_ = (lapack_int) ldb;
@@ -82,11 +82,11 @@ void tfsm(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    char transr_ = op2char( transr );
-    char side_ = side2char( side );
-    char uplo_ = uplo2char( uplo );
-    char trans_ = op2char( trans );
-    char diag_ = diag2char( diag );
+    char transr_ = to_char( transr );
+    char side_ = to_char( side );
+    char uplo_ = to_char( uplo );
+    char trans_ = to_char( trans );
+    char diag_ = to_char( diag );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int ldb_ = (lapack_int) ldb;
@@ -111,11 +111,11 @@ void tfsm(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    char transr_ = op2char( transr );
-    char side_ = side2char( side );
-    char uplo_ = uplo2char( uplo );
-    char trans_ = op2char( trans );
-    char diag_ = diag2char( diag );
+    char transr_ = to_char( transr );
+    char side_ = to_char( side );
+    char uplo_ = to_char( uplo );
+    char trans_ = to_char( trans );
+    char diag_ = to_char( diag );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int ldb_ = (lapack_int) ldb;

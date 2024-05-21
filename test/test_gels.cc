@@ -87,7 +87,7 @@ void test_gels_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_gels( op2char(trans), m, n, nrhs, &A_ref[0], lda, &B_ref[0], ldb );
+        int64_t info_ref = LAPACKE_gels( to_char( trans ), m, n, nrhs, &A_ref[0], lda, &B_ref[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gels returned error %lld\n", llong( info_ref ) );

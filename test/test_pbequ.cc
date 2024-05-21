@@ -78,7 +78,7 @@ void test_pbequ_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_pbequ( uplo2char(uplo), n, kd, &AB[0], ldab, &S_ref[0], &scond_ref, &amax_ref );
+        int64_t info_ref = LAPACKE_pbequ( to_char( uplo ), n, kd, &AB[0], ldab, &S_ref[0], &scond_ref, &amax_ref );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_pbequ returned error %lld\n", llong( info_ref ) );

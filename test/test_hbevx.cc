@@ -147,7 +147,7 @@ void test_hbevx_work( Params& params, bool run )
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_hbevx(
-                               job2char(jobz), range2char(range), uplo2char(uplo),
+                               to_char( jobz ), to_char( range ), to_char( uplo ),
                                n, kd,
                                &Aband_ref[0], lda,
                                &Q[0], ldq,

@@ -27,7 +27,7 @@ float lange(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
+    char norm_ = to_char( norm );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
@@ -57,7 +57,7 @@ double lange(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
+    char norm_ = to_char( norm );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
@@ -87,7 +87,7 @@ float lange(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
+    char norm_ = to_char( norm );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
@@ -144,7 +144,7 @@ double lange(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
+    char norm_ = to_char( norm );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;

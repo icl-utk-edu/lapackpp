@@ -60,7 +60,7 @@ void test_lantp_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        real_t norm_ref = LAPACKE_lantp( norm2char(norm), uplo2char(uplo), diag2char(diag), n, &AP[0] );
+        real_t norm_ref = LAPACKE_lantp( to_char( norm ), to_char( uplo ), to_char( diag ), n, &AP[0] );
         time = testsweeper::get_wtime() - time;
 
         params.ref_time() = time;

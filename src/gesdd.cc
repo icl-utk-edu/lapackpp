@@ -32,7 +32,7 @@ int64_t gesdd(
         lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldvt) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobz_ = job2char( jobz );
+    char jobz_ = to_char( jobz );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
@@ -94,7 +94,7 @@ int64_t gesdd(
         lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldvt) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobz_ = job2char( jobz );
+    char jobz_ = to_char( jobz );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
@@ -156,7 +156,7 @@ int64_t gesdd(
         lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldvt) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobz_ = job2char( jobz );
+    char jobz_ = to_char( jobz );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
@@ -341,7 +341,7 @@ int64_t gesdd(
         lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldvt) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobz_ = job2char( jobz );
+    char jobz_ = to_char( jobz );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;

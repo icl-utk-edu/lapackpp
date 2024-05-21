@@ -36,7 +36,7 @@ int64_t pbrfs(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int kd_ = (lapack_int) kd;
     lapack_int nrhs_ = (lapack_int) nrhs;
@@ -88,7 +88,7 @@ int64_t pbrfs(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int kd_ = (lapack_int) kd;
     lapack_int nrhs_ = (lapack_int) nrhs;
@@ -140,7 +140,7 @@ int64_t pbrfs(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int kd_ = (lapack_int) kd;
     lapack_int nrhs_ = (lapack_int) nrhs;
@@ -270,7 +270,7 @@ int64_t pbrfs(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int kd_ = (lapack_int) kd;
     lapack_int nrhs_ = (lapack_int) nrhs;

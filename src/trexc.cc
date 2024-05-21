@@ -29,7 +29,7 @@ int64_t trexc(
         lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
     }
-    char compq_ = job_comp2char( compq );
+    char compq_ = to_char_comp( compq );
     lapack_int n_ = (lapack_int) n;
     lapack_int ldt_ = (lapack_int) ldt;
     lapack_int ldq_ = (lapack_int) ldq;
@@ -68,7 +68,7 @@ int64_t trexc(
         lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
     }
-    char compq_ = job_comp2char( compq );
+    char compq_ = to_char_comp( compq );
     lapack_int n_ = (lapack_int) n;
     lapack_int ldt_ = (lapack_int) ldt;
     lapack_int ldq_ = (lapack_int) ldq;
@@ -107,7 +107,7 @@ int64_t trexc(
         lapack_error_if( std::abs(ifst) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ilst) > std::numeric_limits<lapack_int>::max() );
     }
-    char compq_ = job_comp2char( compq );
+    char compq_ = to_char_comp( compq );
     lapack_int n_ = (lapack_int) n;
     lapack_int ldt_ = (lapack_int) ldt;
     lapack_int ldq_ = (lapack_int) ldq;
@@ -140,7 +140,7 @@ int64_t trexc(
         lapack_error_if( std::abs(ifst) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ilst) > std::numeric_limits<lapack_int>::max() );
     }
-    char compq_ = job_comp2char( compq );
+    char compq_ = to_char_comp( compq );
     lapack_int n_ = (lapack_int) n;
     lapack_int ldt_ = (lapack_int) ldt;
     lapack_int ldq_ = (lapack_int) ldq;

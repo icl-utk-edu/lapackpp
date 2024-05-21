@@ -69,7 +69,7 @@ void test_lanhe_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        real_t norm_ref = LAPACKE_lanhe( norm2char(norm), uplo2char(uplo), n, &A[0], lda );
+        real_t norm_ref = LAPACKE_lanhe( to_char( norm ), to_char( uplo ), n, &A[0], lda );
         time = testsweeper::get_wtime() - time;
 
         params.ref_time() = time;

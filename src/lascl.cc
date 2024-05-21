@@ -28,7 +28,7 @@ int64_t lascl(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char matrixtype_ = matrixtype2char( matrixtype );
+    char matrixtype_ = to_char( matrixtype );
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;
     lapack_int m_ = (lapack_int) m;
@@ -60,7 +60,7 @@ int64_t lascl(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char matrixtype_ = matrixtype2char( matrixtype );
+    char matrixtype_ = to_char( matrixtype );
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;
     lapack_int m_ = (lapack_int) m;
@@ -92,7 +92,7 @@ int64_t lascl(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char matrixtype_ = matrixtype2char( matrixtype );
+    char matrixtype_ = to_char( matrixtype );
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;
     lapack_int m_ = (lapack_int) m;
@@ -197,7 +197,7 @@ int64_t lascl(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char matrixtype_ = matrixtype2char( matrixtype );
+    char matrixtype_ = to_char( matrixtype );
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;
     lapack_int m_ = (lapack_int) m;

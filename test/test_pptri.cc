@@ -77,7 +77,7 @@ void test_pptri_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_pptri( uplo2char(uplo), n, &AP_ref[0] );
+        int64_t info_ref = LAPACKE_pptri( to_char( uplo ), n, &AP_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_pptri returned error %lld\n", llong( info_ref ) );

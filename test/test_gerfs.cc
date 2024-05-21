@@ -97,7 +97,7 @@ void test_gerfs_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_gerfs( op2char(trans), n, nrhs, &A[0], lda, &AF[0], lda, &ipiv_ref[0], &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
+        int64_t info_ref = LAPACKE_gerfs( to_char( trans ), n, nrhs, &A[0], lda, &AF[0], lda, &ipiv_ref[0], &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gerfs returned error %lld\n", llong( info_ref ) );

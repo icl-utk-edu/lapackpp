@@ -32,8 +32,8 @@ int64_t bdsdc(
         lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldvt) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
-    char compq_ = job_comp2char( compq );
+    char uplo_ = to_char( uplo );
+    char compq_ = to_char_comp( compq );
     lapack_int n_ = (lapack_int) n;
     lapack_int ldu_ = (lapack_int) ldu;
     lapack_int ldvt_ = (lapack_int) ldvt;
@@ -198,8 +198,8 @@ int64_t bdsdc(
         lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldvt) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
-    char compq_ = job_comp2char( compq );
+    char uplo_ = to_char( uplo );
+    char compq_ = to_char_comp( compq );
     lapack_int n_ = (lapack_int) n;
     lapack_int ldu_ = (lapack_int) ldu;
     lapack_int ldvt_ = (lapack_int) ldvt;

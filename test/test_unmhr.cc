@@ -89,7 +89,7 @@ void test_unmhr_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_unmhr( side2char(side), op2char(trans), m, n, ilo, ihi, &A[0], lda, &tau[0], &C_ref[0], ldc );
+        int64_t info_ref = LAPACKE_unmhr( to_char( side ), to_char( trans ), m, n, ilo, ihi, &A[0], lda, &tau[0], &C_ref[0], ldc );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_unmhr returned error %lld\n", llong( info_ref ) );

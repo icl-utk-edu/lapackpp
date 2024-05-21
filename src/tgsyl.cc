@@ -39,7 +39,7 @@ int64_t tgsyl(
         lapack_error_if( std::abs(lde) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldf) > std::numeric_limits<lapack_int>::max() );
     }
-    char trans_ = op2char( trans );
+    char trans_ = to_char( trans );
     lapack_int ijob_ = (lapack_int) ijob;
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
@@ -116,7 +116,7 @@ int64_t tgsyl(
         lapack_error_if( std::abs(lde) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldf) > std::numeric_limits<lapack_int>::max() );
     }
-    char trans_ = op2char( trans );
+    char trans_ = to_char( trans );
     lapack_int ijob_ = (lapack_int) ijob;
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
@@ -193,7 +193,7 @@ int64_t tgsyl(
         lapack_error_if( std::abs(lde) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldf) > std::numeric_limits<lapack_int>::max() );
     }
-    char trans_ = op2char( trans );
+    char trans_ = to_char( trans );
     lapack_int ijob_ = (lapack_int) ijob;
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
@@ -270,7 +270,7 @@ int64_t tgsyl(
         lapack_error_if( std::abs(lde) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldf) > std::numeric_limits<lapack_int>::max() );
     }
-    char trans_ = op2char( trans );
+    char trans_ = to_char( trans );
     lapack_int ijob_ = (lapack_int) ijob;
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;

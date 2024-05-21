@@ -23,9 +23,9 @@ int64_t tftri(
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    char transr_ = op2char( transr );
-    char uplo_ = uplo2char( uplo );
-    char diag_ = diag2char( diag );
+    char transr_ = to_char( transr );
+    char uplo_ = to_char( uplo );
+    char diag_ = to_char( diag );
     lapack_int n_ = (lapack_int) n;
     lapack_int info_ = 0;
 
@@ -48,9 +48,9 @@ int64_t tftri(
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    char transr_ = op2char( transr );
-    char uplo_ = uplo2char( uplo );
-    char diag_ = diag2char( diag );
+    char transr_ = to_char( transr );
+    char uplo_ = to_char( uplo );
+    char diag_ = to_char( diag );
     lapack_int n_ = (lapack_int) n;
     lapack_int info_ = 0;
 
@@ -73,9 +73,9 @@ int64_t tftri(
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    char transr_ = op2char( transr );
-    char uplo_ = uplo2char( uplo );
-    char diag_ = diag2char( diag );
+    char transr_ = to_char( transr );
+    char uplo_ = to_char( uplo );
+    char diag_ = to_char( diag );
     lapack_int n_ = (lapack_int) n;
     lapack_int info_ = 0;
 
@@ -98,9 +98,9 @@ int64_t tftri(
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    char transr_ = op2char( transr );
-    char uplo_ = uplo2char( uplo );
-    char diag_ = diag2char( diag );
+    char transr_ = to_char( transr );
+    char uplo_ = to_char( uplo );
+    char diag_ = to_char( diag );
     lapack_int n_ = (lapack_int) n;
     lapack_int info_ = 0;
 

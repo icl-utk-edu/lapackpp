@@ -17,20 +17,6 @@
 // from config, we need only lapack_logical for callback functions lapack_*_select*
 #include "lapack/config.h"
 
-#if __cplusplus >= 201402 // C++14
-    //#pragma message "LAPACK_DEPRECATED: [[deprecated]]"
-    #define LAPACK_DEPRECATED(msg) [[deprecated(msg)]]
-#elif defined(_MSC_VER)
-    //#pragma message "LAPACK_DEPRECATED: __declspec"
-    #define LAPACK_DEPRECATED(msg) __declspec(deprecated(msg))
-#elif defined(__GNUC__)
-    //#pragma message "LAPACK_DEPRECATED: __attribute__"
-    #define LAPACK_DEPRECATED(msg) __attribute__((deprecated(msg)))
-#else
-    //#pragma message "LAPACK_DEPRECATED: none"
-    #define LAPACK_DEPRECATED(msg)
-#endif
-
 namespace lapack {
 
 // -----------------------------------------------------------------------------
@@ -179,11 +165,11 @@ typedef lapack_logical (*lapack_z_select1) ( std::complex<double> const* omega )
 typedef lapack_logical (*lapack_z_select2) ( std::complex<double> const* alpha, std::complex<double> const* beta );
 
 // =============================================================================
-typedef blas::Layout Layout;
-typedef blas::Op Op;
-typedef blas::Uplo Uplo;
-typedef blas::Diag Diag;
-typedef blas::Side Side;
+using blas::Layout;
+using blas::Op;
+using blas::Uplo;
+using blas::Diag;
+using blas::Side;
 
 // -----------------------------------------------------------------------------
 // like blas::side, but adds Both for trevc
@@ -193,14 +179,16 @@ enum class Sides : char {
     Both  = 'B',  B = 'B',
 };
 
-inline char sides2char( Sides sides )
+extern const char* Sides_help;
+
+inline char to_char( Sides value )
 {
-    return char(sides);
+    return char( value );
 }
 
-inline const char* sides2str( Sides sides )
+inline const char* to_c_string( Sides value )
 {
-    switch (sides) {
+    switch (value) {
         case Sides::Left:  return "left";
         case Sides::Right: return "right";
         case Sides::Both:  return "both";
@@ -208,11 +196,45 @@ inline const char* sides2str( Sides sides )
     return "?";
 }
 
-inline Sides char2sides( char sides )
+inline std::string to_string( Sides value )
 {
-    sides = (char) toupper( sides );
-    assert( sides == 'L' || sides == 'R' || sides == 'B' );
-    return Sides( sides );
+    return to_c_string( value );
+}
+
+inline void from_string( std::string const& str, Sides* val )
+{
+    std::string str_ = str;
+    std::transform( str_.begin(), str_.end(), str_.begin(), ::tolower );
+
+    if (str_ == "l" || str_ == "left")
+        *val = Sides::Left;
+    else if (str_ == "r" || str_ == "right")
+        *val = Sides::Right;
+    else if (str_ == "b" || str_ == "both")
+        *val = Sides::Both;
+    else
+        throw Error( "unknown Sides: " + str );
+}
+
+//--------------------
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char sides2char( Sides value )
+{
+    return char( value );
+}
+
+[[deprecated("use to_string or to_c_string. To be removed 2025-05.")]]
+inline const char* sides2str( Sides value )
+{
+    return to_c_string( value );
+}
+
+[[deprecated("use from_string. To be removed 2025-05.")]]
+inline Sides char2sides( char ch )
+{
+    Sides val;
+    from_string( std::string( 1, ch ), &val );
+    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -224,26 +246,16 @@ enum class Norm : char {
     Max = 'M',
 };
 
-inline char norm2char( lapack::Norm norm )
+extern const char* Norm_help;
+
+inline char to_char( Norm value )
 {
-    return char( norm );
+    return char( value );
 }
 
-inline lapack::Norm char2norm( char norm )
+inline const char* to_c_string( Norm value )
 {
-    norm = char( toupper( norm ));
-    if (norm == 'O')
-        norm = '1';
-    else if (norm == 'E')
-        norm = 'F';
-    lapack_error_if( norm != '1' && norm != '2' && norm != 'I' &&
-                     norm != 'F' && norm != 'M' );
-    return lapack::Norm( norm );
-}
-
-inline const char* norm2str( lapack::Norm norm )
-{
-    switch (norm) {
+    switch (value) {
         case Norm::One: return "1";
         case Norm::Two: return "2";
         case Norm::Inf: return "inf";
@@ -252,6 +264,56 @@ inline const char* norm2str( lapack::Norm norm )
     }
     return "?";
 }
+
+inline std::string to_string( Norm value )
+{
+    return to_c_string( value );
+}
+
+inline void from_string( std::string const& str, Norm* val )
+{
+    std::string str_ = str;
+    std::transform( str_.begin(), str_.end(), str_.begin(), ::tolower );
+
+    if (str_ == "1" || str_ == "o" || str_ == "one")
+        *val = Norm::One;
+    else if (str_ == "2" || str_ == "two")
+        *val = Norm::Two;
+    else if (str_ == "i" || str_ == "inf")
+        *val = Norm::Inf;
+    else if (str_ == "f" || str_ == "fro")
+        *val = Norm::Fro;
+    else if (str_ == "m" || str_ == "max")
+        *val = Norm::Max;
+    else
+        throw Error( "unknown Norm: " + str );
+}
+
+//--------------------
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char norm2char( Norm value )
+{
+    return char( value );
+}
+
+[[deprecated("use to_string or to_c_string. To be removed 2025-05.")]]
+inline const char* norm2str( Norm value )
+{
+    return to_c_string( value );
+}
+
+[[deprecated("use from_string. To be removed 2025-05.")]]
+inline Norm char2norm( char ch )
+{
+    Norm val;
+    from_string( std::string( 1, ch ), &val );
+    return val;
+}
+
+//------------------------------------------------------------------------------
+// itype is integer, 1, 2, 3.
+// sygv
+extern const char* itype_help;
 
 // -----------------------------------------------------------------------------
 // Job for computing eigenvectors and singular vectors
@@ -271,118 +333,192 @@ enum class Job : char {
     Workspace    = 'W',  // gejsv
 };
 
-inline char job2char( lapack::Job job )
+extern const char* Job_eig_help;
+extern const char* Job_eig_left_help;
+extern const char* Job_eig_right_help;
+extern const char* Job_svd_left_help;
+extern const char* Job_svd_right_help;
+
+inline char to_char( Job value )
 {
-    return char( job );
+    return char( value );
 }
 
 // custom maps
 // bbcsd, orcsd2by1
-inline char job_csd2char( lapack::Job job )
+inline char to_char_csd( Job value )
 {
-    switch (job) {
-        case lapack::Job::Vec:          return 'Y';  // orcsd
-        case lapack::Job::UpdateVec:    return 'Y';  // bbcsd
-        default: return char( job );
+    switch (value) {
+        case Job::Vec:          return 'Y';  // orcsd
+        case Job::UpdateVec:    return 'Y';  // bbcsd
+        default: return char( value );
     }
 }
 
 // bdsdc, gghrd, hgeqz, hseqr, pteqr, stedc, steqr, tgsja, trexc, trsen
-inline char job_comp2char( lapack::Job job )
+inline char to_char_comp( Job value )
 {
-    switch (job) {
-        case lapack::Job::Vec:          return 'I';
-        case lapack::Job::UpdateVec:    return 'V';
-        default: return char( job );
+    switch (value) {
+        case Job::Vec:          return 'I';
+        case Job::UpdateVec:    return 'V';
+        default: return char( value );
     }
 }
 
 // tgsja
-inline char job_compu2char( lapack::Job job )
+inline char to_char_compu( Job value )
 {
-    switch (job) {
-        case lapack::Job::Vec:          return 'I';
-        case lapack::Job::UpdateVec:    return 'U';
-        default: return char( job );
+    switch (value) {
+        case Job::Vec:          return 'I';
+        case Job::UpdateVec:    return 'U';
+        default: return char( value );
     }
 }
 
 // tgsja
-inline char job_compq2char( lapack::Job job )
+inline char to_char_compq( Job value )
 {
-    switch (job) {
-        case lapack::Job::Vec:          return 'I';
-        case lapack::Job::UpdateVec:    return 'Q';
-        default: return char( job );
+    switch (value) {
+        case Job::Vec:          return 'I';
+        case Job::UpdateVec:    return 'Q';
+        default: return char( value );
     }
 }
 
 // ggsvd3, ggsvp3
-inline char jobu2char( lapack::Job job )
+inline char to_char_jobu( Job value )
 {
-    switch (job) {
-        case lapack::Job::Vec:          return 'U';
-        default: return char( job );
+    switch (value) {
+        case Job::Vec:          return 'U';
+        default: return char( value );
     }
 }
 
 // ggsvd3, ggsvp3
-inline char jobq2char( lapack::Job job )
+inline char to_char_jobq( Job value )
 {
-    switch (job) {
-        case lapack::Job::Vec:          return 'Q';
-        default: return char( job );
+    switch (value) {
+        case Job::Vec:          return 'Q';
+        default: return char( value );
     }
 }
 
-// gejsva
-inline char jobu_gejsv2char( lapack::Job job )
+// gejsv
+inline char to_char_gejsv( Job value )
 {
-    switch (job) {
-        case lapack::Job::SomeVec:      return 'U';
-        case lapack::Job::AllVec:       return 'F';
-        default: return char( job );
+    switch (value) {
+        case Job::SomeVec:      return 'U';
+        case Job::AllVec:       return 'F';
+        default: return char( value );
     }
 }
 
 // gesvj
-inline char job_gesvj2char( lapack::Job job )
+inline char to_char_gesvj( Job value )
 {
-    switch (job) {
-        case lapack::Job::SomeVec:      return 'U';  // jobu
-        case lapack::Job::SomeVecTol:   return 'C';  // jobu
-        case lapack::Job::UpdateVec:    return 'U';  // jobv
-        default: return char( job );
+    switch (value) {
+        case Job::SomeVec:      return 'U';  // jobu
+        case Job::SomeVecTol:   return 'C';  // jobu
+        case Job::UpdateVec:    return 'U';  // jobv
+        default: return char( value );
     }
 }
 
-inline lapack::Job char2job( char job )
+inline const char* to_c_string( Job value )
 {
-    job = char( toupper( job ));
-    lapack_error_if( job != 'N' && job != 'V' && job != 'U' &&
-                     job != 'A' && job != 'S' && job != 'O' &&
-                     job != 'P' && job != 'C' && job != 'J' &&
-                     job != 'W' );
-    return lapack::Job( job );
-}
+    switch (value) {
+        case Job::NoVec:        return "novec";
+        case Job::Vec:          return "vec";
+        case Job::UpdateVec:    return "update";
 
-inline const char* job2str( lapack::Job job )
-{
-    switch (job) {
-        case lapack::Job::NoVec:        return "novec";
-        case lapack::Job::Vec:          return "vec";
-        case lapack::Job::UpdateVec:    return "update";
+        case Job::AllVec:       return "all";
+        case Job::SomeVec:      return "some";
+        case Job::OverwriteVec: return "overwrite";
 
-        case lapack::Job::AllVec:       return "all";
-        case lapack::Job::SomeVec:      return "some";
-        case lapack::Job::OverwriteVec: return "overwrite";
-
-        case lapack::Job::CompactVec:   return "compact";
-        case lapack::Job::SomeVecTol:   return "sometol";
-        case lapack::Job::VecJacobi:    return "jacobi";
-        case lapack::Job::Workspace:    return "work";
+        case Job::CompactVec:   return "compact";
+        case Job::SomeVecTol:   return "sometol";
+        case Job::VecJacobi:    return "jacobi";
+        case Job::Workspace:    return "work";
     }
     return "?";
+}
+
+inline std::string to_string( Job value )
+{
+    return to_c_string( value );
+}
+
+inline void from_string( std::string const& str, Job* val )
+{
+    std::string str_ = str;
+    std::transform( str_.begin(), str_.end(), str_.begin(), ::tolower );
+
+    if (str_ == "n" || str_ == "novec")
+        *val = Job::NoVec;
+    else if (str_ == "v" || str_ == "vec")
+        *val = Job::Vec;
+    else if (str_ == "u" || str_ == "update" || str_ == "updatevec")
+        *val = Job::UpdateVec;
+
+    else if (str_ == "a" || str_ == "all" || str_ == "allvec")
+        *val = Job::AllVec;
+    else if (str_ == "s" || str_ == "some" || str_ == "somevec")
+        *val = Job::SomeVec;
+    else if (str_ == "o" || str_ == "overwrite" || str_ == "overwritevec")
+        *val = Job::OverwriteVec;
+
+    else if (str_ == "p" || str_ == "compact" || str_ == "compactvec")
+        *val = Job::CompactVec;
+    else if (str_ == "c" || str_ == "somevectol")
+        *val = Job::SomeVecTol;
+    else if (str_ == "j" || str_ == "jacobi")
+        *val = Job::VecJacobi;
+    else if (str_ == "w" || str_ == "workspace")
+        *val = Job::Workspace;
+    else
+        throw Error( "unknown Job: " + str );
+}
+
+//--------------------
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char job2char       ( Job value ) { return to_char      ( value ); }
+
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char job_csd2char   ( Job value ) { return to_char_csd  ( value ); }
+
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char job_comp2char  ( Job value ) { return to_char_comp ( value ); }
+
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char job_compu2char ( Job value ) { return to_char_compu( value ); }
+
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char job_compq2char ( Job value ) { return to_char_compq( value ); }
+
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char jobu2char      ( Job value ) { return to_char_jobu ( value ); }
+
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char jobq2char      ( Job value ) { return to_char_jobq ( value ); }
+
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char jobu_gejsv2char( Job value ) { return to_char_gejsv( value ); }
+
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char job_gesvj2char ( Job value ) { return to_char_gesvj( value ); }
+
+[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
+inline const char* job2str( Job value )
+{
+    return to_c_string( value );
+}
+
+[[deprecated("use from_string. To be removed 2025-05.")]]
+inline Job char2job( char ch )
+{
+    Job val;
+    from_string( std::string( 1, ch ), &val );
+    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -392,25 +528,59 @@ enum class JobSchur : char {
     Schur        = 'S',
 };
 
-inline char jobschur2char( lapack::JobSchur jobschur )
+extern const char* JobSchur_help;
+
+inline char to_char( JobSchur value )
 {
-    return char( jobschur );
+    return char( value );
 }
 
-inline lapack::JobSchur char2jobschur( char jobschur )
+inline const char* to_c_string( JobSchur value )
 {
-    jobschur = char( toupper( jobschur ));
-    lapack_error_if( jobschur != 'E' && jobschur != 'S' );
-    return lapack::JobSchur( jobschur );
-}
-
-inline const char* jobschur2str( lapack::JobSchur jobschur )
-{
-    switch (jobschur) {
-        case lapack::JobSchur::Eigenvalues: return "eigval";
-        case lapack::JobSchur::Schur:       return "schur";
+    switch (value) {
+        case JobSchur::Eigenvalues: return "eigval";
+        case JobSchur::Schur:       return "schur";
     }
     return "?";
+}
+
+inline std::string to_string( JobSchur value )
+{
+    return to_c_string( value );
+}
+
+inline void from_string( std::string const& str, JobSchur* val )
+{
+    std::string str_ = str;
+    std::transform( str_.begin(), str_.end(), str_.begin(), ::tolower );
+
+    if (str_ == "e" || str_ == "eigval")
+        *val = JobSchur::Eigenvalues;
+    else if (str_ == "s" || str_ == "schur")
+        *val = JobSchur::Schur;
+    else
+        throw Error( "unknown JobSchur: " + str );
+}
+
+//--------------------
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char jobschur2char( JobSchur value )
+{
+    return char( value );
+}
+
+[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
+inline const char* jobschur2str( JobSchur value )
+{
+    return to_c_string( value );
+}
+
+[[deprecated("use from_string. To be removed 2025-05.")]]
+inline JobSchur char2jobschur( char ch )
+{
+    JobSchur val;
+    from_string( std::string( 1, ch ), &val );
+    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -421,25 +591,60 @@ enum class Sort : char {
     Sorted      = 'S',
 };
 
-inline char sort2char( lapack::Sort sort )
+extern const char* Sort_help;
+
+//--------------------
+inline char to_char( Sort value )
+{
+    return char( value );
+}
+
+inline const char* to_c_string( Sort value )
+{
+    switch (value) {
+        case Sort::NotSorted: return "notsorted";
+        case Sort::Sorted:    return "sorted";
+    }
+    return "?";
+}
+
+inline std::string to_string( Sort value )
+{
+    return to_c_string( value );
+}
+
+inline void from_string( std::string const& str, Sort* val )
+{
+    std::string str_ = str;
+    std::transform( str_.begin(), str_.end(), str_.begin(), ::tolower );
+
+    if (str_ == "n" || str_ == "notsorted")
+        *val = Sort::NotSorted;
+    else if (str_ == "s" || str_ == "sorted")
+        *val = Sort::Sorted;
+    else
+        throw Error( "unknown Sort: " + str );
+}
+
+//--------------------
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char sort2char( Sort sort )
 {
     return char( sort );
 }
 
-inline lapack::Sort char2sort( char sort )
+[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
+inline const char* sort2str( Sort value )
 {
-    sort = char( toupper( sort ));
-    lapack_error_if( sort != 'N' && sort != 'S' );
-    return lapack::Sort( sort );
+    return to_c_string( value );
 }
 
-inline const char* sort2str( lapack::Sort sort )
+[[deprecated("use from_string. To be removed 2025-05.")]]
+inline Sort char2sort( char ch )
 {
-    switch (sort) {
-        case lapack::Sort::NotSorted: return "not-sorted";
-        case lapack::Sort::Sorted:    return "sorted";
-    }
-    return "?";
+    Sort val;
+    from_string( std::string( 1, ch ), &val );
+    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -450,26 +655,63 @@ enum class Range : char {
     Index       = 'I',
 };
 
-inline char range2char( lapack::Range range )
+extern const char* Range_help;
+
+//--------------------
+inline char to_char( Range value )
+{
+    return char( value );
+}
+
+inline const char* to_c_string( Range value )
+{
+    switch (value) {
+        case Range::All:   return "all";
+        case Range::Value: return "value";
+        case Range::Index: return "index";
+    }
+    return "?";
+}
+
+inline std::string to_string( Range value )
+{
+    return to_c_string( value );
+}
+
+inline void from_string( std::string const& str, Range* val )
+{
+    std::string str_ = str;
+    std::transform( str_.begin(), str_.end(), str_.begin(), ::tolower );
+
+    if (str_ == "a" || str_ == "all")
+        *val = Range::All;
+    else if (str_ == "v" || str_ == "value")
+        *val = Range::Value;
+    else if (str_ == "i" || str_ == "index")
+        *val = Range::Index;
+    else
+        throw Error( "unknown Range: " + str );
+}
+
+//--------------------
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char range2char( Range range )
 {
     return char( range );
 }
 
-inline lapack::Range char2range( char range )
+[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
+inline const char* range2str( Range value )
 {
-    range = char( toupper( range ));
-    lapack_error_if( range != 'A' && range != 'V' && range != 'I' );
-    return lapack::Range( range );
+    return to_c_string( value );
 }
 
-inline const char* range2str( lapack::Range range )
+[[deprecated("use from_string. To be removed 2025-05.")]]
+inline Range char2range( char ch )
 {
-    switch (range) {
-        case lapack::Range::All:   return "all";
-        case lapack::Range::Value: return "value";
-        case lapack::Range::Index: return "index";
-    }
-    return "?";
+    Range val;
+    from_string( std::string( 1, ch ), &val );
+    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -480,27 +722,66 @@ enum class Vect : char {
     Both        = 'B',  // orgbr, ormbr, gbbrd
 };
 
-inline char vect2char( lapack::Vect vect )
+extern const char* Vect_help;
+
+//--------------------
+inline char to_char( Vect value )
 {
-    return char( vect );
+    return char( value );
 }
 
-inline lapack::Vect char2vect( char vect )
+inline const char* to_c_string( Vect value )
 {
-    vect = char( toupper( vect ));
-    lapack_error_if( vect != 'Q' && vect != 'P' && vect != 'N' && vect != 'B' );
-    return lapack::Vect( vect );
-}
-
-inline const char* vect2str( lapack::Vect vect )
-{
-    switch (vect) {
-        case lapack::Vect::P:    return "p";
-        case lapack::Vect::Q:    return "q";
-        case lapack::Vect::None: return "none";
-        case lapack::Vect::Both: return "both";
+    switch (value) {
+        case Vect::P:    return "p";
+        case Vect::Q:    return "q";
+        case Vect::None: return "none";
+        case Vect::Both: return "both";
     }
     return "?";
+}
+
+inline std::string to_string( Vect value )
+{
+    return to_c_string( value );
+}
+
+inline void from_string( std::string const& str, Vect* val )
+{
+    std::string str_ = str;
+    std::transform( str_.begin(), str_.end(), str_.begin(), ::tolower );
+
+    if (str_ == "q")
+        *val = Vect::Q;
+    else if (str_ == "p")
+        *val = Vect::P;
+    else if (str_ == "n" || str_ == "none")
+        *val = Vect::None;
+    else if (str_ == "b" || str_ == "both")
+        *val = Vect::Both;
+    else
+        throw Error( "unknown Vect: " + str );
+}
+
+//--------------------
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char vect2char( Vect value )
+{
+    return char( value );
+}
+
+[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
+inline const char* vect2str( Vect value )
+{
+    return to_c_string( value );
+}
+
+[[deprecated("use from_string. To be removed 2025-05.")]]
+inline Vect char2vect( char ch )
+{
+    Vect val;
+    from_string( std::string( 1, ch ), &val );
+    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -510,47 +791,60 @@ enum class Direction : char {
     Backward    = 'B',
 };
 
-inline char direction2char( lapack::Direction direction )
+extern const char* Direction_help;
+
+//--------------------
+inline char to_char( Direction value )
 {
-    return char( direction );
+    return char( value );
 }
 
-inline lapack::Direction char2direction( char direction )
+inline const char* to_c_string( Direction value )
 {
-    direction = char( toupper( direction ));
-    lapack_error_if( direction != 'F' && direction != 'B' );
-    return lapack::Direction( direction );
-}
-
-inline const char* direction2str( lapack::Direction direction )
-{
-    switch (direction) {
-        case lapack::Direction::Forward:  return "forward";
-        case lapack::Direction::Backward: return "backward";
+    switch (value) {
+        case Direction::Forward:  return "forward";
+        case Direction::Backward: return "backward";
     }
     return "?";
 }
 
-// Deprecated in 2020.03.00; remove after 2021.03.00.
-LAPACK_DEPRECATED("Direct replaced with Direction")
-typedef Direction Direct;
-
-LAPACK_DEPRECATED("direct2char replaced with direction2char")
-inline char direct2char( lapack::Direction direction )
+inline std::string to_string( Direction value )
 {
-    return direction2char( direction );
+    return to_c_string( value );
 }
 
-LAPACK_DEPRECATED("direct2str replaced with direction2str")
-inline const char* direct2str( lapack::Direction direction )
+inline void from_string( std::string const& str, Direction* val )
 {
-    return direction2str( direction );
+    std::string str_ = str;
+    std::transform( str_.begin(), str_.end(), str_.begin(), ::tolower );
+
+    if (str_ == "f" || str_ == "forward")
+        *val = Direction::Forward;
+    else if (str_ == "b" || str_ == "backward")
+        *val = Direction::Backward;
+    else
+        throw Error( "unknown Direction: " + str );
 }
 
-LAPACK_DEPRECATED("char2direct replaced with char2direction")
-inline lapack::Direction char2direct( char direction )
+//--------------------
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char direction2char( Direction value )
 {
-    return char2direction( direction );
+    return char( value );
+}
+
+[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
+inline const char* direction2str( Direction value )
+{
+    return to_c_string( value );
+}
+
+[[deprecated("use from_string. To be removed 2025-05.")]]
+inline Direction char2direction( char ch )
+{
+    Direction val;
+    from_string( std::string( 1, ch ), &val );
+    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -560,25 +854,61 @@ enum class StoreV : char {
     Rowwise     = 'R',
 };
 
-inline char storev2char( lapack::StoreV storev )
+extern const char* StoreV_help;
+
+//--------------------
+inline char to_char( StoreV value )
 {
-    return char( storev );
+    return char( value );
 }
 
-inline lapack::StoreV char2storev( char storev )
+inline const char* to_c_string( StoreV value )
 {
-    storev = char( toupper( storev ));
-    lapack_error_if( storev != 'C' && storev != 'R' );
-    return lapack::StoreV( storev );
-}
-
-inline const char* storev2str( lapack::StoreV storev )
-{
-    switch (storev) {
-        case lapack::StoreV::Columnwise: return "colwise";
-        case lapack::StoreV::Rowwise:    return "rowwise";
+    switch (value) {
+        case StoreV::Columnwise: return "colwise";
+        case StoreV::Rowwise:    return "rowwise";
     }
     return "?";
+}
+
+inline std::string to_string( StoreV value )
+{
+    return to_c_string( value );
+}
+
+inline void from_string( std::string const& str, StoreV* val )
+{
+    std::string str_ = str;
+    std::transform( str_.begin(), str_.end(), str_.begin(), ::tolower );
+
+    if (str_ == "c" || str_ == "col" || str_ == "colwise"
+        || str_ == "columnwise")
+        *val = StoreV::Columnwise;
+    else if (str_ == "r" || str_ == "row" || str_ == "rowwise")
+        *val = StoreV::Rowwise;
+    else
+        throw Error( "unknown StoreV: " + str );
+}
+
+//--------------------
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char storev2char( StoreV value )
+{
+    return char( value );
+}
+
+[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
+inline const char* storev2str( StoreV value )
+{
+    return to_c_string( value );
+}
+
+[[deprecated("use from_string. To be removed 2025-05.")]]
+inline StoreV char2storev( char ch )
+{
+    StoreV val;
+    from_string( std::string( 1, ch ), &val );
+    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -593,31 +923,76 @@ enum class MatrixType : char {
     Band        = 'Z',
 };
 
-inline char matrixtype2char( lapack::MatrixType type )
+extern const char* MatrixType_help;
+
+//--------------------
+inline char to_char( MatrixType value )
 {
-    return char( type );
+    return char( value );
 }
 
-inline lapack::MatrixType char2matrixtype( char type )
+// This string can't be passed to LAPACK since "band" is reused.
+inline const char* to_c_string( MatrixType value )
 {
-    type = char( toupper( type ));
-    lapack_error_if( type != 'G' && type != 'L' && type != 'U' &&
-                     type != 'H' && type != 'B' && type != 'Q' && type != 'Z' );
-    return lapack::MatrixType( type );
-}
-
-inline const char* matrixtype2str( lapack::MatrixType type )
-{
-    switch (type) {
-        case lapack::MatrixType::General:    return "general";
-        case lapack::MatrixType::Lower:      return "lower";
-        case lapack::MatrixType::Upper:      return "upper";
-        case lapack::MatrixType::Hessenberg: return "hessenberg";
-        case lapack::MatrixType::LowerBand:  return "band-lower";
-        case lapack::MatrixType::UpperBand:  return "q-band-upper";
-        case lapack::MatrixType::Band:       return "z-band";
+    switch (value) {
+        case MatrixType::General:    return "general";
+        case MatrixType::Lower:      return "lower";
+        case MatrixType::Upper:      return "upper";
+        case MatrixType::Hessenberg: return "hessenberg";
+        case MatrixType::LowerBand:  return "band-lower";
+        case MatrixType::UpperBand:  return "band-upper";
+        case MatrixType::Band:       return "band";
     }
     return "?";
+}
+
+inline std::string to_string( MatrixType value )
+{
+    return to_c_string( value );
+}
+
+inline void from_string( std::string const& str, MatrixType* val )
+{
+    std::string str_ = str;
+    std::transform( str_.begin(), str_.end(), str_.begin(), ::tolower );
+
+    if (str_ == "g" || str_ == "general")
+        *val = MatrixType::General;
+    else if (str_ == "l" || str_ == "lower")
+        *val = MatrixType::Lower;
+    else if (str_ == "u" || str_ == "upper")
+        *val = MatrixType::Upper;
+    else if (str_ == "h" || str_ == "hessenberg")
+        *val = MatrixType::Hessenberg;
+    else if (str_ == "b" || str_ == "band-lower")
+        *val = MatrixType::LowerBand;
+    else if (str_ == "q" || str_ == "band-upper")
+        *val = MatrixType::UpperBand;
+    else if (str_ == "z" || str_ == "band")
+        *val = MatrixType::Band;
+    else
+        throw Error( "unknown MatrixType: " + str );
+}
+
+//--------------------
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char matrixtype2char( MatrixType value )
+{
+    return char( value );
+}
+
+[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
+inline const char* matrixtype2str( MatrixType value )
+{
+    return to_c_string( value );
+}
+
+[[deprecated("use from_string. To be removed 2025-05.")]]
+inline MatrixType char2matrixtype( char ch )
+{
+    MatrixType val;
+    from_string( std::string( 1, ch ), &val );
+    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -628,26 +1003,63 @@ enum class HowMany : char {
     Select        = 'S',
 };
 
-inline char howmany2char( lapack::HowMany howmany )
+extern const char* HowMany_help;
+
+//--------------------
+inline char to_char( HowMany value )
 {
-    return char( howmany );
+    return char( value );
 }
 
-inline lapack::HowMany char2howmany( char howmany )
+inline const char* to_c_string( HowMany value )
 {
-    howmany = char( toupper( howmany ));
-    lapack_error_if( howmany != 'A' && howmany != 'B' && howmany != 'S' );
-    return lapack::HowMany( howmany );
-}
-
-inline const char* howmany2str( lapack::HowMany howmany )
-{
-    switch (howmany) {
-        case lapack::HowMany::All:           return "all";
-        case lapack::HowMany::Backtransform: return "backtransform";
-        case lapack::HowMany::Select:        return "select";
+    switch (value) {
+        case HowMany::All:           return "all";
+        case HowMany::Backtransform: return "backtransform";
+        case HowMany::Select:        return "select";
     }
     return "?";
+}
+
+inline std::string to_string( HowMany value )
+{
+    return to_c_string( value );
+}
+
+inline void from_string( std::string const& str, HowMany* val )
+{
+    std::string str_ = str;
+    std::transform( str_.begin(), str_.end(), str_.begin(), ::tolower );
+
+    if (str_ == "a" || str_ == "all")
+        *val = HowMany::All;
+    else if (str_ == "b" || str_ == "backtransform")
+        *val = HowMany::Backtransform;
+    else if (str_ == "s" || str_ == "select")
+        *val = HowMany::Select;
+    else
+        throw Error( "unknown HowMany: " + str );
+}
+
+//--------------------
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char howmany2char( HowMany value )
+{
+    return char( value );
+}
+
+[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
+inline const char* howmany2str( HowMany value )
+{
+    return to_c_string( value );
+}
+
+[[deprecated("use from_string. To be removed 2025-05.")]]
+inline HowMany char2howmany( char ch )
+{
+    HowMany val;
+    from_string( std::string( 1, ch ), &val );
+    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -660,29 +1072,69 @@ enum class Equed : char {
     Yes         = 'Y',  // porfsx
 };
 
-inline char equed2char( lapack::Equed equed )
+extern const char* Equed_help;
+
+//--------------------
+inline char to_char( Equed value )
 {
-    return char( equed );
+    return char( value );
 }
 
-inline lapack::Equed char2equed( char equed )
+inline const char* to_c_string( Equed value )
 {
-    equed = char( toupper( equed ));
-    lapack_error_if( equed != 'N' && equed != 'R' && equed != 'C' &&
-                     equed != 'B' && equed != 'Y' );
-    return lapack::Equed( equed );
-}
-
-inline const char* equed2str( lapack::Equed equed )
-{
-    switch (equed) {
-        case lapack::Equed::None: return "none";
-        case lapack::Equed::Row:  return "row";
-        case lapack::Equed::Col:  return "col";
-        case lapack::Equed::Both: return "both";
-        case lapack::Equed::Yes:  return "yes";
+    switch (value) {
+        case Equed::None: return "none";
+        case Equed::Row:  return "row";
+        case Equed::Col:  return "col";
+        case Equed::Both: return "both";
+        case Equed::Yes:  return "yes";
     }
     return "?";
+}
+
+inline std::string to_string( Equed value )
+{
+    return to_c_string( value );
+}
+
+inline void from_string( std::string const& str, Equed* val )
+{
+    std::string str_ = str;
+    std::transform( str_.begin(), str_.end(), str_.begin(), ::tolower );
+
+    if (str_ == "n" || str_ == "none")
+        *val = Equed::None;
+    else if (str_ == "r" || str_ == "row")
+        *val = Equed::Row;
+    else if (str_ == "c" || str_ == "col")
+        *val = Equed::Col;
+    else if (str_ == "b" || str_ == "both")
+        *val = Equed::Both;
+    else if (str_ == "y" || str_ == "yes")
+        *val = Equed::Yes;
+    else
+        throw Error( "unknown Equed: " + str );
+}
+
+//--------------------
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char equed2char( Equed value )
+{
+    return char( value );
+}
+
+[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
+inline const char* equed2str( Equed value )
+{
+    return to_c_string( value );
+}
+
+[[deprecated("use from_string. To be removed 2025-05.")]]
+inline Equed char2equed( char ch )
+{
+    Equed val;
+    from_string( std::string( 1, ch ), &val );
+    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -694,30 +1146,67 @@ enum class Factored : char {
     Equilibrate = 'E',
 };
 
-inline char factored2char( lapack::Factored factored )
+extern const char* Factored_help;
+
+//--------------------
+inline char to_char( Factored value )
 {
-    return char( factored );
+    return char( value );
 }
 
-inline lapack::Factored char2factored( char factored )
+inline const char* to_c_string( Factored value )
 {
-    factored = char( toupper( factored ));
-    lapack_error_if( factored != 'F' && factored != 'N' && factored != 'E' );
-    return lapack::Factored( factored );
-}
-
-inline const char* factored2str( lapack::Factored factored )
-{
-    switch (factored) {
-        case lapack::Factored::Factored:    return "factored";
-        case lapack::Factored::NotFactored: return "notfactored";
-        case lapack::Factored::Equilibrate: return "equilibrate";
+    switch (value) {
+        case Factored::Factored:    return "factored";
+        case Factored::NotFactored: return "notfactored";
+        case Factored::Equilibrate: return "equilibrate";
     }
     return "?";
 }
 
+inline std::string to_string( Factored value )
+{
+    return to_c_string( value );
+}
+
+inline void from_string( std::string const& str, Factored* val )
+{
+    std::string str_ = str;
+    std::transform( str_.begin(), str_.end(), str_.begin(), ::tolower );
+
+    if (str_ == "f" || str_ == "factored")
+        *val = Factored::Factored;
+    else if (str_ == "n" || str_ == "notfactored")
+        *val = Factored::NotFactored;
+    else if (str_ == "e" || str_ == "equilibrate")
+        *val = Factored::Equilibrate;
+    else
+        throw Error( "unknown Factored: " + str );
+}
+
+//--------------------
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char factored2char( Factored value )
+{
+    return char( value );
+}
+
+[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
+inline const char* factored2str( Factored value )
+{
+    return to_c_string( value );
+}
+
+[[deprecated("use from_string. To be removed 2025-05.")]]
+inline Factored char2factored( char ch )
+{
+    Factored val;
+    from_string( std::string( 1, ch ), &val );
+    return val;
+}
+
 // -----------------------------------------------------------------------------
-// geesx, trsen
+// geesx, trsen (job)
 enum class Sense : char {
     None        = 'N',
     Eigenvalues = 'E',
@@ -725,28 +1214,67 @@ enum class Sense : char {
     Both        = 'B',
 };
 
-inline char sense2char( lapack::Sense sense )
+extern const char* Sense_help;
+
+//--------------------
+inline char to_char( Sense value )
 {
-    return char( sense );
+    return char( value );
 }
 
-inline lapack::Sense char2sense( char sense )
+// This string can't be passed to LAPACK since it uses "subspace" instead of "V".
+inline const char* to_c_string( Sense value )
 {
-    sense = char( toupper( sense ));
-    lapack_error_if( sense != 'N' && sense != 'E' && sense != 'V' &&
-                     sense != 'B' );
-    return lapack::Sense( sense );
-}
-
-inline const char* sense2str( lapack::Sense sense )
-{
-    switch (sense) {
-        case lapack::Sense::None:        return "none";
-        case lapack::Sense::Eigenvalues: return "eigval";
-        case lapack::Sense::Subspace:    return "subspace";
-        case lapack::Sense::Both:        return "both";
+    switch (value) {
+        case Sense::None:        return "none";
+        case Sense::Eigenvalues: return "eigval";
+        case Sense::Subspace:    return "subspace";
+        case Sense::Both:        return "both";
     }
     return "?";
+}
+
+inline std::string to_string( Sense value )
+{
+    return to_c_string( value );
+}
+
+inline void from_string( std::string const& str, Sense* val )
+{
+    std::string str_ = str;
+    std::transform( str_.begin(), str_.end(), str_.begin(), ::tolower );
+
+    if (str_ == "n" || str_ == "none")
+        *val = Sense::None;
+    else if (str_ == "e" || str_ == "eigval")
+        *val = Sense::Eigenvalues;
+    else if (str_ == "v" || str_ == "s" || str_ == "subspace")
+        *val = Sense::Subspace;
+    else if (str_ == "b" || str_ == "both")
+        *val = Sense::Both;
+    else
+        throw Error( "unknown Sense: " + str );
+}
+
+//--------------------
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char sense2char( Sense value )
+{
+    return char( value );
+}
+
+[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
+inline const char* sense2str( Sense value )
+{
+    return to_c_string( value );
+}
+
+[[deprecated("use from_string. To be removed 2025-05.")]]
+inline Sense char2sense( char ch )
+{
+    Sense val;
+    from_string( std::string( 1, ch ), &val );
+    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -757,27 +1285,62 @@ enum class JobCond : char {
     RightSingularVec = 'R',
 };
 
-inline char jobcond2char( lapack::JobCond jobcond )
+extern const char* JobCond_help;
+
+//--------------------
+inline char to_char( JobCond value )
 {
-    return char( jobcond );
+    return char( value );
 }
 
-inline lapack::JobCond char2jobcond( char jobcond )
+inline const char* to_c_string( JobCond value )
 {
-    jobcond = char( toupper( jobcond ));
-    lapack_error_if( jobcond != 'N' && jobcond != 'E' && jobcond != 'V' &&
-                     jobcond != 'B' );
-    return lapack::JobCond( jobcond );
-}
-
-inline const char* jobcond2str( lapack::JobCond jobcond )
-{
-    switch (jobcond) {
-        case lapack::JobCond::EigenVec:         return "eigvec";
-        case lapack::JobCond::LeftSingularVec:  return "left";
-        case lapack::JobCond::RightSingularVec: return "right";
+    switch (value) {
+        case JobCond::EigenVec:         return "eigvec";
+        case JobCond::LeftSingularVec:  return "left";
+        case JobCond::RightSingularVec: return "right";
     }
     return "?";
+}
+
+inline std::string to_string( JobCond value )
+{
+    return to_c_string( value );
+}
+
+inline void from_string( std::string const& str, JobCond* val )
+{
+    std::string str_ = str;
+    std::transform( str_.begin(), str_.end(), str_.begin(), ::tolower );
+
+    if (str_ == "e" || str_ == "eigvec")
+        *val = JobCond::EigenVec;
+    else if (str_ == "l" || str_ == "left")
+        *val = JobCond::LeftSingularVec;
+    else if (str_ == "r" || str_ == "right")
+        *val = JobCond::RightSingularVec;
+    else
+        throw Error( "unknown JobCond: " + str );
+}
+
+//--------------------
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char jobcond2char( JobCond value )
+{
+    return char( value );
+}
+
+[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
+inline const char* jobcond2str( JobCond value )
+{
+    return to_c_string( value );
+}
+
+inline JobCond char2jobcond( char ch )
+{
+    JobCond val;
+    from_string( std::string( 1, ch ), &val );
+    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -789,28 +1352,66 @@ enum class Balance : char {
     Both        = 'B',
 };
 
-inline char balance2char( lapack::Balance balance )
+extern const char* Balance_help;
+
+//--------------------
+inline char to_char( Balance value )
 {
-    return char( balance );
+    return char( value );
 }
 
-inline lapack::Balance char2balance( char balance )
+inline const char* to_c_string( Balance value )
 {
-    balance = char( toupper( balance ));
-    lapack_error_if( balance != 'N' && balance != 'P' && balance != 'S' &&
-                     balance != 'B' );
-    return lapack::Balance( balance );
-}
-
-inline const char* balance2str( lapack::Balance balance )
-{
-    switch (balance) {
-        case lapack::Balance::None:    return "none";
-        case lapack::Balance::Permute: return "permute";
-        case lapack::Balance::Scale:   return "scale";
-        case lapack::Balance::Both:    return "both";
+    switch (value) {
+        case Balance::None:    return "none";
+        case Balance::Permute: return "permute";
+        case Balance::Scale:   return "scale";
+        case Balance::Both:    return "both";
     }
     return "?";
+}
+
+inline std::string to_string( Balance value )
+{
+    return to_c_string( value );
+}
+
+inline void from_string( std::string const& str, Balance* val )
+{
+    std::string str_ = str;
+    std::transform( str_.begin(), str_.end(), str_.begin(), ::tolower );
+
+    if (str_ == "n" || str_ == "none")
+        *val = Balance::None;
+    else if (str_ == "p" || str_ == "permute")
+        *val = Balance::Permute;
+    else if (str_ == "s" || str_ == "scale")
+        *val = Balance::Scale;
+    else if (str_ == "b" || str_ == "both")
+        *val = Balance::Both;
+    else
+        throw Error( "unknown Balance: " + str );
+}
+
+//--------------------
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char balance2char( Balance value )
+{
+    return char( value );
+}
+
+[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
+inline const char* balance2str( Balance value )
+{
+    return to_c_string( value );
+}
+
+[[deprecated("use from_string. To be removed 2025-05.")]]
+inline Balance char2balance( char ch )
+{
+    Balance val;
+    from_string( std::string( 1, ch ), &val );
+    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -820,25 +1421,60 @@ enum class Order : char {
     Entire      = 'E',
 };
 
-inline char order2char( lapack::Order order )
+extern const char* Order_help;
+
+//--------------------
+inline char to_char( Order value )
 {
-    return char( order );
+    return char( value );
 }
 
-inline lapack::Order char2order( char order )
+inline const char* to_c_string( Order value )
 {
-    order = char( toupper( order ));
-    lapack_error_if( order != 'B' && order != 'E' );
-    return lapack::Order( order );
-}
-
-inline const char* order2str( lapack::Order order )
-{
-    switch (order) {
-        case lapack::Order::Block:  return "block";
-        case lapack::Order::Entire: return "entire";
+    switch (value) {
+        case Order::Block:  return "block";
+        case Order::Entire: return "entire";
     }
     return "?";
+}
+
+inline std::string to_string( Order value )
+{
+    return to_c_string( value );
+}
+
+inline void from_string( std::string const& str, Order* val )
+{
+    std::string str_ = str;
+    std::transform( str_.begin(), str_.end(), str_.begin(), ::tolower );
+
+    if (str_ == "b" || str_ == "block")
+        *val = Order::Block;
+    else if (str_ == "e" || str_ == "entire")
+        *val = Order::Entire;
+    else
+        throw Error( "unknown Order: " + str );
+}
+
+//--------------------
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char order2char( Order value )
+{
+    return char( value );
+}
+
+[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
+inline const char* order2str( Order value )
+{
+    return to_c_string( value );
+}
+
+[[deprecated("use from_string. To be removed 2025-05.")]]
+inline Order char2order( char ch )
+{
+    Order val;
+    from_string( std::string( 1, ch ), &val );
+    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -848,25 +1484,60 @@ enum class RowCol : char {
     Row = 'R',
 };
 
-inline char rowcol2char( lapack::RowCol rowcol )
+extern const char* RowCol_help;
+
+//--------------------
+inline char to_char( RowCol value )
 {
-    return char( rowcol );
+    return char( value );
 }
 
-inline lapack::RowCol char2rowcol( char rowcol )
+inline const char* to_c_string( RowCol value )
 {
-    rowcol = char( toupper( rowcol ));
-    lapack_error_if( rowcol != 'C' && rowcol != 'R' );
-    return lapack::RowCol( rowcol );
-}
-
-inline const char* rowcol2str( lapack::RowCol rowcol )
-{
-    switch (rowcol) {
-        case lapack::RowCol::Col: return "col";
-        case lapack::RowCol::Row: return "row";
+    switch (value) {
+        case RowCol::Col: return "col";
+        case RowCol::Row: return "row";
     }
     return "?";
+}
+
+inline std::string to_string( RowCol value )
+{
+    return to_c_string( value );
+}
+
+inline void from_string( std::string const& str, RowCol* val )
+{
+    std::string str_ = str;
+    std::transform( str_.begin(), str_.end(), str_.begin(), ::tolower );
+
+    if (str_ == "c" || str_ == "col")
+        *val = RowCol::Col;
+    else if (str_ == "r" || str_ == "row")
+        *val = RowCol::Row;
+    else
+        throw Error( "unknown RowCol: " + str );
+}
+
+//--------------------
+[[deprecated("use to_char. To be removed 2025-05.")]]
+inline char rowcol2char( RowCol value )
+{
+    return char( value );
+}
+
+[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
+inline const char* rowcol2str( RowCol value )
+{
+    return to_c_string( value );
+}
+
+[[deprecated("use from_string. To be removed 2025-05.")]]
+inline RowCol char2rowcol( char ch )
+{
+    RowCol val;
+    from_string( std::string( 1, ch ), &val );
+    return val;
 }
 
 //------------------------------------------------------------------------------

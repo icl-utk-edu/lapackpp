@@ -166,7 +166,7 @@ void test_hbgv_work( Params& params, bool run )
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_hbgv(
-                               job2char(jobz), uplo2char(uplo), n, ka, kb,
+                               to_char( jobz ), to_char( uplo ), n, ka, kb,
                                &Aband_ref[0], lda,
                                &Bband_ref[0], ldb,
                                &Lambda_ref[0], &Z[0], ldz );

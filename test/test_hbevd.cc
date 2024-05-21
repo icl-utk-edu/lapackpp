@@ -128,7 +128,7 @@ void test_hbevd_work( Params& params, bool run )
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_hbevd(
-                               job2char(jobz), uplo2char(uplo), n, kd,
+                               to_char( jobz ), to_char( uplo ), n, kd,
                                &Aband_ref[0], lda,
                                &Lambda_ref[0], &Z[0], ldz );
         time = testsweeper::get_wtime() - time;

@@ -28,9 +28,9 @@ int64_t tbtrs(
         lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
-    char trans_ = op2char( trans );
-    char diag_ = diag2char( diag );
+    char uplo_ = to_char( uplo );
+    char trans_ = to_char( trans );
+    char diag_ = to_char( diag );
     lapack_int n_ = (lapack_int) n;
     lapack_int kd_ = (lapack_int) kd;
     lapack_int nrhs_ = (lapack_int) nrhs;
@@ -63,9 +63,9 @@ int64_t tbtrs(
         lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
-    char trans_ = op2char( trans );
-    char diag_ = diag2char( diag );
+    char uplo_ = to_char( uplo );
+    char trans_ = to_char( trans );
+    char diag_ = to_char( diag );
     lapack_int n_ = (lapack_int) n;
     lapack_int kd_ = (lapack_int) kd;
     lapack_int nrhs_ = (lapack_int) nrhs;
@@ -98,9 +98,9 @@ int64_t tbtrs(
         lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
-    char trans_ = op2char( trans );
-    char diag_ = diag2char( diag );
+    char uplo_ = to_char( uplo );
+    char trans_ = to_char( trans );
+    char diag_ = to_char( diag );
     lapack_int n_ = (lapack_int) n;
     lapack_int kd_ = (lapack_int) kd;
     lapack_int nrhs_ = (lapack_int) nrhs;
@@ -133,9 +133,9 @@ int64_t tbtrs(
         lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
-    char trans_ = op2char( trans );
-    char diag_ = diag2char( diag );
+    char uplo_ = to_char( uplo );
+    char trans_ = to_char( trans );
+    char diag_ = to_char( diag );
     lapack_int n_ = (lapack_int) n;
     lapack_int kd_ = (lapack_int) kd;
     lapack_int nrhs_ = (lapack_int) nrhs;

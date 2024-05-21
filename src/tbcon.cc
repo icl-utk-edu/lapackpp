@@ -27,9 +27,9 @@ int64_t tbcon(
         lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
-    char uplo_ = uplo2char( uplo );
-    char diag_ = diag2char( diag );
+    char norm_ = to_char( norm );
+    char uplo_ = to_char( uplo );
+    char diag_ = to_char( diag );
     lapack_int n_ = (lapack_int) n;
     lapack_int kd_ = (lapack_int) kd;
     lapack_int ldab_ = (lapack_int) ldab;
@@ -63,9 +63,9 @@ int64_t tbcon(
         lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
-    char uplo_ = uplo2char( uplo );
-    char diag_ = diag2char( diag );
+    char norm_ = to_char( norm );
+    char uplo_ = to_char( uplo );
+    char diag_ = to_char( diag );
     lapack_int n_ = (lapack_int) n;
     lapack_int kd_ = (lapack_int) kd;
     lapack_int ldab_ = (lapack_int) ldab;
@@ -99,9 +99,9 @@ int64_t tbcon(
         lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
-    char uplo_ = uplo2char( uplo );
-    char diag_ = diag2char( diag );
+    char norm_ = to_char( norm );
+    char uplo_ = to_char( uplo );
+    char diag_ = to_char( diag );
     lapack_int n_ = (lapack_int) n;
     lapack_int kd_ = (lapack_int) kd;
     lapack_int ldab_ = (lapack_int) ldab;
@@ -135,9 +135,9 @@ int64_t tbcon(
         lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
-    char uplo_ = uplo2char( uplo );
-    char diag_ = diag2char( diag );
+    char norm_ = to_char( norm );
+    char uplo_ = to_char( uplo );
+    char diag_ = to_char( diag );
     lapack_int n_ = (lapack_int) n;
     lapack_int kd_ = (lapack_int) kd;
     lapack_int ldab_ = (lapack_int) ldab;

@@ -148,17 +148,16 @@ void test_gesvx_work( Params& params, bool run )
     if (params.ref() == 'y') {
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
-        char equed_ref_char = lapack::equed2char( equed_ref );
+        char equed_ref_char = to_char( equed_ref );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_gesvx(
-                               factored2char(fact), op2char(trans), n, nrhs,
+                               to_char( fact ), to_char( trans ), n, nrhs,
                                &A_ref[0], lda,
                                &AF_ref[0], ldaf, &ipiv_ref[0],
                                &equed_ref_char, &R_ref[0], &C_ref[0],
                                &B_ref[0], ldb, &X_ref[0], ldx,
                                &rcond_ref, &ferr_ref[0], &berr_ref[0], &rpivot_ref );
         time = testsweeper::get_wtime() - time;
-        equed_ref = lapack::char2equed( equed_ref_char );
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gesvx returned error %lld\n", llong( info_ref ) );
         }

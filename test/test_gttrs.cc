@@ -84,7 +84,7 @@ void test_gttrs_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_gttrs( op2char(trans), n, nrhs, &DL[0], &D[0], &DU[0], &DU2[0], &ipiv_ref[0], &B_ref[0], ldb );
+        int64_t info_ref = LAPACKE_gttrs( to_char( trans ), n, nrhs, &DL[0], &D[0], &DU[0], &DU2[0], &ipiv_ref[0], &B_ref[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gttrs returned error %lld\n", llong( info_ref ) );

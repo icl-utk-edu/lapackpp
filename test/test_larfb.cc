@@ -110,7 +110,7 @@ void test_larfb_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_larfb( side2char(side), op2char(trans), direction2char(direction), storev2char(storev), m, n, k, &V[0], ldv, &T[0], ldt, &C_ref[0], ldc );
+        int64_t info_ref = LAPACKE_larfb( to_char( side ), to_char( trans ), to_char( direction ), to_char( storev ), m, n, k, &V[0], ldv, &T[0], ldt, &C_ref[0], ldc );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_larfb returned error %lld\n", llong( info_ref ) );

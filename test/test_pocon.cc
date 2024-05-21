@@ -79,7 +79,7 @@ void test_pocon_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_pocon( uplo2char(uplo), n, &A[0], lda, anorm, &rcond_ref );
+        int64_t info_ref = LAPACKE_pocon( to_char( uplo ), n, &A[0], lda, anorm, &rcond_ref );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_pocon returned error %lld\n", llong( info_ref ) );

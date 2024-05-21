@@ -117,7 +117,7 @@ void test_hpev_work( Params& params, bool run )
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_hpev(
-                               job2char(jobz), uplo2char(uplo), n,
+                               to_char( jobz ), to_char( uplo ), n,
                                &Apack_ref[0], &Lambda_ref[0], &Z[0], ldz );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {

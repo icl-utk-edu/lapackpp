@@ -41,9 +41,9 @@ int64_t gesvx(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char fact_ = factored2char( fact );
-    char trans_ = op2char( trans );
-    char equed_ = equed2char( *equed );
+    char fact_ = to_char( fact );
+    char trans_ = to_char( trans );
+    char equed_ = to_char( *equed );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int lda_ = (lapack_int) lda;
@@ -81,7 +81,7 @@ int64_t gesvx(
     if (info_ < 0) {
         throw Error();
     }
-    *equed = char2equed( equed_ );
+    from_string( std::string( 1, equed_ ), equed );
     *rpivotgrowth = work[0];
     #ifndef LAPACK_ILP64
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
@@ -115,9 +115,9 @@ int64_t gesvx(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char fact_ = factored2char( fact );
-    char trans_ = op2char( trans );
-    char equed_ = equed2char( *equed );
+    char fact_ = to_char( fact );
+    char trans_ = to_char( trans );
+    char equed_ = to_char( *equed );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int lda_ = (lapack_int) lda;
@@ -155,7 +155,7 @@ int64_t gesvx(
     if (info_ < 0) {
         throw Error();
     }
-    *equed = char2equed( equed_ );
+    from_string( std::string( 1, equed_ ), equed );
     *rpivotgrowth = work[0];
     #ifndef LAPACK_ILP64
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
@@ -189,9 +189,9 @@ int64_t gesvx(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char fact_ = factored2char( fact );
-    char trans_ = op2char( trans );
-    char equed_ = equed2char( *equed );
+    char fact_ = to_char( fact );
+    char trans_ = to_char( trans );
+    char equed_ = to_char( *equed );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int lda_ = (lapack_int) lda;
@@ -229,7 +229,7 @@ int64_t gesvx(
     if (info_ < 0) {
         throw Error();
     }
-    *equed = char2equed( equed_ );
+    from_string( std::string( 1, equed_ ), equed );
     *rpivotgrowth = rwork[0];
     #ifndef LAPACK_ILP64
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );
@@ -474,9 +474,9 @@ int64_t gesvx(
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char fact_ = factored2char( fact );
-    char trans_ = op2char( trans );
-    char equed_ = equed2char( *equed );
+    char fact_ = to_char( fact );
+    char trans_ = to_char( trans );
+    char equed_ = to_char( *equed );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int lda_ = (lapack_int) lda;
@@ -514,7 +514,7 @@ int64_t gesvx(
     if (info_ < 0) {
         throw Error();
     }
-    *equed = char2equed( equed_ );
+    from_string( std::string( 1, equed_ ), equed );
     *rpivotgrowth = rwork[0];
     #ifndef LAPACK_ILP64
         std::copy( ipiv_.begin(), ipiv_.end(), ipiv );

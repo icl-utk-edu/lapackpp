@@ -77,7 +77,7 @@ void test_pttrs_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_pttrs( uplo2char(uplo), n, nrhs, &D[0], &E[0], &B_ref[0], ldb );
+        int64_t info_ref = LAPACKE_pttrs( to_char( uplo ), n, nrhs, &D[0], &E[0], &B_ref[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_pttrs returned error %lld\n", llong( info_ref ) );

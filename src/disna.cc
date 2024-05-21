@@ -25,7 +25,7 @@ int64_t disna(
         lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobcond_ = jobcond2char( jobcond );
+    char jobcond_ = to_char( jobcond );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int info_ = 0;
@@ -52,7 +52,7 @@ int64_t disna(
         lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobcond_ = jobcond2char( jobcond );
+    char jobcond_ = to_char( jobcond );
     lapack_int m_ = (lapack_int) m;
     lapack_int n_ = (lapack_int) n;
     lapack_int info_ = 0;

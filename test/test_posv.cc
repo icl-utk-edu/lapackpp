@@ -122,7 +122,7 @@ void test_posv_work( Params& params, bool run )
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_posv(
-            uplo2char(uplo), n, nrhs, &A_ref[0], lda, &B_ref[0], ldb );
+            to_char( uplo ), n, nrhs, &A_ref[0], lda, &B_ref[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_posv returned error %lld\n", llong( info_ref ) );

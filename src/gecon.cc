@@ -27,7 +27,7 @@ int64_t gecon(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
+    char norm_ = to_char( norm );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int info_ = 0;
@@ -60,7 +60,7 @@ int64_t gecon(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
+    char norm_ = to_char( norm );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int info_ = 0;
@@ -93,7 +93,7 @@ int64_t gecon(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
+    char norm_ = to_char( norm );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int info_ = 0;
@@ -164,7 +164,7 @@ int64_t gecon(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
+    char norm_ = to_char( norm );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int info_ = 0;

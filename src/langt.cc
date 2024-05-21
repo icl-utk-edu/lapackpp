@@ -26,7 +26,7 @@ float langt(
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
+    char norm_ = to_char( norm );
     lapack_int n_ = (lapack_int) n;
 
     return LAPACK_slangt(
@@ -49,7 +49,7 @@ double langt(
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
+    char norm_ = to_char( norm );
     lapack_int n_ = (lapack_int) n;
 
     return LAPACK_dlangt(
@@ -72,7 +72,7 @@ float langt(
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
+    char norm_ = to_char( norm );
     lapack_int n_ = (lapack_int) n;
 
     return LAPACK_clangt(
@@ -125,7 +125,7 @@ double langt(
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
+    char norm_ = to_char( norm );
     lapack_int n_ = (lapack_int) n;
 
     return LAPACK_zlangt(

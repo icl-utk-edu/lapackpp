@@ -168,7 +168,7 @@ void test_hbgvd_work( Params& params, bool run )
         // Note: LAPACKE_hbgvd does workspace query that may be wrong
         // (e.g., in LAPACK <= 3.6.0, MKL 2018), so custom version fixes it.
         int64_t info_ref = LAPACKE_hbgvd_custom(
-                               job2char(jobz), uplo2char(uplo), n, ka, kb,
+                               to_char( jobz ), to_char( uplo ), n, ka, kb,
                                &Aband_ref[0], lda,
                                &Bband_ref[0], ldb,
                                &Lambda_ref[0], &Z[0], ldz );

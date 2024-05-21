@@ -67,7 +67,7 @@ void test_hptrd_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_hptrd( uplo2char(uplo), n, &AP_ref[0], &D_ref[0], &E_ref[0], &tau_ref[0] );
+        int64_t info_ref = LAPACKE_hptrd( to_char( uplo ), n, &AP_ref[0], &D_ref[0], &E_ref[0], &tau_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_hptrd returned error %lld\n", llong( info_ref ) );

@@ -47,8 +47,8 @@ int64_t gbrfsx(
         lapack_error_if( std::abs(n_err_bnds) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(nparams) > std::numeric_limits<lapack_int>::max() );
     }
-    char trans_ = op2char( trans );
-    char equed_ = equed2char( equed );
+    char trans_ = to_char( trans );
+    char equed_ = to_char( equed );
     lapack_int n_ = (lapack_int) n;
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;
@@ -124,8 +124,8 @@ int64_t gbrfsx(
         lapack_error_if( std::abs(n_err_bnds) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(nparams) > std::numeric_limits<lapack_int>::max() );
     }
-    char trans_ = op2char( trans );
-    char equed_ = equed2char( equed );
+    char trans_ = to_char( trans );
+    char equed_ = to_char( equed );
     lapack_int n_ = (lapack_int) n;
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;
@@ -201,8 +201,8 @@ int64_t gbrfsx(
         lapack_error_if( std::abs(n_err_bnds) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(nparams) > std::numeric_limits<lapack_int>::max() );
     }
-    char trans_ = op2char( trans );
-    char equed_ = equed2char( equed );
+    char trans_ = to_char( trans );
+    char equed_ = to_char( equed );
     lapack_int n_ = (lapack_int) n;
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;
@@ -579,8 +579,8 @@ int64_t gbrfsx(
         lapack_error_if( std::abs(n_err_bnds) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(nparams) > std::numeric_limits<lapack_int>::max() );
     }
-    char trans_ = op2char( trans );
-    char equed_ = equed2char( equed );
+    char trans_ = to_char( trans );
+    char equed_ = to_char( equed );
     lapack_int n_ = (lapack_int) n;
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;

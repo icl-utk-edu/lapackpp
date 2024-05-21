@@ -34,9 +34,9 @@ int64_t spgvx(
         lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
     lapack_int itype_ = (lapack_int) itype;
-    char jobz_ = job2char( jobz );
-    char range_ = range2char( range );
-    char uplo_ = uplo2char( uplo );
+    char jobz_ = to_char( jobz );
+    char range_ = to_char( range );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int il_ = (lapack_int) il;
     lapack_int iu_ = (lapack_int) iu;
@@ -96,9 +96,9 @@ int64_t spgvx(
         lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
     lapack_int itype_ = (lapack_int) itype;
-    char jobz_ = job2char( jobz );
-    char range_ = range2char( range );
-    char uplo_ = uplo2char( uplo );
+    char jobz_ = to_char( jobz );
+    char range_ = to_char( range );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int il_ = (lapack_int) il;
     lapack_int iu_ = (lapack_int) iu;

@@ -29,8 +29,8 @@ int64_t gees(
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldvs) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobvs_ = job2char( jobvs );
-    char sort_ = sort2char( sort );
+    char jobvs_ = to_char( jobvs );
+    char sort_ = to_char( sort );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int sdim_ = (lapack_int) *sdim;
@@ -99,8 +99,8 @@ int64_t gees(
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldvs) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobvs_ = job2char( jobvs );
-    char sort_ = sort2char( sort );
+    char jobvs_ = to_char( jobvs );
+    char sort_ = to_char( sort );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int sdim_ = (lapack_int) *sdim;
@@ -169,8 +169,8 @@ int64_t gees(
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldvs) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobvs_ = job2char( jobvs );
-    char sort_ = sort2char( sort );
+    char jobvs_ = to_char( jobvs );
+    char sort_ = to_char( sort );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int sdim_ = (lapack_int) *sdim;
@@ -233,8 +233,8 @@ int64_t gees(
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldvs) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobvs_ = job2char( jobvs );
-    char sort_ = sort2char( sort );
+    char jobvs_ = to_char( jobvs );
+    char sort_ = to_char( sort );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int sdim_ = (lapack_int) *sdim;

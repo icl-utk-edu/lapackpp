@@ -147,7 +147,7 @@ void test_heevr_work( Params& params, bool run )
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_heevr(
-                               job2char(jobz), range2char(range), uplo2char(uplo), n,
+                               to_char( jobz ), to_char( range ), to_char( uplo ), n,
                                &A_ref[0], lda,
                                vl, vu, il, iu, abstol, &nfound_ref,
                                &Lambda_ref[0], &Z[0], ldz, &isuppz_ref[0] );

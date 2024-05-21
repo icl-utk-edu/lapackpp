@@ -149,7 +149,7 @@ void test_tpmqrt_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_tpmqrt( side2char(side), op2char(trans), m, n, k, l, nb, &V[0], ldv, &T[0], ldt, &A_ref[0], lda, &B_ref[0], ldb );
+        int64_t info_ref = LAPACKE_tpmqrt( to_char( side ), to_char( trans ), m, n, k, l, nb, &V[0], ldv, &T[0], ldt, &A_ref[0], lda, &B_ref[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_tpmqrt returned error %lld\n", llong( info_ref ) );

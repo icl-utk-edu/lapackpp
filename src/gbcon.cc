@@ -30,7 +30,7 @@ int64_t gbcon(
         lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
+    char norm_ = to_char( norm );
     lapack_int n_ = (lapack_int) n;
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;
@@ -76,7 +76,7 @@ int64_t gbcon(
         lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
+    char norm_ = to_char( norm );
     lapack_int n_ = (lapack_int) n;
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;
@@ -122,7 +122,7 @@ int64_t gbcon(
         lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
+    char norm_ = to_char( norm );
     lapack_int n_ = (lapack_int) n;
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;
@@ -220,7 +220,7 @@ int64_t gbcon(
         lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
+    char norm_ = to_char( norm );
     lapack_int n_ = (lapack_int) n;
     lapack_int kl_ = (lapack_int) kl;
     lapack_int ku_ = (lapack_int) ku;

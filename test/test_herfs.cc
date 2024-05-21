@@ -99,7 +99,7 @@ void test_herfs_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_herfs( uplo2char(uplo), n, nrhs, &A[0], lda, &AF[0], ldaf, &ipiv_ref[0], &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
+        int64_t info_ref = LAPACKE_herfs( to_char( uplo ), n, nrhs, &A[0], lda, &AF[0], ldaf, &ipiv_ref[0], &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_herfs returned error %lld\n", llong( info_ref ) );

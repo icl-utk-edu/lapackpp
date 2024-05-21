@@ -247,7 +247,7 @@ void check_geev(
 
     if (verbose >= 1) {
         printf( "error: { ||A^{%c} V - V W||=%.2e / (||V||=%.2e ||A||=%.2e) } = %.2e;  n=%.0f\n",
-                op2char(trans), error, Vnorm, Anorm, results[0], real_t(n) );
+                to_char( trans ), error, Vnorm, Anorm, results[0], real_t( n ) );
     }
 
     results[1] = check_geev_Vnormalization( n, W, V, ldv );

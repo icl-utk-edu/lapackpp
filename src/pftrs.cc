@@ -26,8 +26,8 @@ int64_t pftrs(
         lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    char transr_ = op2char( transr );
-    char uplo_ = uplo2char( uplo );
+    char transr_ = to_char( transr );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int ldb_ = (lapack_int) ldb;
@@ -56,8 +56,8 @@ int64_t pftrs(
         lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    char transr_ = op2char( transr );
-    char uplo_ = uplo2char( uplo );
+    char transr_ = to_char( transr );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int ldb_ = (lapack_int) ldb;
@@ -86,8 +86,8 @@ int64_t pftrs(
         lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    char transr_ = op2char( transr );
-    char uplo_ = uplo2char( uplo );
+    char transr_ = to_char( transr );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int ldb_ = (lapack_int) ldb;
@@ -116,8 +116,8 @@ int64_t pftrs(
         lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
     }
-    char transr_ = op2char( transr );
-    char uplo_ = uplo2char( uplo );
+    char transr_ = to_char( transr );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int ldb_ = (lapack_int) ldb;

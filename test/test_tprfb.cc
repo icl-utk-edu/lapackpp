@@ -109,7 +109,7 @@ void test_tprfb_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_tprfb( side2char(side), op2char(trans), direction2char(direction), storev2char(storev), m, n, k, l, &V[0], ldv, &T[0], ldt, &A_ref[0], lda, &B_ref[0], ldb );
+        int64_t info_ref = LAPACKE_tprfb( to_char( side ), to_char( trans ), to_char( direction ), to_char( storev ), m, n, k, l, &V[0], ldv, &T[0], ldt, &A_ref[0], lda, &B_ref[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_tprfb returned error %lld\n", llong( info_ref ) );

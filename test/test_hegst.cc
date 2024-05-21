@@ -97,7 +97,7 @@ void test_hegst_work( Params& params, bool run )
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_hegst(
-            itype, uplo2char(uplo), n, &A_ref[0], lda, &B[0], ldb );
+            itype, to_char( uplo ), n, &A_ref[0], lda, &B[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_hegst returned error %lld\n", llong( info_ref ) );

@@ -25,7 +25,7 @@ float lanst(
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
+    char norm_ = to_char( norm );
     lapack_int n_ = (lapack_int) n;
 
     return LAPACK_slanst( &norm_, &n_, D, E
@@ -71,7 +71,7 @@ double lanst(
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
+    char norm_ = to_char( norm );
     lapack_int n_ = (lapack_int) n;
 
     return LAPACK_dlanst( &norm_, &n_, D, E

@@ -116,7 +116,7 @@ void test_heevd_work( Params& params, bool run )
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_heevd(
-            job2char(jobz), uplo2char(uplo), n,
+            to_char( jobz ), to_char( uplo ), n,
             &A[0], lda, &Lambda_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {

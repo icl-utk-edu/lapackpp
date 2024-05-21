@@ -29,8 +29,8 @@ int64_t gebak(
         lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
     }
-    char balance_ = balance2char( balance );
-    char side_ = side2char( side );
+    char balance_ = to_char( balance );
+    char side_ = to_char( side );
     lapack_int n_ = (lapack_int) n;
     lapack_int ilo_ = (lapack_int) ilo;
     lapack_int ihi_ = (lapack_int) ihi;
@@ -64,8 +64,8 @@ int64_t gebak(
         lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
     }
-    char balance_ = balance2char( balance );
-    char side_ = side2char( side );
+    char balance_ = to_char( balance );
+    char side_ = to_char( side );
     lapack_int n_ = (lapack_int) n;
     lapack_int ilo_ = (lapack_int) ilo;
     lapack_int ihi_ = (lapack_int) ihi;
@@ -99,8 +99,8 @@ int64_t gebak(
         lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
     }
-    char balance_ = balance2char( balance );
-    char side_ = side2char( side );
+    char balance_ = to_char( balance );
+    char side_ = to_char( side );
     lapack_int n_ = (lapack_int) n;
     lapack_int ilo_ = (lapack_int) ilo;
     lapack_int ihi_ = (lapack_int) ihi;
@@ -183,8 +183,8 @@ int64_t gebak(
         lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
     }
-    char balance_ = balance2char( balance );
-    char side_ = side2char( side );
+    char balance_ = to_char( balance );
+    char side_ = to_char( side );
     lapack_int n_ = (lapack_int) n;
     lapack_int ilo_ = (lapack_int) ilo;
     lapack_int ihi_ = (lapack_int) ihi;

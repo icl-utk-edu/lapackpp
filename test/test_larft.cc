@@ -126,7 +126,7 @@ void test_larft_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_larft( direction2char(direction), storev2char(storev), n, k, &V[0], ldv, &tau[0], &T_ref[0], ldt );
+        int64_t info_ref = LAPACKE_larft( to_char( direction ), to_char( storev ), n, k, &V[0], ldv, &tau[0], &T_ref[0], ldt );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_larft returned error %lld\n", llong( info_ref ) );

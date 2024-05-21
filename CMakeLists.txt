@@ -517,6 +517,7 @@ add_library(
     src/unmtr.cc
     src/upgtr.cc
     src/upmtr.cc
+    src/util.cc
     src/version.cc
 
     src/cuda/cuda_common.cc

@@ -182,7 +182,7 @@ void test_hbgvx_work( Params& params, bool run )
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_hbgvx(
-                               job2char(jobz), range2char(range), uplo2char(uplo),
+                               to_char( jobz ), to_char( range ), to_char( uplo ),
                                n, ka, kb,
                                &Aband_ref[0], lda,
                                &Bband_ref[0], ldb,

@@ -69,7 +69,7 @@ void test_sytrf_aa_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_sytrf_aa( uplo2char(uplo), n, &A_ref[0], lda, &ipiv_ref[0] );
+        int64_t info_ref = LAPACKE_sytrf_aa( to_char( uplo ), n, &A_ref[0], lda, &ipiv_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_sytrf_aa returned error %lld\n", llong( info_ref ) );

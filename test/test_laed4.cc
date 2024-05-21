@@ -20,7 +20,7 @@ void test_laed4_work( Params& params, bool run )
     // get & mark input values
     int64_t n = params.dim.n();
     int64_t i = params.i();
-    scalar_t rho = std::abs( params.alpha() );
+    real_t rho = std::abs( params.alpha.get<real_t>() );
 
     assert( 0 <= i && i < n );  // 0-based
 

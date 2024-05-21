@@ -43,8 +43,8 @@ int64_t porfsx(
         lapack_error_if( std::abs(n_err_bnds) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(nparams) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
-    char equed_ = equed2char( equed );
+    char uplo_ = to_char( uplo );
+    char equed_ = to_char( equed );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int lda_ = (lapack_int) lda;
@@ -105,8 +105,8 @@ int64_t porfsx(
         lapack_error_if( std::abs(n_err_bnds) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(nparams) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
-    char equed_ = equed2char( equed );
+    char uplo_ = to_char( uplo );
+    char equed_ = to_char( equed );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int lda_ = (lapack_int) lda;
@@ -167,8 +167,8 @@ int64_t porfsx(
         lapack_error_if( std::abs(n_err_bnds) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(nparams) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
-    char equed_ = equed2char( equed );
+    char uplo_ = to_char( uplo );
+    char equed_ = to_char( equed );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int lda_ = (lapack_int) lda;
@@ -489,8 +489,8 @@ int64_t porfsx(
         lapack_error_if( std::abs(n_err_bnds) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(nparams) > std::numeric_limits<lapack_int>::max() );
     }
-    char uplo_ = uplo2char( uplo );
-    char equed_ = equed2char( equed );
+    char uplo_ = to_char( uplo );
+    char equed_ = to_char( equed );
     lapack_int n_ = (lapack_int) n;
     lapack_int nrhs_ = (lapack_int) nrhs;
     lapack_int lda_ = (lapack_int) lda;

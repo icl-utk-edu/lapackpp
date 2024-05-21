@@ -197,7 +197,7 @@ void test_hegvx_work( Params& params, bool run )
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_hegvx(
-                               itype, job2char(jobz), range2char(range), uplo2char(uplo), n,
+                               itype, to_char( jobz ), to_char( range ), to_char( uplo ), n,
                                &A_ref[0], lda,
                                &B_ref[0], ldb,
                                vl, vu, il, iu, abstol, &nfound_ref,

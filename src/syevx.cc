@@ -33,9 +33,9 @@ int64_t syevx(
         lapack_error_if( std::abs(iu) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobz_ = job2char( jobz );
-    char range_ = range2char( range );
-    char uplo_ = uplo2char( uplo );
+    char jobz_ = to_char( jobz );
+    char range_ = to_char( range );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int il_ = (lapack_int) il;
@@ -113,9 +113,9 @@ int64_t syevx(
         lapack_error_if( std::abs(iu) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobz_ = job2char( jobz );
-    char range_ = range2char( range );
-    char uplo_ = uplo2char( uplo );
+    char jobz_ = to_char( jobz );
+    char range_ = to_char( range );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int il_ = (lapack_int) il;

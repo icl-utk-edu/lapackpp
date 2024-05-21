@@ -91,7 +91,7 @@ void test_gemqrt_work( Params& params, bool run )
         //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_gemqrt( side2char(side), op2char(trans), m, n, k, nb, &V[0], ldv, &T[0], ldt, &C_ref[0], ldc );
+        int64_t info_ref = LAPACKE_gemqrt( to_char( side ), to_char( trans ), m, n, k, nb, &V[0], ldv, &T[0], ldt, &C_ref[0], ldc );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gemqrt returned error %lld\n", llong( info_ref ) );

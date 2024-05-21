@@ -25,9 +25,9 @@ float lantp(
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
-    char uplo_ = uplo2char( uplo );
-    char diag_ = diag2char( diag );
+    char norm_ = to_char( norm );
+    char uplo_ = to_char( uplo );
+    char diag_ = to_char( diag );
     lapack_int n_ = (lapack_int) n;
 
     // from docs
@@ -53,9 +53,9 @@ double lantp(
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
-    char uplo_ = uplo2char( uplo );
-    char diag_ = diag2char( diag );
+    char norm_ = to_char( norm );
+    char uplo_ = to_char( uplo );
+    char diag_ = to_char( diag );
     lapack_int n_ = (lapack_int) n;
 
     // from docs
@@ -81,9 +81,9 @@ float lantp(
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
-    char uplo_ = uplo2char( uplo );
-    char diag_ = diag2char( diag );
+    char norm_ = to_char( norm );
+    char uplo_ = to_char( uplo );
+    char diag_ = to_char( diag );
     lapack_int n_ = (lapack_int) n;
 
     // from docs
@@ -148,9 +148,9 @@ double lantp(
     if (sizeof(int64_t) > sizeof(lapack_int)) {
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
     }
-    char norm_ = norm2char( norm );
-    char uplo_ = uplo2char( uplo );
-    char diag_ = diag2char( diag );
+    char norm_ = to_char( norm );
+    char uplo_ = to_char( uplo );
+    char diag_ = to_char( diag );
     lapack_int n_ = (lapack_int) n;
 
     // from docs

@@ -193,7 +193,7 @@ void test_hpgvx_work( Params& params, bool run )
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_hpgvx(
-                               itype, job2char(jobz), range2char(range), uplo2char(uplo), n,
+                               itype, to_char( jobz ), to_char( range ), to_char( uplo ), n,
                                &Apack_ref[0],
                                &Bpack_ref[0],
                                vl, vu, il, iu, abstol, &nfound_ref,

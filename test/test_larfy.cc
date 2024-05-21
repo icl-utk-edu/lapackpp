@@ -69,7 +69,7 @@ void test_larfy_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_larfy( uplo2char(uplo), n, &V[0], incv, tau, &C_ref[0], ldc );
+        int64_t info_ref = LAPACKE_larfy( to_char( uplo ), n, &V[0], incv, tau, &C_ref[0], ldc );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_larfy returned error %lld\n", llong( info_ref ) );

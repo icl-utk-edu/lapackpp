@@ -27,7 +27,7 @@ int64_t stev(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobz_ = job2char( jobz );
+    char jobz_ = to_char( jobz );
     lapack_int n_ = (lapack_int) n;
     lapack_int ldz_ = (lapack_int) ldz;
     lapack_int info_ = 0;
@@ -60,7 +60,7 @@ int64_t stev(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobz_ = job2char( jobz );
+    char jobz_ = to_char( jobz );
     lapack_int n_ = (lapack_int) n;
     lapack_int ldz_ = (lapack_int) ldz;
     lapack_int info_ = 0;

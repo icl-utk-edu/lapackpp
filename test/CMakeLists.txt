@@ -22,7 +22,7 @@ if (NOT TARGET testsweeper)
         message( "   Found TestSweeper library: ${testsweeper_DIR}" )
     else()
         set( url "https://github.com/icl-utk-edu/testsweeper" )
-        set( tag "v2023.11.05" )
+        set( tag "46266dbd5b9560413a379d5c17764aadf96e1890" ) # 2024-05-24
         message( "" )
         message( "---------- TestSweeper" )
         message( STATUS "Fetching TestSweeper ${tag} from ${url}" )

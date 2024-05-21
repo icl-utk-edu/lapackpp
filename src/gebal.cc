@@ -28,7 +28,7 @@ int64_t gebal(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char balance_ = balance2char( balance );
+    char balance_ = to_char( balance );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ilo_ = (lapack_int) *ilo;
@@ -62,7 +62,7 @@ int64_t gebal(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char balance_ = balance2char( balance );
+    char balance_ = to_char( balance );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ilo_ = (lapack_int) *ilo;
@@ -96,7 +96,7 @@ int64_t gebal(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char balance_ = balance2char( balance );
+    char balance_ = to_char( balance );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ilo_ = (lapack_int) *ilo;
@@ -219,7 +219,7 @@ int64_t gebal(
         lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
     }
-    char balance_ = balance2char( balance );
+    char balance_ = to_char( balance );
     lapack_int n_ = (lapack_int) n;
     lapack_int lda_ = (lapack_int) lda;
     lapack_int ilo_ = (lapack_int) *ilo;

@@ -83,7 +83,7 @@ void test_upmtr_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_upmtr( side2char(side), uplo2char(uplo), op2char(trans), m, n, &AP[0], &tau[0], &C_ref[0], ldc );
+        int64_t info_ref = LAPACKE_upmtr( to_char( side ), to_char( uplo ), to_char( trans ), m, n, &AP[0], &tau[0], &C_ref[0], ldc );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_upmtr returned error %lld\n", llong( info_ref ) );

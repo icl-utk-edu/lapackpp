@@ -31,8 +31,8 @@ int64_t sbgst(
         lapack_error_if( std::abs(ldbb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobz_ = job2char( jobz );
-    char uplo_ = uplo2char( uplo );
+    char jobz_ = to_char( jobz );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int ka_ = (lapack_int) ka;
     lapack_int kb_ = (lapack_int) kb;
@@ -73,8 +73,8 @@ int64_t sbgst(
         lapack_error_if( std::abs(ldbb) > std::numeric_limits<lapack_int>::max() );
         lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
     }
-    char jobz_ = job2char( jobz );
-    char uplo_ = uplo2char( uplo );
+    char jobz_ = to_char( jobz );
+    char uplo_ = to_char( uplo );
     lapack_int n_ = (lapack_int) n;
     lapack_int ka_ = (lapack_int) ka;
     lapack_int kb_ = (lapack_int) kb;

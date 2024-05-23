@@ -10008,8 +10008,8 @@ inline lapack_int LAPACKE_ungtr(
 }
 
 // -----------------------------------------------------------------------------
-// LAPACKE_*unhr_col only in Intel MKL, not yet Netlib LAPACK as of 3.10.
-#if LAPACK_VERSION >= 30900 && defined( LAPACK_HAVE_MKL ) // >= 3.9.0
+// LAPACKE_*unhr_col only in Intel MKL until LAPACK 3.12.
+#if LAPACK_VERSION >= 31200 || (LAPACK_VERSION >= 30900 && defined( LAPACK_HAVE_MKL ))
 
 inline lapack_int LAPACKE_orhr_col(
     lapack_int m, lapack_int n, lapack_int nb,
@@ -10083,7 +10083,7 @@ inline lapack_int LAPACKE_unhr_col(
         (lapack_complex_double*) D );
 }
 
-#endif  // 3.9.0 and LAPACK_HAVE_MKL
+#endif  // 3.12.0 or (3.9.0 and LAPACK_HAVE_MKL)
 
 
 // -----------------------------------------------------------------------------

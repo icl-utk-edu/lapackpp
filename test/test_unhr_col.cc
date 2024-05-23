@@ -53,23 +53,28 @@ void test_unhr_col_work( Params& params, bool run )
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
-    int64_t info_tst = lapack::unhr_col( m, n, nb, &A_tst[0], lda, &T_tst[0], ldt, &D_tst[0] );
+    int64_t info_tst = lapack::unhr_col(
+        m, n, nb, &A_tst[0], lda, &T_tst[0], ldt, &D_tst[0] );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
-        fprintf( stderr, "lapack::unhr_col returned error %lld\n", llong( info_tst ) );
+        fprintf( stderr, "lapack::unhr_col returned error %lld\n",
+                 llong( info_tst ) );
     }
 
     params.time() = time;
 
-    #ifdef LAPACK_HAVE_MKL
     if (params.ref() == 'y' || params.check() == 'y') {
+    #if LAPACK_VERSION >= 31200 || defined( LAPACK_HAVE_MKL )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_unhr_col( m, n, nb, &A_ref[0], lda, &T_ref[0], ldt, &D_ref[0] );
+        // min works around bug in LAPACK <= 3.12
+        int64_t info_ref = LAPACKE_unhr_col(
+            m, n, blas::min( nb, n ), &A_ref[0], lda, &T_ref[0], ldt, &D_ref[0] );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_unhr_col returned error %lld\n", llong( info_ref ) );
+            fprintf( stderr, "LAPACKE_unhr_col returned error %lld\n",
+                     llong( info_ref ) );
         }
 
         params.ref_time() = time;
@@ -84,11 +89,11 @@ void test_unhr_col_work( Params& params, bool run )
         error += abs_error( D_tst, D_ref );
         params.error() = error;
         params.okay() = (error == 0);  // expect lapackpp == lapacke
-    }
     #else
         // LAPACKE_unhr_col not yet in LAPACK
-        params.msg() = "check requires Intel MKL, as of LAPACK 3.11";
+        params.msg() = "check requires LAPACK >= 3.12 or Intel MKL";
     #endif  // LAPACK_HAVE_MKL
+    }
 }
 
 #endif  // LAPACK >= 3.9.0

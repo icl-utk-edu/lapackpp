@@ -19,6 +19,12 @@ project(
     LANGUAGES CXX
 )
 
+# See notes in GNUmakefile about using abi-compliance-checker.
+# soversion is major ABI version.
+set( abi_version 1.0.0 )
+string( REPLACE "." ";" abi_list "${abi_version}" )
+list( GET abi_list 0 soversion )
+
 include( CheckCXXCompilerFlag )
 
 # When built as a sub-project, add a namespace to make targets unique,
@@ -113,6 +119,8 @@ use_cmake_find_lapack  = ${use_cmake_find_lapack}
 gpu_backend            = ${gpu_backend}
 lapackpp_is_project    = ${lapackpp_is_project}
 lapackpp_              = ${lapackpp_}
+abi_version            = ${abi_version}
+soversion              = ${soversion}
 " )
 
 #-------------------------------------------------------------------------------
@@ -684,6 +692,8 @@ set_target_properties(
     CXX_STANDARD_REQUIRED true  # prohibit < c++17
     CXX_EXTENSIONS false        # prohibit gnu++17
     WINDOWS_EXPORT_ALL_SYMBOLS ON
+    VERSION   "${abi_version}"
+    SOVERSION "${soversion}"
 )
 
 if (CMAKE_VERSION VERSION_GREATER_EQUAL 3.15)

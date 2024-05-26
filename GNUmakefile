@@ -37,10 +37,32 @@ make.inc:
 RANLIB   ?= ranlib
 prefix   ?= /opt/slate
 
+abs_prefix := ${abspath ${prefix}}
+
 # Default LD=ld won't work; use CXX. Can override in make.inc or environment.
 ifeq (${origin LD},default)
     LD = ${CXX}
 endif
+
+# Use abi-compliance-checker to compare the ABI (application binary
+# interface) of 2 releases. Changing the ABI does not necessarily change
+# the API (application programming interface). Rearranging a struct or
+# changing a by-value argument from int64 to int doesn't change the
+# API--no source code changes are required, just a recompile.
+#
+# if structs or routines are changed or removed:
+#     bump major version and reset minor, revision = 0;
+# else if structs or routines are added:
+#     bump minor version and reset revision = 0;
+# else (e.g., bug fixes):
+#     bump revision
+#
+# soversion is major ABI version.
+abi_version = 1.0.0
+soversion = ${word 1, ${subst ., ,${abi_version}}}
+
+#-------------------------------------------------------------------------------
+ldflags_shared = -shared
 
 # auto-detect OS
 # $OSTYPE may not be exported from the shell, so echo it
@@ -48,6 +70,19 @@ ostype := ${shell echo $${OSTYPE}}
 ifneq ($(findstring darwin, ${ostype}),)
     # MacOS is darwin
     macos = 1
+    # MacOS needs shared library's path set, and shared library version.
+    ldflags_shared += -install_name @rpath/${notdir $@} \
+                      -current_version ${abi_version} \
+                      -compatibility_version ${soversion}
+    so = dylib
+    so2 = .dylib
+    # on macOS, .dylib comes after version: libfoo.4.dylib
+else
+    # Linux needs shared library's soname.
+    ldflags_shared += -Wl,-soname,${notdir ${lib_soname}}
+    so = so
+    so1 = .so
+    # on Linux, .so comes before version: libfoo.so.4
 endif
 
 #-------------------------------------------------------------------------------
@@ -55,17 +90,9 @@ endif
 ifneq (${static},1)
     CXXFLAGS += -fPIC
     LDFLAGS  += -fPIC
-    lib_ext = so
+    lib_ext = ${so}
 else
     lib_ext = a
-endif
-
-#-------------------------------------------------------------------------------
-# MacOS needs shared library's path set
-ifeq (${macos},1)
-    install_name = -install_name @rpath/${notdir $@}
-else
-    install_name =
 endif
 
 #-------------------------------------------------------------------------------
@@ -79,7 +106,9 @@ tester_src = ${wildcard test/*.cc}
 tester_obj = ${addsuffix .o, ${basename ${tester_src}}}
 dep       += ${addsuffix .d, ${basename ${tester_src}}}
 
-tester     = test/tester
+tester = test/tester
+
+pkg = lib/pkgconfig/lapackpp.pc
 
 #-------------------------------------------------------------------------------
 # BLAS++
@@ -93,33 +122,32 @@ endif
 
 blaspp_src = ${wildcard ${blaspp_dir}/src/*.cc ${blaspp_dir}/include/*.hh}
 
-libblaspp  = ${blaspp_dir}/lib/libblaspp.${lib_ext}
+blaspp = ${blaspp_dir}/lib/libblaspp.${lib_ext}
 
-blaspp: ${libblaspp}
+blaspp: ${blaspp}
 
 ifneq (${blaspp_dir},)
-    ${libblaspp}: ${libblaspp_src}
+    ${blaspp}: ${blaspp_src}
 		cd ${blaspp_dir} && ${MAKE} lib CXX=${CXX}
 else
-    ${lib_obj}:
+    ${blaspp}:
 		${error LAPACK++ requires BLAS++, which was not found. Run 'make config' \
 		        or download manually from https://github.com/icl-utk-edu/blaspp}
 endif
 
 # Compile BLAS++ before LAPACK++.
-${lib_obj} ${tester_obj}: | ${libblaspp}
+${lib_obj} ${tester_obj}: | ${blaspp}
 
 
 #-------------------------------------------------------------------------------
 # TestSweeper
-# Order here (./testsweeper, ../testsweeper) is reverse of order in configure.py.
 
-testsweeper_dir = ${wildcard ./testsweeper}
+testsweeper_dir = ${wildcard ../testsweeper}
 ifeq (${testsweeper_dir},)
     testsweeper_dir = ${wildcard ${blaspp_dir}/testsweeper}
 endif
 ifeq (${testsweeper_dir},)
-    testsweeper_dir = ${wildcard ../testsweeper}
+    testsweeper_dir = ${wildcard ./testsweeper}
 endif
 
 testsweeper_src = ${wildcard ${testsweeper_dir}/testsweeper.cc ${testsweeper_dir}/testsweeper.hh}
@@ -132,14 +160,13 @@ ifneq (${testsweeper_dir},)
     ${testsweeper}: ${testsweeper_src}
 		cd ${testsweeper_dir} && ${MAKE} lib CXX=${CXX}
 else
-    ${tester_obj}:
+    ${testsweeper}:
 		${error Tester requires TestSweeper, which was not found. Run 'make config' \
 		        or download manually from https://github.com/icl-utk-edu/testsweeper}
 endif
 
 # Compile TestSweeper before LAPACK++.
-${lib_obj} ${tester_obj}: | ${libblaspp}
-
+${lib_obj} ${tester_obj}: | ${testsweeper}
 
 #-------------------------------------------------------------------------------
 # Get Mercurial id, and make version.o depend on it via .id file.
@@ -177,58 +204,83 @@ TEST_LIBS    += -llapackpp -lblaspp -ltestsweeper
 .DELETE_ON_ERROR:
 .SUFFIXES:
 .PHONY: all docs hooks lib src test tester headers include clean distclean
-.DEFAULT_GOAL := all
+.DEFAULT_GOAL = all
 
 all: lib tester hooks
 
-pkg = lib/pkgconfig/lapackpp.pc
-
 install: lib ${pkg}
-	mkdir -p ${DESTDIR}${prefix}/include/lapack
-	mkdir -p ${DESTDIR}${prefix}/lib${LIB_SUFFIX}
-	mkdir -p ${DESTDIR}${prefix}/lib${LIB_SUFFIX}/pkgconfig
-	cp include/*.hh ${DESTDIR}${prefix}/include
-	cp include/lapack/*.h  ${DESTDIR}${prefix}/include/lapack
-	cp include/lapack/*.hh ${DESTDIR}${prefix}/include/lapack
-	cp -R lib/lib* ${DESTDIR}${prefix}/lib${LIB_SUFFIX}
-	cp ${pkg} ${DESTDIR}${prefix}/lib${LIB_SUFFIX}/pkgconfig/
+	mkdir -p ${DESTDIR}${abs_prefix}/include/lapack
+	mkdir -p ${DESTDIR}${abs_prefix}/lib${LIB_SUFFIX}/pkgconfig
+	cp include/*.hh        ${DESTDIR}${abs_prefix}/include/
+	cp include/lapack/*.h  ${DESTDIR}${abs_prefix}/include/lapack/
+	cp include/lapack/*.hh ${DESTDIR}${abs_prefix}/include/lapack/
+	cp -av ${lib_name}*    ${DESTDIR}${abs_prefix}/lib${LIB_SUFFIX}/
+	cp ${pkg}              ${DESTDIR}${abs_prefix}/lib${LIB_SUFFIX}/pkgconfig/
 	cd ${blaspp_dir} && make install prefix=${prefix}
 
 uninstall:
-	${RM}    ${DESTDIR}${prefix}/include/lapack.hh
-	${RM} -r ${DESTDIR}${prefix}/include/lapack
-	${RM} ${DESTDIR}${prefix}/lib${LIB_SUFFIX}/liblapackpp.*
-	${RM} ${DESTDIR}${prefix}/lib${LIB_SUFFIX}/pkgconfig/lapackpp.pc
+	${RM}    ${DESTDIR}${abs_prefix}/include/lapack.hh
+	${RM} -r ${DESTDIR}${abs_prefix}/include/lapack
+	${RM}    ${DESTDIR}${abs_prefix}/lib${LIB_SUFFIX}/${notdir ${lib_name}*}
+	${RM}    ${DESTDIR}${abs_prefix}/lib${LIB_SUFFIX}/pkgconfig/lapackpp.pc
 
 #-------------------------------------------------------------------------------
 # if re-configured, recompile everything
 ${lib_obj} ${tester_obj}: make.inc
 
 #-------------------------------------------------------------------------------
-# LAPACK++ library
-lib_a  = lib/liblapackpp.a
-lib_so = lib/liblapackpp.so
-lib    = lib/liblapackpp.${lib_ext}
-
-${lib_so}: ${lib_obj}
+# Generic rule for shared libraries.
+# For libfoo.so version 4.5.6, this creates libfoo.so.4.5.6 and symlinks
+# libfoo.so.4 -> libfoo.so.4.5.6
+# libfoo.so   -> libfoo.so.4
+#
+# Needs [private] variables set (shown with example values):
+# LDFLAGS     = -L/path/to/lib
+# LIBS        = -lmylib
+# lib_obj     = src/foo.o src/bar.o
+# lib_so_abi  = libfoo.so.4.5.6
+# lib_soname  = libfoo.so.4
+# abi_version = 4.5.6
+# soversion   = 4
+%.${lib_ext}:
 	mkdir -p lib
-	${LD} ${LDFLAGS} -shared ${install_name} ${lib_obj} ${LIBS} -o $@
+	${LD} ${LDFLAGS} ${ldflags_shared} ${LIBS} ${lib_obj} -o ${lib_so_abi}
+	ln -fs ${notdir ${lib_so_abi}} ${lib_soname}
+	ln -fs ${notdir ${lib_soname}} $@
 
-${lib_a}: ${lib_obj}
+# Generic rule for static libraries, creates libfoo.a.
+# The library should depend only on its objects.
+%.a:
 	mkdir -p lib
 	${RM} $@
-	${AR} cr $@ ${lib_obj}
+	${AR} cr $@ $^
 	${RANLIB} $@
+
+#-------------------------------------------------------------------------------
+# LAPACK++ library
+# so     is like libfoo.so       or libfoo.dylib
+# so_abi is like libfoo.so.4.5.6 or libfoo.4.5.6.dylib
+# soname is like libfoo.so.4     or libfoo.4.dylib
+lib_name   = lib/liblapackpp
+lib_a      = ${lib_name}.a
+lib_so     = ${lib_name}.${so}
+lib        = ${lib_name}.${lib_ext}
+lib_so_abi = ${lib_name}${so1}.${abi_version}${so2}
+lib_soname = ${lib_name}${so1}.${soversion}${so2}
+
+${lib_so}: ${lib_obj}
+
+${lib_a}: ${lib_obj}
 
 # sub-directory rules
 lib src: ${lib}
 
 lib/clean src/clean:
-	${RM} lib/*.a lib/*.so src/*.o
+	${RM} ${lib_a} ${lib_so} ${lib_so_abi} ${lib_soname} ${lib_obj}
 
 #-------------------------------------------------------------------------------
 # tester
-${tester}: ${tester_obj} ${lib} ${testsweeper} ${libblaspp}
+${tester}: ${tester_obj} ${lib} ${testsweeper} ${blaspp}
 	${LD} ${TEST_LDFLAGS} ${LDFLAGS} ${tester_obj} \
 		${TEST_LIBS} ${LIBS} -o $@
 
@@ -274,7 +326,7 @@ LDFLAGS_clean  = ${filter-out -fPIC, ${LDFLAGS}}
 .PHONY: ${pkg}
 ${pkg}:
 	perl -pe "s'#VERSION'2023.11.05'; \
-	          s'#PREFIX'${prefix}'; \
+	          s'#PREFIX'${abs_prefix}'; \
 	          s'#CXX\b'${CXX}'; \
 	          s'#CXXFLAGS'${CXXFLAGS_clean}'; \
 	          s'#CPPFLAGS'${CPPFLAGS_clean}'; \
@@ -351,13 +403,19 @@ hooks: ${hooks}
 #-------------------------------------------------------------------------------
 # debugging
 echo:
+	@echo "ostype        = '${ostype}'"
 	@echo "static        = '${static}'"
 	@echo "id            = '${id}'"
 	@echo "last_id       = '${last_id}'"
+	@echo "abi_version   = '${abi_version}'"
+	@echo "soversion     = '${soversion}'"
 	@echo
+	@echo "lib_name      = ${lib_name}"
 	@echo "lib_a         = ${lib_a}"
 	@echo "lib_so        = ${lib_so}"
 	@echo "lib           = ${lib}"
+	@echo "lib_so_abi    = ${lib_so_abi}"
+	@echo "lib_soname    = ${lib_soname}"
 	@echo
 	@echo "lib_src       = ${lib_src}"
 	@echo
@@ -377,7 +435,7 @@ echo:
 	@echo
 	@echo "blaspp_dir    = ${blaspp_dir}"
 	@echo "blaspp_src    = ${blaspp_src}"
-	@echo "libblaspp     = ${libblaspp}"
+	@echo "blaspp        = ${blaspp}"
 	@echo
 	@echo "CXX           = ${CXX}"
 	@echo "CXXFLAGS      = ${CXXFLAGS}"
@@ -385,6 +443,7 @@ echo:
 	@echo "LD            = ${LD}"
 	@echo "LDFLAGS       = ${LDFLAGS}"
 	@echo "LIBS          = ${LIBS}"
+	@echo "ldflags_shared = ${ldflags_shared}"
 	@echo
 	@echo "TEST_LDFLAGS  = ${TEST_LDFLAGS}"
 	@echo "TEST_LIBS     = ${TEST_LIBS}"

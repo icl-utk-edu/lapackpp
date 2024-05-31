@@ -1,3 +1,9 @@
+2024.05.31
+  - Added shared library version (ABI version 1.0.0)
+  - Updated enum parameters to have `to_string`, `from_string`;
+    deprecate `<enum>2str`, `str2<enum>`
+  - Removed some deprecated functions
+
 2023.11.05
   - Add heevd GPU wrapper for CUDA, ROCm, oneMKL
   - Update Fortran strlen handling

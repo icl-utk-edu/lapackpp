@@ -232,37 +232,37 @@ typemap = {
 
 # --------------------
 # see blas_util.hh
-uplo = ('lapack::Uplo', 'uplo2char', {
+uplo = ('lapack::Uplo', 'to_char', {
     'u': 'Upper',
     'l': 'Lower',
     'g': 'General',
 })
 
-diag = ('lapack::Diag', 'diag2char', {
+diag = ('lapack::Diag', 'to_char', {
     'n': 'NonUnit',
     'u': 'Unit',
 })
 
-op = ('lapack::Op', 'op2char', {
+op = ('lapack::Op', 'to_char', {
     'n': 'NoTrans',
     't': 'Trans',
     'c': 'ConjTrans',
 })
 
-side = ('lapack::Side', 'side2char', {
+side = ('lapack::Side', 'to_char', {
     'l': 'Left',
     'r': 'Right',
 })
 
 # --------------------
 # see lapack_util.hh
-sides = ('lapack::Sides', 'sides2char', {
+sides = ('lapack::Sides', 'to_char', {
     'l': 'Left',
     'r': 'Right',
     'b': 'Both',
 })
 
-norm = ('lapack::Norm', 'norm2char', {
+norm = ('lapack::Norm', 'to_char', {
     '1': 'One',
     'o': 'One',
     'i': 'Inf',
@@ -270,7 +270,7 @@ norm = ('lapack::Norm', 'norm2char', {
     'm': 'Max',
 })
 
-job = ('lapack::Job', 'job2char', {
+job = ('lapack::Job', 'to_char', {
     'n': 'NoVec',
     'v': 'Vec',
     'u': 'UpdateVec',
@@ -348,26 +348,26 @@ job_gesvj = ('lapack::Job', 'job_gesvj2char', {
 # -----
 
 # hseqr
-jobschur = ('lapack::JobSchur', 'jobschur2char', {
+jobschur = ('lapack::JobSchur', 'to_char', {
     'e': 'Eigenvalues',
     's': 'Schur',
 })
 
 # gees
-sort = ('lapack::Sort', 'sort2char', {
+sort = ('lapack::Sort', 'to_char', {
     'n': 'NotSorted',
     's': 'Sorted',
 })
 
 # syevx, geevx, gesvdx
-range_enum = ('lapack::Range', 'range2char', {
+range_enum = ('lapack::Range', 'to_char', {
     'a': 'All',
     'v': 'Value',
     'i': 'Index',
 })
 
 # ormbr, orgbr
-vect = ('lapack::Vect', 'vect2char', {
+vect = ('lapack::Vect', 'to_char', {
     'q': 'Q',
     'p': 'P',
     'n': 'None',
@@ -375,19 +375,19 @@ vect = ('lapack::Vect', 'vect2char', {
 })
 
 # larfb
-direction = ('lapack::Direction', 'direction2char', {
+direction = ('lapack::Direction', 'to_char', {
     'f': 'Forward',
     'b': 'Backward',
 })
 
 # larfb
-storev = ('lapack::StoreV', 'storev2char', {
+storev = ('lapack::StoreV', 'to_char', {
     'c': 'Columnwise',
     'r': 'Rowwise',
 })
 
 # lascl, laset
-matrixtype = ('lapack::MatrixType', 'matrixtype2char', {
+matrixtype = ('lapack::MatrixType', 'to_char', {
     'g': 'General',
     'l': 'Lower',
     'u': 'Upper',
@@ -398,14 +398,14 @@ matrixtype = ('lapack::MatrixType', 'matrixtype2char', {
 })
 
 # trevc
-howmany = ('lapack::HowMany', 'howmany2char', {
+howmany = ('lapack::HowMany', 'to_char', {
     'a': 'All',
     'b': 'Backtransform',
     's': 'Select',
 })
 
 # *svx, *rfsx
-equed = ('lapack::Equed', 'equed2char', {
+equed = ('lapack::Equed', 'to_char', {
     'n': 'None',
     'r': 'Row',
     'c': 'Col',
@@ -414,14 +414,14 @@ equed = ('lapack::Equed', 'equed2char', {
 })
 
 # *svx, *rfsx
-factored = ('lapack::Factored', 'factored2char', {
+factored = ('lapack::Factored', 'to_char', {
     'f': 'Factored',
     'n': 'NotFactored',
     'e': 'Equilibrate',
 })
 
 # trsen, geesx
-sense = ('lapack::Sense', 'sense2char', {
+sense = ('lapack::Sense', 'to_char', {
     'n': 'None',
     'e': 'Eigenvalues',
     'v': 'Subspace',
@@ -429,14 +429,14 @@ sense = ('lapack::Sense', 'sense2char', {
 })
 
 # disna
-jobcond = ('lapack::JobCond', 'jobcond2char', {
+jobcond = ('lapack::JobCond', 'to_char', {
     'e': 'EigenVec',
     'l': 'LeftSingularVec',
     'r': 'RightSingularVec',
 })
 
 # gebak, gebal
-balance = ('lapack::Balance', 'balance2char', {
+balance = ('lapack::Balance', 'to_char', {
     'n': 'None',
     'p': 'Permute',
     's': 'Scale',
@@ -444,15 +444,22 @@ balance = ('lapack::Balance', 'balance2char', {
 })
 
 # stebz, larrd
-order = ('lapack::Order', 'order2char', {
+order = ('lapack::Order', 'to_char', {
     'b': 'Block',
     'e': 'Entire',
 })
 
 # rowcol
-rowcol = ('lapack::RowCol', 'rowcol2char', {
+rowcol = ('lapack::RowCol', 'to_char', {
     'c': 'Col',
     'r': 'Row',
+})
+
+# lasr
+pivot = ('lapack::Pivot', 'to_char', {
+    'v': 'Variable',
+    't': 'Top',
+    'b': 'Bottom',
 })
 
 # --------------------
@@ -504,6 +511,7 @@ enum_map = {
     'range':        range_enum, # syevx, geevx, gesvdx
     'vect':         vect,       # ormbr, orgbr
     'direction':    direction,  # larfb
+    'direct':       direction,  # larfb
     'storev':       storev,     # larfb
     'matrixtype':   matrixtype, # lascl, laset
     'howmany':      howmany,    # gehrd
@@ -513,6 +521,7 @@ enum_map = {
     'jobcond':      jobcond,    # disna
     'balance':      balance,    # {ge,gg}{bak,bal}
     'order':        order,      # stebz, larrd
+    'pivot':        pivot,      # lasr
 }
 
 # ------------------------------------------------------------------------------
@@ -1380,7 +1389,7 @@ def generate_wrapper( func, header=False ):
                 query_args.append( prefix + cast + arg.pname )
                 if (arg.dtype in ('int64_t', 'bool')):
                     # local 32-bit copy of 64-bit int
-                    int_checks += tab*2 + 'lapack_error_if( std::abs(' + arg.name + ') > std::numeric_limits<lapack_int>::max() );\n'
+                    int_checks += tab*2 + 'lapack_error_if( std::abs( ' + arg.name + ' ) > std::numeric_limits<lapack_int>::max() );\n'
                     local_vars += tab + 'lapack_int ' + arg.lname + ' = (lapack_int) ' + arg.name + ';\n'
                 elif (arg.is_enum):
                     enum2char = enum_map[ arg.name ][1]
@@ -1474,7 +1483,7 @@ def generate_wrapper( func, header=False ):
 
     if (int_checks):
         int_checks = (tab + '// check for overflow\n'
-                   +  tab + 'if (sizeof(int64_t) > sizeof(lapack_int)) {\n'
+                   +  tab + 'if (sizeof( int64_t ) > sizeof( lapack_int )) {\n'
                    +  int_checks
                    +  tab + '}\n')
     # end

@@ -339,6 +339,7 @@ std::vector< testsweeper::routines_t > routines = {
     { "",                   nullptr,        Section::newline },
 
     { "heevr",              test_heevr,     Section::heev }, // backward error check
+    { "lae2",               test_lae2,      Section::heev }, // forward  error check, compared to laev2
     { "laev2",              test_laev2,     Section::heev }, // backward error check
     { "",                   nullptr,        Section::newline },
 

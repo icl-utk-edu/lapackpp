@@ -145,12 +145,15 @@ for func in funcs:
                 # end
             # end
         # end
-        print( '#define LAPACK_' + func + ' LAPACK_GLOBAL(' + func + ',' + func.upper() + ')', file=output )
-        print( retval + ' LAPACK_' + func + '(\n    ' + ', '.join( args ) + '\n);\n', file=output )
+        print( '#define LAPACK_' + func + ' LAPACK_GLOBAL( ' + func + ', '
+               + func.upper() + ' )', file=output )
+        print( retval + ' LAPACK_' + func + '(\n    ' + ', '.join( args )
+               + '\n);\n', file=output )
     else:
         print( '// skipping, file not found:', filename )
         print( '// skipping, file not found:', filename, file=output )
-        print( '// #define LAPACK_' + func + ' LAPACK_GLOBAL(' + func + ',' + func.upper() + ')', file=output )
+        print( '// #define LAPACK_' + func + ' LAPACK_GLOBAL(' + func + ','
+               + func.upper() + ')', file=output )
         print( '// void LAPACK_' + func + '( ... );\n', file=output )
     # end
 # end

@@ -596,6 +596,7 @@ if (opts.syev and opts.host):
     [ 'heevr', gen + dtype + align + n + jobz + uplo + vl + vu ],
     [ 'heevr', gen + dtype + align + n + jobz + uplo + il + iu ],
     [ 'hetrd', gen + dtype + align + n + uplo ],
+    [ 'lae2',  gen + dtype_real ],  # 2x2, eigvals only
     [ 'laev2', gen + dtype ],  # 2x2
     [ 'ungtr', gen + dtype + align + n + uplo ],
     [ 'unmtr', gen + dtype_real    + align + mn + uplo + side + trans    ],  # real does trans = N, T, C

@@ -124,6 +124,7 @@ add_executable(
     test_hptri.cc
     test_hptrs.cc
     test_lacpy.cc
+    test_lae2.cc
     test_laed4.cc
     test_laev2.cc
     test_langb.cc

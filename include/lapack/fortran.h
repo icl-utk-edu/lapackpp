@@ -20383,6 +20383,19 @@ void LAPACK_zunhr_col(
     lapack_complex_double* D, lapack_int* info );
 
 //--------------------
+#define LAPACK_slae2 LAPACK_GLOBAL( slae2, SLAE2 )
+void LAPACK_slae2(
+    float const* a, float const* b, float const* c,
+    float* rt1, float* rt2
+);
+
+#define LAPACK_dlae2 LAPACK_GLOBAL( dlae2, DLAE2 )
+void LAPACK_dlae2(
+    double const* a, double const* b, double const* c,
+    double* rt1, double* rt2
+);
+
+//--------------------
 #define LAPACK_slaev2 LAPACK_GLOBAL( slaev2, SLAEV2 )
 void LAPACK_slaev2(
     float const* a, float const* b, float const* c,

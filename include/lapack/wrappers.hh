@@ -3638,6 +3638,17 @@ void lacpy(
     std::complex<double>* B, int64_t ldb );
 
 // -----------------------------------------------------------------------------
+void lae2(
+    float a, float b, float c,
+    float* rt1,
+    float* rt2 );
+
+void lae2(
+    double a, double b, double c,
+    double* rt1,
+    double* rt2 );
+
+// -----------------------------------------------------------------------------
 int64_t laed4(
     int64_t n, int64_t i,
     float const* d,

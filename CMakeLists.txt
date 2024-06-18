@@ -291,6 +291,7 @@ add_library(
     src/lacgv.cc
     src/lacp2.cc
     src/lacpy.cc
+    src/lae2.cc
     src/laed4.cc
     src/laev2.cc
     src/lag2c.cc

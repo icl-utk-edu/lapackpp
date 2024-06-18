@@ -27,7 +27,7 @@ float lapy2(
 /// overflow.
 ///
 /// Overloaded versions are available for
-/// `float`, `double`, `std::complex<float>`, and `std::complex<double>`.
+/// `float`, `double`.
 ///
 /// @param[in] x
 ///

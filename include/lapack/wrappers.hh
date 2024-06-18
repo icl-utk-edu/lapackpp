@@ -4085,16 +4085,20 @@ void lapmt(
     int64_t* K );
 
 // -----------------------------------------------------------------------------
+[[deprecated("use std::hypot. To be removed 2025-06.")]]
 float lapy2(
     float x, float y );
 
+[[deprecated("use std::hypot. To be removed 2025-06.")]]
 double lapy2(
     double x, double y );
 
 // -----------------------------------------------------------------------------
+[[deprecated("use std::hypot (C++17). To be removed 2025-06.")]]
 float lapy3(
     float x, float y, float z );
 
+[[deprecated("use std::hypot (C++17). To be removed 2025-06.")]]
 double lapy3(
     double x, double y, double z );
 

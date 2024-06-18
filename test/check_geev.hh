@@ -119,8 +119,8 @@ real_t check_geev_Vnormalization(
                 require( real( W[j] ) ==  real( W[j+1] ) );
                 require( imag( W[j] ) == -imag( W[j+1] ) );
                 ipair = true;
-                nrm = lapack::lapy2( blas::nrm2( n, &V(0,j  ), 1 ),
-                                     blas::nrm2( n, &V(0,j+1), 1 ) );
+                nrm = std::hypot( blas::nrm2( n, &V( 0, j   ), 1 ),
+                                  blas::nrm2( n, &V( 0, j+1 ), 1 ) );
             }
             else {
                 // real eigenvector
@@ -133,7 +133,7 @@ real_t check_geev_Vnormalization(
                 real_t Vmax = 0;
                 real_t Vrmax = 0;
                 for (int64_t i = 0; i < n; ++i) {
-                    real_t tmp = lapack::lapy2( V(i,j), V(i,j+1) );
+                    real_t tmp = std::hypot( V( i, j ), V( i, j+1 ) );
                     if (tmp > Vmax)
                         Vmax = tmp;
                     if (V(i,j+1) == 0 && std::abs( V(i,j) ) > Vrmax)

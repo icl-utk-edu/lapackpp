@@ -18,6 +18,7 @@ template< typename scalar_t >
 void test_gesvd_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
+    using lapack::Job;
 
     // get & mark input values
     lapack::Job jobu = params.jobu();
@@ -46,18 +47,16 @@ void test_gesvd_work( Params& params, bool run )
         return;
 
     // skip invalid options
-    if (jobu  == lapack::Job::OverwriteVec &&
-        jobvt == lapack::Job::OverwriteVec)
-    {
+    if (jobu  == Job::OverwriteVec && jobvt == Job::OverwriteVec) {
         params.msg() = "skipping: jobu and jobvt cannot both be overwrite.";
         return;
     }
 
     // ---------- setup
-    int64_t u_ncol = (jobu == lapack::Job::AllVec ? m : blas::min( m, n ));
+    int64_t u_ncol = (jobu == Job::AllVec ? m : blas::min( m, n ));
     int64_t lda = roundup( blas::max( 1, m ), align );
     int64_t ldu = roundup( m, align );
-    int64_t v_nrow = (jobvt == lapack::Job::AllVec ? n : blas::min( m, n ));
+    int64_t v_nrow = (jobvt == Job::AllVec ? n : blas::min( m, n ));
     int64_t ldvt = roundup( v_nrow, align );
     size_t size_A = (size_t) lda * n;
     size_t size_S = (size_t) (blas::min(m,n));
@@ -66,8 +65,8 @@ void test_gesvd_work( Params& params, bool run )
 
     std::vector< scalar_t > A_tst( size_A );
     std::vector< scalar_t > A_ref( size_A );
-    std::vector< real_t > S_tst( size_S );
-    std::vector< real_t > S_ref( size_S );
+    std::vector< real_t > Sigma_tst( size_S );
+    std::vector< real_t > Sigma_ref( size_S );
     std::vector< scalar_t > U_tst( size_U );
     std::vector< scalar_t > U_ref( size_U );
     std::vector< scalar_t > VT_tst( size_VT );
@@ -84,17 +83,22 @@ void test_gesvd_work( Params& params, bool run )
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
-    int64_t info_tst = lapack::gesvd( jobu, jobvt, m, n, &A_tst[0], lda, &S_tst[0], &U_tst[0], ldu, &VT_tst[0], ldvt );
+    int64_t info_tst = lapack::gesvd(
+        jobu, jobvt, m, n,
+        &A_tst[0], lda,
+        &Sigma_tst[0],
+        &U_tst[0], ldu,
+        &VT_tst[0], ldvt );
     time = testsweeper::get_wtime() - time;
     if (info_tst != 0) {
         fprintf( stderr, "lapack::gesvd returned error %lld\n", llong( info_tst ) );
     }
 
     if (verbose >= 2) {
-        printf( "Aout = " ); print_matrix( m, n, &A_tst[0], lda );
-        printf( "U = "    ); print_matrix( m, u_ncol, &U_tst[0], ldu );
-        printf( "VT = "   ); print_matrix( v_nrow, n, &VT_tst[0], ldvt );
-        printf( "S = "    ); print_vector( n, &S_tst[0], 1 );
+        printf( "A_out = " ); print_matrix( m, n, &A_tst[0], lda );
+        printf( "U = "     ); print_matrix( m, u_ncol, &U_tst[0], ldu );
+        printf( "VT = "    ); print_matrix( v_nrow, n, &VT_tst[0], ldvt );
+        printf( "Sigma = " ); print_vector( n, &Sigma_tst[0], 1 );
     }
 
     params.time() = time;
@@ -102,31 +106,32 @@ void test_gesvd_work( Params& params, bool run )
     //params.gflops() = gflop / time;
 
     // ---------- check numerical error
-    // errors[0] = || A - U diag(S) VT || / (||A|| max(m,n)),
-    //                                    if jobu  != NoVec and jobvt != NoVec
-    // errors[1] = || I - U^H U || / m,   if jobu  != NoVec
-    // errors[2] = || I - VT VT^H || / n, if jobvt != NoVec
-    // errors[3] = 0 if S has non-negative values in non-increasing order, else 1
-    real_t errors[4] = { (real_t) testsweeper::no_data_flag,
-                         (real_t) testsweeper::no_data_flag,
-                         (real_t) testsweeper::no_data_flag,
-                         (real_t) testsweeper::no_data_flag };
+    // result[ 0 ] = || A - U Sigma VT || / (||A|| max( m, n )),
+    //                                      if jobu  != NoVec and jobvt != NoVec.
+    // result[ 1 ] = || I - U^H U || / m,   if jobu  != NoVec.
+    // result[ 2 ] = || I - VT VT^H || / n, if jobvt != NoVec.
+    // result[ 3 ] = 0 if Sigma has non-negative values in non-increasing order,
+    //                 else >= 1.
+    real_t result[ 4 ] = { (real_t) testsweeper::no_data_flag,
+                           (real_t) testsweeper::no_data_flag,
+                           (real_t) testsweeper::no_data_flag,
+                           (real_t) testsweeper::no_data_flag };
     if (params.check() == 'y') {
         // U2 or VT2 points to A if overwriting
         scalar_t* U2    = &U_tst[0];
         int64_t   ldu2  = ldu;
         scalar_t* VT2   = &VT_tst[0];
         int64_t   ldvt2 = ldvt;
-        if (jobu == lapack::Job::OverwriteVec) {
+        if (jobu == Job::OverwriteVec) {
             U2   = &A_tst[0];
             ldu2 = lda;
         }
-        else if (jobvt == lapack::Job::OverwriteVec) {
+        else if (jobvt == Job::OverwriteVec) {
             VT2   = &A_tst[0];
             ldvt2 = lda;
         }
         check_svd( jobu, jobvt, m, n, &A_ref[0], lda,
-                   &S_tst[0], U2, ldu2, VT2, ldvt2, errors );
+                   &Sigma_tst[0], U2, ldu2, VT2, ldvt2, result );
 
         if (verbose >= 2) {
             printf( "U2 = "  ); print_matrix( m, u_ncol, U2, ldu2 );
@@ -138,7 +143,12 @@ void test_gesvd_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_gesvd( to_char( jobu ), to_char( jobvt ), m, n, &A_ref[0], lda, &S_ref[0], &U_ref[0], ldu, &VT_ref[0], ldvt );
+        int64_t info_ref = LAPACKE_gesvd(
+            to_char( jobu ), to_char( jobvt ), m, n,
+            &A_ref[0], lda,
+            &Sigma_ref[0],
+            &U_ref[0], ldu,
+            &VT_ref[0], ldvt );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
             fprintf( stderr, "LAPACKE_gesvd returned error %lld\n", llong( info_ref ) );
@@ -149,19 +159,19 @@ void test_gesvd_work( Params& params, bool run )
 
         // ---------- check error compared to reference
         if (info_tst != info_ref) {
-            errors[0] = 1;
+            result[ 0 ] = 1;
         }
-        errors[3] += rel_error( S_tst, S_ref );
+        result[ 3 ] += rel_error( Sigma_tst, Sigma_ref );
     }
-    params.error()   = errors[0];
-    params.ortho_U() = errors[1];
-    params.ortho_V() = errors[2];
-    params.error2()  = errors[3];
+    params.error()   = result[ 0 ];
+    params.ortho_U() = result[ 1 ];
+    params.ortho_V() = result[ 2 ];
+    params.error2()  = result[ 3 ];
     params.okay() = (
-        (jobu  == lapack::Job::NoVec || jobvt == lapack::Job::NoVec || errors[0] < tol) &&
-        (jobu  == lapack::Job::NoVec || errors[1] < tol) &&
-        (jobvt == lapack::Job::NoVec || errors[2] < tol) &&
-        errors[3] < tol);
+        (jobu == Job::NoVec || jobvt == Job::NoVec || result[ 0 ] < tol)
+        && (jobu  == Job::NoVec || result[ 1 ] < tol)
+        && (jobvt == Job::NoVec || result[ 2 ] < tol)
+        && result[ 3 ] < tol);
 }
 
 // -----------------------------------------------------------------------------

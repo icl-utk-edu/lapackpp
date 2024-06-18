@@ -8,8 +8,8 @@
 #include "lapack/flops.hh"
 #include "print_matrix.hh"
 #include "error.hh"
+#include "check_heev.hh"
 #include "lapacke_wrappers.hh"
-#include "scale.hh"
 
 #include <vector>
 
@@ -18,9 +18,10 @@ template< typename scalar_t >
 void test_heevd_work( Params& params, bool run )
 {
     using real_t = blas::real_type< scalar_t >;
+    using lapack::Job;
 
     // Constants
-    const real_t   eps  = std::numeric_limits< real_t >::epsilon();
+    const real_t eps = std::numeric_limits< real_t >::epsilon();
 
     // get & mark input values
     lapack::Job jobz = params.jobz();
@@ -35,7 +36,9 @@ void test_heevd_work( Params& params, bool run )
     params.ref_time();
     // params.ref_gflops();
     // params.gflops();
+    params.ortho();
     params.error2();
+    params.error2.name( "Lambda" );
 
     if (! run)
         return;
@@ -81,34 +84,24 @@ void test_heevd_work( Params& params, bool run )
         printf( "Lambda = " ); print_vector( n, &Lambda_tst[0], 1 );
     }
 
-    if (params.check() == 'y' && jobz == lapack::Job::Vec) {
-        // ---------- check error
-        // Relative backwards error =
-        //     ||A Z - Z Lambda|| / (n * ||A|| * ||Z||)
-        real_t Anorm = lapack::lanhe( lapack::Norm::One, uplo, n, &A[0], lda );
-        real_t Znorm = lapack::lange( lapack::Norm::One, n, n, &Z[0], ldz );
+    if (params.check() == 'y') {
+        // ---------- check numerical error
+        // result[ 0 ] = || A - Z Lambda Z^H || / (n ||A||), if jobz != NoVec.
+        // result[ 1 ] = || I - Z^H Z || / n, if jobz != NoVec.
+        // result[ 2 ] = 0 if Lambda is in non-decreasing order, else > 0.
+        real_t result[ 3 ] = { (real_t) testsweeper::no_data_flag,
+                               (real_t) testsweeper::no_data_flag,
+                               (real_t) testsweeper::no_data_flag };
 
-        std::vector< scalar_t > W( size_A );  // workspace
-        int64_t ldw = ldz;
-        // W = Z
-        lapack::lacpy( lapack::MatrixType::General, n, n,
-                       &Z[0], ldz,
-                       &W[0], ldw );
-        // W = Z Lambda
-        col_scale( n, n, &W[0], ldw, &Lambda_tst[0] );
-        // W = A Z - (Z Lambda)
-        blas::hemm( blas::Layout::ColMajor, blas::Side::Left, uplo, n, n,
-                    1.0,  &A[0], lda,
-                          &Z[0], ldz,
-                    -1.0, &W[0], ldw );
-        real_t error = lapack::lange( lapack::Norm::One, n, n, &W[0], ldw );
-        if (verbose >= 2) {
-            printf( "W = " ); print_matrix( n, n, &W[0], ldw );
-        }
+        check_heev( jobz, uplo, n, &A[0], lda,
+                    n, &Lambda_tst[0], &Z[0], ldz, result );
 
-        error /= (n * Anorm * Znorm);
-        params.error() = error;
-        params.okay() = (error < tol);
+        params.error()  = result[ 0 ];
+        params.ortho()  = result[ 1 ];
+        params.error2() = result[ 2 ];
+        params.okay()   = (jobz == Job::NoVec || result[ 0 ] < tol)
+                       && (jobz == Job::NoVec || result[ 1 ] < tol)
+                       && result[ 2 ] < tol;
     }
 
     if (params.ref() == 'y' || params.check() == 'y') {

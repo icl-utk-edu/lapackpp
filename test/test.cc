@@ -319,23 +319,23 @@ std::vector< testsweeper::routines_t > routines = {
 
     // -----
     // symmetric/Hermitian eigenvalues
-    { "heev",               test_heev,      Section::heev }, // tested via LAPACKE
+    { "heev",               test_heev,      Section::heev }, // backwards error check
     { "hpev",               test_hpev,      Section::heev }, // tested via LAPACKE
     { "hbev",               test_hbev,      Section::heev }, // tested via LAPACKE
     { "sturm",              test_sturm,     Section::heev },
     { "",                   nullptr,        Section::newline },
 
-    { "heevx",              test_heevx,     Section::heev }, // tested via LAPACKE
+    { "heevx",              test_heevx,     Section::heev }, // backwards error check
     { "hpevx",              test_hpevx,     Section::heev }, // tested via LAPACKE
     { "hbevx",              test_hbevx,     Section::heev }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },
 
-    { "heevd",              test_heevd,     Section::heev }, // tested via LAPACKE using gcc/MKL
+    { "heevd",              test_heevd,     Section::heev }, // backwards error check
     { "hpevd",              test_hpevd,     Section::heev }, // tested via LAPACKE using gcc/MKL
     { "hbevd",              test_hbevd,     Section::heev }, // tested via LAPACKE using gcc/MKL
     { "",                   nullptr,        Section::newline },
 
-    { "heevr",              test_heevr,     Section::heev }, // tested via LAPACKE using gcc/MKL
+    { "heevr",              test_heevr,     Section::heev }, // backwards error check
     { "",                   nullptr,        Section::newline },
 
     { "hetrd",              test_hetrd,     Section::heev }, // tested via LAPACKE using gcc/MKL

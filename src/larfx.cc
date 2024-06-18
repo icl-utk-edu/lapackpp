@@ -16,7 +16,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
-/// @ingroup unitary_computational
+/// @ingroup reflector_aux_grp
 void larfx(
     lapack::Side side, int64_t m, int64_t n,
     float const* v, float tau,
@@ -48,7 +48,7 @@ void larfx(
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup unitary_computational
+/// @ingroup reflector_aux_grp
 void larfx(
     lapack::Side side, int64_t m, int64_t n,
     double const* v, double tau,
@@ -80,7 +80,7 @@ void larfx(
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup unitary_computational
+/// @ingroup reflector_aux_grp
 void larfx(
     lapack::Side side, int64_t m, int64_t n,
     std::complex<float> const* v, std::complex<float> tau,
@@ -153,7 +153,7 @@ void larfx(
 /// @param[in] ldc
 ///     The leading dimension of the array C. ldc >= max(1,m).
 ///
-/// @ingroup unitary_computational
+/// @ingroup reflector_aux_grp
 void larfx(
     lapack::Side side, int64_t m, int64_t n,
     std::complex<double> const* v, std::complex<double> tau,

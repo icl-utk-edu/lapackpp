@@ -17,7 +17,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
-/// @ingroup unitary_computational
+/// @ingroup reflector_aux_grp
 void larfgp(
     int64_t n,
     float* alpha,
@@ -38,7 +38,7 @@ void larfgp(
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup unitary_computational
+/// @ingroup reflector_aux_grp
 void larfgp(
     int64_t n,
     double* alpha,
@@ -59,7 +59,7 @@ void larfgp(
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup unitary_computational
+/// @ingroup reflector_aux_grp
 void larfgp(
     int64_t n,
     std::complex<float>* alpha,
@@ -136,7 +136,7 @@ void larfgp(
 /// @param[out] tau
 ///     The value tau.
 ///
-/// @ingroup unitary_computational
+/// @ingroup reflector_aux_grp
 void larfgp(
     int64_t n,
     std::complex<double>* alpha,

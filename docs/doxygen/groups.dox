@@ -66,7 +66,8 @@
         @defgroup ggqrf Generalized QR factorization
         @defgroup ggrqf Generalized RQ factorization
         @defgroup bbcsd Cosine-Sine (CS) decomposition
-        @defgroup unitary_computational Householder reflectors and plane rotations
+        @defgroup reflector_aux_grp  Householder reflectors
+        @defgroup rot_aux_grp        Givens/Jacobi plane rotations
     @}
 
     ----------------------------------------------------------------------------

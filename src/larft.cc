@@ -15,7 +15,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
-/// @ingroup unitary_computational
+/// @ingroup reflector_aux_grp
 void larft(
     lapack::Direction direction, lapack::StoreV storev,
     int64_t n, int64_t k,
@@ -46,7 +46,7 @@ void larft(
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup unitary_computational
+/// @ingroup reflector_aux_grp
 void larft(
     lapack::Direction direction, lapack::StoreV storev,
     int64_t n, int64_t k,
@@ -77,7 +77,7 @@ void larft(
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup unitary_computational
+/// @ingroup reflector_aux_grp
 void larft(
     lapack::Direction direction, lapack::StoreV storev,
     int64_t n, int64_t k,
@@ -200,7 +200,7 @@ void larft(
 ///         (     1 v3 )
 ///         (        1 )
 ///
-/// @ingroup unitary_computational
+/// @ingroup reflector_aux_grp
 void larft(
     lapack::Direction direction, lapack::StoreV storev,
     int64_t n, int64_t k,

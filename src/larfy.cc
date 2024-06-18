@@ -18,7 +18,7 @@ using blas::min;
 using blas::real;
 
 // -----------------------------------------------------------------------------
-/// @ingroup unitary_computational
+/// @ingroup reflector_aux_grp
 void larfy(
     lapack::Uplo uplo, int64_t n,
     float const* V, int64_t incv, float tau,
@@ -47,7 +47,7 @@ void larfy(
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup unitary_computational
+/// @ingroup reflector_aux_grp
 void larfy(
     lapack::Uplo uplo, int64_t n,
     double const* V, int64_t incv, double tau,
@@ -76,7 +76,7 @@ void larfy(
 }
 
 // -----------------------------------------------------------------------------
-/// @ingroup unitary_computational
+/// @ingroup reflector_aux_grp
 void larfy(
     lapack::Uplo uplo, int64_t n,
     std::complex<float> const* V, int64_t incv, std::complex<float> tau,
@@ -148,7 +148,7 @@ void larfy(
 /// @param[in] ldc
 ///     The leading dimension of the array C. ldc >= max( 1, n ).
 ///
-/// @ingroup unitary_computational
+/// @ingroup reflector_aux_grp
 void larfy(
     lapack::Uplo uplo, int64_t n,
     std::complex<double> const* V, int64_t incv, std::complex<double> tau,

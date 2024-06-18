@@ -76,10 +76,10 @@ categories = [
     group_cat.add_argument( '--geev',          action='store_true', help='run non-symmetric eigenvalues tests' ),
     group_cat.add_argument( '--svd',           action='store_true', help='run svd tests' ),
     group_cat.add_argument( '--aux',           action='store_true', help='run auxiliary tests' ),
-    group_cat.add_argument( '--aux-house',     action='store_true', help='run auxiliary Householder tests' ),
+    group_cat.add_argument( '--aux-house',     action='store_true', help='run auxiliary Householder reflector tests' ),
+    group_cat.add_argument( '--aux-givens',    action='store_true', help='run auxiliary Givens rotations tests' ),
     group_cat.add_argument( '--aux-norm',      action='store_true', help='run auxiliary norm tests' ),
     group_cat.add_argument( '--blas',          action='store_true', help='run additional BLAS tests' ),
-
 ]
 # map category objects to category names: ['lu', 'chol', ...]
 categories = list( map( lambda x: x.dest, categories ) )
@@ -112,6 +112,7 @@ group_opt.add_argument( '--verbose', action='store', help='default=0', default='
 group_opt.add_argument( '--itype',  action='store', help='default=%(default)s', default='1,2,3' )
 group_opt.add_argument( '--factored', action='store', help='default=%(default)s', default='f,n,e' )
 group_opt.add_argument( '--equed',  action='store', help='default=%(default)s', default='n,r,c,b' )
+group_opt.add_argument( '--pivot',  action='store', help='default=%(default)s', default='v,t,b' )
 group_opt.add_argument( '--direction', action='store', help='default=%(default)s', default='f,b' )
 group_opt.add_argument( '--storev', action='store', help='default=%(default)s', default='c,r' )
 group_opt.add_argument( '--norm',   action='store', help='default=%(default)s', default='max,1,inf,fro' )
@@ -293,6 +294,7 @@ verbose = ' --verbose ' + opts.verbose if (opts.verbose) else ''
 itype  = ' --itype '  + opts.itype  if (opts.itype)  else ''
 factored = ' --factored ' + opts.factored if (opts.factored)  else ''
 equed  = ' --equed '  + opts.equed  if (opts.equed)  else ''
+pivot  = ' --pivot '  + opts.pivot  if (opts.pivot)  else ''
 direction = ' --direction ' + opts.direction if (opts.direction) else ''
 storev = ' --storev ' + opts.storev if (opts.storev) else ''
 norm   = ' --norm '   + opts.norm   if (opts.norm)   else ''
@@ -594,6 +596,7 @@ if (opts.syev and opts.host):
     [ 'heevr', gen + dtype + align + n + jobz + uplo + vl + vu ],
     [ 'heevr', gen + dtype + align + n + jobz + uplo + il + iu ],
     [ 'hetrd', gen + dtype + align + n + uplo ],
+    [ 'laev2', gen + dtype ],  # 2x2
     [ 'ungtr', gen + dtype + align + n + uplo ],
     [ 'unmtr', gen + dtype_real    + align + mn + uplo + side + trans    ],  # real does trans = N, T, C
     [ 'unmtr', gen + dtype_complex + align + mn + uplo + side + trans_nc ],  # complex does trans = N, C, not T
@@ -710,6 +713,12 @@ if (opts.aux_house and opts.host):
     [ 'larfy', gen + dtype + align + n   + incx ],
     [ 'larfb', gen + dtype + align + mnk + side + trans + direction + storev ],
     [ 'larft', gen + dtype + align + nk  + direction + storev ],
+    ]
+
+# auxilary - Givens rotations
+if (opts.aux_givens and opts.host):
+    cmds += [
+    [ 'lasr', gen + dtype + align + mn + side + pivot + direction ],
     ]
 
 # auxilary - norms

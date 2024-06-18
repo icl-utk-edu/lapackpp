@@ -292,6 +292,7 @@ add_library(
     src/lacp2.cc
     src/lacpy.cc
     src/laed4.cc
+    src/laev2.cc
     src/lag2c.cc
     src/lag2d.cc
     src/lag2s.cc
@@ -333,6 +334,7 @@ add_library(
     src/lartgs.cc
     src/lascl.cc
     src/laset.cc
+    src/lasr.cc
     src/lassq.cc
     src/laswp.cc
     src/lauum.cc

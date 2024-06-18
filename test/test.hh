@@ -79,6 +79,7 @@ public:
     testsweeper::ParamEnum< blas::Op >              transA;
     testsweeper::ParamEnum< blas::Op >              transB;
     testsweeper::ParamEnum< blas::Diag >            diag;
+    testsweeper::ParamEnum< lapack::Pivot >         pivot;      // lasr
     testsweeper::ParamEnum< lapack::Direction >     direction;  // larfb
     testsweeper::ParamEnum< lapack::StoreV >        storev;     // larfb
     testsweeper::ParamEnum< lapack::Equed >         equed;      // gesvx
@@ -342,6 +343,7 @@ void test_heevx ( Params& params, bool run );
 void test_heevd ( Params& params, bool run );
 void test_heevr ( Params& params, bool run );
 void test_hetrd ( Params& params, bool run );
+void test_laev2 ( Params& params, bool run );
 void test_sturm ( Params& params, bool run );
 void test_ungtr ( Params& params, bool run );
 void test_unmtr ( Params& params, bool run );
@@ -427,6 +429,9 @@ void test_larfx ( Params& params, bool run );
 void test_larfy ( Params& params, bool run );
 void test_larfb ( Params& params, bool run );
 void test_larft ( Params& params, bool run );
+
+// auxiliary - Givens rotations
+void test_lasr  ( Params& params, bool run );
 
 // auxiliary - norms
 void test_lange ( Params& params, bool run );

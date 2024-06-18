@@ -1540,6 +1540,52 @@ inline RowCol char2rowcol( char ch )
     return val;
 }
 
+// -----------------------------------------------------------------------------
+// check_ortho (LAPACK testing zunt01)
+enum class Pivot : char {
+    Variable = 'V',
+    Top      = 'T',
+    Bottom   = 'B',
+};
+
+extern const char* Pivot_help;
+
+//--------------------
+inline char to_char( Pivot value )
+{
+    return char( value );
+}
+
+inline const char* to_c_string( Pivot value )
+{
+    switch (value) {
+        case Pivot::Variable: return "variable";
+        case Pivot::Top:      return "top";
+        case Pivot::Bottom:   return "bottom";
+    }
+    return "?";
+}
+
+inline std::string to_string( Pivot value )
+{
+    return to_c_string( value );
+}
+
+inline void from_string( std::string const& str, Pivot* val )
+{
+    std::string str_ = str;
+    std::transform( str_.begin(), str_.end(), str_.begin(), ::tolower );
+
+    if (str_ == "v" || str_ == "variable")
+        *val = Pivot::Variable;
+    else if (str_ == "t" || str_ == "top")
+        *val = Pivot::Top;
+    else if (str_ == "b" || str_ == "bottom")
+        *val = Pivot::Bottom;
+    else
+        throw Error( "unknown Pivot: " + str );
+}
+
 //------------------------------------------------------------------------------
 // For %lld printf-style printing, cast to llong; guaranteed >= 64 bits.
 using llong = long long;

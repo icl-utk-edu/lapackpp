@@ -20382,6 +20382,96 @@ void LAPACK_zunhr_col(
     lapack_complex_double* T, lapack_int const* ldt,
     lapack_complex_double* D, lapack_int* info );
 
+//--------------------
+#define LAPACK_slaev2 LAPACK_GLOBAL( slaev2, SLAEV2 )
+void LAPACK_slaev2(
+    float const* a, float const* b, float const* c,
+    float* rt1, float* rt2,
+    float* cs1, float* sn1
+);
+
+#define LAPACK_dlaev2 LAPACK_GLOBAL( dlaev2, DLAEV2 )
+void LAPACK_dlaev2(
+    double const* a, double const* b, double const* c,
+    double* rt1, double* rt2,
+    double* cs1, double* sn1
+);
+
+#define LAPACK_claev2 LAPACK_GLOBAL( claev2, CLAEV2 )
+void LAPACK_claev2(
+    lapack_complex_float const* a,
+    lapack_complex_float const* b,
+    lapack_complex_float const* c,
+    float* rt1, float* rt2,
+    float* cs1, lapack_complex_float* sn1
+);
+
+#define LAPACK_zlaev2 LAPACK_GLOBAL( zlaev2, ZLAEV2 )
+void LAPACK_zlaev2(
+    lapack_complex_double const* a,
+    lapack_complex_double const* b,
+    lapack_complex_double const* c,
+    double* rt1, double* rt2,
+    double* cs1, lapack_complex_double* sn1
+);
+
+//--------------------
+#define LAPACK_slasr_base LAPACK_GLOBAL( slasr, SLASR )
+void LAPACK_slasr_base(
+    char const* side, char const* pivot, char const* direction,
+    lapack_int const* m, lapack_int const* n,
+    float const* C, float const* S,
+    float* A, lapack_int const* lda
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , size_t side_len, size_t pivot_len, size_t direction_len
+    #endif
+);
+
+#define LAPACK_dlasr_base LAPACK_GLOBAL( dlasr, DLASR )
+void LAPACK_dlasr_base(
+    char const* side, char const* pivot, char const* direction,
+    lapack_int const* m, lapack_int const* n,
+    double const* C, double const* S,
+    double* A, lapack_int const* lda
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , size_t side_len, size_t pivot_len, size_t direction_len
+    #endif
+);
+
+#define LAPACK_clasr_base LAPACK_GLOBAL( clasr, CLASR )
+void LAPACK_clasr_base(
+    char const* side, char const* pivot, char const* direction,
+    lapack_int const* m, lapack_int const* n,
+    float const* C, float const* S,
+    lapack_complex_float* A, lapack_int const* lda
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , size_t side_len, size_t pivot_len, size_t direction_len
+    #endif
+);
+
+#define LAPACK_zlasr_base LAPACK_GLOBAL( zlasr, ZLASR )
+void LAPACK_zlasr_base(
+    char const* side, char const* pivot, char const* direction,
+    lapack_int const* m, lapack_int const* n,
+    double const* C, double const* S,
+    lapack_complex_double* A, lapack_int const* lda
+    #ifdef LAPACK_FORTRAN_STRLEN_END
+    , size_t side_len, size_t pivot_len, size_t direction_len
+    #endif
+);
+#ifdef LAPACK_FORTRAN_STRLEN_END
+    #define LAPACK_slasr( ... ) LAPACK_slasr_base( __VA_ARGS__, 1, 1, 1 )
+    #define LAPACK_dlasr( ... ) LAPACK_dlasr_base( __VA_ARGS__, 1, 1, 1 )
+    #define LAPACK_clasr( ... ) LAPACK_clasr_base( __VA_ARGS__, 1, 1, 1 )
+    #define LAPACK_zlasr( ... ) LAPACK_zlasr_base( __VA_ARGS__, 1, 1, 1 )
+#else
+    #define LAPACK_slasr( ... ) LAPACK_slasr_base( __VA_ARGS__ )
+    #define LAPACK_dlasr( ... ) LAPACK_dlasr_base( __VA_ARGS__ )
+    #define LAPACK_clasr( ... ) LAPACK_clasr_base( __VA_ARGS__ )
+    #define LAPACK_zlasr( ... ) LAPACK_zlasr_base( __VA_ARGS__ )
+#endif
+
+
 #ifdef __cplusplus
 }  // extern "C"
 #endif

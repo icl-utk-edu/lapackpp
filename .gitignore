@@ -38,10 +38,12 @@ docs/doxygen/errors.txt
 docs/html/
 files.txt
 include/lapack/defines.h
+install*
 issues/
 lib/*.a
 lib/*.so
 lib/pkgconfig/*.pc
 make.inc
 test/tester
+tools/gen
 wiki/

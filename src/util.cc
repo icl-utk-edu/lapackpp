@@ -38,6 +38,11 @@ const char* Range_help          = "eig/svd value range: A=All, V=Value, I=Index"
 
 const char* Vect_help           = "form Q or P: Q, P, N=None, B=Both";
 
+const char* Pivot_help          = "rows or cols to update: "
+                                  "V=Variable updates k and k+1; "
+                                  "T=Top updates 0 and k+1; "
+                                  "B=Bottom updates k and m-1 or n-1";
+
 const char* Direction_help      = "apply Householder H: F=Forward H = H1...Hk, "
                                   "B=Backward H = Hk...H1";
 

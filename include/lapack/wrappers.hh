@@ -3655,6 +3655,35 @@ int64_t laed4(
     double* lambda );
 
 // -----------------------------------------------------------------------------
+void laev2(
+    float a, float b, float c,
+    float* rt1,
+    float* rt2,
+    float* cs1,
+    float* sn1 );
+
+void laev2(
+    double a, double b, double c,
+    double* rt1,
+    double* rt2,
+    double* cs1,
+    double* sn1 );
+
+void laev2(
+    std::complex<float> a, std::complex<float> b, std::complex<float> c,
+    float* rt1,
+    float* rt2,
+    float* cs1,
+    std::complex<float>* sn1 );
+
+void laev2(
+    std::complex<double> a, std::complex<double> b, std::complex<double> c,
+    double* rt1,
+    double* rt2,
+    double* cs1,
+    std::complex<double>* sn1 );
+
+// -----------------------------------------------------------------------------
 int64_t lag2c(
     int64_t m, int64_t n,
     std::complex<double> const* A, int64_t lda,
@@ -4397,6 +4426,31 @@ void lassq(
     std::complex<double> const* X, int64_t incx,
     double* scale,
     double* sumsq );
+
+// -----------------------------------------------------------------------------
+void lasr(
+    lapack::Side side, lapack::Pivot pivot, lapack::Direction direction,
+    int64_t m, int64_t n,
+    float const* C, float const* S,
+    float* A, int64_t lda );
+
+void lasr(
+    lapack::Side side, lapack::Pivot pivot, lapack::Direction direction,
+    int64_t m, int64_t n,
+    double const* C, double const* S,
+    double* A, int64_t lda );
+
+void lasr(
+    lapack::Side side, lapack::Pivot pivot, lapack::Direction direction,
+    int64_t m, int64_t n,
+    float const* C, float const* S,
+    std::complex<float>* A, int64_t lda );
+
+void lasr(
+    lapack::Side side, lapack::Pivot pivot, lapack::Direction direction,
+    int64_t m, int64_t n,
+    double const* C, double const* S,
+    std::complex<double>* A, int64_t lda );
 
 // -----------------------------------------------------------------------------
 void laswp(

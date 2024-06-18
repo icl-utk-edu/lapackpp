@@ -125,6 +125,7 @@ add_executable(
     test_hptrs.cc
     test_lacpy.cc
     test_laed4.cc
+    test_laev2.cc
     test_langb.cc
     test_lange.cc
     test_langt.cc
@@ -148,6 +149,7 @@ add_executable(
     test_larfx.cc
     test_larfy.cc
     test_laset.cc
+    test_lasr.cc
     test_laswp.cc
     test_pbcon.cc
     test_pbequ.cc

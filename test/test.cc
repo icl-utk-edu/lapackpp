@@ -37,6 +37,7 @@ using lapack::Range,      lapack::Range_help;
 using lapack::Norm,       lapack::Norm_help;
 using lapack::MatrixType, lapack::MatrixType_help;
 using lapack::Factored,   lapack::Factored_help;
+using lapack::Pivot,      lapack::Pivot_help;
 using lapack::Direction,  lapack::Direction_help;
 using lapack::StoreV,     lapack::StoreV_help;
 using lapack::Equed,      lapack::Equed_help;
@@ -68,6 +69,7 @@ enum Section {
     aux,
     aux_norm,
     aux_householder,
+    aux_givens,
     aux_gen,
     blas1,
     blas2,
@@ -91,6 +93,7 @@ const char* section_names[] = {
     "auxiliary",
     "matrix norms",
     "auxiliary - Householder",
+    "auxiliary - Givens",
     "auxiliary - matrix generation",
     "Level 1 BLAS (additional)",
     "Level 2 BLAS (additional)",
@@ -319,23 +322,24 @@ std::vector< testsweeper::routines_t > routines = {
 
     // -----
     // symmetric/Hermitian eigenvalues
-    { "heev",               test_heev,      Section::heev }, // backwards error check
+    { "heev",               test_heev,      Section::heev }, // backward error check
     { "hpev",               test_hpev,      Section::heev }, // tested via LAPACKE
     { "hbev",               test_hbev,      Section::heev }, // tested via LAPACKE
     { "sturm",              test_sturm,     Section::heev },
     { "",                   nullptr,        Section::newline },
 
-    { "heevx",              test_heevx,     Section::heev }, // backwards error check
+    { "heevx",              test_heevx,     Section::heev }, // backward error check
     { "hpevx",              test_hpevx,     Section::heev }, // tested via LAPACKE
     { "hbevx",              test_hbevx,     Section::heev }, // tested via LAPACKE
     { "",                   nullptr,        Section::newline },
 
-    { "heevd",              test_heevd,     Section::heev }, // backwards error check
+    { "heevd",              test_heevd,     Section::heev }, // backward error check
     { "hpevd",              test_hpevd,     Section::heev }, // tested via LAPACKE using gcc/MKL
     { "hbevd",              test_hbevd,     Section::heev }, // tested via LAPACKE using gcc/MKL
     { "",                   nullptr,        Section::newline },
 
-    { "heevr",              test_heevr,     Section::heev }, // backwards error check
+    { "heevr",              test_heevr,     Section::heev }, // backward error check
+    { "laev2",              test_laev2,     Section::heev }, // backward error check
     { "",                   nullptr,        Section::newline },
 
     { "hetrd",              test_hetrd,     Section::heev }, // tested via LAPACKE using gcc/MKL
@@ -440,6 +444,10 @@ std::vector< testsweeper::routines_t > routines = {
     { "larft",              test_larft,     Section::aux_householder },
     { "",                   nullptr,        Section::newline },
 
+    // auxiliary: Givens rotations
+    { "lasr",               test_lasr,      Section::aux_givens },  // forward error check, compared to rot
+    { "",                   nullptr,        Section::newline },
+
     // auxiliary: norms
     { "lange",              test_lange,     Section::aux_norm },
     { "lanhe",              test_lanhe,     Section::aux_norm },
@@ -534,6 +542,7 @@ Params::Params():
     transA    ( "transA",     7, PT_List, Op::NoTrans, Op_help ),
     transB    ( "transB",     7, PT_List, Op::NoTrans, Op_help ),
     diag      ( "diag",       7, PT_List, Diag::NonUnit, Diag_help ),
+    pivot     ( "pivot",      8, PT_List, Pivot::Variable, Pivot_help ),
     direction ( "direction",  8, PT_List, Direction::Forward, Direction_help ),
     storev    ( "storev",     7, PT_List, StoreV::Columnwise, StoreV_help ),
     equed     ( "equed",      5, PT_List, Equed::Both, Equed_help ),
@@ -627,7 +636,6 @@ void Params::get_range(
     double* vl_arg, double* vu_arg,
     int64_t* il_arg, int64_t* iu_arg )
 {
-
     // default assume All
     *vl_arg = this->vl();
     *vu_arg = this->vu();

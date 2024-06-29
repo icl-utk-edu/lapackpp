@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -25,21 +26,13 @@ int64_t ggev(
     float* VL, int64_t ldvl,
     float* VR, int64_t ldvr )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldvl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldvr) > std::numeric_limits<lapack_int>::max() );
-    }
     char jobvl_ = to_char( jobvl );
     char jobvr_ = to_char( jobvr );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int ldb_ = (lapack_int) ldb;
-    lapack_int ldvl_ = (lapack_int) ldvl;
-    lapack_int ldvr_ = (lapack_int) ldvr;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int ldb_ = to_lapack_int( ldb );
+    lapack_int ldvl_ = to_lapack_int( ldvl );
+    lapack_int ldvr_ = to_lapack_int( ldvr );
     lapack_int info_ = 0;
 
     // split-complex representation
@@ -97,21 +90,13 @@ int64_t ggev(
     double* VL, int64_t ldvl,
     double* VR, int64_t ldvr )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldvl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldvr) > std::numeric_limits<lapack_int>::max() );
-    }
     char jobvl_ = to_char( jobvl );
     char jobvr_ = to_char( jobvr );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int ldb_ = (lapack_int) ldb;
-    lapack_int ldvl_ = (lapack_int) ldvl;
-    lapack_int ldvr_ = (lapack_int) ldvr;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int ldb_ = to_lapack_int( ldb );
+    lapack_int ldvl_ = to_lapack_int( ldvl );
+    lapack_int ldvr_ = to_lapack_int( ldvr );
     lapack_int info_ = 0;
 
     // split-complex representation
@@ -169,21 +154,13 @@ int64_t ggev(
     std::complex<float>* VL, int64_t ldvl,
     std::complex<float>* VR, int64_t ldvr )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldvl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldvr) > std::numeric_limits<lapack_int>::max() );
-    }
     char jobvl_ = to_char( jobvl );
     char jobvr_ = to_char( jobvr );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int ldb_ = (lapack_int) ldb;
-    lapack_int ldvl_ = (lapack_int) ldvl;
-    lapack_int ldvr_ = (lapack_int) ldvr;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int ldb_ = to_lapack_int( ldb );
+    lapack_int ldvl_ = to_lapack_int( ldvl );
+    lapack_int ldvr_ = to_lapack_int( ldvr );
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -237,21 +214,13 @@ int64_t ggev(
     std::complex<double>* VL, int64_t ldvl,
     std::complex<double>* VR, int64_t ldvr )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldvl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldvr) > std::numeric_limits<lapack_int>::max() );
-    }
     char jobvl_ = to_char( jobvl );
     char jobvr_ = to_char( jobvr );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int ldb_ = (lapack_int) ldb;
-    lapack_int ldvl_ = (lapack_int) ldvl;
-    lapack_int ldvr_ = (lapack_int) ldvr;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int ldb_ = to_lapack_int( ldb );
+    lapack_int ldvl_ = to_lapack_int( ldvl );
+    lapack_int ldvr_ = to_lapack_int( ldvr );
     lapack_int info_ = 0;
 
     // query for workspace size

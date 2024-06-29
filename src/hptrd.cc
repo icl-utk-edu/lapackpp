@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 
 #include <vector>
@@ -22,12 +23,8 @@ int64_t hptrd(
     float* E,
     std::complex<float>* tau )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
     lapack_int info_ = 0;
 
     LAPACK_chptrd(
@@ -51,12 +48,8 @@ int64_t hptrd(
     double* E,
     std::complex<double>* tau )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
     lapack_int info_ = 0;
 
     LAPACK_zhptrd(

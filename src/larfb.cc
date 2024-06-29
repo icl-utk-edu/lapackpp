@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -25,25 +26,16 @@ void larfb(
     float const* T, int64_t ldt,
     float* C, int64_t ldc )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
-    }
     char side_ = to_char( side );
     char trans_ = to_char( trans );
     char direction_ = to_char( direction );
     char storev_ = to_char( storev );
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int ldv_ = (lapack_int) ldv;
-    lapack_int ldt_ = (lapack_int) ldt;
-    lapack_int ldc_ = (lapack_int) ldc;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int ldv_ = to_lapack_int( ldv );
+    lapack_int ldt_ = to_lapack_int( ldt );
+    lapack_int ldc_ = to_lapack_int( ldc );
 
     // from docs
     lapack_int ldwork_ = (side == Side::Left ? n : m);
@@ -69,25 +61,16 @@ void larfb(
     double const* T, int64_t ldt,
     double* C, int64_t ldc )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
-    }
     char side_ = to_char( side );
     char trans_ = to_char( trans );
     char direction_ = to_char( direction );
     char storev_ = to_char( storev );
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int ldv_ = (lapack_int) ldv;
-    lapack_int ldt_ = (lapack_int) ldt;
-    lapack_int ldc_ = (lapack_int) ldc;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int ldv_ = to_lapack_int( ldv );
+    lapack_int ldt_ = to_lapack_int( ldt );
+    lapack_int ldc_ = to_lapack_int( ldc );
 
     // from docs
     lapack_int ldwork_ = (side == Side::Left ? n : m);
@@ -114,25 +97,16 @@ void larfb(
     std::complex<float> const* T, int64_t ldt,
     std::complex<float>* C, int64_t ldc )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
-    }
     char side_ = to_char( side );
     char trans_ = to_char( trans );
     char direction_ = to_char( direction );
     char storev_ = to_char( storev );
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int ldv_ = (lapack_int) ldv;
-    lapack_int ldt_ = (lapack_int) ldt;
-    lapack_int ldc_ = (lapack_int) ldc;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int ldv_ = to_lapack_int( ldv );
+    lapack_int ldt_ = to_lapack_int( ldt );
+    lapack_int ldc_ = to_lapack_int( ldc );
 
     // from docs
     lapack_int ldwork_ = (side == Side::Left ? n : m);
@@ -255,25 +229,16 @@ void larfb(
     std::complex<double> const* T, int64_t ldt,
     std::complex<double>* C, int64_t ldc )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
-    }
     char side_ = to_char( side );
     char trans_ = to_char( trans );
     char direction_ = to_char( direction );
     char storev_ = to_char( storev );
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int ldv_ = (lapack_int) ldv;
-    lapack_int ldt_ = (lapack_int) ldt;
-    lapack_int ldc_ = (lapack_int) ldc;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int ldv_ = to_lapack_int( ldv );
+    lapack_int ldt_ = to_lapack_int( ldt );
+    lapack_int ldc_ = to_lapack_int( ldc );
 
     // from docs
     lapack_int ldwork_ = (side == Side::Left ? n : m);

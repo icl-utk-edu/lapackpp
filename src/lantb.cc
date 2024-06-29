@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -21,18 +22,12 @@ float lantb(
     lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t n, int64_t k,
     float const* AB, int64_t ldab )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-    }
     char norm_ = to_char( norm );
     char uplo_ = to_char( uplo );
     char diag_ = to_char( diag );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int ldab_ = to_lapack_int( ldab );
 
     // from docs
     int64_t lwork = (norm == Norm::Inf ? n : 1);
@@ -53,18 +48,12 @@ double lantb(
     lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t n, int64_t k,
     double const* AB, int64_t ldab )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-    }
     char norm_ = to_char( norm );
     char uplo_ = to_char( uplo );
     char diag_ = to_char( diag );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int ldab_ = to_lapack_int( ldab );
 
     // from docs
     int64_t lwork = (norm == Norm::Inf ? n : 1);
@@ -85,18 +74,12 @@ float lantb(
     lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t n, int64_t k,
     std::complex<float> const* AB, int64_t ldab )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-    }
     char norm_ = to_char( norm );
     char uplo_ = to_char( uplo );
     char diag_ = to_char( diag );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int ldab_ = to_lapack_int( ldab );
 
     // from docs
     int64_t lwork = (norm == Norm::Inf ? n : 1);
@@ -164,18 +147,12 @@ double lantb(
     lapack::Norm norm, lapack::Uplo uplo, lapack::Diag diag, int64_t n, int64_t k,
     std::complex<double> const* AB, int64_t ldab )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-    }
     char norm_ = to_char( norm );
     char uplo_ = to_char( uplo );
     char diag_ = to_char( diag );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int ldab_ = to_lapack_int( ldab );
 
     // from docs
     int64_t lwork = (norm == Norm::Inf ? n : 1);

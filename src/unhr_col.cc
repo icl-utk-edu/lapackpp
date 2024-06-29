@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 
 #if LAPACK_VERSION >= 30900  // >= 3.9.0
@@ -24,20 +25,12 @@ int64_t unhr_col(
     std::complex<float>* T, int64_t ldt,
     std::complex<float>* D )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
-    }
     lapack_error_if(m < n);
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int nb_ = (lapack_int) nb;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int ldt_ = (lapack_int) ldt;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int nb_ = to_lapack_int( nb );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int ldt_ = to_lapack_int( ldt );
     lapack_int info_ = 0;
 
     // Work around bug in LAPACK <= 3.12. See https://github.com/Reference-LAPACK/lapack/pull/1018
@@ -147,19 +140,11 @@ int64_t unhr_col(
     std::complex<double>* T, int64_t ldt,
     std::complex<double>* D )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int nb_ = (lapack_int) nb;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int ldt_ = (lapack_int) ldt;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int nb_ = to_lapack_int( nb );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int ldt_ = to_lapack_int( ldt );
     lapack_int info_ = 0;
 
     // Work around bug in LAPACK <= 3.12. See https://github.com/Reference-LAPACK/lapack/pull/1018

@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 
 #include <vector>
@@ -21,12 +22,8 @@ float lanht(
     float const* D,
     std::complex<float> const* E )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
     char norm_ = to_char( norm );
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
 
     return LAPACK_clanht(
         &norm_, &n_,
@@ -70,12 +67,8 @@ double lanht(
     double const* D,
     std::complex<double> const* E )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
     char norm_ = to_char( norm );
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
 
     return LAPACK_zlanht(
         &norm_, &n_,

@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 
 #include <vector>
@@ -21,21 +22,13 @@ int64_t ggbak(
     float const* rscale, int64_t m,
     float* V, int64_t ldv )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ilo) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ihi) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
-    }
     char balance_ = to_char( balance );
     char side_ = to_char( side );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ilo_ = (lapack_int) ilo;
-    lapack_int ihi_ = (lapack_int) ihi;
-    lapack_int m_ = (lapack_int) m;
-    lapack_int ldv_ = (lapack_int) ldv;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ilo_ = to_lapack_int( ilo );
+    lapack_int ihi_ = to_lapack_int( ihi );
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int ldv_ = to_lapack_int( ldv );
     lapack_int info_ = 0;
 
     LAPACK_sggbak(
@@ -57,21 +50,13 @@ int64_t ggbak(
     double const* rscale, int64_t m,
     double* V, int64_t ldv )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ilo) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ihi) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
-    }
     char balance_ = to_char( balance );
     char side_ = to_char( side );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ilo_ = (lapack_int) ilo;
-    lapack_int ihi_ = (lapack_int) ihi;
-    lapack_int m_ = (lapack_int) m;
-    lapack_int ldv_ = (lapack_int) ldv;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ilo_ = to_lapack_int( ilo );
+    lapack_int ihi_ = to_lapack_int( ihi );
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int ldv_ = to_lapack_int( ldv );
     lapack_int info_ = 0;
 
     LAPACK_dggbak(
@@ -93,21 +78,13 @@ int64_t ggbak(
     float const* rscale, int64_t m,
     std::complex<float>* V, int64_t ldv )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ilo) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ihi) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
-    }
     char balance_ = to_char( balance );
     char side_ = to_char( side );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ilo_ = (lapack_int) ilo;
-    lapack_int ihi_ = (lapack_int) ihi;
-    lapack_int m_ = (lapack_int) m;
-    lapack_int ldv_ = (lapack_int) ldv;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ilo_ = to_lapack_int( ilo );
+    lapack_int ihi_ = to_lapack_int( ihi );
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int ldv_ = to_lapack_int( ldv );
     lapack_int info_ = 0;
 
     LAPACK_cggbak(
@@ -129,21 +106,13 @@ int64_t ggbak(
     double const* rscale, int64_t m,
     std::complex<double>* V, int64_t ldv )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ilo) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ihi) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
-    }
     char balance_ = to_char( balance );
     char side_ = to_char( side );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ilo_ = (lapack_int) ilo;
-    lapack_int ihi_ = (lapack_int) ihi;
-    lapack_int m_ = (lapack_int) m;
-    lapack_int ldv_ = (lapack_int) ldv;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ilo_ = to_lapack_int( ilo );
+    lapack_int ihi_ = to_lapack_int( ihi );
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int ldv_ = to_lapack_int( ldv );
     lapack_int info_ = 0;
 
     LAPACK_zggbak(

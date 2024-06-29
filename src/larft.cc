@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 
 #include <vector>
@@ -23,19 +24,12 @@ void larft(
     float const* tau,
     float* T, int64_t ldt )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
-    }
     char direction_ = to_char( direction );
     char storev_ = to_char( storev );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int ldv_ = (lapack_int) ldv;
-    lapack_int ldt_ = (lapack_int) ldt;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int ldv_ = to_lapack_int( ldv );
+    lapack_int ldt_ = to_lapack_int( ldt );
 
     LAPACK_slarft(
         &direction_, &storev_, &n_, &k_,
@@ -54,19 +48,12 @@ void larft(
     double const* tau,
     double* T, int64_t ldt )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
-    }
     char direction_ = to_char( direction );
     char storev_ = to_char( storev );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int ldv_ = (lapack_int) ldv;
-    lapack_int ldt_ = (lapack_int) ldt;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int ldv_ = to_lapack_int( ldv );
+    lapack_int ldt_ = to_lapack_int( ldt );
 
     LAPACK_dlarft(
         &direction_, &storev_, &n_, &k_,
@@ -85,19 +72,12 @@ void larft(
     std::complex<float> const* tau,
     std::complex<float>* T, int64_t ldt )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
-    }
     char direction_ = to_char( direction );
     char storev_ = to_char( storev );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int ldv_ = (lapack_int) ldv;
-    lapack_int ldt_ = (lapack_int) ldt;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int ldv_ = to_lapack_int( ldv );
+    lapack_int ldt_ = to_lapack_int( ldt );
 
     LAPACK_clarft(
         &direction_, &storev_, &n_, &k_,
@@ -208,19 +188,12 @@ void larft(
     std::complex<double> const* tau,
     std::complex<double>* T, int64_t ldt )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
-    }
     char direction_ = to_char( direction );
     char storev_ = to_char( storev );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int ldv_ = (lapack_int) ldv;
-    lapack_int ldt_ = (lapack_int) ldt;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int ldv_ = to_lapack_int( ldv );
+    lapack_int ldt_ = to_lapack_int( ldt );
 
     LAPACK_zlarft(
         &direction_, &storev_, &n_, &k_,

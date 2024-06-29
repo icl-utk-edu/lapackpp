@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -23,21 +24,12 @@ int64_t gbtrs(
     int64_t const* ipiv,
     float* B, int64_t ldb )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-    }
     char trans_ = to_char( trans );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int kl_ = (lapack_int) kl;
-    lapack_int ku_ = (lapack_int) ku;
-    lapack_int nrhs_ = (lapack_int) nrhs;
-    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int kl_ = to_lapack_int( kl );
+    lapack_int ku_ = to_lapack_int( ku );
+    lapack_int nrhs_ = to_lapack_int( nrhs );
+    lapack_int ldab_ = to_lapack_int( ldab );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
@@ -45,7 +37,7 @@ int64_t gbtrs(
     #else
         lapack_int const* ipiv_ptr = ipiv;
     #endif
-    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int info_ = 0;
 
     LAPACK_sgbtrs(
@@ -68,21 +60,12 @@ int64_t gbtrs(
     int64_t const* ipiv,
     double* B, int64_t ldb )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-    }
     char trans_ = to_char( trans );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int kl_ = (lapack_int) kl;
-    lapack_int ku_ = (lapack_int) ku;
-    lapack_int nrhs_ = (lapack_int) nrhs;
-    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int kl_ = to_lapack_int( kl );
+    lapack_int ku_ = to_lapack_int( ku );
+    lapack_int nrhs_ = to_lapack_int( nrhs );
+    lapack_int ldab_ = to_lapack_int( ldab );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
@@ -90,7 +73,7 @@ int64_t gbtrs(
     #else
         lapack_int const* ipiv_ptr = ipiv;
     #endif
-    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int info_ = 0;
 
     LAPACK_dgbtrs(
@@ -113,21 +96,12 @@ int64_t gbtrs(
     int64_t const* ipiv,
     std::complex<float>* B, int64_t ldb )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-    }
     char trans_ = to_char( trans );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int kl_ = (lapack_int) kl;
-    lapack_int ku_ = (lapack_int) ku;
-    lapack_int nrhs_ = (lapack_int) nrhs;
-    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int kl_ = to_lapack_int( kl );
+    lapack_int ku_ = to_lapack_int( ku );
+    lapack_int nrhs_ = to_lapack_int( nrhs );
+    lapack_int ldab_ = to_lapack_int( ldab );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
@@ -135,7 +109,7 @@ int64_t gbtrs(
     #else
         lapack_int const* ipiv_ptr = ipiv;
     #endif
-    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int info_ = 0;
 
     LAPACK_cgbtrs(
@@ -220,21 +194,12 @@ int64_t gbtrs(
     int64_t const* ipiv,
     std::complex<double>* B, int64_t ldb )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-    }
     char trans_ = to_char( trans );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int kl_ = (lapack_int) kl;
-    lapack_int ku_ = (lapack_int) ku;
-    lapack_int nrhs_ = (lapack_int) nrhs;
-    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int kl_ = to_lapack_int( kl );
+    lapack_int ku_ = to_lapack_int( ku );
+    lapack_int nrhs_ = to_lapack_int( nrhs );
+    lapack_int ldab_ = to_lapack_int( ldab );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
@@ -242,7 +207,7 @@ int64_t gbtrs(
     #else
         lapack_int const* ipiv_ptr = ipiv;
     #endif
-    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int info_ = 0;
 
     LAPACK_zgbtrs(

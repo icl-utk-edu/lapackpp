@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 
 #include <vector>
@@ -20,13 +21,8 @@ void lacgv(
     int64_t n,
     std::complex<float>* x, int64_t incx )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(incx) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int incx_ = (lapack_int) incx;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int incx_ = to_lapack_int( incx );
 
     LAPACK_clacgv(
         &n_,
@@ -57,13 +53,8 @@ void lacgv(
     int64_t n,
     std::complex<double>* x, int64_t incx )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(incx) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int incx_ = (lapack_int) incx;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int incx_ = to_lapack_int( incx );
 
     LAPACK_zlacgv(
         &n_,

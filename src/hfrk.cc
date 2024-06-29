@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 
 #include <vector>
@@ -20,18 +21,12 @@ void hfrk(
     std::complex<float> const* A, int64_t lda, float beta,
     std::complex<float>* C )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-    }
     char transr_ = to_char( transr );
     char uplo_ = to_char( uplo );
     char trans_ = to_char( trans );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int lda_ = to_lapack_int( lda );
 
     LAPACK_chfrk(
         &transr_, &uplo_, &trans_, &n_, &k_, &alpha,
@@ -46,18 +41,12 @@ void hfrk(
     std::complex<double> const* A, int64_t lda, double beta,
     std::complex<double>* C )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-    }
     char transr_ = to_char( transr );
     char uplo_ = to_char( uplo );
     char trans_ = to_char( trans );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int lda_ = to_lapack_int( lda );
 
     LAPACK_zhfrk(
         &transr_, &uplo_, &trans_, &n_, &k_, &alpha,

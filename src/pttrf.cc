@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 
 #include <vector>
@@ -21,11 +22,7 @@ int64_t pttrf(
     float* D,
     float* E )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
     lapack_int info_ = 0;
 
     LAPACK_spttrf(
@@ -45,11 +42,7 @@ int64_t pttrf(
     double* D,
     double* E )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
     lapack_int info_ = 0;
 
     LAPACK_dpttrf(
@@ -69,11 +62,7 @@ int64_t pttrf(
     float* D,
     std::complex<float>* E )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
     lapack_int info_ = 0;
 
     LAPACK_cpttrf(
@@ -123,11 +112,7 @@ int64_t pttrf(
     double* D,
     std::complex<double>* E )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
     lapack_int info_ = 0;
 
     LAPACK_zpttrf(

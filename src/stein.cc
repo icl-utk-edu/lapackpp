@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -26,14 +27,8 @@ int64_t stein(
     float* Z, int64_t ldz,
     int64_t* ifail )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int m_ = (lapack_int) m;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int m_ = to_lapack_int( m );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iblock_( &iblock[0], &iblock[(n)] );
@@ -48,7 +43,7 @@ int64_t stein(
     #else
         lapack_int const* isplit_ptr = isplit;
     #endif
-    lapack_int ldz_ = (lapack_int) ldz;
+    lapack_int ldz_ = to_lapack_int( ldz );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         lapack::vector< lapack_int > ifail_( (m) );
@@ -93,14 +88,8 @@ int64_t stein(
     double* Z, int64_t ldz,
     int64_t* ifail )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int m_ = (lapack_int) m;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int m_ = to_lapack_int( m );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iblock_( &iblock[0], &iblock[(n)] );
@@ -115,7 +104,7 @@ int64_t stein(
     #else
         lapack_int const* isplit_ptr = isplit;
     #endif
-    lapack_int ldz_ = (lapack_int) ldz;
+    lapack_int ldz_ = to_lapack_int( ldz );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         lapack::vector< lapack_int > ifail_( (m) );
@@ -160,14 +149,8 @@ int64_t stein(
     std::complex<float>* Z, int64_t ldz,
     int64_t* ifail )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int m_ = (lapack_int) m;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int m_ = to_lapack_int( m );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iblock_( &iblock[0], &iblock[(n)] );
@@ -182,7 +165,7 @@ int64_t stein(
     #else
         lapack_int const* isplit_ptr = isplit;
     #endif
-    lapack_int ldz_ = (lapack_int) ldz;
+    lapack_int ldz_ = to_lapack_int( ldz );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         lapack::vector< lapack_int > ifail_( (m) );
@@ -227,14 +210,8 @@ int64_t stein(
     std::complex<double>* Z, int64_t ldz,
     int64_t* ifail )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int m_ = (lapack_int) m;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int m_ = to_lapack_int( m );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iblock_( &iblock[0], &iblock[(n)] );
@@ -249,7 +226,7 @@ int64_t stein(
     #else
         lapack_int const* isplit_ptr = isplit;
     #endif
-    lapack_int ldz_ = (lapack_int) ldz;
+    lapack_int ldz_ = to_lapack_int( ldz );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         lapack::vector< lapack_int > ifail_( (m) );

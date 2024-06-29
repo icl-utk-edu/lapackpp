@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 
 #include <vector>
@@ -20,11 +21,7 @@ int64_t sterf(
     float* D,
     float* E )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
     lapack_int info_ = 0;
 
     LAPACK_ssterf(
@@ -43,11 +40,7 @@ int64_t sterf(
     double* D,
     double* E )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
     lapack_int info_ = 0;
 
     LAPACK_dsterf(

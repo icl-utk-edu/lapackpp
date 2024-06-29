@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -28,14 +29,6 @@ int64_t trevc3(
     float* VR, int64_t ldvr, int64_t mm,
     int64_t* m )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldvl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldvr) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(mm) > std::numeric_limits<lapack_int>::max() );
-    }
     char sides_ = to_char( sides );
     char howmany_ = to_char( howmany );
 
@@ -43,12 +36,12 @@ int64_t trevc3(
     std::vector< lapack_logical > select_( &select[0], &select[(n)] );
     lapack_logical* select_ptr = &select_[0];
 
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ldt_ = (lapack_int) ldt;
-    lapack_int ldvl_ = (lapack_int) ldvl;
-    lapack_int ldvr_ = (lapack_int) ldvr;
-    lapack_int mm_ = (lapack_int) mm;
-    lapack_int m_ = (lapack_int) *m;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ldt_ = to_lapack_int( ldt );
+    lapack_int ldvl_ = to_lapack_int( ldvl );
+    lapack_int ldvr_ = to_lapack_int( ldvr );
+    lapack_int mm_ = to_lapack_int( mm );
+    lapack_int m_ = to_lapack_int( *m );
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -97,14 +90,6 @@ int64_t trevc3(
     double* VR, int64_t ldvr, int64_t mm,
     int64_t* m )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldvl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldvr) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(mm) > std::numeric_limits<lapack_int>::max() );
-    }
     char sides_ = to_char( sides );
     char howmany_ = to_char( howmany );
 
@@ -112,12 +97,12 @@ int64_t trevc3(
     std::vector< lapack_logical > select_( &select[0], &select[(n)] );
     lapack_logical* select_ptr = &select_[0];
 
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ldt_ = (lapack_int) ldt;
-    lapack_int ldvl_ = (lapack_int) ldvl;
-    lapack_int ldvr_ = (lapack_int) ldvr;
-    lapack_int mm_ = (lapack_int) mm;
-    lapack_int m_ = (lapack_int) *m;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ldt_ = to_lapack_int( ldt );
+    lapack_int ldvl_ = to_lapack_int( ldvl );
+    lapack_int ldvr_ = to_lapack_int( ldvr );
+    lapack_int mm_ = to_lapack_int( mm );
+    lapack_int m_ = to_lapack_int( *m );
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -166,14 +151,6 @@ int64_t trevc3(
     std::complex<float>* VR, int64_t ldvr, int64_t mm,
     int64_t* m )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldvl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldvr) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(mm) > std::numeric_limits<lapack_int>::max() );
-    }
     char sides_ = to_char( sides );
     char howmany_ = to_char( howmany );
 
@@ -181,12 +158,12 @@ int64_t trevc3(
     std::vector< lapack_logical > select_( &select[0], &select[(n)] );
     lapack_logical const* select_ptr = &select_[0];
 
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ldt_ = (lapack_int) ldt;
-    lapack_int ldvl_ = (lapack_int) ldvl;
-    lapack_int ldvr_ = (lapack_int) ldvr;
-    lapack_int mm_ = (lapack_int) mm;
-    lapack_int m_ = (lapack_int) *m;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ldt_ = to_lapack_int( ldt );
+    lapack_int ldvl_ = to_lapack_int( ldvl );
+    lapack_int ldvr_ = to_lapack_int( ldvr );
+    lapack_int mm_ = to_lapack_int( mm );
+    lapack_int m_ = to_lapack_int( *m );
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -362,14 +339,6 @@ int64_t trevc3(
     std::complex<double>* VR, int64_t ldvr, int64_t mm,
     int64_t* m )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldvl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldvr) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(mm) > std::numeric_limits<lapack_int>::max() );
-    }
     char sides_ = to_char( sides );
     char howmany_ = to_char( howmany );
 
@@ -377,12 +346,12 @@ int64_t trevc3(
     std::vector< lapack_logical > select_( &select[0], &select[(n)] );
     lapack_logical const* select_ptr = &select_[0];
 
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ldt_ = (lapack_int) ldt;
-    lapack_int ldvl_ = (lapack_int) ldvl;
-    lapack_int ldvr_ = (lapack_int) ldvr;
-    lapack_int mm_ = (lapack_int) mm;
-    lapack_int m_ = (lapack_int) *m;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ldt_ = to_lapack_int( ldt );
+    lapack_int ldvl_ = to_lapack_int( ldvl );
+    lapack_int ldvr_ = to_lapack_int( ldvr );
+    lapack_int mm_ = to_lapack_int( mm );
+    lapack_int m_ = to_lapack_int( *m );
     lapack_int info_ = 0;
 
     // query for workspace size

@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -22,19 +23,11 @@ int64_t gbtrf(
     float* AB, int64_t ldab,
     int64_t* ipiv )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int kl_ = (lapack_int) kl;
-    lapack_int ku_ = (lapack_int) ku;
-    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int kl_ = to_lapack_int( kl );
+    lapack_int ku_ = to_lapack_int( ku );
+    lapack_int ldab_ = to_lapack_int( ldab );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         lapack::vector< lapack_int > ipiv_( (min(m,n)) );
@@ -64,19 +57,11 @@ int64_t gbtrf(
     double* AB, int64_t ldab,
     int64_t* ipiv )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int kl_ = (lapack_int) kl;
-    lapack_int ku_ = (lapack_int) ku;
-    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int kl_ = to_lapack_int( kl );
+    lapack_int ku_ = to_lapack_int( ku );
+    lapack_int ldab_ = to_lapack_int( ldab );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         lapack::vector< lapack_int > ipiv_( (min(m,n)) );
@@ -106,19 +91,11 @@ int64_t gbtrf(
     std::complex<float>* AB, int64_t ldab,
     int64_t* ipiv )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int kl_ = (lapack_int) kl;
-    lapack_int ku_ = (lapack_int) ku;
-    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int kl_ = to_lapack_int( kl );
+    lapack_int ku_ = to_lapack_int( ku );
+    lapack_int ldab_ = to_lapack_int( ldab );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         lapack::vector< lapack_int > ipiv_( (min(m,n)) );
@@ -216,19 +193,11 @@ int64_t gbtrf(
     std::complex<double>* AB, int64_t ldab,
     int64_t* ipiv )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int kl_ = (lapack_int) kl;
-    lapack_int ku_ = (lapack_int) ku;
-    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int kl_ = to_lapack_int( kl );
+    lapack_int ku_ = to_lapack_int( ku );
+    lapack_int ldab_ = to_lapack_int( ldab );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         lapack::vector< lapack_int > ipiv_( (min(m,n)) );

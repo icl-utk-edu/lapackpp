@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -26,31 +27,19 @@ int64_t sbgvx(
     float* Z, int64_t ldz,
     int64_t* ifail )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ka) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldbb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(il) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(iu) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
-    }
     char jobz_ = to_char( jobz );
     char range_ = to_char( range );
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ka_ = (lapack_int) ka;
-    lapack_int kb_ = (lapack_int) kb;
-    lapack_int ldab_ = (lapack_int) ldab;
-    lapack_int ldbb_ = (lapack_int) ldbb;
-    lapack_int ldq_ = (lapack_int) ldq;
-    lapack_int il_ = (lapack_int) il;
-    lapack_int iu_ = (lapack_int) iu;
-    lapack_int m_ = (lapack_int) *m;
-    lapack_int ldz_ = (lapack_int) ldz;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ka_ = to_lapack_int( ka );
+    lapack_int kb_ = to_lapack_int( kb );
+    lapack_int ldab_ = to_lapack_int( ldab );
+    lapack_int ldbb_ = to_lapack_int( ldbb );
+    lapack_int ldq_ = to_lapack_int( ldq );
+    lapack_int il_ = to_lapack_int( il );
+    lapack_int iu_ = to_lapack_int( iu );
+    lapack_int m_ = to_lapack_int( *m );
+    lapack_int ldz_ = to_lapack_int( ldz );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         lapack::vector< lapack_int > ifail_( n );  // was m; n >= m
@@ -98,31 +87,19 @@ int64_t sbgvx(
     double* Z, int64_t ldz,
     int64_t* ifail )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ka) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldbb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(il) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(iu) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
-    }
     char jobz_ = to_char( jobz );
     char range_ = to_char( range );
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ka_ = (lapack_int) ka;
-    lapack_int kb_ = (lapack_int) kb;
-    lapack_int ldab_ = (lapack_int) ldab;
-    lapack_int ldbb_ = (lapack_int) ldbb;
-    lapack_int ldq_ = (lapack_int) ldq;
-    lapack_int il_ = (lapack_int) il;
-    lapack_int iu_ = (lapack_int) iu;
-    lapack_int m_ = (lapack_int) *m;
-    lapack_int ldz_ = (lapack_int) ldz;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ka_ = to_lapack_int( ka );
+    lapack_int kb_ = to_lapack_int( kb );
+    lapack_int ldab_ = to_lapack_int( ldab );
+    lapack_int ldbb_ = to_lapack_int( ldbb );
+    lapack_int ldq_ = to_lapack_int( ldq );
+    lapack_int il_ = to_lapack_int( il );
+    lapack_int iu_ = to_lapack_int( iu );
+    lapack_int m_ = to_lapack_int( *m );
+    lapack_int ldz_ = to_lapack_int( ldz );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         lapack::vector< lapack_int > ifail_( n );  // was m; n >= m

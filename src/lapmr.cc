@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -23,16 +24,10 @@ void lapmr(
     float* X, int64_t ldx,
     int64_t* K )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int forwrd_ = (lapack_int) forwrd;
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ldx_ = (lapack_int) ldx;
+    lapack_int forwrd_ = to_lapack_int( forwrd );
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ldx_ = to_lapack_int( ldx );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > K_( &K[0], &K[(m)] );
@@ -56,16 +51,10 @@ void lapmr(
     double* X, int64_t ldx,
     int64_t* K )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int forwrd_ = (lapack_int) forwrd;
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ldx_ = (lapack_int) ldx;
+    lapack_int forwrd_ = to_lapack_int( forwrd );
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ldx_ = to_lapack_int( ldx );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > K_( &K[0], &K[(m)] );
@@ -89,16 +78,10 @@ void lapmr(
     std::complex<float>* X, int64_t ldx,
     int64_t* K )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int forwrd_ = (lapack_int) forwrd;
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ldx_ = (lapack_int) ldx;
+    lapack_int forwrd_ = to_lapack_int( forwrd );
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ldx_ = to_lapack_int( ldx );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > K_( &K[0], &K[(m)] );
@@ -122,16 +105,10 @@ void lapmr(
     std::complex<double>* X, int64_t ldx,
     int64_t* K )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int forwrd_ = (lapack_int) forwrd;
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ldx_ = (lapack_int) ldx;
+    lapack_int forwrd_ = to_lapack_int( forwrd );
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ldx_ = to_lapack_int( ldx );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > K_( &K[0], &K[(m)] );

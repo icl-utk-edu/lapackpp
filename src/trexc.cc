@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -23,18 +24,12 @@ int64_t trexc(
     int64_t* ifst,
     int64_t* ilst )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
-    }
     char compq_ = to_char_comp( compq );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ldt_ = (lapack_int) ldt;
-    lapack_int ldq_ = (lapack_int) ldq;
-    lapack_int ifst_ = (lapack_int) *ifst;
-    lapack_int ilst_ = (lapack_int) *ilst;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ldt_ = to_lapack_int( ldt );
+    lapack_int ldq_ = to_lapack_int( ldq );
+    lapack_int ifst_ = to_lapack_int( *ifst );
+    lapack_int ilst_ = to_lapack_int( *ilst );
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -62,18 +57,12 @@ int64_t trexc(
     int64_t* ifst,
     int64_t* ilst )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
-    }
     char compq_ = to_char_comp( compq );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ldt_ = (lapack_int) ldt;
-    lapack_int ldq_ = (lapack_int) ldq;
-    lapack_int ifst_ = (lapack_int) *ifst;
-    lapack_int ilst_ = (lapack_int) *ilst;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ldt_ = to_lapack_int( ldt );
+    lapack_int ldq_ = to_lapack_int( ldq );
+    lapack_int ifst_ = to_lapack_int( *ifst );
+    lapack_int ilst_ = to_lapack_int( *ilst );
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -99,20 +88,12 @@ int64_t trexc(
     std::complex<float>* T, int64_t ldt,
     std::complex<float>* Q, int64_t ldq, int64_t ifst, int64_t ilst )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ifst) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ilst) > std::numeric_limits<lapack_int>::max() );
-    }
     char compq_ = to_char_comp( compq );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ldt_ = (lapack_int) ldt;
-    lapack_int ldq_ = (lapack_int) ldq;
-    lapack_int ifst_ = (lapack_int) ifst;
-    lapack_int ilst_ = (lapack_int) ilst;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ldt_ = to_lapack_int( ldt );
+    lapack_int ldq_ = to_lapack_int( ldq );
+    lapack_int ifst_ = to_lapack_int( ifst );
+    lapack_int ilst_ = to_lapack_int( ilst );
     lapack_int info_ = 0;
 
     LAPACK_ctrexc(
@@ -132,20 +113,12 @@ int64_t trexc(
     std::complex<double>* T, int64_t ldt,
     std::complex<double>* Q, int64_t ldq, int64_t ifst, int64_t ilst )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ifst) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ilst) > std::numeric_limits<lapack_int>::max() );
-    }
     char compq_ = to_char_comp( compq );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ldt_ = (lapack_int) ldt;
-    lapack_int ldq_ = (lapack_int) ldq;
-    lapack_int ifst_ = (lapack_int) ifst;
-    lapack_int ilst_ = (lapack_int) ilst;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ldt_ = to_lapack_int( ldt );
+    lapack_int ldq_ = to_lapack_int( ldq );
+    lapack_int ifst_ = to_lapack_int( ifst );
+    lapack_int ilst_ = to_lapack_int( ilst );
     lapack_int info_ = 0;
 
     LAPACK_ztrexc(

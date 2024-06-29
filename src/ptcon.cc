@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -23,11 +24,7 @@ int64_t ptcon(
     float const* E, float anorm,
     float* rcond )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -52,11 +49,7 @@ int64_t ptcon(
     double const* E, double anorm,
     double* rcond )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -81,11 +74,7 @@ int64_t ptcon(
     std::complex<float> const* E, float anorm,
     float* rcond )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -154,11 +143,7 @@ int64_t ptcon(
     std::complex<double> const* E, double anorm,
     double* rcond )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
     lapack_int info_ = 0;
 
     // allocate workspace

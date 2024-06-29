@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 
 #if LAPACK_VERSION >= 30202  // >= 3.2.2
@@ -24,13 +25,8 @@ void larfgp(
     float* X, int64_t incx,
     float* tau )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(incx) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int incx_ = (lapack_int) incx;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int incx_ = to_lapack_int( incx );
 
     LAPACK_slarfgp(
         &n_, alpha,
@@ -45,13 +41,8 @@ void larfgp(
     double* X, int64_t incx,
     double* tau )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(incx) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int incx_ = (lapack_int) incx;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int incx_ = to_lapack_int( incx );
 
     LAPACK_dlarfgp(
         &n_, alpha,
@@ -66,13 +57,8 @@ void larfgp(
     std::complex<float>* X, int64_t incx,
     std::complex<float>* tau )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(incx) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int incx_ = (lapack_int) incx;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int incx_ = to_lapack_int( incx );
 
     LAPACK_clarfgp(
         &n_, (lapack_complex_float*) alpha,
@@ -143,13 +129,8 @@ void larfgp(
     std::complex<double>* X, int64_t incx,
     std::complex<double>* tau )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(incx) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int incx_ = (lapack_int) incx;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int incx_ = to_lapack_int( incx );
 
     LAPACK_zlarfgp(
         &n_, (lapack_complex_double*) alpha,

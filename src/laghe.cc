@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -24,15 +25,9 @@ int64_t laghe(
     std::complex<float>* A, int64_t lda,
     int64_t* iseed )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int lda_ = to_lapack_int( lda );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
@@ -67,15 +62,9 @@ int64_t laghe(
     std::complex<double>* A, int64_t lda,
     int64_t* iseed )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int lda_ = to_lapack_int( lda );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );

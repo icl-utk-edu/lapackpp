@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 
 #include <vector>
@@ -20,16 +21,10 @@ int64_t pbstf(
     lapack::Uplo uplo, int64_t n, int64_t kd,
     float* AB, int64_t ldab )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int kd_ = (lapack_int) kd;
-    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int kd_ = to_lapack_int( kd );
+    lapack_int ldab_ = to_lapack_int( ldab );
     lapack_int info_ = 0;
 
     LAPACK_spbstf(
@@ -48,16 +43,10 @@ int64_t pbstf(
     lapack::Uplo uplo, int64_t n, int64_t kd,
     double* AB, int64_t ldab )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int kd_ = (lapack_int) kd;
-    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int kd_ = to_lapack_int( kd );
+    lapack_int ldab_ = to_lapack_int( ldab );
     lapack_int info_ = 0;
 
     LAPACK_dpbstf(
@@ -76,16 +65,10 @@ int64_t pbstf(
     lapack::Uplo uplo, int64_t n, int64_t kd,
     std::complex<float>* AB, int64_t ldab )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int kd_ = (lapack_int) kd;
-    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int kd_ = to_lapack_int( kd );
+    lapack_int ldab_ = to_lapack_int( ldab );
     lapack_int info_ = 0;
 
     LAPACK_cpbstf(
@@ -200,16 +183,10 @@ int64_t pbstf(
     lapack::Uplo uplo, int64_t n, int64_t kd,
     std::complex<double>* AB, int64_t ldab )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int kd_ = (lapack_int) kd;
-    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int kd_ = to_lapack_int( kd );
+    lapack_int ldab_ = to_lapack_int( ldab );
     lapack_int info_ = 0;
 
     LAPACK_zpbstf(

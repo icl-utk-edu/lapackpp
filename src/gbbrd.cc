@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -26,28 +27,16 @@ int64_t gbbrd(
     float* PT, int64_t ldpt,
     float* C, int64_t ldc )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ncc) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldpt) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
-    }
     char vect_ = to_char( vect );
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ncc_ = (lapack_int) ncc;
-    lapack_int kl_ = (lapack_int) kl;
-    lapack_int ku_ = (lapack_int) ku;
-    lapack_int ldab_ = (lapack_int) ldab;
-    lapack_int ldq_ = (lapack_int) ldq;
-    lapack_int ldpt_ = (lapack_int) ldpt;
-    lapack_int ldc_ = (lapack_int) ldc;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ncc_ = to_lapack_int( ncc );
+    lapack_int kl_ = to_lapack_int( kl );
+    lapack_int ku_ = to_lapack_int( ku );
+    lapack_int ldab_ = to_lapack_int( ldab );
+    lapack_int ldq_ = to_lapack_int( ldq );
+    lapack_int ldpt_ = to_lapack_int( ldpt );
+    lapack_int ldc_ = to_lapack_int( ldc );
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -80,28 +69,16 @@ int64_t gbbrd(
     double* PT, int64_t ldpt,
     double* C, int64_t ldc )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ncc) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldpt) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
-    }
     char vect_ = to_char( vect );
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ncc_ = (lapack_int) ncc;
-    lapack_int kl_ = (lapack_int) kl;
-    lapack_int ku_ = (lapack_int) ku;
-    lapack_int ldab_ = (lapack_int) ldab;
-    lapack_int ldq_ = (lapack_int) ldq;
-    lapack_int ldpt_ = (lapack_int) ldpt;
-    lapack_int ldc_ = (lapack_int) ldc;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ncc_ = to_lapack_int( ncc );
+    lapack_int kl_ = to_lapack_int( kl );
+    lapack_int ku_ = to_lapack_int( ku );
+    lapack_int ldab_ = to_lapack_int( ldab );
+    lapack_int ldq_ = to_lapack_int( ldq );
+    lapack_int ldpt_ = to_lapack_int( ldpt );
+    lapack_int ldc_ = to_lapack_int( ldc );
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -134,28 +111,16 @@ int64_t gbbrd(
     std::complex<float>* PT, int64_t ldpt,
     std::complex<float>* C, int64_t ldc )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ncc) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldpt) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
-    }
     char vect_ = to_char( vect );
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ncc_ = (lapack_int) ncc;
-    lapack_int kl_ = (lapack_int) kl;
-    lapack_int ku_ = (lapack_int) ku;
-    lapack_int ldab_ = (lapack_int) ldab;
-    lapack_int ldq_ = (lapack_int) ldq;
-    lapack_int ldpt_ = (lapack_int) ldpt;
-    lapack_int ldc_ = (lapack_int) ldc;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ncc_ = to_lapack_int( ncc );
+    lapack_int kl_ = to_lapack_int( kl );
+    lapack_int ku_ = to_lapack_int( ku );
+    lapack_int ldab_ = to_lapack_int( ldab );
+    lapack_int ldq_ = to_lapack_int( ldq );
+    lapack_int ldpt_ = to_lapack_int( ldpt );
+    lapack_int ldc_ = to_lapack_int( ldc );
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -275,28 +240,16 @@ int64_t gbbrd(
     std::complex<double>* PT, int64_t ldpt,
     std::complex<double>* C, int64_t ldc )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ncc) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldpt) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
-    }
     char vect_ = to_char( vect );
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ncc_ = (lapack_int) ncc;
-    lapack_int kl_ = (lapack_int) kl;
-    lapack_int ku_ = (lapack_int) ku;
-    lapack_int ldab_ = (lapack_int) ldab;
-    lapack_int ldq_ = (lapack_int) ldq;
-    lapack_int ldpt_ = (lapack_int) ldpt;
-    lapack_int ldc_ = (lapack_int) ldc;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ncc_ = to_lapack_int( ncc );
+    lapack_int kl_ = to_lapack_int( kl );
+    lapack_int ku_ = to_lapack_int( ku );
+    lapack_int ldab_ = to_lapack_int( ldab );
+    lapack_int ldq_ = to_lapack_int( ldq );
+    lapack_int ldpt_ = to_lapack_int( ldpt );
+    lapack_int ldc_ = to_lapack_int( ldc );
     lapack_int info_ = 0;
 
     // allocate workspace

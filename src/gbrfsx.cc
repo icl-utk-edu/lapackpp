@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -34,27 +35,14 @@ int64_t gbrfsx(
     float* err_bnds_comp, int64_t nparams,
     float* params )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldafb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n_err_bnds) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nparams) > std::numeric_limits<lapack_int>::max() );
-    }
     char trans_ = to_char( trans );
     char equed_ = to_char( equed );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int kl_ = (lapack_int) kl;
-    lapack_int ku_ = (lapack_int) ku;
-    lapack_int nrhs_ = (lapack_int) nrhs;
-    lapack_int ldab_ = (lapack_int) ldab;
-    lapack_int ldafb_ = (lapack_int) ldafb;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int kl_ = to_lapack_int( kl );
+    lapack_int ku_ = to_lapack_int( ku );
+    lapack_int nrhs_ = to_lapack_int( nrhs );
+    lapack_int ldab_ = to_lapack_int( ldab );
+    lapack_int ldafb_ = to_lapack_int( ldafb );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
@@ -62,10 +50,10 @@ int64_t gbrfsx(
     #else
         lapack_int const* ipiv_ptr = ipiv;
     #endif
-    lapack_int ldb_ = (lapack_int) ldb;
-    lapack_int ldx_ = (lapack_int) ldx;
-    lapack_int n_err_bnds_ = (lapack_int) n_err_bnds;
-    lapack_int nparams_ = (lapack_int) nparams;
+    lapack_int ldb_ = to_lapack_int( ldb );
+    lapack_int ldx_ = to_lapack_int( ldx );
+    lapack_int n_err_bnds_ = to_lapack_int( n_err_bnds );
+    lapack_int nparams_ = to_lapack_int( nparams );
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -111,27 +99,14 @@ int64_t gbrfsx(
     double* err_bnds_comp, int64_t nparams,
     double* params )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldafb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n_err_bnds) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nparams) > std::numeric_limits<lapack_int>::max() );
-    }
     char trans_ = to_char( trans );
     char equed_ = to_char( equed );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int kl_ = (lapack_int) kl;
-    lapack_int ku_ = (lapack_int) ku;
-    lapack_int nrhs_ = (lapack_int) nrhs;
-    lapack_int ldab_ = (lapack_int) ldab;
-    lapack_int ldafb_ = (lapack_int) ldafb;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int kl_ = to_lapack_int( kl );
+    lapack_int ku_ = to_lapack_int( ku );
+    lapack_int nrhs_ = to_lapack_int( nrhs );
+    lapack_int ldab_ = to_lapack_int( ldab );
+    lapack_int ldafb_ = to_lapack_int( ldafb );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
@@ -139,10 +114,10 @@ int64_t gbrfsx(
     #else
         lapack_int const* ipiv_ptr = ipiv;
     #endif
-    lapack_int ldb_ = (lapack_int) ldb;
-    lapack_int ldx_ = (lapack_int) ldx;
-    lapack_int n_err_bnds_ = (lapack_int) n_err_bnds;
-    lapack_int nparams_ = (lapack_int) nparams;
+    lapack_int ldb_ = to_lapack_int( ldb );
+    lapack_int ldx_ = to_lapack_int( ldx );
+    lapack_int n_err_bnds_ = to_lapack_int( n_err_bnds );
+    lapack_int nparams_ = to_lapack_int( nparams );
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -188,27 +163,14 @@ int64_t gbrfsx(
     float* err_bnds_comp, int64_t nparams,
     float* params )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldafb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n_err_bnds) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nparams) > std::numeric_limits<lapack_int>::max() );
-    }
     char trans_ = to_char( trans );
     char equed_ = to_char( equed );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int kl_ = (lapack_int) kl;
-    lapack_int ku_ = (lapack_int) ku;
-    lapack_int nrhs_ = (lapack_int) nrhs;
-    lapack_int ldab_ = (lapack_int) ldab;
-    lapack_int ldafb_ = (lapack_int) ldafb;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int kl_ = to_lapack_int( kl );
+    lapack_int ku_ = to_lapack_int( ku );
+    lapack_int nrhs_ = to_lapack_int( nrhs );
+    lapack_int ldab_ = to_lapack_int( ldab );
+    lapack_int ldafb_ = to_lapack_int( ldafb );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
@@ -216,10 +178,10 @@ int64_t gbrfsx(
     #else
         lapack_int const* ipiv_ptr = ipiv;
     #endif
-    lapack_int ldb_ = (lapack_int) ldb;
-    lapack_int ldx_ = (lapack_int) ldx;
-    lapack_int n_err_bnds_ = (lapack_int) n_err_bnds;
-    lapack_int nparams_ = (lapack_int) nparams;
+    lapack_int ldb_ = to_lapack_int( ldb );
+    lapack_int ldx_ = to_lapack_int( ldx );
+    lapack_int n_err_bnds_ = to_lapack_int( n_err_bnds );
+    lapack_int nparams_ = to_lapack_int( nparams );
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -566,27 +528,14 @@ int64_t gbrfsx(
     double* err_bnds_comp, int64_t nparams,
     double* params )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldafb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldx) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n_err_bnds) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nparams) > std::numeric_limits<lapack_int>::max() );
-    }
     char trans_ = to_char( trans );
     char equed_ = to_char( equed );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int kl_ = (lapack_int) kl;
-    lapack_int ku_ = (lapack_int) ku;
-    lapack_int nrhs_ = (lapack_int) nrhs;
-    lapack_int ldab_ = (lapack_int) ldab;
-    lapack_int ldafb_ = (lapack_int) ldafb;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int kl_ = to_lapack_int( kl );
+    lapack_int ku_ = to_lapack_int( ku );
+    lapack_int nrhs_ = to_lapack_int( nrhs );
+    lapack_int ldab_ = to_lapack_int( ldab );
+    lapack_int ldafb_ = to_lapack_int( ldafb );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
@@ -594,10 +543,10 @@ int64_t gbrfsx(
     #else
         lapack_int const* ipiv_ptr = ipiv;
     #endif
-    lapack_int ldb_ = (lapack_int) ldb;
-    lapack_int ldx_ = (lapack_int) ldx;
-    lapack_int n_err_bnds_ = (lapack_int) n_err_bnds;
-    lapack_int nparams_ = (lapack_int) nparams;
+    lapack_int ldb_ = to_lapack_int( ldb );
+    lapack_int ldx_ = to_lapack_int( ldx );
+    lapack_int n_err_bnds_ = to_lapack_int( n_err_bnds );
+    lapack_int nparams_ = to_lapack_int( nparams );
     lapack_int info_ = 0;
 
     // allocate workspace

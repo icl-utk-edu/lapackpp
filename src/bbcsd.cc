@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -36,28 +37,18 @@ int64_t bbcsd(
     float* B22D,
     float* B22E )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(p) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(q) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldu1) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldu2) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv1t) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv2t) > std::numeric_limits<lapack_int>::max() );
-    }
     char jobu1_ = to_char_csd( jobu1 );
     char jobu2_ = to_char_csd( jobu2 );
     char jobv1t_ = to_char_csd( jobv1t );
     char jobv2t_ = to_char_csd( jobv2t );
     char trans_ = to_char( trans );
-    lapack_int m_ = (lapack_int) m;
-    lapack_int p_ = (lapack_int) p;
-    lapack_int q_ = (lapack_int) q;
-    lapack_int ldu1_ = (lapack_int) ldu1;
-    lapack_int ldu2_ = (lapack_int) ldu2;
-    lapack_int ldv1t_ = (lapack_int) ldv1t;
-    lapack_int ldv2t_ = (lapack_int) ldv2t;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int p_ = to_lapack_int( p );
+    lapack_int q_ = to_lapack_int( q );
+    lapack_int ldu1_ = to_lapack_int( ldu1 );
+    lapack_int ldu2_ = to_lapack_int( ldu2 );
+    lapack_int ldv1t_ = to_lapack_int( ldv1t );
+    lapack_int ldv2t_ = to_lapack_int( ldv2t );
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -132,28 +123,18 @@ int64_t bbcsd(
     double* B22D,
     double* B22E )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(p) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(q) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldu1) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldu2) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv1t) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv2t) > std::numeric_limits<lapack_int>::max() );
-    }
     char jobu1_ = to_char_csd( jobu1 );
     char jobu2_ = to_char_csd( jobu2 );
     char jobv1t_ = to_char_csd( jobv1t );
     char jobv2t_ = to_char_csd( jobv2t );
     char trans_ = to_char( trans );
-    lapack_int m_ = (lapack_int) m;
-    lapack_int p_ = (lapack_int) p;
-    lapack_int q_ = (lapack_int) q;
-    lapack_int ldu1_ = (lapack_int) ldu1;
-    lapack_int ldu2_ = (lapack_int) ldu2;
-    lapack_int ldv1t_ = (lapack_int) ldv1t;
-    lapack_int ldv2t_ = (lapack_int) ldv2t;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int p_ = to_lapack_int( p );
+    lapack_int q_ = to_lapack_int( q );
+    lapack_int ldu1_ = to_lapack_int( ldu1 );
+    lapack_int ldu2_ = to_lapack_int( ldu2 );
+    lapack_int ldv1t_ = to_lapack_int( ldv1t );
+    lapack_int ldv2t_ = to_lapack_int( ldv2t );
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -228,28 +209,18 @@ int64_t bbcsd(
     float* B22D,
     float* B22E )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(p) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(q) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldu1) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldu2) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv1t) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv2t) > std::numeric_limits<lapack_int>::max() );
-    }
     char jobu1_ = to_char_csd( jobu1 );
     char jobu2_ = to_char_csd( jobu2 );
     char jobv1t_ = to_char_csd( jobv1t );
     char jobv2t_ = to_char_csd( jobv2t );
     char trans_ = to_char( trans );
-    lapack_int m_ = (lapack_int) m;
-    lapack_int p_ = (lapack_int) p;
-    lapack_int q_ = (lapack_int) q;
-    lapack_int ldu1_ = (lapack_int) ldu1;
-    lapack_int ldu2_ = (lapack_int) ldu2;
-    lapack_int ldv1t_ = (lapack_int) ldv1t;
-    lapack_int ldv2t_ = (lapack_int) ldv2t;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int p_ = to_lapack_int( p );
+    lapack_int q_ = to_lapack_int( q );
+    lapack_int ldu1_ = to_lapack_int( ldu1 );
+    lapack_int ldu2_ = to_lapack_int( ldu2 );
+    lapack_int ldv1t_ = to_lapack_int( ldv1t );
+    lapack_int ldv2t_ = to_lapack_int( ldv2t );
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -509,28 +480,18 @@ int64_t bbcsd(
     double* B22D,
     double* B22E )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(p) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(q) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldu1) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldu2) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv1t) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv2t) > std::numeric_limits<lapack_int>::max() );
-    }
     char jobu1_ = to_char_csd( jobu1 );
     char jobu2_ = to_char_csd( jobu2 );
     char jobv1t_ = to_char_csd( jobv1t );
     char jobv2t_ = to_char_csd( jobv2t );
     char trans_ = to_char( trans );
-    lapack_int m_ = (lapack_int) m;
-    lapack_int p_ = (lapack_int) p;
-    lapack_int q_ = (lapack_int) q;
-    lapack_int ldu1_ = (lapack_int) ldu1;
-    lapack_int ldu2_ = (lapack_int) ldu2;
-    lapack_int ldv1t_ = (lapack_int) ldv1t;
-    lapack_int ldv2t_ = (lapack_int) ldv2t;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int p_ = to_lapack_int( p );
+    lapack_int q_ = to_lapack_int( q );
+    lapack_int ldu1_ = to_lapack_int( ldu1 );
+    lapack_int ldu2_ = to_lapack_int( ldu2 );
+    lapack_int ldv1t_ = to_lapack_int( ldv1t );
+    lapack_int ldv2t_ = to_lapack_int( ldv2t );
     lapack_int info_ = 0;
 
     // query for workspace size

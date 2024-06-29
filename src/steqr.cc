@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -22,14 +23,9 @@ int64_t steqr(
     float* E,
     float* Z, int64_t ldz )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
-    }
     char compz_ = to_char_comp( compz );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ldz_ = (lapack_int) ldz;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ldz_ = to_lapack_int( ldz );
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -55,14 +51,9 @@ int64_t steqr(
     double* E,
     double* Z, int64_t ldz )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
-    }
     char compz_ = to_char_comp( compz );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ldz_ = (lapack_int) ldz;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ldz_ = to_lapack_int( ldz );
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -88,14 +79,9 @@ int64_t steqr(
     float* E,
     std::complex<float>* Z, int64_t ldz )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
-    }
     char compz_ = to_char_comp( compz );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ldz_ = (lapack_int) ldz;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ldz_ = to_lapack_int( ldz );
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -121,14 +107,9 @@ int64_t steqr(
     double* E,
     std::complex<double>* Z, int64_t ldz )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
-    }
     char compz_ = to_char_comp( compz );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ldz_ = (lapack_int) ldz;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ldz_ = to_lapack_int( ldz );
     lapack_int info_ = 0;
 
     // allocate workspace

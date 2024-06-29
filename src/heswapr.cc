@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 
 #if LAPACK_VERSION >= 30301  // >= 3.3.1
@@ -22,18 +23,11 @@ void heswapr(
     lapack::Uplo uplo, int64_t n,
     std::complex<float>* A, int64_t lda, int64_t i1, int64_t i2 )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(i1) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(i2) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int i1_ = (lapack_int) i1;
-    lapack_int i2_ = (lapack_int) i2;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int i1_ = to_lapack_int( i1 );
+    lapack_int i2_ = to_lapack_int( i2 );
 
     LAPACK_cheswapr(
         &uplo_, &n_,
@@ -77,18 +71,11 @@ void heswapr(
     lapack::Uplo uplo, int64_t n,
     std::complex<double>* A, int64_t lda, int64_t i1, int64_t i2 )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(i1) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(i2) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int i1_ = (lapack_int) i1;
-    lapack_int i2_ = (lapack_int) i2;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int i1_ = to_lapack_int( i1 );
+    lapack_int i2_ = to_lapack_int( i2 );
 
     LAPACK_zheswapr(
         &uplo_, &n_,

@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 
 #include <vector>
@@ -22,12 +23,8 @@ float langt(
     float const* D,
     float const* DU )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
     char norm_ = to_char( norm );
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
 
     return LAPACK_slangt(
         &norm_, &n_,
@@ -45,12 +42,8 @@ double langt(
     double const* D,
     double const* DU )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
     char norm_ = to_char( norm );
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
 
     return LAPACK_dlangt(
         &norm_, &n_,
@@ -68,12 +61,8 @@ float langt(
     std::complex<float> const* D,
     std::complex<float> const* DU )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
     char norm_ = to_char( norm );
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
 
     return LAPACK_clangt(
         &norm_, &n_,
@@ -121,12 +110,8 @@ double langt(
     std::complex<double> const* D,
     std::complex<double> const* DU )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
     char norm_ = to_char( norm );
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
 
     return LAPACK_zlangt(
         &norm_, &n_,

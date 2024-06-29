@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -23,18 +24,12 @@ int64_t gees(
     std::complex<float>* W,
     float* VS, int64_t ldvs )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldvs) > std::numeric_limits<lapack_int>::max() );
-    }
     char jobvs_ = to_char( jobvs );
     char sort_ = to_char( sort );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int sdim_ = (lapack_int) *sdim;
-    lapack_int ldvs_ = (lapack_int) ldvs;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int sdim_ = to_lapack_int( *sdim );
+    lapack_int ldvs_ = to_lapack_int( ldvs );
     lapack_int info_ = 0;
 
     // split-complex representation
@@ -93,18 +88,12 @@ int64_t gees(
     std::complex<double>* W,
     double* VS, int64_t ldvs )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldvs) > std::numeric_limits<lapack_int>::max() );
-    }
     char jobvs_ = to_char( jobvs );
     char sort_ = to_char( sort );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int sdim_ = (lapack_int) *sdim;
-    lapack_int ldvs_ = (lapack_int) ldvs;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int sdim_ = to_lapack_int( *sdim );
+    lapack_int ldvs_ = to_lapack_int( ldvs );
     lapack_int info_ = 0;
 
     // split-complex representation
@@ -163,18 +152,12 @@ int64_t gees(
     std::complex<float>* W,
     std::complex<float>* VS, int64_t ldvs )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldvs) > std::numeric_limits<lapack_int>::max() );
-    }
     char jobvs_ = to_char( jobvs );
     char sort_ = to_char( sort );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int sdim_ = (lapack_int) *sdim;
-    lapack_int ldvs_ = (lapack_int) ldvs;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int sdim_ = to_lapack_int( *sdim );
+    lapack_int ldvs_ = to_lapack_int( ldvs );
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -227,18 +210,12 @@ int64_t gees(
     std::complex<double>* W,
     std::complex<double>* VS, int64_t ldvs )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldvs) > std::numeric_limits<lapack_int>::max() );
-    }
     char jobvs_ = to_char( jobvs );
     char sort_ = to_char( sort );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int sdim_ = (lapack_int) *sdim;
-    lapack_int ldvs_ = (lapack_int) ldvs;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int sdim_ = to_lapack_int( *sdim );
+    lapack_int ldvs_ = to_lapack_int( ldvs );
     lapack_int info_ = 0;
 
     // query for workspace size

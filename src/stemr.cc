@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -26,22 +27,14 @@ int64_t stemr(
     int64_t* isuppz,
     bool* tryrac )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(il) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(iu) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nzc) > std::numeric_limits<lapack_int>::max() );
-    }
     char jobz_ = to_char( jobz );
     char range_ = to_char( range );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int il_ = (lapack_int) il;
-    lapack_int iu_ = (lapack_int) iu;
-    lapack_int m_ = (lapack_int) *m;
-    lapack_int ldz_ = (lapack_int) ldz;
-    lapack_int nzc_ = (lapack_int) nzc;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int il_ = to_lapack_int( il );
+    lapack_int iu_ = to_lapack_int( iu );
+    lapack_int m_ = to_lapack_int( *m );
+    lapack_int ldz_ = to_lapack_int( ldz );
+    lapack_int nzc_ = to_lapack_int( nzc );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         lapack::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was m; n >= m
@@ -49,7 +42,7 @@ int64_t stemr(
     #else
         lapack_int* isuppz_ptr = isuppz;
     #endif
-    lapack_int tryrac_ = (lapack_int) *tryrac;
+    lapack_int tryrac_ = to_lapack_int( *tryrac );
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -108,22 +101,14 @@ int64_t stemr(
     int64_t* isuppz,
     bool* tryrac )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(il) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(iu) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nzc) > std::numeric_limits<lapack_int>::max() );
-    }
     char jobz_ = to_char( jobz );
     char range_ = to_char( range );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int il_ = (lapack_int) il;
-    lapack_int iu_ = (lapack_int) iu;
-    lapack_int m_ = (lapack_int) *m;
-    lapack_int ldz_ = (lapack_int) ldz;
-    lapack_int nzc_ = (lapack_int) nzc;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int il_ = to_lapack_int( il );
+    lapack_int iu_ = to_lapack_int( iu );
+    lapack_int m_ = to_lapack_int( *m );
+    lapack_int ldz_ = to_lapack_int( ldz );
+    lapack_int nzc_ = to_lapack_int( nzc );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         lapack::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was m; n >= m
@@ -131,7 +116,7 @@ int64_t stemr(
     #else
         lapack_int* isuppz_ptr = isuppz;
     #endif
-    lapack_int tryrac_ = (lapack_int) *tryrac;
+    lapack_int tryrac_ = to_lapack_int( *tryrac );
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -190,22 +175,14 @@ int64_t stemr(
     int64_t* isuppz,
     bool* tryrac )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(il) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(iu) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nzc) > std::numeric_limits<lapack_int>::max() );
-    }
     char jobz_ = to_char( jobz );
     char range_ = to_char( range );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int il_ = (lapack_int) il;
-    lapack_int iu_ = (lapack_int) iu;
-    lapack_int m_ = (lapack_int) *m;
-    lapack_int ldz_ = (lapack_int) ldz;
-    lapack_int nzc_ = (lapack_int) nzc;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int il_ = to_lapack_int( il );
+    lapack_int iu_ = to_lapack_int( iu );
+    lapack_int m_ = to_lapack_int( *m );
+    lapack_int ldz_ = to_lapack_int( ldz );
+    lapack_int nzc_ = to_lapack_int( nzc );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         lapack::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was m; n >= m
@@ -213,7 +190,7 @@ int64_t stemr(
     #else
         lapack_int* isuppz_ptr = isuppz;
     #endif
-    lapack_int tryrac_ = (lapack_int) *tryrac;
+    lapack_int tryrac_ = to_lapack_int( *tryrac );
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -272,22 +249,14 @@ int64_t stemr(
     int64_t* isuppz,
     bool* tryrac )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(il) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(iu) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nzc) > std::numeric_limits<lapack_int>::max() );
-    }
     char jobz_ = to_char( jobz );
     char range_ = to_char( range );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int il_ = (lapack_int) il;
-    lapack_int iu_ = (lapack_int) iu;
-    lapack_int m_ = (lapack_int) *m;
-    lapack_int ldz_ = (lapack_int) ldz;
-    lapack_int nzc_ = (lapack_int) nzc;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int il_ = to_lapack_int( il );
+    lapack_int iu_ = to_lapack_int( iu );
+    lapack_int m_ = to_lapack_int( *m );
+    lapack_int ldz_ = to_lapack_int( ldz );
+    lapack_int nzc_ = to_lapack_int( nzc );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         lapack::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was m; n >= m
@@ -295,7 +264,7 @@ int64_t stemr(
     #else
         lapack_int* isuppz_ptr = isuppz;
     #endif
-    lapack_int tryrac_ = (lapack_int) *tryrac;
+    lapack_int tryrac_ = to_lapack_int( *tryrac );
     lapack_int info_ = 0;
 
     // query for workspace size

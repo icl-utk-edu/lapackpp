@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -27,33 +28,20 @@ int64_t tgsja(
     float* Q, int64_t ldq,
     int64_t* ncycle )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(p) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(l) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
-    }
     char jobu_ = to_char_compu( jobu );
     char jobv_ = to_char_comp( jobv );
     char jobq_ = to_char_compq( jobq );
-    lapack_int m_ = (lapack_int) m;
-    lapack_int p_ = (lapack_int) p;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int l_ = (lapack_int) l;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int ldb_ = (lapack_int) ldb;
-    lapack_int ldu_ = (lapack_int) ldu;
-    lapack_int ldv_ = (lapack_int) ldv;
-    lapack_int ldq_ = (lapack_int) ldq;
-    lapack_int ncycle_ = (lapack_int) *ncycle;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int p_ = to_lapack_int( p );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int l_ = to_lapack_int( l );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int ldb_ = to_lapack_int( ldb );
+    lapack_int ldu_ = to_lapack_int( ldu );
+    lapack_int ldv_ = to_lapack_int( ldv );
+    lapack_int ldq_ = to_lapack_int( ldq );
+    lapack_int ncycle_ = to_lapack_int( *ncycle );
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -89,33 +77,20 @@ int64_t tgsja(
     double* Q, int64_t ldq,
     int64_t* ncycle )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(p) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(l) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
-    }
     char jobu_ = to_char_compu( jobu );
     char jobv_ = to_char_comp( jobv );
     char jobq_ = to_char_compq( jobq );
-    lapack_int m_ = (lapack_int) m;
-    lapack_int p_ = (lapack_int) p;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int l_ = (lapack_int) l;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int ldb_ = (lapack_int) ldb;
-    lapack_int ldu_ = (lapack_int) ldu;
-    lapack_int ldv_ = (lapack_int) ldv;
-    lapack_int ldq_ = (lapack_int) ldq;
-    lapack_int ncycle_ = (lapack_int) *ncycle;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int p_ = to_lapack_int( p );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int l_ = to_lapack_int( l );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int ldb_ = to_lapack_int( ldb );
+    lapack_int ldu_ = to_lapack_int( ldu );
+    lapack_int ldv_ = to_lapack_int( ldv );
+    lapack_int ldq_ = to_lapack_int( ldq );
+    lapack_int ncycle_ = to_lapack_int( *ncycle );
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -151,33 +126,20 @@ int64_t tgsja(
     std::complex<float>* Q, int64_t ldq,
     int64_t* ncycle )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(p) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(l) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
-    }
     char jobu_ = to_char_compu( jobu );
     char jobv_ = to_char_comp( jobv );
     char jobq_ = to_char_compq( jobq );
-    lapack_int m_ = (lapack_int) m;
-    lapack_int p_ = (lapack_int) p;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int l_ = (lapack_int) l;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int ldb_ = (lapack_int) ldb;
-    lapack_int ldu_ = (lapack_int) ldu;
-    lapack_int ldv_ = (lapack_int) ldv;
-    lapack_int ldq_ = (lapack_int) ldq;
-    lapack_int ncycle_ = (lapack_int) *ncycle;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int p_ = to_lapack_int( p );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int l_ = to_lapack_int( l );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int ldb_ = to_lapack_int( ldb );
+    lapack_int ldu_ = to_lapack_int( ldu );
+    lapack_int ldv_ = to_lapack_int( ldv );
+    lapack_int ldq_ = to_lapack_int( ldq );
+    lapack_int ncycle_ = to_lapack_int( *ncycle );
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -213,33 +175,20 @@ int64_t tgsja(
     std::complex<double>* Q, int64_t ldq,
     int64_t* ncycle )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(p) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(l) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldq) > std::numeric_limits<lapack_int>::max() );
-    }
     char jobu_ = to_char_compu( jobu );
     char jobv_ = to_char_comp( jobv );
     char jobq_ = to_char_compq( jobq );
-    lapack_int m_ = (lapack_int) m;
-    lapack_int p_ = (lapack_int) p;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int l_ = (lapack_int) l;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int ldb_ = (lapack_int) ldb;
-    lapack_int ldu_ = (lapack_int) ldu;
-    lapack_int ldv_ = (lapack_int) ldv;
-    lapack_int ldq_ = (lapack_int) ldq;
-    lapack_int ncycle_ = (lapack_int) *ncycle;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int p_ = to_lapack_int( p );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int l_ = to_lapack_int( l );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int ldb_ = to_lapack_int( ldb );
+    lapack_int ldu_ = to_lapack_int( ldu );
+    lapack_int ldv_ = to_lapack_int( ldv );
+    lapack_int ldq_ = to_lapack_int( ldq );
+    lapack_int ncycle_ = to_lapack_int( *ncycle );
     lapack_int info_ = 0;
 
     // allocate workspace

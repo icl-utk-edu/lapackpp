@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -23,19 +24,11 @@ int64_t ggqrf(
     float* B, int64_t ldb,
     float* taub )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(p) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int m_ = (lapack_int) m;
-    lapack_int p_ = (lapack_int) p;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int p_ = to_lapack_int( p );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -77,19 +70,11 @@ int64_t ggqrf(
     double* B, int64_t ldb,
     double* taub )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(p) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int m_ = (lapack_int) m;
-    lapack_int p_ = (lapack_int) p;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int p_ = to_lapack_int( p );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -131,19 +116,11 @@ int64_t ggqrf(
     std::complex<float>* B, int64_t ldb,
     std::complex<float>* taub )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(p) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int m_ = (lapack_int) m;
-    lapack_int p_ = (lapack_int) p;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int p_ = to_lapack_int( p );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -185,19 +162,11 @@ int64_t ggqrf(
     std::complex<double>* B, int64_t ldb,
     std::complex<double>* taub )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(p) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int m_ = (lapack_int) m;
-    lapack_int p_ = (lapack_int) p;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int p_ = to_lapack_int( p );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int info_ = 0;
 
     // query for workspace size

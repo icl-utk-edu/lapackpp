@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -25,17 +26,10 @@ int64_t sytrs_rook(
     int64_t const* ipiv,
     float* B, int64_t ldb )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int nrhs_ = (lapack_int) nrhs;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int nrhs_ = to_lapack_int( nrhs );
+    lapack_int lda_ = to_lapack_int( lda );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
@@ -43,7 +37,7 @@ int64_t sytrs_rook(
     #else
         lapack_int const* ipiv_ptr = ipiv;
     #endif
-    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int info_ = 0;
 
     LAPACK_ssytrs_rook(
@@ -66,17 +60,10 @@ int64_t sytrs_rook(
     int64_t const* ipiv,
     double* B, int64_t ldb )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int nrhs_ = (lapack_int) nrhs;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int nrhs_ = to_lapack_int( nrhs );
+    lapack_int lda_ = to_lapack_int( lda );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
@@ -84,7 +71,7 @@ int64_t sytrs_rook(
     #else
         lapack_int const* ipiv_ptr = ipiv;
     #endif
-    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int info_ = 0;
 
     LAPACK_dsytrs_rook(
@@ -107,17 +94,10 @@ int64_t sytrs_rook(
     int64_t const* ipiv,
     std::complex<float>* B, int64_t ldb )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int nrhs_ = (lapack_int) nrhs;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int nrhs_ = to_lapack_int( nrhs );
+    lapack_int lda_ = to_lapack_int( lda );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
@@ -125,7 +105,7 @@ int64_t sytrs_rook(
     #else
         lapack_int const* ipiv_ptr = ipiv;
     #endif
-    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int info_ = 0;
 
     LAPACK_csytrs_rook(
@@ -150,17 +130,10 @@ int64_t sytrs_rook(
     int64_t const* ipiv,
     std::complex<double>* B, int64_t ldb )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int nrhs_ = (lapack_int) nrhs;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int nrhs_ = to_lapack_int( nrhs );
+    lapack_int lda_ = to_lapack_int( lda );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
@@ -168,7 +141,7 @@ int64_t sytrs_rook(
     #else
         lapack_int const* ipiv_ptr = ipiv;
     #endif
-    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int info_ = 0;
 
     LAPACK_zsytrs_rook(

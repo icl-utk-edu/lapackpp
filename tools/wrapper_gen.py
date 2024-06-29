@@ -1329,7 +1329,6 @@ def generate_docs( func ):
 def generate_wrapper( func, header=False ):
     # --------------------
     # build list of arguments for prototype, query, and call
-    int_checks = ''
     local_vars = ''
     alloc_work = ''
     query      = ''
@@ -1382,15 +1381,14 @@ def generate_wrapper( func, header=False ):
                 use_query = True
             elif (arg.is_lwork):
                 # lwork, etc. local variables; not in proto_args
-                local_vars += tab + 'lapack_int ' + arg.lname + ' = (lapack_int) ' + arg.lbound + ';\n'
+                local_vars += tab + 'lapack_int ' + arg.lname + ' = to_lapack_int( ' + arg.lbound + ' );\n'
             else:
                 proto_args.append( arg.dtype + ' ' + arg.name )
                 alias_args.append( arg.name )
                 query_args.append( prefix + cast + arg.pname )
                 if (arg.dtype in ('int64_t', 'bool')):
                     # local 32-bit copy of 64-bit int
-                    int_checks += tab*2 + 'lapack_error_if( std::abs( ' + arg.name + ' ) > std::numeric_limits<lapack_int>::max() );\n'
-                    local_vars += tab + 'lapack_int ' + arg.lname + ' = (lapack_int) ' + arg.name + ';\n'
+                    local_vars += tab + 'lapack_int ' + arg.lname + ' = to_lapack_int( ' + arg.name + ' );\n'
                 elif (arg.is_enum):
                     enum2char = enum_map[ arg.name ][1]
                     local_vars += tab + 'char ' + arg.lname + ' = ' + enum2char + '( ' + arg.name + ' );\n'
@@ -1424,7 +1422,7 @@ def generate_wrapper( func, header=False ):
                 else:
                     proto_args.append( '\n    ' + arg.dtype + '* ' + arg.name )
                     alias_args.append( arg.name )
-                    local_vars += tab + 'lapack_int ' + arg.lname + ' = (lapack_int) *' + arg.name + ';\n'
+                    local_vars += tab + 'lapack_int ' + arg.lname + ' = to_lapack_int( *' + arg.name + ' );\n'
                     cleanup += tab + '*' + arg.name + ' = ' + arg.lname + ';\n'
             else:
                 # output array
@@ -1481,13 +1479,6 @@ def generate_wrapper( func, header=False ):
         query = ''
     # end
 
-    if (int_checks):
-        int_checks = (tab + '// check for overflow\n'
-                   +  tab + 'if (sizeof( int64_t ) > sizeof( lapack_int )) {\n'
-                   +  int_checks
-                   +  tab + '}\n')
-    # end
-
     if (alloc_work):
         alloc_work = ('\n'
                    +  tab + '// allocate workspace\n'
@@ -1521,7 +1512,6 @@ def generate_wrapper( func, header=False ):
         txt = (func.retval + ' ' + func.name + '(\n'
             +  tab + ', '.join( proto_args )
             +  ' )\n{\n'
-            +  int_checks
             +  local_vars
             +  query
             +  alloc_work

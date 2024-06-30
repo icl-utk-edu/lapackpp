@@ -23,7 +23,7 @@ int64_t trsen(
     float* T, int64_t ldt,
     float* Q, int64_t ldq,
     std::complex<float>* W,
-    int64_t* m,
+    int64_t* nfound,
     float* s,
     float* sep )
 {
@@ -37,7 +37,7 @@ int64_t trsen(
     lapack_int n_ = to_lapack_int( n );
     lapack_int ldt_ = to_lapack_int( ldt );
     lapack_int ldq_ = to_lapack_int( ldq );
-    lapack_int m_ = to_lapack_int( *m );
+    lapack_int nfound_ = 0;  // out
     lapack_int info_ = 0;
 
     // split-complex representation
@@ -55,7 +55,7 @@ int64_t trsen(
         Q, &ldq_,
         &WR[0],
         &WI[0],
-        &m_, s, sep,
+        &nfound_, s, sep,
         qry_work, &ineg_one,
         qry_iwork, &ineg_one, &info_
     );
@@ -76,14 +76,14 @@ int64_t trsen(
         Q, &ldq_,
         &WR[0],
         &WI[0],
-        &m_, s, sep,
+        &nfound_, s, sep,
         &work[0], &lwork_,
         &iwork[0], &liwork_, &info_
     );
     if (info_ < 0) {
         throw Error();
     }
-    *m = m_;
+    *nfound = nfound_;
     // merge split-complex representation
     for (int64_t i = 0; i < n; ++i) {
         W[i] = std::complex<float>( WR[i], WI[i] );
@@ -98,7 +98,7 @@ int64_t trsen(
     double* T, int64_t ldt,
     double* Q, int64_t ldq,
     std::complex<double>* W,
-    int64_t* m,
+    int64_t* nfound,
     double* s,
     double* sep )
 {
@@ -112,7 +112,7 @@ int64_t trsen(
     lapack_int n_ = to_lapack_int( n );
     lapack_int ldt_ = to_lapack_int( ldt );
     lapack_int ldq_ = to_lapack_int( ldq );
-    lapack_int m_ = to_lapack_int( *m );
+    lapack_int nfound_ = 0;  // out
     lapack_int info_ = 0;
 
     // split-complex representation
@@ -130,7 +130,7 @@ int64_t trsen(
         Q, &ldq_,
         &WR[0],
         &WI[0],
-        &m_, s, sep,
+        &nfound_, s, sep,
         qry_work, &ineg_one,
         qry_iwork, &ineg_one, &info_
     );
@@ -151,14 +151,14 @@ int64_t trsen(
         Q, &ldq_,
         &WR[0],
         &WI[0],
-        &m_, s, sep,
+        &nfound_, s, sep,
         &work[0], &lwork_,
         &iwork[0], &liwork_, &info_
     );
     if (info_ < 0) {
         throw Error();
     }
-    *m = m_;
+    *nfound = nfound_;
     // merge split-complex representation
     for (int64_t i = 0; i < n; ++i) {
         W[i] = std::complex<double>( WR[i], WI[i] );
@@ -173,7 +173,7 @@ int64_t trsen(
     std::complex<float>* T, int64_t ldt,
     std::complex<float>* Q, int64_t ldq,
     std::complex<float>* W,
-    int64_t* m,
+    int64_t* nfound,
     float* s,
     float* sep )
 {
@@ -187,7 +187,7 @@ int64_t trsen(
     lapack_int n_ = to_lapack_int( n );
     lapack_int ldt_ = to_lapack_int( ldt );
     lapack_int ldq_ = to_lapack_int( ldq );
-    lapack_int m_ = to_lapack_int( *m );
+    lapack_int nfound_ = 0;  // out
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -198,7 +198,7 @@ int64_t trsen(
         select_ptr, &n_,
         (lapack_complex_float*) T, &ldt_,
         (lapack_complex_float*) Q, &ldq_,
-        (lapack_complex_float*) W, &m_, s, sep,
+        (lapack_complex_float*) W, &nfound_, s, sep,
         (lapack_complex_float*) qry_work, &ineg_one, &info_
     );
     if (info_ < 0) {
@@ -214,13 +214,13 @@ int64_t trsen(
         select_ptr, &n_,
         (lapack_complex_float*) T, &ldt_,
         (lapack_complex_float*) Q, &ldq_,
-        (lapack_complex_float*) W, &m_, s, sep,
+        (lapack_complex_float*) W, &nfound_, s, sep,
         (lapack_complex_float*) &work[0], &lwork_, &info_
     );
     if (info_ < 0) {
         throw Error();
     }
-    *m = m_;
+    *nfound = nfound_;
     return info_;
 }
 
@@ -231,7 +231,7 @@ int64_t trsen(
     std::complex<double>* T, int64_t ldt,
     std::complex<double>* Q, int64_t ldq,
     std::complex<double>* W,
-    int64_t* m,
+    int64_t* nfound,
     double* s,
     double* sep )
 {
@@ -245,7 +245,7 @@ int64_t trsen(
     lapack_int n_ = to_lapack_int( n );
     lapack_int ldt_ = to_lapack_int( ldt );
     lapack_int ldq_ = to_lapack_int( ldq );
-    lapack_int m_ = to_lapack_int( *m );
+    lapack_int nfound_ = 0;  // out
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -256,7 +256,7 @@ int64_t trsen(
         select_ptr, &n_,
         (lapack_complex_double*) T, &ldt_,
         (lapack_complex_double*) Q, &ldq_,
-        (lapack_complex_double*) W, &m_, s, sep,
+        (lapack_complex_double*) W, &nfound_, s, sep,
         (lapack_complex_double*) qry_work, &ineg_one, &info_
     );
     if (info_ < 0) {
@@ -272,13 +272,13 @@ int64_t trsen(
         select_ptr, &n_,
         (lapack_complex_double*) T, &ldt_,
         (lapack_complex_double*) Q, &ldq_,
-        (lapack_complex_double*) W, &m_, s, sep,
+        (lapack_complex_double*) W, &nfound_, s, sep,
         (lapack_complex_double*) &work[0], &lwork_, &info_
     );
     if (info_ < 0) {
         throw Error();
     }
-    *m = m_;
+    *nfound = nfound_;
     return info_;
 }
 

@@ -118,9 +118,6 @@ int64_t tgexc(
     scalar_t* Z, int64_t ldz,
     int64_t* ifst, int64_t* ilst )
 {
-    // convert arguments
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-    }
     lapack_int wantq_ = to_lapack_int( wantq );
     lapack_int wantz_ = to_lapack_int( wantz );
     lapack_int n_ = to_lapack_int( n );
@@ -128,8 +125,8 @@ int64_t tgexc(
     lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int ldq_ = to_lapack_int( ldq );
     lapack_int ldz_ = to_lapack_int( ldz );
-    lapack_int ifst_ = to_lapack_int( *ifst );
-    lapack_int ilst_ = to_lapack_int( *ilst );
+    lapack_int ifst_ = to_lapack_int( *ifst );  // in,out
+    lapack_int ilst_ = to_lapack_int( *ilst );  // in,out
     lapack_int info_ = 0;
 
     if constexpr (! is_complex<scalar_t>::value) {

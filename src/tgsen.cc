@@ -31,7 +31,7 @@ inline void tgsen(
     float* beta,
     float* Q, lapack_int ldq,
     float* Z, lapack_int ldz,
-    lapack_int* sdim, float* pl, float* pr, float* dif,
+    lapack_int* nfound, float* pl, float* pr, float* dif,
     float* work, lapack_int lwork,
     lapack_int* iwork, lapack_int liwork,
     lapack_int* info )
@@ -39,7 +39,7 @@ inline void tgsen(
     LAPACK_stgsen(
         &ijob, &wantq, &wantz, select, &n,
         A, &lda, B, &ldb, alphar, alphai, beta,
-        Q, &ldq, Z, &ldz, sdim, pl, pr, dif,
+        Q, &ldq, Z, &ldz, nfound, pl, pr, dif,
         work, &lwork, iwork, &liwork, info );
 }
 
@@ -55,7 +55,7 @@ inline void tgsen(
     double* beta,
     double* Q, lapack_int ldq,
     double* Z, lapack_int ldz,
-    lapack_int* sdim, double* pl, double* pr, double* dif,
+    lapack_int* nfound, double* pl, double* pr, double* dif,
     double* work, lapack_int lwork,
     lapack_int* iwork, lapack_int liwork,
     lapack_int* info )
@@ -63,7 +63,7 @@ inline void tgsen(
     LAPACK_dtgsen(
         &ijob, &wantq, &wantz, select, &n,
         A, &lda, B, &ldb, alphar, alphai, beta,
-        Q, &ldq, Z, &ldz, sdim, pl, pr, dif,
+        Q, &ldq, Z, &ldz, nfound, pl, pr, dif,
         work, &lwork, iwork, &liwork, info );
 }
 
@@ -79,7 +79,7 @@ inline void tgsen(
     std::complex<float>* beta,
     std::complex<float>* Q, lapack_int ldq,
     std::complex<float>* Z, lapack_int ldz,
-    lapack_int* sdim, float* pl, float* pr, float* dif,
+    lapack_int* nfound, float* pl, float* pr, float* dif,
     std::complex<float>* work, lapack_int lwork,
     lapack_int* iwork, lapack_int liwork,
     lapack_int* info )
@@ -92,7 +92,7 @@ inline void tgsen(
         (lapack_complex_float*) alpha,
         (lapack_complex_float*) beta,
         (lapack_complex_float*) Q, &ldq,
-        (lapack_complex_float*) Z, &ldz, sdim, pl, pr, dif,
+        (lapack_complex_float*) Z, &ldz, nfound, pl, pr, dif,
         (lapack_complex_float*) work, &lwork,
         iwork, &liwork, info );
 }
@@ -109,7 +109,7 @@ inline void tgsen(
     std::complex<double>* beta,
     std::complex<double>* Q, lapack_int ldq,
     std::complex<double>* Z, lapack_int ldz,
-    lapack_int* sdim,
+    lapack_int* nfound,
     double* pl, double* pr,
     double* dif,
     std::complex<double>* work, lapack_int lwork,
@@ -123,7 +123,7 @@ inline void tgsen(
         (lapack_complex_double*) alpha,
         (lapack_complex_double*) beta,
         (lapack_complex_double*) Q, &ldq,
-        (lapack_complex_double*) Z, &ldz, sdim, pl, pr, dif,
+        (lapack_complex_double*) Z, &ldz, nfound, pl, pr, dif,
         (lapack_complex_double*) work, &lwork,
         iwork, &liwork, info );
 }
@@ -148,13 +148,10 @@ int64_t tgsen(
     scalar_t* beta,
     scalar_t* Q, int64_t ldq,
     scalar_t* Z, int64_t ldz,
-    int64_t* sdim,
+    int64_t* nfound,
     real_type<scalar_t>* pl, real_type<scalar_t>* pr,
     real_type<scalar_t>* dif )
 {
-    // convert arguments
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-    }
     lapack_int ijob_ = to_lapack_int( ijob );
     lapack_int wantq_ = to_lapack_int( wantq );
     lapack_int wantz_ = to_lapack_int( wantz );
@@ -163,7 +160,7 @@ int64_t tgsen(
     lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int ldq_ = to_lapack_int( ldq );
     lapack_int ldz_ = to_lapack_int( ldz );
-    lapack_int sdim_ = to_lapack_int( *sdim );
+    lapack_int nfound_ = 0;  // out
     lapack_int info_ = 0;
 
     // For real, create vectors for split-complex representation.
@@ -184,14 +181,14 @@ int64_t tgsen(
         internal::tgsen(
             ijob_, wantq_, wantz_, select, n_,
             A, lda_, B, ldb_, &alphar[ 0 ], &alphai[ 0 ], beta,
-            Q, ldq_, Z, ldz_, &sdim_, pl, pr, dif,
+            Q, ldq_, Z, ldz_, &nfound_, pl, pr, dif,
             qry_work, ineg_one, qry_iwork, ineg_one, &info_ );
     }
     else {
         internal::tgsen(
             ijob_, wantq_, wantz_, select, n_,
             A, lda_, B, ldb_, alpha, beta,
-            Q, ldq_, Z, ldz_, &sdim_, pl, pr, dif,
+            Q, ldq_, Z, ldz_, &nfound_, pl, pr, dif,
             qry_work, ineg_one, qry_iwork, ineg_one, &info_ );
     }
     if (info_ < 0) {
@@ -211,7 +208,7 @@ int64_t tgsen(
         internal::tgsen(
             ijob_, wantq_, wantz_, select, n_,
             A, lda_, B, ldb_, &alphar[0], &alphai[0], beta,
-            Q, ldq_, Z, ldz_, &sdim_, pl, pr, dif,
+            Q, ldq_, Z, ldz_, &nfound_, pl, pr, dif,
             &work[0], lwork_, &iwork[0], liwork_, &info_ );
         // Merge split-complex representation.
         for (int64_t i = 0; i < n; ++i) {
@@ -222,13 +219,13 @@ int64_t tgsen(
         internal::tgsen(
             ijob_, wantq_, wantz_, select, n_,
             A, lda_, B, ldb_, alpha, beta,
-            Q, ldq_, Z, ldz_, &sdim_, pl, pr, dif,
+            Q, ldq_, Z, ldz_, &nfound_, pl, pr, dif,
             &work[0], lwork_, &iwork[0], liwork_, &info_ );
     }
     if (info_ < 0) {
         throw Error();
     }
-    *sdim = sdim_;
+    *nfound = nfound_;
     return info_;
 }
 
@@ -330,7 +327,7 @@ int64_t tgsen(
 ///     The n-by-n matrix Q, stored in an ldq-by-n array.
 ///     On entry, if wantq = true, Q is an n-by-n matrix.
 ///     On exit, Q has been postmultiplied by the left unitary
-///     transformation matrix which reorder (A, B); The leading sdim
+///     transformation matrix which reorder (A, B); The leading nfound
 ///     columns of Q form orthonormal bases for the specified pair of
 ///     left eigenspaces (deflating subspaces).
 ///     If wantq = false, Q is not referenced.
@@ -343,7 +340,7 @@ int64_t tgsen(
 ///     The n-by-n matrix Z, stored in an ldz-by-n array.
 ///     On entry, if wantz = true, Z is an n-by-n matrix.
 ///     On exit, Z has been postmultiplied by the left unitary
-///     transformation matrix which reorder (A, B); The leading sdim
+///     transformation matrix which reorder (A, B); The leading nfound
 ///     columns of Z form orthonormal bases for the specified pair of
 ///     left eigenspaces (deflating subspaces).
 ///     If wantz = false, Z is not referenced.
@@ -352,9 +349,9 @@ int64_t tgsen(
 ///     The leading dimension of the array Z. ldz >= 1.
 ///     If wantz = true, ldz >= n.
 ///
-/// @param[out] sdim
+/// @param[out] nfound
 ///     The dimension of the specified pair of left and right
-///     eigenspaces (deflating subspaces) 0 <= sdim <= n.
+///     eigenspaces (deflating subspaces) 0 <= nfound <= n.
 ///     (Called `m` in LAPACK.)
 ///
 /// @param[out] pl
@@ -363,7 +360,7 @@ int64_t tgsen(
 ///       reciprocal of the norm of "projections" onto left and right
 ///       eigenspace with respect to the selected cluster.
 ///       0 < pl, pr <= 1.
-///     * If sdim = 0 or sdim = n, then pl = pr = 1.
+///     * If nfound = 0 or nfound = n, then pl = pr = 1.
 ///     * If ijob = 0, 2 or 3, then pl, pr are not referenced.
 ///
 /// @param[out] dif
@@ -374,7 +371,7 @@ int64_t tgsen(
 ///     * If ijob = 3 or 5, dif(1:2) are 1-norm-based
 ///       estimates of Difu and Difl, computed using reversed
 ///       communication with `lapack::lacn2`.
-///     * If sdim = 0 or n, dif(1:2) = F-norm([A, B]).
+///     * If nfound = 0 or n, dif(1:2) = F-norm([A, B]).
 ///     * If ijob = 0 or 1, dif is not referenced.
 ///
 /// @return
@@ -499,14 +496,14 @@ int64_t tgsen(
     float* beta,
     float* Q, int64_t ldq,
     float* Z, int64_t ldz,
-    int64_t* sdim,
+    int64_t* nfound,
     float* pl, float* pr,
     float* dif )
 {
     return impl::tgsen(
         ijob, wantq, wantz, select, n,
         A, lda, B, ldb, alpha, beta,
-        Q, ldq, Z, ldz, sdim, pl, pr, dif );
+        Q, ldq, Z, ldz, nfound, pl, pr, dif );
 }
 
 //------------------------------------------------------------------------------
@@ -521,14 +518,14 @@ int64_t tgsen(
     double* beta,
     double* Q, int64_t ldq,
     double* Z, int64_t ldz,
-    int64_t* sdim,
+    int64_t* nfound,
     double* pl, double* pr,
     double* dif )
 {
     return impl::tgsen(
         ijob, wantq, wantz, select, n,
         A, lda, B, ldb, alpha, beta,
-        Q, ldq, Z, ldz, sdim, pl, pr, dif );
+        Q, ldq, Z, ldz, nfound, pl, pr, dif );
 }
 
 //------------------------------------------------------------------------------
@@ -543,14 +540,14 @@ int64_t tgsen(
     std::complex<float>* beta,
     std::complex<float>* Q, int64_t ldq,
     std::complex<float>* Z, int64_t ldz,
-    int64_t* sdim,
+    int64_t* nfound,
     float* pl, float* pr,
     float* dif )
 {
     return impl::tgsen(
         ijob, wantq, wantz, select, n,
         A, lda, B, ldb, alpha, beta,
-        Q, ldq, Z, ldz, sdim, pl, pr, dif );
+        Q, ldq, Z, ldz, nfound, pl, pr, dif );
 }
 
 //------------------------------------------------------------------------------
@@ -565,14 +562,14 @@ int64_t tgsen(
     std::complex<double>* beta,
     std::complex<double>* Q, int64_t ldq,
     std::complex<double>* Z, int64_t ldz,
-    int64_t* sdim,
+    int64_t* nfound,
     double* pl, double* pr,
     double* dif )
 {
     return impl::tgsen(
         ijob, wantq, wantz, select, n,
         A, lda, B, ldb, alpha, beta,
-        Q, ldq, Z, ldz, sdim, pl, pr, dif );
+        Q, ldq, Z, ldz, nfound, pl, pr, dif );
 }
 
 }  // namespace lapack

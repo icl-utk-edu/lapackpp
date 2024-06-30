@@ -35,7 +35,7 @@ int64_t heevr_2stage(
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int il_ = to_lapack_int( il );
     lapack_int iu_ = to_lapack_int( iu );
-    lapack_int nfound_ = to_lapack_int( *nfound );
+    lapack_int nfound_ = 0;
     lapack_int ldz_ = to_lapack_int( ldz );
     #ifndef LAPACK_ILP64
         // 32-bit copy
@@ -333,7 +333,7 @@ int64_t heevr_2stage(
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int il_ = to_lapack_int( il );
     lapack_int iu_ = to_lapack_int( iu );
-    lapack_int nfound_ = to_lapack_int( *nfound );
+    lapack_int nfound_ = 0;
     lapack_int ldz_ = to_lapack_int( ldz );
     #ifndef LAPACK_ILP64
         // 32-bit copy

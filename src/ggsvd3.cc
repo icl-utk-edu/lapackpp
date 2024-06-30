@@ -37,8 +37,8 @@ int64_t ggsvd3(
     lapack_int m_ = to_lapack_int( m );
     lapack_int n_ = to_lapack_int( n );
     lapack_int p_ = to_lapack_int( p );
-    lapack_int k_ = to_lapack_int( *k );
-    lapack_int l_ = to_lapack_int( *l );
+    lapack_int k_ = 0;
+    lapack_int l_ = 0;
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int ldu_ = to_lapack_int( ldu );
@@ -110,8 +110,8 @@ int64_t ggsvd3(
     lapack_int m_ = to_lapack_int( m );
     lapack_int n_ = to_lapack_int( n );
     lapack_int p_ = to_lapack_int( p );
-    lapack_int k_ = to_lapack_int( *k );
-    lapack_int l_ = to_lapack_int( *l );
+    lapack_int k_ = 0;
+    lapack_int l_ = 0;
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int ldu_ = to_lapack_int( ldu );
@@ -183,8 +183,8 @@ int64_t ggsvd3(
     lapack_int m_ = to_lapack_int( m );
     lapack_int n_ = to_lapack_int( n );
     lapack_int p_ = to_lapack_int( p );
-    lapack_int k_ = to_lapack_int( *k );
-    lapack_int l_ = to_lapack_int( *l );
+    lapack_int k_ = 0;
+    lapack_int l_ = 0;
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int ldu_ = to_lapack_int( ldu );
@@ -260,8 +260,8 @@ int64_t ggsvd3(
     lapack_int m_ = to_lapack_int( m );
     lapack_int n_ = to_lapack_int( n );
     lapack_int p_ = to_lapack_int( p );
-    lapack_int k_ = to_lapack_int( *k );
-    lapack_int l_ = to_lapack_int( *l );
+    lapack_int k_ = 0;
+    lapack_int l_ = 0;
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int ldu_ = to_lapack_int( ldu );

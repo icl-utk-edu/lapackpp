@@ -30,7 +30,7 @@ int64_t gelss(
     lapack_int nrhs_ = to_lapack_int( nrhs );
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int ldb_ = to_lapack_int( ldb );
-    lapack_int rank_ = to_lapack_int( *rank );
+    lapack_int rank_ = 0;
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -77,7 +77,7 @@ int64_t gelss(
     lapack_int nrhs_ = to_lapack_int( nrhs );
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int ldb_ = to_lapack_int( ldb );
-    lapack_int rank_ = to_lapack_int( *rank );
+    lapack_int rank_ = 0;
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -124,7 +124,7 @@ int64_t gelss(
     lapack_int nrhs_ = to_lapack_int( nrhs );
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int ldb_ = to_lapack_int( ldb );
-    lapack_int rank_ = to_lapack_int( *rank );
+    lapack_int rank_ = 0;
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -242,7 +242,7 @@ int64_t gelss(
     lapack_int nrhs_ = to_lapack_int( nrhs );
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int ldb_ = to_lapack_int( ldb );
-    lapack_int rank_ = to_lapack_int( *rank );
+    lapack_int rank_ = 0;
     lapack_int info_ = 0;
 
     // query for workspace size

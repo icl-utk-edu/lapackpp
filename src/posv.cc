@@ -189,7 +189,7 @@ int64_t posv(
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int ldx_ = to_lapack_int( ldx );
-    lapack_int iter_ = to_lapack_int( *iter );
+    lapack_int iter_ = 0;
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -225,7 +225,7 @@ int64_t posv(
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int ldx_ = to_lapack_int( ldx );
-    lapack_int iter_ = to_lapack_int( *iter );
+    lapack_int iter_ = 0;
     lapack_int info_ = 0;
 
     // allocate workspace

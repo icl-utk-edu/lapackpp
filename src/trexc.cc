@@ -28,8 +28,8 @@ int64_t trexc(
     lapack_int n_ = to_lapack_int( n );
     lapack_int ldt_ = to_lapack_int( ldt );
     lapack_int ldq_ = to_lapack_int( ldq );
-    lapack_int ifst_ = to_lapack_int( *ifst );
-    lapack_int ilst_ = to_lapack_int( *ilst );
+    lapack_int ifst_ = to_lapack_int( *ifst );  // in,out
+    lapack_int ilst_ = to_lapack_int( *ilst );  // in,out
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -61,8 +61,8 @@ int64_t trexc(
     lapack_int n_ = to_lapack_int( n );
     lapack_int ldt_ = to_lapack_int( ldt );
     lapack_int ldq_ = to_lapack_int( ldq );
-    lapack_int ifst_ = to_lapack_int( *ifst );
-    lapack_int ilst_ = to_lapack_int( *ilst );
+    lapack_int ifst_ = to_lapack_int( *ifst );  // in,out
+    lapack_int ilst_ = to_lapack_int( *ilst );  // in,out
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -92,6 +92,7 @@ int64_t trexc(
     lapack_int n_ = to_lapack_int( n );
     lapack_int ldt_ = to_lapack_int( ldt );
     lapack_int ldq_ = to_lapack_int( ldq );
+    // In complex, ifst, ilst are in only, not in,out.
     lapack_int ifst_ = to_lapack_int( ifst );
     lapack_int ilst_ = to_lapack_int( ilst );
     lapack_int info_ = 0;
@@ -117,6 +118,7 @@ int64_t trexc(
     lapack_int n_ = to_lapack_int( n );
     lapack_int ldt_ = to_lapack_int( ldt );
     lapack_int ldq_ = to_lapack_int( ldq );
+    // In complex, ifst, ilst are in only, not in,out.
     lapack_int ifst_ = to_lapack_int( ifst );
     lapack_int ilst_ = to_lapack_int( ilst );
     lapack_int info_ = 0;

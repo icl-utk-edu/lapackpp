@@ -31,7 +31,7 @@ int64_t geesx(
     char sense_ = to_char( sense );
     lapack_int n_ = to_lapack_int( n );
     lapack_int lda_ = to_lapack_int( lda );
-    lapack_int sdim_ = to_lapack_int( *sdim );
+    lapack_int sdim_ = 0;
     lapack_int ldvs_ = to_lapack_int( ldvs );
     lapack_int info_ = 0;
 
@@ -103,7 +103,7 @@ int64_t geesx(
     char sense_ = to_char( sense );
     lapack_int n_ = to_lapack_int( n );
     lapack_int lda_ = to_lapack_int( lda );
-    lapack_int sdim_ = to_lapack_int( *sdim );
+    lapack_int sdim_ = 0;
     lapack_int ldvs_ = to_lapack_int( ldvs );
     lapack_int info_ = 0;
 
@@ -175,7 +175,7 @@ int64_t geesx(
     char sense_ = to_char( sense );
     lapack_int n_ = to_lapack_int( n );
     lapack_int lda_ = to_lapack_int( lda );
-    lapack_int sdim_ = to_lapack_int( *sdim );
+    lapack_int sdim_ = 0;
     lapack_int ldvs_ = to_lapack_int( ldvs );
     lapack_int info_ = 0;
 
@@ -236,7 +236,7 @@ int64_t geesx(
     char sense_ = to_char( sense );
     lapack_int n_ = to_lapack_int( n );
     lapack_int lda_ = to_lapack_int( lda );
-    lapack_int sdim_ = to_lapack_int( *sdim );
+    lapack_int sdim_ = 0;
     lapack_int ldvs_ = to_lapack_int( ldvs );
     lapack_int info_ = 0;
 

@@ -33,7 +33,7 @@ int64_t spgvx(
     lapack_int n_ = to_lapack_int( n );
     lapack_int il_ = to_lapack_int( il );
     lapack_int iu_ = to_lapack_int( iu );
-    lapack_int m_ = to_lapack_int( *m );
+    lapack_int m_ = 0;
     lapack_int ldz_ = to_lapack_int( ldz );
     #ifndef LAPACK_ILP64
         // 32-bit copy
@@ -87,7 +87,7 @@ int64_t spgvx(
     lapack_int n_ = to_lapack_int( n );
     lapack_int il_ = to_lapack_int( il );
     lapack_int iu_ = to_lapack_int( iu );
-    lapack_int m_ = to_lapack_int( *m );
+    lapack_int m_ = 0;
     lapack_int ldz_ = to_lapack_int( ldz );
     #ifndef LAPACK_ILP64
         // 32-bit copy

@@ -152,9 +152,6 @@ int64_t tgsen(
     real_type<scalar_t>* pl, real_type<scalar_t>* pr,
     real_type<scalar_t>* dif )
 {
-    // convert arguments
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-    }
     lapack_int ijob_ = to_lapack_int( ijob );
     lapack_int wantq_ = to_lapack_int( wantq );
     lapack_int wantz_ = to_lapack_int( wantz );
@@ -163,7 +160,7 @@ int64_t tgsen(
     lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int ldq_ = to_lapack_int( ldq );
     lapack_int ldz_ = to_lapack_int( ldz );
-    lapack_int sdim_ = to_lapack_int( *sdim );
+    lapack_int sdim_ = 0;
     lapack_int info_ = 0;
 
     // For real, create vectors for split-complex representation.

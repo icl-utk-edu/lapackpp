@@ -27,8 +27,8 @@ int64_t gebal(
     char balance_ = to_char( balance );
     lapack_int n_ = to_lapack_int( n );
     lapack_int lda_ = to_lapack_int( lda );
-    lapack_int ilo_ = to_lapack_int( *ilo );
-    lapack_int ihi_ = to_lapack_int( *ihi );
+    lapack_int ilo_ = 0;
+    lapack_int ihi_ = 0;
     lapack_int info_ = 0;
 
     LAPACK_sgebal(
@@ -56,8 +56,8 @@ int64_t gebal(
     char balance_ = to_char( balance );
     lapack_int n_ = to_lapack_int( n );
     lapack_int lda_ = to_lapack_int( lda );
-    lapack_int ilo_ = to_lapack_int( *ilo );
-    lapack_int ihi_ = to_lapack_int( *ihi );
+    lapack_int ilo_ = 0;
+    lapack_int ihi_ = 0;
     lapack_int info_ = 0;
 
     LAPACK_dgebal(
@@ -85,8 +85,8 @@ int64_t gebal(
     char balance_ = to_char( balance );
     lapack_int n_ = to_lapack_int( n );
     lapack_int lda_ = to_lapack_int( lda );
-    lapack_int ilo_ = to_lapack_int( *ilo );
-    lapack_int ihi_ = to_lapack_int( *ihi );
+    lapack_int ilo_ = 0;
+    lapack_int ihi_ = 0;
     lapack_int info_ = 0;
 
     LAPACK_cgebal(
@@ -203,8 +203,8 @@ int64_t gebal(
     char balance_ = to_char( balance );
     lapack_int n_ = to_lapack_int( n );
     lapack_int lda_ = to_lapack_int( lda );
-    lapack_int ilo_ = to_lapack_int( *ilo );
-    lapack_int ihi_ = to_lapack_int( *ihi );
+    lapack_int ilo_ = 0;
+    lapack_int ihi_ = 0;
     lapack_int info_ = 0;
 
     LAPACK_zgebal(

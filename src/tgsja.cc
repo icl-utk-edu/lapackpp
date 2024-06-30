@@ -41,7 +41,7 @@ int64_t tgsja(
     lapack_int ldu_ = to_lapack_int( ldu );
     lapack_int ldv_ = to_lapack_int( ldv );
     lapack_int ldq_ = to_lapack_int( ldq );
-    lapack_int ncycle_ = to_lapack_int( *ncycle );
+    lapack_int ncycle_ = 0;
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -90,7 +90,7 @@ int64_t tgsja(
     lapack_int ldu_ = to_lapack_int( ldu );
     lapack_int ldv_ = to_lapack_int( ldv );
     lapack_int ldq_ = to_lapack_int( ldq );
-    lapack_int ncycle_ = to_lapack_int( *ncycle );
+    lapack_int ncycle_ = 0;
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -139,7 +139,7 @@ int64_t tgsja(
     lapack_int ldu_ = to_lapack_int( ldu );
     lapack_int ldv_ = to_lapack_int( ldv );
     lapack_int ldq_ = to_lapack_int( ldq );
-    lapack_int ncycle_ = to_lapack_int( *ncycle );
+    lapack_int ncycle_ = 0;
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -188,7 +188,7 @@ int64_t tgsja(
     lapack_int ldu_ = to_lapack_int( ldu );
     lapack_int ldv_ = to_lapack_int( ldv );
     lapack_int ldq_ = to_lapack_int( ldq );
-    lapack_int ncycle_ = to_lapack_int( *ncycle );
+    lapack_int ncycle_ = 0;
     lapack_int info_ = 0;
 
     // allocate workspace

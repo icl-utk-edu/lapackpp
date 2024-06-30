@@ -24,7 +24,7 @@ int64_t trevc(
     float const* T, int64_t ldt,
     float* VL, int64_t ldvl,
     float* VR, int64_t ldvr, int64_t mm,
-    int64_t* m )
+    int64_t* nfound )
 {
     char sides_ = to_char( sides );
     char howmany_ = to_char( howmany );
@@ -38,7 +38,7 @@ int64_t trevc(
     lapack_int ldvl_ = to_lapack_int( ldvl );
     lapack_int ldvr_ = to_lapack_int( ldvr );
     lapack_int mm_ = to_lapack_int( mm );
-    lapack_int m_ = to_lapack_int( *m );
+    lapack_int nfound_ = 0;
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -49,7 +49,7 @@ int64_t trevc(
         select_ptr, &n_,
         T, &ldt_,
         VL, &ldvl_,
-        VR, &ldvr_, &mm_, &m_,
+        VR, &ldvr_, &mm_, &nfound_,
         &work[0], &info_
     );
     if (info_ < 0) {
@@ -57,7 +57,7 @@ int64_t trevc(
     }
     // [sd]trevc update select
     std::copy( select_.begin(), select_.end(), select );
-    *m = m_;
+    *nfound = nfound_;
     return info_;
 }
 
@@ -69,7 +69,7 @@ int64_t trevc(
     double const* T, int64_t ldt,
     double* VL, int64_t ldvl,
     double* VR, int64_t ldvr, int64_t mm,
-    int64_t* m )
+    int64_t* nfound )
 {
     char sides_ = to_char( sides );
     char howmany_ = to_char( howmany );
@@ -83,7 +83,7 @@ int64_t trevc(
     lapack_int ldvl_ = to_lapack_int( ldvl );
     lapack_int ldvr_ = to_lapack_int( ldvr );
     lapack_int mm_ = to_lapack_int( mm );
-    lapack_int m_ = to_lapack_int( *m );
+    lapack_int nfound_ = 0;
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -94,7 +94,7 @@ int64_t trevc(
         select_ptr, &n_,
         T, &ldt_,
         VL, &ldvl_,
-        VR, &ldvr_, &mm_, &m_,
+        VR, &ldvr_, &mm_, &nfound_,
         &work[0], &info_
     );
     if (info_ < 0) {
@@ -102,7 +102,7 @@ int64_t trevc(
     }
     // [sd]trevc update select
     std::copy( select_.begin(), select_.end(), select );
-    *m = m_;
+    *nfound = nfound_;
     return info_;
 }
 
@@ -114,7 +114,7 @@ int64_t trevc(
     std::complex<float>* T, int64_t ldt,
     std::complex<float>* VL, int64_t ldvl,
     std::complex<float>* VR, int64_t ldvr, int64_t mm,
-    int64_t* m )
+    int64_t* nfound )
 {
     char sides_ = to_char( sides );
     char howmany_ = to_char( howmany );
@@ -128,7 +128,7 @@ int64_t trevc(
     lapack_int ldvl_ = to_lapack_int( ldvl );
     lapack_int ldvr_ = to_lapack_int( ldvr );
     lapack_int mm_ = to_lapack_int( mm );
-    lapack_int m_ = to_lapack_int( *m );
+    lapack_int nfound_ = 0;
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -140,14 +140,14 @@ int64_t trevc(
         select_ptr, &n_,
         (lapack_complex_float*) T, &ldt_,
         (lapack_complex_float*) VL, &ldvl_,
-        (lapack_complex_float*) VR, &ldvr_, &mm_, &m_,
+        (lapack_complex_float*) VR, &ldvr_, &mm_, &nfound_,
         (lapack_complex_float*) &work[0],
         &rwork[0], &info_
     );
     if (info_ < 0) {
         throw Error();
     }
-    *m = m_;
+    *nfound = nfound_;
     return info_;
 }
 
@@ -253,12 +253,12 @@ int64_t trevc(
 ///     ldvr >= 1, and if side = Right or Both, ldvr >= n.
 ///
 /// @param[in] mm
-///     The number of columns in the arrays VL and/or VR. mm >= m.
+///     The number of columns in the arrays VL and/or VR. mm >= nfound.
 ///
-/// @param[out] m
+/// @param[out] nfound
 ///     The number of columns in the arrays VL and/or VR actually
 ///     used to store the eigenvectors.
-///     If howmany = All or Backtransform, m is set to n.
+///     If howmany = All or Backtransform, nfound is set to n.
 ///     Each selected eigenvector occupies one column.
 ///
 /// @return = 0: successful exit
@@ -281,7 +281,7 @@ int64_t trevc(
     std::complex<double>* T, int64_t ldt,
     std::complex<double>* VL, int64_t ldvl,
     std::complex<double>* VR, int64_t ldvr, int64_t mm,
-    int64_t* m )
+    int64_t* nfound )
 {
     char sides_ = to_char( sides );
     char howmany_ = to_char( howmany );
@@ -295,7 +295,7 @@ int64_t trevc(
     lapack_int ldvl_ = to_lapack_int( ldvl );
     lapack_int ldvr_ = to_lapack_int( ldvr );
     lapack_int mm_ = to_lapack_int( mm );
-    lapack_int m_ = to_lapack_int( *m );
+    lapack_int nfound_ = 0;
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -307,14 +307,14 @@ int64_t trevc(
         select_ptr, &n_,
         (lapack_complex_double*) T, &ldt_,
         (lapack_complex_double*) VL, &ldvl_,
-        (lapack_complex_double*) VR, &ldvr_, &mm_, &m_,
+        (lapack_complex_double*) VR, &ldvr_, &mm_, &nfound_,
         (lapack_complex_double*) &work[0],
         &rwork[0], &info_
     );
     if (info_ < 0) {
         throw Error();
     }
-    *m = m_;
+    *nfound = nfound_;
     return info_;
 }
 

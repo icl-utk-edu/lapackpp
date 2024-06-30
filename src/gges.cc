@@ -34,7 +34,7 @@ int64_t gges(
     lapack_int n_ = to_lapack_int( n );
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int ldb_ = to_lapack_int( ldb );
-    lapack_int sdim_ = to_lapack_int( *sdim );
+    lapack_int sdim_ = 0;
     lapack_int ldvsl_ = to_lapack_int( ldvsl );
     lapack_int ldvsr_ = to_lapack_int( ldvsr );
     lapack_int info_ = 0;
@@ -111,7 +111,7 @@ int64_t gges(
     lapack_int n_ = to_lapack_int( n );
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int ldb_ = to_lapack_int( ldb );
-    lapack_int sdim_ = to_lapack_int( *sdim );
+    lapack_int sdim_ = 0;
     lapack_int ldvsl_ = to_lapack_int( ldvsl );
     lapack_int ldvsr_ = to_lapack_int( ldvsr );
     lapack_int info_ = 0;
@@ -188,7 +188,7 @@ int64_t gges(
     lapack_int n_ = to_lapack_int( n );
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int ldb_ = to_lapack_int( ldb );
-    lapack_int sdim_ = to_lapack_int( *sdim );
+    lapack_int sdim_ = 0;
     lapack_int ldvsl_ = to_lapack_int( ldvsl );
     lapack_int ldvsr_ = to_lapack_int( ldvsr );
     lapack_int info_ = 0;
@@ -259,7 +259,7 @@ int64_t gges(
     lapack_int n_ = to_lapack_int( n );
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int ldb_ = to_lapack_int( ldb );
-    lapack_int sdim_ = to_lapack_int( *sdim );
+    lapack_int sdim_ = 0;
     lapack_int ldvsl_ = to_lapack_int( ldvsl );
     lapack_int ldvsr_ = to_lapack_int( ldvsr );
     lapack_int info_ = 0;

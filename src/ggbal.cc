@@ -30,8 +30,8 @@ int64_t ggbal(
     lapack_int n_ = to_lapack_int( n );
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int ldb_ = to_lapack_int( ldb );
-    lapack_int ilo_ = to_lapack_int( *ilo );
-    lapack_int ihi_ = to_lapack_int( *ihi );
+    lapack_int ilo_ = 0;
+    lapack_int ihi_ = 0;
     lapack_int info_ = 0;
 
     // from docs
@@ -70,8 +70,8 @@ int64_t ggbal(
     lapack_int n_ = to_lapack_int( n );
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int ldb_ = to_lapack_int( ldb );
-    lapack_int ilo_ = to_lapack_int( *ilo );
-    lapack_int ihi_ = to_lapack_int( *ihi );
+    lapack_int ilo_ = 0;
+    lapack_int ihi_ = 0;
     lapack_int info_ = 0;
 
     // from docs
@@ -110,8 +110,8 @@ int64_t ggbal(
     lapack_int n_ = to_lapack_int( n );
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int ldb_ = to_lapack_int( ldb );
-    lapack_int ilo_ = to_lapack_int( *ilo );
-    lapack_int ihi_ = to_lapack_int( *ihi );
+    lapack_int ilo_ = 0;
+    lapack_int ihi_ = 0;
     lapack_int info_ = 0;
 
     // from docs
@@ -150,8 +150,8 @@ int64_t ggbal(
     lapack_int n_ = to_lapack_int( n );
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int ldb_ = to_lapack_int( ldb );
-    lapack_int ilo_ = to_lapack_int( *ilo );
-    lapack_int ihi_ = to_lapack_int( *ihi );
+    lapack_int ilo_ = 0;
+    lapack_int ihi_ = 0;
     lapack_int info_ = 0;
 
     // from docs

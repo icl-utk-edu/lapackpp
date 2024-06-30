@@ -21,7 +21,7 @@ int64_t stemr(
     lapack::Job jobz, lapack::Range range, int64_t n,
     float* D,
     float* E, float vl, float vu, int64_t il, int64_t iu,
-    int64_t* m,
+    int64_t* nfound,
     float* W,
     float* Z, int64_t ldz, int64_t nzc,
     int64_t* isuppz,
@@ -32,12 +32,12 @@ int64_t stemr(
     lapack_int n_ = to_lapack_int( n );
     lapack_int il_ = to_lapack_int( il );
     lapack_int iu_ = to_lapack_int( iu );
-    lapack_int m_ = to_lapack_int( *m );
+    lapack_int nfound_ = 0;
     lapack_int ldz_ = to_lapack_int( ldz );
     lapack_int nzc_ = to_lapack_int( nzc );
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was m; n >= m
+        lapack::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was nfound; n >= nfound
         lapack_int* isuppz_ptr = &isuppz_[0];
     #else
         lapack_int* isuppz_ptr = isuppz;
@@ -52,7 +52,7 @@ int64_t stemr(
     LAPACK_sstemr(
         &jobz_, &range_, &n_,
         D,
-        E, &vl, &vu, &il_, &iu_, &m_,
+        E, &vl, &vu, &il_, &iu_, &nfound_,
         W,
         Z, &ldz_, &nzc_,
         isuppz_ptr, &tryrac_,
@@ -72,7 +72,7 @@ int64_t stemr(
     LAPACK_sstemr(
         &jobz_, &range_, &n_,
         D,
-        E, &vl, &vu, &il_, &iu_, &m_,
+        E, &vl, &vu, &il_, &iu_, &nfound_,
         W,
         Z, &ldz_, &nzc_,
         isuppz_ptr, &tryrac_,
@@ -82,9 +82,9 @@ int64_t stemr(
     if (info_ < 0) {
         throw Error();
     }
-    *m = m_;
+    *nfound = nfound_;
     #ifndef LAPACK_ILP64
-        std::copy( &isuppz_[0], &isuppz_[m_], isuppz );  // was begin to end
+        std::copy( &isuppz_[0], &isuppz_[ nfound_ ], isuppz );
     #endif
     *tryrac = tryrac_;
     return info_;
@@ -95,7 +95,7 @@ int64_t stemr(
     lapack::Job jobz, lapack::Range range, int64_t n,
     double* D,
     double* E, double vl, double vu, int64_t il, int64_t iu,
-    int64_t* m,
+    int64_t* nfound,
     double* W,
     double* Z, int64_t ldz, int64_t nzc,
     int64_t* isuppz,
@@ -106,12 +106,12 @@ int64_t stemr(
     lapack_int n_ = to_lapack_int( n );
     lapack_int il_ = to_lapack_int( il );
     lapack_int iu_ = to_lapack_int( iu );
-    lapack_int m_ = to_lapack_int( *m );
+    lapack_int nfound_ = 0;
     lapack_int ldz_ = to_lapack_int( ldz );
     lapack_int nzc_ = to_lapack_int( nzc );
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was m; n >= m
+        lapack::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was nfound; n >= nfound
         lapack_int* isuppz_ptr = &isuppz_[0];
     #else
         lapack_int* isuppz_ptr = isuppz;
@@ -126,7 +126,7 @@ int64_t stemr(
     LAPACK_dstemr(
         &jobz_, &range_, &n_,
         D,
-        E, &vl, &vu, &il_, &iu_, &m_,
+        E, &vl, &vu, &il_, &iu_, &nfound_,
         W,
         Z, &ldz_, &nzc_,
         isuppz_ptr, &tryrac_,
@@ -146,7 +146,7 @@ int64_t stemr(
     LAPACK_dstemr(
         &jobz_, &range_, &n_,
         D,
-        E, &vl, &vu, &il_, &iu_, &m_,
+        E, &vl, &vu, &il_, &iu_, &nfound_,
         W,
         Z, &ldz_, &nzc_,
         isuppz_ptr, &tryrac_,
@@ -156,9 +156,9 @@ int64_t stemr(
     if (info_ < 0) {
         throw Error();
     }
-    *m = m_;
+    *nfound = nfound_;
     #ifndef LAPACK_ILP64
-        std::copy( &isuppz_[0], &isuppz_[m_], isuppz );  // was begin to end
+        std::copy( &isuppz_[0], &isuppz_[ nfound_ ], isuppz );
     #endif
     *tryrac = tryrac_;
     return info_;
@@ -169,7 +169,7 @@ int64_t stemr(
     lapack::Job jobz, lapack::Range range, int64_t n,
     float* D,
     float* E, float vl, float vu, int64_t il, int64_t iu,
-    int64_t* m,
+    int64_t* nfound,
     float* W,
     std::complex<float>* Z, int64_t ldz, int64_t nzc,
     int64_t* isuppz,
@@ -180,12 +180,12 @@ int64_t stemr(
     lapack_int n_ = to_lapack_int( n );
     lapack_int il_ = to_lapack_int( il );
     lapack_int iu_ = to_lapack_int( iu );
-    lapack_int m_ = to_lapack_int( *m );
+    lapack_int nfound_ = 0;
     lapack_int ldz_ = to_lapack_int( ldz );
     lapack_int nzc_ = to_lapack_int( nzc );
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was m; n >= m
+        lapack::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was nfound; n >= nfound
         lapack_int* isuppz_ptr = &isuppz_[0];
     #else
         lapack_int* isuppz_ptr = isuppz;
@@ -200,7 +200,7 @@ int64_t stemr(
     LAPACK_cstemr(
         &jobz_, &range_, &n_,
         D,
-        E, &vl, &vu, &il_, &iu_, &m_,
+        E, &vl, &vu, &il_, &iu_, &nfound_,
         W,
         (lapack_complex_float*) Z, &ldz_, &nzc_,
         isuppz_ptr, &tryrac_,
@@ -220,7 +220,7 @@ int64_t stemr(
     LAPACK_cstemr(
         &jobz_, &range_, &n_,
         D,
-        E, &vl, &vu, &il_, &iu_, &m_,
+        E, &vl, &vu, &il_, &iu_, &nfound_,
         W,
         (lapack_complex_float*) Z, &ldz_, &nzc_,
         isuppz_ptr, &tryrac_,
@@ -230,9 +230,9 @@ int64_t stemr(
     if (info_ < 0) {
         throw Error();
     }
-    *m = m_;
+    *nfound = nfound_;
     #ifndef LAPACK_ILP64
-        std::copy( &isuppz_[0], &isuppz_[m_], isuppz );  // was begin to end
+        std::copy( &isuppz_[0], &isuppz_[ nfound_ ], isuppz );
     #endif
     *tryrac = tryrac_;
     return info_;
@@ -243,7 +243,7 @@ int64_t stemr(
     lapack::Job jobz, lapack::Range range, int64_t n,
     double* D,
     double* E, double vl, double vu, int64_t il, int64_t iu,
-    int64_t* m,
+    int64_t* nfound,
     double* W,
     std::complex<double>* Z, int64_t ldz, int64_t nzc,
     int64_t* isuppz,
@@ -254,12 +254,12 @@ int64_t stemr(
     lapack_int n_ = to_lapack_int( n );
     lapack_int il_ = to_lapack_int( il );
     lapack_int iu_ = to_lapack_int( iu );
-    lapack_int m_ = to_lapack_int( *m );
+    lapack_int nfound_ = 0;
     lapack_int ldz_ = to_lapack_int( ldz );
     lapack_int nzc_ = to_lapack_int( nzc );
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was m; n >= m
+        lapack::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was nfound; n >= nfound
         lapack_int* isuppz_ptr = &isuppz_[0];
     #else
         lapack_int* isuppz_ptr = isuppz;
@@ -274,7 +274,7 @@ int64_t stemr(
     LAPACK_zstemr(
         &jobz_, &range_, &n_,
         D,
-        E, &vl, &vu, &il_, &iu_, &m_,
+        E, &vl, &vu, &il_, &iu_, &nfound_,
         W,
         (lapack_complex_double*) Z, &ldz_, &nzc_,
         isuppz_ptr, &tryrac_,
@@ -294,7 +294,7 @@ int64_t stemr(
     LAPACK_zstemr(
         &jobz_, &range_, &n_,
         D,
-        E, &vl, &vu, &il_, &iu_, &m_,
+        E, &vl, &vu, &il_, &iu_, &nfound_,
         W,
         (lapack_complex_double*) Z, &ldz_, &nzc_,
         isuppz_ptr, &tryrac_,
@@ -304,9 +304,9 @@ int64_t stemr(
     if (info_ < 0) {
         throw Error();
     }
-    *m = m_;
+    *nfound = nfound_;
     #ifndef LAPACK_ILP64
-        std::copy( &isuppz_[0], &isuppz_[m_], isuppz );  // was begin to end
+        std::copy( &isuppz_[0], &isuppz_[ nfound_ ], isuppz );
     #endif
     *tryrac = tryrac_;
     return info_;

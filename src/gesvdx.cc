@@ -8,7 +8,7 @@
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
-#if LAPACK_VERSION >= 30600  // >= v3.6
+#if LAPACK_VERSION >= 30600  // >= 3.6.0
 
 #include <vector>
 
@@ -36,7 +36,7 @@ int64_t gesvdx(
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int il_ = to_lapack_int( il );
     lapack_int iu_ = to_lapack_int( iu );
-    lapack_int nfound_ = to_lapack_int( *nfound );
+    lapack_int nfound_ = 0;
     lapack_int ldu_ = to_lapack_int( ldu );
     lapack_int ldvt_ = to_lapack_int( ldvt );
     lapack_int info_ = 0;
@@ -97,7 +97,7 @@ int64_t gesvdx(
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int il_ = to_lapack_int( il );
     lapack_int iu_ = to_lapack_int( iu );
-    lapack_int nfound_ = to_lapack_int( *nfound );
+    lapack_int nfound_ = 0;
     lapack_int ldu_ = to_lapack_int( ldu );
     lapack_int ldvt_ = to_lapack_int( ldvt );
     lapack_int info_ = 0;
@@ -158,7 +158,7 @@ int64_t gesvdx(
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int il_ = to_lapack_int( il );
     lapack_int iu_ = to_lapack_int( iu );
-    lapack_int nfound_ = to_lapack_int( *nfound );
+    lapack_int nfound_ = 0;
     lapack_int ldu_ = to_lapack_int( ldu );
     lapack_int ldvt_ = to_lapack_int( ldvt );
     lapack_int info_ = 0;
@@ -353,7 +353,7 @@ int64_t gesvdx(
     lapack_int lda_ = to_lapack_int( lda );
     lapack_int il_ = to_lapack_int( il );
     lapack_int iu_ = to_lapack_int( iu );
-    lapack_int nfound_ = to_lapack_int( *nfound );
+    lapack_int nfound_ = 0;
     lapack_int ldu_ = to_lapack_int( ldu );
     lapack_int ldvt_ = to_lapack_int( ldvt );
     lapack_int info_ = 0;
@@ -405,4 +405,4 @@ int64_t gesvdx(
 
 }  // namespace lapack
 
-#endif  // LAPACK >= v3.6
+#endif  // LAPACK >= 3.6.0

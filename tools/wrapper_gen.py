@@ -157,7 +157,9 @@ wrapper_top1 = '''\
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 '''
 
@@ -1061,7 +1063,8 @@ def parse_lapack( path ):
                 # dimensions, enums
                 arg.lname += '_'
             arg.pname = '&' + arg.lname
-        elif (arg.intent in ('out', 'in,out') and not arg.is_array and arg.dtype in ('int64_t', 'bool')):
+        elif (arg.intent in ('out', 'in,out') and not arg.is_array
+              and arg.dtype in ('int64_t', 'bool')):
             # output dimensions (nfound, rank, ...)
             arg.lname += '_'
             arg.pname = '&' + arg.lname
@@ -1367,9 +1370,9 @@ def generate_wrapper( func, header=False ):
                 query_args.append( prefix + cast + arg.pname )
                 if (arg.dtype in ('int64_t', 'bool')):
                     # integer input arrays: copy in input
-                    local_vars += (tab + '#if 1\n'
+                    local_vars += (tab + '#ifndef LAPACK_ILP64\n'
                                +   tab*2 + '// 32-bit copy\n'
-                               +   tab*2 + 'std::vector< lapack_int > ' + arg.lname + '( &' + arg.name + '[0], &' + arg.name + '[' + arg.dim + '] );\n'
+                               +   tab*2 + 'lapack::vector< lapack_int > ' + arg.lname + '( &' + arg.name + '[0], &' + arg.name + '[' + arg.dim + '] );\n'
                                +   tab*2 + 'lapack_int const* ' + arg.pname + ' = &' + arg.lname + '[0];\n'
                                +   tab + '#else\n'
                                +   tab*2 + 'lapack_int const* ' + arg.pname + ' = ' + arg.lname + ';\n'
@@ -1391,7 +1394,7 @@ def generate_wrapper( func, header=False ):
                     local_vars += tab + 'lapack_int ' + arg.lname + ' = to_lapack_int( ' + arg.name + ' );\n'
                 elif (arg.is_enum):
                     enum2char = enum_map[ arg.name ][1]
-                    local_vars += tab + 'char ' + arg.lname + ' = ' + enum2char + '( ' + arg.name + ' );\n'
+                    local_vars += tab + 'char ' + arg.lname + ' = to_char( ' + arg.name + ' );\n'
                 # end
             # end
         else:
@@ -1400,10 +1403,11 @@ def generate_wrapper( func, header=False ):
                 query_args.append( prefix + cast + 'qry_' + arg.name )
                 query += tab + arg.dtype + ' qry_' + arg.name + '[1];\n'
 
+                alloc_work += tab + 'lapack::vector< ' + arg.dtype + ' > ' + arg.lname
                 if (arg.use_query):
-                    alloc_work += tab + 'std::vector< ' + arg.dtype + ' > ' + arg.lname + '( ' + func.args[i+1].lname + ' );\n'
+                    alloc_work += '( ' + func.args[i+1].lname + ' );\n'
                 else:
-                    alloc_work += tab + 'std::vector< ' + arg.dtype + ' > ' + arg.lname + '( ' + arg.dim.lower() + ' );\n'
+                    alloc_work += '( ' + arg.dim.lower() + ' );\n'
 
                 ##alloc_work += (tab + arg.dtype + '* ' + arg.name + '_'
                 ##           +   ' = new ' + arg.dtype + '[ l' + arg.name + ' ];\n')
@@ -1422,7 +1426,11 @@ def generate_wrapper( func, header=False ):
                 else:
                     proto_args.append( '\n    ' + arg.dtype + '* ' + arg.name )
                     alias_args.append( arg.name )
-                    local_vars += tab + 'lapack_int ' + arg.lname + ' = to_lapack_int( *' + arg.name + ' );\n'
+                    local_vars += tab + 'lapack_int ' + arg.lname + ' = '
+                    if (arg.intent == 'out'):
+                        local_vars += '0;\n'
+                    else: # in,out
+                        local_vars += 'to_lapack_int( *' + arg.name + ' );  // in,out\n'
                     cleanup += tab + '*' + arg.name + ' = ' + arg.lname + ';\n'
             else:
                 # output array
@@ -1432,24 +1440,24 @@ def generate_wrapper( func, header=False ):
                 if (arg.is_array and (arg.dtype in ('int64_t', 'bool'))):
                     if (arg.intent == 'in,out'):
                         # copy in input, copy out in cleanup
-                        local_vars += (tab + '#if 1\n'
+                        local_vars += (tab + '#ifndef LAPACK_ILP64\n'
                                    +   tab*2 + '// 32-bit copy\n'
-                                   +   tab*2 + 'std::vector< lapack_int > ' + arg.lname + '( &' + arg.name + '[0], &' + arg.name + '[' + arg.dim + '] );\n'
+                                   +   tab*2 + 'lapack::vector< lapack_int > ' + arg.lname + '( &' + arg.name + '[0], &' + arg.name + '[' + arg.dim + '] );\n'
                                    +   tab*2 + 'lapack_int* ' + arg.pname + ' = &' + arg.lname + '[0];\n'
                                    +   tab + '#else\n'
                                    +   tab*2 + 'lapack_int* ' + arg.pname + ' = ' + arg.name + ';\n'
                                    +   tab + '#endif\n')
                     else:
                         # allocate w/o copy, copy out in cleanup
-                        local_vars += (tab + '#if 1\n'
+                        local_vars += (tab + '#ifndef LAPACK_ILP64\n'
                                    +   tab*2 + '// 32-bit copy\n'
-                                   +   tab*2 + 'std::vector< lapack_int > ' + arg.lname + '( ' + arg.dim + ' );\n'
+                                   +   tab*2 + 'lapack::vector< lapack_int > ' + arg.lname + '( ' + arg.dim + ' );\n'
                                    +   tab*2 + 'lapack_int* ' + arg.pname + ' = &' + arg.lname + '[0];\n'
                                    +   tab + '#else\n'
                                    +   tab*2 + 'lapack_int* ' + arg.pname + ' = ' + arg.name + ';\n'
                                    +   tab + '#endif\n')
                     # end
-                    cleanup += (tab + '#if 1\n'
+                    cleanup += (tab + '#ifndef LAPACK_ILP64\n'
                             +   tab*2 + 'std::copy( ' + arg.lname + '.begin(), ' + arg.lname + '.end(), ' + arg.name + ' );\n'
                             +   tab + '#endif\n')
             # end
@@ -1457,14 +1465,16 @@ def generate_wrapper( func, header=False ):
         i += 1
     # end
 
-    # --------------------
+    #--------------------
     # build query
     if (use_query):
         query =  ('\n'
               +   tab + '// query for workspace size\n'
               +   query
               +   tab + 'lapack_int ineg_one = -1;\n'
-              +   tab + 'LAPACK_' + func.xname + '(\n' + tab*2 + ', '.join( query_args ) + ' );\n'
+              +   tab + 'LAPACK_' + func.xname + '(\n' + tab*2
+                      + ', '.join( query_args ) + '\n'
+              +   tab + ');\n'
               +   tab + 'if (info_ < 0) {\n'
               +   tab*2 + 'throw Error();\n'
               +   tab + '}\n')
@@ -1479,19 +1489,27 @@ def generate_wrapper( func, header=False ):
         query = ''
     # end
 
+    #--------------------
     if (alloc_work):
         alloc_work = ('\n'
                    +  tab + '// allocate workspace\n'
                    +  alloc_work)
     # end
 
+    #--------------------
+    # function call
     if (func.is_func):
-        call = '\n' + tab + 'return LAPACK_' + func.xname + '(\n' + tab*2 + ', '.join( call_args ) + ' );\n'
+        call = ('\n' + tab + 'return LAPACK_' + func.xname + '(\n'
+             + tab*2 + ', '.join( call_args ) + '\n'
+             + tab + ');\n')
         if (info_throw or cleanup or info_return):
             print( 'Warning: why is info or cleanup on a function?' )
     else:
-        call = '\n' + tab + 'LAPACK_' + func.xname + '(\n' + tab*2 + ', '.join( call_args ) + ' );\n'
+        call = ('\n' + tab + 'LAPACK_' + func.xname + '(\n'
+             + tab*2 + ', '.join( call_args ) + '\n'
+             + tab + ');\n')
 
+    #--------------------
     if (header):
         txt = (func.retval + ' ' + func.name + '(\n'
             +  tab + ', '.join( proto_args )

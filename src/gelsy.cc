@@ -37,7 +37,7 @@ int64_t gelsy(
     #else
         lapack_int* jpvt_ptr = jpvt;
     #endif
-    lapack_int rank_ = to_lapack_int( *rank );
+    lapack_int rank_ = 0;
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -94,7 +94,7 @@ int64_t gelsy(
     #else
         lapack_int* jpvt_ptr = jpvt;
     #endif
-    lapack_int rank_ = to_lapack_int( *rank );
+    lapack_int rank_ = 0;
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -151,7 +151,7 @@ int64_t gelsy(
     #else
         lapack_int* jpvt_ptr = jpvt;
     #endif
-    lapack_int rank_ = to_lapack_int( *rank );
+    lapack_int rank_ = 0;
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -311,7 +311,7 @@ int64_t gelsy(
     #else
         lapack_int* jpvt_ptr = jpvt;
     #endif
-    lapack_int rank_ = to_lapack_int( *rank );
+    lapack_int rank_ = 0;
     lapack_int info_ = 0;
 
     // query for workspace size

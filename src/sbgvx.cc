@@ -22,7 +22,7 @@ int64_t sbgvx(
     float* AB, int64_t ldab,
     float* BB, int64_t ldbb,
     float* Q, int64_t ldq, float vl, float vu, int64_t il, int64_t iu, float abstol,
-    int64_t* m,
+    int64_t* nfound,
     float* W,
     float* Z, int64_t ldz,
     int64_t* ifail )
@@ -38,11 +38,11 @@ int64_t sbgvx(
     lapack_int ldq_ = to_lapack_int( ldq );
     lapack_int il_ = to_lapack_int( il );
     lapack_int iu_ = to_lapack_int( iu );
-    lapack_int m_ = to_lapack_int( *m );
+    lapack_int nfound_ = 0;
     lapack_int ldz_ = to_lapack_int( ldz );
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector< lapack_int > ifail_( n );  // was m; n >= m
+        lapack::vector< lapack_int > ifail_( n );  // was nfound; n >= nfound
         lapack_int* ifail_ptr = &ifail_[0];
     #else
         lapack_int* ifail_ptr = ifail;
@@ -57,7 +57,7 @@ int64_t sbgvx(
         &jobz_, &range_, &uplo_, &n_, &ka_, &kb_,
         AB, &ldab_,
         BB, &ldbb_,
-        Q, &ldq_, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        Q, &ldq_, &vl, &vu, &il_, &iu_, &abstol, &nfound_,
         W,
         Z, &ldz_,
         &work[0],
@@ -67,10 +67,10 @@ int64_t sbgvx(
     if (info_ < 0) {
         throw Error();
     }
-    *m = m_;
+    *nfound = nfound_;
     #ifndef LAPACK_ILP64
         if (jobz != Job::NoVec) {
-            std::copy( &ifail_[ 0 ], &ifail_[ m_ ], ifail );
+            std::copy( &ifail_[ 0 ], &ifail_[ nfound_ ], ifail );
         }
     #endif
     return info_;
@@ -82,7 +82,7 @@ int64_t sbgvx(
     double* AB, int64_t ldab,
     double* BB, int64_t ldbb,
     double* Q, int64_t ldq, double vl, double vu, int64_t il, int64_t iu, double abstol,
-    int64_t* m,
+    int64_t* nfound,
     double* W,
     double* Z, int64_t ldz,
     int64_t* ifail )
@@ -98,11 +98,11 @@ int64_t sbgvx(
     lapack_int ldq_ = to_lapack_int( ldq );
     lapack_int il_ = to_lapack_int( il );
     lapack_int iu_ = to_lapack_int( iu );
-    lapack_int m_ = to_lapack_int( *m );
+    lapack_int nfound_ = 0;
     lapack_int ldz_ = to_lapack_int( ldz );
     #ifndef LAPACK_ILP64
         // 32-bit copy
-        lapack::vector< lapack_int > ifail_( n );  // was m; n >= m
+        lapack::vector< lapack_int > ifail_( n );  // was nfound; n >= nfound
         lapack_int* ifail_ptr = &ifail_[0];
     #else
         lapack_int* ifail_ptr = ifail;
@@ -117,7 +117,7 @@ int64_t sbgvx(
         &jobz_, &range_, &uplo_, &n_, &ka_, &kb_,
         AB, &ldab_,
         BB, &ldbb_,
-        Q, &ldq_, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        Q, &ldq_, &vl, &vu, &il_, &iu_, &abstol, &nfound_,
         W,
         Z, &ldz_,
         &work[0],
@@ -127,10 +127,10 @@ int64_t sbgvx(
     if (info_ < 0) {
         throw Error();
     }
-    *m = m_;
+    *nfound = nfound_;
     #ifndef LAPACK_ILP64
         if (jobz != Job::NoVec) {
-            std::copy( &ifail_[ 0 ], &ifail_[ m_ ], ifail );
+            std::copy( &ifail_[ 0 ], &ifail_[ nfound_ ], ifail );
         }
     #endif
     return info_;

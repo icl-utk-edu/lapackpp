@@ -37,7 +37,7 @@ int64_t trsen(
     lapack_int n_ = to_lapack_int( n );
     lapack_int ldt_ = to_lapack_int( ldt );
     lapack_int ldq_ = to_lapack_int( ldq );
-    lapack_int m_ = to_lapack_int( *m );
+    lapack_int m_ = 0;
     lapack_int info_ = 0;
 
     // split-complex representation
@@ -112,7 +112,7 @@ int64_t trsen(
     lapack_int n_ = to_lapack_int( n );
     lapack_int ldt_ = to_lapack_int( ldt );
     lapack_int ldq_ = to_lapack_int( ldq );
-    lapack_int m_ = to_lapack_int( *m );
+    lapack_int m_ = 0;
     lapack_int info_ = 0;
 
     // split-complex representation
@@ -187,7 +187,7 @@ int64_t trsen(
     lapack_int n_ = to_lapack_int( n );
     lapack_int ldt_ = to_lapack_int( ldt );
     lapack_int ldq_ = to_lapack_int( ldq );
-    lapack_int m_ = to_lapack_int( *m );
+    lapack_int m_ = 0;
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -245,7 +245,7 @@ int64_t trsen(
     lapack_int n_ = to_lapack_int( n );
     lapack_int ldt_ = to_lapack_int( ldt );
     lapack_int ldq_ = to_lapack_int( ldq );
-    lapack_int m_ = to_lapack_int( *m );
+    lapack_int m_ = 0;
     lapack_int info_ = 0;
 
     // query for workspace size

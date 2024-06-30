@@ -33,7 +33,7 @@ int64_t pstrf(
     #else
         lapack_int* piv_ptr = piv;
     #endif
-    lapack_int rank_ = to_lapack_int( *rank );
+    lapack_int rank_ = 0;
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -72,7 +72,7 @@ int64_t pstrf(
     #else
         lapack_int* piv_ptr = piv;
     #endif
-    lapack_int rank_ = to_lapack_int( *rank );
+    lapack_int rank_ = 0;
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -111,7 +111,7 @@ int64_t pstrf(
     #else
         lapack_int* piv_ptr = piv;
     #endif
-    lapack_int rank_ = to_lapack_int( *rank );
+    lapack_int rank_ = 0;
     lapack_int info_ = 0;
 
     // allocate workspace
@@ -150,7 +150,7 @@ int64_t pstrf(
     #else
         lapack_int* piv_ptr = piv;
     #endif
-    lapack_int rank_ = to_lapack_int( *rank );
+    lapack_int rank_ = 0;
     lapack_int info_ = 0;
 
     // allocate workspace

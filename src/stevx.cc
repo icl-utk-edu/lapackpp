@@ -21,7 +21,7 @@ int64_t stevx(
     lapack::Job jobz, lapack::Range range, int64_t n,
     float* D,
     float* E, float vl, float vu, int64_t il, int64_t iu, float abstol,
-    int64_t* m,
+    int64_t* nfound,
     float* W,
     float* Z, int64_t ldz,
     int64_t* ifail )
@@ -31,7 +31,7 @@ int64_t stevx(
     lapack_int n_ = to_lapack_int( n );
     lapack_int il_ = to_lapack_int( il );
     lapack_int iu_ = to_lapack_int( iu );
-    lapack_int m_ = to_lapack_int( *m );
+    lapack_int nfound_ = 0;
     lapack_int ldz_ = to_lapack_int( ldz );
     #ifndef LAPACK_ILP64
         // 32-bit copy
@@ -49,7 +49,7 @@ int64_t stevx(
     LAPACK_sstevx(
         &jobz_, &range_, &n_,
         D,
-        E, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        E, &vl, &vu, &il_, &iu_, &abstol, &nfound_,
         W,
         Z, &ldz_,
         &work[0],
@@ -59,10 +59,10 @@ int64_t stevx(
     if (info_ < 0) {
         throw Error();
     }
-    *m = m_;
+    *nfound = nfound_;
     #ifndef LAPACK_ILP64
         if (jobz != Job::NoVec) {
-            std::copy( &ifail_[ 0 ], &ifail_[ m_ ], ifail );
+            std::copy( &ifail_[ 0 ], &ifail_[ nfound_ ], ifail );
         }
     #endif
     return info_;
@@ -73,7 +73,7 @@ int64_t stevx(
     lapack::Job jobz, lapack::Range range, int64_t n,
     double* D,
     double* E, double vl, double vu, int64_t il, int64_t iu, double abstol,
-    int64_t* m,
+    int64_t* nfound,
     double* W,
     double* Z, int64_t ldz,
     int64_t* ifail )
@@ -83,7 +83,7 @@ int64_t stevx(
     lapack_int n_ = to_lapack_int( n );
     lapack_int il_ = to_lapack_int( il );
     lapack_int iu_ = to_lapack_int( iu );
-    lapack_int m_ = to_lapack_int( *m );
+    lapack_int nfound_ = 0;
     lapack_int ldz_ = to_lapack_int( ldz );
     #ifndef LAPACK_ILP64
         // 32-bit copy
@@ -101,7 +101,7 @@ int64_t stevx(
     LAPACK_dstevx(
         &jobz_, &range_, &n_,
         D,
-        E, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        E, &vl, &vu, &il_, &iu_, &abstol, &nfound_,
         W,
         Z, &ldz_,
         &work[0],
@@ -111,10 +111,10 @@ int64_t stevx(
     if (info_ < 0) {
         throw Error();
     }
-    *m = m_;
+    *nfound = nfound_;
     #ifndef LAPACK_ILP64
         if (jobz != Job::NoVec) {
-            std::copy( &ifail_[ 0 ], &ifail_[ m_ ], ifail );
+            std::copy( &ifail_[ 0 ], &ifail_[ nfound_ ], ifail );
         }
     #endif
     return info_;

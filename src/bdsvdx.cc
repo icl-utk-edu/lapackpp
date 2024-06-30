@@ -8,7 +8,7 @@
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
-#if LAPACK_VERSION >= 30600  // >= v3.6
+#if LAPACK_VERSION >= 30600  // >= 3.6.0
 
 #include <vector>
 
@@ -34,7 +34,7 @@ int64_t bdsvdx(
     lapack_int n_ = to_lapack_int( n );
     lapack_int il_ = to_lapack_int( il );
     lapack_int iu_ = to_lapack_int( iu );
-    lapack_int nfound_ = to_lapack_int( *nfound );
+    lapack_int nfound_ = 0;
     lapack_int ldz_ = to_lapack_int( ldz );
     lapack_int info_ = 0;
 
@@ -202,7 +202,7 @@ int64_t bdsvdx(
     lapack_int n_ = to_lapack_int( n );
     lapack_int il_ = to_lapack_int( il );
     lapack_int iu_ = to_lapack_int( iu );
-    lapack_int nfound_ = to_lapack_int( *nfound );
+    lapack_int nfound_ = 0;
     lapack_int ldz_ = to_lapack_int( ldz );
     lapack_int info_ = 0;
 
@@ -228,4 +228,4 @@ int64_t bdsvdx(
 
 }  // namespace lapack
 
-#endif  // LAPACK >= v3.6
+#endif  // LAPACK >= 3.6.0

@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 
 #include <vector>
@@ -20,14 +21,9 @@ int64_t trttp(
     float const* A, int64_t lda,
     float* AP )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
     lapack_int info_ = 0;
 
     LAPACK_strttp(
@@ -47,14 +43,9 @@ int64_t trttp(
     double const* A, int64_t lda,
     double* AP )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
     lapack_int info_ = 0;
 
     LAPACK_dtrttp(
@@ -74,14 +65,9 @@ int64_t trttp(
     std::complex<float> const* A, int64_t lda,
     std::complex<float>* AP )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
     lapack_int info_ = 0;
 
     LAPACK_ctrttp(
@@ -101,14 +87,9 @@ int64_t trttp(
     std::complex<double> const* A, int64_t lda,
     std::complex<double>* AP )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
     lapack_int info_ = 0;
 
     LAPACK_ztrttp(

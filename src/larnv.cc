@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 
 #include <vector>
@@ -21,12 +22,7 @@ void larnv(
     int64_t* iseed, int64_t n,
     float* X )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(idist) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int idist_ = (lapack_int) idist;
+    lapack_int idist_ = to_lapack_int( idist );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
@@ -34,7 +30,7 @@ void larnv(
     #else
         lapack_int* iseed_ptr = iseed;
     #endif
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
 
     LAPACK_slarnv(
         &idist_,
@@ -52,12 +48,7 @@ void larnv(
     int64_t* iseed, int64_t n,
     double* X )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(idist) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int idist_ = (lapack_int) idist;
+    lapack_int idist_ = to_lapack_int( idist );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
@@ -65,7 +56,7 @@ void larnv(
     #else
         lapack_int* iseed_ptr = iseed;
     #endif
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
 
     LAPACK_dlarnv(
         &idist_,
@@ -83,12 +74,7 @@ void larnv(
     int64_t* iseed, int64_t n,
     std::complex<float>* X )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(idist) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int idist_ = (lapack_int) idist;
+    lapack_int idist_ = to_lapack_int( idist );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
@@ -96,7 +82,7 @@ void larnv(
     #else
         lapack_int* iseed_ptr = iseed;
     #endif
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
 
     LAPACK_clarnv(
         &idist_,
@@ -150,12 +136,7 @@ void larnv(
     int64_t* iseed, int64_t n,
     std::complex<double>* X )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(idist) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int idist_ = (lapack_int) idist;
+    lapack_int idist_ = to_lapack_int( idist );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > iseed_( &iseed[0], &iseed[(4)] );
@@ -163,7 +144,7 @@ void larnv(
     #else
         lapack_int* iseed_ptr = iseed;
     #endif
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
 
     LAPACK_zlarnv(
         &idist_,

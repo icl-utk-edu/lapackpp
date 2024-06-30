@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -26,17 +27,11 @@ int64_t bdsdc(
     float* Q,
     int64_t* IQ )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldvt) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
     char compq_ = to_char_comp( compq );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ldu_ = (lapack_int) ldu;
-    lapack_int ldvt_ = (lapack_int) ldvt;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ldu_ = to_lapack_int( ldu );
+    lapack_int ldvt_ = to_lapack_int( ldvt );
     lapack_int info_ = 0;
 
     // IQ disabled for now, due to complicated dimension
@@ -192,17 +187,11 @@ int64_t bdsdc(
     double* Q,
     int64_t* IQ )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldu) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldvt) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
     char compq_ = to_char_comp( compq );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ldu_ = (lapack_int) ldu;
-    lapack_int ldvt_ = (lapack_int) ldvt;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ldu_ = to_lapack_int( ldu );
+    lapack_int ldvt_ = to_lapack_int( ldvt );
     lapack_int info_ = 0;
 
     // IQ disabled for now, due to complicated dimension

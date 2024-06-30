@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -22,17 +23,10 @@ int64_t gehrd(
     float* A, int64_t lda,
     float* tau )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ilo) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ihi) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ilo_ = (lapack_int) ilo;
-    lapack_int ihi_ = (lapack_int) ihi;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ilo_ = to_lapack_int( ilo );
+    lapack_int ihi_ = to_lapack_int( ihi );
+    lapack_int lda_ = to_lapack_int( lda );
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -69,17 +63,10 @@ int64_t gehrd(
     double* A, int64_t lda,
     double* tau )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ilo) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ihi) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ilo_ = (lapack_int) ilo;
-    lapack_int ihi_ = (lapack_int) ihi;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ilo_ = to_lapack_int( ilo );
+    lapack_int ihi_ = to_lapack_int( ihi );
+    lapack_int lda_ = to_lapack_int( lda );
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -116,17 +103,10 @@ int64_t gehrd(
     std::complex<float>* A, int64_t lda,
     std::complex<float>* tau )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ilo) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ihi) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ilo_ = (lapack_int) ilo;
-    lapack_int ihi_ = (lapack_int) ihi;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ilo_ = to_lapack_int( ilo );
+    lapack_int ihi_ = to_lapack_int( ihi );
+    lapack_int lda_ = to_lapack_int( lda );
     lapack_int info_ = 0;
 
     // query for workspace size
@@ -240,17 +220,10 @@ int64_t gehrd(
     std::complex<double>* A, int64_t lda,
     std::complex<double>* tau )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ilo) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ihi) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int ilo_ = (lapack_int) ilo;
-    lapack_int ihi_ = (lapack_int) ihi;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int ilo_ = to_lapack_int( ilo );
+    lapack_int ihi_ = to_lapack_int( ihi );
+    lapack_int lda_ = to_lapack_int( lda );
     lapack_int info_ = 0;
 
     // query for workspace size

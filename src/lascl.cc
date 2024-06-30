@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 
 #include <vector>
@@ -20,20 +21,12 @@ int64_t lascl(
     lapack::MatrixType matrixtype, int64_t kl, int64_t ku, float cfrom, float cto, int64_t m, int64_t n,
     float* A, int64_t lda )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-    }
     char matrixtype_ = to_char( matrixtype );
-    lapack_int kl_ = (lapack_int) kl;
-    lapack_int ku_ = (lapack_int) ku;
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int kl_ = to_lapack_int( kl );
+    lapack_int ku_ = to_lapack_int( ku );
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
     lapack_int info_ = 0;
 
     LAPACK_slascl(
@@ -52,20 +45,12 @@ int64_t lascl(
     lapack::MatrixType matrixtype, int64_t kl, int64_t ku, double cfrom, double cto, int64_t m, int64_t n,
     double* A, int64_t lda )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-    }
     char matrixtype_ = to_char( matrixtype );
-    lapack_int kl_ = (lapack_int) kl;
-    lapack_int ku_ = (lapack_int) ku;
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int kl_ = to_lapack_int( kl );
+    lapack_int ku_ = to_lapack_int( ku );
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
     lapack_int info_ = 0;
 
     LAPACK_dlascl(
@@ -84,20 +69,12 @@ int64_t lascl(
     lapack::MatrixType matrixtype, int64_t kl, int64_t ku, float cfrom, float cto, int64_t m, int64_t n,
     std::complex<float>* A, int64_t lda )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-    }
     char matrixtype_ = to_char( matrixtype );
-    lapack_int kl_ = (lapack_int) kl;
-    lapack_int ku_ = (lapack_int) ku;
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int kl_ = to_lapack_int( kl );
+    lapack_int ku_ = to_lapack_int( ku );
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
     lapack_int info_ = 0;
 
     LAPACK_clascl(
@@ -189,20 +166,12 @@ int64_t lascl(
     lapack::MatrixType matrixtype, int64_t kl, int64_t ku, double cfrom, double cto, int64_t m, int64_t n,
     std::complex<double>* A, int64_t lda )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(kl) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ku) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-    }
     char matrixtype_ = to_char( matrixtype );
-    lapack_int kl_ = (lapack_int) kl;
-    lapack_int ku_ = (lapack_int) ku;
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int kl_ = to_lapack_int( kl );
+    lapack_int ku_ = to_lapack_int( ku );
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
     lapack_int info_ = 0;
 
     LAPACK_zlascl(

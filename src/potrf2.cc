@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 
 #if LAPACK_VERSION >= 30600  // >= v3.6
@@ -22,14 +23,9 @@ int64_t potrf2(
     lapack::Uplo uplo, int64_t n,
     float* A, int64_t lda )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
     lapack_int info_ = 0;
 
     LAPACK_spotrf2(
@@ -48,14 +44,9 @@ int64_t potrf2(
     lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
     lapack_int info_ = 0;
 
     LAPACK_dpotrf2(
@@ -74,14 +65,9 @@ int64_t potrf2(
     lapack::Uplo uplo, int64_t n,
     std::complex<float>* A, int64_t lda )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
     lapack_int info_ = 0;
 
     LAPACK_cpotrf2(
@@ -157,14 +143,9 @@ int64_t potrf2(
     lapack::Uplo uplo, int64_t n,
     std::complex<double>* A, int64_t lda )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
     lapack_int info_ = 0;
 
     LAPACK_zpotrf2(

@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 
 #include <vector>
@@ -20,13 +21,9 @@ int64_t tpttf(
     float const* AP,
     float* ARF )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
     char transr_ = to_char( transr );
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
     lapack_int info_ = 0;
 
     LAPACK_stpttf(
@@ -46,13 +43,9 @@ int64_t tpttf(
     double const* AP,
     double* ARF )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
     char transr_ = to_char( transr );
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
     lapack_int info_ = 0;
 
     LAPACK_dtpttf(
@@ -72,13 +65,9 @@ int64_t tpttf(
     std::complex<float> const* AP,
     std::complex<float>* ARF )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
     char transr_ = to_char( transr );
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
     lapack_int info_ = 0;
 
     LAPACK_ctpttf(
@@ -98,13 +87,9 @@ int64_t tpttf(
     std::complex<double> const* AP,
     std::complex<double>* ARF )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-    }
     char transr_ = to_char( transr );
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
+    lapack_int n_ = to_lapack_int( n );
     lapack_int info_ = 0;
 
     LAPACK_ztpttf(

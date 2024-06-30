@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -21,17 +22,11 @@ float lanhb(
     lapack::Norm norm, lapack::Uplo uplo, int64_t n, int64_t kd,
     std::complex<float> const* AB, int64_t ldab )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-    }
     char norm_ = to_char( norm );
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int kd_ = (lapack_int) kd;
-    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int kd_ = to_lapack_int( kd );
+    lapack_int ldab_ = to_lapack_int( ldab );
 
     // from docs
     int64_t lwork = (norm == Norm::Inf || norm == Norm::One ? n : 1);
@@ -95,17 +90,11 @@ double lanhb(
     lapack::Norm norm, lapack::Uplo uplo, int64_t n, int64_t kd,
     std::complex<double> const* AB, int64_t ldab )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-    }
     char norm_ = to_char( norm );
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int kd_ = (lapack_int) kd;
-    lapack_int ldab_ = (lapack_int) ldab;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int kd_ = to_lapack_int( kd );
+    lapack_int ldab_ = to_lapack_int( ldab );
 
     // from docs
     int64_t lwork = (norm == Norm::Inf || norm == Norm::One ? n : 1);

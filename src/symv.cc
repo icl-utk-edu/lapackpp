@@ -8,6 +8,7 @@
 
 #include "lapack/fortran.h"
 #include "lapack.hh"
+#include "lapack_internal.hh"
 
 #include <limits>
 
@@ -38,18 +39,10 @@ void symv(
     lapack_error_if( incx == 0 );
     lapack_error_if( incy == 0 );
 
-    // check for overflow in native BLAS integer type, if smaller than int64_t
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( n              > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( lda            > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(incx) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(incy) > std::numeric_limits<lapack_int>::max() );
-    }
-
-    lapack_int n_    = (lapack_int) n;
-    lapack_int lda_  = (lapack_int) lda;
-    lapack_int incx_ = (lapack_int) incx;
-    lapack_int incy_ = (lapack_int) incy;
+    lapack_int n_    = to_lapack_int( n );
+    lapack_int lda_  = to_lapack_int( lda );
+    lapack_int incx_ = to_lapack_int( incx );
+    lapack_int incy_ = to_lapack_int( incy );
 
     if (layout == Layout::RowMajor) {
         // swap lower <=> upper
@@ -88,18 +81,10 @@ void symv(
     lapack_error_if( incx == 0 );
     lapack_error_if( incy == 0 );
 
-    // check for overflow in native BLAS integer type, if smaller than int64_t
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( n              > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( lda            > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(incx) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(incy) > std::numeric_limits<lapack_int>::max() );
-    }
-
-    lapack_int n_    = (lapack_int) n;
-    lapack_int lda_  = (lapack_int) lda;
-    lapack_int incx_ = (lapack_int) incx;
-    lapack_int incy_ = (lapack_int) incy;
+    lapack_int n_    = to_lapack_int( n );
+    lapack_int lda_  = to_lapack_int( lda );
+    lapack_int incx_ = to_lapack_int( incx );
+    lapack_int incy_ = to_lapack_int( incy );
 
     if (layout == Layout::RowMajor) {
         // swap lower <=> upper

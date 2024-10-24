@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -20,32 +21,22 @@ int64_t sygvx(
     int64_t itype, lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     float* A, int64_t lda,
     float* B, int64_t ldb, float vl, float vu, int64_t il, int64_t iu, float abstol,
-    int64_t* m,
+    int64_t* nfound,
     float* W,
     float* Z, int64_t ldz,
     int64_t* ifail )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(itype) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(il) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(iu) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int itype_ = (lapack_int) itype;
+    lapack_int itype_ = to_lapack_int( itype );
     char jobz_ = to_char( jobz );
     char range_ = to_char( range );
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int ldb_ = (lapack_int) ldb;
-    lapack_int il_ = (lapack_int) il;
-    lapack_int iu_ = (lapack_int) iu;
-    lapack_int m_ = (lapack_int) *m;
-    lapack_int ldz_ = (lapack_int) ldz;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int ldb_ = to_lapack_int( ldb );
+    lapack_int il_ = to_lapack_int( il );
+    lapack_int iu_ = to_lapack_int( iu );
+    lapack_int nfound_ = 0;
+    lapack_int ldz_ = to_lapack_int( ldz );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         lapack::vector< lapack_int > ifail_( (n) );
@@ -62,7 +53,7 @@ int64_t sygvx(
     LAPACK_ssygvx(
         &itype_, &jobz_, &range_, &uplo_, &n_,
         A, &lda_,
-        B, &ldb_, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        B, &ldb_, &vl, &vu, &il_, &iu_, &abstol, &nfound_,
         W,
         Z, &ldz_,
         qry_work, &ineg_one,
@@ -81,7 +72,7 @@ int64_t sygvx(
     LAPACK_ssygvx(
         &itype_, &jobz_, &range_, &uplo_, &n_,
         A, &lda_,
-        B, &ldb_, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        B, &ldb_, &vl, &vu, &il_, &iu_, &abstol, &nfound_,
         W,
         Z, &ldz_,
         &work[0], &lwork_,
@@ -91,10 +82,10 @@ int64_t sygvx(
     if (info_ < 0) {
         throw Error();
     }
-    *m = m_;
+    *nfound = nfound_;
     #ifndef LAPACK_ILP64
         if (jobz != Job::NoVec) {
-            std::copy( &ifail_[ 0 ], &ifail_[ m_ ], ifail );
+            std::copy( &ifail_[ 0 ], &ifail_[ nfound_ ], ifail );
         }
     #endif
     return info_;
@@ -105,32 +96,22 @@ int64_t sygvx(
     int64_t itype, lapack::Job jobz, lapack::Range range, lapack::Uplo uplo, int64_t n,
     double* A, int64_t lda,
     double* B, int64_t ldb, double vl, double vu, int64_t il, int64_t iu, double abstol,
-    int64_t* m,
+    int64_t* nfound,
     double* W,
     double* Z, int64_t ldz,
     int64_t* ifail )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(itype) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(il) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(iu) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldz) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int itype_ = (lapack_int) itype;
+    lapack_int itype_ = to_lapack_int( itype );
     char jobz_ = to_char( jobz );
     char range_ = to_char( range );
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int ldb_ = (lapack_int) ldb;
-    lapack_int il_ = (lapack_int) il;
-    lapack_int iu_ = (lapack_int) iu;
-    lapack_int m_ = (lapack_int) *m;
-    lapack_int ldz_ = (lapack_int) ldz;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int ldb_ = to_lapack_int( ldb );
+    lapack_int il_ = to_lapack_int( il );
+    lapack_int iu_ = to_lapack_int( iu );
+    lapack_int nfound_ = 0;
+    lapack_int ldz_ = to_lapack_int( ldz );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         lapack::vector< lapack_int > ifail_( (n) );
@@ -147,7 +128,7 @@ int64_t sygvx(
     LAPACK_dsygvx(
         &itype_, &jobz_, &range_, &uplo_, &n_,
         A, &lda_,
-        B, &ldb_, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        B, &ldb_, &vl, &vu, &il_, &iu_, &abstol, &nfound_,
         W,
         Z, &ldz_,
         qry_work, &ineg_one,
@@ -166,7 +147,7 @@ int64_t sygvx(
     LAPACK_dsygvx(
         &itype_, &jobz_, &range_, &uplo_, &n_,
         A, &lda_,
-        B, &ldb_, &vl, &vu, &il_, &iu_, &abstol, &m_,
+        B, &ldb_, &vl, &vu, &il_, &iu_, &abstol, &nfound_,
         W,
         Z, &ldz_,
         &work[0], &lwork_,
@@ -176,10 +157,10 @@ int64_t sygvx(
     if (info_ < 0) {
         throw Error();
     }
-    *m = m_;
+    *nfound = nfound_;
     #ifndef LAPACK_ILP64
         if (jobz != Job::NoVec) {
-            std::copy( &ifail_[ 0 ], &ifail_[ m_ ], ifail );
+            std::copy( &ifail_[ 0 ], &ifail_[ nfound_ ], ifail );
         }
     #endif
     return info_;

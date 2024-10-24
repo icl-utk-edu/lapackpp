@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 #include "NoConstructAllocator.hh"
 
@@ -22,18 +23,10 @@ void laswp(
     float* A, int64_t lda, int64_t k1, int64_t k2,
     int64_t const* ipiv, int64_t incx )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k1) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k2) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(incx) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int k1_ = (lapack_int) k1;
-    lapack_int k2_ = (lapack_int) k2;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int k1_ = to_lapack_int( k1 );
+    lapack_int k2_ = to_lapack_int( k2 );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(k1+(k2-k1)*std::abs(incx))] );
@@ -41,7 +34,7 @@ void laswp(
     #else
         lapack_int const* ipiv_ptr = ipiv;
     #endif
-    lapack_int incx_ = (lapack_int) incx;
+    lapack_int incx_ = to_lapack_int( incx );
 
     LAPACK_slaswp(
         &n_,
@@ -56,18 +49,10 @@ void laswp(
     double* A, int64_t lda, int64_t k1, int64_t k2,
     int64_t const* ipiv, int64_t incx )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k1) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k2) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(incx) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int k1_ = (lapack_int) k1;
-    lapack_int k2_ = (lapack_int) k2;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int k1_ = to_lapack_int( k1 );
+    lapack_int k2_ = to_lapack_int( k2 );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(k1+(k2-k1)*std::abs(incx))] );
@@ -75,7 +60,7 @@ void laswp(
     #else
         lapack_int const* ipiv_ptr = ipiv;
     #endif
-    lapack_int incx_ = (lapack_int) incx;
+    lapack_int incx_ = to_lapack_int( incx );
 
     LAPACK_dlaswp(
         &n_,
@@ -90,18 +75,10 @@ void laswp(
     std::complex<float>* A, int64_t lda, int64_t k1, int64_t k2,
     int64_t const* ipiv, int64_t incx )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k1) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k2) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(incx) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int k1_ = (lapack_int) k1;
-    lapack_int k2_ = (lapack_int) k2;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int k1_ = to_lapack_int( k1 );
+    lapack_int k2_ = to_lapack_int( k2 );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(k1+(k2-k1)*std::abs(incx))] );
@@ -109,7 +86,7 @@ void laswp(
     #else
         lapack_int const* ipiv_ptr = ipiv;
     #endif
-    lapack_int incx_ = (lapack_int) incx;
+    lapack_int incx_ = to_lapack_int( incx );
 
     LAPACK_claswp(
         &n_,
@@ -162,18 +139,10 @@ void laswp(
     std::complex<double>* A, int64_t lda, int64_t k1, int64_t k2,
     int64_t const* ipiv, int64_t incx )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(lda) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k1) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k2) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(incx) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int lda_ = (lapack_int) lda;
-    lapack_int k1_ = (lapack_int) k1;
-    lapack_int k2_ = (lapack_int) k2;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int lda_ = to_lapack_int( lda );
+    lapack_int k1_ = to_lapack_int( k1 );
+    lapack_int k2_ = to_lapack_int( k2 );
     #ifndef LAPACK_ILP64
         // 32-bit copy
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(k1+(k2-k1)*std::abs(incx))] );
@@ -181,7 +150,7 @@ void laswp(
     #else
         lapack_int const* ipiv_ptr = ipiv;
     #endif
-    lapack_int incx_ = (lapack_int) incx;
+    lapack_int incx_ = to_lapack_int( incx );
 
     LAPACK_zlaswp(
         &n_,

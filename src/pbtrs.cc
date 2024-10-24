@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 
 #include <vector>
@@ -21,20 +22,12 @@ int64_t pbtrs(
     float const* AB, int64_t ldab,
     float* B, int64_t ldb )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int kd_ = (lapack_int) kd;
-    lapack_int nrhs_ = (lapack_int) nrhs;
-    lapack_int ldab_ = (lapack_int) ldab;
-    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int kd_ = to_lapack_int( kd );
+    lapack_int nrhs_ = to_lapack_int( nrhs );
+    lapack_int ldab_ = to_lapack_int( ldab );
+    lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int info_ = 0;
 
     LAPACK_spbtrs(
@@ -55,20 +48,12 @@ int64_t pbtrs(
     double const* AB, int64_t ldab,
     double* B, int64_t ldb )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int kd_ = (lapack_int) kd;
-    lapack_int nrhs_ = (lapack_int) nrhs;
-    lapack_int ldab_ = (lapack_int) ldab;
-    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int kd_ = to_lapack_int( kd );
+    lapack_int nrhs_ = to_lapack_int( nrhs );
+    lapack_int ldab_ = to_lapack_int( ldab );
+    lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int info_ = 0;
 
     LAPACK_dpbtrs(
@@ -89,20 +74,12 @@ int64_t pbtrs(
     std::complex<float> const* AB, int64_t ldab,
     std::complex<float>* B, int64_t ldb )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int kd_ = (lapack_int) kd;
-    lapack_int nrhs_ = (lapack_int) nrhs;
-    lapack_int ldab_ = (lapack_int) ldab;
-    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int kd_ = to_lapack_int( kd );
+    lapack_int nrhs_ = to_lapack_int( nrhs );
+    lapack_int ldab_ = to_lapack_int( ldab );
+    lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int info_ = 0;
 
     LAPACK_cpbtrs(
@@ -168,20 +145,12 @@ int64_t pbtrs(
     std::complex<double> const* AB, int64_t ldab,
     std::complex<double>* B, int64_t ldb )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(kd) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nrhs) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldab) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldb) > std::numeric_limits<lapack_int>::max() );
-    }
     char uplo_ = to_char( uplo );
-    lapack_int n_ = (lapack_int) n;
-    lapack_int kd_ = (lapack_int) kd;
-    lapack_int nrhs_ = (lapack_int) nrhs;
-    lapack_int ldab_ = (lapack_int) ldab;
-    lapack_int ldb_ = (lapack_int) ldb;
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int kd_ = to_lapack_int( kd );
+    lapack_int nrhs_ = to_lapack_int( nrhs );
+    lapack_int ldab_ = to_lapack_int( ldab );
+    lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int info_ = 0;
 
     LAPACK_zpbtrs(

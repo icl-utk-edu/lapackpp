@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 
 #if LAPACK_VERSION >= 30400  // >= 3.4.0
@@ -28,25 +29,15 @@ int64_t gemqrt(
     if (trans == Op::ConjTrans)
         trans = Op::Trans;
 
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
-    }
     char side_ = to_char( side );
     char trans_ = to_char( trans );
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int nb_ = (lapack_int) nb;
-    lapack_int ldv_ = (lapack_int) ldv;
-    lapack_int ldt_ = (lapack_int) ldt;
-    lapack_int ldc_ = (lapack_int) ldc;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int nb_ = to_lapack_int( nb );
+    lapack_int ldv_ = to_lapack_int( ldv );
+    lapack_int ldt_ = to_lapack_int( ldt );
+    lapack_int ldc_ = to_lapack_int( ldc );
     lapack_int info_ = 0;
 
     // Set workspace size
@@ -80,25 +71,15 @@ int64_t gemqrt(
     if (trans == Op::ConjTrans)
         trans = Op::Trans;
 
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
-    }
     char side_ = to_char( side );
     char trans_ = to_char( trans );
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int nb_ = (lapack_int) nb;
-    lapack_int ldv_ = (lapack_int) ldv;
-    lapack_int ldt_ = (lapack_int) ldt;
-    lapack_int ldc_ = (lapack_int) ldc;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int nb_ = to_lapack_int( nb );
+    lapack_int ldv_ = to_lapack_int( ldv );
+    lapack_int ldt_ = to_lapack_int( ldt );
+    lapack_int ldc_ = to_lapack_int( ldc );
     lapack_int info_ = 0;
 
     // Set workspace size
@@ -132,25 +113,15 @@ int64_t gemqrt(
     if (trans == Op::Trans)
         trans = Op::ConjTrans;
 
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
-    }
     char side_ = to_char( side );
     char trans_ = to_char( trans );
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int nb_ = (lapack_int) nb;
-    lapack_int ldv_ = (lapack_int) ldv;
-    lapack_int ldt_ = (lapack_int) ldt;
-    lapack_int ldc_ = (lapack_int) ldc;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int nb_ = to_lapack_int( nb );
+    lapack_int ldv_ = to_lapack_int( ldv );
+    lapack_int ldt_ = to_lapack_int( ldt );
+    lapack_int ldc_ = to_lapack_int( ldc );
     lapack_int info_ = 0;
 
     // Set workspace size
@@ -259,25 +230,15 @@ int64_t gemqrt(
     if (trans == Op::Trans)
         trans = Op::ConjTrans;
 
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(m) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(k) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(nb) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldv) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldt) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(ldc) > std::numeric_limits<lapack_int>::max() );
-    }
     char side_ = to_char( side );
     char trans_ = to_char( trans );
-    lapack_int m_ = (lapack_int) m;
-    lapack_int n_ = (lapack_int) n;
-    lapack_int k_ = (lapack_int) k;
-    lapack_int nb_ = (lapack_int) nb;
-    lapack_int ldv_ = (lapack_int) ldv;
-    lapack_int ldt_ = (lapack_int) ldt;
-    lapack_int ldc_ = (lapack_int) ldc;
+    lapack_int m_ = to_lapack_int( m );
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int k_ = to_lapack_int( k );
+    lapack_int nb_ = to_lapack_int( nb );
+    lapack_int ldv_ = to_lapack_int( ldv );
+    lapack_int ldt_ = to_lapack_int( ldt );
+    lapack_int ldc_ = to_lapack_int( ldc );
     lapack_int info_ = 0;
 
     // Set workspace size

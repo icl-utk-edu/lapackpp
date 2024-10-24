@@ -4,6 +4,7 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include "lapack.hh"
+#include "lapack_internal.hh"
 #include "lapack/fortran.h"
 
 #include <vector>
@@ -23,13 +24,8 @@ int64_t laed4(
     float* delta, float rho,
     float* lambda )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(i) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int i_ = (lapack_int) i + 1;  // change to 1-based
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int i_ = to_lapack_int( i ) + 1;  // change to 1-based
     lapack_int info_ = 0;
 
     LAPACK_slaed4(
@@ -104,13 +100,8 @@ int64_t laed4(
     double* delta, double rho,
     double* lambda )
 {
-    // check for overflow
-    if (sizeof(int64_t) > sizeof(lapack_int)) {
-        lapack_error_if( std::abs(n) > std::numeric_limits<lapack_int>::max() );
-        lapack_error_if( std::abs(i) > std::numeric_limits<lapack_int>::max() );
-    }
-    lapack_int n_ = (lapack_int) n;
-    lapack_int i_ = (lapack_int) i + 1;  // change to 1-based
+    lapack_int n_ = to_lapack_int( n );
+    lapack_int i_ = to_lapack_int( i ) + 1;  // change to 1-based
     lapack_int info_ = 0;
 
     LAPACK_dlaed4(

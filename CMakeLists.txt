@@ -301,7 +301,6 @@ add_library(
     src/lagge.cc
     src/laghe.cc
     src/lagsy.cc
-    src/lamch.cc
     src/langb.cc
     src/lange.cc
     src/langt.cc

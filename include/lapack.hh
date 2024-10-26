@@ -9,8 +9,8 @@
 #include "lapack/defines.h"
 
 // Version is updated by make_release.py; DO NOT EDIT.
-// Version 2024.05.31
-#define LAPACKPP_VERSION 20240531
+// Version 2024.10.26
+#define LAPACKPP_VERSION 20241026
 
 namespace lapack {
 

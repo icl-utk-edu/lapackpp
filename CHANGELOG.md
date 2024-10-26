@@ -1,3 +1,9 @@
+2024.10.26
+  - Added eigenvalue utilities (lae2, laev2, lasr).
+  - Refactor eigenvalue testers.
+  - Use std::hypot instead of lapy2, lapy3.
+  - Use to_lapack_int to convert int32 to int64.
+
 2024.05.31
   - Added shared library version (ABI version 1.0.0)
   - Updated enum parameters to have `to_string`, `from_string`;

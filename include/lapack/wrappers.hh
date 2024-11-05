@@ -8119,45 +8119,6 @@ inline int64_t hegvx(
 }
 
 // -----------------------------------------------------------------------------
-}  // end namespace lapack
-namespace blas {
-
-void syr(
-    blas::Layout layout,
-    blas::Uplo uplo, int64_t n, std::complex<float> alpha,
-    std::complex<float> const* X, int64_t incx,
-    std::complex<float>* A, int64_t lda );
-
-void syr(
-    blas::Layout layout,
-    blas::Uplo uplo, int64_t n, std::complex<double> alpha,
-    std::complex<double> const* X, int64_t incx,
-    std::complex<double>* A, int64_t lda );
-
-void symv(
-    blas::Layout layout,
-    blas::Uplo uplo,
-    int64_t n,
-    std::complex<float> alpha,
-    std::complex<float> const *A, int64_t lda,
-    std::complex<float> const *x, int64_t incx,
-    std::complex<float> beta,
-    std::complex<float> *y, int64_t incy );
-
-void symv(
-    blas::Layout layout,
-    blas::Uplo uplo,
-    int64_t n,
-    std::complex<double> alpha,
-    std::complex<double> const*A, int64_t lda,
-    std::complex<double> const *x, int64_t incx,
-    std::complex<double> beta,
-    std::complex<double> *y, int64_t incy );
-
-}  // end namespace blas
-namespace lapack {
-
-// -----------------------------------------------------------------------------
 int64_t syrfs(
     lapack::Uplo uplo, int64_t n, int64_t nrhs,
     float const* A, int64_t lda,

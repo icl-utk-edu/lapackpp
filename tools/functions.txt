@@ -527,8 +527,6 @@ sygv
 sygv_2stage
 sygvd
 sygvx
-symv
-syr
 syrfs
 syrfsx
 sysv

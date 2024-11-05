@@ -186,7 +186,6 @@ add_executable(
     test_sptrs.cc
     test_sturm.cc
     test_sycon.cc
-    test_syr.cc
     test_syrfs.cc
     test_sysv.cc
     test_sysv_aa.cc
@@ -220,7 +219,6 @@ add_executable(
     test_tpqrt.cc
     test_tpqrt2.cc
     test_tprfb.cc
-    test_symv.cc
     test_larfy.cc
 )
 

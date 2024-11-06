@@ -6,9 +6,6 @@
 #ifndef ICL_LAPACKE_WRAPPERS_HH
 #define ICL_LAPACKE_WRAPPERS_HH
 
-#include "lapack/util.hh"
-#include "lapack/config.h"  // may be newer than what's in lapacke.h
-
 #include <complex>
 #include <vector>
 
@@ -23,9 +20,6 @@
 #else
     #include <lapacke.h>
 #endif
-
-// *after* lapacke.h, which may define LAPACK_GLOBAL macro
-#include "lapack/mangling.h"
 
 // This is in alphabetical order.
 
@@ -4809,7 +4803,7 @@ extern "C" {
 /* ----- matrix norm - general banded */
 #ifndef LAPACK_slangb
 #define LAPACK_slangb LAPACK_GLOBAL(slangb,SLANGB)
-lapack_float_return LAPACK_slangb(
+lapackpp_float_return LAPACK_slangb(
     char const* norm, lapack_int const* n,
     lapack_int const* kl, lapack_int const* ku,
     float const* AB, lapack_int const* ldab,
@@ -4827,7 +4821,7 @@ double LAPACK_dlangb(
 
 #ifndef LAPACK_clangb
 #define LAPACK_clangb LAPACK_GLOBAL(clangb,CLANGB)
-lapack_float_return LAPACK_clangb(
+lapackpp_float_return LAPACK_clangb(
     char const* norm, lapack_int const* n,
     lapack_int const* kl, lapack_int const* ku,
     lapack_complex_float const* AB, lapack_int const* ldab,
@@ -4931,7 +4925,7 @@ extern "C" {
 /* ----- matrix norm - general tridiagonal */
 #ifndef LAPACK_slangt
 #define LAPACK_slangt LAPACK_GLOBAL(slangt,SLANGT)
-lapack_float_return LAPACK_slangt(
+lapackpp_float_return LAPACK_slangt(
     char const* norm, lapack_int const* n,
     float const* DL,
     float const* D,
@@ -4949,7 +4943,7 @@ double LAPACK_dlangt(
 
 #ifndef LAPACK_clangt
 #define LAPACK_clangt LAPACK_GLOBAL(clangt,CLANGT)
-lapack_float_return LAPACK_clangt(
+lapackpp_float_return LAPACK_clangt(
     char const* norm, lapack_int const* n,
     lapack_complex_float const* DL,
     lapack_complex_float const* D,
@@ -5028,7 +5022,7 @@ extern "C" {
 /* ----- matrix norm - symmetric banded */
 #ifndef LAPACK_slansb
 #define LAPACK_slansb LAPACK_GLOBAL(slansb,SLANSB)
-lapack_float_return LAPACK_slansb(
+lapackpp_float_return LAPACK_slansb(
     char const* norm, char const* uplo,
     lapack_int const* n, lapack_int const* kd,
     float const* AB, lapack_int const* ldab,
@@ -5046,7 +5040,7 @@ double LAPACK_dlansb(
 
 #ifndef LAPACK_clanhb
 #define LAPACK_clanhb LAPACK_GLOBAL(clanhb,CLANHB)
-lapack_float_return LAPACK_clanhb(
+lapackpp_float_return LAPACK_clanhb(
     char const* norm, char const* uplo,
     lapack_int const* n, lapack_int const* kd,
     lapack_complex_float const* AB, lapack_int const* ldab,
@@ -5150,7 +5144,7 @@ extern "C" {
 /* ----- matrix norm - symmetric packed */
 #ifndef LAPACK_slansp
 #define LAPACK_slansp LAPACK_GLOBAL(slansp,SLANSP)
-lapack_float_return LAPACK_slansp(
+lapackpp_float_return LAPACK_slansp(
     char const* norm, char const* uplo,
     lapack_int const* n,
     float const* AP, float* work );
@@ -5166,7 +5160,7 @@ double LAPACK_dlansp(
 
 #ifndef LAPACK_clanhp
 #define LAPACK_clanhp LAPACK_GLOBAL(clanhp,CLANHP)
-lapack_float_return LAPACK_clanhp(
+lapackpp_float_return LAPACK_clanhp(
     char const* norm, char const* uplo,
     lapack_int const* n,
     lapack_complex_float const* AP, float* work );
@@ -5231,7 +5225,7 @@ extern "C" {
 /* ----- matrix norm - symmetric packed */
 #ifndef LAPACK_slanhs
 #define LAPACK_slanhs LAPACK_GLOBAL(slanhs,SLANHS)
-lapack_float_return LAPACK_slanhs(
+lapackpp_float_return LAPACK_slanhs(
     char const* norm,
     lapack_int const* n,
     float const* A, lapack_int const* lda, float* work );
@@ -5247,7 +5241,7 @@ double LAPACK_dlanhs(
 
 #ifndef LAPACK_clanhs
 #define LAPACK_clanhs LAPACK_GLOBAL(clanhs,CLANHS)
-lapack_float_return LAPACK_clanhs(
+lapackpp_float_return LAPACK_clanhs(
     char const* norm,
     lapack_int const* n,
     lapack_complex_float const* A, lapack_int const* lda, float* work );
@@ -5312,7 +5306,7 @@ extern "C" {
 /* ----- matrix norm - symmetric tridiagonal */
 #ifndef LAPACK_slanst
 #define LAPACK_slanst LAPACK_GLOBAL(slanst,SLANST)
-lapack_float_return LAPACK_slanst(
+lapackpp_float_return LAPACK_slanst(
     char const* norm, lapack_int const* n,
     float const* D,
     float const* E );
@@ -5328,7 +5322,7 @@ double LAPACK_dlanst(
 
 #ifndef LAPACK_clanht
 #define LAPACK_clanht LAPACK_GLOBAL(clanht,CLANHT)
-lapack_float_return LAPACK_clanht(
+lapackpp_float_return LAPACK_clanht(
     char const* norm, lapack_int const* n,
     float const* D,
     lapack_complex_float const* E );
@@ -5419,7 +5413,7 @@ extern "C" {
 /* ----- matrix norm - symmetric banded */
 #ifndef LAPACK_slansb
 #define LAPACK_slansb LAPACK_GLOBAL(slansb,SLANSB)
-lapack_float_return LAPACK_slansb(
+lapackpp_float_return LAPACK_slansb(
     char const* norm, char const* uplo,
     lapack_int const* n, lapack_int const* kd,
     float const* AB, lapack_int const* ldab,
@@ -5437,7 +5431,7 @@ double LAPACK_dlansb(
 
 #ifndef LAPACK_clansb
 #define LAPACK_clansb LAPACK_GLOBAL(clansb,CLANSB)
-lapack_float_return LAPACK_clansb(
+lapackpp_float_return LAPACK_clansb(
     char const* norm, char const* uplo,
     lapack_int const* n, lapack_int const* kd,
     lapack_complex_float const* AB, lapack_int const* ldab,
@@ -5504,7 +5498,7 @@ extern "C" {
 /* ----- matrix norm - symmetric packed */
 #ifndef LAPACK_slansp
 #define LAPACK_slansp LAPACK_GLOBAL(slansp,SLANSP)
-lapack_float_return LAPACK_slansp(
+lapackpp_float_return LAPACK_slansp(
     char const* norm, char const* uplo,
     lapack_int const* n,
     float const* AP, float* work );
@@ -5520,7 +5514,7 @@ double LAPACK_dlansp(
 
 #ifndef LAPACK_clansp
 #define LAPACK_clansp LAPACK_GLOBAL(clansp,CLANSP)
-lapack_float_return LAPACK_clansp(
+lapackpp_float_return LAPACK_clansp(
     char const* norm, char const* uplo,
     lapack_int const* n,
     lapack_complex_float const* AP, float* work );
@@ -5622,7 +5616,7 @@ extern "C" {
 /* ----- matrix norm - triangular banded */
 #ifndef LAPACK_slantb
 #define LAPACK_slantb LAPACK_GLOBAL(slantb,SLANTB)
-lapack_float_return LAPACK_slantb(
+lapackpp_float_return LAPACK_slantb(
     char const* norm, char const* uplo, char const* diag,
     lapack_int const* n, lapack_int const* k,
     float const* AB, lapack_int const* ldab,
@@ -5640,7 +5634,7 @@ double LAPACK_dlantb(
 
 #ifndef LAPACK_clantb
 #define LAPACK_clantb LAPACK_GLOBAL(clantb,CLANTB)
-lapack_float_return LAPACK_clantb(
+lapackpp_float_return LAPACK_clantb(
     char const* norm, char const* uplo, char const* diag,
     lapack_int const* n, lapack_int const* k,
     lapack_complex_float const* AB, lapack_int const* ldab,
@@ -5707,7 +5701,7 @@ extern "C" {
 /* ----- matrix norm - triangular packed */
 #ifndef LAPACK_slantp
 #define LAPACK_slantp LAPACK_GLOBAL(slantp,SLANTP)
-lapack_float_return LAPACK_slantp(
+lapackpp_float_return LAPACK_slantp(
     char const* norm, char const* uplo, char const* diag,
     lapack_int const* n,
     float const* AP,
@@ -5725,7 +5719,7 @@ double LAPACK_dlantp(
 
 #ifndef LAPACK_clantp
 #define LAPACK_clantp LAPACK_GLOBAL(clantp,CLANTP)
-lapack_float_return LAPACK_clantp(
+lapackpp_float_return LAPACK_clantp(
     char const* norm, char const* uplo, char const* diag,
     lapack_int const* n,
     lapack_complex_float const* AP,

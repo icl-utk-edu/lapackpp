@@ -21,7 +21,7 @@
     #else
         typedef int lapack_int;
     #endif
-    /* #define so that #ifdef works. */
+    // #define so we can check later with #ifdef.
     #define lapack_int lapack_int
 #endif
 
@@ -29,84 +29,49 @@
     #define lapack_logical lapack_int
 #endif
 
-/* f2c, hence MacOS Accelerate, returns double instead of float
- * for sdot, slange, clange, etc. */
+// f2c, hence MacOS Accelerate (before 13.3), returns double instead of float
+// for sdot, slange, clange, etc.
+// LAPACKE's lapack.h is missing #define to protect against multiple
+// definitions, so use lapackpp prefix.
 #if defined(BLAS_HAVE_ACCELERATE) || defined(BLAS_HAVE_F2C)
-    typedef double lapack_float_return;
+    typedef double lapackpp_float_return;
 #else
-    typedef float lapack_float_return;
+    typedef float lapackpp_float_return;
 #endif
+// #define so we can check later with #ifdef.
+#define lapackpp_float_return lapackpp_float_return
 
-/* --------------------------------------------------------------------------
- * Complex types */
-#if defined(LAPACK_COMPLEX_CUSTOM)
-    /* If user defines LAPACK_COMPLEX_CUSTOM, then the user must define:
-     *     lapack_complex_float
-     *     lapack_complex_double
-     *     lapack_complex_float_real(z)
-     *     lapack_complex_float_imag(z)
-     *     lapack_complex_double_real(z)
-     *     lapack_complex_double_imag(z)
-     */
+//------------------------------------------------------------------------------
+// Complex types
+#if defined( lapack_complex_float ) || defined( LAPACK_COMPLEX_CUSTOM )
+    // LAPACKE's header may already define lapack_complex_float. Otherwise,
+    // if user defines LAPACK_COMPLEX_CUSTOM, then the user must define:
+    //     lapack_complex_float
+    //     lapack_complex_double
 
 #elif defined(LAPACK_COMPLEX_STRUCTURE) || defined(_MSC_VER)
-
-    /* If user defines LAPACK_COMPLEX_STRUCTURE, then use a struct.
-     * Also use this for MSVC, as it has no C99 _Complex.
-     */
+    // If user defines LAPACK_COMPLEX_STRUCTURE, then use a struct.
+    // Also use this for MSVC, as it has no C99 _Complex.
     typedef struct { float  real, imag; } lapack_complex_float;
     typedef struct { double real, imag; } lapack_complex_double;
-    #define lapack_complex_float_real(z)  ((z).real)
-    #define lapack_complex_float_imag(z)  ((z).imag)
-    #define lapack_complex_double_real(z) ((z).real)
-    #define lapack_complex_double_imag(z) ((z).imag)
 
 #elif defined(LAPACK_COMPLEX_CPP) && defined(__cplusplus)
-    /* If user defines LAPACK_COMPLEX_CPP, then use C++ std::complex.
-     * This isn't compatible as a return type from extern C functions,
-     * so it may generate compiler warnings or errors. */
+    // If user defines LAPACK_COMPLEX_CPP, then use C++ std::complex.
+    // This isn't compatible as a return type from extern C functions,
+    // so it may generate compiler warnings or errors.
     #include <complex>
     typedef std::complex<float>  lapack_complex_float;
     typedef std::complex<double> lapack_complex_double;
-    #define lapack_complex_float_real(z)  ((z).real())
-    #define lapack_complex_float_imag(z)  ((z).imag())
-    #define lapack_complex_double_real(z) ((z).real())
-    #define lapack_complex_double_imag(z) ((z).imag())
 
 #else
-
-    /* Otherwise, by default use C99 _Complex. */
+    // Otherwise, by default use C99 _Complex.
     #include <complex.h>
     typedef float _Complex  lapack_complex_float;
     typedef double _Complex lapack_complex_double;
-    #define lapack_complex_float_real(z)  (creal(z))
-    #define lapack_complex_float_imag(z)  (cimag(z))
-    #define lapack_complex_double_real(z) (creal(z))
-    #define lapack_complex_double_imag(z) (cimag(z))
-
 #endif
 
-/* define so we can check later with ifdef */
+// #define so we can check later with #ifdef.
 #define lapack_complex_float  lapack_complex_float
 #define lapack_complex_double lapack_complex_double
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-
-lapack_complex_float  lapack_make_complex_float( float re, float im );
-lapack_complex_double lapack_make_complex_double( double re, double im );
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
-
-#ifndef LAPACK_malloc
-#define LAPACK_malloc( size )   malloc( size )
-#endif
-
-#ifndef LAPACK_free
-#define LAPACK_free( p )        free( p )
-#endif
-
-#endif /* LAPACK_CONFIG_H */
+#endif // LAPACK_CONFIG_H

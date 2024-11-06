@@ -6,6 +6,9 @@
 #ifndef ICL_LAPACKE_WRAPPERS_HH
 #define ICL_LAPACKE_WRAPPERS_HH
 
+#include "lapack/util.hh"
+#include "lapack/config.h"  // may be newer than what's in lapacke.h
+
 #include <complex>
 #include <vector>
 
@@ -20,6 +23,9 @@
 #else
     #include <lapacke.h>
 #endif
+
+// *after* lapacke.h, which may define LAPACK_GLOBAL macro
+#include "lapack/mangling.h"
 
 // This is in alphabetical order.
 

@@ -463,10 +463,6 @@ void test_lagsy ( Params& params, bool run );
 void test_laghe ( Params& params, bool run );
 void test_lagtr ( Params& params, bool run );
 
-// additional BLAS
-void test_syr   ( Params& params, bool run );
-void test_symv  ( Params& params, bool run );
-
 //----------------------------------------
 // GPU device functions
 void test_potrf_device ( Params& params, bool run );

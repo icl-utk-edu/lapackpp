@@ -112,16 +112,6 @@
     @}
 
     ----------------------------------------------------------------------------
-    @defgroup group_blas BLAS extensions in LAPACK
-    @{
-        @defgroup symv         symv:    Symmetric matrix-vector multiply
-        @brief    $y = \alpha Ax + \beta y$
-
-        @defgroup syr          syr:     Symmetric rank 1 update
-        @brief    $A = \alpha xx^T + A$
-    @}
-
-    ----------------------------------------------------------------------------
     @defgroup group_test Test routines
     @{
         @defgroup generate_matrix Test matrix generation

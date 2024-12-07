@@ -450,8 +450,6 @@ add_library(
     src/sygv.cc
     src/sygvd.cc
     src/sygvx.cc
-    src/symv.cc
-    src/syr.cc
     src/syrfs.cc
     src/syrfsx.cc
     src/sysv_aa.cc

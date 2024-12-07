@@ -71,9 +71,6 @@ enum Section {
     aux_householder,
     aux_givens,
     aux_gen,
-    blas1,
-    blas2,
-    blas3,
     gpu,
     num_sections,  // last
 };
@@ -95,9 +92,6 @@ const char* section_names[] = {
     "auxiliary - Householder",
     "auxiliary - Givens",
     "auxiliary - matrix generation",
-    "Level 1 BLAS (additional)",
-    "Level 2 BLAS (additional)",
-    "Level 3 BLAS (additional)",
     "GPU device functions",
 };
 
@@ -482,11 +476,6 @@ std::vector< testsweeper::routines_t > routines = {
     //{ "lagsy",              test_lagsy,     Section::aux_gen },
     //{ "laghe",              test_laghe,     Section::aux_gen },
     //{ "lagtr",              test_lagtr,     Section::aux_gen },
-    { "",                   nullptr,        Section::newline },
-
-    // additional BLAS
-    { "syr",                test_syr,       Section::blas2 },
-    { "symv",               test_symv,      Section::blas2 },
     { "",                   nullptr,        Section::newline },
 
     //----------------------------------------

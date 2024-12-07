@@ -79,7 +79,6 @@ categories = [
     group_cat.add_argument( '--aux-house',     action='store_true', help='run auxiliary Householder reflector tests' ),
     group_cat.add_argument( '--aux-givens',    action='store_true', help='run auxiliary Givens rotations tests' ),
     group_cat.add_argument( '--aux-norm',      action='store_true', help='run auxiliary norm tests' ),
-    group_cat.add_argument( '--blas',          action='store_true', help='run additional BLAS tests' ),
 ]
 # map category objects to category names: ['lu', 'chol', ...]
 categories = list( map( lambda x: x.dest, categories ) )
@@ -747,13 +746,6 @@ if (opts.aux_norm and opts.host):
     [ 'langt', gen + dtype + n + norm ],
     [ 'lanht', gen + dtype + n + norm ],
     [ 'lanst', gen + dtype + n + norm ],
-    ]
-
-# additional blas
-if (opts.blas and opts.host):
-    cmds += [
-    [ 'syr',   gen + dtype + align + n + uplo ],
-    [ 'symv',  gen + dtype + layout + align + uplo + n + incx + incy ],
     ]
 
 # ------------------------------------------------------------------------------

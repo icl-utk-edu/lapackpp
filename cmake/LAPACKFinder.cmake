@@ -51,17 +51,8 @@ endif()
 #---------------------------------------- lapack
 string( TOLOWER "${lapack}" lapack_ )
 
-if ("${lapack_}" MATCHES "auto")
-    set( test_all true )
-endif()
-
-if ("${lapack_}" MATCHES "default")
-    set( test_default true )
-endif()
-
-if ("${lapack_}" MATCHES "generic")
-    set( test_generic true )
-endif()
+string( REGEX MATCH "auto|default" test_default "${lapack_}" )
+string( REGEX MATCH "auto|generic" test_generic "${lapack_}" )
 
 message( DEBUG "
 LAPACK_LIBRARIES      = '${LAPACK_LIBRARIES}'
@@ -69,12 +60,10 @@ lapack                = '${lapack}'
 lapack_               = '${lapack_}'
 test_lapack_libraries = '${test_lapack_libraries}'
 test_default          = '${test_default}'
-test_generic          = '${test_generic}'
-test_all              = '${test_all}'")
+test_generic          = '${test_generic}'" )
 
 #-------------------------------------------------------------------------------
 # Build list of libraries to check.
-# todo: add flame?
 # todo: LAPACK_?(ROOT|DIR)
 
 set( lapack_libs_list "" )
@@ -89,12 +78,12 @@ if (test_lapack_libraries)
 endif()
 
 #---------------------------------------- default (in BLAS library)
-if (test_all OR test_default)
+if (test_default)
     list( APPEND lapack_libs_list " " )
 endif()
 
 #---------------------------------------- generic -llapack
-if (test_all OR test_generic)
+if (test_generic)
     list( APPEND lapack_libs_list "-llapack" )
 endif()
 
@@ -106,6 +95,7 @@ message( DEBUG "lapack_libs_list ${lapack_libs_list}" )
 # LAPACK++ checks for pstrf (Cholesky with pivoting) to make sure it is
 # a complete LAPACK library, since some BLAS libraries (ESSL, ATLAS)
 # contain only an optimized subset of LAPACK routines.
+# ESSL lacks [cz]symv, [cz]syr.
 
 unset( LAPACK_FOUND CACHE )
 unset( lapackpp_defs_ CACHE )

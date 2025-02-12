@@ -12,7 +12,7 @@
 namespace lapack {
 
 using blas::real;
-using blas::is_complex;
+using blas::is_complex_v;
 using blas::real_type;
 using blas::complex_type;
 
@@ -165,7 +165,7 @@ int64_t tgsen(
 
     // For real, create vectors for split-complex representation.
     // For complex, creates as dummy `int` type to be optimized away.
-    std::conditional_t< is_complex<scalar_t>::value, int, std::vector<scalar_t> >
+    std::conditional_t< is_complex_v<scalar_t>, int, std::vector<scalar_t> >
         alphar, alphai;
     blas_unused( alphar );  // unused in complex
     blas_unused( alphai );
@@ -174,7 +174,7 @@ int64_t tgsen(
     scalar_t qry_work[ 1 ];
     lapack_int qry_iwork[ 1 ];
     lapack_int ineg_one = -1;
-    if constexpr (! is_complex<scalar_t>::value) {
+    if constexpr (! is_complex_v<scalar_t>) {
         // For real, use split-complex alpha.
         alphar.resize( n );
         alphai.resize( n );
@@ -203,7 +203,7 @@ int64_t tgsen(
     std::vector< lapack_int > iwork( liwork_ );
 
     // call low-level wrapper
-    if constexpr (! is_complex<scalar_t>::value) {
+    if constexpr (! is_complex_v<scalar_t>) {
         // For real, use split-complex alpha.
         internal::tgsen(
             ijob_, wantq_, wantz_, select, n_,

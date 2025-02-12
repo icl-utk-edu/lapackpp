@@ -14,7 +14,7 @@ namespace lapack {
 using blas::max;
 using blas::min;
 using blas::real;
-using blas::is_complex;
+using blas::is_complex_v;
 
 //==============================================================================
 namespace internal {
@@ -129,7 +129,7 @@ int64_t tgexc(
     lapack_int ilst_ = to_lapack_int( *ilst );  // in,out
     lapack_int info_ = 0;
 
-    if constexpr (! is_complex<scalar_t>::value) {
+    if constexpr (! is_complex_v<scalar_t>) {
         // Real needs workspace.
         // query for workspace size
         scalar_t qry_work[1];

@@ -46,7 +46,7 @@ void test_larfb_work( Params& params, bool run )
     }
 
     // skip invalid configuration
-    if ((blas::is_complex<scalar_t>::value) &&
+    if ((blas::is_complex_v<scalar_t>) &&
         (trans == lapack::Op::Trans))
     {
         params.msg() = "skipping: requires Op::NoTrans or Op::ConjTrans if complex";

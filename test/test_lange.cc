@@ -82,7 +82,7 @@ void test_lange_work( Params& params, bool run )
         // ---------- check error compared to reference
         real_t tol = 3 * std::numeric_limits< real_t >::epsilon();
         real_t normalize = 1;
-        if (norm == lapack::Norm::Max && ! blas::is_complex< scalar_t >::value) {
+        if (norm == lapack::Norm::Max && ! blas::is_complex_v< scalar_t >) {
             // max-norm depends on only one element, so in real there should be
             // zero error, but in complex there's error in abs().
             tol = 0;

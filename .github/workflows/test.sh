@@ -1,8 +1,5 @@
 #!/bin/bash -x
 
-maker=$1
-device=$2
-
 mydir=$(dirname $0)
 source ${mydir}/setup_env.sh
 
@@ -21,12 +18,18 @@ if [ "${device}" = "gpu_intel" ]; then
     args+=" --type s,c"
 fi
 
-./run_tests.py ${args} --host
-(( err += $? ))
+if [[ $check = "sanity" ]]; then
+    echo "Running only sanity checks"
+    ./run_tests.py ${args} potrf dev-potrf
+    (( err += $? ))
+else
+    ./run_tests.py ${args} --host
+    (( err += $? ))
 
-# CUDA, HIP, or SYCL. These fail gracefully when GPUs are absent.
-./run_tests.py ${args} --device
-(( err += $? ))
+    # CUDA, HIP, or SYCL. These fail gracefully when GPUs are absent.
+    ./run_tests.py ${args} --device
+    (( err += $? ))
+fi
 
 print "======================================== Smoke tests"
 cd ${top}/examples

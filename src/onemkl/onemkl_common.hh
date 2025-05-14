@@ -9,7 +9,7 @@
 #include "lapack/device.hh"
 
 #include <sycl/detail/cl.h>  // For CL version
-#include <sycl.hpp>
+#include <sycl/sycl.hpp>
 
 #define MKL_Complex8  lapack_complex_float
 #define MKL_Complex16 lapack_complex_double

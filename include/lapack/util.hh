@@ -216,27 +216,6 @@ inline void from_string( std::string const& str, Sides* val )
         throw Error( "unknown Sides: " + str );
 }
 
-//--------------------
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char sides2char( Sides value )
-{
-    return char( value );
-}
-
-[[deprecated("use to_string or to_c_string. To be removed 2025-05.")]]
-inline const char* sides2str( Sides value )
-{
-    return to_c_string( value );
-}
-
-[[deprecated("use from_string. To be removed 2025-05.")]]
-inline Sides char2sides( char ch )
-{
-    Sides val;
-    from_string( std::string( 1, ch ), &val );
-    return val;
-}
-
 // -----------------------------------------------------------------------------
 enum class Norm : char {
     One = '1',  // or 'O'
@@ -287,27 +266,6 @@ inline void from_string( std::string const& str, Norm* val )
         *val = Norm::Max;
     else
         throw Error( "unknown Norm: " + str );
-}
-
-//--------------------
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char norm2char( Norm value )
-{
-    return char( value );
-}
-
-[[deprecated("use to_string or to_c_string. To be removed 2025-05.")]]
-inline const char* norm2str( Norm value )
-{
-    return to_c_string( value );
-}
-
-[[deprecated("use from_string. To be removed 2025-05.")]]
-inline Norm char2norm( char ch )
-{
-    Norm val;
-    from_string( std::string( 1, ch ), &val );
-    return val;
 }
 
 //------------------------------------------------------------------------------
@@ -479,48 +437,6 @@ inline void from_string( std::string const& str, Job* val )
         throw Error( "unknown Job: " + str );
 }
 
-//--------------------
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char job2char       ( Job value ) { return to_char      ( value ); }
-
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char job_csd2char   ( Job value ) { return to_char_csd  ( value ); }
-
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char job_comp2char  ( Job value ) { return to_char_comp ( value ); }
-
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char job_compu2char ( Job value ) { return to_char_compu( value ); }
-
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char job_compq2char ( Job value ) { return to_char_compq( value ); }
-
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char jobu2char      ( Job value ) { return to_char_jobu ( value ); }
-
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char jobq2char      ( Job value ) { return to_char_jobq ( value ); }
-
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char jobu_gejsv2char( Job value ) { return to_char_gejsv( value ); }
-
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char job_gesvj2char ( Job value ) { return to_char_gesvj( value ); }
-
-[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
-inline const char* job2str( Job value )
-{
-    return to_c_string( value );
-}
-
-[[deprecated("use from_string. To be removed 2025-05.")]]
-inline Job char2job( char ch )
-{
-    Job val;
-    from_string( std::string( 1, ch ), &val );
-    return val;
-}
-
 // -----------------------------------------------------------------------------
 // hseqr
 enum class JobSchur : char {
@@ -560,27 +476,6 @@ inline void from_string( std::string const& str, JobSchur* val )
         *val = JobSchur::Schur;
     else
         throw Error( "unknown JobSchur: " + str );
-}
-
-//--------------------
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char jobschur2char( JobSchur value )
-{
-    return char( value );
-}
-
-[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
-inline const char* jobschur2str( JobSchur value )
-{
-    return to_c_string( value );
-}
-
-[[deprecated("use from_string. To be removed 2025-05.")]]
-inline JobSchur char2jobschur( char ch )
-{
-    JobSchur val;
-    from_string( std::string( 1, ch ), &val );
-    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -624,27 +519,6 @@ inline void from_string( std::string const& str, Sort* val )
         *val = Sort::Sorted;
     else
         throw Error( "unknown Sort: " + str );
-}
-
-//--------------------
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char sort2char( Sort sort )
-{
-    return char( sort );
-}
-
-[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
-inline const char* sort2str( Sort value )
-{
-    return to_c_string( value );
-}
-
-[[deprecated("use from_string. To be removed 2025-05.")]]
-inline Sort char2sort( char ch )
-{
-    Sort val;
-    from_string( std::string( 1, ch ), &val );
-    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -691,27 +565,6 @@ inline void from_string( std::string const& str, Range* val )
         *val = Range::Index;
     else
         throw Error( "unknown Range: " + str );
-}
-
-//--------------------
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char range2char( Range range )
-{
-    return char( range );
-}
-
-[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
-inline const char* range2str( Range value )
-{
-    return to_c_string( value );
-}
-
-[[deprecated("use from_string. To be removed 2025-05.")]]
-inline Range char2range( char ch )
-{
-    Range val;
-    from_string( std::string( 1, ch ), &val );
-    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -763,27 +616,6 @@ inline void from_string( std::string const& str, Vect* val )
         throw Error( "unknown Vect: " + str );
 }
 
-//--------------------
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char vect2char( Vect value )
-{
-    return char( value );
-}
-
-[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
-inline const char* vect2str( Vect value )
-{
-    return to_c_string( value );
-}
-
-[[deprecated("use from_string. To be removed 2025-05.")]]
-inline Vect char2vect( char ch )
-{
-    Vect val;
-    from_string( std::string( 1, ch ), &val );
-    return val;
-}
-
 // -----------------------------------------------------------------------------
 // larfb
 enum class Direction : char {
@@ -824,27 +656,6 @@ inline void from_string( std::string const& str, Direction* val )
         *val = Direction::Backward;
     else
         throw Error( "unknown Direction: " + str );
-}
-
-//--------------------
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char direction2char( Direction value )
-{
-    return char( value );
-}
-
-[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
-inline const char* direction2str( Direction value )
-{
-    return to_c_string( value );
-}
-
-[[deprecated("use from_string. To be removed 2025-05.")]]
-inline Direction char2direction( char ch )
-{
-    Direction val;
-    from_string( std::string( 1, ch ), &val );
-    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -888,27 +699,6 @@ inline void from_string( std::string const& str, StoreV* val )
         *val = StoreV::Rowwise;
     else
         throw Error( "unknown StoreV: " + str );
-}
-
-//--------------------
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char storev2char( StoreV value )
-{
-    return char( value );
-}
-
-[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
-inline const char* storev2str( StoreV value )
-{
-    return to_c_string( value );
-}
-
-[[deprecated("use from_string. To be removed 2025-05.")]]
-inline StoreV char2storev( char ch )
-{
-    StoreV val;
-    from_string( std::string( 1, ch ), &val );
-    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -974,27 +764,6 @@ inline void from_string( std::string const& str, MatrixType* val )
         throw Error( "unknown MatrixType: " + str );
 }
 
-//--------------------
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char matrixtype2char( MatrixType value )
-{
-    return char( value );
-}
-
-[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
-inline const char* matrixtype2str( MatrixType value )
-{
-    return to_c_string( value );
-}
-
-[[deprecated("use from_string. To be removed 2025-05.")]]
-inline MatrixType char2matrixtype( char ch )
-{
-    MatrixType val;
-    from_string( std::string( 1, ch ), &val );
-    return val;
-}
-
 // -----------------------------------------------------------------------------
 // trevc
 enum class HowMany : char {
@@ -1039,27 +808,6 @@ inline void from_string( std::string const& str, HowMany* val )
         *val = HowMany::Select;
     else
         throw Error( "unknown HowMany: " + str );
-}
-
-//--------------------
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char howmany2char( HowMany value )
-{
-    return char( value );
-}
-
-[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
-inline const char* howmany2str( HowMany value )
-{
-    return to_c_string( value );
-}
-
-[[deprecated("use from_string. To be removed 2025-05.")]]
-inline HowMany char2howmany( char ch )
-{
-    HowMany val;
-    from_string( std::string( 1, ch ), &val );
-    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -1116,27 +864,6 @@ inline void from_string( std::string const& str, Equed* val )
         throw Error( "unknown Equed: " + str );
 }
 
-//--------------------
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char equed2char( Equed value )
-{
-    return char( value );
-}
-
-[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
-inline const char* equed2str( Equed value )
-{
-    return to_c_string( value );
-}
-
-[[deprecated("use from_string. To be removed 2025-05.")]]
-inline Equed char2equed( char ch )
-{
-    Equed val;
-    from_string( std::string( 1, ch ), &val );
-    return val;
-}
-
 // -----------------------------------------------------------------------------
 // *svx
 // todo: what's good name for this?
@@ -1182,27 +909,6 @@ inline void from_string( std::string const& str, Factored* val )
         *val = Factored::Equilibrate;
     else
         throw Error( "unknown Factored: " + str );
-}
-
-//--------------------
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char factored2char( Factored value )
-{
-    return char( value );
-}
-
-[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
-inline const char* factored2str( Factored value )
-{
-    return to_c_string( value );
-}
-
-[[deprecated("use from_string. To be removed 2025-05.")]]
-inline Factored char2factored( char ch )
-{
-    Factored val;
-    from_string( std::string( 1, ch ), &val );
-    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -1256,27 +962,6 @@ inline void from_string( std::string const& str, Sense* val )
         throw Error( "unknown Sense: " + str );
 }
 
-//--------------------
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char sense2char( Sense value )
-{
-    return char( value );
-}
-
-[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
-inline const char* sense2str( Sense value )
-{
-    return to_c_string( value );
-}
-
-[[deprecated("use from_string. To be removed 2025-05.")]]
-inline Sense char2sense( char ch )
-{
-    Sense val;
-    from_string( std::string( 1, ch ), &val );
-    return val;
-}
-
 // -----------------------------------------------------------------------------
 // disna
 enum class JobCond : char {
@@ -1321,26 +1006,6 @@ inline void from_string( std::string const& str, JobCond* val )
         *val = JobCond::RightSingularVec;
     else
         throw Error( "unknown JobCond: " + str );
-}
-
-//--------------------
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char jobcond2char( JobCond value )
-{
-    return char( value );
-}
-
-[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
-inline const char* jobcond2str( JobCond value )
-{
-    return to_c_string( value );
-}
-
-inline JobCond char2jobcond( char ch )
-{
-    JobCond val;
-    from_string( std::string( 1, ch ), &val );
-    return val;
 }
 
 // -----------------------------------------------------------------------------
@@ -1393,27 +1058,6 @@ inline void from_string( std::string const& str, Balance* val )
         throw Error( "unknown Balance: " + str );
 }
 
-//--------------------
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char balance2char( Balance value )
-{
-    return char( value );
-}
-
-[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
-inline const char* balance2str( Balance value )
-{
-    return to_c_string( value );
-}
-
-[[deprecated("use from_string. To be removed 2025-05.")]]
-inline Balance char2balance( char ch )
-{
-    Balance val;
-    from_string( std::string( 1, ch ), &val );
-    return val;
-}
-
 // -----------------------------------------------------------------------------
 // stebz, larrd, stein docs
 enum class Order : char {
@@ -1456,27 +1100,6 @@ inline void from_string( std::string const& str, Order* val )
         throw Error( "unknown Order: " + str );
 }
 
-//--------------------
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char order2char( Order value )
-{
-    return char( value );
-}
-
-[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
-inline const char* order2str( Order value )
-{
-    return to_c_string( value );
-}
-
-[[deprecated("use from_string. To be removed 2025-05.")]]
-inline Order char2order( char ch )
-{
-    Order val;
-    from_string( std::string( 1, ch ), &val );
-    return val;
-}
-
 // -----------------------------------------------------------------------------
 // check_ortho (LAPACK testing zunt01)
 enum class RowCol : char {
@@ -1517,27 +1140,6 @@ inline void from_string( std::string const& str, RowCol* val )
         *val = RowCol::Row;
     else
         throw Error( "unknown RowCol: " + str );
-}
-
-//--------------------
-[[deprecated("use to_char. To be removed 2025-05.")]]
-inline char rowcol2char( RowCol value )
-{
-    return char( value );
-}
-
-[[deprecated("use to_c_string or to_string. To be removed 2025-05.")]]
-inline const char* rowcol2str( RowCol value )
-{
-    return to_c_string( value );
-}
-
-[[deprecated("use from_string. To be removed 2025-05.")]]
-inline RowCol char2rowcol( char ch )
-{
-    RowCol val;
-    from_string( std::string( 1, ch ), &val );
-    return val;
 }
 
 // -----------------------------------------------------------------------------

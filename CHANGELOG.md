@@ -1,13 +1,22 @@
-2024.10.26
-  - Added eigenvalue utilities (lae2, laev2, lasr).
-  - Refactor eigenvalue testers.
-  - Use std::hypot instead of lapy2, lapy3.
-  - Use to_lapack_int to convert int32 to int64.
+2025.05.28 (ABI 2.0.0)
+  - Added support for BLIS and libFLAME (hence AOCL)
+  - Removed support for ACML
+  - Removed [cz]symv and [cz]syr; moved them to BLAS++
+  - Removed deprecated `<enum>2str`, `str2<enum>`, `char2<enum>`, `<enum>2char`
+  - Tester prints stats with --repeat
+  - Fixed SYCL include path
+  - Fixed conflict between LAPACKE and LAPACK++ headers
 
-2024.05.31
-  - Added shared library version (ABI version 1.0.0)
+2024.10.26 (ABI 1.0.0)
+  - Added eigenvalue utilities (lae2, laev2, lasr)
+  - Refactor eigenvalue testers
+  - Use std::hypot instead of lapy2, lapy3. Deprecate lapy2, lapy3
+  - Use to_lapack_int to convert int32 to int64
+
+2024.05.31 (ABI 1.0.0)
+  - Added shared library ABI version
   - Updated enum parameters to have `to_string`, `from_string`;
-    deprecate `<enum>2str`, `str2<enum>`
+    deprecate `<enum>2str`, `str2<enum>`, `char2<enum>`, `<enum>2char`
   - Removed some deprecated functions
 
 2023.11.05

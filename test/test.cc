@@ -788,6 +788,7 @@ int main( int argc, char** argv )
 
         // run tests
         int repeat = params.repeat();
+        std::vector<double> times( repeat ), gflops( repeat );
         testsweeper::DataType last = params.datatype();
         std::string matrix, matrixB;
         double cond = 0, condD = 0, condB = 0, condD_B = 0;
@@ -806,6 +807,11 @@ int main( int argc, char** argv )
                              ansi_bold, ansi_red, ex.what(), ansi_normal );
                     params.okay() = false;
                 }
+
+                // Collect stats.
+                times [ iter ] = params.time();
+                gflops[ iter ] = params.gflops();
+
                 if (iter == 0) {
                     print_matrix_header( params.matrix,  "test matrix A", &matrix,  &cond,  &condD   );
                     print_matrix_header( params.matrixB, "test matrix B", &matrixB, &condB, &condD_B );
@@ -816,6 +822,8 @@ int main( int argc, char** argv )
                 params.reset_output();
             }
             if (repeat > 1) {
+                testsweeper::print_stats( params.time,   times  );
+                testsweeper::print_stats( params.gflops, gflops );
                 printf( "\n" );
             }
         } while(params.next());

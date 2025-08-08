@@ -545,7 +545,10 @@ if (opts.qr and opts.host):
 if (opts.qr and opts.device):
     # GPU
     cmds += [
-    [ 'dev-geqrf', gen + dtype + align + n + wide + tall ],
+    [ 'dev-geqrf',  gen + dtype + align + n + wide + tall ],
+    [ 'dev-tpqrt',  gen + dtype + align + mn + l + nb ],
+    [ 'dev-tpqrt2', gen + dtype + align + mn + l ],
+    [ 'dev-tprfb',  gen + dtype + align + mn + l + trans ], # TODO: fix cases for side and direction
     ]
 
 # LQ
@@ -713,6 +716,12 @@ if (opts.aux_house and opts.host):
     [ 'larfy', gen + dtype + align + n   + incx ],
     [ 'larfb', gen + dtype + align + mnk + side + trans + direction + storev ],
     [ 'larft', gen + dtype + align + nk  + direction + storev ],
+    ]
+    
+if (opts.aux_house and opts.device):
+    # GPU
+    cmds += [
+    [ 'dev-larfg', dtype + n + incx_pos ],
     ]
 
 # auxilary - Givens rotations

@@ -330,7 +330,7 @@ void tprfb(
         // work_2 = V_12^H work_2 = V_12^H B_1
         blas::trmm( Layout::ColMajor, Side::Left, Uplo::Lower, op_trans, Diag::NonUnit, l, n, one, V_12, lddv, work_2, ldwork, queue );
         // work_2 = V_22^H B_2 + work_2
-        blas::gemm( Layout::ColMajor, op_trans, Op::NoTrans, l, n, m - l, one, V_22, lddv, B_1, lddb, one, work_2, ldwork, queue );
+        blas::gemm( Layout::ColMajor, op_trans, Op::NoTrans, l, n, m - l, one, V_22, lddv, B_2, lddb, one, work_2, ldwork, queue );
         // work_1 = V_x1^H B + work_1
         blas::gemm( Layout::ColMajor, op_trans, Op::NoTrans, k - l, n, m, one, V_x1, lddv, dB, lddb, zero, work_1, ldwork, queue );
 
@@ -412,7 +412,7 @@ void tprfb(
         // work_2 = work_2 V_12 = B_1 V_12
         blas::trmm( Layout::ColMajor, Side::Right, Uplo::Lower, Op::NoTrans, Diag::NonUnit, m, l, one, V_12, lddv, work_2, ldwork, queue );
         // work_2 = B2 V_22 + work_2
-        blas::gemm( Layout::ColMajor, Op::NoTrans, Op::NoTrans, m, l, n - l, one, B_1, lddb, V_22, lddv, one, work_2, ldwork, queue );
+        blas::gemm( Layout::ColMajor, Op::NoTrans, Op::NoTrans, m, l, n - l, one, B_2, lddb, V_22, lddv, one, work_2, ldwork, queue );
         // work_1 = B V_x1 + work_1
         blas::gemm( Layout::ColMajor, Op::NoTrans, Op::NoTrans, m, k - l, n, one, dB, lddb, V_x1, lddv, zero, work_1, ldwork, queue );
 
@@ -661,7 +661,7 @@ void tprfb(
         // work_2 = V_21 work_2  V_21 B_1
         blas::trmm( Layout::ColMajor, Side::Left, Uplo::Upper, Op::NoTrans, Diag::NonUnit, l, n, one, V_21, lddv, work_2, ldwork, queue );
         // work_2 = V_22 B_2 + work_2
-        blas::gemm( Layout::ColMajor, Op::NoTrans, Op::NoTrans, l, n, m - l, one, V_22, lddv, B_1, lddb, one, work_2, ldwork, queue );
+        blas::gemm( Layout::ColMajor, Op::NoTrans, Op::NoTrans, l, n, m - l, one, V_22, lddv, B_2, lddb, one, work_2, ldwork, queue );
         // work_1 = V_1x B + work_1
         blas::gemm( Layout::ColMajor, Op::NoTrans, Op::NoTrans, k - l, n, m, one, V_1x, lddv, dB, lddb, zero, work_1, ldwork, queue );
 
@@ -742,7 +742,7 @@ void tprfb(
         // work_2 = work_2 V_21^H = B_1 V_21^H
         blas::trmm( Layout::ColMajor, Side::Right, Uplo::Upper, op_trans, Diag::NonUnit, m, l, one, V_21, lddv, work_2, ldwork, queue );
         // work_2 = B_2 V_22^H + work_2
-        blas::gemm( Layout::ColMajor, Op::NoTrans, op_trans, m, l, n - l, one, B_1, lddb, V_22, lddv, one, work_2, ldwork, queue );
+        blas::gemm( Layout::ColMajor, Op::NoTrans, op_trans, m, l, n - l, one, B_2, lddb, V_22, lddv, one, work_2, ldwork, queue );
         // work_1 = B V_1x^H + work_1
         blas::gemm( Layout::ColMajor, Op::NoTrans, op_trans, m, k - l, n, one, dB, lddb, V_1x, lddv, zero, work_1, ldwork, queue );
 

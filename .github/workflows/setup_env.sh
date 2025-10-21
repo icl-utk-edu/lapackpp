@@ -150,9 +150,10 @@ if [ "${device}" = "gpu_nvidia" ]; then
 
 elif [ "${device}" = "gpu_amd" ]; then
     print "======================================== Load ROCm"
-    export ROCM_PATH=/opt/rocm
+    export MODULEPATH=$MODULEPATH:/apps/rocm/Modulefiles
+    quiet module load rocm/6.3.2
     # Some hip utilities require /usr/sbin/lsmod
-    export PATH=${PATH}:${ROCM_PATH}/bin:/usr/sbin
+    export PATH=${PATH}:/usr/sbin
     export gpu_backend=hip
     quiet which hipcc
     hipcc --version

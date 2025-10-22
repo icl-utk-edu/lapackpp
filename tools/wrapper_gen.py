@@ -982,9 +982,9 @@ def parse_lapack( path ):
         arg.desc = re.sub( r'(\S)  +',    r'\1 ', arg.desc )
 
         # extract data type and if array
-        s = (re.search( r'^ *' + arg.name + ' +is +(CHARACTER|INTEGER|REAL|DOUBLE PRECISION|COMPLEX\*16|COMPLEX|LOGICAL)( array)?', arg.desc ) or
+        s = (re.search( r'^ *' + arg.name + r' +is +(CHARACTER|INTEGER|REAL|DOUBLE PRECISION|COMPLEX\*16|COMPLEX|LOGICAL)( array)?', arg.desc ) or
              re.search( r'^ *\(workspace\) +(CHARACTER|INTEGER|REAL|DOUBLE PRECISION|COMPLEX\*16|COMPLEX|LOGICAL)( array)?', arg.desc ) or
-             re.search( r'^ *' + arg.name + ' +is a (LOGICAL FUNCTION of (?:one|two|three) (?:REAL|DOUBLE PRECISION|COMPLEX\*16|COMPLEX) arguments?)( array)?', arg.desc ))
+             re.search( r'^ *' + arg.name + r' +is a (LOGICAL FUNCTION of (?:one|two|three) (?:REAL|DOUBLE PRECISION|COMPLEX\*16|COMPLEX) arguments?)( array)?', arg.desc ))
         if (s):
             arg.dtype = typemap[ s.group(1).lower() ]
             arg.is_array = (s.group(2) == ' array')
@@ -1164,14 +1164,15 @@ def parse_docs( func, txt, variables, indent=0 ):
 
     # Fortran operators:  ".LT."  =>  "<"
     txt = re.sub( r'\.(LT|LE|GT|GE|EQ|NE)\.',
-                  lambda match: fortran_operators[ match.group(1) ], txt, 0, re.I )
+                  lambda match: fortran_operators[ match.group(1) ], txt,
+                  count=0, flags=re.I )
 
     # space around operators
     txt = re.sub( r'(\S)(<=|>=)(\S)', r'\1 \2 \3', txt )
     txt = re.sub( r'(\S)(<=|>=)(\S)', r'\1 \2 \3', txt )
 
     # make indents 4 spaces (lapack usually has 3)
-    txt = re.sub( r'^   +', r'    ', txt, 0, re.M )
+    txt = re.sub( r'^   +', r'    ', txt, count=0, flags=re.M )
 
     # convert enums, e.g.,
     # "UPLO = 'U'" => "uplo = Upper"
@@ -1184,8 +1185,8 @@ def parse_docs( func, txt, variables, indent=0 ):
                   lambda match: '`lapack::' + match.group(1).lower() + '`', txt )
 
     # INFO references
-    txt = re.sub( r'On exit, if INFO *= *0,', r'On successful exit,', txt, 0, re.I )
-    txt = re.sub( r'(if) INFO *= *0', r'\1 successful', txt, 0, re.I )
+    txt = re.sub( r'On exit, if INFO *= *0,', r'On successful exit,', txt, count=0, flags=re.I )
+    txt = re.sub( r'(if) INFO *= *0', r'\1 successful', txt, count=0, flags=re.I )
     txt = re.sub( r'\bINFO *(=|>|>=) *', r'return value \1 ', txt )
 
     # rename arguments (lowercase, spelling)
@@ -1196,7 +1197,7 @@ def parse_docs( func, txt, variables, indent=0 ):
     txt = re.sub( r'\b([a-z]) by ([a-z])\b', r'\1-by-\2', txt )
 
     # prefix lines
-    txt = re.sub( r'^', r'/// ' + ' '*indent, txt, 0, re.M ) + '\n'
+    txt = re.sub( r'^', r'/// ' + ' '*indent, txt, count=0, flags=re.M ) + '\n'
     return txt
 # end
 
@@ -1239,21 +1240,21 @@ def generate_docs( func ):
 
         # remove "VAR is INTEGER" line
         d = re.sub( r'^ *' + arg.name.upper()
-                    + ' +is +(CHARACTER|INTEGER|REAL|DOUBLE PRECISION|COMPLEX\*16|COMPLEX|LOGICAL).*\n',
+                    + r' +is +(CHARACTER|INTEGER|REAL|DOUBLE PRECISION|COMPLEX\*16|COMPLEX|LOGICAL).*\n',
                     r'', d )
 
         # change "Specifies the ..." => "The ..."
-        d = re.sub( r'^ *' + 'Specifies (\w)',
+        d = re.sub( r'^ *Specifies (\w)',
                     lambda match: match.group(1).upper(), d )
 
         if (arg.name == 'info'):
             # @retval
             d = re.sub( r'^ *< *0: *if INFO *= *-i, the i-th argument.*\n', r'',
-                        d, 0, re.M | re.I )
-            d = re.sub( r'^ *(=|<|<=|>|>=) ', r'@retval \1 ', d, 0, re.M )
+                        d, count=0, flags=re.M | re.I )
+            d = re.sub( r'^ *(=|<|<=|>|>=) ', r'@retval \1 ', d, count=0, flags=re.M )
 
             # increase indented lines
-            d = re.sub( r'^      ', r'             ', d, 0, re.M )
+            d = re.sub( r'^      ', r'             ', d, count=0, flags=re.M )
 
             txt += parse_docs( func, d, variables, indent=0 )
         else:
@@ -1294,13 +1295,13 @@ def generate_docs( func ):
             if (arg.is_enum):
                 d = re.sub( r"^ *= *'(\w)'(?:(\s+or\s+)'(\w)')?[:,]",
                             lambda match: sub_enum_list( arg, match ),
-                            d, 0, re.M )
+                            d, count=0, flags=re.M )
             # end
 
             d = parse_docs( func, d, variables, indent=4 )
 
             # add "\n" on blank lines
-            d = re.sub( r'^(/// +)\n///', r'\1\\n\n///', d, 0, re.M )
+            d = re.sub( r'^(/// +)\n///', r'\1\\n\n///', d, count=0, flags=re.M )
             txt += d
         # end
         i += 1
@@ -1322,7 +1323,7 @@ def generate_docs( func ):
             txt = re.sub( search, replace, txt )
 
     # trim trailing whitespace
-    txt = re.sub( r' +$', r'', txt, 0, re.M )
+    txt = re.sub( r' +$', r'', txt, count=0, flags=re.M )
 
     return txt
 # end
@@ -1357,7 +1358,7 @@ def generate_wrapper( func, header=False ):
 
         # cast complex pointers
         cast = ''
-        m = re.search( '^std::complex<(\w+)>$', arg.dtype )
+        m = re.search( r'^std::complex<(\w+)>$', arg.dtype )
         if (m):
             cast = '(lapack_complex_' + m.group(1) + '*) '
         call_args.append( prefix + cast + arg.pname )
@@ -1546,7 +1547,7 @@ def generate_wrapper( func, header=False ):
             txt = re.sub( search, replace, txt )
 
     # trim trailing whitespace
-    txt = re.sub( r' +$', r'', txt, 0, re.M )
+    txt = re.sub( r' +$', r'', txt, 0, flags=re.M )
 
     return txt
 # end
@@ -1699,7 +1700,7 @@ def generate_tester( funcs ):
             if (arg.is_array or ('out' in arg.intent)):
                 pre = '\n' + tab*2
             # cast complex pointers
-            m = re.search( '^std::complex<(\w+)>$', arg.dtype )
+            m = re.search( r'^std::complex<(\w+)>$', arg.dtype )
             if (m):
                 pre += '(lapack_complex_' + m.group(1) + '*) '
             lapacke_args.append( pre + arg.name )
@@ -1847,7 +1848,7 @@ void test_''' + func.name + '''( Params& params, bool run )
             txt = re.sub( search, replace, txt )
 
     # trim trailing whitespace
-    txt = re.sub( r' +$', r'', txt, 0, re.M )
+    txt = re.sub( r' +$', r'', txt, count=0, flags=re.M )
 
     return txt
 # end

@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2023, University of Tennessee. All rights reserved.
+// Copyright (c) 2017-2025, University of Tennessee. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
@@ -100,10 +100,12 @@ void test_larfg_device_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_larfg( n, &alpha_ref, &X_ref[0], incx, &tau_ref );
+        int64_t info_ref = LAPACKE_larfg( n, &alpha_ref, &X_ref[0], incx,
+                                          &tau_ref );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_larfg returned error %lld\n", llong( info_ref ) );
+            fprintf( stderr, "LAPACKE_larfg returned error %lld\n",
+                     llong( info_ref ) );
         }
 
         params.ref_time() = time;

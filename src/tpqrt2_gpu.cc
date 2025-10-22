@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2023, University of Tennessee. All rights reserved.
+// Copyright (c) 2017-2025, University of Tennessee. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
@@ -64,9 +64,12 @@ int64_t tpqrt2(
         if (i < n-1) {
             // Apply block reflector to C
 
-            // Compute v^H C_i where C_i = [ A_row ; B_rem ], (work = A_row^H + B^H v)
+            // Compute v^H C_i where C_i = [ A_row ; B_rem ],
+            // (work = A_row^H + B^H v)
             blas::conj( n-i-1, A_row, ldda, work, 1, queue );
-            blas::gemv( Layout::ColMajor, op_trans, p, n-i-1, one, B_rem, lddb, v, 1, one, work, 1, queue );
+            blas::gemv( Layout::ColMajor, op_trans, p, n-i-1,
+                        one, B_rem, lddb, v, 1,
+                        one, work, 1, queue );
 
             // Apply H to A_row (A_row = A_row - tau * work^H)
             // alpha = -conj( tau )
@@ -75,7 +78,8 @@ int64_t tpqrt2(
             queue.sync();
             alpha = -conj( alpha );
             // A_row += alpha * work^H for j = [0, n-i-1)
-            scalar_t* temp = blas::device_malloc< scalar_t >( n-i-1, queue );   // Allocate intermediate temp vector
+            // Allocate intermediate temp vector
+            scalar_t* temp = blas::device_malloc< scalar_t >( n-i-1, queue );
             blas::conj( n-i-1, work, 1, temp, 1, queue );
             blas::axpy( n-i-1, alpha, temp, 1, A_row, ldda, queue );
             queue.sync();
@@ -83,13 +87,14 @@ int64_t tpqrt2(
 
             // Apply H to B
             // B_rem = B_rem + alpha*v*work^H
-            blas::ger( Layout::ColMajor, p, n-i-1, alpha, v, 1, work, 1, B_rem, lddb, queue );
+            blas::ger( Layout::ColMajor, p, n-i-1, alpha, v, 1, work, 1,
+                       B_rem, lddb, queue );
         }
     }
     for (int i = 1; i < n; ++i) {
         // Get T matrix
 
-        // T(1:I-1,I) := C(I:M,1:I-1)**H * (alpha * C(I:M,I))
+        // T(1:I-1,I) := C(I:M,1:I-1)^H * (alpha * C(I:M,I))
 
         // alpha = -dT(i, 0)
         scalar_t alpha;
@@ -107,16 +112,22 @@ int64_t tpqrt2(
         // T(j, i) = alpha * B(m-l, i)
         blas::device_memcpy( dT(0, i), dB(m-l, i), p, queue );
         blas::scal( p, alpha, dT(0, i), 1, queue );
-        blas::trmv( Layout::ColMajor, Uplo::Upper, op_trans, Diag::NonUnit, p, dB(mp, 0), lddb, dT(0, i), 1, queue );
+        blas::trmv( Layout::ColMajor, Uplo::Upper, op_trans, Diag::NonUnit, p,
+                    dB(mp, 0), lddb, dT(0, i), 1, queue );
 
         // Rectangular part of B2
-        blas::gemv( Layout::ColMajor, op_trans, l, i-p, alpha, dB(mp, np), lddb, dB(mp, i), 1, zero, dT(np, i), 1, queue );
+        blas::gemv( Layout::ColMajor, op_trans, l, i-p,
+                    alpha, dB(mp, np), lddb, dB(mp, i), 1,
+                    zero, dT(np, i), 1, queue );
 
         // B1
-        blas::gemv( Layout::ColMajor, op_trans, m-l, i, alpha, dB, lddb, dB(0, i), 1, one, dT(0, i), 1, queue );
+        blas::gemv( Layout::ColMajor, op_trans, m-l, i,
+                    alpha, dB, lddb, dB(0, i), 1,
+                    one, dT(0, i), 1, queue );
 
         // T(1:I-1,I) := T(1:I-1,1:I-1) * T(1:I-1,I)
-        blas::trmv( Layout::ColMajor, Uplo::Upper, Op::NoTrans, Diag::NonUnit, i, dT, lddt, dT(0, i), 1, queue );
+        blas::trmv( Layout::ColMajor, Uplo::Upper, Op::NoTrans, Diag::NonUnit,
+                    i, dT, lddt, dT(0, i), 1, queue );
 
         // T(i, i) = tau
         blas::device_memcpy( dT(i, i), dT(i, 0), 1, queue );

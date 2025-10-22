@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2023, University of Tennessee. All rights reserved.
+// Copyright (c) 2017-2025, University of Tennessee. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
@@ -158,7 +158,7 @@ int64_t tpqrt(
 
         tpqrt2( mb, ib, lb, dA(i, i), ldda, dB(0, i), lddb, dT(0, i), lddt, queue );
 
-        // Update by applying H**H to B(:, i+ib:n) from the left
+        // Update by applying H^H to B(:, i+ib:n) from the left
         if (i + ib < n) {
             Op trans = (blas::is_complex_v<scalar_t> ? Op::ConjTrans : Op::Trans);
             tprfb( Side::Left, trans, Direction::Forward, StoreV::Columnwise,

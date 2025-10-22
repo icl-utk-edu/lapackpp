@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2023, University of Tennessee. All rights reserved.
+// Copyright (c) 2017-2025, University of Tennessee. All rights reserved.
 // SPDX-License-Identifier: BSD-3-Clause
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
@@ -117,16 +117,14 @@ void test_tprfb_device_work( Params& params, bool run )
     testsweeper::flush_cache( params.cache() );
     queue.sync();
     double time = testsweeper::get_wtime();
-    lapack::tprfb( side, trans, direction, storev, m, n, k, l, dV, ldv, dT, ldt, dA_tst, lda, dB_tst, ldb, queue );
+    lapack::tprfb( side, trans, direction, storev, m, n, k, l,
+                   dV, ldv, dT, ldt, dA_tst, lda, dB_tst, ldb, queue );
     queue.sync();
     time = testsweeper::get_wtime() - time;
-    // internal routine: no argument check so no info.
-    //if (info_tst != 0) {
-    //    fprintf( stderr, "lapack::tprfb returned error %lld\n", llong( info_tst ) );
-    //}
 
     params.time() = time;
-    //double gflop = lapack::Gflop< scalar_t >::larfb( side, trans, direction, storev, m, n, k );
+    //double gflop = lapack::Gflop< scalar_t >::larfb(
+    //    side, trans, direction, storev, m, n, k );
     //params.gflops() = gflop / time;
 
     // Copy result back to CPU
@@ -142,10 +140,15 @@ void test_tprfb_device_work( Params& params, bool run )
         // ---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
-        int64_t info_ref = LAPACKE_tprfb( to_char( side ), to_char( trans ), to_char( direction ), to_char( storev ), m, n, k, l, &V[0], ldv, &T[0], ldt, &A_ref[0], lda, &B_ref[0], ldb );
+        int64_t info_ref = LAPACKE_tprfb(
+            to_char( side ), to_char( trans ),
+            to_char( direction ), to_char( storev ),
+            m, n, k, l,
+            &V[0], ldv, &T[0], ldt, &A_ref[0], lda, &B_ref[0], ldb );
         time = testsweeper::get_wtime() - time;
         if (info_ref != 0) {
-            fprintf( stderr, "LAPACKE_tprfb returned error %lld\n", llong( info_ref ) );
+            fprintf( stderr, "LAPACKE_tprfb returned error %lld\n",
+                     llong( info_ref ) );
         }
 
         params.ref_time() = time;

@@ -178,6 +178,41 @@ void heevd(
     void* host_work, size_t host_work_size,
     device_info_int* dev_info, lapack::Queue& queue );
 
+template <typename scalar_t>
+void larfg(
+    int64_t n,
+    scalar_t* alpha,
+    scalar_t* dx, int64_t incdx,
+    scalar_t* tau,
+    lapack::Queue& queue );
+
+template <typename scalar_t>
+int64_t tpqrt(
+    int64_t m, int64_t n, int64_t l, int64_t nb,
+    scalar_t* dA, int64_t ldda,
+    scalar_t* dB, int64_t lddb,
+    scalar_t* dT, int64_t lddt,
+    lapack::Queue& queue );
+
+template <typename scalar_t>
+int64_t tpqrt2(
+    int64_t m, int64_t n, int64_t l,
+    scalar_t* dA, int64_t ldda,
+    scalar_t* dB, int64_t lddb,
+    scalar_t* dT, int64_t lddt,
+    lapack::Queue& queue );
+
+template <typename scalar_t>
+void tprfb(
+    lapack::Side side, lapack::Op trans,
+    lapack::Direction direction, lapack::StoreV storev,
+    int64_t m, int64_t n, int64_t k, int64_t l,
+    scalar_t const* dV, int64_t ldv,
+    scalar_t const* dT, int64_t ldt,
+    scalar_t* dA, int64_t lda,
+    scalar_t* dB, int64_t ldb,
+    lapack::Queue& queue );
+
 }  // namespace lapack
 
 #endif // LAPACK_DEVICE_HH

@@ -31,7 +31,7 @@ void lapmt(
         std::vector< lapack_int > K_( &K[0], &K[(n)] );
         lapack_int* K_ptr = &K_[0];
     #else
-        lapack_int* K_ptr = K;
+        lapack_int* K_ptr = (lapack_int*) K;
     #endif
 
     LAPACK_slapmt(
@@ -58,7 +58,7 @@ void lapmt(
         std::vector< lapack_int > K_( &K[0], &K[(n)] );
         lapack_int* K_ptr = &K_[0];
     #else
-        lapack_int* K_ptr = K;
+        lapack_int* K_ptr = (lapack_int*) K;
     #endif
 
     LAPACK_dlapmt(
@@ -85,7 +85,7 @@ void lapmt(
         std::vector< lapack_int > K_( &K[0], &K[(n)] );
         lapack_int* K_ptr = &K_[0];
     #else
-        lapack_int* K_ptr = K;
+        lapack_int* K_ptr = (lapack_int*) K;
     #endif
 
     LAPACK_clapmt(
@@ -112,7 +112,7 @@ void lapmt(
         std::vector< lapack_int > K_( &K[0], &K[(n)] );
         lapack_int* K_ptr = &K_[0];
     #else
-        lapack_int* K_ptr = K;
+        lapack_int* K_ptr = (lapack_int*) K;
     #endif
 
     LAPACK_zlapmt(

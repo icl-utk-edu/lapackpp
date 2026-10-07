@@ -33,7 +33,7 @@ int64_t gbtrf(
         lapack::vector< lapack_int > ipiv_( (min(m,n)) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int* ipiv_ptr = ipiv;
+        lapack_int* ipiv_ptr = (lapack_int*) ipiv;
     #endif
     lapack_int info_ = 0;
 
@@ -67,7 +67,7 @@ int64_t gbtrf(
         lapack::vector< lapack_int > ipiv_( (min(m,n)) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int* ipiv_ptr = ipiv;
+        lapack_int* ipiv_ptr = (lapack_int*) ipiv;
     #endif
     lapack_int info_ = 0;
 
@@ -101,7 +101,7 @@ int64_t gbtrf(
         lapack::vector< lapack_int > ipiv_( (min(m,n)) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int* ipiv_ptr = ipiv;
+        lapack_int* ipiv_ptr = (lapack_int*) ipiv;
     #endif
     lapack_int info_ = 0;
 
@@ -203,7 +203,7 @@ int64_t gbtrf(
         lapack::vector< lapack_int > ipiv_( (min(m,n)) );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int* ipiv_ptr = ipiv;
+        lapack_int* ipiv_ptr = (lapack_int*) ipiv;
     #endif
     lapack_int info_ = 0;
 

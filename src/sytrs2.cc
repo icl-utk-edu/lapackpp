@@ -35,7 +35,7 @@ int64_t sytrs2(
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int const* ipiv_ptr = ipiv;
+        lapack_int const* ipiv_ptr = (lapack_int const*) ipiv;
     #endif
     lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int info_ = 0;
@@ -73,7 +73,7 @@ int64_t sytrs2(
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int const* ipiv_ptr = ipiv;
+        lapack_int const* ipiv_ptr = (lapack_int const*) ipiv;
     #endif
     lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int info_ = 0;
@@ -111,7 +111,7 @@ int64_t sytrs2(
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int const* ipiv_ptr = ipiv;
+        lapack_int const* ipiv_ptr = (lapack_int const*) ipiv;
     #endif
     lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int info_ = 0;
@@ -201,7 +201,7 @@ int64_t sytrs2(
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int const* ipiv_ptr = ipiv;
+        lapack_int const* ipiv_ptr = (lapack_int const*) ipiv;
     #endif
     lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int info_ = 0;

@@ -45,7 +45,7 @@ int64_t sbgvx(
         lapack::vector< lapack_int > ifail_( n );  // was nfound; n >= nfound
         lapack_int* ifail_ptr = &ifail_[0];
     #else
-        lapack_int* ifail_ptr = ifail;
+        lapack_int* ifail_ptr = (lapack_int*) ifail;
     #endif
     lapack_int info_ = 0;
 
@@ -105,7 +105,7 @@ int64_t sbgvx(
         lapack::vector< lapack_int > ifail_( n );  // was nfound; n >= nfound
         lapack_int* ifail_ptr = &ifail_[0];
     #else
-        lapack_int* ifail_ptr = ifail;
+        lapack_int* ifail_ptr = (lapack_int*) ifail;
     #endif
     lapack_int info_ = 0;
 

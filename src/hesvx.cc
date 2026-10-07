@@ -40,7 +40,7 @@ int64_t hesvx(
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int* ipiv_ptr = ipiv;
+        lapack_int* ipiv_ptr = (lapack_int*) ipiv;
     #endif
     lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int ldx_ = to_lapack_int( ldx );
@@ -250,7 +250,7 @@ int64_t hesvx(
         std::vector< lapack_int > ipiv_( &ipiv[0], &ipiv[(n)] );
         lapack_int* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int* ipiv_ptr = ipiv;
+        lapack_int* ipiv_ptr = (lapack_int*) ipiv;
     #endif
     lapack_int ldb_ = to_lapack_int( ldb );
     lapack_int ldx_ = to_lapack_int( ldx );

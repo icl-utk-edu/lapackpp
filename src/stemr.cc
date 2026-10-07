@@ -40,7 +40,7 @@ int64_t stemr(
         lapack::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was nfound; n >= nfound
         lapack_int* isuppz_ptr = &isuppz_[0];
     #else
-        lapack_int* isuppz_ptr = isuppz;
+        lapack_int* isuppz_ptr = (lapack_int*) isuppz;
     #endif
     lapack_int tryrac_ = to_lapack_int( *tryrac );
     lapack_int info_ = 0;
@@ -114,7 +114,7 @@ int64_t stemr(
         lapack::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was nfound; n >= nfound
         lapack_int* isuppz_ptr = &isuppz_[0];
     #else
-        lapack_int* isuppz_ptr = isuppz;
+        lapack_int* isuppz_ptr = (lapack_int*) isuppz;
     #endif
     lapack_int tryrac_ = to_lapack_int( *tryrac );
     lapack_int info_ = 0;
@@ -188,7 +188,7 @@ int64_t stemr(
         lapack::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was nfound; n >= nfound
         lapack_int* isuppz_ptr = &isuppz_[0];
     #else
-        lapack_int* isuppz_ptr = isuppz;
+        lapack_int* isuppz_ptr = (lapack_int*) isuppz;
     #endif
     lapack_int tryrac_ = to_lapack_int( *tryrac );
     lapack_int info_ = 0;
@@ -262,7 +262,7 @@ int64_t stemr(
         lapack::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was nfound; n >= nfound
         lapack_int* isuppz_ptr = &isuppz_[0];
     #else
-        lapack_int* isuppz_ptr = isuppz;
+        lapack_int* isuppz_ptr = (lapack_int*) isuppz;
     #endif
     lapack_int tryrac_ = to_lapack_int( *tryrac );
     lapack_int info_ = 0;

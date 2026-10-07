@@ -31,7 +31,7 @@ int64_t getri(
         std::copy( &ipiv[0], &ipiv[(n)], ipiv_.begin() );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int const* ipiv_ptr = ipiv;
+        lapack_int const* ipiv_ptr = (lapack_int const*) ipiv;
     #endif
     lapack_int info_ = 0;
 
@@ -77,7 +77,7 @@ int64_t getri(
         std::copy( &ipiv[0], &ipiv[(n)], ipiv_.begin() );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int const* ipiv_ptr = ipiv;
+        lapack_int const* ipiv_ptr = (lapack_int const*) ipiv;
     #endif
     lapack_int info_ = 0;
 
@@ -123,7 +123,7 @@ int64_t getri(
         std::copy( &ipiv[0], &ipiv[(n)], ipiv_.begin() );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int const* ipiv_ptr = ipiv;
+        lapack_int const* ipiv_ptr = (lapack_int const*) ipiv;
     #endif
     lapack_int info_ = 0;
 
@@ -201,7 +201,7 @@ int64_t getri(
         std::copy( &ipiv[0], &ipiv[(n)], ipiv_.begin() );
         lapack_int const* ipiv_ptr = &ipiv_[0];
     #else
-        lapack_int const* ipiv_ptr = ipiv;
+        lapack_int const* ipiv_ptr = (lapack_int const*) ipiv;
     #endif
     lapack_int info_ = 0;
 

@@ -42,7 +42,7 @@ int64_t heevr_2stage(
         lapack::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was max(1,nfound), n >= nfound
         lapack_int* isuppz_ptr = &isuppz_[0];
     #else
-        lapack_int* isuppz_ptr = isuppz;
+        lapack_int* isuppz_ptr = (lapack_int*) isuppz;
     #endif
     lapack_int info_ = 0;
 
@@ -340,7 +340,7 @@ int64_t heevr_2stage(
         lapack::vector< lapack_int > isuppz_( (2*max( 1, n )) );  // was max(1,nfound), n >= nfound
         lapack_int* isuppz_ptr = &isuppz_[0];
     #else
-        lapack_int* isuppz_ptr = isuppz;
+        lapack_int* isuppz_ptr = (lapack_int*) isuppz;
     #endif
     lapack_int info_ = 0;
 

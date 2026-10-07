@@ -39,6 +39,15 @@
     #define lapack_int lapack_int
 #endif
 
+#if defined(__cplusplus) && defined(LAPACK_ILP64)
+    // lapack_int can be a distinct type from int64_t with the same size and
+    // representation (long vs. long long with Apple's ILP64 Accelerate).
+    // The wrappers cast integer-array pointers between the two, so the
+    // sizes must agree.
+    static_assert( sizeof(lapack_int) == sizeof(int64_t),
+                   "lapack_int must be the same size as int64_t" );
+#endif
+
 #ifndef lapack_logical
     #define lapack_logical lapack_int
 #endif

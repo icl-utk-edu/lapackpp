@@ -60,20 +60,25 @@ public:
 
     ~Queue()
     {
-        #if defined(LAPACK_HAVE_CUBLAS)
-            blas::internal_set_device( device() );
-            #if CUSOLVER_VERSION >= 11000
-                if (solver_params_) {
-                    cusolverDnDestroyParams( solver_params_ );
-                    solver_params_ = nullptr;
+        try {
+            #if defined(LAPACK_HAVE_CUBLAS)
+                blas::internal_set_device( device() );
+                #if CUSOLVER_VERSION >= 11000
+                    if (solver_params_) {
+                        cusolverDnDestroyParams( solver_params_ );
+                        solver_params_ = nullptr;
+                    }
+                #endif
+
+                if (solver_) {
+                    cusolverDnDestroy( solver_ );
+                    solver_ = nullptr;
                 }
             #endif
-
-            if (solver_) {
-                cusolverDnDestroy( solver_ );
-                solver_ = nullptr;
-            }
-        #endif
+        }
+        catch (...) {
+            // Destructors can't leak exceptions.
+        }
     }
 
     // Disable copying; must construct anew.

@@ -79,6 +79,13 @@ void test_potrf_device_work( Params& params, bool run )
         assert_throw( lapack::potrf( uplo,     n, dA_tst, n-1, d_info, queue ), lapack::Error );
     }
 
+    // Query workspace and allocate it in the queue before the timed run,
+    // so potrf doesn't need to grow it.
+    size_t d_size, h_size;
+    lapack::potrf_work_size_bytes( uplo, n, dA_tst, lda, &d_size, &h_size, queue );
+    queue.work_ensure_size< char >( d_size );
+    size_t queue_work_size = queue.work_size< char >();
+
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
     queue.sync();
@@ -88,6 +95,12 @@ void test_potrf_device_work( Params& params, bool run )
 
     queue.sync();
     time = testsweeper::get_wtime() - time;
+
+    // potrf should have used the queried workspace without growing it.
+    bool work_okay = (h_size == 0 && queue.work_size< char >() == queue_work_size);
+    if (! work_okay) {
+        params.msg() = "potrf_work_size_bytes mismatch";
+    }
 
     params.time() = time;
     double gflop = lapack::Gflop< scalar_t >::potrf( n );
@@ -144,7 +157,7 @@ void test_potrf_device_work( Params& params, bool run )
         real_t Anorm = lapack::lanhe( lapack::Norm::One, uplo, n, &A_ref[0], lda );
         error /= (n * Anorm * Xnorm);
         params.error() = error;
-        params.okay() = (error < tol);
+        params.okay() = (error < tol) && work_okay;
     }
 
     if (params.ref() == 'y') {

@@ -25,6 +25,21 @@ rocblas_fill uplo2rocblas(blas::Uplo uplo);
 namespace lapack {
 
 //------------------------------------------------------------------------------
+// Wrapper around rocSolver workspace query.
+// rocSolver potrf takes no workspace, so the sizes are 0.
+// dA is only for templating scalar_t; it isn't referenced.
+template <typename scalar_t>
+void potrf_work_size_bytes(
+    lapack::Uplo uplo, int64_t n,
+    scalar_t* dA, int64_t ldda,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue )
+{
+    *dev_work_size  = 0;
+    *host_work_size = 0;
+}
+
+//------------------------------------------------------------------------------
 // Intermediate wrappers around rocSolver to deal with precisions.
 void rocsolver_potrf(
     rocblas_handle solver, rocblas_fill uplo, rocblas_int n,
@@ -84,6 +99,35 @@ void potrf(
 
 //------------------------------------------------------------------------------
 // Explicit instantiations.
+template
+void potrf_work_size_bytes(
+    lapack::Uplo uplo, int64_t n,
+    float* dA, int64_t ldda,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue );
+
+template
+void potrf_work_size_bytes(
+    lapack::Uplo uplo, int64_t n,
+    double* dA, int64_t ldda,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue );
+
+template
+void potrf_work_size_bytes(
+    lapack::Uplo uplo, int64_t n,
+    std::complex<float>* dA, int64_t ldda,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue );
+
+template
+void potrf_work_size_bytes(
+    lapack::Uplo uplo, int64_t n,
+    std::complex<double>* dA, int64_t ldda,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue );
+
+//--------------------
 template
 void potrf(
     lapack::Uplo uplo, int64_t n,

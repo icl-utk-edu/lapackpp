@@ -533,21 +533,25 @@ add_library(
     src/cuda/cuda_getrf.cc
     src/cuda/cuda_potrf.cc
     src/cuda/cuda_heevd.cc
+    src/cuda/cuda_unmqr.cc
 
     src/rocm/rocm_geqrf.cc
     src/rocm/rocm_getrf.cc
     src/rocm/rocm_potrf.cc
     src/rocm/rocm_heevd.cc
+    src/rocm/rocm_unmqr.cc
 
     src/onemkl/onemkl_geqrf.cc
     src/onemkl/onemkl_getrf.cc
     src/onemkl/onemkl_potrf.cc
     src/onemkl/onemkl_heevd.cc
+    src/onemkl/onemkl_unmqr.cc
 
     src/stub/stub_geqrf.cc
     src/stub/stub_getrf.cc
     src/stub/stub_potrf.cc
     src/stub/stub_heevd.cc
+    src/stub/stub_unmqr.cc
 )
 
 #-------------------------------------------------------------------------------

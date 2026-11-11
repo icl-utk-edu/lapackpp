@@ -546,6 +546,8 @@ if (opts.qr and opts.device):
     # GPU
     cmds += [
     [ 'dev-geqrf', gen + dtype + align + n + wide + tall ],
+    [ 'dev-unmqr', gen + dtype_real    + align + mnk + side + trans    ],  # real does trans = N, T, C
+    [ 'dev-unmqr', gen + dtype_complex + align + mnk + side + trans_nc ],  # complex does trans = N, C, not T
     ]
 
 # LQ

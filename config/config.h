@@ -8,6 +8,14 @@
 
 #include <stdint.h>
 
+// Normalize the mangling options accepted by the configuration probes.
+#if defined(FORTRAN_UPPER) || defined(BLAS_FORTRAN_UPPER) || defined(LAPACK_FORTRAN_UPPER)
+    #define FORTRAN_USE_UPPER_
+#endif
+#if defined(FORTRAN_LOWER) || defined(BLAS_FORTRAN_LOWER) || defined(LAPACK_FORTRAN_LOWER)
+    #define FORTRAN_USE_LOWER_
+#endif
+
 //------------------------------------------------------------------------------
 // A Fortran symbol suffix, if defined, is appended to every mangled name, for
 // BLAS/LAPACK libraries that suffix their symbols (e.g., OpenBLAS built with
@@ -23,18 +31,18 @@
 #ifdef FORTRAN_SUFFIX_
     #define FORTRAN_CONCAT_( a, b ) a##b
     #define FORTRAN_CONCAT(  a, b ) FORTRAN_CONCAT_( a, b )
-    #if defined(FORTRAN_UPPER) || defined(BLAS_FORTRAN_UPPER) || defined(LAPACK_FORTRAN_UPPER)
+    #ifdef FORTRAN_USE_UPPER_
         #define FORTRAN_NAME( lower, UPPER ) FORTRAN_CONCAT( UPPER, FORTRAN_SUFFIX_ )
-    #elif defined(FORTRAN_LOWER) || defined(BLAS_FORTRAN_LOWER) || defined(LAPACK_FORTRAN_LOWER)
+    #elif defined(FORTRAN_USE_LOWER_)
         #define FORTRAN_NAME( lower, UPPER ) FORTRAN_CONCAT( lower, FORTRAN_SUFFIX_ )
     #else
         // default is ADD_
         #define FORTRAN_NAME( lower, UPPER ) FORTRAN_CONCAT( lower##_, FORTRAN_SUFFIX_ )
     #endif
 #else
-    #if defined(FORTRAN_UPPER) || defined(BLAS_FORTRAN_UPPER) || defined(LAPACK_FORTRAN_UPPER)
+    #ifdef FORTRAN_USE_UPPER_
         #define FORTRAN_NAME( lower, UPPER ) UPPER
-    #elif defined(FORTRAN_LOWER) || defined(BLAS_FORTRAN_LOWER) || defined(LAPACK_FORTRAN_LOWER)
+    #elif defined(FORTRAN_USE_LOWER_)
         #define FORTRAN_NAME( lower, UPPER ) lower
     #elif defined(FORTRAN_ADD_) || defined(BLAS_FORTRAN_ADD_) || defined(LAPACK_FORTRAN_ADD_)
         #define FORTRAN_NAME( lower, UPPER ) lower ## _

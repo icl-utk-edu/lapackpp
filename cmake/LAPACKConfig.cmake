@@ -6,13 +6,12 @@
 # Check if this file has already been run with these settings.
 if (DEFINED lapack_config_cache
     AND "${lapack_config_cache}" STREQUAL "${LAPACK_LIBRARIES}"
-    AND "${lapack_config_defines_cache}" STREQUAL "${blaspp_defines};${lapack_symbol_suffix_def}")
+    AND "${lapack_config_defines_cache}" STREQUAL "${blaspp_defines};${lapackpp_defs_}")
 
     message( DEBUG "LAPACK config already done for '${LAPACK_LIBRARIES}'" )
     return()
 endif()
 set( lapack_config_cache "${LAPACK_LIBRARIES}" CACHE INTERNAL "" )
-set( lapack_config_defines_cache "${blaspp_defines};${lapack_symbol_suffix_def}" CACHE INTERNAL "" )
 list( FILTER lapackpp_defs_ EXCLUDE REGEX "^-DLAPACK_(VERSION|HAVE_XBLAS|HAVE_LAPACKE)(=|$)" )
 unset( lapacke_found CACHE )
 unset( lapacke_libraries CACHE )
@@ -130,3 +129,7 @@ lapackpp_defs_    = '${lapackpp_defs_}'
 lapacke_found     = '${lapacke_found}'
 lapacke_libraries = '${lapacke_libraries}'
 ")
+
+# Keep the generated definitions in the key too: LAPACKFinder may clear them
+# while selecting the same libraries and effective suffix as before.
+set( lapack_config_defines_cache "${blaspp_defines};${lapackpp_defs_}" CACHE INTERNAL "" )

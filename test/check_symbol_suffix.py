@@ -47,6 +47,52 @@ def main():
     ]
     with tempfile.TemporaryDirectory(dir=args.work_dir) as tmp:
         work = Path(tmp)
+        # Test CMake's cache handling without configuring a vendor library.
+        # The mocked link/run results isolate repeated includes and the finder
+        # resetting its definitions, as happens after an option change.
+        cache_check = work / 'check-cache.cmake'
+        cache_check.write_text(r"""
+cmake_minimum_required(VERSION 3.17)
+function(try_run run_result compile_result)
+    set(${run_result} 0 PARENT_SCOPE)
+    set(${compile_result} TRUE PARENT_SCOPE)
+    set(run_output "LAPACK_VERSION=3.12.00 ok" PARENT_SCOPE)
+    get_property(count GLOBAL PROPERTY probes)
+    math(EXPR count "${count} + 1")
+    set_property(GLOBAL PROPERTY probes ${count})
+endfunction()
+set_property(GLOBAL PROPERTY probes 0)
+set(LAPACK_LIBRARIES fixture)
+set(blaspp_defines -DBLAS_ILP64)
+set(lapack_symbol_suffix_def -DLAPACK_FORTRAN_SUFFIX=)
+set(lapackpp_defs_ -DLAPACK_HAVE_LAPACK ${lapack_symbol_suffix_def})
+include(cmake/LAPACKConfig.cmake)
+get_property(first GLOBAL PROPERTY probes)
+include(cmake/LAPACKConfig.cmake)
+get_property(second GLOBAL PROPERTY probes)
+if(NOT first EQUAL second)
+    message(FATAL_ERROR "unchanged settings repeated the probes")
+endif()
+# The finder may rerun with different options but select the same library.
+set(lapackpp_defs_ -DLAPACK_HAVE_LAPACK ${lapack_symbol_suffix_def})
+include(cmake/LAPACKConfig.cmake)
+if(NOT "-DLAPACK_VERSION=31200" IN_LIST lapackpp_defs_)
+    message(FATAL_ERROR "cached probes lost the LAPACK version definition")
+endif()
+set(lapack_symbol_suffix_def -DLAPACK_FORTRAN_SUFFIX=64_)
+list(FILTER lapackpp_defs_ EXCLUDE REGEX "^-DLAPACK_FORTRAN_SUFFIX=")
+list(APPEND lapackpp_defs_ ${lapack_symbol_suffix_def})
+get_property(before GLOBAL PROPERTY probes)
+include(cmake/LAPACKConfig.cmake)
+get_property(after GLOBAL PROPERTY probes)
+if(NOT after GREATER before)
+    message(FATAL_ERROR "changed suffix did not repeat the probes")
+endif()
+""")
+        subprocess.check_output(['cmake', '-P', str(cache_check)],
+                                cwd=root, text=True, stderr=subprocess.STDOUT)
+        print('CMake probe cache: unchanged, reset, and changed suffix passed',
+              flush=True)
         for name, blas_suffix, lapack_suffix in cases:
             include = work / name
             for library in ('blas', 'lapack'):
@@ -180,4 +226,8 @@ int main() { LAPACK_GLOBAL(dpotrf, DPOTRF)(); }
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except subprocess.CalledProcessError as error:
+        print(error.output, file=sys.stderr)
+        raise SystemExit(error.returncode)

@@ -67,6 +67,23 @@ LAPACK++ specific options include (all values are case insensitive):
         Again, there is usually no need to specify this. E.g.,
         cmake -DLAPACK_LIBRARIES='-lopenblas' ..
 
+    lapack_symbol_suffix
+        Suffix appended to LAPACK symbols after Fortran name mangling.
+        empty           inherit BLAS++'s suffix (default)
+        none            use unsuffixed LAPACK symbols, even if BLAS has a suffix
+        other value     use this suffix, e.g., 64_ for conda-forge ILP64 OpenBLAS
+
+        CMake inherits the suffix from the selected BLAS++ installation.
+        The Make build probes BLAS itself: blas_symbol_suffix selects its BLAS
+        suffix, defaulting to lapack_symbol_suffix for bundled OpenBLAS builds.
+        For separate libraries with different suffixes, set both explicitly,
+        using none for unsuffixed symbols, and specify BLAS_LIBRARIES and
+        LAPACK_LIBRARIES as needed. For example, suffixed BLAS and unsuffixed
+        LAPACK use blas_symbol_suffix=64_ lapack_symbol_suffix=none in Make;
+        with CMake, build BLAS++ with -Dblas_symbol_suffix=64_ and configure
+        LAPACK++ with -Dlapack_symbol_suffix=none.
+        Suffix strings are case sensitive; the none keyword is case insensitive.
+
     gpu_backend
         BLAS++ must be built with the same GPU backend.
         auto            (default) auto-detect CUDA, HIP/ROCm, or SYCL

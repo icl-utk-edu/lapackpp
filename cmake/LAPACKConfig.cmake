@@ -5,12 +5,17 @@
 
 # Check if this file has already been run with these settings.
 if (DEFINED lapack_config_cache
-    AND "${lapack_config_cache}" STREQUAL "${LAPACK_LIBRARIES}")
+    AND "${lapack_config_cache}" STREQUAL "${LAPACK_LIBRARIES}"
+    AND "${lapack_config_defines_cache}" STREQUAL "${blaspp_defines};${lapack_symbol_suffix_def}")
 
     message( DEBUG "LAPACK config already done for '${LAPACK_LIBRARIES}'" )
     return()
 endif()
 set( lapack_config_cache "${LAPACK_LIBRARIES}" CACHE INTERNAL "" )
+set( lapack_config_defines_cache "${blaspp_defines};${lapack_symbol_suffix_def}" CACHE INTERNAL "" )
+list( FILTER lapackpp_defs_ EXCLUDE REGEX "^-DLAPACK_(VERSION|HAVE_XBLAS|HAVE_LAPACKE)(=|$)" )
+unset( lapacke_found CACHE )
+unset( lapacke_libraries CACHE )
 
 include( "cmake/util.cmake" )
 
@@ -24,7 +29,7 @@ try_run(
     LINK_LIBRARIES
         ${LAPACK_LIBRARIES} ${blaspp_libraries}
     COMPILE_DEFINITIONS
-        ${blaspp_defines}
+        ${blaspp_defines} ${lapack_symbol_suffix_def}
     COMPILE_OUTPUT_VARIABLE
         compile_output
     RUN_OUTPUT_VARIABLE
@@ -54,7 +59,7 @@ try_run(
     LINK_LIBRARIES
         ${LAPACK_LIBRARIES} ${blaspp_libraries}
     COMPILE_DEFINITIONS
-        ${blaspp_defines}
+        ${blaspp_defines} ${lapack_symbol_suffix_def}
     COMPILE_OUTPUT_VARIABLE
         compile_output
     RUN_OUTPUT_VARIABLE
@@ -92,7 +97,7 @@ foreach (lib IN LISTS lib_list)
         LINK_LIBRARIES
             ${lib} ${LAPACK_LIBRARIES} ${blaspp_libraries}
         COMPILE_DEFINITIONS
-            ${blaspp_defines}
+            ${blaspp_defines} ${lapack_symbol_suffix_def}
         COMPILE_OUTPUT_VARIABLE
             compile_output
         RUN_OUTPUT_VARIABLE

@@ -36,11 +36,8 @@
     // OpenBLAS built with SYMBOLSUFFIX (e.g., 64_) also suffixes CBLAS
     // functions, exporting cblas_dgbmv64_. Defined before including cblas.h,
     // these work whether or not the header's declarations are suffixed.
-    // LAPACK_FORTRAN_SUFFIX takes precedence; BLAS_FORTRAN_SUFFIX is the
-    // fallback.
-    #if defined(LAPACK_FORTRAN_SUFFIX)
-        #define LAPACK_CBLAS_SUFFIX_ LAPACK_FORTRAN_SUFFIX
-    #elif defined(BLAS_FORTRAN_SUFFIX)
+    // Use the BLAS suffix independently of the LAPACK suffix.
+    #if defined(BLAS_FORTRAN_SUFFIX)
         #define LAPACK_CBLAS_SUFFIX_ BLAS_FORTRAN_SUFFIX
     #endif
 

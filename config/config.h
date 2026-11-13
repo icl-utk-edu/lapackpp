@@ -13,6 +13,7 @@
 // BLAS/LAPACK libraries that suffix their symbols (e.g., OpenBLAS built with
 // SYMBOLSUFFIX=64_ exports dgemm_64_, dpstrf_64_). LAPACK_FORTRAN_SUFFIX takes
 // precedence; BLAS_FORTRAN_SUFFIX (inherited from BLAS++) is the fallback.
+// An explicitly empty LAPACK_FORTRAN_SUFFIX disables suffix inheritance.
 #if defined(LAPACK_FORTRAN_SUFFIX)
     #define FORTRAN_SUFFIX_ LAPACK_FORTRAN_SUFFIX
 #elif defined(BLAS_FORTRAN_SUFFIX)

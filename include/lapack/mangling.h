@@ -21,6 +21,7 @@
 // INTERFACE64=1 SYMBOLSUFFIX=64_ exports `dpstrf_64_`. LAPACK_FORTRAN_SUFFIX
 // (set via the lapack_symbol_suffix option) takes precedence; BLAS_FORTRAN_SUFFIX
 // (inherited from BLAS++'s blas_symbol_suffix via blas/defines.h) is the fallback.
+// An explicitly empty LAPACK_FORTRAN_SUFFIX disables suffix inheritance.
 #ifndef LAPACK_GLOBAL
     #if defined(LAPACK_FORTRAN_SUFFIX)
         #define LAPACK_GLOBAL_SUFFIX_ LAPACK_FORTRAN_SUFFIX

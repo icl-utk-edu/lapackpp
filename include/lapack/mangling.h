@@ -23,6 +23,14 @@
 // (inherited from BLAS++'s blas_symbol_suffix via blas/defines.h) is the fallback.
 // An explicitly empty LAPACK_FORTRAN_SUFFIX disables suffix inheritance.
 #ifndef LAPACK_GLOBAL
+    // Normalize the mangling options accepted by the public headers.
+    #if defined(BLAS_FORTRAN_UPPER) || defined(LAPACK_FORTRAN_UPPER) || defined(LAPACK_GLOBAL_PATTERN_UC)
+        #define LAPACK_GLOBAL_USE_UPPER_
+    #endif
+    #if defined(BLAS_FORTRAN_LOWER) || defined(LAPACK_FORTRAN_LOWER) || defined(LAPACK_GLOBAL_PATTERN_LC)
+        #define LAPACK_GLOBAL_USE_LOWER_
+    #endif
+
     #if defined(LAPACK_FORTRAN_SUFFIX)
         #define LAPACK_GLOBAL_SUFFIX_ LAPACK_FORTRAN_SUFFIX
     #elif defined(BLAS_FORTRAN_SUFFIX)
@@ -32,18 +40,18 @@
     #ifdef LAPACK_GLOBAL_SUFFIX_
         #define LAPACK_GLOBAL_CONCAT_( a, b ) a##b
         #define LAPACK_GLOBAL_CONCAT(  a, b ) LAPACK_GLOBAL_CONCAT_( a, b )
-        #if defined(BLAS_FORTRAN_UPPER) || defined(LAPACK_FORTRAN_UPPER) || defined(LAPACK_GLOBAL_PATTERN_UC)
+        #ifdef LAPACK_GLOBAL_USE_UPPER_
             #define LAPACK_GLOBAL( lower, UPPER ) LAPACK_GLOBAL_CONCAT( UPPER, LAPACK_GLOBAL_SUFFIX_ )
-        #elif defined(BLAS_FORTRAN_LOWER) || defined(LAPACK_FORTRAN_LOWER) || defined(LAPACK_GLOBAL_PATTERN_LC)
+        #elif defined(LAPACK_GLOBAL_USE_LOWER_)
             #define LAPACK_GLOBAL( lower, UPPER ) LAPACK_GLOBAL_CONCAT( lower, LAPACK_GLOBAL_SUFFIX_ )
         #else
             // default is ADD_
             #define LAPACK_GLOBAL( lower, UPPER ) LAPACK_GLOBAL_CONCAT( lower##_, LAPACK_GLOBAL_SUFFIX_ )
         #endif
     #else
-        #if defined(BLAS_FORTRAN_UPPER) || defined(LAPACK_FORTRAN_UPPER) || defined(LAPACK_GLOBAL_PATTERN_UC)
+        #ifdef LAPACK_GLOBAL_USE_UPPER_
             #define LAPACK_GLOBAL( lower, UPPER ) UPPER
-        #elif defined(BLAS_FORTRAN_LOWER) || defined(LAPACK_FORTRAN_LOWER) || defined(LAPACK_GLOBAL_PATTERN_LC)
+        #elif defined(LAPACK_GLOBAL_USE_LOWER_)
             #define LAPACK_GLOBAL( lower, UPPER ) lower
         #elif defined(BLAS_FORTRAN_ADD_) || defined(LAPACK_FORTRAN_ADD_) || defined(LAPACK_GLOBAL_PATTERN_MC)
             #define LAPACK_GLOBAL( lower, UPPER ) lower##_

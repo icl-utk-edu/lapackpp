@@ -13,6 +13,20 @@
 namespace lapack {
 
 //------------------------------------------------------------------------------
+// Wrapper around workspace query.
+// dA is only for templating scalar_t; it isn't referenced.
+template <typename scalar_t>
+void potrf_work_size_bytes(
+    lapack::Uplo uplo, int64_t n,
+    scalar_t* dA, int64_t ldda,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue )
+{
+    *dev_work_size  = 0;
+    *host_work_size = 0;
+}
+
+//------------------------------------------------------------------------------
 // Wrapper stub.
 // This is async. Once finished, the return info is in dev_info on the device.
 template <typename scalar_t>
@@ -26,6 +40,35 @@ void potrf(
 
 //------------------------------------------------------------------------------
 // Explicit instantiations.
+template
+void potrf_work_size_bytes(
+    lapack::Uplo uplo, int64_t n,
+    float* dA, int64_t ldda,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue );
+
+template
+void potrf_work_size_bytes(
+    lapack::Uplo uplo, int64_t n,
+    double* dA, int64_t ldda,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue );
+
+template
+void potrf_work_size_bytes(
+    lapack::Uplo uplo, int64_t n,
+    std::complex<float>* dA, int64_t ldda,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue );
+
+template
+void potrf_work_size_bytes(
+    lapack::Uplo uplo, int64_t n,
+    std::complex<double>* dA, int64_t ldda,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue );
+
+//--------------------
 template
 void potrf(
     lapack::Uplo uplo, int64_t n,

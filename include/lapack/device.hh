@@ -60,20 +60,25 @@ public:
 
     ~Queue()
     {
-        #if defined(LAPACK_HAVE_CUBLAS)
-            blas::internal_set_device( device() );
-            #if CUSOLVER_VERSION >= 11000
-                if (solver_params_) {
-                    cusolverDnDestroyParams( solver_params_ );
-                    solver_params_ = nullptr;
+        try {
+            #if defined(LAPACK_HAVE_CUBLAS)
+                blas::internal_set_device( device() );
+                #if CUSOLVER_VERSION >= 11000
+                    if (solver_params_) {
+                        cusolverDnDestroyParams( solver_params_ );
+                        solver_params_ = nullptr;
+                    }
+                #endif
+
+                if (solver_) {
+                    cusolverDnDestroy( solver_ );
+                    solver_ = nullptr;
                 }
             #endif
-
-            if (solver_) {
-                cusolverDnDestroy( solver_ );
-                solver_ = nullptr;
-            }
-        #endif
+        }
+        catch (...) {
+            // Destructors can't leak exceptions.
+        }
     }
 
     // Disable copying; must construct anew.
@@ -124,6 +129,15 @@ private:
 };
 
 //------------------------------------------------------------------------------
+// Device workspace potrf takes from the queue; allocating it beforehand with
+// queue.work_ensure_size<char>( dev_work_size ) keeps potrf from growing it.
+template <typename scalar_t>
+void potrf_work_size_bytes(
+    lapack::Uplo uplo, int64_t n,
+    scalar_t* dA, int64_t ldda,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue );
+
 template <typename scalar_t>
 void potrf(
     lapack::Uplo uplo, int64_t n,

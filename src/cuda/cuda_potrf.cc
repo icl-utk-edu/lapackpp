@@ -121,6 +121,9 @@ void potrf_work_size_bytes(
     auto solver = queue.solver();
     auto uplo_ = blas::internal::uplo2cublas( uplo );
 
+    // for cuda, rocm, call set_device; for oneapi, do nothing.
+    blas::internal_set_device( queue.device() );
+
     // query for workspace size
     #if CUSOLVER_VERSION >= 11000
         auto params = queue.solver_params();
@@ -186,6 +189,35 @@ void potrf(
 
 //------------------------------------------------------------------------------
 // Explicit instantiations.
+template
+void potrf_work_size_bytes(
+    lapack::Uplo uplo, int64_t n,
+    float* dA, int64_t ldda,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue );
+
+template
+void potrf_work_size_bytes(
+    lapack::Uplo uplo, int64_t n,
+    double* dA, int64_t ldda,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue );
+
+template
+void potrf_work_size_bytes(
+    lapack::Uplo uplo, int64_t n,
+    std::complex<float>* dA, int64_t ldda,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue );
+
+template
+void potrf_work_size_bytes(
+    lapack::Uplo uplo, int64_t n,
+    std::complex<double>* dA, int64_t ldda,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue );
+
+//--------------------
 template
 void potrf(
     lapack::Uplo uplo, int64_t n,

@@ -85,6 +85,35 @@ void potrf(
 //------------------------------------------------------------------------------
 // Explicit instantiations.
 template
+void potrf_work_size_bytes(
+    lapack::Uplo uplo, int64_t n,
+    float* dA, int64_t ldda,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue );
+
+template
+void potrf_work_size_bytes(
+    lapack::Uplo uplo, int64_t n,
+    double* dA, int64_t ldda,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue );
+
+template
+void potrf_work_size_bytes(
+    lapack::Uplo uplo, int64_t n,
+    std::complex<float>* dA, int64_t ldda,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue );
+
+template
+void potrf_work_size_bytes(
+    lapack::Uplo uplo, int64_t n,
+    std::complex<double>* dA, int64_t ldda,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue );
+
+//--------------------
+template
 void potrf(
     lapack::Uplo uplo, int64_t n,
     float* dA, int64_t ldda,

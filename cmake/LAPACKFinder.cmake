@@ -44,10 +44,17 @@ elseif (NOT ("${lapack_cached}" STREQUAL "${lapack}"))
     # Ignore LAPACK_LIBRARIES if lapack* changed.
     message( DEBUG "unset LAPACK_LIBRARIES" )
     set( LAPACK_LIBRARIES "" CACHE INTERNAL "" )
-else()
+elseif (LAPACK_FOUND
+        AND DEFINED lapack_defs_cached
+        AND "${blaspp_libraries}" STREQUAL "${lapack_blaspp_libraries_cached}"
+        AND "${blaspp_defines}"   STREQUAL "${lapack_blaspp_defines_cached}")
+    # The previous search succeeded with the same BLAS++; reuse it.
+    # (lapack_defs_cached is undefined if an older version searched.)
     message( DEBUG "LAPACK search already done for
     lapack           = ${lapack}
     LAPACK_LIBRARIES = ${LAPACK_LIBRARIES}" )
+    # Restore defines found in the previous search (see bottom).
+    set( lapackpp_defs_ "${lapack_defs_cached}" )
     return()
 endif()
 
@@ -118,6 +125,9 @@ message( DEBUG "lapack_libs_list ${lapack_libs_list}" )
 unset( LAPACK_FOUND CACHE )
 unset( lapackpp_defs_ CACHE )
 
+# LAPACKConfig depends on this search, so re-run it.
+unset( lapack_config_cache CACHE )
+
 foreach (lapack_libs IN LISTS lapack_libs_list)
     if ("${lapack_libs}" MATCHES "^ *$")
         set( label "   In BLAS library" )
@@ -164,6 +174,15 @@ endforeach()
 
 # Update to found LAPACK library.
 set( lapack_libraries_cached ${LAPACK_LIBRARIES} CACHE INTERNAL "" )
+set( lapack_blaspp_libraries_cached "${blaspp_libraries}" CACHE INTERNAL "" )
+set( lapack_blaspp_defines_cached   "${blaspp_defines}"   CACHE INTERNAL "" )
+# Without saved defines, the search is not skipped next time, even if
+# LAPACK_FOUND is set elsewhere (e.g., by BLAS++'s LAPACKFinder in SLATE).
+if (LAPACK_FOUND)
+    set( lapack_defs_cached "${lapackpp_defs_}" CACHE INTERNAL "" )
+else()
+    unset( lapack_defs_cached CACHE )
+endif()
 
 #-------------------------------------------------------------------------------
 if (LAPACK_FOUND)

@@ -8,10 +8,9 @@ BLAS_FORTRAN_SUFFIX is defined.
 
 test/lapacke_suffix.hh, included before lapacke.h, maps each LAPACKE function
 the tester calls to its suffixed name, e.g., LAPACKE_dgesv to LAPACKE_dgesv64_.
-The functions are LAPACKE_* names found in test/*.cc and test/*.hh, ignoring
-comments, string literals, and `#if 0` blocks, and omitting names the tester
-defines itself (the generic overloads in lapacke_wrappers.hh, such as
-LAPACKE_gesv).
+All of these calls are in test/lapacke_wrappers.hh. The generator ignores
+comments, string literals, and `#if 0` blocks, and omits the generic overloads
+defined by that same header, such as LAPACKE_gesv.
 
 test/lapack_suffix.hh, included after lapacke.h, handles the Fortran routines
 that lapacke_wrappers.hh declares itself unless lapack.h defines LAPACK_x.
@@ -28,7 +27,6 @@ Rerun after adding LAPACKE calls or Fortran prototypes to the tester:
     generating test/lapack_suffix.hh with 64 functions
 '''
 
-import glob
 import os
 import re
 
@@ -90,27 +88,19 @@ def main():
     used    = set()  # LAPACKE_* names
     defined = set()  # LAPACKE_* names the tester defines
     fortran = set()  # LAPACK_* names the tester declares if lapack.h doesn't
-    for filename in sorted( glob.glob( os.path.join( root, 'test', '*.cc' ) )
-                          + glob.glob( os.path.join( root, 'test', '*.hh' ) ) ):
-        if (filename.endswith( (lapacke_file, lapack_file) )):
-            continue
-        with open( filename ) as f:
-            text = strip_if0( strip_comments_strings( f.read() ) )
-        used.update( re.findall( r'\bLAPACKE_\w+', text ) )
-        # Definitions start in column 0 with a return type, e.g.,
-        # `inline lapack_int LAPACKE_gesv(`; calls are indented.
-        defined.update( re.findall(
-            r'^(?!return\b)[A-Za-z_][\w:<>,* ]*?[ *](LAPACKE_\w+)\s*\(',
-            text, flags=re.M ) )
-        # Macros the tester defines, e.g., LAPACKE_NAME.
-        defined.update( re.findall( r'#\s*define\s+(LAPACKE_\w+)', text ) )
-        # Fallback prototypes look like
-        #     #ifndef LAPACK_slangb
-        #     #define LAPACK_slangb LAPACK_GLOBAL(slangb,SLANGB)
-        fortran.update( re.findall(
-            r'^\s*#\s*ifndef\s+(LAPACK_\w+)\s*\n\s*#\s*define\s+\1\s+LAPACK_GLOBAL\b',
-            text, flags=re.M ) )
-    # end
+    filename = os.path.join( root, 'test', 'lapacke_wrappers.hh' )
+    with open( filename ) as f:
+        text = strip_if0( strip_comments_strings( f.read() ) )
+    used.update( re.findall( r'\bLAPACKE_\w+', text ) )
+    # Generic overloads, e.g., LAPACKE_gesv, are defined in this header;
+    # only their calls to precision-specific LAPACKE functions need mapping.
+    defined.update( re.findall(
+        r'^(?!return\b)[A-Za-z_][\w:<>,* ]*?[ *](LAPACKE_\w+)\s*\(',
+        text, flags=re.M ) )
+    defined.update( re.findall( r'#\s*define\s+(LAPACKE_\w+)', text ) )
+    fortran.update( re.findall(
+        r'^\s*#\s*ifndef\s+(LAPACK_\w+)\s*\n\s*#\s*define\s+\1\s+LAPACK_GLOBAL\b',
+        text, flags=re.M ) )
 
     names = sorted( used - defined )
     width = max( map( len, names ) )

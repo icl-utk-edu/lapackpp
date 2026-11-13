@@ -44,7 +44,9 @@ elseif (NOT ("${lapack_cached}" STREQUAL "${lapack}"))
     # Ignore LAPACK_LIBRARIES if lapack* changed.
     message( DEBUG "unset LAPACK_LIBRARIES" )
     set( LAPACK_LIBRARIES "" CACHE INTERNAL "" )
-else()
+elseif (DEFINED lapack_symbol_suffix_cached
+        AND "${lapack_symbol_suffix_cached}" STREQUAL "${lapack_symbol_suffix}"
+        AND "${lapack_blas_defines_cached}" STREQUAL "${blaspp_defines}")
     message( DEBUG "LAPACK search already done for
     lapack           = ${lapack}
     LAPACK_LIBRARIES = ${LAPACK_LIBRARIES}" )
@@ -53,6 +55,8 @@ endif()
 
 set( lapack_libraries_cached ${LAPACK_LIBRARIES} CACHE INTERNAL "" )  # updated later
 set( lapack_cached           ${lapack}           CACHE INTERNAL "" )
+set( lapack_symbol_suffix_cached "${lapack_symbol_suffix}" CACHE INTERNAL "" )
+set( lapack_blas_defines_cached "${blaspp_defines}" CACHE INTERNAL "" )
 
 include( "cmake/util.cmake" )
 
@@ -137,7 +141,7 @@ foreach (lapack_libs IN LISTS lapack_libs_list)
             # Not "quoted"; screws up OpenMP.
             ${lapack_libs} ${blaspp_libraries}
         COMPILE_DEFINITIONS
-            ${blaspp_defines}
+            ${blaspp_defines} ${lapack_symbol_suffix_def}
         COMPILE_OUTPUT_VARIABLE
             compile_output
         RUN_OUTPUT_VARIABLE

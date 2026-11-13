@@ -4,6 +4,22 @@
 // the terms of the BSD 3-Clause license. See the accompanying LICENSE file.
 
 #include <stdio.h>
+
+// OpenBLAS built with SYMBOLSUFFIX (e.g., 64_) also suffixes its own
+// functions, exporting openblas_get_config64_. Defined before including
+// cblas.h, this works whether or not the header's declarations are suffixed.
+// Use the BLAS suffix independently of the LAPACK suffix.
+#if defined(BLAS_FORTRAN_SUFFIX)
+    #define OPENBLAS_SUFFIX_ BLAS_FORTRAN_SUFFIX
+#endif
+
+#ifdef OPENBLAS_SUFFIX_
+    #define OPENBLAS_CONCAT_( a, b ) a##b
+    #define OPENBLAS_CONCAT(  a, b ) OPENBLAS_CONCAT_( a, b )
+    #define openblas_get_config \
+        OPENBLAS_CONCAT( openblas_get_config, OPENBLAS_SUFFIX_ )
+#endif
+
 #include <cblas.h> // openblas_get_config
 
 int main()

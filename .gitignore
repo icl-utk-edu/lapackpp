@@ -22,7 +22,6 @@ config/lapack_potrf
 config/lapack_pstrf
 config/lapack_version
 config/lapack_xblas
-config/lapacke_potrf
 config/lapacke_pstrf
 config/log.txt
 config/mkl_version

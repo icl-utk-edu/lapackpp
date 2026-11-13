@@ -11,6 +11,28 @@
     #endif
     #include <mkl_lapacke.h>
 #else
+    // lapacke.h uses LAPACK_ILP64; CMake passes only BLAS++'s BLAS_ILP64.
+    #if defined(BLAS_ILP64) && ! defined(LAPACK_ILP64)
+        #define LAPACK_ILP64
+    #endif
+
+    // OpenBLAS built with SYMBOLSUFFIX (e.g., 64_) also suffixes LAPACKE
+    // functions, exporting LAPACKE_dpstrf64_. Defined before including
+    // lapacke.h, this works whether or not the header's declarations are
+    // suffixed. LAPACK_FORTRAN_SUFFIX takes precedence; BLAS_FORTRAN_SUFFIX
+    // is the fallback.
+    #if defined(LAPACK_FORTRAN_SUFFIX)
+        #define LAPACKE_SUFFIX_ LAPACK_FORTRAN_SUFFIX
+    #elif defined(BLAS_FORTRAN_SUFFIX)
+        #define LAPACKE_SUFFIX_ BLAS_FORTRAN_SUFFIX
+    #endif
+
+    #ifdef LAPACKE_SUFFIX_
+        #define LAPACKE_CONCAT_( a, b ) a##b
+        #define LAPACKE_CONCAT(  a, b ) LAPACKE_CONCAT_( a, b )
+        #define LAPACKE_dpstrf LAPACKE_CONCAT( LAPACKE_dpstrf, LAPACKE_SUFFIX_ )
+    #endif
+
     #include <lapacke.h>
 #endif
 

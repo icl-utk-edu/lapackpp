@@ -8,15 +8,47 @@
 
 #include <stdint.h>
 
-//------------------------------------------------------------------------------
+// Normalize the mangling options accepted by the configuration probes.
 #if defined(FORTRAN_UPPER) || defined(BLAS_FORTRAN_UPPER) || defined(LAPACK_FORTRAN_UPPER)
-    #define FORTRAN_NAME( lower, UPPER ) UPPER
-#elif defined(FORTRAN_LOWER) || defined(BLAS_FORTRAN_LOWER) || defined(LAPACK_FORTRAN_LOWER)
-    #define FORTRAN_NAME( lower, UPPER ) lower
-#elif defined(FORTRAN_ADD_) || defined(BLAS_FORTRAN_ADD_) || defined(LAPACK_FORTRAN_ADD_)
-    #define FORTRAN_NAME( lower, UPPER ) lower ## _
+    #define FORTRAN_USE_UPPER_
+#endif
+#if defined(FORTRAN_LOWER) || defined(BLAS_FORTRAN_LOWER) || defined(LAPACK_FORTRAN_LOWER)
+    #define FORTRAN_USE_LOWER_
+#endif
+
+//------------------------------------------------------------------------------
+// A Fortran symbol suffix, if defined, is appended to every mangled name, for
+// BLAS/LAPACK libraries that suffix their symbols (e.g., OpenBLAS built with
+// SYMBOLSUFFIX=64_ exports dgemm_64_, dpstrf_64_). LAPACK_FORTRAN_SUFFIX takes
+// precedence; BLAS_FORTRAN_SUFFIX (inherited from BLAS++) is the fallback.
+// An explicitly empty LAPACK_FORTRAN_SUFFIX disables suffix inheritance.
+#if defined(LAPACK_FORTRAN_SUFFIX)
+    #define FORTRAN_SUFFIX_ LAPACK_FORTRAN_SUFFIX
+#elif defined(BLAS_FORTRAN_SUFFIX)
+    #define FORTRAN_SUFFIX_ BLAS_FORTRAN_SUFFIX
+#endif
+
+#ifdef FORTRAN_SUFFIX_
+    #define FORTRAN_CONCAT_( a, b ) a##b
+    #define FORTRAN_CONCAT(  a, b ) FORTRAN_CONCAT_( a, b )
+    #ifdef FORTRAN_USE_UPPER_
+        #define FORTRAN_NAME( lower, UPPER ) FORTRAN_CONCAT( UPPER, FORTRAN_SUFFIX_ )
+    #elif defined(FORTRAN_USE_LOWER_)
+        #define FORTRAN_NAME( lower, UPPER ) FORTRAN_CONCAT( lower, FORTRAN_SUFFIX_ )
+    #else
+        // default is ADD_
+        #define FORTRAN_NAME( lower, UPPER ) FORTRAN_CONCAT( lower##_, FORTRAN_SUFFIX_ )
+    #endif
 #else
-    #error "must define one of FORTRAN_ADD_, FORTRAN_LOWER, FORTRAN_UPPER"
+    #ifdef FORTRAN_USE_UPPER_
+        #define FORTRAN_NAME( lower, UPPER ) UPPER
+    #elif defined(FORTRAN_USE_LOWER_)
+        #define FORTRAN_NAME( lower, UPPER ) lower
+    #elif defined(FORTRAN_ADD_) || defined(BLAS_FORTRAN_ADD_) || defined(LAPACK_FORTRAN_ADD_)
+        #define FORTRAN_NAME( lower, UPPER ) lower ## _
+    #else
+        #error "must define one of FORTRAN_ADD_, FORTRAN_LOWER, FORTRAN_UPPER"
+    #endif
 #endif
 
 //------------------------------------------------------------------------------

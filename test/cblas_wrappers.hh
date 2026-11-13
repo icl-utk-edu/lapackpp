@@ -7,6 +7,7 @@
 #define CBLAS_HH
 
 #include "blas/defines.h"
+#include "lapack/defines.h"
 
 #if defined(BLAS_HAVE_MKL)
     #if defined(BLAS_ILP64) && ! defined(MKL_ILP64)
@@ -32,6 +33,30 @@
     typedef CBLAS_ORDER CBLAS_LAYOUT;
 
 #else
+    // OpenBLAS built with SYMBOLSUFFIX (e.g., 64_) also suffixes CBLAS
+    // functions, exporting cblas_dgbmv64_. Defined before including cblas.h,
+    // these work whether or not the header's declarations are suffixed.
+    // Use the BLAS suffix independently of the LAPACK suffix.
+    #if defined(BLAS_FORTRAN_SUFFIX)
+        #define LAPACK_CBLAS_SUFFIX_ BLAS_FORTRAN_SUFFIX
+    #endif
+
+    #ifdef LAPACK_CBLAS_SUFFIX_
+        #define LAPACK_CBLAS_CONCAT_( a, b ) a##b
+        #define LAPACK_CBLAS_CONCAT(  a, b ) LAPACK_CBLAS_CONCAT_( a, b )
+        #define LAPACK_CBLAS_NAME( name ) \
+            LAPACK_CBLAS_CONCAT( name, LAPACK_CBLAS_SUFFIX_ )
+
+        #define cblas_sgbmv  LAPACK_CBLAS_NAME( cblas_sgbmv )
+        #define cblas_dgbmv  LAPACK_CBLAS_NAME( cblas_dgbmv )
+        #define cblas_cgbmv  LAPACK_CBLAS_NAME( cblas_cgbmv )
+        #define cblas_zgbmv  LAPACK_CBLAS_NAME( cblas_zgbmv )
+        #define cblas_ssbmv  LAPACK_CBLAS_NAME( cblas_ssbmv )
+        #define cblas_dsbmv  LAPACK_CBLAS_NAME( cblas_dsbmv )
+        #define cblas_chbmv  LAPACK_CBLAS_NAME( cblas_chbmv )
+        #define cblas_zhbmv  LAPACK_CBLAS_NAME( cblas_zhbmv )
+    #endif
+
     // Some ancient cblas.h don't include extern C. It's okay to nest.
     extern "C" {
     #include <cblas.h>

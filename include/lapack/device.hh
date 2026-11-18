@@ -177,6 +177,64 @@ void geqrf(
     device_info_int* dev_info, lapack::Queue& queue );
 
 //------------------------------------------------------------------------------
+// dA and dtau are logically read-only (const), but rocSOLVER modifies and
+// restores them during the call, so work on another queue must not use them
+// concurrently.
+template <typename scalar_t>
+void unmqr_work_size_bytes(
+    lapack::Side side, lapack::Op trans,
+    int64_t m, int64_t n, int64_t k,
+    scalar_t const* dA, int64_t ldda, scalar_t const* dtau,
+    scalar_t* dC, int64_t lddc,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue );
+
+template <typename scalar_t>
+void unmqr(
+    lapack::Side side, lapack::Op trans,
+    int64_t m, int64_t n, int64_t k,
+    scalar_t const* dA, int64_t ldda, scalar_t const* dtau,
+    scalar_t* dC, int64_t lddc,
+    void*  dev_work, size_t  dev_work_size,
+    void* host_work, size_t host_work_size,
+    device_info_int* dev_info, lapack::Queue& queue );
+
+//----------
+// ormqr alias to unmqr, for real scalar_t only.
+template <typename scalar_t>
+void ormqr_work_size_bytes(
+    lapack::Side side, lapack::Op trans,
+    int64_t m, int64_t n, int64_t k,
+    scalar_t const* dA, int64_t ldda, scalar_t const* dtau,
+    scalar_t* dC, int64_t lddc,
+    size_t* dev_work_size, size_t* host_work_size,
+    lapack::Queue& queue )
+{
+    static_assert( ! blas::is_complex_v<scalar_t>,
+                   "ormqr is for real types; use unmqr for complex" );
+    unmqr_work_size_bytes(
+        side, trans, m, n, k, dA, ldda, dtau, dC, lddc,
+        dev_work_size, host_work_size, queue );
+}
+
+template <typename scalar_t>
+void ormqr(
+    lapack::Side side, lapack::Op trans,
+    int64_t m, int64_t n, int64_t k,
+    scalar_t const* dA, int64_t ldda, scalar_t const* dtau,
+    scalar_t* dC, int64_t lddc,
+    void*  dev_work, size_t  dev_work_size,
+    void* host_work, size_t host_work_size,
+    device_info_int* dev_info, lapack::Queue& queue )
+{
+    static_assert( ! blas::is_complex_v<scalar_t>,
+                   "ormqr is for real types; use unmqr for complex" );
+    unmqr(
+        side, trans, m, n, k, dA, ldda, dtau, dC, lddc,
+        dev_work, dev_work_size, host_work, host_work_size, dev_info, queue );
+}
+
+//------------------------------------------------------------------------------
 template <typename scalar_t>
 void heevd_work_size_bytes(
     lapack::Job jobz, lapack::Uplo uplo,

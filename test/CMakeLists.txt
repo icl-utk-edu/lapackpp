@@ -209,6 +209,7 @@ add_executable(
     test_ungtr.cc
     test_unhr_col.cc    test_orhr_col.cc
     test_unmhr.cc
+    test_unmqr_device.cc
     test_unmtr.cc
     test_upgtr.cc
     test_upmtr.cc

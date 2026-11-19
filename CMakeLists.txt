@@ -106,6 +106,9 @@ set_property(
     CACHE lapack PROPERTY STRINGS
     "auto" "generic" )
 
+set( lapack_symbol_suffix "" CACHE STRING
+     "Suffix appended to LAPACK symbol names after Fortran mangling, e.g. '64_' for OpenBLAS built with INTERFACE64=1 SYMBOLSUFFIX=64_. Empty (default) inherits BLAS++'s blas_symbol_suffix; 'none' requests unsuffixed LAPACK symbols; any other value overrides the inherited suffix." )
+
 message( DEBUG "Settings:
 CMAKE_VERSION          = ${CMAKE_VERSION}
 CMAKE_INSTALL_PREFIX   = ${CMAKE_INSTALL_PREFIX}
@@ -113,6 +116,7 @@ CMAKE_BUILD_TYPE       = ${CMAKE_BUILD_TYPE}
 BUILD_SHARED_LIBS      = ${BUILD_SHARED_LIBS}
 BLA_VENDOR             = ${BLA_VENDOR}
 lapack                 = ${lapack}
+lapack_symbol_suffix   = ${lapack_symbol_suffix}
 build_tests            = ${build_tests}
 color                  = ${color}
 use_cmake_find_lapack  = ${use_cmake_find_lapack}
@@ -717,6 +721,15 @@ else()
     message( "   BLAS++ already included" )
 endif()
 
+# An explicitly empty macro suppresses the BLAS++ suffix fallback.
+set( lapack_symbol_suffix_def "" )
+string( TOLOWER "${lapack_symbol_suffix}" lapack_symbol_suffix_lower_ )
+if (lapack_symbol_suffix_lower_ STREQUAL "none")
+    set( lapack_symbol_suffix_def "-DLAPACK_FORTRAN_SUFFIX=" )
+elseif (NOT "${lapack_symbol_suffix}" STREQUAL "")
+    set( lapack_symbol_suffix_def "-DLAPACK_FORTRAN_SUFFIX=${lapack_symbol_suffix}" )
+endif()
+
 # Search for LAPACK library.
 message( "" )
 if (BLA_VENDOR OR use_cmake_find_lapack)
@@ -731,6 +744,12 @@ if (NOT LAPACK_FOUND)
     message( FATAL_ERROR "LAPACK++ requires a LAPACK library and none was found."
              " Ensure that it is accessible in environment variables"
              " $CPATH, $LIBRARY_PATH, and $LD_LIBRARY_PATH." )
+endif()
+
+# Apply the override with either LAPACK finder, including after reconfigure.
+list( FILTER lapackpp_defs_ EXCLUDE REGEX "^-DLAPACK_FORTRAN_SUFFIX=" )
+if (lapack_symbol_suffix_def)
+    list( APPEND lapackpp_defs_ "${lapack_symbol_suffix_def}" )
 endif()
 
 include( "cmake/LAPACKConfig.cmake" )

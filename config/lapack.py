@@ -316,9 +316,29 @@ def blas():
                      {'LIBS': '-lessl6464'}])
     # end essl
 
+    # The Make build probes BLAS independently of the BLAS++ installation.
+    # Retain lapack_symbol_suffix as the default for bundled OpenBLAS builds.
+    blas_symbol_suffix = (config.environ['blas_symbol_suffix']
+                          or config.environ['lapack_symbol_suffix'])
+    if (blas_symbol_suffix.lower() == 'none'):
+        blas_symbol_suffix = ''
+
     #-------------------- OpenBLAS
     if (test_openblas):
         choices.append( ['OpenBLAS', {'LIBS': '-lopenblas'}])
+        if (test_int64):
+            # Debian/Ubuntu ship the ILP64 build as libopenblas64, with
+            # standard (unsuffixed) dgemm_ symbols, so it needs only the
+            # -lopenblas64 name.
+            choices.append( ['OpenBLAS (ILP64, -lopenblas64)',
+                             {'LIBS': '-lopenblas64'}])
+        # OpenBLAS built with SYMBOLSUFFIX (e.g. conda-forge's libopenblas64_,
+        # exporting dgemm_64_) needs both the suffixed name and the matching
+        # BLAS_FORTRAN_SUFFIX so the mangling appends _64_ to its calls.
+        if (blas_symbol_suffix):
+            choices.append(
+                ['OpenBLAS (symbol suffix ' + blas_symbol_suffix + ')',
+                 {'LIBS': '-lopenblas' + blas_symbol_suffix}])
 
     #-------------------- BLIS (also used by AMD AOCL)
     if (test_blis):
@@ -379,6 +399,11 @@ def blas():
     manglings = get_fortran_manglings()
     int_sizes = get_int_sizes()
     passed = []
+    if (blas_symbol_suffix):
+        for (label, env) in choices:
+            env['CXXFLAGS'] = (get(env, 'CXXFLAGS')
+                               + ' -DBLAS_FORTRAN_SUFFIX=' + blas_symbol_suffix)
+
     print_subhead( 'BLAS (ddot) in:' )
     for (label, env) in choices:
         title = label
@@ -436,6 +461,14 @@ def lapack():
     routines like `potrf`.
     '''
     print_header( 'LAPACK library' )
+
+    # Apply LAPACK's override only after the BLAS and CBLAS probes.
+    # An empty macro, rather than an undefined macro, disables inheritance.
+    suffix = config.environ['lapack_symbol_suffix']
+    if (suffix.lower() == 'none'):
+        config.environ.append( 'CXXFLAGS', '-DLAPACK_FORTRAN_SUFFIX=' )
+    elif (suffix):
+        config.environ.append( 'CXXFLAGS', define('FORTRAN_SUFFIX', suffix) )
 
     #----------------------------------------
     # Parse options.
@@ -500,7 +533,8 @@ def lapack():
 def lapacke():
     '''
     Search for LAPACKE in existing BLAS/LAPACK libraries,
-    found with blas() and lapack(), then in -llapacke.
+    found with blas() and lapack(), then in -llapacke64 (ILP64 only)
+    and -llapacke.
     '''
     print_header( 'LAPACKE library' )
     choices = [
@@ -508,6 +542,11 @@ def lapacke():
         ['LAPACKE (LAPACKE_dpstrf) in -llapacke',
             {'LIBS': '-llapacke'}],
     ]
+    # For ILP64, try -llapacke64, as Debian/Ubuntu ship it, before -llapacke.
+    if (re.search( r'_ILP64\b', config.environ['CXXFLAGS'] )):
+        choices.insert( 1,
+            ['LAPACKE (LAPACKE_dpstrf) in -llapacke64',
+             {'LIBS': '-llapacke64'}] )
 
     passed = []
     for (label, env) in choices:

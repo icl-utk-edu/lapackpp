@@ -5,12 +5,16 @@
 
 # Check if this file has already been run with these settings.
 if (DEFINED lapack_config_cache
-    AND "${lapack_config_cache}" STREQUAL "${LAPACK_LIBRARIES}")
+    AND "${lapack_config_cache}" STREQUAL "${LAPACK_LIBRARIES}"
+    AND "${lapack_config_defines_cache}" STREQUAL "${blaspp_defines};${lapackpp_defs_}")
 
     message( DEBUG "LAPACK config already done for '${LAPACK_LIBRARIES}'" )
     return()
 endif()
 set( lapack_config_cache "${LAPACK_LIBRARIES}" CACHE INTERNAL "" )
+list( FILTER lapackpp_defs_ EXCLUDE REGEX "^-DLAPACK_(VERSION|HAVE_XBLAS|HAVE_LAPACKE)(=|$)" )
+unset( lapacke_found CACHE )
+unset( lapacke_libraries CACHE )
 
 include( "cmake/util.cmake" )
 
@@ -24,7 +28,7 @@ try_run(
     LINK_LIBRARIES
         ${LAPACK_LIBRARIES} ${blaspp_libraries}
     COMPILE_DEFINITIONS
-        ${blaspp_defines}
+        ${blaspp_defines} ${lapack_symbol_suffix_def}
     COMPILE_OUTPUT_VARIABLE
         compile_output
     RUN_OUTPUT_VARIABLE
@@ -54,7 +58,7 @@ try_run(
     LINK_LIBRARIES
         ${LAPACK_LIBRARIES} ${blaspp_libraries}
     COMPILE_DEFINITIONS
-        ${blaspp_defines}
+        ${blaspp_defines} ${lapack_symbol_suffix_def}
     COMPILE_OUTPUT_VARIABLE
         compile_output
     RUN_OUTPUT_VARIABLE
@@ -73,8 +77,13 @@ endif()
 #-------------------------------------------------------------------------------
 # Find LAPACKE, either in the BLAS/LAPACK library or in -llapacke.
 # Check for pstrf (Cholesky with pivoting).
+# For ILP64, first try -llapacke64, as Debian/Ubuntu ship it.
 
-set( lib_list ";-llapacke" )
+if ("${blaspp_defines}" MATCHES "ILP64")
+    set( lib_list ";-llapacke64;-llapacke" )
+else()
+    set( lib_list ";-llapacke" )
+endif()
 message( DEBUG "lib_list ${lib_list}" )
 
 foreach (lib IN LISTS lib_list)
@@ -87,7 +96,7 @@ foreach (lib IN LISTS lib_list)
         LINK_LIBRARIES
             ${lib} ${LAPACK_LIBRARIES} ${blaspp_libraries}
         COMPILE_DEFINITIONS
-            ${blaspp_defines}
+            ${blaspp_defines} ${lapack_symbol_suffix_def}
         COMPILE_OUTPUT_VARIABLE
             compile_output
         RUN_OUTPUT_VARIABLE
@@ -120,3 +129,7 @@ lapackpp_defs_    = '${lapackpp_defs_}'
 lapacke_found     = '${lapacke_found}'
 lapacke_libraries = '${lapacke_libraries}'
 ")
+
+# Keep the generated definitions in the key too: LAPACKFinder may clear them
+# while selecting the same libraries and effective suffix as before.
+set( lapack_config_defines_cache "${blaspp_defines};${lapackpp_defs_}" CACHE INTERNAL "" )

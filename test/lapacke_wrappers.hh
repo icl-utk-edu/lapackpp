@@ -21,11 +21,38 @@
     #endif
     #include <mkl_lapacke.h>
 #else
+    // OpenBLAS built with SYMBOLSUFFIX (e.g., 64_) also suffixes LAPACKE
+    // functions, exporting LAPACKE_dgesv64_. Defined before including
+    // lapacke.h, these work whether or not the header's declarations are
+    // suffixed. LAPACK_FORTRAN_SUFFIX takes precedence; BLAS_FORTRAN_SUFFIX
+    // is the fallback.
+    #if defined(LAPACK_FORTRAN_SUFFIX)
+        #define LAPACKE_SUFFIX_ LAPACK_FORTRAN_SUFFIX
+    #elif defined(BLAS_FORTRAN_SUFFIX)
+        #define LAPACKE_SUFFIX_ BLAS_FORTRAN_SUFFIX
+    #endif
+
+    #ifdef LAPACKE_SUFFIX_
+        // lapacke.h defines LAPACK_GLOBAL without the suffix unless it is
+        // already defined, so include mangling.h first in this case.
+        #include "lapack/mangling.h"
+
+        #define LAPACKE_CONCAT_( a, b ) a##b
+        #define LAPACKE_CONCAT(  a, b ) LAPACKE_CONCAT_( a, b )
+        #define LAPACKE_NAME( name ) LAPACKE_CONCAT( name, LAPACKE_SUFFIX_ )
+        #include "lapacke_suffix.hh"
+    #endif
+
     #include <lapacke.h>
 #endif
 
 // *after* lapacke.h, which may define LAPACK_GLOBAL macro
 #include "lapack/mangling.h"
+
+#ifdef LAPACKE_SUFFIX_
+    // *after* lapacke.h, to map Fortran macros that lapack.h suffixed.
+    #include "lapack_suffix.hh"
+#endif
 
 // This is in alphabetical order.
 

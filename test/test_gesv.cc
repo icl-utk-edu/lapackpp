@@ -66,10 +66,8 @@ void test_gesv_work( Params& params, bool run )
                 llong( n ), llong( lda ),
                 llong( n ), llong( nrhs ), llong( ldb ) );
     }
-    if (verbose >= 2) {
-        print_matrix( "A", n, n, &A_tst[0], lda, verbose );
-        print_matrix( "B", n, nrhs, &B_tst[0], ldb, verbose );
-    }
+    print_matrix( "A", n, n, &A_tst[0], lda, verbose );
+    print_matrix( "B", n, nrhs, &B_tst[0], ldb, verbose );
 
     // test error exits
     if (params.error_exit() == 'y') {
@@ -93,10 +91,8 @@ void test_gesv_work( Params& params, bool run )
     double gflop = lapack::Gflop< scalar_t >::gesv( n, nrhs );
     params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        print_matrix( "Aout", n, n, &A_tst[0], lda, verbose );
-        print_matrix( "X", n, nrhs, &B_tst[0], ldb, verbose );
-    }
+    print_matrix( "Aout", n, n, &A_tst[0], lda, verbose );
+    print_matrix( "X", n, nrhs, &B_tst[0], ldb, verbose );
 
     if (params.check() == 'y') {
         // ---------- check error
@@ -106,9 +102,7 @@ void test_gesv_work( Params& params, bool run )
                     -one, &A_ref[0], lda,
                           &B_tst[0], ldb,
                     one,  &B_ref[0], ldb );
-        if (verbose >= 2) {
-            print_matrix( "R", n, nrhs, &B_ref[0], ldb, verbose );
-        }
+        print_matrix( "R", n, nrhs, &B_ref[0], ldb, verbose );
 
         real_t error = lapack::lange( lapack::Norm::One, n, nrhs, &B_ref[0], ldb );
         real_t Xnorm = lapack::lange( lapack::Norm::One, n, nrhs, &B_tst[0], ldb );
@@ -136,10 +130,8 @@ void test_gesv_work( Params& params, bool run )
         params.ref_time() = time;
         params.ref_gflops() = gflop / time;
 
-        if (verbose >= 2) {
-            print_matrix( "Aref", n, n, &A_ref[0], lda, verbose );
-            print_matrix( "Xref", n, nrhs, &B_ref[0], ldb, verbose );
-        }
+        print_matrix( "Aref", n, n, &A_ref[0], lda, verbose );
+        print_matrix( "Xref", n, nrhs, &B_ref[0], ldb, verbose );
     }
 }
 

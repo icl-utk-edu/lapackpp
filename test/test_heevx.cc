@@ -76,9 +76,7 @@ void test_heevx_work( Params& params, bool run )
         printf( "\n" );
         printf( "A n=%5lld, lda=%5lld\n", llong( n ), llong( lda ) );
     }
-    if (verbose >= 2) {
-        print_matrix( "A", n, n, &A_tst[0], lda, verbose );
-    }
+    print_matrix( "A", n, n, &A_tst[0], lda, verbose );
 
     // ---------- run test
     testsweeper::flush_cache( params.cache() );

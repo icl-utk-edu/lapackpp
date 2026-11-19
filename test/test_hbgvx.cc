@@ -99,10 +99,8 @@ void test_hbgvx_work( Params& params, bool run )
     Aband_ref = Aband_tst;
     Bband_ref = Bband_tst;
 
-    if (verbose >= 2) {
-        print_matrix( "Aband", ka+1, n, &Aband_tst[0], lda, verbose );
-        print_matrix( "Bband", kb+1, n, &Bband_tst[0], ldb, verbose );
-    }
+    print_matrix( "Aband", ka+1, n, &Aband_tst[0], lda, verbose );
+    print_matrix( "Bband", kb+1, n, &Bband_tst[0], ldb, verbose );
 
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
@@ -163,9 +161,7 @@ void test_hbgvx_work( Params& params, bool run )
                 error = lapack::lange( lapack::Norm::One, n, nfound, &W[0], ldw );
             }
         }
-        if (verbose >= 2) {
-            print_matrix( "W", n, nfound, &W[0], ldw, verbose );
-        }
+        print_matrix( "W", n, nfound, &W[0], ldw, verbose );
 
         error /= (n * Anorm * Znorm);
         params.error() = error;

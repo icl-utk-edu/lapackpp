@@ -53,9 +53,7 @@ void test_getri_work( Params& params, bool run )
                 "A n=%5lld, lda=%5lld\n",
                 llong( n ), llong( lda ) );
     }
-    if (verbose >= 2) {
-        print_matrix( "A", n, n, &A_tst[0], lda, verbose );
-    }
+    print_matrix( "A", n, n, &A_tst[0], lda, verbose );
 
     // factor A into LU
     int64_t info = lapack::getrf( n, n, &A_tst[0], lda, &ipiv_tst[0] );
@@ -82,9 +80,7 @@ void test_getri_work( Params& params, bool run )
     double gflop = lapack::Gflop< scalar_t >::getri( n );
     params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        print_matrix( "A2", n, n, &A_tst[0], lda, verbose );
-    }
+    print_matrix( "A2", n, n, &A_tst[0], lda, verbose );
 
     if (params.check() == 'y') {
         // ---------- check error
@@ -105,9 +101,7 @@ void test_getri_work( Params& params, bool run )
                     -1.0, &A_ref[0], lda,
                           &A_tst[0], lda,
                      1.0, &R[0], lda );
-        if (verbose >= 2) {
-            print_matrix( "R", n, n, &R[0], lda, verbose );
-        }
+        print_matrix( "R", n, n, &R[0], lda, verbose );
 
         // error = ||I - A A^{-1}|| / (n ||A|| ||A^{-1}||)
         real_t Rnorm     = lapack::lange( lapack::Norm::Fro, n, n, &R[0],     lda );
@@ -137,9 +131,7 @@ void test_getri_work( Params& params, bool run )
         params.ref_time() = time;
         params.ref_gflops() = gflop / time;
 
-        if (verbose >= 2) {
-            print_matrix( "A2ref", n, n, &A_ref[0], lda, verbose );
-        }
+        print_matrix( "A2ref", n, n, &A_ref[0], lda, verbose );
     }
 }
 

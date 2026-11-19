@@ -86,10 +86,8 @@ void test_hegvx_work( Params& params, bool run )
         printf( "A n=%5lld, lda=%5lld\n", llong( n ), llong( lda ) );
         printf( "B n=%5lld, ldb=%5lld\n", llong( n ), llong( ldb ) );
     }
-    if (verbose >= 2) {
-        print_matrix( "A", n, n, &A_tst[0], lda, verbose );
-        print_matrix( "B", n, n, &B_tst[0], ldb, verbose );
-    }
+    print_matrix( "A", n, n, &A_tst[0], lda, verbose );
+    print_matrix( "B", n, n, &B_tst[0], ldb, verbose );
 
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
@@ -178,9 +176,7 @@ void test_hegvx_work( Params& params, bool run )
                 error = lapack::lange( lapack::Norm::One, n, nfound, &Z[0], ldz );
                 break;
         }
-        if (verbose >= 2) {
-            print_matrix( "W", n, nfound, &W[0], ldw, verbose );
-        }
+        print_matrix( "W", n, nfound, &W[0], ldw, verbose );
 
         error /= (n * Anorm * Znorm);
         params.error() = error;

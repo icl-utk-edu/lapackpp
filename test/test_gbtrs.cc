@@ -95,10 +95,8 @@ void test_gbtrs_work( Params& params, bool run )
     //double gflop = lapack::Gflop< scalar_t >::gbtrs( trans, n, kl, ku, nrhs );
     //params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        print_matrix( "A_factor", kd, n, &AB_tst[0], ldab, verbose );
-        print_matrix( "X", n, nrhs, &B_tst[0], ldb, verbose );
-    }
+    print_matrix( "A_factor", kd, n, &AB_tst[0], ldab, verbose );
+    print_matrix( "X", n, nrhs, &B_tst[0], ldb, verbose );
 
     if (params.check() == 'y') {
         // ---------- check error
@@ -112,9 +110,7 @@ void test_gbtrs_work( Params& params, bool run )
                               &B_tst[ j*ldb ], 1,
                          1.0, &B_ref[ j*ldb ], 1 );
         }
-        if (verbose >= 2) {
-            print_matrix( "R", n, nrhs, &B_ref[0], ldb, verbose );
-        }
+        print_matrix( "R", n, nrhs, &B_ref[0], ldb, verbose );
 
         real_t error = lapack::lange( lapack::Norm::One, n, nrhs, &B_ref[0], ldb );
         real_t Xnorm = lapack::lange( lapack::Norm::One, n, nrhs, &B_tst[0], ldb );

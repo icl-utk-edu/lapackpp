@@ -56,9 +56,7 @@ void test_laev2_work( Params& params, bool run )
     real_t rt1, rt2, cs1;
     scalar_t sn1;
 
-    if (verbose >= 2) {
-        print_matrix( "A", n, n, &A[0], lda, verbose );
-    }
+    print_matrix( "A", n, n, &A[0], lda, verbose );
 
     //---------- run test
     testsweeper::flush_cache( params.cache() );
@@ -74,10 +72,8 @@ void test_laev2_work( Params& params, bool run )
     std::vector< scalar_t > Z{ cs1, sn1, -conj( sn1 ), cs1 };
     std::vector< real_t > Lambda{ rt1, rt2 };
 
-    if (verbose >= 2) {
-        print_matrix( "Z", n, n, &Z[0], lda, verbose );
-        print_vector( "Lambda", n, &Lambda[0], 1, verbose );
-    }
+    print_matrix( "Z", n, n, &Z[0], lda, verbose );
+    print_vector( "Lambda", n, &Lambda[0], 1, verbose );
 
     if (params.check() == 'y') {
         int64_t ldz = 2;

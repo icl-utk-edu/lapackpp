@@ -71,9 +71,7 @@ void test_hpevx_work( Params& params, bool run )
     lapack::larnv( idist, iseed, Apack_tst.size(), &Apack_tst[0] );
     Apack_ref = Apack_tst;
 
-    if (verbose >= 2) {
-        print_vector( "A", size_A, &Apack_tst[0], 1, verbose );
-    }
+    print_vector( "A", size_A, &Apack_tst[0], 1, verbose );
 
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
@@ -121,9 +119,7 @@ void test_hpevx_work( Params& params, bool run )
                           &Z[0], ldz,
                     -one, &W[0], ldw );
         real_t error = lapack::lange( lapack::Norm::One, n, n, &W[0], ldw );
-        if (verbose >= 2) {
-            print_matrix( "W", n, nfound, &W[0], ldw, verbose );
-        }
+        print_matrix( "W", n, nfound, &W[0], ldw, verbose );
 
         error /= (n * Anorm * Znorm);
         params.error() = error;

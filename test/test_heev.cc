@@ -61,9 +61,7 @@ void test_heev_work( Params& params, bool run )
         printf( "\n" );
         printf( "A n=%5lld, lda=%5lld\n", llong( n ), llong( lda ) );
     }
-    if (verbose >= 2) {
-        print_matrix( "A", n, n, &A[0], lda, verbose );
-    }
+    print_matrix( "A", n, n, &A[0], lda, verbose );
 
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
@@ -79,10 +77,8 @@ void test_heev_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::heev( jobz, n );
     // params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        print_matrix( "Z", n, n, &Z[0], ldz, verbose );
-        print_vector( "Lambda", n, &Lambda_tst[0], 1, verbose );
-    }
+    print_matrix( "Z", n, n, &Z[0], ldz, verbose );
+    print_vector( "Lambda", n, &Lambda_tst[0], 1, verbose );
 
     if (params.check() == 'y') {
         // ---------- check numerical error

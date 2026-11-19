@@ -74,10 +74,8 @@ void test_hpevd_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::hpevd( jobz, n );
     // params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        print_matrix( "Z", n, n, &Z[0], ldz, verbose );
-        print_vector( "Lambda", n, &Lambda_tst[0], 1, verbose );
-    }
+    print_matrix( "Z", n, n, &Z[0], ldz, verbose );
+    print_vector( "Lambda", n, &Lambda_tst[0], 1, verbose );
 
     if (params.check() == 'y' && jobz == lapack::Job::Vec) {
         // ---------- check error
@@ -101,9 +99,7 @@ void test_hpevd_work( Params& params, bool run )
                           &Z[0], ldz,
                     -one, &W[0], ldw );
         real_t error = lapack::lange( lapack::Norm::One, n, n, &W[0], ldw );
-        if (verbose >= 2) {
-            print_matrix( "W", n, n, &W[0], ldw, verbose );
-        }
+        print_matrix( "W", n, n, &W[0], ldw, verbose );
 
         error /= (n * Anorm * Znorm);
         params.error() = error;

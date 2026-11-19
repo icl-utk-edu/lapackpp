@@ -103,10 +103,8 @@ void test_larft_work( Params& params, bool run )
         }
     }
 
-    if (verbose >= 2) {
-        print_matrix( "V", Vm, Vn, &V[0], ldv, verbose );
-        print_vector( "tau", k, &tau[0], 1, verbose );
-    }
+    print_matrix( "V", Vm, Vn, &V[0], ldv, verbose );
+    print_vector( "tau", k, &tau[0], 1, verbose );
 
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
@@ -118,9 +116,7 @@ void test_larft_work( Params& params, bool run )
     //double gflop = lapack::Gflop< scalar_t >::larft( direction, storev, n, k );
     //params.gflops() = gflop / time;
 
-    if (verbose >= 3) {
-        print_matrix( "T", k, k, &T_tst[0], ldt, verbose );
-    }
+    print_matrix( "T", k, k, &T_tst[0], ldt, verbose );
 
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
@@ -135,9 +131,7 @@ void test_larft_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        if (verbose >= 3) {
-            print_matrix( "Tref", k, k, &T_ref[0], ldt, verbose );
-        }
+        print_matrix( "Tref", k, k, &T_ref[0], ldt, verbose );
 
         // ---------- check error compared to reference
         real_t error = 0;

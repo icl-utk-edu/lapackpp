@@ -162,9 +162,7 @@ void test_hpgvd_work( Params& params, bool run )
                 error = lapack::lange( lapack::Norm::One, n, n, &Z[0], ldz );
                 break;
         }
-        if (verbose >= 2) {
-            print_matrix( "W", n, n, &W[0], ldw, verbose );
-        }
+        print_matrix( "W", n, n, &W[0], ldw, verbose );
 
         error /= (n * Anorm * Znorm);
         params.error() = error;

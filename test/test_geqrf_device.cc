@@ -71,9 +71,7 @@ void test_geqrf_device_work( Params& params, bool run )
                 "A m=%5lld, n=%5lld, lda=%5lld\n",
                 llong( m ), llong( n ), llong( lda ) );
     }
-    if (verbose >= 2) {
-        print_matrix( "A", m, n, &A_tst[0], lda, verbose );
-    }
+    print_matrix( "A", m, n, &A_tst[0], lda, verbose );
 
     // Allocate workspace
     size_t d_size, h_size;
@@ -121,10 +119,8 @@ void test_geqrf_device_work( Params& params, bool run )
     blas::device_free( d_info, queue );
     blas::device_free( d_work, queue );
 
-    if (verbose >= 2) {
-        print_matrix( "A_factor", m, n, &A_tst[0], lda, verbose );
-        print_matrix( "tau", 1, minmn, &tau_tst[0], 1, verbose );
-    }
+    print_matrix( "A_factor", m, n, &A_tst[0], lda, verbose );
+    print_matrix( "tau", 1, minmn, &tau_tst[0], 1, verbose );
 
     if (params.check() == 'y') {
         // ---------- check error
@@ -189,9 +185,7 @@ void test_geqrf_device_work( Params& params, bool run )
         params.ref_time() = time;
         params.ref_gflops() = gflop / time;
 
-        if (verbose >= 2) {
-            print_matrix( "Aref_factor", m, n, &A_ref[0], lda, verbose );
-        }
+        print_matrix( "Aref_factor", m, n, &A_ref[0], lda, verbose );
     }
 }
 

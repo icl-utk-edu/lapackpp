@@ -41,9 +41,7 @@ void test_lanhp_work( Params& params, bool run )
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, AP.size(), &AP[0] );
 
-    if (verbose >= 2) {
-        print_vector( "AP", AP.size(), &AP[0], 1, verbose );
-    }
+    print_vector( "AP", AP.size(), &AP[0], 1, verbose );
 
     // ---------- run test
     testsweeper::flush_cache( params.cache() );

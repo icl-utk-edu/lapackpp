@@ -71,9 +71,7 @@ void test_getrf_device_work( Params& params, bool run )
                 "A m=%5lld, n=%5lld, lda=%5lld\n",
                 llong( m ), llong( n ), llong( lda ) );
     }
-    if (verbose >= 2) {
-        print_matrix( "A", m, n, &A_tst[0], lda, verbose );
-    }
+    print_matrix( "A", m, n, &A_tst[0], lda, verbose );
 
     // Allocate workspace
     size_t d_size, h_size;
@@ -157,9 +155,7 @@ void test_getrf_device_work( Params& params, bool run )
                     -1.0, &A_ref[0], lda,
                           &B_tst[0], ldb,
                      1.0, &B_ref[0], ldb );
-        if (verbose >= 2) {
-            print_matrix( "R", n, nrhs, &B_ref[0], ldb, verbose );
-        }
+        print_matrix( "R", n, nrhs, &B_ref[0], ldb, verbose );
 
         real_t error = lapack::lange( lapack::Norm::One, n, nrhs, &B_ref[0], ldb );
         real_t Xnorm = lapack::lange( lapack::Norm::One, n, nrhs, &B_tst[0], ldb );
@@ -182,9 +178,7 @@ void test_getrf_device_work( Params& params, bool run )
         params.ref_time() = time;
         params.ref_gflops() = gflop / time;
 
-        if (verbose >= 2) {
-            print_matrix( "Aref_factor", m, n, &A_ref[0], lda, verbose );
-        }
+        print_matrix( "Aref_factor", m, n, &A_ref[0], lda, verbose );
     }
 }
 

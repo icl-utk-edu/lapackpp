@@ -47,9 +47,7 @@ void test_lange_work( Params& params, bool run )
                 "A m=%5lld, n=%5lld, lda=%5lld\n",
                 llong( m ), llong( n ), llong( lda ) );
     }
-    if (verbose >= 2) {
-        print_matrix( "A", m, n, &A[0], lda, verbose );
-    }
+    print_matrix( "A", m, n, &A[0], lda, verbose );
 
     // ---------- run test
     testsweeper::flush_cache( params.cache() );

@@ -53,9 +53,7 @@ void test_potrf_work( Params& params, bool run )
                 "A n=%5lld, lda=%5lld\n",
                 llong( n ), llong( lda ) );
     }
-    if (verbose >= 2) {
-        print_matrix( "A", n, n, &A_tst[0], lda, verbose );
-    }
+    print_matrix( "A", n, n, &A_tst[0], lda, verbose );
 
     // test error exits
     if (params.error_exit() == 'y') {
@@ -78,9 +76,7 @@ void test_potrf_work( Params& params, bool run )
     double gflop = lapack::Gflop< scalar_t >::potrf( n );
     params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        print_matrix( "A_factor", n, n, &A_tst[0], lda, verbose );
-    }
+    print_matrix( "A_factor", n, n, &A_tst[0], lda, verbose );
 
     if (params.check() == 'y') {
         // ---------- check error
@@ -106,9 +102,7 @@ void test_potrf_work( Params& params, bool run )
                     -1.0, &A_ref[0], lda,
                           &B_tst[0], ldb,
                      1.0, &B_ref[0], ldb );
-        if (verbose >= 2) {
-            print_matrix( "R", n, nrhs, &B_ref[0], ldb, verbose );
-        }
+        print_matrix( "R", n, nrhs, &B_ref[0], ldb, verbose );
 
         real_t error = lapack::lange( lapack::Norm::One, n, nrhs, &B_ref[0], ldb );
         real_t Xnorm = lapack::lange( lapack::Norm::One, n, nrhs, &B_tst[0], ldb );
@@ -131,9 +125,7 @@ void test_potrf_work( Params& params, bool run )
         params.ref_time() = time;
         params.ref_gflops() = gflop / time;
 
-        if (verbose >= 2) {
-            print_matrix( "Aref_factor", n, n, &A_ref[0], lda, verbose );
-        }
+        print_matrix( "Aref_factor", n, n, &A_ref[0], lda, verbose );
     }
 }
 

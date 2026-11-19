@@ -76,10 +76,8 @@ void test_pbtrs_work( Params& params, bool run )
                 llong( n ), llong( kd ), llong( ldab ),
                 llong( n ), llong( nrhs ), llong( ldb ) );
     }
-    if (verbose >= 2) {
-        print_matrix( "AB", kd+1, n, &AB_tst[0], ldab, verbose );
-        print_matrix( "B", n, nrhs, &B_tst[0], ldb, verbose );
-    }
+    print_matrix( "AB", kd+1, n, &AB_tst[0], ldab, verbose );
+    print_matrix( "B", n, nrhs, &B_tst[0], ldb, verbose );
 
     // factor AB
     int64_t info = lapack::pbtrf( uplo, n, kd, &AB_tst[0], ldab );
@@ -100,10 +98,8 @@ void test_pbtrs_work( Params& params, bool run )
     double gflop = lapack::Gflop< scalar_t >::pbtrs( n, kd, nrhs );
     params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        print_matrix( "A_factor", kd+1, n, &AB_tst[0], ldab, verbose );
-        print_matrix( "X", n, nrhs, &B_tst[0], ldb, verbose );
-    }
+    print_matrix( "A_factor", kd+1, n, &AB_tst[0], ldab, verbose );
+    print_matrix( "X", n, nrhs, &B_tst[0], ldb, verbose );
 
     if (params.check() == 'y') {
         // ---------- check error
@@ -116,9 +112,7 @@ void test_pbtrs_work( Params& params, bool run )
                               &B_tst[ j*ldb ], 1,
                          1.0, &B_ref[ j*ldb ], 1 );
         }
-        if (verbose >= 2) {
-            print_matrix( "R", n, nrhs, &B_ref[0], ldb, verbose );
-        }
+        print_matrix( "R", n, nrhs, &B_ref[0], ldb, verbose );
 
         real_t error = lapack::lange( lapack::Norm::One, n, nrhs, &B_ref[0], ldb );
         real_t Xnorm = lapack::lange( lapack::Norm::One, n, nrhs, &B_tst[0], ldb );

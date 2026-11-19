@@ -95,10 +95,8 @@ void test_pbrfs_work( Params& params, bool run )
     }
     X_ref = X_tst;
 
-    if (verbose >= 2) {
-        print_matrix( "A_factor", kd+1, n, &AFB[0], ldafb, verbose );
-        print_matrix( "X", n, nrhs, &X_tst[0], ldx, verbose );
-    }
+    print_matrix( "A_factor", kd+1, n, &AFB[0], ldafb, verbose );
+    print_matrix( "X", n, nrhs, &X_tst[0], ldx, verbose );
 
 
     // ---------- run test
@@ -117,11 +115,9 @@ void test_pbrfs_work( Params& params, bool run )
     //double gflop = lapack::Gflop< scalar_t >::pbrfs( n, kd, nrhs );
     //params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        print_matrix( "Xrfs", n, nrhs, &X_tst[0], ldx, verbose );
-        print_vector( "ferr", n, &ferr_tst[0], 1, verbose );
-        print_vector( "berr", n, &berr_tst[0], 1, verbose );
-    }
+    print_matrix( "Xrfs", n, nrhs, &X_tst[0], ldx, verbose );
+    print_vector( "ferr", n, &ferr_tst[0], 1, verbose );
+    print_vector( "berr", n, &berr_tst[0], 1, verbose );
 
     if (params.check() == 'y') {
         // ---------- check error
@@ -134,9 +130,7 @@ void test_pbrfs_work( Params& params, bool run )
                               &X_tst[ j*ldx ], 1,
                          1.0, &B[ j*ldb ], 1 );
         }
-        if (verbose >= 2) {
-            print_matrix( "R", n, nrhs, &B[0], ldb, verbose );
-        }
+        print_matrix( "R", n, nrhs, &B[0], ldb, verbose );
 
         real_t error = lapack::lange( lapack::Norm::One, n, nrhs, &B[0], ldb );
         real_t Xnorm = lapack::lange( lapack::Norm::One, n, nrhs, &X_tst[0], ldx );

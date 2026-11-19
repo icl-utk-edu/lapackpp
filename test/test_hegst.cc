@@ -59,10 +59,8 @@ void test_hegst_work( Params& params, bool run )
         printf( "A n=%5lld, lda=%5lld\n", llong( n ), llong( lda ) );
         printf( "B n=%5lld, ldb=%5lld\n", llong( n ), llong( ldb ) );
     }
-    if (verbose >= 2) {
-        print_matrix( "A", n, n, &A_tst[0], lda, verbose );
-        print_matrix( "B", n, n, &B[0], ldb, verbose );
-    }
+    print_matrix( "A", n, n, &A_tst[0], lda, verbose );
+    print_matrix( "B", n, n, &B[0], ldb, verbose );
 
     // factor B
     int64_t info = lapack::potrf( uplo, n, &B[0], ldb );
@@ -70,9 +68,7 @@ void test_hegst_work( Params& params, bool run )
         fprintf( stderr, "lapack::potrf returned error %lld\n", llong( info ) );
     }
 
-    if (verbose >= 2) {
-        print_matrix( "Bhat", n, n, &B[0], ldb, verbose );
-    }
+    print_matrix( "Bhat", n, n, &B[0], ldb, verbose );
 
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
@@ -88,9 +84,7 @@ void test_hegst_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::hegst( itype, n );
     // params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        print_matrix( "Ahat", n, n, &A_tst[0], lda, verbose );
-    }
+    print_matrix( "Ahat", n, n, &A_tst[0], lda, verbose );
 
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference

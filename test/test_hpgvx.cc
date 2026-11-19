@@ -176,9 +176,7 @@ void test_hpgvx_work( Params& params, bool run )
                 error = lapack::lange( lapack::Norm::One, n, nfound, &Z[0], ldz );
                 break;
         }
-        if (verbose >= 2) {
-            print_matrix( "W", n, nfound, &W[0], ldw, verbose );
-        }
+        print_matrix( "W", n, nfound, &W[0], ldw, verbose );
 
         error /= (n * Anorm * Znorm);
         params.error() = error;

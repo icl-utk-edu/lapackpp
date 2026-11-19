@@ -44,9 +44,7 @@ void test_lansb_work( Params& params, bool run )
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, AB.size(), &AB[0] );
 
-    if (verbose >= 2) {
-        print_matrix( "AB", kd+1, n, &AB[0], ldab, verbose );
-    }
+    print_matrix( "AB", kd+1, n, &AB[0], ldab, verbose );
 
     // ---------- run test
     testsweeper::flush_cache( params.cache() );

@@ -60,10 +60,8 @@ void test_getrs_work( Params& params, bool run )
                 llong( n ), llong( lda ),
                 llong( n ), llong( nrhs ), llong( ldb ) );
     }
-    if (verbose >= 2) {
-        print_matrix( "A", n, n, &A[0], lda, verbose );
-        print_matrix( "B", n, nrhs, &B_tst[0], lda, verbose );
-    }
+    print_matrix( "A", n, n, &A[0], lda, verbose );
+    print_matrix( "B", n, nrhs, &B_tst[0], lda, verbose );
 
     // factor A into LU
     int64_t info = lapack::getrf( n, n, &A[0], lda, &ipiv_tst[0] );
@@ -92,9 +90,7 @@ void test_getrs_work( Params& params, bool run )
     double gflop = lapack::Gflop< scalar_t >::getrs( n, nrhs );
     params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        print_matrix( "B2", n, nrhs, &B_tst[0], ldb, verbose );
-    }
+    print_matrix( "B2", n, nrhs, &B_tst[0], ldb, verbose );
 
     if (params.ref() == 'y' || params.check() == 'y') {
         // ---------- run reference
@@ -109,9 +105,7 @@ void test_getrs_work( Params& params, bool run )
         params.ref_time() = time;
         params.ref_gflops() = gflop / time;
 
-        if (verbose >= 2) {
-            print_matrix( "B2ref", n, nrhs, &B_ref[0], ldb, verbose );
-        }
+        print_matrix( "B2ref", n, nrhs, &B_ref[0], ldb, verbose );
 
         // ---------- check error compared to reference
         real_t error = 0;

@@ -75,9 +75,7 @@ void test_gesvd_work( Params& params, bool run )
     lapack::generate_matrix( params.matrix, m, n, &A_tst[0], lda );
     A_ref = A_tst;
 
-    if (verbose >= 2) {
-        print_matrix( "A", m, n, &A_tst[0], lda, verbose );
-    }
+    print_matrix( "A", m, n, &A_tst[0], lda, verbose );
 
 
     // ---------- run test
@@ -94,12 +92,10 @@ void test_gesvd_work( Params& params, bool run )
         fprintf( stderr, "lapack::gesvd returned error %lld\n", llong( info_tst ) );
     }
 
-    if (verbose >= 2) {
-        print_matrix( "A_out", m, n, &A_tst[0], lda, verbose );
-        print_matrix( "U", m, u_ncol, &U_tst[0], ldu, verbose );
-        print_matrix( "VT", v_nrow, n, &VT_tst[0], ldvt, verbose );
-        print_vector( "Sigma", n, &Sigma_tst[0], 1, verbose );
-    }
+    print_matrix( "A_out", m, n, &A_tst[0], lda, verbose );
+    print_matrix( "U", m, u_ncol, &U_tst[0], ldu, verbose );
+    print_matrix( "VT", v_nrow, n, &VT_tst[0], ldvt, verbose );
+    print_vector( "Sigma", n, &Sigma_tst[0], 1, verbose );
 
     params.time() = time;
     //double gflop = lapack::Gflop< scalar_t >::gesvd( jobu, jobvt, m, n );
@@ -133,10 +129,8 @@ void test_gesvd_work( Params& params, bool run )
         check_svd( jobu, jobvt, m, n, &A_ref[0], lda,
                    &Sigma_tst[0], U2, ldu2, VT2, ldvt2, result );
 
-        if (verbose >= 2) {
-            print_matrix( "U2", m, u_ncol, U2, ldu2, verbose );
-            print_matrix( "VT2", v_nrow, n, VT2, ldvt2, verbose );
-        }
+        print_matrix( "U2", m, u_ncol, U2, ldu2, verbose );
+        print_matrix( "VT2", v_nrow, n, VT2, ldvt2, verbose );
     }
 
     if (params.ref() == 'y') {

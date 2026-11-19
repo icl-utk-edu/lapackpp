@@ -99,12 +99,10 @@ void test_gglse_work( Params& params, bool run )
     C_ref = C_tst;
     D_ref = D_tst;
 
-    if (verbose >= 2) {
-        print_matrix( "A", m, n, &A_tst[0], lda, verbose );
-        print_matrix( "B", p, n, &B_tst[0], ldb, verbose );
-        print_vector( "c", m, &C_tst[0], 1, verbose );
-        print_vector( "d", p, &D_tst[0], 1, verbose );
-    }
+    print_matrix( "A", m, n, &A_tst[0], lda, verbose );
+    print_matrix( "B", p, n, &B_tst[0], ldb, verbose );
+    print_vector( "c", m, &C_tst[0], 1, verbose );
+    print_vector( "d", p, &D_tst[0], 1, verbose );
 
     // ---------- run test
     // minimize || c - A*x ||_2   subject to   B*x = d
@@ -121,9 +119,7 @@ void test_gglse_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::gglse( m, n );
     // params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        print_vector( "x_tst", n, &X_tst[0], 1, verbose );
-    }
+    print_vector( "x_tst", n, &X_tst[0], 1, verbose );
 
     if (params.check() == 'y') {
         // ---------- check error
@@ -173,9 +169,7 @@ void test_gglse_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_gglse returned error %lld\n", llong( info_ref ) );
         }
 
-        if (verbose >= 2) {
-            print_vector( "x_ref", n, &X_ref[0], 1, verbose );
-        }
+        print_vector( "x_ref", n, &X_ref[0], 1, verbose );
 
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;

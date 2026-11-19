@@ -719,6 +719,8 @@ endif()
 
 # Search for LAPACK library.
 message( "" )
+# LAPACKFinder and LAPACKConfig rebuild lapackpp_defs_ on every run.
+set( lapackpp_defs_ "" )
 if (BLA_VENDOR OR use_cmake_find_lapack)
     message( DEBUG "Using CMake's FindLAPACK" )
     find_package( LAPACK )

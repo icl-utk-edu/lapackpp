@@ -323,6 +323,7 @@ add_library(
     src/larf.cc
     src/larfb.cc
     src/larfg.cc
+    src/larfg_gpu.cc
     src/larfgp.cc
     src/larft.cc
     src/larfx.cc
@@ -489,8 +490,11 @@ add_library(
     src/tpmlqt.cc
     src/tpmqrt.cc
     src/tpqrt.cc
+    src/tpqrt_gpu.cc
     src/tpqrt2.cc
+    src/tpqrt2_gpu.cc
     src/tprfb.cc
+    src/tprfb_gpu.cc
     src/tprfs.cc
     src/tptri.cc
     src/tptrs.cc

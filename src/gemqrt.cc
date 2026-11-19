@@ -6,6 +6,7 @@
 #include "lapack.hh"
 #include "lapack_internal.hh"
 #include "lapack/fortran.h"
+#include "NoConstructAllocator.hh"
 
 #if LAPACK_VERSION >= 30400  // >= 3.4.0
 
@@ -44,7 +45,7 @@ int64_t gemqrt(
     lapack_int lwork_ = real((side == lapack::Side::Right) ? (m * nb) : (n * nb));
 
     // allocate workspace
-    std::vector< float > work( lwork_ );
+    lapack::vector< float > work( max( 1, lwork_ ) );
 
     LAPACK_sgemqrt(
         &side_, &trans_, &m_, &n_, &k_, &nb_,
@@ -86,7 +87,7 @@ int64_t gemqrt(
     lapack_int lwork_ = real((side == lapack::Side::Right) ? (m * nb) : (n * nb));
 
     // allocate workspace
-    std::vector< double > work( lwork_ );
+    lapack::vector< double > work( max( 1, lwork_ ) );
 
     LAPACK_dgemqrt(
         &side_, &trans_, &m_, &n_, &k_, &nb_,
@@ -128,7 +129,7 @@ int64_t gemqrt(
     lapack_int lwork_ = real((side == lapack::Side::Right) ? (m * nb) : (n * nb));
 
     // allocate workspace
-    std::vector< std::complex<float> > work( lwork_ );
+    lapack::vector< std::complex<float> > work( max( 1, lwork_ ) );
 
     LAPACK_cgemqrt(
         &side_, &trans_, &m_, &n_, &k_, &nb_,
@@ -245,7 +246,7 @@ int64_t gemqrt(
     lapack_int lwork_ = real((side == lapack::Side::Right) ? (m * nb) : (n * nb));
 
     // allocate workspace
-    std::vector< std::complex<double> > work( lwork_ );
+    lapack::vector< std::complex<double> > work( max( 1, lwork_ ) );
 
     LAPACK_zgemqrt(
         &side_, &trans_, &m_, &n_, &k_, &nb_,

@@ -31,9 +31,9 @@ void test_gemqrt_work( Params& params, bool run )
     int64_t nb = params.nb();
     int64_t align = params.align();
 
-    // geqrt requires min( m, n ) >= nb; use nb = 0.5 min( m, n ).
-    if (nb > min( m, n )) {
-        nb = max( 1, min( m, n ) / 2 );
+    // gemqrt requires k >= nb; use nb = 0.5 k.
+    if (nb > k) {
+        nb = max( 1, k / 2 );
         params.nb() = nb;
     }
 
@@ -46,18 +46,14 @@ void test_gemqrt_work( Params& params, bool run )
         return;
 
     //---------- setup
-    int64_t ldv;
-    if (side == lapack::Side::Right) {
-        ldv = roundup( blas::max( 1, m ), align );
-    }
-    else {
-        ldv = roundup( blas::max( 1, n ), align );
-    }
+    // V is q-by-k, where Q is q-by-q: q = m if side = Left, q = n if side = Right.
+    int64_t q = (side == lapack::Side::Left ? m : n);
+    int64_t ldv = roundup( blas::max( 1, q ), align );
     int64_t ldt = roundup( nb, align );
     int64_t ldc = roundup( blas::max( 1, m ), align );
-    size_t size_V = (size_t) ldv * k;
-    size_t size_T = (size_t) ldt * k;
-    size_t size_C = (size_t) ldc * n;
+    size_t size_V = (size_t) blas::max( 1, ldv * k );
+    size_t size_T = (size_t) ldt * blas::max( 1, k );
+    size_t size_C = (size_t) blas::max( 1, ldc * n );
 
     std::vector< scalar_t > V( size_V );
     std::vector< scalar_t > T( size_T );
@@ -71,8 +67,10 @@ void test_gemqrt_work( Params& params, bool run )
     lapack::larnv( idist, iseed, C_tst.size(), &C_tst[0] );
     C_ref = C_tst;
 
-    // Calling this to set up the matrices
-    lapack::geqrt( m, n, nb, &V[0], ldv, &T[0], ldt );
+    // Calling this to set up the matrices; there is nothing to factor if k = 0.
+    if (k > 0) {
+        lapack::geqrt( q, k, nb, &V[0], ldv, &T[0], ldt );
+    }
 
     //---------- run test
     testsweeper::flush_cache( params.cache() );

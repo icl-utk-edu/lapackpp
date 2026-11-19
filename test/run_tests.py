@@ -533,6 +533,9 @@ if (opts.qr and opts.host):
 
     [ 'gemqrt', gen + dtype_real    + align + n + nb + side + trans    ],  # real does trans = N, T, C
     [ 'gemqrt', gen + dtype_complex + align + n + nb + side + trans_nc ],  # complex does trans = N, C, not T
+    # m = 0 or n = 0; workspace is n*nb for side = Left, m*nb for side = Right
+    [ 'gemqrt', gen + dtype_real    + align + nb + side + trans    + ' --dim 100x0x0 --dim 0x100x0' ],
+    [ 'gemqrt', gen + dtype_complex + align + nb + side + trans_nc + ' --dim 100x0x0 --dim 0x100x0' ],
 
     # Triangle-pentagon
     [ 'tpqrt',  gen + dtype + align + mn + l + nb ],

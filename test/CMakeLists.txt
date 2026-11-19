@@ -145,6 +145,7 @@ add_executable(
     test_larf.cc
     test_larfb.cc
     test_larfg.cc
+    test_larfg_device.cc
     test_larfgp.cc
     test_larft.cc
     test_larfx.cc
@@ -217,8 +218,11 @@ add_executable(
     test_tpmlqt.cc
     test_tpmqrt.cc
     test_tpqrt.cc
+    test_tpqrt_device.cc
     test_tpqrt2.cc
+    test_tpqrt2_device.cc
     test_tprfb.cc
+    test_tprfb_device.cc
     test_larfy.cc
 )
 

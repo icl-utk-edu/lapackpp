@@ -104,8 +104,8 @@ void test_larft_work( Params& params, bool run )
     }
 
     if (verbose >= 2) {
-        printf( "V = " ); print_matrix( Vm, Vn, &V[0], ldv );
-        printf( "tau = " ); print_vector( k, &tau[0], 1 );
+        print_matrix( "V", Vm, Vn, &V[0], ldv, verbose );
+        print_vector( "tau", k, &tau[0], 1, verbose );
     }
 
     // ---------- run test
@@ -119,7 +119,7 @@ void test_larft_work( Params& params, bool run )
     //params.gflops() = gflop / time;
 
     if (verbose >= 3) {
-        printf( "T = " ); print_matrix( k, k, &T_tst[0], ldt );
+        print_matrix( "T", k, k, &T_tst[0], ldt, verbose );
     }
 
     if (params.ref() == 'y' || params.check() == 'y') {
@@ -136,7 +136,7 @@ void test_larft_work( Params& params, bool run )
         //params.ref_gflops() = gflop / time;
 
         if (verbose >= 3) {
-            printf( "Tref = " ); print_matrix( k, k, &T_ref[0], ldt );
+            print_matrix( "Tref", k, k, &T_ref[0], ldt, verbose );
         }
 
         // ---------- check error compared to reference

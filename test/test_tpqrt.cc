@@ -78,12 +78,9 @@ void test_tpqrt_work( Params& params, bool run )
                 llong( n ), llong( lda ),
                 llong( m ), llong( n ), llong( ldb ), llong( (m-L) ), llong( L ) );
     }
-    if (verbose >= 2) {
-        printf( "A  = " ); print_matrix( n,   n, &A_tst[0],   lda );
-        printf( "B1 = " ); print_matrix( m-L, n, &B_tst[0],   ldb );
-        printf( "B2 = " ); print_matrix( L,   n, &B_tst[m-L], ldb );
-        printf( "\n" );
-    }
+    print_matrix( "A",  n,   n, &A_tst[0],   lda, verbose );
+    print_matrix( "B1", m-L, n, &B_tst[0],   ldb, verbose );
+    print_matrix( "B2", L,   n, &B_tst[m-L], ldb, verbose );
 
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
@@ -99,13 +96,10 @@ void test_tpqrt_work( Params& params, bool run )
     double gflop = lapack::Gflop< scalar_t >::geqrf( m, n );  // under-estimate
     params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        printf( "Ahat  = " ); print_matrix( n,   n, &A_tst[0],   lda );
-        printf( "Bhat1 = " ); print_matrix( m-L, n, &B_tst[0],   ldb );
-        printf( "Bhat2 = " ); print_matrix( L,   n, &B_tst[m-L], ldb );
-        printf( "T = "     ); print_matrix( nb,  n, &T_tst[0],   ldt );
-        printf( "\n" );
-    }
+    print_matrix( "Ahat",  n,   n, &A_tst[0],   lda, verbose );
+    print_matrix( "Bhat1", m-L, n, &B_tst[0],   ldb, verbose );
+    print_matrix( "Bhat2", L,   n, &B_tst[m-L], ldb, verbose );
+    print_matrix( "T",     nb,  n, &T_tst[0],   ldt, verbose );
 
     if (params.check() == 'y') {
         // ---------- check error
@@ -116,22 +110,16 @@ void test_tpqrt_work( Params& params, bool run )
         std::vector< scalar_t > RA( size_A, 0.0 );
         std::vector< scalar_t > RB( size_B, 0.0 );
         lapack::lacpy( lapack::MatrixType::Upper, n, n, &A_tst[0], lda, &RA[0], lda );
-        if (verbose >= 2) {
-            printf( "RA  = " ); print_matrix( n,   n, &RA[0],   lda );
-            printf( "RB1 = " ); print_matrix( m-L, n, &RB[0],   ldb );
-            printf( "RB2 = " ); print_matrix( L,   n, &RB[m-L], ldb );
-            printf( "\n" );
-        }
+        print_matrix( "RA",  n,   n, &RA[0],   lda, verbose );
+        print_matrix( "RB1", m-L, n, &RB[0],   ldb, verbose );
+        print_matrix( "RB2", L,   n, &RB[m-L], ldb, verbose );
 
         // zero out lower triangle of A (below row 1) and B (below row m-L+1).
         lapack::laset( lapack::MatrixType::Lower, n-1, n-1, 0.0, 0.0, &A_ref[1], lda );
         lapack::laset( lapack::MatrixType::Lower, L-1, L-1, 0.0, 0.0, &B_ref[m-L+1], ldb );
-        if (verbose >= 2) {
-            printf( "Aref  = " ); print_matrix( n,   n, &A_ref[0],   lda );
-            printf( "Bref1 = " ); print_matrix( m-L, n, &B_ref[0],   ldb );
-            printf( "Bref2 = " ); print_matrix( L,   n, &B_ref[m-L], ldb );
-            printf( "\n" );
-        }
+        print_matrix( "Aref",  n,   n, &A_ref[0],   lda, verbose );
+        print_matrix( "Bref1", m-L, n, &B_ref[0],   ldb, verbose );
+        print_matrix( "Bref2", L,   n, &B_ref[m-L], ldb, verbose );
 
         // [ RA ] = Q * [ RA ]
         // [ RB ]       [ RB ]
@@ -156,12 +144,9 @@ void test_tpqrt_work( Params& params, bool run )
         params.error() = error;
         params.okay() = (error < tol);
 
-        if (verbose >= 2) {
-            printf( "A_QR0 = " ); print_matrix( n,   n, &A_ref[0],   lda );
-            printf( "A_QR1 = " ); print_matrix( m-L, n, &B_ref[0],   ldb );
-            printf( "A_QR2 = " ); print_matrix( L,   n, &B_ref[m-L], ldb );
-            printf( "\n" );
-        }
+        print_matrix( "A_QR0", n,   n, &A_ref[0],   lda, verbose );
+        print_matrix( "A_QR1", m-L, n, &B_ref[0],   ldb, verbose );
+        print_matrix( "A_QR2", L,   n, &B_ref[m-L], ldb, verbose );
     }
 
     if (params.ref() == 'y') {

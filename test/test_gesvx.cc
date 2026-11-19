@@ -133,8 +133,7 @@ void test_gesvx_work( Params& params, bool run )
                           &X_tst[0], ldb,
                     one,  &B_tst[0], ldb );
         if (verbose >= 2) {
-            printf( "R = " );
-            print_matrix( n, nrhs, &B_tst[0], ldb );
+            print_matrix( "R", n, nrhs, &B_tst[0], ldb, verbose );
         }
 
         real_t error = lapack::lange( lapack::Norm::One, n, nrhs, &B_tst[0], ldb );

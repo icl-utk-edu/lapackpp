@@ -95,11 +95,9 @@ void test_hpgv_work( Params& params, bool run )
     // params.gflops() = gflop / time;
 
     if (verbose >= 2) {
-        printf( "Lambda = " );
-        print_vector( n, &Lambda_tst[0], 1 );
+        print_vector( "Lambda", n, &Lambda_tst[0], 1, verbose );
         if (jobz == lapack::Job::Vec) {
-            printf( "Z = " );
-            print_matrix( n, n, &Z[0], ldz );
+            print_matrix( "Z", n, n, &Z[0], ldz, verbose );
         }
     }
 
@@ -165,8 +163,7 @@ void test_hpgv_work( Params& params, bool run )
                 break;
         }
         if (verbose >= 2) {
-            printf( "W = " );
-            print_matrix( n, n, &W[0], ldw );
+            print_matrix( "W", n, n, &W[0], ldw, verbose );
         }
 
         error /= (n * Anorm * Znorm);
@@ -192,11 +189,9 @@ void test_hpgv_work( Params& params, bool run )
         // params.ref_gflops() = gflop / time;
 
         if (verbose >= 2) {
-            printf( "Lambda_ref" );
-            print_vector( n, &Lambda_ref[0], 1 );
+            print_vector( "Lambda_ref", n, &Lambda_ref[0], 1, verbose );
             if (jobz == lapack::Job::Vec) {
-                printf( "Zref" );
-                print_matrix( n, n, &Z[0], ldz );
+                print_matrix( "Zref", n, n, &Z[0], ldz, verbose );
             }
         }
 

@@ -87,7 +87,7 @@ void test_heevd_device_work( Params& params, bool run )
         printf( "A n=%5lld, lda=%5lld\n", llong( n ), llong( lda ) );
     }
     if (verbose >= 2) {
-        printf( "A = " ); print_matrix( n, n, &A[0], lda );
+        print_matrix( "A", n, n, &A[0], lda, verbose );
     }
 
     // ---------- run test
@@ -124,8 +124,8 @@ void test_heevd_device_work( Params& params, bool run )
     blas::device_free( d_info, queue );
 
     if (verbose >= 2) {
-        printf( "Z = " ); print_matrix( n, n, &Z[0], ldz );
-        printf( "Lambda = " ); print_vector( n, &Lambda_tst[0], 1 );
+        print_matrix( "Z", n, n, &Z[0], ldz, verbose );
+        print_vector( "Lambda", n, &Lambda_tst[0], 1, verbose );
     }
 
     if (params.check() == 'y') {

@@ -83,8 +83,7 @@ void test_heevr_work( Params& params, bool run )
         printf( "A n=%5lld, lda=%5lld\n", llong( n ), llong( lda ) );
     }
     if (verbose >= 2) {
-        printf( "A = " );
-        print_matrix( n, n, &A_tst[0], lda );
+        print_matrix( "A", n, n, &A_tst[0], lda, verbose );
     }
 
     // ---------- run test
@@ -105,11 +104,9 @@ void test_heevr_work( Params& params, bool run )
 
     if (verbose >= 2) {
         printf( "nfound = %lld\n", llong( nfound ) );
-        printf( "Lambda = " );
-        print_vector( n, &Lambda_tst[0], 1 );
+        print_vector( "Lambda", n, &Lambda_tst[0], 1, verbose );
         if (jobz == lapack::Job::Vec) {
-            printf( "Z = " );
-            print_matrix( n, nfound, &Z[0], ldz );
+            print_matrix( "Z", n, nfound, &Z[0], ldz, verbose );
         }
     }
 

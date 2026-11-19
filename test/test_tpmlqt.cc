@@ -100,10 +100,10 @@ void test_tpmlqt_work( Params& params, bool run )
     }
 
     if (verbose > 1) {
-        printf( "V =" ); print_matrix( k,  Vn, &V[0], ldv );
-        printf( "T =" ); print_matrix( nb, k,  &T[0], ldt );
-        printf( "A =" ); print_matrix( Am, An, &A_tst[0], lda );
-        printf( "B =" ); print_matrix( m,  n,  &B_tst[0], ldb );
+        print_matrix( "V", k,  Vn, &V[0], ldv, verbose );
+        print_matrix( "T", nb, k,  &T[0], ldt, verbose );
+        print_matrix( "A", Am, An, &A_tst[0], lda, verbose );
+        print_matrix( "B", m,  n,  &B_tst[0], ldb, verbose );
     }
 
     // ---------- run test
@@ -120,8 +120,8 @@ void test_tpmlqt_work( Params& params, bool run )
     params.gflops() = gflop / time;
 
     if (verbose > 1) {
-        printf( "Aout =" ); print_matrix( Am, An, &A_tst[0], lda );
-        printf( "Bout =" ); print_matrix( m,  n,  &B_tst[0], ldb );
+        print_matrix( "Aout", Am, An, &A_tst[0], lda, verbose );
+        print_matrix( "Bout", m,  n,  &B_tst[0], ldb, verbose );
     }
 
     if (params.ref() == 'y' || params.check() == 'y') {
@@ -138,8 +138,8 @@ void test_tpmlqt_work( Params& params, bool run )
         params.ref_gflops() = gflop / time;
 
         if (verbose > 1) {
-            printf( "Aref =" ); print_matrix( Am, An, &A_ref[0], lda );
-            printf( "Bref =" ); print_matrix( m,  n,  &B_ref[0], ldb );
+            print_matrix( "Aref", Am, An, &A_ref[0], lda, verbose );
+            print_matrix( "Bref", m,  n,  &B_ref[0], ldb, verbose );
         }
 
         // ---------- check error compared to reference

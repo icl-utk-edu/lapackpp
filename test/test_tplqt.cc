@@ -78,12 +78,9 @@ void test_tplqt_work( Params& params, bool run )
                 llong( m ), llong( lda ),
                 llong( m ), llong( n ), llong( ldb ), llong( (m-L) ), llong( L ) );
     }
-    if (verbose >= 2) {
-        printf( "A  = " ); print_matrix( m, m,   &A_tst[0], lda );
-        printf( "B1 = " ); print_matrix( m, n-L, &B_tst[0], ldb );
-        printf( "B2 = " ); print_matrix( m, L,   &B_tst[(n-L)*ldb], ldb );
-        printf( "\n" );
-    }
+    print_matrix( "A",  m, m,   &A_tst[0], lda, verbose );
+    print_matrix( "B1", m, n-L, &B_tst[0], ldb, verbose );
+    print_matrix( "B2", m, L,   &B_tst[(n-L)*ldb], ldb, verbose );
 
     // ---------- run test
     testsweeper::flush_cache( params.cache() );
@@ -99,13 +96,10 @@ void test_tplqt_work( Params& params, bool run )
     double gflop = lapack::Gflop< scalar_t >::gelqf( m, n );  // under-estimate
     params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        printf( "Ahat  = " ); print_matrix( m,  m,   &A_tst[0], lda );
-        printf( "Bhat1 = " ); print_matrix( m,  n-L, &B_tst[0], ldb );
-        printf( "Bhat2 = " ); print_matrix( m,  L,   &B_tst[(n-L)*ldb], ldb );
-        printf( "T = "     ); print_matrix( mb, m,   &T_tst[0], ldt );
-        printf( "\n" );
-    }
+    print_matrix( "Ahat",  m,  m,   &A_tst[0], lda, verbose );
+    print_matrix( "Bhat1", m,  n-L, &B_tst[0], ldb, verbose );
+    print_matrix( "Bhat2", m,  L,   &B_tst[(n-L)*ldb], ldb, verbose );
+    print_matrix( "T",     mb, m,   &T_tst[0], ldt, verbose );
 
     if (params.check() == 'y') {
         // ---------- check error
@@ -116,22 +110,18 @@ void test_tplqt_work( Params& params, bool run )
         std::vector< scalar_t > LA( size_A, 0.0 );
         std::vector< scalar_t > LB( size_B, 0.0 );
         lapack::lacpy( lapack::MatrixType::Lower, m, m, &A_tst[0], lda, &LA[0], lda );
-        if (verbose >= 2) {
-            printf( "LA  = " ); print_matrix( m, m,   &LA[0], lda );
-            printf( "LB1 = " ); print_matrix( m, n-L, &LB[0], ldb );
-            printf( "LB2 = " ); print_matrix( m, L,   &LB[(n-L)*ldb], ldb );
-            printf( "\n" );
-        }
+
+        print_matrix( "LA",  m, m,   &LA[0], lda, verbose );
+        print_matrix( "LB1", m, n-L, &LB[0], ldb, verbose );
+        print_matrix( "LB2", m, L,   &LB[(n-L)*ldb], ldb, verbose );
 
         // zero out upper triangle of A (above col 1) and B (above col n-L+1).
         lapack::laset( lapack::MatrixType::Upper, m-1, m-1, 0.0, 0.0, &A_ref[1*lda], lda );
         lapack::laset( lapack::MatrixType::Upper, L-1, L-1, 0.0, 0.0, &B_ref[(n-L+1)*ldb], ldb );
-        if (verbose >= 2) {
-            printf( "Aref  = " ); print_matrix( m, m,   &A_ref[0], lda );
-            printf( "Bref1 = " ); print_matrix( m, n-L, &B_ref[0], ldb );
-            printf( "Bref2 = " ); print_matrix( m, L,   &B_ref[(n-L)*ldb], ldb );
-            printf( "\n" );
-        }
+
+        print_matrix( "Aref",  m, m,   &A_ref[0], lda, verbose );
+        print_matrix( "Bref1", m, n-L, &B_ref[0], ldb, verbose );
+        print_matrix( "Bref2", m, L,   &B_ref[(n-L)*ldb], ldb, verbose );
 
         // [ LA LB ] = [ LA LB ] * Q
         info_tst = lapack::tpmlqt(
@@ -154,12 +144,9 @@ void test_tplqt_work( Params& params, bool run )
         params.error() = error;
         params.okay() = (error < tol);
 
-        if (verbose >= 2) {
-            printf( "A_QR0 = " ); print_matrix( m, m,   &A_ref[0],   lda );
-            printf( "A_QR1 = " ); print_matrix( m, n-L, &B_ref[0],   ldb );
-            printf( "A_QR2 = " ); print_matrix( m, L,   &B_ref[m-L], ldb );
-            printf( "\n" );
-        }
+        print_matrix( "A_QR0", m, m,   &A_ref[0],   lda, verbose );
+        print_matrix( "A_QR1", m, n-L, &B_ref[0],   ldb, verbose );
+        print_matrix( "A_QR2", m, L,   &B_ref[m-L], ldb, verbose );
     }
 
     if (params.ref() == 'y') {

@@ -42,7 +42,7 @@ void test_lanhp_work( Params& params, bool run )
     lapack::larnv( idist, iseed, AP.size(), &AP[0] );
 
     if (verbose >= 2) {
-        printf( "AP = " ); print_vector( AP.size(), &AP[0], 1 );
+        print_vector( "AP", AP.size(), &AP[0], 1, verbose );
     }
 
     // ---------- run test

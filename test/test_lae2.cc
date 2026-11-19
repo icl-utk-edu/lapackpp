@@ -54,7 +54,7 @@ void test_lae2_work( Params& params, bool run )
     scalar_t sn1;
 
     if (verbose >= 2) {
-        printf( "A = " ); print_matrix( n, n, &A[0], lda );
+        print_matrix( "A", n, n, &A[0], lda, verbose );
     }
 
     //---------- run test
@@ -69,7 +69,7 @@ void test_lae2_work( Params& params, bool run )
     std::vector< real_t > Lambda{ rt1, rt2 };
 
     if (verbose >= 2) {
-        printf( "Lambda = " ); print_vector( n, &Lambda[0], 1 );
+        print_vector( "Lambda", n, &Lambda[0], 1, verbose );
     }
 
     if (params.check() == 'y') {

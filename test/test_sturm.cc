@@ -13,9 +13,8 @@
 #include <vector>
 #include <ctgmath>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Generate the Kahan matrix and its eigenvalues on three vectors.
-// -----------------------------------------------------------------------------
 template< typename scalar_t >
 void test_sturm_Kahan(int64_t n, std::vector<scalar_t>& diag,
                       std::vector<scalar_t>& offd, std::vector<scalar_t>& eigv,
@@ -64,6 +63,7 @@ void test_sturm_Kahan(int64_t n, std::vector<scalar_t>& diag,
     one_norm[0] = norm;
 }
 
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_sturm_work( Params& params, bool run )
 {
@@ -199,7 +199,7 @@ void test_sturm_work( Params& params, bool run )
     params.okay() = (error == 0);
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_sturm( Params& params, bool run )
 {
     switch (params.datatype()) {

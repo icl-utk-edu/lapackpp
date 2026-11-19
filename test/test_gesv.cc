@@ -67,10 +67,8 @@ void test_gesv_work( Params& params, bool run )
                 llong( n ), llong( nrhs ), llong( ldb ) );
     }
     if (verbose >= 2) {
-        printf( "A = " );
-        print_matrix( n, n, &A_tst[0], lda );
-        printf( "B = " );
-        print_matrix( n, nrhs, &B_tst[0], ldb );
+        print_matrix( "A", n, n, &A_tst[0], lda, verbose );
+        print_matrix( "B", n, nrhs, &B_tst[0], ldb, verbose );
     }
 
     // test error exits
@@ -96,10 +94,8 @@ void test_gesv_work( Params& params, bool run )
     params.gflops() = gflop / time;
 
     if (verbose >= 2) {
-        printf( "A_factor = " );
-        print_matrix( n, n, &A_tst[0], lda );
-        printf( "X = " );
-        print_matrix( n, nrhs, &B_tst[0], ldb );
+        print_matrix( "Aout", n, n, &A_tst[0], lda, verbose );
+        print_matrix( "X", n, nrhs, &B_tst[0], ldb, verbose );
     }
 
     if (params.check() == 'y') {
@@ -111,8 +107,7 @@ void test_gesv_work( Params& params, bool run )
                           &B_tst[0], ldb,
                     one,  &B_ref[0], ldb );
         if (verbose >= 2) {
-            printf( "R = " );
-            print_matrix( n, nrhs, &B_ref[0], ldb );
+            print_matrix( "R", n, nrhs, &B_ref[0], ldb, verbose );
         }
 
         real_t error = lapack::lange( lapack::Norm::One, n, nrhs, &B_ref[0], ldb );
@@ -142,10 +137,8 @@ void test_gesv_work( Params& params, bool run )
         params.ref_gflops() = gflop / time;
 
         if (verbose >= 2) {
-            printf( "Aref_factor = " );
-            print_matrix( n, n, &A_ref[0], lda );
-            printf( "Xref = " );
-            print_matrix( n, nrhs, &B_ref[0], ldb );
+            print_matrix( "Aref", n, n, &A_ref[0], lda, verbose );
+            print_matrix( "Xref", n, nrhs, &B_ref[0], ldb, verbose );
         }
     }
 }

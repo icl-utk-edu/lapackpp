@@ -66,8 +66,8 @@ void test_potrs_work( Params& params, bool run )
                 llong( n ), llong( nrhs ), llong( ldb ) );
     }
     if (verbose >= 2) {
-        printf( "A = " ); print_matrix( n, n, &A[0], lda );
-        printf( "B = " ); print_matrix( n, nrhs, &B_tst[0], lda );
+        print_matrix( "A", n, n, &A[0], lda, verbose );
+        print_matrix( "B", n, nrhs, &B_tst[0], lda, verbose );
     }
 
     // test error exits
@@ -94,7 +94,7 @@ void test_potrs_work( Params& params, bool run )
     params.gflops() = gflop / time;
 
     if (verbose >= 2) {
-        printf( "B2 = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
+        print_matrix( "B2", n, nrhs, &B_tst[0], ldb, verbose );
     }
 
     if (params.ref() == 'y' || params.check() == 'y') {
@@ -111,7 +111,7 @@ void test_potrs_work( Params& params, bool run )
         params.ref_gflops() = gflop / time;
 
         if (verbose >= 2) {
-            printf( "B2ref = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
+            print_matrix( "B2ref", n, nrhs, &B_ref[0], ldb, verbose );
         }
 
         // ---------- check error compared to reference

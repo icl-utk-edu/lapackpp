@@ -53,7 +53,7 @@ void test_lantr_work( Params& params, bool run )
                 llong( m ), llong( n ), llong( lda ) );
     }
     if (verbose >= 2) {
-        printf( "A = " ); print_matrix( m, n, &A[0], lda );
+        print_matrix( "A", m, n, &A[0], lda, verbose );
     }
 
     // ---------- run test

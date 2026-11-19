@@ -8,161 +8,172 @@
 
 #include <assert.h>
 #include <complex>
+#include <type_traits>
 
-// -----------------------------------------------------------------------------
-template< typename T >
-void print_matrix( int64_t m, int64_t n, T *A, int64_t lda,
-                   const char* format="%9.4f",
-                   const char* format_int="%9.0f" )
+//========================================
+// Copied from slate/src/print.cc, with minor modifications.
+
+//------------------------------------------------------------------------------
+/// @return 10^y for 0 <= y <= 20.
+static inline double pow10( int y )
+{
+    static double values[] = {
+        1, 10, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1e10, 1e11, 1e12,
+        1e13, 1e14, 1e15, 1e16, 1e17, 1e18, 1e19, 1e20 };
+    assert( 0 <= y && y <= 20 );
+    return values[ y ];
+}
+
+//------------------------------------------------------------------------------
+/// Print real value to a buffer buf of length buf_len.
+/// For w = width and p = precision:
+/// - integers are printed with %v.0f where v = w-p
+/// - small values < 0.01 or large values > threshold are printed with %w.pg
+/// - modest values are printed with %w.pf.
+/// To ensure data fits, set threshold = 10^(w - p - 2) and w >= p + 6.
+template <typename real_t>
+int snprintf_value(
+    char* buf, size_t buf_len,
+    int width, int precision,
+    real_t value,
+    std::enable_if_t< std::is_floating_point_v< real_t > >* z=nullptr )
+{
+    real_t abs_val = std::abs( value );
+    real_t threshold = pow10( width - precision - 2 );
+
+    int len;
+    if (value == int64_t( value )) {
+        // exactly integer, print without digits after decimal point
+        len = snprintf( buf, buf_len,
+                        " %#*.0f%*s", width - precision, value,
+                        precision, "" );
+    }
+    else if (abs_val < 0.01 || abs_val >= threshold) {
+        // small or large value: print with %g
+        len = snprintf( buf, buf_len,
+                        " %#*.*g", width, precision, value );
+    }
+    else {
+        // between 1 and threshold = 10^(w-p-2): %f will fit in width.
+        len = snprintf( buf, buf_len,
+                        " %#*.*f", width, precision, value );
+    }
+    return len;
+}
+
+//------------------------------------------------------------------------------
+/// Overload to print integer values.
+template <typename integer_t>
+int snprintf_value(
+    char* buf, size_t buf_len,
+    int width, int precision,
+    integer_t value,
+    std::enable_if_t< std::is_integral_v< integer_t > >* z=nullptr)
+{
+    return snprintf( buf, buf_len, " %*lld", width, llong( value ) );
+}
+
+//------------------------------------------------------------------------------
+/// Overload to print complex values as " <real> + <imag>i".
+template <typename real_t>
+int snprintf_value(
+    char* buf, size_t buf_len,
+    int width, int precision,
+    std::complex<real_t> value)
+{
+    // " real"
+    real_t re = std::real( value );
+    int len = snprintf_value( buf, buf_len, width, precision, re );
+    buf     += len;
+    buf_len -= len;
+
+    real_t im = std::imag( value );
+    if (im == 0) {
+        // blank padding
+        len += snprintf( buf, buf_len, "   %*s ", width, "" );
+    }
+    else {
+        // " + imagi"
+        int l = snprintf( buf, buf_len, " +" );
+        len     += l;
+        buf     += l;
+        buf_len -= l;
+
+        l = snprintf_value( buf, buf_len, width, precision, im );
+        len     += l;
+        buf     += l;
+        buf_len -= l;
+
+        l = snprintf( buf, buf_len, "i" );
+        len += l;
+    }
+    return len;
+}
+
+// end copy
+//========================================
+
+//------------------------------------------------------------------------------
+template <typename T>
+void print_matrix( const char* label, int64_t m, int64_t n, T* A, int64_t lda,
+                   int verbose=2, int precision=4 )
 {
     #define A(i_, j_) A[ (i_) + size_t(lda)*(j_) ]
 
-    require( m >= 0 );
-    require( n >= 0 );
-    require( lda >= m );
-    char format_[32], format_int_[32];
-    snprintf( format_,     sizeof(format_),     " %s", format     );
-    snprintf( format_int_, sizeof(format_int_), " %s", format_int );
+    assert( m >= 0 );
+    assert( n >= 0 );
+    assert( lda >= m );
 
-    printf( "[\n" );
-    for (int64_t i = 0; i < m; ++i) {
-        for (int64_t j = 0; j < n; ++j) {
-            T re = A(i, j);
-            if (re == int(re))
-                printf( format_int_, re );
-            else
-                printf( format_, re );
+    if (verbose == 0)
+        return;
+
+    int width = precision + 6;
+
+    printf( "%% %s %lld-by-%lld matrix, ld %lld\n", label, llong(m), llong(n), llong(lda) );
+    if (verbose >= 2) {
+        std::string msg;
+        char buf[ 80 ];
+        printf( "%s = [\n", label );
+        for (int64_t i = 0; i < m; ++i) {
+            msg = "";
+            for (int64_t j = 0; j < n; ++j) {
+                snprintf_value( buf, sizeof(buf), width, precision, A(i, j) );
+                msg += buf;
+            }
+            printf( "%s\n", msg.c_str() );
         }
-        printf( "\n" );
+        printf( "];\n" );
     }
-    printf( "];\n" );
 
     #undef A
 }
 
-// -----------------------------------------------------------------------------
-/// Overload for complex.
-template< typename T >
-void print_matrix( int64_t m, int64_t n, std::complex<T>* A, int64_t lda,
-                   const char* format="%9.4f",
-                   const char* format_int="%9.0f" )
+//------------------------------------------------------------------------------
+template <typename T>
+void print_vector( const char* label, int64_t n, T *x, int64_t incx,
+                   int verbose=2, int precision=4 )
 {
-    #define A(i_, j_) A[ (i_) + size_t(lda)*(j_) ]
+    assert( n >= 0 );
+    assert( incx != 0 );
 
-    require( m >= 0 );
-    require( n >= 0 );
-    require( lda >= m );
-    char format_[32], format_i_[32], format_int_[32], format_int_i_[32];
-    snprintf( format_,       sizeof(format_),       " %s",    format     );
-    snprintf( format_int_,   sizeof(format_int_),   " %s",    format_int );
-    snprintf( format_i_,     sizeof(format_i_),     " + %si", format     );
-    snprintf( format_int_i_, sizeof(format_int_i_), " + %si", format_int );
+    if (verbose == 0)
+        return;
 
-    printf( "[\n" );
-    for (int64_t i = 0; i < m; ++i) {
-        for (int64_t j = 0; j < n; ++j) {
-            T re = std::real( A(i, j) );
-            if (re == int(re))
-                printf( format_int_, re );
-            else
-                printf( format_, re );
+    int width = precision + 6;
 
-            T im = std::imag( A(i, j) );
-            if (im == int(im))
-                printf( format_int_i_, im );
-            else
-                printf( format_i_, im );
+    printf( "%% %s %lld vector\n", label, llong(n) );
+    if (verbose >= 2) {
+        std::string msg;
+        char buf[ 80 ];
+        printf( "%s = [", label );
+        int64_t ix = (incx > 0 ? 0 : (-n + 1)*incx);
+        for (int64_t i = 0; i < n; ++i) {
+            snprintf_value( buf, sizeof(buf), width, precision, x[ix] );
+            msg += buf;
+            ix += incx;
         }
-        printf( "\n" );
+        printf( "%s ]';\n", msg.c_str() );
     }
-    printf( "];\n" );
-
-    #undef A
 }
 
-// -----------------------------------------------------------------------------
-/// Overload with name.
-template< typename T >
-void print_matrix( const char* name,
-                   int64_t m, int64_t n, T *A, int64_t lda,
-                   const char* format="%9.4f",
-                   const char* format_int="%9.0f" )
-{
-    printf( "%s = ", name );
-    print_matrix( m, n, A, lda, format, format_int );
-}
-
-// -----------------------------------------------------------------------------
-template< typename T >
-void print_vector( int64_t n, T *x, int64_t incx,
-                   const char* format="%9.4f",
-                   const char* format_int="%9.0f" )
-{
-    require( n >= 0 );
-    require( incx != 0 );
-    char format_[32], format_int_[32];
-    snprintf( format_,     sizeof(format_),     " %s", format     );
-    snprintf( format_int_, sizeof(format_int_), " %s", format_int );
-
-    printf( "[" );
-    int64_t ix = (incx > 0 ? 0 : (-n + 1)*incx);
-    for (int64_t i = 0; i < n; ++i) {
-        T re = x[ix];
-        if (re == int(re))
-            printf( format_int_, re );
-        else
-            printf( format_, re );
-
-        ix += incx;
-    }
-    printf( " ]';\n" );
-}
-
-// -----------------------------------------------------------------------------
-/// Overload for complex.
-template< typename T >
-void print_vector( int64_t n, std::complex<T>* x, int64_t incx,
-                   const char* format="%9.4f",
-                   const char* format_int="%9.0f" )
-{
-    require( n >= 0 );
-    require( incx != 0 );
-    char format_[32], format_i_[32], format_int_[32], format_int_i_[32];
-    snprintf( format_,       sizeof(format_),       " %s",    format     );
-    snprintf( format_int_,   sizeof(format_int_),   " %s",    format_int );
-    snprintf( format_i_,     sizeof(format_i_),     " + %si", format     );
-    snprintf( format_int_i_, sizeof(format_int_i_), " + %si", format_int );
-
-    printf( "[" );
-    int64_t ix = (incx > 0 ? 0 : (-n + 1)*incx);
-    for (int64_t i = 0; i < n; ++i) {
-        T re = std::real( x[ix] );
-        if (re == int(re))
-            printf( format_int_, re );
-        else
-            printf( format_, re );
-
-        T im = std::imag( x[ix] );
-        if (im == int(im))
-            printf( format_int_i_, im );
-        else
-            printf( format_i_, im );
-
-        ix += incx;
-    }
-    printf( " ]';\n" );
-}
-
-// -----------------------------------------------------------------------------
-/// Overload with name.
-template< typename T >
-void print_vector( const char* name,
-                   int64_t n, T *x, int64_t incx,
-                   const char* format="%9.4f",
-                   const char* format_int="%9.0f" )
-{
-    printf( "%s = ", name );
-    print_vector( n, x, incx, format, format_int );
-}
-
-#endif        //  #ifndef PRINT_HH
+#endif  // PRINT_HH

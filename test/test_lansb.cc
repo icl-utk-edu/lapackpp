@@ -45,7 +45,7 @@ void test_lansb_work( Params& params, bool run )
     lapack::larnv( idist, iseed, AB.size(), &AB[0] );
 
     if (verbose >= 2) {
-        printf( "AB = " ); print_matrix( kd+1, n, &AB[0], ldab );
+        print_matrix( "AB", kd+1, n, &AB[0], ldab, verbose );
     }
 
     // ---------- run test

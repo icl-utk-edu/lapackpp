@@ -60,8 +60,8 @@ void test_hegst_work( Params& params, bool run )
         printf( "B n=%5lld, ldb=%5lld\n", llong( n ), llong( ldb ) );
     }
     if (verbose >= 2) {
-        printf( "A = " ); print_matrix( n, n, &A_tst[0], lda );
-        printf( "B = " ); print_matrix( n, n, &B[0], ldb );
+        print_matrix( "A", n, n, &A_tst[0], lda, verbose );
+        print_matrix( "B", n, n, &B[0], ldb, verbose );
     }
 
     // factor B
@@ -71,7 +71,7 @@ void test_hegst_work( Params& params, bool run )
     }
 
     if (verbose >= 2) {
-        printf( "Bhat = " ); print_matrix( n, n, &B[0], ldb );
+        print_matrix( "Bhat", n, n, &B[0], ldb, verbose );
     }
 
     // ---------- run test
@@ -89,7 +89,7 @@ void test_hegst_work( Params& params, bool run )
     // params.gflops() = gflop / time;
 
     if (verbose >= 2) {
-        printf( "Ahat = " ); print_matrix( n, n, &A_tst[0], lda );
+        print_matrix( "Ahat", n, n, &A_tst[0], lda, verbose );
     }
 
     if (params.ref() == 'y' || params.check() == 'y') {

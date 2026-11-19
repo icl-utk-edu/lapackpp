@@ -72,7 +72,7 @@ void test_geqrf_device_work( Params& params, bool run )
                 llong( m ), llong( n ), llong( lda ) );
     }
     if (verbose >= 2) {
-        printf( "A = " ); print_matrix( m, n, &A_tst[0], lda );
+        print_matrix( "A", m, n, &A_tst[0], lda, verbose );
     }
 
     // Allocate workspace
@@ -122,8 +122,8 @@ void test_geqrf_device_work( Params& params, bool run )
     blas::device_free( d_work, queue );
 
     if (verbose >= 2) {
-        printf( "A_factor = " ); print_matrix( m, n, &A_tst[0], lda );
-        printf( "tau = " ); print_matrix( 1, minmn, &tau_tst[0], 1 );
+        print_matrix( "A_factor", m, n, &A_tst[0], lda, verbose );
+        print_matrix( "tau", 1, minmn, &tau_tst[0], 1, verbose );
     }
 
     if (params.check() == 'y') {
@@ -190,7 +190,7 @@ void test_geqrf_device_work( Params& params, bool run )
         params.ref_gflops() = gflop / time;
 
         if (verbose >= 2) {
-            printf( "Aref_factor = " ); print_matrix( m, n, &A_ref[0], lda );
+            print_matrix( "Aref_factor", m, n, &A_ref[0], lda, verbose );
         }
     }
 }

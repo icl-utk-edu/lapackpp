@@ -87,10 +87,8 @@ void test_hegvx_work( Params& params, bool run )
         printf( "B n=%5lld, ldb=%5lld\n", llong( n ), llong( ldb ) );
     }
     if (verbose >= 2) {
-        printf( "A = " );
-        print_matrix( n, n, &A_tst[0], lda );
-        printf( "B = " );
-        print_matrix( n, n, &B_tst[0], ldb );
+        print_matrix( "A", n, n, &A_tst[0], lda, verbose );
+        print_matrix( "B", n, n, &B_tst[0], ldb, verbose );
     }
 
     // ---------- run test
@@ -113,11 +111,9 @@ void test_hegvx_work( Params& params, bool run )
 
     if (verbose >= 2) {
         printf( "nfound = %lld\n", llong( nfound ) );
-        printf( "Lambda = " );
-        print_vector( n, &Lambda_tst[0], 1 );
+        print_vector( "Lambda", n, &Lambda_tst[0], 1, verbose );
         if (jobz == lapack::Job::Vec) {
-            printf( "Z = " );
-            print_matrix( n, nfound, &Z[0], ldz );
+            print_matrix( "Z", n, nfound, &Z[0], ldz, verbose );
         }
     }
 
@@ -183,8 +179,7 @@ void test_hegvx_work( Params& params, bool run )
                 break;
         }
         if (verbose >= 2) {
-            printf( "W = " );
-            print_matrix( n, nfound, &W[0], ldw );
+            print_matrix( "W", n, nfound, &W[0], ldw, verbose );
         }
 
         error /= (n * Anorm * Znorm);
@@ -211,11 +206,9 @@ void test_hegvx_work( Params& params, bool run )
         // params.ref_gflops() = gflop / time;
 
         if (verbose >= 2) {
-            printf( "Lambda_ref" );
-            print_vector( n, &Lambda_ref[0], 1 );
+            print_vector( "Lambda_ref", n, &Lambda_ref[0], 1, verbose );
             if (jobz == lapack::Job::Vec) {
-                printf( "Zref" );
-                print_matrix( n, nfound, &Z[0], ldz );
+                print_matrix( "Zref", n, nfound, &Z[0], ldz, verbose );
             }
         }
 

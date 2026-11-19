@@ -72,7 +72,7 @@ void test_getrf_device_work( Params& params, bool run )
                 llong( m ), llong( n ), llong( lda ) );
     }
     if (verbose >= 2) {
-        printf( "A = " ); print_matrix( m, n, &A_tst[0], lda );
+        print_matrix( "A", m, n, &A_tst[0], lda, verbose );
     }
 
     // Allocate workspace
@@ -122,7 +122,7 @@ void test_getrf_device_work( Params& params, bool run )
     blas::device_free( d_work, queue );
 
     if (verbose >= 2) {
-        printf( "A_factor = " ); print_matrix( m, n, &A_tst[0], lda );
+        print_matrix( "A_factor", m, n, &A_tst[0], lda, verbose );
 
         printf( "ipiv = [" );
         for (size_t i = 0; i < size_ipiv; ++i) {
@@ -158,7 +158,7 @@ void test_getrf_device_work( Params& params, bool run )
                           &B_tst[0], ldb,
                      1.0, &B_ref[0], ldb );
         if (verbose >= 2) {
-            printf( "R = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
+            print_matrix( "R", n, nrhs, &B_ref[0], ldb, verbose );
         }
 
         real_t error = lapack::lange( lapack::Norm::One, n, nrhs, &B_ref[0], ldb );
@@ -183,7 +183,7 @@ void test_getrf_device_work( Params& params, bool run )
         params.ref_gflops() = gflop / time;
 
         if (verbose >= 2) {
-            printf( "Aref_factor = " ); print_matrix( m, n, &A_ref[0], lda );
+            print_matrix( "Aref_factor", m, n, &A_ref[0], lda, verbose );
         }
     }
 }

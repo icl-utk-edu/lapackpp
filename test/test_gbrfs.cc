@@ -84,8 +84,8 @@ void test_gbrfs_work( Params& params, bool run )
     }
     if (verbose >= 2) {
         printf( "Input data in rows 0 to kl-1 are ignored.\n" );
-        printf( "AB = " ); print_matrix( kd, n, &AB[0], ldab );
-        printf( "B = " ); print_matrix( n, nrhs, &B[0], ldb );
+        print_matrix( "AB", kd, n, &AB[0], ldab, verbose );
+        print_matrix( "B", n, nrhs, &B[0], ldb, verbose );
     }
 
     // Factor
@@ -102,8 +102,8 @@ void test_gbrfs_work( Params& params, bool run )
     X_ref = X_tst;
 
     if (verbose >= 2) {
-        printf( "A_factor = " ); print_matrix( kd, n, &AFB[0], ldafb );
-        printf( "X = " ); print_matrix( n, nrhs, &X_tst[0], ldx );
+        print_matrix( "A_factor", kd, n, &AFB[0], ldafb, verbose );
+        print_matrix( "X", n, nrhs, &X_tst[0], ldx, verbose );
     }
 
     std::copy (ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
@@ -127,9 +127,9 @@ void test_gbrfs_work( Params& params, bool run )
     //params.gflops() = gflop / time;
 
     if (verbose >= 2) {
-        printf( "Xrfs = " ); print_matrix( n, nrhs, &X_tst[0], ldx );
-        printf( "ferr = " ); print_vector( n, &ferr_tst[0], 1 );
-        printf( "berr = " ); print_vector( n, &berr_tst[0], 1 );
+        print_matrix( "Xrfs", n, nrhs, &X_tst[0], ldx, verbose );
+        print_vector( "ferr", n, &ferr_tst[0], 1, verbose );
+        print_vector( "berr", n, &berr_tst[0], 1, verbose );
     }
 
     if (params.check() == 'y') {
@@ -145,7 +145,7 @@ void test_gbrfs_work( Params& params, bool run )
                          1.0, &B[ j*ldb ], 1 );
         }
         if (verbose >= 2) {
-            printf( "R = " ); print_matrix( n, nrhs, &B[0], ldb );
+            print_matrix( "R", n, nrhs, &B[0], ldb, verbose );
         }
 
         real_t error = lapack::lange( lapack::Norm::One, n, nrhs, &B[0], ldb );

@@ -54,7 +54,7 @@ void test_getri_work( Params& params, bool run )
                 llong( n ), llong( lda ) );
     }
     if (verbose >= 2) {
-        printf( "A = " ); print_matrix( n, n, &A_tst[0], lda );
+        print_matrix( "A", n, n, &A_tst[0], lda, verbose );
     }
 
     // factor A into LU
@@ -83,7 +83,7 @@ void test_getri_work( Params& params, bool run )
     params.gflops() = gflop / time;
 
     if (verbose >= 2) {
-        printf( "A2 = " ); print_matrix( n, n, &A_tst[0], lda );
+        print_matrix( "A2", n, n, &A_tst[0], lda, verbose );
     }
 
     if (params.check() == 'y') {
@@ -106,7 +106,7 @@ void test_getri_work( Params& params, bool run )
                           &A_tst[0], lda,
                      1.0, &R[0], lda );
         if (verbose >= 2) {
-            printf( "R = " ); print_matrix( n, n, &R[0], lda );
+            print_matrix( "R", n, n, &R[0], lda, verbose );
         }
 
         // error = ||I - A A^{-1}|| / (n ||A|| ||A^{-1}||)
@@ -138,7 +138,7 @@ void test_getri_work( Params& params, bool run )
         params.ref_gflops() = gflop / time;
 
         if (verbose >= 2) {
-            printf( "A2ref = " ); print_matrix( n, n, &A_ref[0], lda );
+            print_matrix( "A2ref", n, n, &A_ref[0], lda, verbose );
         }
     }
 }

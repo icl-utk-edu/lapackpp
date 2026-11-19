@@ -100,10 +100,10 @@ void test_gglse_work( Params& params, bool run )
     D_ref = D_tst;
 
     if (verbose >= 2) {
-        printf( "A = " ); print_matrix( m, n, &A_tst[0], lda );
-        printf( "B = " ); print_matrix( p, n, &B_tst[0], ldb );
-        printf( "c = " ); print_vector( m, &C_tst[0], 1 );
-        printf( "d = " ); print_vector( p, &D_tst[0], 1 );
+        print_matrix( "A", m, n, &A_tst[0], lda, verbose );
+        print_matrix( "B", p, n, &B_tst[0], ldb, verbose );
+        print_vector( "c", m, &C_tst[0], 1, verbose );
+        print_vector( "d", p, &D_tst[0], 1, verbose );
     }
 
     // ---------- run test
@@ -122,7 +122,7 @@ void test_gglse_work( Params& params, bool run )
     // params.gflops() = gflop / time;
 
     if (verbose >= 2) {
-        printf( "x_tst = " ); print_vector( n, &X_tst[0], 1 );
+        print_vector( "x_tst", n, &X_tst[0], 1, verbose );
     }
 
     if (params.check() == 'y') {
@@ -174,7 +174,7 @@ void test_gglse_work( Params& params, bool run )
         }
 
         if (verbose >= 2) {
-            printf( "x_ref = " ); print_vector( n, &X_ref[0], 1 );
+            print_vector( "x_ref", n, &X_ref[0], 1, verbose );
         }
 
         params.ref_time() = time;

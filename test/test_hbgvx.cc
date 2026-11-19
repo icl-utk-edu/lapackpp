@@ -100,10 +100,8 @@ void test_hbgvx_work( Params& params, bool run )
     Bband_ref = Bband_tst;
 
     if (verbose >= 2) {
-        printf( "Aband = " );
-        print_matrix( ka+1, n, &Aband_tst[0], lda );
-        printf( "Bband = " );
-        print_matrix( kb+1, n, &Bband_tst[0], ldb );
+        print_matrix( "Aband", ka+1, n, &Aband_tst[0], lda, verbose );
+        print_matrix( "Bband", kb+1, n, &Bband_tst[0], ldb, verbose );
     }
 
     // ---------- run test
@@ -127,11 +125,9 @@ void test_hbgvx_work( Params& params, bool run )
 
     if (verbose >= 2) {
         printf( "nfound = %lld\n", llong( nfound ) );
-        printf( "Lambda = " );
-        print_vector( n, &Lambda_tst[0], 1 );
+        print_vector( "Lambda", n, &Lambda_tst[0], 1, verbose );
         if (jobz == lapack::Job::Vec) {
-            printf( "Z = " );
-            print_matrix( n, nfound, &Z[0], ldz );
+            print_matrix( "Z", n, nfound, &Z[0], ldz, verbose );
         }
     }
 
@@ -168,8 +164,7 @@ void test_hbgvx_work( Params& params, bool run )
             }
         }
         if (verbose >= 2) {
-            printf( "W = " );
-            print_matrix( n, nfound, &W[0], ldw );
+            print_matrix( "W", n, nfound, &W[0], ldw, verbose );
         }
 
         error /= (n * Anorm * Znorm);
@@ -198,11 +193,9 @@ void test_hbgvx_work( Params& params, bool run )
         // params.ref_gflops() = gflop / time;
 
         if (verbose >= 2) {
-            printf( "Lambda_ref" );
-            print_vector( n, &Lambda_ref[0], 1 );
+            print_vector( "Lambda_ref", n, &Lambda_ref[0], 1, verbose );
             if (jobz == lapack::Job::Vec) {
-                printf( "Zref" );
-                print_matrix( n, nfound, &Z[0], ldz );
+                print_matrix( "Zref", n, nfound, &Z[0], ldz, verbose );
             }
         }
 

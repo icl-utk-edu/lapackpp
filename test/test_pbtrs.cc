@@ -77,8 +77,8 @@ void test_pbtrs_work( Params& params, bool run )
                 llong( n ), llong( nrhs ), llong( ldb ) );
     }
     if (verbose >= 2) {
-        printf( "AB = " ); print_matrix( kd+1, n, &AB_tst[0], ldab );
-        printf( "B = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
+        print_matrix( "AB", kd+1, n, &AB_tst[0], ldab, verbose );
+        print_matrix( "B", n, nrhs, &B_tst[0], ldb, verbose );
     }
 
     // factor AB
@@ -101,8 +101,8 @@ void test_pbtrs_work( Params& params, bool run )
     params.gflops() = gflop / time;
 
     if (verbose >= 2) {
-        printf( "A_factor = " ); print_matrix( kd+1, n, &AB_tst[0], ldab );
-        printf( "X = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
+        print_matrix( "A_factor", kd+1, n, &AB_tst[0], ldab, verbose );
+        print_matrix( "X", n, nrhs, &B_tst[0], ldb, verbose );
     }
 
     if (params.check() == 'y') {
@@ -117,7 +117,7 @@ void test_pbtrs_work( Params& params, bool run )
                          1.0, &B_ref[ j*ldb ], 1 );
         }
         if (verbose >= 2) {
-            printf( "R = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
+            print_matrix( "R", n, nrhs, &B_ref[0], ldb, verbose );
         }
 
         real_t error = lapack::lange( lapack::Norm::One, n, nrhs, &B_ref[0], ldb );

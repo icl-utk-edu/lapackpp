@@ -76,7 +76,7 @@ void test_gesvd_work( Params& params, bool run )
     A_ref = A_tst;
 
     if (verbose >= 2) {
-        printf( "A = " ); print_matrix( m, n, &A_tst[0], lda );
+        print_matrix( "A", m, n, &A_tst[0], lda, verbose );
     }
 
 
@@ -95,10 +95,10 @@ void test_gesvd_work( Params& params, bool run )
     }
 
     if (verbose >= 2) {
-        printf( "A_out = " ); print_matrix( m, n, &A_tst[0], lda );
-        printf( "U = "     ); print_matrix( m, u_ncol, &U_tst[0], ldu );
-        printf( "VT = "    ); print_matrix( v_nrow, n, &VT_tst[0], ldvt );
-        printf( "Sigma = " ); print_vector( n, &Sigma_tst[0], 1 );
+        print_matrix( "A_out", m, n, &A_tst[0], lda, verbose );
+        print_matrix( "U", m, u_ncol, &U_tst[0], ldu, verbose );
+        print_matrix( "VT", v_nrow, n, &VT_tst[0], ldvt, verbose );
+        print_vector( "Sigma", n, &Sigma_tst[0], 1, verbose );
     }
 
     params.time() = time;
@@ -134,8 +134,8 @@ void test_gesvd_work( Params& params, bool run )
                    &Sigma_tst[0], U2, ldu2, VT2, ldvt2, result );
 
         if (verbose >= 2) {
-            printf( "U2 = "  ); print_matrix( m, u_ncol, U2, ldu2 );
-            printf( "VT2 = " ); print_matrix( v_nrow, n, VT2, ldvt2 );
+            print_matrix( "U2", m, u_ncol, U2, ldu2, verbose );
+            print_matrix( "VT2", v_nrow, n, VT2, ldvt2, verbose );
         }
     }
 

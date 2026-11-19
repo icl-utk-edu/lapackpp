@@ -223,9 +223,7 @@ void check_geev(
     std::vector< scalar_t > work( n * n );
     check_geev_multiply_VW( trans, n, W, V, ldv, &work[0], n );
 
-    if (verbose >= 2) {
-        printf( "VW = " ); print_matrix( n, n, &work[0], n );
-    }
+    print_matrix( "VW", n, n, &work[0], n, verbose );
 
     blas::gemm( blas::Layout::ColMajor,
                 trans, blas::Op::NoTrans, n, n, n,
@@ -233,9 +231,7 @@ void check_geev(
                       V, ldv,
                 -1.0, &work[0], n );
 
-    if (verbose >= 2) {
-        printf( "R = " ); print_matrix( n, n, &work[0], n );
-    }
+    print_matrix( "R", n, n, &work[0], n, verbose );
 
     // || op(A) V - V W || / (n ||A||)
     // instead of n, get22 uses ||V||, which generally gives a larger error:

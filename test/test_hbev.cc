@@ -62,8 +62,7 @@ void test_hbev_work( Params& params, bool run )
     Aband_ref = Aband_tst;
 
     if (verbose >= 2) {
-        printf( "Aband = " );
-        print_matrix( kd+1, n, &Aband_tst[0], lda );
+        print_matrix( "Aband", kd+1, n, &Aband_tst[0], lda, verbose );
     }
 
     // ---------- run test
@@ -83,11 +82,9 @@ void test_hbev_work( Params& params, bool run )
     // params.gflops() = gflop / time;
 
     if (verbose >= 2) {
-        printf( "Lambda = " );
-        print_vector( n, &Lambda_tst[0], 1 );
+        print_vector( "Lambda", n, &Lambda_tst[0], 1, verbose );
         if (jobz == lapack::Job::Vec) {
-            printf( "Z = " );
-            print_matrix( n, n, &Z[0], ldz );
+            print_matrix( "Z", n, n, &Z[0], ldz, verbose );
         }
     }
 
@@ -115,8 +112,7 @@ void test_hbev_work( Params& params, bool run )
         real_t error = lapack::lange( lapack::Norm::One, n, n, &W[0], ldw );
 
         if (verbose >= 2) {
-            printf( "W = " );
-            print_matrix( n, n, &W[0], ldw );
+            print_matrix( "W", n, n, &W[0], ldw, verbose );
         }
 
         error /= (n * Anorm * Znorm);
@@ -141,11 +137,9 @@ void test_hbev_work( Params& params, bool run )
         // params.ref_gflops() = gflop / time;
 
         if (verbose >= 2) {
-            printf( "Lambda_ref" );
-            print_vector( n, &Lambda_ref[0], 1 );
+            print_vector( "Lambda_ref", n, &Lambda_ref[0], 1, verbose );
             if (jobz == lapack::Job::Vec) {
-                printf( "Zref" );
-                print_matrix( n, n, &Z[0], ldz );
+                print_matrix( "Zref", n, n, &Z[0], ldz, verbose );
             }
         }
 

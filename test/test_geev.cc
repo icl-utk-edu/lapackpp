@@ -92,7 +92,7 @@ void test_geev_work( Params& params, bool run )
                 llong( n ), llong( lda ) );
     }
     if (verbose >= 2) {
-        printf( "A = " ); print_matrix( n, n, &A_tst[0], lda );
+        print_matrix( "A", n, n, &A_tst[0], lda, verbose );
     }
 
     // ---------- run test
@@ -111,12 +111,12 @@ void test_geev_work( Params& params, bool run )
     //params.gflops() = gflop / time;
 
     if (verbose >= 2) {
-        printf( "W = " ); print_vector( n, &W_tst[0], 1 );
+        print_vector( "W", n, &W_tst[0], 1, verbose );
         if (jobvl == lapack::Job::Vec) {
-            printf( "VL = " ); print_matrix( n, n, &VL_tst[0], ldvl );
+            print_matrix( "VL", n, n, &VL_tst[0], ldvl, verbose );
         }
         if (jobvr == lapack::Job::Vec) {
-            printf( "VR = " ); print_matrix( n, n, &VR_tst[0], ldvr );
+            print_matrix( "VR", n, n, &VR_tst[0], ldvr, verbose );
         }
     }
 
@@ -165,12 +165,12 @@ void test_geev_work( Params& params, bool run )
 
         if (verbose >= 2) {
             printf( "// note: may be sorted differently than results above\n" );
-            printf( "Wref  = " ); print_vector( n, &W_ref[0], 1 );
+            print_vector( "Wref", n, &W_ref[0], 1, verbose );
             if (jobvl == lapack::Job::Vec) {
-                printf( "VLref = " ); print_matrix( n, n, &VL_ref[0], ldvl );
+                print_matrix( "VLref", n, n, &VL_ref[0], ldvl, verbose );
             }
             if (jobvr == lapack::Job::Vec) {
-                printf( "VRref = " ); print_matrix( n, n, &VR_ref[0], ldvr );
+                print_matrix( "VRref", n, n, &VR_ref[0], ldvr, verbose );
             }
         }
 

@@ -11,7 +11,8 @@
 #include "lapacke_wrappers.hh"
 
 #include <vector>
-#include <ctgmath>
+#include <cmath>
+#include <complex>
 
 //------------------------------------------------------------------------------
 // Generate the Kahan matrix and its eigenvalues on three vectors.

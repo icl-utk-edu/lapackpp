@@ -50,6 +50,7 @@ void test_pocon_work( Params& params, bool run )
 
     anorm = lapack::lanhe( lapack::Norm::One, uplo, n, &A[0], lda );
 
+    print_matrix( "A", n, n, &A[0], lda, verbose );
 
     // factor A into LL^T
     int64_t info = lapack::potrf( uplo, n, &A[0], lda );

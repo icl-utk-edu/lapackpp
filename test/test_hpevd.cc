@@ -74,7 +74,9 @@ void test_hpevd_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::hpevd( jobz, n );
     // params.gflops() = gflop / time;
 
-    print_matrix( "Z", n, n, &Z[0], ldz, verbose );
+    if (jobz == lapack::Job::Vec) {
+        print_matrix( "Z", n, n, &Z[0], ldz, verbose );
+    }
     print_vector( "Lambda", n, &Lambda_tst[0], 1, verbose );
 
     if (params.check() == 'y' && jobz == lapack::Job::Vec) {

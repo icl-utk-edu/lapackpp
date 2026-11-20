@@ -78,10 +78,6 @@ void test_heevr_work( Params& params, bool run )
     lapack::generate_matrix( params.matrix, n, n, &A_tst[0], lda );
     A_ref = A_tst;
 
-    if (verbose >= 1) {
-        printf( "\n" );
-        printf( "A n=%5lld, lda=%5lld\n", llong( n ), llong( lda ) );
-    }
     print_matrix( "A", n, n, &A_tst[0], lda, verbose );
 
     // ---------- run test
@@ -100,7 +96,7 @@ void test_heevr_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::heevr( jobz, range, n );
     // params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
+    if (verbose) {
         printf( "nfound = %lld\n", llong( nfound ) );
         print_vector( "Lambda", n, &Lambda_tst[0], 1, verbose );
         if (jobz == lapack::Job::Vec) {

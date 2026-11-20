@@ -86,11 +86,6 @@ void test_geev_work( Params& params, bool run )
 
     A_ref = A_tst;
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "A n=%5lld, lda=%5lld\n",
-                llong( n ), llong( lda ) );
-    }
     print_matrix( "A", n, n, &A_tst[0], lda, verbose );
 
     // ---------- run test
@@ -108,14 +103,12 @@ void test_geev_work( Params& params, bool run )
     //double gflop = lapack::Gflop< scalar_t >::geev( jobvl, jobvr, n );
     //params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        print_vector( "W", n, &W_tst[0], 1, verbose );
-        if (jobvl == lapack::Job::Vec) {
-            print_matrix( "VL", n, n, &VL_tst[0], ldvl, verbose );
-        }
-        if (jobvr == lapack::Job::Vec) {
-            print_matrix( "VR", n, n, &VR_tst[0], ldvr, verbose );
-        }
+    print_vector( "W", n, &W_tst[0], 1, verbose );
+    if (jobvl == lapack::Job::Vec) {
+        print_matrix( "VL", n, n, &VL_tst[0], ldvl, verbose );
+    }
+    if (jobvr == lapack::Job::Vec) {
+        print_matrix( "VR", n, n, &VR_tst[0], ldvr, verbose );
     }
 
     bool okay = true;
@@ -161,7 +154,7 @@ void test_geev_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        if (verbose >= 2) {
+        if (verbose) {
             printf( "// note: may be sorted differently than results above\n" );
             print_vector( "Wref", n, &W_ref[0], 1, verbose );
             if (jobvl == lapack::Job::Vec) {

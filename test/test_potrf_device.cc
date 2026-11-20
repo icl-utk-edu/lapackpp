@@ -62,11 +62,6 @@ void test_potrf_device_work( Params& params, bool run )
     device_info_int* d_info = blas::device_malloc< device_info_int >( 1, queue );
     blas::device_copy_matrix( n, n, A_tst.data(), lda, dA_tst, lda, queue );
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "A n=%5lld, lda=%5lld\n",
-                llong( n ), llong( lda ) );
-    }
     print_matrix( "A", n, n, &A_tst[0], lda, verbose );
 
     // test error exits

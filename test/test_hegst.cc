@@ -54,11 +54,6 @@ void test_hegst_work( Params& params, bool run )
     lapack::generate_matrix( params.matrixB, n, n, &B[0], ldb );
     A_ref = A_tst;
 
-    if (verbose >= 1) {
-        printf( "\n" );
-        printf( "A n=%5lld, lda=%5lld\n", llong( n ), llong( lda ) );
-        printf( "B n=%5lld, ldb=%5lld\n", llong( n ), llong( ldb ) );
-    }
     print_matrix( "A", n, n, &A_tst[0], lda, verbose );
     print_matrix( "B", n, n, &B[0], ldb, verbose );
 

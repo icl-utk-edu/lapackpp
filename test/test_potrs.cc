@@ -58,13 +58,6 @@ void test_potrs_work( Params& params, bool run )
         fprintf( stderr, "lapack::potrf returned error %lld\n", llong( info ) );
     }
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "A n=%5lld, lda=%5lld\n"
-                "B n=%5lld, nrhs=%5lld, ldb=%5lld",
-                llong( n ), llong( lda ),
-                llong( n ), llong( nrhs ), llong( ldb ) );
-    }
     print_matrix( "A", n, n, &A[0], lda, verbose );
     print_matrix( "B", n, nrhs, &B_tst[0], lda, verbose );
 

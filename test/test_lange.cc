@@ -42,11 +42,6 @@ void test_lange_work( Params& params, bool run )
 
     lapack::generate_matrix( params.matrix, m, n, &A[0], lda );
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "A m=%5lld, n=%5lld, lda=%5lld\n",
-                llong( m ), llong( n ), llong( lda ) );
-    }
     print_matrix( "A", m, n, &A[0], lda, verbose );
 
     // ---------- run test
@@ -59,7 +54,7 @@ void test_lange_work( Params& params, bool run )
     //double gflop = lapack::Gflop< scalar_t >::lange( norm, m, n );
     //params.gflops() = gflop / time;
 
-    if (verbose >= 1) {
+    if (verbose) {
         printf( "norm_tst = %.8e\n", norm_tst );
     }
 
@@ -73,7 +68,7 @@ void test_lange_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        if (verbose >= 1) {
+        if (verbose) {
             printf( "norm_ref = %.8e\n", norm_ref );
         }
 

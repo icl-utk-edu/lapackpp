@@ -49,11 +49,6 @@ void test_getrf_work( Params& params, bool run )
     lapack::generate_matrix( params.matrix, m, n, &A_tst[0], lda );
     A_ref = A_tst;
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "A m=%5lld, n=%5lld, lda=%5lld\n",
-                llong( m ), llong( n ), llong( lda ) );
-    }
     print_matrix( "A", m, n, &A_tst[0], lda, verbose );
 
     // test error exits

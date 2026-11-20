@@ -61,14 +61,7 @@ void test_gbtrs_work( Params& params, bool run )
     AB_ref = AB_tst;
     B_ref = B_tst;
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "AB n=%5lld, kl=%5lld, ku=%5lld, kd=%5lld, ldab=%5lld\n"
-                "B n=%5lld, nrhs=%5lld, ldb=%5lld\n",
-                llong( n ), llong( kl ), llong( ku ), llong( kd ), llong( ldab ),
-                llong( n ), llong( nrhs ), llong( ldb ) );
-    }
-    if (verbose >= 2) {
+    if (verbose) {
         printf( "Input data in rows 0 to kl-1 are ignored.\n" );
         print_matrix( "AB", kd, n, &AB_tst[0], ldab, verbose );
         print_matrix( "B", n, nrhs, &B_tst[0], ldb, verbose );

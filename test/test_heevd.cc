@@ -57,10 +57,6 @@ void test_heevd_work( Params& params, bool run )
     lapack::generate_matrix( params.matrix,  n, n, &A[0], lda );
     Z = A;
 
-    if (verbose >= 1) {
-        printf( "\n" );
-        printf( "A n=%5lld, lda=%5lld\n", llong( n ), llong( lda ) );
-    }
     print_matrix( "A", n, n, &A[0], lda, verbose );
 
     // ---------- run test

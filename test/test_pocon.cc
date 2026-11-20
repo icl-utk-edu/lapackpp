@@ -50,11 +50,6 @@ void test_pocon_work( Params& params, bool run )
 
     anorm = lapack::lanhe( lapack::Norm::One, uplo, n, &A[0], lda );
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "A n %lld, lda %lld, Anorm %.2e\n",
-                llong( n ), llong( lda ), anorm );
-    }
 
     // factor A into LL^T
     int64_t info = lapack::potrf( uplo, n, &A[0], lda );

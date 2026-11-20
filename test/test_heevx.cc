@@ -72,10 +72,6 @@ void test_heevx_work( Params& params, bool run )
     lapack::generate_matrix( params.matrix, n, n, &A_tst[0], lda );
     A_ref = A_tst;
 
-    if (verbose >= 1) {
-        printf( "\n" );
-        printf( "A n=%5lld, lda=%5lld\n", llong( n ), llong( lda ) );
-    }
     print_matrix( "A", n, n, &A_tst[0], lda, verbose );
 
     // ---------- run test
@@ -95,7 +91,7 @@ void test_heevx_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::heevx( jobz, range, n );
     // params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
+    if (verbose) {
         printf( "nfound = %lld\n", llong( nfound ) );
         print_vector( "Lambda", n, &Lambda_tst[0], 1, verbose );
         if (jobz == lapack::Job::Vec) {
@@ -140,7 +136,8 @@ void test_heevx_work( Params& params, bool run )
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
-        if (verbose >= 2) {
+        if (verbose) {
+            printf( "nfound_ref = %lld\n", llong( nfound_ref ) );
             print_vector( "Lambda_ref", n, &Lambda_ref[0], 1, verbose );
             if (jobz == lapack::Job::Vec) {
                 print_matrix( "Zref", n, nfound, &Z[0], ldz, verbose );

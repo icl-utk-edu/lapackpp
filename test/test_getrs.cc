@@ -53,13 +53,6 @@ void test_getrs_work( Params& params, bool run )
     lapack::larnv( idist, iseed, B_tst.size(), &B_tst[0] );
     B_ref = B_tst;
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "A n=%5lld, lda=%5lld\n"
-                "B n=%5lld, nrhs=%5lld, ldb=%5lld",
-                llong( n ), llong( lda ),
-                llong( n ), llong( nrhs ), llong( ldb ) );
-    }
     print_matrix( "A", n, n, &A[0], lda, verbose );
     print_matrix( "B", n, nrhs, &B_tst[0], lda, verbose );
 

@@ -69,13 +69,6 @@ void test_pbsv_work( Params& params, bool run )
     AB_ref = AB_tst;
     B_ref = B_tst;
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "AB n=%5lld, kd=%5lld, ldab=%5lld\n"
-                "B n=%5lld, nrhs=%5lld, ldb=%5lld\n",
-                llong( n ), llong( kd ), llong( ldab ),
-                llong( n ), llong( nrhs ), llong( ldb ) );
-    }
     print_matrix( "AB", kd+1, n, &AB_tst[0], ldab, verbose );
     print_matrix( "B", n, nrhs, &B_tst[0], ldb, verbose );
 

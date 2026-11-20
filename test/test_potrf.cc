@@ -48,11 +48,6 @@ void test_potrf_work( Params& params, bool run )
     lapack::generate_matrix( params.matrix, n, n, &A_tst[0], lda );
     A_ref = A_tst;
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "A n=%5lld, lda=%5lld\n",
-                llong( n ), llong( lda ) );
-    }
     print_matrix( "A", n, n, &A_tst[0], lda, verbose );
 
     // test error exits

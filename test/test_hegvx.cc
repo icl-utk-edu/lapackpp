@@ -81,11 +81,6 @@ void test_hegvx_work( Params& params, bool run )
     A_ref = A_tst;
     B_ref = B_tst;
 
-    if (verbose >= 1) {
-        printf( "\n" );
-        printf( "A n=%5lld, lda=%5lld\n", llong( n ), llong( lda ) );
-        printf( "B n=%5lld, ldb=%5lld\n", llong( n ), llong( ldb ) );
-    }
     print_matrix( "A", n, n, &A_tst[0], lda, verbose );
     print_matrix( "B", n, n, &B_tst[0], ldb, verbose );
 
@@ -107,7 +102,7 @@ void test_hegvx_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::hegvx( itype, jobz, range, n );
     // params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
+    if (verbose) {
         printf( "nfound = %lld\n", llong( nfound ) );
         print_vector( "Lambda", n, &Lambda_tst[0], 1, verbose );
         if (jobz == lapack::Job::Vec) {
@@ -201,7 +196,8 @@ void test_hegvx_work( Params& params, bool run )
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
-        if (verbose >= 2) {
+        if (verbose) {
+            printf( "nfound_ref = %lld\n", llong( nfound_ref ) );
             print_vector( "Lambda_ref", n, &Lambda_ref[0], 1, verbose );
             if (jobz == lapack::Job::Vec) {
                 print_matrix( "Zref", n, nfound, &Z[0], ldz, verbose );

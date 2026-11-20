@@ -56,13 +56,6 @@ void test_posv_work( Params& params, bool run )
     A_ref = A_tst;
     B_ref = B_tst;
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "A n=%5lld, lda=%5lld\n"
-                "B n=%5lld, nrhs=%5lld, ldb=%5lld\n",
-                llong( n ), llong( lda ),
-                llong( n ), llong( nrhs ), llong( ldb ) );
-    }
     print_matrix( "A", n, n, &A_tst[0], lda, verbose );
     print_matrix( "B", n, nrhs, &B_tst[0], ldb, verbose );
 

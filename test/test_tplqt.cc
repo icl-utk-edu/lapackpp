@@ -71,13 +71,6 @@ void test_tplqt_work( Params& params, bool run )
     A_ref = A_tst;
     B_ref = B_tst;
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "A m-by-m=%5lld, lda=%5lld triangle\n"
-                "B m=%5lld, n=%5lld, ldb=%5lld, rows m-L=%5lld rect, L=%5lld trapezoid\n",
-                llong( m ), llong( lda ),
-                llong( m ), llong( n ), llong( ldb ), llong( (m-L) ), llong( L ) );
-    }
     print_matrix( "A",  m, m,   &A_tst[0], lda, verbose );
     print_matrix( "B1", m, n-L, &B_tst[0], ldb, verbose );
     print_matrix( "B2", m, L,   &B_tst[(n-L)*ldb], ldb, verbose );

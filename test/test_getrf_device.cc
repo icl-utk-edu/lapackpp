@@ -66,11 +66,6 @@ void test_getrf_device_work( Params& params, bool run )
     device_info_int*  d_info = blas::device_malloc< device_info_int >( 1, queue );
     blas::device_copy_matrix( m, n, A_tst.data(), lda, dA_tst, lda, queue );
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "A m=%5lld, n=%5lld, lda=%5lld\n",
-                llong( m ), llong( n ), llong( lda ) );
-    }
     print_matrix( "A", m, n, &A_tst[0], lda, verbose );
 
     // Allocate workspace
@@ -119,15 +114,8 @@ void test_getrf_device_work( Params& params, bool run )
     blas::device_free( d_info, queue );
     blas::device_free( d_work, queue );
 
-    if (verbose >= 2) {
-        print_matrix( "A_factor", m, n, &A_tst[0], lda, verbose );
-
-        printf( "ipiv = [" );
-        for (size_t i = 0; i < size_ipiv; ++i) {
-            printf( " %3lld", llong( ipiv_tst[ i ] ) );
-        }
-        printf( "];\n" );
-    }
+    print_matrix( "A_factor", m, n, &A_tst[0], lda, verbose );
+    print_vector( "ipiv", size_ipiv, &ipiv_tst[0], 1, verbose );
 
     if (params.check() == 'y' && m == n) {
         // ---------- check error

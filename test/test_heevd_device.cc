@@ -82,10 +82,6 @@ void test_heevd_device_work( Params& params, bool run )
     char* h_work = h_work_vector.data();
 
 
-    if (verbose >= 1) {
-        printf( "\n" );
-        printf( "A n=%5lld, lda=%5lld\n", llong( n ), llong( lda ) );
-    }
     print_matrix( "A", n, n, &A[0], lda, verbose );
 
     // ---------- run test

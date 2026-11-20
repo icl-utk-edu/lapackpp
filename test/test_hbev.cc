@@ -79,11 +79,9 @@ void test_hbev_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::hbev( jobz, n, kd );
     // params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        print_vector( "Lambda", n, &Lambda_tst[0], 1, verbose );
-        if (jobz == lapack::Job::Vec) {
-            print_matrix( "Z", n, n, &Z[0], ldz, verbose );
-        }
+    print_vector( "Lambda", n, &Lambda_tst[0], 1, verbose );
+    if (jobz == lapack::Job::Vec) {
+        print_matrix( "Z", n, n, &Z[0], ldz, verbose );
     }
 
     if (params.check() == 'y' && jobz == lapack::Job::Vec) {
@@ -132,11 +130,9 @@ void test_hbev_work( Params& params, bool run )
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
-        if (verbose >= 2) {
-            print_vector( "Lambda_ref", n, &Lambda_ref[0], 1, verbose );
-            if (jobz == lapack::Job::Vec) {
-                print_matrix( "Zref", n, n, &Z[0], ldz, verbose );
-            }
+        print_vector( "Lambda_ref", n, &Lambda_ref[0], 1, verbose );
+        if (jobz == lapack::Job::Vec) {
+            print_matrix( "Zref", n, n, &Z[0], ldz, verbose );
         }
 
         // ---------- check error compared to reference

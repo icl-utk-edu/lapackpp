@@ -56,7 +56,7 @@ void test_lanhb_work( Params& params, bool run )
     //double gflop = lapack::Gflop< scalar_t >::lanhb( norm, n, kd );
     //params.gflops() = gflop / time;
 
-    if (verbose >= 1) {
+    if (verbose) {
         printf( "norm_tst = %.8e\n", norm_tst );
     }
 
@@ -70,7 +70,7 @@ void test_lanhb_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        if (verbose >= 1) {
+        if (verbose) {
             printf( "norm_ref = %.8e\n", norm_ref );
         }
 

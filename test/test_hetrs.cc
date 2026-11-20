@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_hetrs_work( Params& params, bool run )
 {
@@ -33,7 +33,7 @@ void test_hetrs_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
     int64_t ldb = roundup( blas::max( 1, n ), align );
     size_t size_A = (size_t) lda * n;
@@ -59,7 +59,7 @@ void test_hetrs_work( Params& params, bool run )
     }
     std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::hetrs( uplo, n, nrhs, &A[0], lda, &ipiv_tst[0], &B_tst[0], ldb );
@@ -73,7 +73,7 @@ void test_hetrs_work( Params& params, bool run )
     params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_hetrs( to_char( uplo ), n, nrhs, &A[0], lda, &ipiv_ref[0], &B_ref[0], ldb );
@@ -85,7 +85,7 @@ void test_hetrs_work( Params& params, bool run )
         params.ref_time() = time;
         params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -96,7 +96,7 @@ void test_hetrs_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_hetrs( Params& params, bool run )
 {
     switch (params.datatype()) {

@@ -14,7 +14,7 @@
 
 #if LAPACK_VERSION >= 30202  // >= 3.2.2
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_larfgp_work( Params& params, bool run )
 {
@@ -37,7 +37,7 @@ void test_larfgp_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     scalar_t tau_tst;
     //scalar_t tau_ref;
     size_t size_X = (size_t) (1+(n-2)*std::abs(incx));
@@ -56,7 +56,7 @@ void test_larfgp_work( Params& params, bool run )
         print_vector( "xref", n-1, &X_ref[0], incx, verbose );
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     lapack::larfgp( n, &alpha_tst, &X_tst[0], incx, &tau_tst );
@@ -75,7 +75,7 @@ void test_larfgp_work( Params& params, bool run )
     // As of 3.9.1, LAPACKE lacks larfgp.
     #if 0
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_larfgp( n, &alpha_ref, &X_ref[0], incx, &tau_ref );
@@ -93,7 +93,7 @@ void test_larfgp_work( Params& params, bool run )
             printf( "tau_ref = %.4e\n", real(tau_ref) );
         }
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         error += std::abs( alpha_tst - alpha_ref );
         error += abs_error( X_tst, X_ref );
@@ -104,7 +104,7 @@ void test_larfgp_work( Params& params, bool run )
     #endif
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_larfgp( Params& params, bool run )
 {
     switch (params.datatype()) {
@@ -132,7 +132,7 @@ void test_larfgp( Params& params, bool run )
 
 #else
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_larfgp( Params& params, bool run )
 {
     fprintf( stderr, "larfgp requires LAPACK >= 3.2.2\n\n" );

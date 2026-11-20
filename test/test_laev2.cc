@@ -78,7 +78,7 @@ void test_laev2_work( Params& params, bool run )
     if (params.check() == 'y') {
         int64_t ldz = 2;
 
-        // ---------- check numerical error
+        //---------- check numerical error
         // result[ 0 ] = || A - Z Lambda Z^H || / (n ||A||), if jobz != NoVec.
         // result[ 1 ] = || I - Z^H Z || / n, if jobz != NoVec.
         // result[ 2 ] = 0 if Lambda is in non-decreasing order, else >= 1.

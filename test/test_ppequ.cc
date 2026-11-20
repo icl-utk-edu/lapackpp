@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_ppequ_work( Params& params, bool run )
 {
@@ -30,7 +30,7 @@ void test_ppequ_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     real_t scond_tst = 0;
     real_t scond_ref = 0;
     real_t amax_tst;
@@ -58,7 +58,7 @@ void test_ppequ_work( Params& params, bool run )
         }
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::ppequ( uplo, n, &AP[0], &S_tst[0], &scond_tst, &amax_tst );
@@ -72,7 +72,7 @@ void test_ppequ_work( Params& params, bool run )
     //params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_ppequ( to_char( uplo ), n, &AP[0], &S_ref[0], &scond_ref, &amax_ref );
@@ -84,7 +84,7 @@ void test_ppequ_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -97,7 +97,7 @@ void test_ppequ_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_ppequ( Params& params, bool run )
 {
     switch (params.datatype()) {

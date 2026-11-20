@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_ppsv_work( Params& params, bool run )
 {
@@ -32,7 +32,7 @@ void test_ppsv_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t ldb = roundup( blas::max( 1, n ), align );
     size_t size_AP = (size_t) (n*(n+1)/2);
     size_t size_B = (size_t) ldb * nrhs;
@@ -61,7 +61,7 @@ void test_ppsv_work( Params& params, bool run )
     AP_ref = AP_tst;
     B_ref = B_tst;
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::ppsv( uplo, n, nrhs, &AP_tst[0], &B_tst[0], ldb );
@@ -75,7 +75,7 @@ void test_ppsv_work( Params& params, bool run )
     //params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_ppsv( to_char( uplo ), n, nrhs, &AP_ref[0], &B_ref[0], ldb );
@@ -87,7 +87,7 @@ void test_ppsv_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -99,7 +99,7 @@ void test_ppsv_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_ppsv( Params& params, bool run )
 {
     switch (params.datatype()) {

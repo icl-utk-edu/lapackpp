@@ -50,7 +50,7 @@ void test_heevd_device_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
     int64_t ldz = lda;  // vectors overwrite matrix A
     size_t size_A = (size_t) lda * n;
@@ -84,7 +84,7 @@ void test_heevd_device_work( Params& params, bool run )
 
     print_matrix( "A", n, n, &A[0], lda, verbose );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     queue.sync();
     double time = testsweeper::get_wtime();
@@ -121,7 +121,7 @@ void test_heevd_device_work( Params& params, bool run )
     print_vector( "Lambda", n, &Lambda_tst[0], 1, verbose );
 
     if (params.check() == 'y') {
-        // ---------- check numerical error
+        //---------- check numerical error
         // result[ 0 ] = || A - Z Lambda Z^H || / (n ||A||), if jobz != NoVec.
         // result[ 1 ] = || I - Z^H Z || / n, if jobz != NoVec.
         // result[ 2 ] = 0 if Lambda is in non-decreasing order, else > 0.
@@ -141,7 +141,7 @@ void test_heevd_device_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_heev(
@@ -155,7 +155,7 @@ void test_heevd_device_work( Params& params, bool run )
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = rel_error( Lambda_tst, Lambda_ref );
         if (info_tst != info_ref) {
             error = 1;
@@ -165,7 +165,7 @@ void test_heevd_device_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_heevd_device( Params& params, bool run )
 {
     switch (params.datatype()) {

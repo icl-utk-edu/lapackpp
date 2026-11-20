@@ -14,7 +14,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_hbev_work( Params& params, bool run )
 {
@@ -42,7 +42,7 @@ void test_hbev_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( kd+1, align );
     int64_t ldz = (jobz == lapack::Job::Vec
                    ? roundup( blas::max( 1, n ), align )
@@ -63,7 +63,7 @@ void test_hbev_work( Params& params, bool run )
 
     print_matrix( "Aband", kd+1, n, &Aband_tst[0], lda, verbose );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::hbev(
@@ -85,7 +85,7 @@ void test_hbev_work( Params& params, bool run )
     }
 
     if (params.check() == 'y' && jobz == lapack::Job::Vec) {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error =
         //     ||A Z - Z Lambda|| / (n * ||A|| * ||Z||)
         real_t Anorm = lapack::lanhb( lapack::Norm::One, uplo, n, kd,
@@ -115,7 +115,7 @@ void test_hbev_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_hbev(
@@ -135,7 +135,7 @@ void test_hbev_work( Params& params, bool run )
             print_matrix( "Zref", n, n, &Z[0], ldz, verbose );
         }
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = rel_error( Lambda_tst, Lambda_ref );
         if (info_tst != info_ref) {
             error = 1;
@@ -145,7 +145,7 @@ void test_hbev_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_hbev( Params& params, bool run )
 {
     switch (params.datatype()) {

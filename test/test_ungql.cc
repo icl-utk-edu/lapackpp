@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_ungql_work( Params& params, bool run )
 {
@@ -44,7 +44,7 @@ void test_ungql_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, m ), align );
     size_t size_A = (size_t) lda * n;
     size_t size_tau = (size_t) (k);
@@ -60,15 +60,15 @@ void test_ungql_work( Params& params, bool run )
     lapack::larnv( idist, iseed, tau.size(), &tau[0] );
     A_ref = A_tst;
 
-    // ---------- factor matrix
+    //---------- factor matrix
     int64_t info_qlf = lapack::geqlf( m, n, &A_tst[0], lda, &tau[0] );
     if (info_qlf != 0) {
         fprintf( stderr, "lapack::unqlf returned error %lld\n", llong( info_qlf ) );
     }
-    // ---------- save matrix after factorization as the reference matrix
+    //---------- save matrix after factorization as the reference matrix
     A_factorized = A_tst;
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::ungql( m, n, k, &A_tst[0], lda, &tau[0] );
@@ -82,7 +82,7 @@ void test_ungql_work( Params& params, bool run )
     params.gflops() = gflop / time;
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         // comparing to ref. solution doesn't work
         // Following lapack/TESTING/LIN/zlqt02.f
         int64_t ldq = lda;
@@ -135,7 +135,7 @@ void test_ungql_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_ungql( m, n, k, &A_ref[0], lda, &tau[0] );
@@ -149,7 +149,7 @@ void test_ungql_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_ungql( Params& params, bool run )
 {
     switch (params.datatype()) {

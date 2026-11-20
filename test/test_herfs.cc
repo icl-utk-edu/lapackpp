@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_herfs_work( Params& params, bool run )
 {
@@ -33,7 +33,7 @@ void test_herfs_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
     int64_t ldaf = roundup( blas::max( 1, n ), align );
     int64_t ldb = roundup( blas::max( 1, n ), align );
@@ -81,7 +81,7 @@ void test_herfs_work( Params& params, bool run )
     std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
     X_ref = X_tst;
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::herfs( uplo, n, nrhs, &A[0], lda, &AF[0], ldaf, &ipiv_tst[0], &B[0], ldb, &X_tst[0], ldx, &ferr_tst[0], &berr_tst[0] );
@@ -96,7 +96,7 @@ void test_herfs_work( Params& params, bool run )
 
     if (params.ref() == 'y' || params.check() == 'y') {
 
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_herfs( to_char( uplo ), n, nrhs, &A[0], lda, &AF[0], ldaf, &ipiv_ref[0], &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
@@ -108,7 +108,7 @@ void test_herfs_work( Params& params, bool run )
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -121,7 +121,7 @@ void test_herfs_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_herfs( Params& params, bool run )
 {
     switch (params.datatype()) {

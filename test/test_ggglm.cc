@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_ggglm_work( Params& params, bool run )
 {
@@ -45,7 +45,7 @@ void test_ggglm_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
     int64_t ldb = roundup( blas::max( 1, n ), align );
     size_t size_A = (size_t) ( lda * m );
@@ -74,7 +74,7 @@ void test_ggglm_work( Params& params, bool run )
     B_ref = B_tst;
     D_ref = D_tst;
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::ggglm( n, m, p, &A_tst[0], lda, &B_tst[0], ldb, &D_tst[0], &X_tst[0], &Y_tst[0] );
@@ -88,7 +88,7 @@ void test_ggglm_work( Params& params, bool run )
     // params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_ggglm( n, m, p, &A_ref[0], lda, &B_ref[0], ldb, &D_ref[0], &X_ref[0], &Y_ref[0] );
@@ -100,7 +100,7 @@ void test_ggglm_work( Params& params, bool run )
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -115,7 +115,7 @@ void test_ggglm_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_ggglm( Params& params, bool run )
 {
     switch (params.datatype()) {

@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_lansb_work( Params& params, bool run )
 {
@@ -34,7 +34,7 @@ void test_lansb_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t ldab = roundup( kd+1, align );
     size_t size_AB = (size_t) ldab * n;
 
@@ -46,7 +46,7 @@ void test_lansb_work( Params& params, bool run )
 
     print_matrix( "AB", kd+1, n, &AB[0], ldab, verbose );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     real_t norm_tst = lapack::lansb( norm, uplo, n, kd, &AB[0], ldab );
@@ -61,7 +61,7 @@ void test_lansb_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         real_t norm_ref = LAPACKE_lansb( to_char( norm ), to_char( uplo ), n, kd, &AB[0], ldab );
@@ -74,7 +74,7 @@ void test_lansb_work( Params& params, bool run )
             printf( "norm_ref = %.8e\n", norm_ref );
         }
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         // todo: adjust normalize for band
         real_t tol = 3 * std::numeric_limits< real_t >::epsilon();
         real_t normalize = 1;
@@ -97,7 +97,7 @@ void test_lansb_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_lansb( Params& params, bool run )
 {
     switch (params.datatype()) {

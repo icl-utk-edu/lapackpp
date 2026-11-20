@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_larfb_work( Params& params, bool run )
 {
@@ -53,7 +53,7 @@ void test_larfb_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     int64_t ldv;
     if (storev == lapack::StoreV::Columnwise) {
         if (side == lapack::Side::Left)
@@ -96,7 +96,7 @@ void test_larfb_work( Params& params, bool run )
     lapack::generate_matrix( params.matrix, m, n, &C_tst[0], ldc );
     C_ref = C_tst;
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     lapack::larfb( side, trans, direction, storev, m, n, k, &V[0], ldv, &T[0], ldt, &C_tst[0], ldc );
@@ -107,7 +107,7 @@ void test_larfb_work( Params& params, bool run )
     //params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_larfb( to_char( side ), to_char( trans ), to_char( direction ), to_char( storev ), m, n, k, &V[0], ldv, &T[0], ldt, &C_ref[0], ldc );
@@ -120,7 +120,7 @@ void test_larfb_work( Params& params, bool run )
         //params.ref_gflops() = gflop / time;
         real_t tol = std::numeric_limits< real_t >::epsilon();
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         error += rel_error( C_tst, C_ref );
         params.error() = error;
@@ -128,7 +128,7 @@ void test_larfb_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_larfb( Params& params, bool run )
 {
     switch (params.datatype()) {

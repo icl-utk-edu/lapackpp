@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_potrf_work( Params& params, bool run )
 {
@@ -38,7 +38,7 @@ void test_potrf_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
     size_t size_A = (size_t) lda * n;
 
@@ -58,7 +58,7 @@ void test_potrf_work( Params& params, bool run )
         assert_throw( lapack::potrf( uplo,     n, &A_tst[0], n-1 ), lapack::Error );
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::potrf( uplo, n, &A_tst[0], lda );
@@ -74,7 +74,7 @@ void test_potrf_work( Params& params, bool run )
     print_matrix( "A_factor", n, n, &A_tst[0], lda, verbose );
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error = ||b - Ax|| / (n * ||A|| * ||x||).
         int64_t nrhs = 1;
         int64_t ldb = roundup( blas::max( 1, n ), align );
@@ -108,7 +108,7 @@ void test_potrf_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_potrf( to_char( uplo ), n, &A_ref[0], lda );
@@ -124,7 +124,7 @@ void test_potrf_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_potrf( Params& params, bool run )
 {
     switch (params.datatype()) {

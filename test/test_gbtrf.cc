@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_gbtrf_work( Params& params, bool run )
 {
@@ -33,7 +33,7 @@ void test_gbtrf_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t ldab = roundup( 2*kl+ku+1, align );
     size_t size_AB = (size_t) ldab * n;
     size_t size_ipiv = (size_t) (blas::min(m,n));
@@ -48,7 +48,7 @@ void test_gbtrf_work( Params& params, bool run )
     lapack::larnv( idist, iseed, AB_tst.size(), &AB_tst[0] );
     AB_ref = AB_tst;
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::gbtrf( m, n, kl, ku, &AB_tst[0], ldab, &ipiv_tst[0] );
@@ -62,7 +62,7 @@ void test_gbtrf_work( Params& params, bool run )
     //params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_gbtrf( m, n, kl, ku, &AB_ref[0], ldab, &ipiv_ref[0] );
@@ -74,7 +74,7 @@ void test_gbtrf_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -86,7 +86,7 @@ void test_gbtrf_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_gbtrf( Params& params, bool run )
 {
     switch (params.datatype()) {

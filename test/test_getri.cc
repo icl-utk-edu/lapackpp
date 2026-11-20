@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_getri_work( Params& params, bool run )
 {
@@ -35,7 +35,7 @@ void test_getri_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
     size_t size_A = (size_t) lda * n;
     size_t size_ipiv = (size_t) (n);
@@ -62,7 +62,7 @@ void test_getri_work( Params& params, bool run )
         assert_throw( lapack::getri(  n, &A_tst[0], n-1, &ipiv_tst[0] ), lapack::Error );
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::getri( n, &A_tst[0], lda, &ipiv_tst[0] );
@@ -78,7 +78,7 @@ void test_getri_work( Params& params, bool run )
     print_matrix( "A2", n, n, &A_tst[0], lda, verbose );
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         // comparing to ref. solution doesn't work due to roundoff errors
         // R = I
         std::vector< scalar_t > R( size_A );
@@ -114,7 +114,7 @@ void test_getri_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_getrf returned error %lld\n", llong( info ) );
         }
 
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_getri( n, &A_ref[0], lda, &ipiv_ref[0] );
@@ -130,7 +130,7 @@ void test_getri_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_getri( Params& params, bool run )
 {
     switch (params.datatype()) {

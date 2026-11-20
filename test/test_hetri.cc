@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_hetri_work( Params& params, bool run )
 {
@@ -36,7 +36,7 @@ void test_hetri_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
     size_t size_A = (size_t) lda * n;
     size_t size_ipiv = (size_t) (n);
@@ -56,7 +56,7 @@ void test_hetri_work( Params& params, bool run )
     }
     std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::hetri( uplo, n, &A_tst[0], lda, &ipiv_tst[0] );
@@ -71,13 +71,13 @@ void test_hetri_work( Params& params, bool run )
 
     if (params.ref() == 'y' || params.check() == 'y') {
         testsweeper::flush_cache( params.cache() );
-        // ---------- factor reference
+        //---------- factor reference
         int64_t info_ref_trf = LAPACKE_hetrf( to_char( uplo ), n, &A_ref[0], lda, &ipiv_ref[0] );
         if (info_ref_trf != 0) {
             fprintf( stderr, "LAPACKE_hetrf returned error %lld\n", llong( info_ref_trf ) );
         }
 
-        // ---------- run reference
+        //---------- run reference
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_hetri( to_char( uplo ), n, &A_ref[0], lda, &ipiv_ref[0] );
         time = testsweeper::get_wtime() - time;
@@ -88,7 +88,7 @@ void test_hetri_work( Params& params, bool run )
         params.ref_time() = time;
         params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -99,7 +99,7 @@ void test_hetri_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_hetri( Params& params, bool run )
 {
     switch (params.datatype()) {

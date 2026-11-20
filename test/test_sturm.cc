@@ -78,7 +78,7 @@ void test_sturm_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     std::vector< scalar_t > diag( (size_t) n );
     std::vector< scalar_t > eigv( (size_t) n );
     std::vector< scalar_t > offd( (size_t) (n-1) );
@@ -127,7 +127,7 @@ void test_sturm_work( Params& params, bool run )
                 eig_max, eig_max_before, eig_max_after );
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t r_min_before, r_min_after;

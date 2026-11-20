@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_lansp_work( Params& params, bool run )
 {
@@ -32,7 +32,7 @@ void test_lansp_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     size_t size_AP = (size_t) (n*(n+1)/2);
 
     std::vector< scalar_t > AP( size_AP );
@@ -43,7 +43,7 @@ void test_lansp_work( Params& params, bool run )
 
     print_vector( "AP", AP.size(), &AP[0], 1, verbose );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     real_t norm_tst = lapack::lansp( norm, uplo, n, &AP[0] );
@@ -58,7 +58,7 @@ void test_lansp_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         real_t norm_ref = LAPACKE_lansp( to_char( norm ), to_char( uplo ), n, &AP[0] );
@@ -71,7 +71,7 @@ void test_lansp_work( Params& params, bool run )
             printf( "norm_ref = %.8e\n", norm_ref );
         }
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t tol = 3 * std::numeric_limits< real_t >::epsilon();
         real_t normalize = 1;
         if (norm == lapack::Norm::Max && ! blas::is_complex_v< scalar_t >) {
@@ -93,7 +93,7 @@ void test_lansp_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_lansp( Params& params, bool run )
 {
     switch (params.datatype()) {

@@ -13,7 +13,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_pbsv_work( Params& params, bool run )
 {
@@ -38,7 +38,7 @@ void test_pbsv_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t ldab = roundup( kd+1, align );
     int64_t ldb = roundup( blas::max( 1, n ), align );
     size_t size_AB = (size_t) ldab * n;
@@ -72,7 +72,7 @@ void test_pbsv_work( Params& params, bool run )
     print_matrix( "AB", kd+1, n, &AB_tst[0], ldab, verbose );
     print_matrix( "B", n, nrhs, &B_tst[0], ldb, verbose );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::pbsv( uplo, n, kd, nrhs, &AB_tst[0], ldab, &B_tst[0], ldb );
@@ -89,7 +89,7 @@ void test_pbsv_work( Params& params, bool run )
     print_matrix( "X", n, nrhs, &B_tst[0], ldb, verbose );
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error = ||b - Ax|| / (n * ||A|| * ||x||).
         // No hbmm, so loop over RHS.
         for (int64_t j = 0; j < nrhs; ++j) {
@@ -110,7 +110,7 @@ void test_pbsv_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_pbsv( to_char( uplo ), n, kd, nrhs, &AB_ref[0], ldab, &B_ref[0], ldb );
@@ -124,7 +124,7 @@ void test_pbsv_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_pbsv( Params& params, bool run )
 {
     switch (params.datatype()) {

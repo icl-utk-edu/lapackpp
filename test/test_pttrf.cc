@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_pttrf_work( Params& params, bool run )
 {
@@ -29,7 +29,7 @@ void test_pttrf_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     size_t size_D = (size_t) (n);
     size_t size_E = (size_t) (n-1);
 
@@ -50,7 +50,7 @@ void test_pttrf_work( Params& params, bool run )
     }
     D_ref = D_tst;
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::pttrf( n, &D_tst[0], &E_tst[0] );
@@ -64,7 +64,7 @@ void test_pttrf_work( Params& params, bool run )
     //params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_pttrf( n, &D_ref[0], &E_ref[0] );
@@ -76,7 +76,7 @@ void test_pttrf_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -88,7 +88,7 @@ void test_pttrf_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_pttrf( Params& params, bool run )
 {
     switch (params.datatype()) {

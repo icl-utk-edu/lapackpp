@@ -13,7 +13,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_gbtrs_work( Params& params, bool run )
 {
@@ -39,7 +39,7 @@ void test_gbtrs_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t kd = 2*kl + ku + 1;  // number of diagonals in factor
     int64_t ldab = roundup( kd, align );
     int64_t ldb = roundup( blas::max( 1, n ), align );
@@ -75,7 +75,7 @@ void test_gbtrs_work( Params& params, bool run )
 
     std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::gbtrs( trans, n, kl, ku, nrhs, &AB_tst[0], ldab, &ipiv_tst[0], &B_tst[0], ldb );
@@ -92,7 +92,7 @@ void test_gbtrs_work( Params& params, bool run )
     print_matrix( "X", n, nrhs, &B_tst[0], ldb, verbose );
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error = ||b - Ax|| / (n * ||A|| * ||x||).
         // No gbmm, so loop over RHS.
         // AB_ref rows 0:kl-1 are ignored; start in row kl.
@@ -114,7 +114,7 @@ void test_gbtrs_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_gbtrs( to_char( trans ), n, kl, ku, nrhs, &AB_tst[0], ldab, &ipiv_ref[0], &B_ref[0], ldb );
@@ -128,7 +128,7 @@ void test_gbtrs_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_gbtrs( Params& params, bool run )
 {
     switch (params.datatype()) {

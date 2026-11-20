@@ -14,7 +14,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_hpevx_work( Params& params, bool run )
 {
@@ -48,7 +48,7 @@ void test_hpevx_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     real_t abstol = 0;  // default value
     int64_t nfound;
     lapack_int nfound_ref;
@@ -73,7 +73,7 @@ void test_hpevx_work( Params& params, bool run )
 
     print_vector( "A", size_A, &Apack_tst[0], 1, verbose );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::hpevx(
@@ -99,7 +99,7 @@ void test_hpevx_work( Params& params, bool run )
     }
 
     if (params.check() == 'y' && jobz == lapack::Job::Vec) {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error =
         //     ||A Z - Z Lambda|| / (n * ||A|| * ||Z||)
         real_t Anorm = lapack::lanhp( lapack::Norm::One, uplo, n, &Apack_ref[0] );
@@ -127,7 +127,7 @@ void test_hpevx_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_hpevx(
@@ -151,7 +151,7 @@ void test_hpevx_work( Params& params, bool run )
             }
         }
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = rel_error( Lambda_tst, Lambda_ref );
         if (info_tst != info_ref) {
             error = 1;
@@ -167,7 +167,7 @@ void test_hpevx_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_hpevx( Params& params, bool run )
 {
     switch (params.datatype()) {

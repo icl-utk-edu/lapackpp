@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_pbequ_work( Params& params, bool run )
 {
@@ -32,7 +32,7 @@ void test_pbequ_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t ldab = roundup( kd+1, align );
     real_t scond_tst = 0;
     real_t scond_ref = 0;
@@ -61,7 +61,7 @@ void test_pbequ_work( Params& params, bool run )
         }
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::pbequ( uplo, n, kd, &AB[0], ldab, &S_tst[0], &scond_tst, &amax_tst );
@@ -75,7 +75,7 @@ void test_pbequ_work( Params& params, bool run )
     //params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_pbequ( to_char( uplo ), n, kd, &AB[0], ldab, &S_ref[0], &scond_ref, &amax_ref );
@@ -87,7 +87,7 @@ void test_pbequ_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -100,7 +100,7 @@ void test_pbequ_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_pbequ( Params& params, bool run )
 {
     switch (params.datatype()) {

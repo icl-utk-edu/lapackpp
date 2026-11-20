@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_posv_work( Params& params, bool run )
 {
@@ -38,7 +38,7 @@ void test_posv_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
     int64_t ldb = roundup( blas::max( 1, n ), align );
     size_t size_A = (size_t) lda * n;
@@ -69,7 +69,7 @@ void test_posv_work( Params& params, bool run )
         assert_throw( lapack::posv( uplo,     n, nrhs, &A_tst[0], lda, &B_tst[0], n-1 ), lapack::Error );
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::posv(
@@ -87,7 +87,7 @@ void test_posv_work( Params& params, bool run )
     print_matrix( "X", n, nrhs, &B_tst[0], ldb, verbose );
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error = ||b - Ax|| / (n * ||A|| * ||x||).
         blas::hemm( blas::Layout::ColMajor, blas::Side::Left, uplo,
                     n, nrhs,
@@ -105,7 +105,7 @@ void test_posv_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_posv(
@@ -123,7 +123,7 @@ void test_posv_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_posv( Params& params, bool run )
 {
     switch (params.datatype()) {

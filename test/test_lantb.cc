@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_lantb_work( Params& params, bool run )
 {
@@ -35,7 +35,7 @@ void test_lantb_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t ldab = roundup( k+1, align );
     size_t size_AB = (size_t) ldab * n;
 
@@ -45,7 +45,7 @@ void test_lantb_work( Params& params, bool run )
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, AB.size(), &AB[0] );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     real_t norm_tst = lapack::lantb( norm, uplo, diag, n, k, &AB[0], ldab );
@@ -60,7 +60,7 @@ void test_lantb_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         real_t norm_ref = LAPACKE_lantb( to_char( norm ), to_char( uplo ), to_char( diag ), n, k, &AB[0], ldab );
@@ -73,7 +73,7 @@ void test_lantb_work( Params& params, bool run )
             printf( "norm_ref = %.8e\n", norm_ref );
         }
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         // todo: adjust normalize for band
         real_t tol = 3 * std::numeric_limits< real_t >::epsilon();
         real_t normalize = 1;
@@ -96,7 +96,7 @@ void test_lantb_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_lantb( Params& params, bool run )
 {
     switch (params.datatype()) {

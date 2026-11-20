@@ -8,7 +8,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // work = V*W^{trans}; used in check_geev
 // version for real
 template< typename real_t >
@@ -53,7 +53,7 @@ void check_geev_multiply_VW(
     #undef work
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // work = V*W; used in check_geev
 // version for complex
 template< typename real_t >
@@ -83,7 +83,7 @@ void check_geev_multiply_VW(
     #undef work
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // checks | ||V||_2 - 1 |
 // 2-norm as used in drvev, not max-norm as used in get22
 // also checks that conjugate pairs are together correctly
@@ -151,7 +151,7 @@ real_t check_geev_Vnormalization(
     #undef V
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // checks | ||V||_2 - 1 |
 // 2-norm as used in drvev, not max-norm as used in get22
 // also checks that conjugate pairs are together correctly
@@ -194,7 +194,7 @@ real_t check_geev_Vnormalization(
     #undef V
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // || op(A) V - V W ||_1 / (||A||_1 ||V||_1)
 // max_j | || E(j) ||_2 - 1 | / n
 //

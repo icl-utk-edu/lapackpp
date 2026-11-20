@@ -13,7 +13,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_gesdd_work( Params& params, bool run )
 {
@@ -41,7 +41,7 @@ void test_gesdd_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t ucol = (jobu == lapack::Job::AllVec ? m : blas::min( m, n ));
     int64_t lda = roundup( blas::max( 1, m ), align );
     int64_t ldu = roundup( m, align );
@@ -63,7 +63,7 @@ void test_gesdd_work( Params& params, bool run )
     lapack::generate_matrix( params.matrix, m, n, &A_tst[0], lda );
     A_ref = A_tst;
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::gesdd( jobu, m, n, &A_tst[0], lda, &S_tst[0], &U_tst[0], ldu, &VT_tst[0], ldvt );
@@ -76,7 +76,7 @@ void test_gesdd_work( Params& params, bool run )
     //double gflop = lapack::Gflop< scalar_t >::gesdd( jobu, m, n );
     //params.gflops() = gflop / time;
 
-    // ---------- check numerical error
+    //---------- check numerical error
     // errors[0] = || A - U diag(S) VT || / (||A|| max(m,n)),
     //                                    if jobu  != NoVec
     // errors[1] = || I - U^H U || / m,   if jobu  != NoVec
@@ -107,7 +107,7 @@ void test_gesdd_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_gesdd( to_char( jobu ), m, n, &A_ref[0], lda, &S_ref[0], &U_ref[0], ldu, &VT_ref[0], ldvt );
@@ -119,7 +119,7 @@ void test_gesdd_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         if (info_tst != info_ref) {
             errors[0] = 1;
         }
@@ -136,7 +136,7 @@ void test_gesdd_work( Params& params, bool run )
         errors[3] < tol);
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_gesdd( Params& params, bool run )
 {
     switch (params.datatype()) {

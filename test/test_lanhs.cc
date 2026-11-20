@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_lanhs_work( Params& params, bool run )
 {
@@ -32,7 +32,7 @@ void test_lanhs_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( n, 1 ), align );
     size_t size_A = (size_t) lda * n;
 
@@ -42,7 +42,7 @@ void test_lanhs_work( Params& params, bool run )
 
     print_matrix( "A", n, n, &A[0], lda, verbose );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     real_t norm_tst = lapack::lanhs( norm, n, &A[0], lda );
@@ -57,7 +57,7 @@ void test_lanhs_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         real_t norm_ref = LAPACKE_lanhs( to_char( norm ), n, &A[0], lda );
@@ -70,7 +70,7 @@ void test_lanhs_work( Params& params, bool run )
             printf( "norm_ref = %.8e\n", norm_ref );
         }
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t tol = 3 * std::numeric_limits< real_t >::epsilon();
         real_t normalize = 1;
         if (norm == lapack::Norm::Max && ! blas::is_complex_v< scalar_t >) {
@@ -92,7 +92,7 @@ void test_lanhs_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_lanhs( Params& params, bool run )
 {
     switch (params.datatype()) {

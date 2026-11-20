@@ -14,7 +14,7 @@
 
 #if LAPACK_VERSION >= 30400  // >= 3.4.0
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // tpqrt is blocked version
 // tpqrt2 is non-blocked version
 // todo: merge test_tpqrt2.cc and test_tpqrt.cc
@@ -49,7 +49,7 @@ void test_tpqrt_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
     int64_t ldb = roundup( blas::max( 1, m ), align );
     int64_t ldt = roundup( nb, align );
@@ -75,7 +75,7 @@ void test_tpqrt_work( Params& params, bool run )
     print_matrix( "B1", m-L, n, &B_tst[0],   ldb, verbose );
     print_matrix( "B2", L,   n, &B_tst[m-L], ldb, verbose );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::tpqrt(
@@ -95,7 +95,7 @@ void test_tpqrt_work( Params& params, bool run )
     print_matrix( "T",     nb,  n, &T_tst[0],   ldt, verbose );
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error = ||A - QR|| / (m * ||A||).
         // todo: Orthogonality check = ||I - Q^H Q|| / m.
 
@@ -143,7 +143,7 @@ void test_tpqrt_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         // Reset A, B in case check wiped them out.
         lapack::larnv( idist, iseed, A_ref.size(), &A_ref[0] );
         lapack::larnv( idist, iseed, B_ref.size(), &B_ref[0] );
@@ -161,7 +161,7 @@ void test_tpqrt_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_tpqrt( Params& params, bool run )
 {
     switch (params.datatype()) {
@@ -189,7 +189,7 @@ void test_tpqrt( Params& params, bool run )
 
 #else
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_tpqrt( Params& params, bool run )
 {
     fprintf( stderr, "tpqrt requires LAPACK >= 3.4.0\n\n" );

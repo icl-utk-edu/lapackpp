@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_hpcon_work( Params& params, bool run )
 {
@@ -31,7 +31,7 @@ void test_hpcon_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     real_t anorm;
     real_t rcond_tst;
     real_t rcond_ref;
@@ -56,7 +56,7 @@ void test_hpcon_work( Params& params, bool run )
     }
     std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::hpcon( uplo, n, &AP[0], &ipiv_tst[0], anorm, &rcond_tst );
@@ -70,7 +70,7 @@ void test_hpcon_work( Params& params, bool run )
     // params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_hpcon( to_char( uplo ), n, &AP[0], &ipiv_ref[0], anorm, &rcond_ref );
@@ -82,7 +82,7 @@ void test_hpcon_work( Params& params, bool run )
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         real_t eps = std::numeric_limits< real_t >::epsilon();
         if (info_tst != info_ref) {
@@ -94,7 +94,7 @@ void test_hpcon_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_hpcon( Params& params, bool run )
 {
     switch (params.datatype()) {

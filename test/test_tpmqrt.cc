@@ -15,7 +15,7 @@
 
 #if LAPACK_VERSION >= 30400  // >= 3.4.0
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_tpmqrt_work( Params& params, bool run )
 {
@@ -55,7 +55,7 @@ void test_tpmqrt_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     // Householder vectors W, Q = \product_i (I - Wi Ti Wi^T)
     // V1, Bhat1 are rectangular
     // V2, Bhat2 are upper trapezoidal
@@ -127,7 +127,7 @@ void test_tpmqrt_work( Params& params, bool run )
         print_matrix( "B", m,  n,  &B_tst[0], ldb, verbose );
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::tpmqrt( side, trans, m, n, k, l, nb, &V[0], ldv, &T[0], ldt, &A_tst[0], lda, &B_tst[0], ldb );
@@ -146,7 +146,7 @@ void test_tpmqrt_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_tpmqrt( to_char( side ), to_char( trans ), m, n, k, l, nb, &V[0], ldv, &T[0], ldt, &A_ref[0], lda, &B_ref[0], ldb );
@@ -163,7 +163,7 @@ void test_tpmqrt_work( Params& params, bool run )
             print_matrix( "Bref", m,  n,  &B_ref[0], ldb, verbose );
         }
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -175,7 +175,7 @@ void test_tpmqrt_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_tpmqrt( Params& params, bool run )
 {
     switch (params.datatype()) {
@@ -203,7 +203,7 @@ void test_tpmqrt( Params& params, bool run )
 
 #else
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_tpmqrt( Params& params, bool run )
 {
     fprintf( stderr, "tpmqrt requires LAPACK >= 3.4.0\n\n" );

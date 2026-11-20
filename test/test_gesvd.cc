@@ -13,7 +13,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_gesvd_work( Params& params, bool run )
 {
@@ -52,7 +52,7 @@ void test_gesvd_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     int64_t u_ncol = (jobu == Job::AllVec ? m : blas::min( m, n ));
     int64_t lda = roundup( blas::max( 1, m ), align );
     int64_t ldu = roundup( m, align );
@@ -78,7 +78,7 @@ void test_gesvd_work( Params& params, bool run )
     print_matrix( "A", m, n, &A_tst[0], lda, verbose );
 
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::gesvd(
@@ -101,7 +101,7 @@ void test_gesvd_work( Params& params, bool run )
     //double gflop = lapack::Gflop< scalar_t >::gesvd( jobu, jobvt, m, n );
     //params.gflops() = gflop / time;
 
-    // ---------- check numerical error
+    //---------- check numerical error
     // result[ 0 ] = || A - U Sigma VT || / (||A|| max( m, n )),
     //                                      if jobu  != NoVec and jobvt != NoVec.
     // result[ 1 ] = || I - U^H U || / m,   if jobu  != NoVec.
@@ -134,7 +134,7 @@ void test_gesvd_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_gesvd(
@@ -151,7 +151,7 @@ void test_gesvd_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         if (info_tst != info_ref) {
             result[ 0 ] = 1;
         }
@@ -168,7 +168,7 @@ void test_gesvd_work( Params& params, bool run )
         && result[ 3 ] < tol);
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_gesvd( Params& params, bool run )
 {
     switch (params.datatype()) {

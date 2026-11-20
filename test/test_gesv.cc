@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_gesv_work( Params& params, bool run )
 {
@@ -38,7 +38,7 @@ void test_gesv_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
     int64_t ldb = roundup( blas::max( 1, n ), align );
     size_t size_A = (size_t) lda * n;
@@ -70,7 +70,7 @@ void test_gesv_work( Params& params, bool run )
         assert_throw( lapack::gesv(  n, nrhs, &A_tst[0], lda, &ipiv_tst[0], &B_tst[0], n-1 ), lapack::Error );
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::gesv( n, nrhs, &A_tst[0], lda, &ipiv_tst[0],
@@ -88,7 +88,7 @@ void test_gesv_work( Params& params, bool run )
     print_matrix( "X", n, nrhs, &B_tst[0], ldb, verbose );
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error = ||b - Ax|| / (n * ||A|| * ||x||).
         blas::gemm( blas::Layout::ColMajor, blas::Op::NoTrans, blas::Op::NoTrans,
                     n, nrhs, n,
@@ -106,7 +106,7 @@ void test_gesv_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         // Reset B in case check cleared it.
         int64_t iseed2[4] = { 0, 1, 2, 3 };
         lapack::larnv( idist, iseed2, B_ref.size(), &B_ref[0] );
@@ -128,7 +128,7 @@ void test_gesv_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_gesv( Params& params, bool run )
 {
     switch (params.datatype()) {

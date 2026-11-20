@@ -14,7 +14,7 @@
 #include <vector>
 #include <algorithm>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // comparison operator for sorting
 template< typename T >
 bool lessthan( T a, T b )
@@ -22,7 +22,7 @@ bool lessthan( T a, T b )
     return (real(a) < real(b)) || (real(a) == real(b) && imag(a) < imag(b));
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_geev_work( Params& params, bool run )
 {
@@ -63,7 +63,7 @@ void test_geev_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
     int64_t ldvl = roundup( n, align );
     int64_t ldvr = roundup( n, align );
@@ -88,7 +88,7 @@ void test_geev_work( Params& params, bool run )
 
     print_matrix( "A", n, n, &A_tst[0], lda, verbose );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     //printf (" test start\n");
@@ -113,7 +113,7 @@ void test_geev_work( Params& params, bool run )
 
     bool okay = true;
     if (params.check() == 'y') {
-        // ---------- check numerical error
+        //---------- check numerical error
         // formula from get22; differs from LAWN 41, usess ||V||_1 instead of n
         // 1. || A^H Vl - Vl W^H ||_1 / (||V||_1 ||A||_1)
         // 2. max_{j=1, ..., n} | || Vl(j) ||_2 - 1 |
@@ -140,7 +140,7 @@ void test_geev_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
     //printf (" ref start\n");
@@ -165,7 +165,7 @@ void test_geev_work( Params& params, bool run )
             }
         }
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         // sort eigenvalues into lexical order for comparison
         real_t error = 0;
         std::sort( W_tst.begin(), W_tst.end(), lessthan< std::complex<real_t> > );
@@ -179,7 +179,7 @@ void test_geev_work( Params& params, bool run )
     params.okay() = okay;
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_geev( Params& params, bool run )
 {
     switch (params.datatype()) {

@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_getrf_work( Params& params, bool run )
 {
@@ -36,7 +36,7 @@ void test_getrf_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, m ), align );
     size_t size_A = (size_t) lda * n;
     size_t size_ipiv = (size_t) (blas::min(m,n));
@@ -58,7 +58,7 @@ void test_getrf_work( Params& params, bool run )
         assert_throw( lapack::getrf(  m,  n, &A_tst[0], m-1, &ipiv_tst[0] ), lapack::Error );
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::getrf( m, n, &A_tst[0], lda, &ipiv_tst[0] );
@@ -74,7 +74,7 @@ void test_getrf_work( Params& params, bool run )
     print_matrix( "A_factor", m, n, &A_tst[0], lda, verbose );
 
     if (params.check() == 'y' && m == n) {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error = ||b - Ax|| / (n * ||A|| * ||x||).
         // For m != n, could check PA - LU.
         int64_t nrhs = 1;
@@ -109,7 +109,7 @@ void test_getrf_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_getrf( m, n, &A_ref[0], lda, &ipiv_ref[0] );
@@ -125,7 +125,7 @@ void test_getrf_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_getrf( Params& params, bool run )
 {
     switch (params.datatype()) {

@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_upgtr_work( Params& params, bool run )
 {
@@ -35,7 +35,7 @@ void test_upgtr_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t ldq = roundup( blas::max( 1, n ), align );
     size_t size_AP = (size_t) (n*(n+1)/2);
     size_t size_D = (size_t) (n);
@@ -61,7 +61,7 @@ void test_upgtr_work( Params& params, bool run )
         fprintf( stderr, "lapack::upgtr returned error %lld\n", llong( info ) );
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::upgtr( uplo, n, &AP[0], &tau[0], &Q_tst[0], ldq );
@@ -75,7 +75,7 @@ void test_upgtr_work( Params& params, bool run )
     // params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_upgtr( to_char( uplo ), n, &AP[0], &tau[0], &Q_ref[0], ldq );
@@ -87,7 +87,7 @@ void test_upgtr_work( Params& params, bool run )
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -98,7 +98,7 @@ void test_upgtr_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_upgtr( Params& params, bool run )
 {
     switch (params.datatype()) {

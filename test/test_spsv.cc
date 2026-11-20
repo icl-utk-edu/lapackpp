@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_spsv_work( Params& params, bool run )
 {
@@ -37,7 +37,7 @@ void test_spsv_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t ldb = roundup( blas::max( 1, n ), align );
     size_t size_AP = (size_t) (n*(n+1)/2);
     size_t size_ipiv = (size_t) (n);
@@ -60,7 +60,7 @@ void test_spsv_work( Params& params, bool run )
     print_matrix( "AP", 1, size_AP, &AP_tst[0], 1, verbose );
     print_matrix( "B",  n, nrhs, &B_tst[0], ldb, verbose );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::spsv( uplo, n, nrhs, &AP_tst[0], &ipiv_tst[0], &B_tst[0], ldb );
@@ -74,7 +74,7 @@ void test_spsv_work( Params& params, bool run )
     params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_spsv( to_char( uplo ), n, nrhs, &AP_ref[0], &ipiv_ref[0], &B_ref[0], ldb );
@@ -89,7 +89,7 @@ void test_spsv_work( Params& params, bool run )
         print_matrix( "B_tst", n, nrhs, &B_tst[0], ldb, verbose );
         print_matrix( "B_ref", n, nrhs, &B_ref[0], ldb, verbose );
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -102,7 +102,7 @@ void test_spsv_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_spsv( Params& params, bool run )
 {
     switch (params.datatype()) {

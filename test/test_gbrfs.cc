@@ -13,7 +13,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_gbrfs_work( Params& params, bool run )
 {
@@ -39,7 +39,7 @@ void test_gbrfs_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     // AB could use kd = kl + ku + 1, but for simplicity make AB = AFB.
     int64_t kd = 2*kl + ku + 1;  // number of diagonals in factor
     int64_t ldab = roundup( kd, align );
@@ -99,7 +99,7 @@ void test_gbrfs_work( Params& params, bool run )
 
     std::copy (ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     // Refine solution in X_tst, using original AB and B, factored AFB.
@@ -122,7 +122,7 @@ void test_gbrfs_work( Params& params, bool run )
     print_vector( "berr", n, &berr_tst[0], 1, verbose );
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error = ||b - Ax|| / (n * ||A|| * ||x||).
         // No gbmm, so loop over RHS.
         // AB rows 0:kl-1 are ignored; start in row kl.
@@ -147,7 +147,7 @@ void test_gbrfs_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_gbrfs(
@@ -164,7 +164,7 @@ void test_gbrfs_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_gbrfs( Params& params, bool run )
 {
     switch (params.datatype()) {

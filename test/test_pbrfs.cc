@@ -13,7 +13,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_pbrfs_work( Params& params, bool run )
 {
@@ -38,7 +38,7 @@ void test_pbrfs_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t ldab = roundup( kd+1, align );
     int64_t ldafb = ldab;
     int64_t ldb = roundup( blas::max( 1, n ), align );
@@ -99,7 +99,7 @@ void test_pbrfs_work( Params& params, bool run )
     print_matrix( "X", n, nrhs, &X_tst[0], ldx, verbose );
 
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     // Refine solution in X_tst, using original AB and B, factored AFB.
@@ -120,7 +120,7 @@ void test_pbrfs_work( Params& params, bool run )
     print_vector( "berr", n, &berr_tst[0], 1, verbose );
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error = ||b - Ax|| / (n * ||A|| * ||x||).
         // No hbmm, so loop over RHS.
         for (int64_t j = 0; j < nrhs; ++j) {
@@ -144,7 +144,7 @@ void test_pbrfs_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_pbrfs(
@@ -160,7 +160,7 @@ void test_pbrfs_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_pbrfs( Params& params, bool run )
 {
     switch (params.datatype()) {

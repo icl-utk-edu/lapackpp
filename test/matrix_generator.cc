@@ -12,14 +12,14 @@
 #include "matrix_params.hh"
 #include "matrix_generator.hh"
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // ANSI color codes
 using testsweeper::ansi_esc;
 using testsweeper::ansi_red;
 using testsweeper::ansi_bold;
 using testsweeper::ansi_normal;
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /// Splits a string by any of the delimiters.
 /// Adjacent delimiters will give empty tokens.
 /// See https://stackoverflow.com/questions/53849
@@ -44,7 +44,7 @@ std::vector< std::string >
 // =============================================================================
 namespace lapack {
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /// Generates sigma vector of singular or eigenvalues, according to distribution.
 ///
 /// Internal function, called from generate_matrix().
@@ -175,7 +175,7 @@ void generate_sigma(
 }
 
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /// Given matrix A with singular values such that sum(sigma_i^2) = n,
 /// returns A with columns of unit norm, with the same condition number.
 /// see: Davies and Higham, 2000, Numerically stable generation of correlation
@@ -219,7 +219,7 @@ void generate_correlation_factor( Matrix<scalar_t>& A )
 }
 
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // specialization to complex
 // can't use Higham's algorithm in complex
 template<>
@@ -235,7 +235,7 @@ void generate_correlation_factor( Matrix<std::complex<double>>& A )
 }
 
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /// Generates matrix using SVD, $A = U Sigma V^H$.
 ///
 /// Internal function, called from generate_matrix().
@@ -263,7 +263,7 @@ void generate_svd(
     Matrix<scalar_t> U( maxmn, minmn );
     Vector<scalar_t> tau( minmn );
 
-    // ----------
+    //-----------
     generate_sigma( params, dist, false, cond, sigma_max, A, sigma );
 
     // for generate correlation factor, need sum sigma_i^2 = n
@@ -333,7 +333,7 @@ void generate_svd(
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /// Generates matrix using Hermitian eigenvalue decomposition, $A = U Sigma U^H$.
 ///
 /// Internal function, called from generate_matrix().
@@ -361,7 +361,7 @@ void generate_heev(
     Matrix<scalar_t> U( n, n );
     Vector<scalar_t> tau( n );
 
-    // ----------
+    //-----------
     generate_sigma( params, dist, rand_sign, cond, sigma_max, A, sigma );
 
     // random U, n-by-n
@@ -406,7 +406,7 @@ void generate_heev(
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /// Generates matrix using general eigenvalue decomposition, $A = V T V^H$,
 /// with orthogonal eigenvectors.
 /// Not yet implemented.
@@ -426,7 +426,7 @@ void generate_geev(
     throw std::exception();  // not implemented
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /// Generates matrix using general eigenvalue decomposition, $A = X T X^{-1}$,
 /// with random eigenvectors.
 /// Not yet implemented.
@@ -446,7 +446,7 @@ void generate_geevx(
     throw std::exception();  // not implemented
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void generate_matrix_usage()
 {
     printf(
@@ -517,7 +517,7 @@ void generate_matrix_usage()
     );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /// Generates an m-by-n test matrix.
 /// Similar to LAPACK's libtmg functionality, but a level 3 BLAS implementation.
 ///
@@ -685,7 +685,7 @@ void generate_matrix(
     real_t sigma_max = 1;
     int64_t minmn = std::min( A.m, A.n );
 
-    // ----------
+    //-----------
     // set sigma to unknown (nan)
     lapack::laset( lapack::MatrixType::General, sigma.n, 1, nan, nan, sigma(0), sigma.n );
 
@@ -963,7 +963,7 @@ void generate_matrix(
 }
 
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /// Generates an m-by-n test matrix.
 /// Traditional interface with m, n, lda instead of Matrix object.
 ///
@@ -990,7 +990,7 @@ void generate_matrix(
 }
 
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // explicit instantiations
 template
 void generate_matrix(

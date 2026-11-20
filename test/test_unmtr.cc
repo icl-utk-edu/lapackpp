@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_unmtr_work( Params& params, bool run )
 {
@@ -39,7 +39,7 @@ void test_unmtr_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t r = (side == lapack::Side::Left) ? m : n;
     int64_t lda = roundup( blas::max( 1, r ), align );
     int64_t ldc = roundup( blas::max( 1, m ), align );
@@ -68,7 +68,7 @@ void test_unmtr_work( Params& params, bool run )
         fprintf( stderr, "lapack::hetrd returned error %lld\n", llong( info ) );
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::unmtr( side, uplo, trans, m, n, &A[0], lda, &tau[0], &C_tst[0], ldc );
@@ -82,7 +82,7 @@ void test_unmtr_work( Params& params, bool run )
     // params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_unmtr( to_char( side ), to_char( uplo ), to_char( trans ), m, n, &A[0], lda, &tau[0], &C_ref[0], ldc );
@@ -94,7 +94,7 @@ void test_unmtr_work( Params& params, bool run )
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -105,7 +105,7 @@ void test_unmtr_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_unmtr( Params& params, bool run )
 {
     switch (params.datatype()) {

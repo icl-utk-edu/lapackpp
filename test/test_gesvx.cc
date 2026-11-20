@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_gesvx_work( Params& params, bool run )
 {
@@ -41,7 +41,7 @@ void test_gesvx_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t lda  = roundup( blas::max( 1, n ), align );
     int64_t ldaf = roundup( blas::max( 1, n ), align );
     int64_t ldb  = roundup( blas::max( 1, n ), align );
@@ -103,7 +103,7 @@ void test_gesvx_work( Params& params, bool run )
     C_ref = C_tst;
     B_ref = B_tst;
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::gesvx(
@@ -124,7 +124,7 @@ void test_gesvx_work( Params& params, bool run )
     params.gflops() = gflop / time;
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error = ||b - Ax|| / (n * ||A|| * ||x||).
         B_tst = B_ref;  // equed may have modified B.
         blas::gemm( blas::Layout::ColMajor, trans, blas::Op::NoTrans,
@@ -143,7 +143,7 @@ void test_gesvx_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         char equed_ref_char = to_char( equed_ref );
         time = testsweeper::get_wtime();
@@ -164,7 +164,7 @@ void test_gesvx_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_gesvx( Params& params, bool run )
 {
     switch (params.datatype()) {

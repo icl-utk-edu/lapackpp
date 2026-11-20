@@ -13,7 +13,7 @@
 
 #if LAPACK_VERSION >= 30900  // >= 3.9.0
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_unhr_col_work( Params& params, bool run )
 {
@@ -31,7 +31,7 @@ void test_unhr_col_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, m ), align );
     int64_t ldt = roundup( blas::max( 1, blas::min( nb, n ) ), align );
     size_t size_A = (size_t) lda * n;
@@ -50,7 +50,7 @@ void test_unhr_col_work( Params& params, bool run )
     lapack::larnv( idist, iseed, A_tst.size(), &A_tst[0] );
     A_ref = A_tst;
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::unhr_col(
@@ -65,7 +65,7 @@ void test_unhr_col_work( Params& params, bool run )
 
     if (params.ref() == 'y' || params.check() == 'y') {
     #if LAPACK_VERSION >= 31200 || defined( LAPACK_HAVE_MKL )
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         // min works around bug in LAPACK <= 3.12
@@ -79,7 +79,7 @@ void test_unhr_col_work( Params& params, bool run )
 
         params.ref_time() = time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -98,7 +98,7 @@ void test_unhr_col_work( Params& params, bool run )
 
 #endif  // LAPACK >= 3.9.0
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_unhr_col( Params& params, bool run )
 {
 #if LAPACK_VERSION >= 30900  // >= 3.9.0

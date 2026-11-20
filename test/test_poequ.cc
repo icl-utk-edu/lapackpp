@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_poequ_work( Params& params, bool run )
 {
@@ -33,7 +33,7 @@ void test_poequ_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
     real_t scond_tst = 0;
     real_t scond_ref = 0;
@@ -48,7 +48,7 @@ void test_poequ_work( Params& params, bool run )
 
     lapack::generate_matrix( params.matrix, n, n, &A[0], lda );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::poequ( n, &A[0], lda, &S_tst[0], &scond_tst, &amax_tst );
@@ -62,7 +62,7 @@ void test_poequ_work( Params& params, bool run )
     //params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_poequ( n, &A[0], lda, &S_ref[0], &scond_ref, &amax_ref );
@@ -74,7 +74,7 @@ void test_poequ_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -87,7 +87,7 @@ void test_poequ_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_poequ( Params& params, bool run )
 {
     switch (params.datatype()) {

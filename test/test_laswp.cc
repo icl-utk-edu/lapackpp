@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_laswp_work( Params& params, bool run )
 {
@@ -33,7 +33,7 @@ void test_laswp_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t nb = blas::min( 32, n );
     int64_t lda = roundup( blas::max( 1, m ), align );
     int64_t k1 = 1;
@@ -56,7 +56,7 @@ void test_laswp_work( Params& params, bool run )
     A_ref = A_tst;
     std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     lapack::laswp( n, &A_tst[0], lda, k1, k2, &ipiv_tst[0], incx );
@@ -67,7 +67,7 @@ void test_laswp_work( Params& params, bool run )
     //params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_laswp( n, &A_ref[0], lda, k1, k2, &ipiv_ref[0], incx );
@@ -79,7 +79,7 @@ void test_laswp_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         error += abs_error( A_tst, A_ref );
         params.error() = error;
@@ -87,7 +87,7 @@ void test_laswp_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_laswp( Params& params, bool run )
 {
     switch (params.datatype()) {

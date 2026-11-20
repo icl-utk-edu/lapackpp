@@ -14,7 +14,7 @@
 
 #if LAPACK_VERSION >= 30700  // >= 3.7.0
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // tplqt is blocked version
 // tplqt2 is non-blocked version
 // todo: merge test_tplqt2.cc and test_tplqt.cc
@@ -48,7 +48,7 @@ void test_tplqt2_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, m ), align );
     int64_t ldb = roundup( blas::max( 1, m ), align );
     int64_t ldt = roundup( blas::max( 1, m ), align );
@@ -74,7 +74,7 @@ void test_tplqt2_work( Params& params, bool run )
     print_matrix( "B1", m, n-L, &B_tst[0], ldb, verbose );
     print_matrix( "B2", m, L,   &B_tst[(n-L)*ldb], ldb, verbose );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::tplqt2(
@@ -94,7 +94,7 @@ void test_tplqt2_work( Params& params, bool run )
     print_matrix( "T",     m,  m,   &T_tst[0], ldt, verbose );
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error = ||A - LQ|| / (m * ||A||).
         // todo: Orthogonality check = ||I - Q^H Q|| / m.
 
@@ -142,7 +142,7 @@ void test_tplqt2_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         // Reset A, B in case check wiped them out.
         lapack::larnv( idist, iseed, A_ref.size(), &A_ref[0] );
         lapack::larnv( idist, iseed, B_ref.size(), &B_ref[0] );
@@ -160,7 +160,7 @@ void test_tplqt2_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_tplqt2( Params& params, bool run )
 {
     switch (params.datatype()) {
@@ -188,7 +188,7 @@ void test_tplqt2( Params& params, bool run )
 
 #else
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_tplqt2( Params& params, bool run )
 {
     fprintf( stderr, "tplqt2 requires LAPACK >= 3.7.0\n\n" );

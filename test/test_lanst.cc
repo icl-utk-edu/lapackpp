@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_lanst_work( Params& params, bool run )
 {
@@ -32,7 +32,7 @@ void test_lanst_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     size_t size_D = (size_t) (n);
     size_t size_E = (size_t) (n-1);
 
@@ -44,7 +44,7 @@ void test_lanst_work( Params& params, bool run )
     lapack::larnv( idist, iseed, D.size(), &D[0] );
     lapack::larnv( idist, iseed, E.size(), &E[0] );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     real_t norm_tst = lapack::lanst( norm, n, &D[0], &E[0] );
@@ -59,7 +59,7 @@ void test_lanst_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         real_t norm_ref = LAPACKE_lanst( to_char( norm ), n, &D[0], &E[0] );
@@ -72,7 +72,7 @@ void test_lanst_work( Params& params, bool run )
             printf( "norm_ref = %.8e\n", norm_ref );
         }
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t tol = 3 * std::numeric_limits< real_t >::epsilon();
         if (norm == lapack::Norm::Max && ! blas::is_complex_v< scalar_t >) {
             // max-norm depends on only one element, so in real there should be
@@ -87,7 +87,7 @@ void test_lanst_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_lanst( Params& params, bool run )
 {
     switch (params.datatype()) {

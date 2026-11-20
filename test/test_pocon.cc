@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_pocon_work( Params& params, bool run )
 {
@@ -37,7 +37,7 @@ void test_pocon_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
     real_t anorm;
     real_t rcond_tst;
@@ -58,7 +58,7 @@ void test_pocon_work( Params& params, bool run )
         fprintf( stderr, "lapack::potrf returned error %lld\n", llong( info ) );
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::pocon( uplo, n, &A[0], lda, anorm, &rcond_tst );
@@ -72,7 +72,7 @@ void test_pocon_work( Params& params, bool run )
     //params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_pocon( to_char( uplo ), n, &A[0], lda, anorm, &rcond_ref );
@@ -84,7 +84,7 @@ void test_pocon_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -95,7 +95,7 @@ void test_pocon_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_pocon( Params& params, bool run )
 {
     switch (params.datatype()) {

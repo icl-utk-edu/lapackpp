@@ -13,7 +13,7 @@
 #include <vector>
 #include <iostream>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_ggev_work( Params& params, bool run )
 {
@@ -35,7 +35,7 @@ void test_ggev_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
     int64_t ldb = roundup( blas::max( 1, n ), align );
     int64_t ldvl = ( jobvl == lapack::Job::Vec ? roundup( blas::max(1, n), align ) : 1 );
@@ -67,7 +67,7 @@ void test_ggev_work( Params& params, bool run )
 
     std::copy( alpha_tst.begin(), alpha_tst.end(), alpha_ref.begin() );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::ggev( jobvl, jobvr, n, &A_tst[0], lda, &B_tst[0], ldb, &alpha_tst[0], &beta_tst[0], &VL_tst[0], ldvl, &VR_tst[0], ldvr );
@@ -81,7 +81,7 @@ void test_ggev_work( Params& params, bool run )
     // params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_ggev( to_char( jobvl ), to_char( jobvr ), n, &A_ref[0], lda, &B_ref[0], ldb, &alpha_ref[0], &beta_ref[0], &VL_ref[0], ldvl, &VR_ref[0], ldvr );
@@ -93,7 +93,7 @@ void test_ggev_work( Params& params, bool run )
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -109,7 +109,7 @@ void test_ggev_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_ggev( Params& params, bool run )
 {
     switch (params.datatype()) {

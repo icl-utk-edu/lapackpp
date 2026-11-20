@@ -14,7 +14,7 @@
 
 #if LAPACK_VERSION >= 30600  // >= 3.6.0
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_gesvdx_work( Params& params, bool run )
 {
@@ -51,7 +51,7 @@ void test_gesvdx_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, m ), align );
     int64_t ns_tst;
     lapack_int ns_ref;
@@ -74,7 +74,7 @@ void test_gesvdx_work( Params& params, bool run )
     lapack::generate_matrix( params.matrix, m, n, &A_tst[0], lda );
     A_ref = A_tst;
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::gesvdx( jobu, jobvt, range, m, n, &A_tst[0], lda, vl, vu, il, iu, &ns_tst, &S_tst[0], &U_tst[0], ldu, &VT_tst[0], ldvt );
@@ -88,7 +88,7 @@ void test_gesvdx_work( Params& params, bool run )
     // params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_gesvdx( to_char( jobu ), to_char( jobvt ), to_char( range ), m, n, &A_ref[0], lda, vl, vu, il, iu, &ns_ref, &S_ref[0], &U_ref[0], ldu, &VT_ref[0], ldvt );
@@ -100,7 +100,7 @@ void test_gesvdx_work( Params& params, bool run )
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -115,7 +115,7 @@ void test_gesvdx_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_gesvdx( Params& params, bool run )
 {
     switch (params.datatype()) {
@@ -143,7 +143,7 @@ void test_gesvdx( Params& params, bool run )
 
 #else
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_gesvdx( Params& params, bool run )
 {
     fprintf( stderr, "gesvdx requires LAPACK >= 3.6.0\n\n" );

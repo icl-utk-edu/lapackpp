@@ -38,6 +38,9 @@ int snprintf_value(
     real_t value,
     std::enable_if_t< std::is_floating_point_v< real_t > >* z=nullptr )
 {
+    // min prevents compiler format-truncation warning for unrealistic theoretical width.
+    width = std::min( width, 32 );
+
     real_t abs_val = std::abs( value );
     real_t threshold = pow10( width - precision - 2 );
 
@@ -70,6 +73,9 @@ int snprintf_value(
     integer_t value,
     std::enable_if_t< std::is_integral_v< integer_t > >* z=nullptr)
 {
+    // min prevents compiler format-truncation warning for unrealistic theoretical width.
+    width = std::min( width, 32 );
+
     return snprintf( buf, buf_len, " %*lld", width, llong( value ) );
 }
 

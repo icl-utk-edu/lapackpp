@@ -14,7 +14,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_hpevx_work( Params& params, bool run )
 {
@@ -48,7 +48,7 @@ void test_hpevx_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     real_t abstol = 0;  // default value
     int64_t nfound;
     lapack_int nfound_ref;
@@ -71,12 +71,9 @@ void test_hpevx_work( Params& params, bool run )
     lapack::larnv( idist, iseed, Apack_tst.size(), &Apack_tst[0] );
     Apack_ref = Apack_tst;
 
-    if (verbose >= 2) {
-        printf( "A = " );
-        print_vector( size_A, &Apack_tst[0], 1 );
-    }
+    print_vector( "A", size_A, &Apack_tst[0], 1, verbose );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::hpevx(
@@ -93,18 +90,16 @@ void test_hpevx_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::hpevx( jobz, range, n );
     // params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
+    if (verbose) {
         printf( "nfound = %lld\n", llong( nfound ) );
-        printf( "Lambda = " );
-        print_vector( n, &Lambda_tst[0], 1 );
+        print_vector( "Lambda", n, &Lambda_tst[0], 1, verbose );
         if (jobz == lapack::Job::Vec) {
-            printf( "Z = " );
-            print_matrix( n, nfound, &Z[0], ldz );
+            print_matrix( "Z", n, nfound, &Z[0], ldz, verbose );
         }
     }
 
     if (params.check() == 'y' && jobz == lapack::Job::Vec) {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error =
         //     ||A Z - Z Lambda|| / (n * ||A|| * ||Z||)
         real_t Anorm = lapack::lanhp( lapack::Norm::One, uplo, n, &Apack_ref[0] );
@@ -124,10 +119,7 @@ void test_hpevx_work( Params& params, bool run )
                           &Z[0], ldz,
                     -one, &W[0], ldw );
         real_t error = lapack::lange( lapack::Norm::One, n, n, &W[0], ldw );
-        if (verbose >= 2) {
-            printf( "W = " );
-            print_matrix( n, nfound, &W[0], ldw );
-        }
+        print_matrix( "W", n, nfound, &W[0], ldw, verbose );
 
         error /= (n * Anorm * Znorm);
         params.error() = error;
@@ -135,7 +127,7 @@ void test_hpevx_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_hpevx(
@@ -151,16 +143,15 @@ void test_hpevx_work( Params& params, bool run )
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
-        if (verbose >= 2) {
-            printf( "Lambda_ref" );
-            print_vector( n, &Lambda_ref[0], 1 );
+        if (verbose) {
+            printf( "nfound_ref = %lld\n", llong( nfound_ref ) );
+            print_vector( "Lambda_ref", n, &Lambda_ref[0], 1, verbose );
             if (jobz == lapack::Job::Vec) {
-                printf( "Zref" );
-                print_matrix( n, nfound, &Z[0], ldz );
+                print_matrix( "Zref", n, nfound, &Z[0], ldz, verbose );
             }
         }
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = rel_error( Lambda_tst, Lambda_ref );
         if (info_tst != info_ref) {
             error = 1;
@@ -176,7 +167,7 @@ void test_hpevx_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_hpevx( Params& params, bool run )
 {
     switch (params.datatype()) {

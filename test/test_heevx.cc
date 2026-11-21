@@ -13,7 +13,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_heevx_work( Params& params, bool run )
 {
@@ -50,7 +50,7 @@ void test_heevx_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
     real_t abstol = 0;  // default value
     int64_t nfound;
@@ -72,16 +72,9 @@ void test_heevx_work( Params& params, bool run )
     lapack::generate_matrix( params.matrix, n, n, &A_tst[0], lda );
     A_ref = A_tst;
 
-    if (verbose >= 1) {
-        printf( "\n" );
-        printf( "A n=%5lld, lda=%5lld\n", llong( n ), llong( lda ) );
-    }
-    if (verbose >= 2) {
-        printf( "A = " );
-        print_matrix( n, n, &A_tst[0], lda );
-    }
+    print_matrix( "A", n, n, &A_tst[0], lda, verbose );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::heevx(
@@ -98,18 +91,16 @@ void test_heevx_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::heevx( jobz, range, n );
     // params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
+    if (verbose) {
         printf( "nfound = %lld\n", llong( nfound ) );
-        printf( "Lambda = " );
-        print_vector( n, &Lambda_tst[0], 1 );
+        print_vector( "Lambda", n, &Lambda_tst[0], 1, verbose );
         if (jobz == lapack::Job::Vec) {
-            printf( "Z = " );
-            print_matrix( n, nfound, &Z[0], ldz );
+            print_matrix( "Z", n, nfound, &Z[0], ldz, verbose );
         }
     }
 
     if (params.check() == 'y') {
-        // ---------- check numerical error
+        //---------- check numerical error
         // result[ 0 ] = || A - Z Lambda Z^H || / (n ||A||), if jobz != NoVec.
         // result[ 1 ] = || I - Z^H Z || / n, if jobz != NoVec.
         // result[ 2 ] = 0 if Lambda is in non-decreasing order, else > 0.
@@ -129,7 +120,7 @@ void test_heevx_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_heevx(
@@ -145,16 +136,15 @@ void test_heevx_work( Params& params, bool run )
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
-        if (verbose >= 2) {
-            printf( "Lambda_ref" );
-            print_vector( n, &Lambda_ref[0], 1 );
+        if (verbose) {
+            printf( "nfound_ref = %lld\n", llong( nfound_ref ) );
+            print_vector( "Lambda_ref", n, &Lambda_ref[0], 1, verbose );
             if (jobz == lapack::Job::Vec) {
-                printf( "Zref" );
-                print_matrix( n, nfound, &Z[0], ldz );
+                print_matrix( "Zref", n, nfound, &Z[0], ldz, verbose );
             }
         }
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = rel_error( Lambda_tst, Lambda_ref );
         if (info_tst != info_ref) {
             error = 1;
@@ -170,7 +160,7 @@ void test_heevx_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_heevx( Params& params, bool run )
 {
     switch (params.datatype()) {

@@ -13,7 +13,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_gelsy_work( Params& params, bool run )
 {
@@ -38,7 +38,7 @@ void test_gelsy_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, m ), align );
     int64_t ldb = roundup( blas::max( 1, m, n ), align );
     real_t rcond = std::numeric_limits< real_t >::epsilon();
@@ -67,7 +67,7 @@ void test_gelsy_work( Params& params, bool run )
     std::fill( jpvt_tst.begin(), jpvt_tst.end(), 0 );
     std::fill( jpvt_ref.begin(), jpvt_ref.end(), 0 );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::gelsy( m, n, nrhs, &A_tst[0], lda, &B_tst[0], ldb, &jpvt_tst[0], rcond, &rank_tst );
@@ -81,7 +81,7 @@ void test_gelsy_work( Params& params, bool run )
     // params.gflops() = gflop / time;
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         real_t error[2];
         check_gels( false, blas::Op::NoTrans, m, n, nrhs,
                     &A_ref[0], lda, // original A
@@ -94,7 +94,7 @@ void test_gelsy_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_gelsy( m, n, nrhs, &A_ref[0], lda, &B_ref[0], ldb, &jpvt_ref[0], rcond, &rank_ref );
@@ -108,7 +108,7 @@ void test_gelsy_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_gelsy( Params& params, bool run )
 {
     switch (params.datatype()) {

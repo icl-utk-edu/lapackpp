@@ -14,7 +14,7 @@
 
 namespace lapack {
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 const int64_t idist_rand  = 1;
 const int64_t idist_rands = 2;
 const int64_t idist_randn = 3;
@@ -51,7 +51,7 @@ enum class Dist {
     none,
 };
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /// Simple vector class that can wrap existing memory or allocate its own memory.
 //
 // Uses copy-and-swap idiom.
@@ -148,7 +148,7 @@ private:
     bool own_;
 };
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /// Simple matrix class that can wrap existing memory or allocate its own memory.
 template< typename scalar_t >
 class Matrix
@@ -198,7 +198,7 @@ protected:
     Vector<scalar_t> data_;
 };
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void generate_matrix(
     MatrixParams& params,

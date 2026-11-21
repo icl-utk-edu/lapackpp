@@ -14,7 +14,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_hpev_work( Params& params, bool run )
 {
@@ -41,7 +41,7 @@ void test_hpev_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t ldz = (jobz == lapack::Job::Vec
                    ? roundup( blas::max( 1, n ), align )
                    : 1 );
@@ -59,7 +59,7 @@ void test_hpev_work( Params& params, bool run )
     lapack::larnv( idist, iseed, Apack_tst.size(), &Apack_tst[0] );
     Apack_ref = Apack_tst;
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::hpev(
@@ -74,15 +74,13 @@ void test_hpev_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::hpev( jobz, n );
     // params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        printf( "Z = " );
-        print_matrix( n, n, &Z[0], ldz );
-        printf( "Lambda = " );
-        print_vector( n, &Lambda_tst[0], 1 );
+    if (jobz == lapack::Job::Vec) {
+        print_matrix( "Z", n, n, &Z[0], ldz, verbose );
     }
+    print_vector( "Lambda", n, &Lambda_tst[0], 1, verbose );
 
     if (params.check() == 'y' && jobz == lapack::Job::Vec) {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error =
         //     ||A Z - Z Lambda|| / (n * ||A|| * ||Z||)
         real_t Anorm = lapack::lanhp( lapack::Norm::One, uplo, n, &Apack_ref[0] );
@@ -102,10 +100,7 @@ void test_hpev_work( Params& params, bool run )
                           &Z[0], ldz,
                     -one, &W[0], ldw );
         real_t error = lapack::lange( lapack::Norm::One, n, n, &W[0], ldw );
-        if (verbose >= 2) {
-            printf( "W = " );
-            print_matrix( n, n, &W[0], ldw );
-        }
+        print_matrix( "W", n, n, &W[0], ldw, verbose );
 
         error /= (n * Anorm * Znorm);
         params.error() = error;
@@ -113,7 +108,7 @@ void test_hpev_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_hpev(
@@ -127,7 +122,7 @@ void test_hpev_work( Params& params, bool run )
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = rel_error( Lambda_tst, Lambda_ref );
         if (info_tst != info_ref) {
             error = 1;
@@ -137,7 +132,7 @@ void test_hpev_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_hpev( Params& params, bool run )
 {
     switch (params.datatype()) {

@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_larfx_work( Params& params, bool run )
 {
@@ -36,7 +36,7 @@ void test_larfx_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     scalar_t tau;
     int64_t ldc = roundup( blas::max( 1, m ), align );
     size_t size_V;
@@ -57,7 +57,7 @@ void test_larfx_work( Params& params, bool run )
     lapack::generate_matrix( params.matrix, m, n, &C_tst[0], ldc );
     C_ref = C_tst;
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     lapack::larfx( side, m, n, &V[0], tau, &C_tst[0], ldc );
@@ -68,7 +68,7 @@ void test_larfx_work( Params& params, bool run )
     //params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_larfx( to_char( side ), m, n, &V[0], tau, &C_ref[0], ldc );
@@ -80,14 +80,14 @@ void test_larfx_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = rel_error( C_tst, C_ref );
         params.error() = error;
         params.okay() = (error < tol);
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_larfx( Params& params, bool run )
 {
     switch (params.datatype()) {

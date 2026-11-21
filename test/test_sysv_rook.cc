@@ -14,7 +14,7 @@
 
 #if LAPACK_VERSION >= 30500  // >= 3.5
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_sysv_rook_work( Params& params, bool run )
 {
@@ -39,7 +39,7 @@ void test_sysv_rook_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
     int64_t ldb = roundup( blas::max( 1, n ), align );
     size_t size_A = (size_t) lda * n;
@@ -60,7 +60,7 @@ void test_sysv_rook_work( Params& params, bool run )
     A_ref = A_tst;
     B_ref = B_tst;
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::sysv_rook( uplo, n, nrhs, &A_tst[0], lda, &ipiv_tst[0], &B_tst[0], ldb );
@@ -74,7 +74,7 @@ void test_sysv_rook_work( Params& params, bool run )
     // params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_sysv_rook( to_char( uplo ), n, nrhs, &A_ref[0], lda, &ipiv_ref[0], &B_ref[0], ldb );
@@ -86,7 +86,7 @@ void test_sysv_rook_work( Params& params, bool run )
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -99,7 +99,7 @@ void test_sysv_rook_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_sysv_rook( Params& params, bool run )
 {
     switch (params.datatype()) {
@@ -127,7 +127,7 @@ void test_sysv_rook( Params& params, bool run )
 
 #else
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_sysv_rook( Params& params, bool run )
 {
     fprintf( stderr, "sysv_rook requires LAPACK >= 3.5\n\n" );

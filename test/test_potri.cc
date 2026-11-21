@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_potri_work( Params& params, bool run )
 {
@@ -39,7 +39,7 @@ void test_potri_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
     size_t size_A = (size_t) lda * n;
 
@@ -48,14 +48,7 @@ void test_potri_work( Params& params, bool run )
     lapack::generate_matrix( params.matrix, n, n, &A_tst[0], lda );
     A_ref = A_tst;
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "A n=%5lld, lda=%5lld\n",
-                llong( n ), llong( lda ) );
-    }
-    if (verbose >= 2) {
-        printf( "A = " ); print_matrix( n, n, &A_tst[0], lda );
-    }
+    print_matrix( "A", n, n, &A_tst[0], lda, verbose );
 
     // factor A into LL^T
     int64_t info = lapack::potrf( uplo, n, &A_tst[0], lda );
@@ -71,7 +64,7 @@ void test_potri_work( Params& params, bool run )
         assert_throw( lapack::potri( uplo,     n, &A_tst[0], n-1 ), lapack::Error );
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::potri( uplo, n, &A_tst[0], lda );
@@ -84,12 +77,10 @@ void test_potri_work( Params& params, bool run )
     double gflop = lapack::Gflop< scalar_t >::potri( n );
     params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        printf( "A2 = " ); print_matrix( n, n, &A_tst[0], lda );
-    }
+    print_matrix( "A2", n, n, &A_tst[0], lda, verbose );
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         // comparing to ref. solution doesn't work due to roundoff errors
         // symmetrize A^{-1}, in order to use hemm
         if (uplo == blas::Uplo::Lower) {
@@ -102,9 +93,7 @@ void test_potri_work( Params& params, bool run )
                 for (int64_t i = 0; i < j; ++i)
                     A_tst[ j + i*lda ] = conj( A_tst[ i + j*lda ] );
         }
-        if (verbose >= 2) {
-            printf( "A2b = " ); print_matrix( n, n, &A_tst[0], lda );
-        }
+        print_matrix( "A2b", n, n, &A_tst[0], lda, verbose );
 
         // R = I
         std::vector< scalar_t > R( size_A );
@@ -121,9 +110,7 @@ void test_potri_work( Params& params, bool run )
                     -1.0, &A_ref[0], lda,
                           &A_tst[0], lda,
                      1.0, &R[0], lda );
-        if (verbose >= 2) {
-            printf( "R = " ); print_matrix( n, n, &R[0], lda );
-        }
+        print_matrix( "R", n, n, &R[0], lda, verbose );
 
         // error = ||I - A A^{-1}|| / (n ||A|| ||A^{-1}||)
         real_t Rnorm     = lapack::lange( lapack::Norm::Fro, n, n, &R[0], lda );
@@ -141,7 +128,7 @@ void test_potri_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_potrf returned error %lld\n", llong( info ) );
         }
 
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_potri( to_char( uplo ), n, &A_ref[0], lda );
@@ -153,13 +140,11 @@ void test_potri_work( Params& params, bool run )
         params.ref_time() = time;
         params.ref_gflops() = gflop / time;
 
-        if (verbose >= 2) {
-            printf( "A2ref = " ); print_matrix( n, n, &A_ref[0], lda );
-        }
+        print_matrix( "A2ref", n, n, &A_ref[0], lda, verbose );
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_potri( Params& params, bool run )
 {
     switch (params.datatype()) {

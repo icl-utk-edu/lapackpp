@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_getrf_work( Params& params, bool run )
 {
@@ -36,7 +36,7 @@ void test_getrf_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, m ), align );
     size_t size_A = (size_t) lda * n;
     size_t size_ipiv = (size_t) (blas::min(m,n));
@@ -49,14 +49,7 @@ void test_getrf_work( Params& params, bool run )
     lapack::generate_matrix( params.matrix, m, n, &A_tst[0], lda );
     A_ref = A_tst;
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "A m=%5lld, n=%5lld, lda=%5lld\n",
-                llong( m ), llong( n ), llong( lda ) );
-    }
-    if (verbose >= 2) {
-        printf( "A = " ); print_matrix( m, n, &A_tst[0], lda );
-    }
+    print_matrix( "A", m, n, &A_tst[0], lda, verbose );
 
     // test error exits
     if (params.error_exit() == 'y') {
@@ -65,7 +58,7 @@ void test_getrf_work( Params& params, bool run )
         assert_throw( lapack::getrf(  m,  n, &A_tst[0], m-1, &ipiv_tst[0] ), lapack::Error );
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::getrf( m, n, &A_tst[0], lda, &ipiv_tst[0] );
@@ -78,12 +71,10 @@ void test_getrf_work( Params& params, bool run )
     double gflop = lapack::Gflop< scalar_t >::getrf( m, n );
     params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        printf( "A_factor = " ); print_matrix( m, n, &A_tst[0], lda );
-    }
+    print_matrix( "A_factor", m, n, &A_tst[0], lda, verbose );
 
     if (params.check() == 'y' && m == n) {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error = ||b - Ax|| / (n * ||A|| * ||x||).
         // For m != n, could check PA - LU.
         int64_t nrhs = 1;
@@ -107,9 +98,7 @@ void test_getrf_work( Params& params, bool run )
                     -1.0, &A_ref[0], lda,
                           &B_tst[0], ldb,
                      1.0, &B_ref[0], ldb );
-        if (verbose >= 2) {
-            printf( "R = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
-        }
+        print_matrix( "R", n, nrhs, &B_ref[0], ldb, verbose );
 
         real_t error = lapack::lange( lapack::Norm::One, n, nrhs, &B_ref[0], ldb );
         real_t Xnorm = lapack::lange( lapack::Norm::One, n, nrhs, &B_tst[0], ldb );
@@ -120,7 +109,7 @@ void test_getrf_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_getrf( m, n, &A_ref[0], lda, &ipiv_ref[0] );
@@ -132,13 +121,11 @@ void test_getrf_work( Params& params, bool run )
         params.ref_time() = time;
         params.ref_gflops() = gflop / time;
 
-        if (verbose >= 2) {
-            printf( "Aref_factor = " ); print_matrix( m, n, &A_ref[0], lda );
-        }
+        print_matrix( "Aref_factor", m, n, &A_ref[0], lda, verbose );
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_getrf( Params& params, bool run )
 {
     switch (params.datatype()) {

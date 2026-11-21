@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_sycon_work( Params& params, bool run )
 {
@@ -32,7 +32,7 @@ void test_sycon_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
     real_t anorm = 0;  // todo value
     real_t rcond_tst;
@@ -46,12 +46,12 @@ void test_sycon_work( Params& params, bool run )
 
     lapack::generate_matrix( params.matrix, n, n, &A[0], lda );
 
-    // ---------- factor before test
+    //---------- factor before test
     int64_t info = lapack::sytrf( uplo, n, &A[0], lda, &ipiv_tst[0] );
     if (info != 0) {
         fprintf( stderr, "lapack::sytrf returned error %lld\n", llong( info ) );
     }
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::sycon( uplo, n, &A[0], lda, &ipiv_tst[0], anorm, &rcond_tst );
@@ -65,9 +65,9 @@ void test_sycon_work( Params& params, bool run )
     // params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- reuse factorization and initialize ipiv_ref
+        //---------- reuse factorization and initialize ipiv_ref
         std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_sycon( to_char( uplo ), n, &A[0], lda, &ipiv_ref[0], anorm, &rcond_ref );
@@ -79,7 +79,7 @@ void test_sycon_work( Params& params, bool run )
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -90,7 +90,7 @@ void test_sycon_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_sycon( Params& params, bool run )
 {
     switch (params.datatype()) {

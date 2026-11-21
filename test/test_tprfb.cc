@@ -14,7 +14,7 @@
 
 #if LAPACK_VERSION >= 30400  // >= 3.4.0
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_tprfb_work( Params& params, bool run )
 {
@@ -46,7 +46,7 @@ void test_tprfb_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     // B is m-by-n
     // V is m-by-k (left,  columnwise)
     //   or n-by-k (right, columnwise)
@@ -91,7 +91,7 @@ void test_tprfb_work( Params& params, bool run )
     A_ref = A_tst;
     B_ref = B_tst;
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     lapack::tprfb( side, trans, direction, storev, m, n, k, l, &V[0], ldv, &T[0], ldt, &A_tst[0], lda, &B_tst[0], ldb );
@@ -106,7 +106,7 @@ void test_tprfb_work( Params& params, bool run )
     //params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_tprfb( to_char( side ), to_char( trans ), to_char( direction ), to_char( storev ), m, n, k, l, &V[0], ldv, &T[0], ldt, &A_ref[0], lda, &B_ref[0], ldb );
@@ -118,7 +118,7 @@ void test_tprfb_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         //if (info_tst != info_ref) {
         //    error = 1;
@@ -130,7 +130,7 @@ void test_tprfb_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_tprfb( Params& params, bool run )
 {
     switch (params.datatype()) {
@@ -158,7 +158,7 @@ void test_tprfb( Params& params, bool run )
 
 #else
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_tprfb( Params& params, bool run )
 {
     fprintf( stderr, "tprfb requires LAPACK >= 3.4.0\n\n" );

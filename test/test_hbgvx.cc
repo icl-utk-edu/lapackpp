@@ -14,7 +14,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_hbgvx_work( Params& params, bool run )
 {
@@ -55,7 +55,7 @@ void test_hbgvx_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( ka+1, align );
     int64_t ldb = roundup( kb+1, align );
     real_t abstol = 0;  // default value
@@ -99,14 +99,10 @@ void test_hbgvx_work( Params& params, bool run )
     Aband_ref = Aband_tst;
     Bband_ref = Bband_tst;
 
-    if (verbose >= 2) {
-        printf( "Aband = " );
-        print_matrix( ka+1, n, &Aband_tst[0], lda );
-        printf( "Bband = " );
-        print_matrix( kb+1, n, &Bband_tst[0], ldb );
-    }
+    print_matrix( "Aband", ka+1, n, &Aband_tst[0], lda, verbose );
+    print_matrix( "Bband", kb+1, n, &Bband_tst[0], ldb, verbose );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::hbgvx(
@@ -125,18 +121,16 @@ void test_hbgvx_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::hbgvx( jobz, range, n, ka, kb );
     // params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
+    if (verbose) {
         printf( "nfound = %lld\n", llong( nfound ) );
-        printf( "Lambda = " );
-        print_vector( n, &Lambda_tst[0], 1 );
+        print_vector( "Lambda", n, &Lambda_tst[0], 1, verbose );
         if (jobz == lapack::Job::Vec) {
-            printf( "Z = " );
-            print_matrix( n, nfound, &Z[0], ldz );
+            print_matrix( "Z", n, nfound, &Z[0], ldz, verbose );
         }
     }
 
     if (params.check() == 'y' && jobz == lapack::Job::Vec) {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error =
         //     type 1: ||A Z - B Z Lambda|| / (n * ||A|| * ||Z||)
         //     type 2: ||A B Z - Z Lambda|| / (n * ||A|| * ||Z||)
@@ -167,10 +161,7 @@ void test_hbgvx_work( Params& params, bool run )
                 error = lapack::lange( lapack::Norm::One, n, nfound, &W[0], ldw );
             }
         }
-        if (verbose >= 2) {
-            printf( "W = " );
-            print_matrix( n, nfound, &W[0], ldw );
-        }
+        print_matrix( "W", n, nfound, &W[0], ldw, verbose );
 
         error /= (n * Anorm * Znorm);
         params.error() = error;
@@ -178,7 +169,7 @@ void test_hbgvx_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_hbgvx(
@@ -197,16 +188,15 @@ void test_hbgvx_work( Params& params, bool run )
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
-        if (verbose >= 2) {
-            printf( "Lambda_ref" );
-            print_vector( n, &Lambda_ref[0], 1 );
+        if (verbose) {
+            printf( "nfound_ref = %lld\n", llong( nfound_ref ) );
+            print_vector( "Lambda_ref", n, &Lambda_ref[0], 1, verbose );
             if (jobz == lapack::Job::Vec) {
-                printf( "Zref" );
-                print_matrix( n, nfound, &Z[0], ldz );
+                print_matrix( "Zref", n, nfound, &Z[0], ldz, verbose );
             }
         }
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = rel_error( Lambda_tst, Lambda_ref );
         if (info_tst != info_ref) {
             error = 1;
@@ -222,7 +212,7 @@ void test_hbgvx_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_hbgvx( Params& params, bool run )
 {
     switch (params.datatype()) {

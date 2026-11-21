@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_potrs_work( Params& params, bool run )
 {
@@ -36,7 +36,7 @@ void test_potrs_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
     int64_t ldb = roundup( blas::max( 1, n ), align );
     size_t size_A = (size_t) lda * n;
@@ -58,17 +58,8 @@ void test_potrs_work( Params& params, bool run )
         fprintf( stderr, "lapack::potrf returned error %lld\n", llong( info ) );
     }
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "A n=%5lld, lda=%5lld\n"
-                "B n=%5lld, nrhs=%5lld, ldb=%5lld",
-                llong( n ), llong( lda ),
-                llong( n ), llong( nrhs ), llong( ldb ) );
-    }
-    if (verbose >= 2) {
-        printf( "A = " ); print_matrix( n, n, &A[0], lda );
-        printf( "B = " ); print_matrix( n, nrhs, &B_tst[0], lda );
-    }
+    print_matrix( "A", n, n, &A[0], lda, verbose );
+    print_matrix( "B", n, nrhs, &B_tst[0], lda, verbose );
 
     // test error exits
     if (params.error_exit() == 'y') {
@@ -80,7 +71,7 @@ void test_potrs_work( Params& params, bool run )
         assert_throw( lapack::potrs( uplo,     n, nrhs, &A[0], lda, &B_tst[0], n-1 ), lapack::Error );
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::potrs( uplo, n, nrhs, &A[0], lda, &B_tst[0], ldb );
@@ -93,12 +84,10 @@ void test_potrs_work( Params& params, bool run )
     double gflop = lapack::Gflop< scalar_t >::potrs( n, nrhs );
     params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        printf( "B2 = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
-    }
+    print_matrix( "B2", n, nrhs, &B_tst[0], ldb, verbose );
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_potrs( to_char( uplo ), n, nrhs, &A[0], lda, &B_ref[0], ldb );
@@ -110,11 +99,9 @@ void test_potrs_work( Params& params, bool run )
         params.ref_time() = time;
         params.ref_gflops() = gflop / time;
 
-        if (verbose >= 2) {
-            printf( "B2ref = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
-        }
+        print_matrix( "B2ref", n, nrhs, &B_ref[0], ldb, verbose );
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -125,7 +112,7 @@ void test_potrs_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_potrs( Params& params, bool run )
 {
     switch (params.datatype()) {

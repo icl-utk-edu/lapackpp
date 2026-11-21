@@ -116,7 +116,8 @@ quiet which pkg-config
 # CMake finds CUDA in /usr/local/cuda, so need to explicitly set gpu_backend.
 export gpu_backend=none
 export color=no
-export CXXFLAGS="-Werror -Wno-unused-command-line-argument"
+export CXXFLAGS="-Werror"
+# -Wno-unused-command-line-argument is clang option
 
 #----------------------------------------------------------------- Compiler
 if [[ $device = "gpu_intel" ]] \

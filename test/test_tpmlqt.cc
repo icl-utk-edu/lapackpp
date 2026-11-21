@@ -15,7 +15,7 @@
 
 #if LAPACK_VERSION >= 30700  // >= 3.7.0
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_tpmlqt_work( Params& params, bool run )
 {
@@ -55,7 +55,7 @@ void test_tpmlqt_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     int64_t Vn = (side == blas::Side::Left ? m : n);
     int64_t Am = (side == blas::Side::Left ? k : m);
     int64_t An = (side == blas::Side::Left ? n : k);
@@ -100,13 +100,13 @@ void test_tpmlqt_work( Params& params, bool run )
     }
 
     if (verbose > 1) {
-        printf( "V =" ); print_matrix( k,  Vn, &V[0], ldv );
-        printf( "T =" ); print_matrix( nb, k,  &T[0], ldt );
-        printf( "A =" ); print_matrix( Am, An, &A_tst[0], lda );
-        printf( "B =" ); print_matrix( m,  n,  &B_tst[0], ldb );
+        print_matrix( "V", k,  Vn, &V[0], ldv, verbose );
+        print_matrix( "T", nb, k,  &T[0], ldt, verbose );
+        print_matrix( "A", Am, An, &A_tst[0], lda, verbose );
+        print_matrix( "B", m,  n,  &B_tst[0], ldb, verbose );
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::tpmlqt( side, trans, m, n, k, l, nb, &V[0], ldv, &T[0], ldt, &A_tst[0], lda, &B_tst[0], ldb );
@@ -120,12 +120,12 @@ void test_tpmlqt_work( Params& params, bool run )
     params.gflops() = gflop / time;
 
     if (verbose > 1) {
-        printf( "Aout =" ); print_matrix( Am, An, &A_tst[0], lda );
-        printf( "Bout =" ); print_matrix( m,  n,  &B_tst[0], ldb );
+        print_matrix( "Aout", Am, An, &A_tst[0], lda, verbose );
+        print_matrix( "Bout", m,  n,  &B_tst[0], ldb, verbose );
     }
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_tpmlqt( to_char( side ), to_char( trans ), m, n, k, l, nb, &V[0], ldv, &T[0], ldt, &A_ref[0], lda, &B_ref[0], ldb );
@@ -138,11 +138,11 @@ void test_tpmlqt_work( Params& params, bool run )
         params.ref_gflops() = gflop / time;
 
         if (verbose > 1) {
-            printf( "Aref =" ); print_matrix( Am, An, &A_ref[0], lda );
-            printf( "Bref =" ); print_matrix( m,  n,  &B_ref[0], ldb );
+            print_matrix( "Aref", Am, An, &A_ref[0], lda, verbose );
+            print_matrix( "Bref", m,  n,  &B_ref[0], ldb, verbose );
         }
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -154,7 +154,7 @@ void test_tpmlqt_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_tpmlqt( Params& params, bool run )
 {
     switch (params.datatype()) {
@@ -182,7 +182,7 @@ void test_tpmlqt( Params& params, bool run )
 
 #else
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_tpmlqt( Params& params, bool run )
 {
     fprintf( stderr, "tpmlqt requires LAPACK >= 3.7.0\n\n" );

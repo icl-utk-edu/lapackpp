@@ -58,9 +58,9 @@ void test_lasr_work( Params& params, bool run )
     A_ref = A_tst;
 
     if (verbose >= 2 ) {
-        printf( "A = " ); print_matrix( m, n, &A_tst[0], lda );
-        printf( "C = " ); print_vector( size_C, &C[0], 1 );
-        printf( "S = " ); print_vector( size_C, &S[0], 1 );
+        print_matrix( "A", m, n, &A_tst[0], lda, verbose );
+        print_vector( "C", size_C, &C[0], 1, verbose );
+        print_vector( "S", size_C, &S[0], 1, verbose );
     }
 
     //---------- run test
@@ -72,8 +72,7 @@ void test_lasr_work( Params& params, bool run )
     params.time() = time;
 
     if (verbose >= 2 ) {
-        printf( "A_out = " );
-        print_matrix( m, n, &A_tst[0], lda );
+        print_matrix( "A_out", m, n, &A_tst[0], lda, verbose );
     }
 
     if (params.check() == 'y') {
@@ -133,8 +132,7 @@ void test_lasr_work( Params& params, bool run )
         params.ref_time() = time;
 
         if (verbose >= 2 ) {
-            printf( "A_ref = " );
-            print_matrix( m, n, &A_ref[0], lda );
+            print_matrix( "A_ref", m, n, &A_ref[0], lda, verbose );
         }
 
         //---------- check error compared to reference

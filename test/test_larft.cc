@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_larft_work( Params& params, bool run )
 {
@@ -40,7 +40,7 @@ void test_larft_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     int64_t Vm, Vn;
     if (storev == lapack::StoreV::Columnwise) {
         Vm = n;
@@ -103,12 +103,10 @@ void test_larft_work( Params& params, bool run )
         }
     }
 
-    if (verbose >= 2) {
-        printf( "V = " ); print_matrix( Vm, Vn, &V[0], ldv );
-        printf( "tau = " ); print_vector( k, &tau[0], 1 );
-    }
+    print_matrix( "V", Vm, Vn, &V[0], ldv, verbose );
+    print_vector( "tau", k, &tau[0], 1, verbose );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     lapack::larft( direction, storev, n, k, &V[0], ldv, &tau[0], &T_tst[0], ldt );
@@ -118,12 +116,10 @@ void test_larft_work( Params& params, bool run )
     //double gflop = lapack::Gflop< scalar_t >::larft( direction, storev, n, k );
     //params.gflops() = gflop / time;
 
-    if (verbose >= 3) {
-        printf( "T = " ); print_matrix( k, k, &T_tst[0], ldt );
-    }
+    print_matrix( "T", k, k, &T_tst[0], ldt, verbose );
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_larft( to_char( direction ), to_char( storev ), n, k, &V[0], ldv, &tau[0], &T_ref[0], ldt );
@@ -135,11 +131,9 @@ void test_larft_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        if (verbose >= 3) {
-            printf( "Tref = " ); print_matrix( k, k, &T_ref[0], ldt );
-        }
+        print_matrix( "Tref", k, k, &T_ref[0], ldt, verbose );
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         error += abs_error( T_tst, T_ref );
         params.error() = error;
@@ -149,7 +143,7 @@ void test_larft_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_larft( Params& params, bool run )
 {
     switch (params.datatype()) {

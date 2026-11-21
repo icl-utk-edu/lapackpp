@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_upmtr_work( Params& params, bool run )
 {
@@ -38,7 +38,7 @@ void test_upmtr_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t ldc = roundup( blas::max( 1, m ), align );
     int64_t r = ( side == lapack::Side::Left ) ? m : n;
     size_t size_AP = (size_t) (r*(r+1)/2);
@@ -66,7 +66,7 @@ void test_upmtr_work( Params& params, bool run )
         fprintf( stderr, "lapack::hptrd returned error %lld\n", llong( info ) );
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::upmtr( side, uplo, trans, m, n, &AP[0], &tau[0], &C_tst[0], ldc );
@@ -80,7 +80,7 @@ void test_upmtr_work( Params& params, bool run )
     // params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_upmtr( to_char( side ), to_char( uplo ), to_char( trans ), m, n, &AP[0], &tau[0], &C_ref[0], ldc );
@@ -92,7 +92,7 @@ void test_upmtr_work( Params& params, bool run )
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -103,7 +103,7 @@ void test_upmtr_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_upmtr( Params& params, bool run )
 {
     switch (params.datatype()) {

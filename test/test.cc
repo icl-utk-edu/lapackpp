@@ -11,7 +11,7 @@
 
 #include "test.hh"
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 using testsweeper::ParamType;
 using testsweeper::DataType;
 using testsweeper::DataType_help;
@@ -52,7 +52,7 @@ const char*  e_rt3i  = "2.718281828459045 + 1.732050807568877i";
 const double pi      = 3.141592653589793;
 const double e       = 2.718281828459045;
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // each section must have a corresponding entry in section_names
 enum Section {
     newline = 0,  // zero flag forces newline
@@ -97,7 +97,7 @@ const char* section_names[] = {
 
 // { "", nullptr, Section::newline } entries force newline in help
 std::vector< testsweeper::routines_t > routines = {
-    // -----
+    //------
     // LU
     { "gesv",               test_gesv,      Section::gesv },
     { "gbsv",               test_gbsv,      Section::gesv },
@@ -136,7 +136,7 @@ std::vector< testsweeper::routines_t > routines = {
     { "gbequ",              test_gbequ,     Section::gesv },
     { "",                   nullptr,        Section::newline },
 
-    // -----
+    //------
     // Cholesky
     { "posv",               test_posv,      Section::posv },
     { "ppsv",               test_ppsv,      Section::posv },
@@ -177,7 +177,7 @@ std::vector< testsweeper::routines_t > routines = {
     { "pbequ",              test_pbequ,     Section::posv },
     { "",                   nullptr,        Section::newline },
 
-    // -----
+    //------
     // symmetric indefinite
     { "sysv",               test_sysv,      Section::sysv }, // tested via LAPACKE
     { "spsv",               test_spsv,      Section::sysv }, // tested via LAPACKE
@@ -226,7 +226,7 @@ std::vector< testsweeper::routines_t > routines = {
     //{ "sytri_rook",         test_sytri_rook,         Section::sysv }, // TODO lapack_fortran.h header missing
     { "",                   nullptr,                 Section::newline },
 
-    // -----
+    //------
     // Hermitian indefinite
     { "hesv",               test_hesv,      Section::hesv }, // tested via LAPACKE
     { "hpsv",               test_hpsv,      Section::hesv }, // tested via LAPACKE
@@ -252,7 +252,7 @@ std::vector< testsweeper::routines_t > routines = {
     { "hprfs",              test_hprfs,     Section::hesv }, // tested via LAPACKE, error < 3*eps
     { "",                   nullptr,        Section::newline },
 
-    // -----
+    //------
     // least squares
     { "gels",               test_gels,      Section::gels }, // tested via LAPACKE using gcc/MKL
     { "gelsy",              test_gelsy,     Section::gels }, // tested via LAPACKE using gcc/MKL TODO jpvt[i]=i rcond=0
@@ -265,7 +265,7 @@ std::vector< testsweeper::routines_t > routines = {
     { "ggglm",              test_ggglm,     Section::gels }, // tested via LAPACKE using gcc/MKL
     { "",                   nullptr,        Section::newline },
 
-    // -----
+    //------
     // QR, LQ, RQ, QL
     { "geqr",               test_geqr,      Section::qr }, // tested numerically
     { "geqrf",              test_geqrf,     Section::qr }, // tested numerically
@@ -314,7 +314,7 @@ std::vector< testsweeper::routines_t > routines = {
     { "tprfb",              test_tprfb,     Section::qr },
     { "",                   nullptr,        Section::newline },
 
-    // -----
+    //------
     // symmetric/Hermitian eigenvalues
     { "heev",               test_heev,      Section::heev }, // backward error check
     { "hpev",               test_hpev,      Section::heev }, // tested via LAPACKE
@@ -350,7 +350,7 @@ std::vector< testsweeper::routines_t > routines = {
     { "upmtr",              test_upmtr,     Section::heev },
     { "",                   nullptr,        Section::newline },
 
-    // -----
+    //------
     // generalized symmetric eigenvalues
     { "hegv",               test_hegv,      Section::sygv }, // tested via LAPACKE using gcc/MKL
     { "hpgv",               test_hpgv,      Section::sygv }, // tested via LAPACKE using gcc/MKL
@@ -374,7 +374,7 @@ std::vector< testsweeper::routines_t > routines = {
     //{ "hgeqz",              test_hgeqz,     Section::sygv }, // TODO Needs params job compq compz...
     { "",                   nullptr,        Section::newline },
 
-    // -----
+    //------
     // non-symmetric eigenvalues
     { "geev",               test_geev,      Section::geev },
     { "ggev",               test_ggev,      Section::geev }, // tested via LAPACKE using gcc/MKL. NOTE: No doxygen in src/ggev.cc
@@ -403,7 +403,7 @@ std::vector< testsweeper::routines_t > routines = {
     { "tgsen",              test_tgsen,     Section::geev },
     { "",                   nullptr,        Section::newline },
 
-    // -----
+    //------
     // driver: singular value decomposition
     { "gesvd",              test_gesvd,         Section::svd },
     //{ "gesvd_2stage",       test_gesvd_2stage,  Section::svd }, // TODO No src
@@ -421,7 +421,7 @@ std::vector< testsweeper::routines_t > routines = {
     //{ "gesvj",              test_gesvj,     Section::svd }, // TODO No src
     { "",                   nullptr,        Section::newline },
 
-    // -----
+    //------
     // auxiliary
     { "lacpy",              test_lacpy,     Section::aux },
     { "laed4",              test_laed4,     Section::aux },
@@ -487,7 +487,7 @@ std::vector< testsweeper::routines_t > routines = {
     { "",                   nullptr,            Section::newline },
 };
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Params class
 // List of parameters
 
@@ -619,7 +619,7 @@ Params::Params():
     // routine's parameters are marked by the test routine; see main
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // determines the range, il, iu, vl, vu values.
 void Params::get_range(
     int64_t n, lapack::Range* range_arg,
@@ -659,7 +659,7 @@ void Params::get_range(
     this->iu_out() = *iu_arg;
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void Params::get_range(
     int64_t n, lapack::Range* range_arg,
     float* vl_arg, float* vu_arg,
@@ -671,7 +671,7 @@ void Params::get_range(
     *vu_arg = float(dvu);
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Compare a == b, bitwise. Returns true if a and b are both the same NaN value,
 // unlike (a == b) which is false for NaNs.
 bool same( double a, double b );
@@ -681,7 +681,7 @@ bool same( double a, double b )
     return (memcmp( &a, &b, sizeof(double) ) == 0);
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Prints line describing matrix kind and cond, if kind or cond changed.
 // Updates kind and cond to current values.
 void print_matrix_header(
@@ -711,7 +711,7 @@ void print_matrix_header(
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 int main( int argc, char** argv )
 {
     using testsweeper::QuitException;

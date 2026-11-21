@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_geequ_work( Params& params, bool run )
 {
@@ -32,7 +32,7 @@ void test_geequ_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, m ), align );
     real_t rowcnd_tst = 0;
     real_t rowcnd_ref = 0;
@@ -52,7 +52,7 @@ void test_geequ_work( Params& params, bool run )
 
     lapack::generate_matrix( params.matrix, m, n, &A[0], lda );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::geequ( m, n, &A[0], lda, &R_tst[0], &C_tst[0], &rowcnd_tst, &colcnd_tst, &amax_tst );
@@ -66,7 +66,7 @@ void test_geequ_work( Params& params, bool run )
     //params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_geequ( m, n, &A[0], lda, &R_ref[0], &C_ref[0], &rowcnd_ref, &colcnd_ref, &amax_ref );
@@ -78,7 +78,7 @@ void test_geequ_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -93,7 +93,7 @@ void test_geequ_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_geequ( Params& params, bool run )
 {
     switch (params.datatype()) {

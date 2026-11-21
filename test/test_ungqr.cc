@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_ungqr_work( Params& params, bool run )
 {
@@ -44,7 +44,7 @@ void test_ungqr_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, m ), align );
     size_t size_A = (size_t) lda * n;
     size_t size_tau = (size_t) (k);
@@ -61,7 +61,7 @@ void test_ungqr_work( Params& params, bool run )
     // save matrix
     A_ref = A_tst;
 
-    // ---------- factor matrix
+    //---------- factor matrix
     int64_t info_qrf = lapack::geqrf( m, n, &A_tst[0], lda, &tau[0] );
     if (info_qrf != 0) {
         fprintf( stderr, "lapack::unqrf returned error %lld\n", llong( info_qrf ) );
@@ -69,7 +69,7 @@ void test_ungqr_work( Params& params, bool run )
     // save matrix
     A_factored = A_tst;
 
-    // // ---------- run test
+    // //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::ungqr( m, n, k, &A_tst[0], lda, &tau[0] );
@@ -83,7 +83,7 @@ void test_ungqr_work( Params& params, bool run )
     params.gflops() = gflop / time;
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         // comparing to ref. solution doesn't work
         // Following lapack/TESTING/LIN/zqrt02.f
         // Note (0 <= n <= m)  (0 <= k <= n).
@@ -135,7 +135,7 @@ void test_ungqr_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_ungqr( m, n, k, &A_ref[0], lda, &tau[0] );
@@ -149,7 +149,7 @@ void test_ungqr_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_ungqr( Params& params, bool run )
 {
     switch (params.datatype()) {

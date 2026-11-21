@@ -13,7 +13,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_pbrfs_work( Params& params, bool run )
 {
@@ -38,7 +38,7 @@ void test_pbrfs_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t ldab = roundup( kd+1, align );
     int64_t ldafb = ldab;
     int64_t ldb = roundup( blas::max( 1, n ), align );
@@ -95,13 +95,11 @@ void test_pbrfs_work( Params& params, bool run )
     }
     X_ref = X_tst;
 
-    if (verbose >= 2) {
-        printf( "A_factor = " ); print_matrix( kd+1, n, &AFB[0], ldafb );
-        printf( "X = " ); print_matrix( n, nrhs, &X_tst[0], ldx );
-    }
+    print_matrix( "A_factor", kd+1, n, &AFB[0], ldafb, verbose );
+    print_matrix( "X", n, nrhs, &X_tst[0], ldx, verbose );
 
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     // Refine solution in X_tst, using original AB and B, factored AFB.
@@ -117,14 +115,12 @@ void test_pbrfs_work( Params& params, bool run )
     //double gflop = lapack::Gflop< scalar_t >::pbrfs( n, kd, nrhs );
     //params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        printf( "Xrfs = " ); print_matrix( n, nrhs, &X_tst[0], ldx );
-        printf( "ferr = " ); print_vector( n, &ferr_tst[0], 1 );
-        printf( "berr = " ); print_vector( n, &berr_tst[0], 1 );
-    }
+    print_matrix( "Xrfs", n, nrhs, &X_tst[0], ldx, verbose );
+    print_vector( "ferr", n, &ferr_tst[0], 1, verbose );
+    print_vector( "berr", n, &berr_tst[0], 1, verbose );
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error = ||b - Ax|| / (n * ||A|| * ||x||).
         // No hbmm, so loop over RHS.
         for (int64_t j = 0; j < nrhs; ++j) {
@@ -134,9 +130,7 @@ void test_pbrfs_work( Params& params, bool run )
                               &X_tst[ j*ldx ], 1,
                          1.0, &B[ j*ldb ], 1 );
         }
-        if (verbose >= 2) {
-            printf( "R = " ); print_matrix( n, nrhs, &B[0], ldb );
-        }
+        print_matrix( "R", n, nrhs, &B[0], ldb, verbose );
 
         real_t error = lapack::lange( lapack::Norm::One, n, nrhs, &B[0], ldb );
         real_t Xnorm = lapack::lange( lapack::Norm::One, n, nrhs, &X_tst[0], ldx );
@@ -150,7 +144,7 @@ void test_pbrfs_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_pbrfs(
@@ -166,7 +160,7 @@ void test_pbrfs_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_pbrfs( Params& params, bool run )
 {
     switch (params.datatype()) {

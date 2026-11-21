@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_lantp_work( Params& params, bool run )
 {
@@ -33,7 +33,7 @@ void test_lantp_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     size_t size_AP = (size_t) (n*(n+1)/2);
 
     std::vector< scalar_t > AP( size_AP );
@@ -42,7 +42,7 @@ void test_lantp_work( Params& params, bool run )
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, AP.size(), &AP[0] );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     real_t norm_tst = lapack::lantp( norm, uplo, diag, n, &AP[0] );
@@ -52,12 +52,12 @@ void test_lantp_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::lantp( norm, diag, n );
     // params.gflops() = gflop / time;
 
-    if (verbose >= 1) {
+    if (verbose) {
         printf( "norm_tst = %.8e\n", norm_tst );
     }
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         real_t norm_ref = LAPACKE_lantp( to_char( norm ), to_char( uplo ), to_char( diag ), n, &AP[0] );
@@ -66,11 +66,11 @@ void test_lantp_work( Params& params, bool run )
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
-        if (verbose >= 1) {
+        if (verbose) {
             printf( "norm_ref = %.8e\n", norm_ref );
         }
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t tol = 3 * std::numeric_limits< real_t >::epsilon();
         real_t normalize = 1;
         if (norm == lapack::Norm::Max && ! blas::is_complex_v< scalar_t >) {
@@ -92,7 +92,7 @@ void test_lantp_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_lantp( Params& params, bool run )
 {
     switch (params.datatype()) {

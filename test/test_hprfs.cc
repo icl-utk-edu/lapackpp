@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_hprfs_work( Params& params, bool run )
 {
@@ -32,7 +32,7 @@ void test_hprfs_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t ldb = roundup( blas::max( 1, n ), align );
     int64_t ldx = roundup( blas::max( 1, n ), align );
     size_t size_AP = (size_t) (n*(n+1)/2);
@@ -78,7 +78,7 @@ void test_hprfs_work( Params& params, bool run )
     std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
     X_ref = X_tst;
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::hprfs( uplo, n, nrhs, &AP[0], &AFP[0], &ipiv_tst[0], &B[0], ldb, &X_tst[0], ldx, &ferr_tst[0], &berr_tst[0] );
@@ -92,7 +92,7 @@ void test_hprfs_work( Params& params, bool run )
     // params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_hprfs( to_char( uplo ), n, nrhs, &AP[0], &AFP[0], &ipiv_ref[0], &B[0], ldb, &X_ref[0], ldx, &ferr_ref[0], &berr_ref[0] );
@@ -104,7 +104,7 @@ void test_hprfs_work( Params& params, bool run )
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         real_t eps = std::numeric_limits< real_t >::epsilon();
         if (info_tst != info_ref) {
@@ -118,7 +118,7 @@ void test_hprfs_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_hprfs( Params& params, bool run )
 {
     switch (params.datatype()) {

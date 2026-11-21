@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_sptrs_work( Params& params, bool run )
 {
@@ -33,7 +33,7 @@ void test_sptrs_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t ldb = roundup( blas::max( 1, n ), align );
     size_t size_AP = (size_t) (n*(n+1)/2);
     size_t size_ipiv = (size_t) (n);
@@ -51,10 +51,8 @@ void test_sptrs_work( Params& params, bool run )
     lapack::larnv( idist, iseed, B_tst.size(), &B_tst[0] );
     B_ref = B_tst;
 
-    if (verbose >= 2) {
-        printf( "AP = " ); print_matrix( 1, size_AP, &AP[0], 1 );
-        printf( "B = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
-    }
+    print_matrix( "AP", 1, size_AP, &AP[0], 1, verbose );
+    print_matrix( "B",  n, nrhs, &B_tst[0], ldb, verbose );
 
     int64_t info = lapack::sptrf( uplo, n, &AP[0], &ipiv_tst[0] );
     if (info != 0) {
@@ -62,7 +60,7 @@ void test_sptrs_work( Params& params, bool run )
     }
     std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::sptrs( uplo, n, nrhs, &AP[0], &ipiv_tst[0], &B_tst[0], ldb );
@@ -76,7 +74,7 @@ void test_sptrs_work( Params& params, bool run )
     params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_sptrs( to_char( uplo ), n, nrhs, &AP[0], &ipiv_ref[0], &B_ref[0], ldb );
@@ -88,12 +86,10 @@ void test_sptrs_work( Params& params, bool run )
         params.ref_time() = time;
         params.ref_gflops() = gflop / time;
 
-        if (verbose >= 2) {
-            printf( "B_tst = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
-            printf( "B_ref = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
-        }
+        print_matrix( "B_tst", n, nrhs, &B_tst[0], ldb, verbose );
+        print_matrix( "B_ref", n, nrhs, &B_ref[0], ldb, verbose );
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -104,7 +100,7 @@ void test_sptrs_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_sptrs( Params& params, bool run )
 {
     switch (params.datatype()) {

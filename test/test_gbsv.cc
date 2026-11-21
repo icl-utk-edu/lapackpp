@@ -13,7 +13,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_gbsv_work( Params& params, bool run )
 {
@@ -38,7 +38,7 @@ void test_gbsv_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t kd = 2*kl + ku + 1;  // number of diagonals in factor
     int64_t ldab = roundup( kd, align );
     int64_t ldb = roundup( blas::max( 1, n ), align );
@@ -60,20 +60,13 @@ void test_gbsv_work( Params& params, bool run )
     AB_ref = AB_tst;
     B_ref = B_tst;
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "AB n=%5lld, kl=%5lld, ku=%5lld, kd=%5lld, ldab=%5lld\n"
-                "B n=%5lld, nrhs=%5lld, ldb=%5lld\n",
-                llong( n ), llong( kl ), llong( ku ), llong( kd ), llong( ldab ),
-                llong( n ), llong( nrhs ), llong( ldb ) );
-    }
-    if (verbose >= 2) {
+    if (verbose) {
         printf( "Input data in rows 0 to kl-1 are ignored.\n" );
-        printf( "AB = " ); print_matrix( kd, n, &AB_tst[0], ldab );
-        printf( "B = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
+        print_matrix( "AB", kd, n, &AB_tst[0], ldab, verbose );
+        print_matrix( "B", n, nrhs, &B_tst[0], ldb, verbose );
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::gbsv( n, kl, ku, nrhs, &AB_tst[0], ldab, &ipiv_tst[0], &B_tst[0], ldb );
@@ -86,13 +79,11 @@ void test_gbsv_work( Params& params, bool run )
     //double gflop = lapack::Gflop< scalar_t >::gbsv( n, kl, ku, nrhs );
     //params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        printf( "A_factor = " ); print_matrix( kd, n, &AB_tst[0], ldab );
-        printf( "X = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
-    }
+    print_matrix( "A_factor", kd, n, &AB_tst[0], ldab, verbose );
+    print_matrix( "X", n, nrhs, &B_tst[0], ldb, verbose );
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error = ||b - Ax|| / (n * ||A|| * ||x||).
         // No gbmm, so loop over RHS.
         // AB_ref rows 0:kl-1 are ignored; start in row kl.
@@ -103,9 +94,7 @@ void test_gbsv_work( Params& params, bool run )
                               &B_tst[ j*ldb ], 1,
                          1.0, &B_ref[ j*ldb ], 1 );
         }
-        if (verbose >= 2) {
-            printf( "R = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
-        }
+        print_matrix( "R", n, nrhs, &B_ref[0], ldb, verbose );
 
         real_t error = lapack::lange( lapack::Norm::One, n, nrhs, &B_ref[0], ldb );
         real_t Xnorm = lapack::lange( lapack::Norm::One, n, nrhs, &B_tst[0], ldb );
@@ -116,7 +105,7 @@ void test_gbsv_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_gbsv( n, kl, ku, nrhs, &AB_ref[0], ldab, &ipiv_ref[0], &B_ref[0], ldb );
@@ -130,7 +119,7 @@ void test_gbsv_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_gbsv( Params& params, bool run )
 {
     switch (params.datatype()) {

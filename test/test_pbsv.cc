@@ -13,7 +13,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_pbsv_work( Params& params, bool run )
 {
@@ -38,7 +38,7 @@ void test_pbsv_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t ldab = roundup( kd+1, align );
     int64_t ldb = roundup( blas::max( 1, n ), align );
     size_t size_AB = (size_t) ldab * n;
@@ -69,19 +69,10 @@ void test_pbsv_work( Params& params, bool run )
     AB_ref = AB_tst;
     B_ref = B_tst;
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "AB n=%5lld, kd=%5lld, ldab=%5lld\n"
-                "B n=%5lld, nrhs=%5lld, ldb=%5lld\n",
-                llong( n ), llong( kd ), llong( ldab ),
-                llong( n ), llong( nrhs ), llong( ldb ) );
-    }
-    if (verbose >= 2) {
-        printf( "AB = " ); print_matrix( kd+1, n, &AB_tst[0], ldab );
-        printf( "B = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
-    }
+    print_matrix( "AB", kd+1, n, &AB_tst[0], ldab, verbose );
+    print_matrix( "B", n, nrhs, &B_tst[0], ldb, verbose );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::pbsv( uplo, n, kd, nrhs, &AB_tst[0], ldab, &B_tst[0], ldb );
@@ -94,13 +85,11 @@ void test_pbsv_work( Params& params, bool run )
     double gflop = lapack::Gflop< scalar_t >::pbsv( n, kd, nrhs );
     params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        printf( "A_factor = " ); print_matrix( kd+1, n, &AB_tst[0], ldab );
-        printf( "X = " ); print_matrix( n, nrhs, &B_tst[0], ldb );
-    }
+    print_matrix( "A_factor", kd+1, n, &AB_tst[0], ldab, verbose );
+    print_matrix( "X", n, nrhs, &B_tst[0], ldb, verbose );
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error = ||b - Ax|| / (n * ||A|| * ||x||).
         // No hbmm, so loop over RHS.
         for (int64_t j = 0; j < nrhs; ++j) {
@@ -110,9 +99,7 @@ void test_pbsv_work( Params& params, bool run )
                               &B_tst[ j*ldb ], 1,
                          1.0, &B_ref[ j*ldb ], 1 );
         }
-        if (verbose >= 2) {
-            printf( "R = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
-        }
+        print_matrix( "R", n, nrhs, &B_ref[0], ldb, verbose );
 
         real_t error = lapack::lange( lapack::Norm::One, n, nrhs, &B_ref[0], ldb );
         real_t Xnorm = lapack::lange( lapack::Norm::One, n, nrhs, &B_tst[0], ldb );
@@ -123,7 +110,7 @@ void test_pbsv_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_pbsv( to_char( uplo ), n, kd, nrhs, &AB_ref[0], ldab, &B_ref[0], ldb );
@@ -137,7 +124,7 @@ void test_pbsv_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_pbsv( Params& params, bool run )
 {
     switch (params.datatype()) {

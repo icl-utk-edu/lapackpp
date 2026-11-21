@@ -10,7 +10,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // returns absolute error, || x - xref ||_2
 // TODO: generalize to more arbitrary iterators than std::vector.
 // TODO: use LAPACK's lassq algorithm to avoid numerical issues in summing squares.
@@ -33,7 +33,7 @@ abs_error( std::vector<T1>& x, std::vector<T2>& xref )
     return diff;
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // returns relative error, || x - xref ||_2 / || xref ||_2
 template< typename T1, typename T2 >
 blas::real_type< T1, T2 >

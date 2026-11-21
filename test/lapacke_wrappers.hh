@@ -29,7 +29,7 @@
 
 // This is in alphabetical order.
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gbcon(
     char norm, lapack_int n, lapack_int kl, lapack_int ku,
     float* AB, lapack_int ldab,
@@ -82,7 +82,7 @@ inline lapack_int LAPACKE_gbcon(
         rcond );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gbequ(
     lapack_int m, lapack_int n, lapack_int kl, lapack_int ku,
     float* AB, lapack_int ldab,
@@ -159,7 +159,7 @@ inline lapack_int LAPACKE_gbequ(
         amax );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gbrfs(
     char trans, lapack_int n, lapack_int kl, lapack_int ku, lapack_int nrhs,
     float* AB, lapack_int ldab,
@@ -244,7 +244,7 @@ inline lapack_int LAPACKE_gbrfs(
         berr );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gbsv(
     lapack_int n, lapack_int kl, lapack_int ku, lapack_int nrhs,
     float* AB, lapack_int ldab,
@@ -297,7 +297,7 @@ inline lapack_int LAPACKE_gbsv(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gbtrf(
     lapack_int m, lapack_int n, lapack_int kl, lapack_int ku,
     float* AB, lapack_int ldab,
@@ -342,7 +342,7 @@ inline lapack_int LAPACKE_gbtrf(
         ipiv );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gbtrs(
     char trans, lapack_int n, lapack_int kl, lapack_int ku, lapack_int nrhs,
     float* AB, lapack_int ldab,
@@ -395,7 +395,7 @@ inline lapack_int LAPACKE_gbtrs(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gecon(
     char norm, lapack_int n,
     float* A, lapack_int lda, float anorm,
@@ -440,7 +440,7 @@ inline lapack_int LAPACKE_gecon(
         rcond );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_geequ(
     lapack_int m, lapack_int n,
     float* A, lapack_int lda,
@@ -517,7 +517,7 @@ inline lapack_int LAPACKE_geequ(
         amax );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_geev(
     char jobvl, char jobvr, lapack_int n,
     float* A, lapack_int lda,
@@ -587,7 +587,7 @@ inline lapack_int LAPACKE_geev(
         (lapack_complex_double*) VR, ldvr );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gehrd(
     lapack_int n, lapack_int ilo, lapack_int ihi,
     float* A, lapack_int lda,
@@ -632,7 +632,7 @@ inline lapack_int LAPACKE_gehrd(
         (lapack_complex_double*) tau );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gelqf(
     lapack_int m, lapack_int n,
     float* A, lapack_int lda,
@@ -677,7 +677,7 @@ inline lapack_int LAPACKE_gelqf(
         (lapack_complex_double*) tau );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gels(
     char trans, lapack_int m, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -726,7 +726,7 @@ inline lapack_int LAPACKE_gels(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gelsd(
     lapack_int m, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -783,7 +783,7 @@ inline lapack_int LAPACKE_gelsd(
         rank );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gelss(
     lapack_int m, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -840,7 +840,7 @@ inline lapack_int LAPACKE_gelss(
         rank );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gelsy(
     lapack_int m, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -897,7 +897,7 @@ inline lapack_int LAPACKE_gelsy(
         rank );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_geqlf(
     lapack_int m, lapack_int n,
     float* A, lapack_int lda,
@@ -942,7 +942,7 @@ inline lapack_int LAPACKE_geqlf(
         (lapack_complex_double*) tau );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_geqr(
     lapack_int m, lapack_int n,
     float* A, lapack_int lda,
@@ -987,7 +987,7 @@ inline lapack_int LAPACKE_geqr(
         (lapack_complex_double*) T, tsize );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_geqrf(
     lapack_int m, lapack_int n,
     float* A, lapack_int lda,
@@ -1032,7 +1032,7 @@ inline lapack_int LAPACKE_geqrf(
         (lapack_complex_double*) tau );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gerfs(
     char trans, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -1117,7 +1117,7 @@ inline lapack_int LAPACKE_gerfs(
         berr );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gerqf(
     lapack_int m, lapack_int n,
     float* A, lapack_int lda,
@@ -1221,7 +1221,7 @@ inline lapack_int LAPACKE_gemqrt(
         (lapack_complex_double*) C, ldc );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gesdd(
     char jobz, lapack_int m, lapack_int n,
     float* A, lapack_int lda,
@@ -1282,7 +1282,7 @@ inline lapack_int LAPACKE_gesdd(
         (lapack_complex_double*) VT, ldvt );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gesv(
     lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -1335,7 +1335,7 @@ inline lapack_int LAPACKE_gesv(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gesvd(
     char jobu, char jobvt, lapack_int m, lapack_int n,
     float* A, lapack_int lda,
@@ -1404,7 +1404,7 @@ inline lapack_int LAPACKE_gesvd(
         &superdiag[0] );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30600
 inline lapack_int LAPACKE_gesvdx(
     char jobu, char jobvt, char range, lapack_int m, lapack_int n,
@@ -1487,7 +1487,7 @@ inline lapack_int LAPACKE_gesvdx(
 }
 #endif // 30600
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gesvx(
     char fact, char trans, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -1594,7 +1594,7 @@ inline lapack_int LAPACKE_gesvx(
         rpivot );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_getrf(
     lapack_int m, lapack_int n,
     float* A, lapack_int lda,
@@ -1639,7 +1639,7 @@ inline lapack_int LAPACKE_getrf(
         ipiv );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_getri(
     lapack_int n,
     float* A, lapack_int lda,
@@ -1684,7 +1684,7 @@ inline lapack_int LAPACKE_getri(
         ipiv );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_getrs(
     char trans, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -1737,7 +1737,7 @@ inline lapack_int LAPACKE_getrs(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30700
 inline lapack_int LAPACKE_getsls(
     char trans, lapack_int m, lapack_int n, lapack_int nrhs,
@@ -1792,7 +1792,7 @@ inline lapack_int LAPACKE_getsls(
 }
 #endif // 30700
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_ggev(
     char jobvl, char jobvr, lapack_int n,
     float* A, lapack_int lda,
@@ -1879,7 +1879,7 @@ inline lapack_int LAPACKE_ggev(
         (lapack_complex_double*) VR, ldvr );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_ggglm(
     lapack_int n, lapack_int m, lapack_int p,
     float* A, lapack_int lda,
@@ -1948,7 +1948,7 @@ inline lapack_int LAPACKE_ggglm(
         (lapack_complex_double*) Y );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gglse(
     lapack_int m, lapack_int n, lapack_int p,
     float* A, lapack_int lda,
@@ -2017,7 +2017,7 @@ inline lapack_int LAPACKE_gglse(
         (lapack_complex_double*) X );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_ggqrf(
     lapack_int n, lapack_int m, lapack_int p,
     float* A, lapack_int lda,
@@ -2078,7 +2078,7 @@ inline lapack_int LAPACKE_ggqrf(
         (lapack_complex_double*) taub );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_ggrqf(
     lapack_int m, lapack_int p, lapack_int n,
     float* A, lapack_int lda,
@@ -2139,7 +2139,7 @@ inline lapack_int LAPACKE_ggrqf(
         (lapack_complex_double*) taub );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gtcon(
     char norm, lapack_int n,
     float* DL,
@@ -2216,7 +2216,7 @@ inline lapack_int LAPACKE_gtcon(
         rcond );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gtrfs(
     char trans, lapack_int n, lapack_int nrhs,
     float* DL,
@@ -2341,7 +2341,7 @@ inline lapack_int LAPACKE_gtrfs(
         berr );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gtsv(
     lapack_int n, lapack_int nrhs,
     float* DL,
@@ -2402,7 +2402,7 @@ inline lapack_int LAPACKE_gtsv(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gttrf(
     lapack_int n,
     float* DL,
@@ -2471,7 +2471,7 @@ inline lapack_int LAPACKE_gttrf(
         ipiv );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_gttrs(
     char trans, lapack_int n, lapack_int nrhs,
     float* DL,
@@ -2548,7 +2548,7 @@ inline lapack_int LAPACKE_gttrs(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hbev(
     char jobz, char uplo, lapack_int n, lapack_int kd,
     float* AB, lapack_int ldab,
@@ -2601,7 +2601,7 @@ inline lapack_int LAPACKE_hbev(
         (lapack_complex_double*) Z, ldz );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hbevd(
     char jobz, char uplo, lapack_int n, lapack_int kd,
     float* AB, lapack_int ldab,
@@ -2654,7 +2654,7 @@ inline lapack_int LAPACKE_hbevd(
         (lapack_complex_double*) Z, ldz );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hbevx(
     char jobz, char range, char uplo, lapack_int n, lapack_int kd,
     float* AB, lapack_int ldab,
@@ -2727,7 +2727,7 @@ inline lapack_int LAPACKE_hbevx(
         ifail );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hbgv(
     char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
     float* AB, lapack_int ldab,
@@ -2788,7 +2788,7 @@ inline lapack_int LAPACKE_hbgv(
         (lapack_complex_double*) Z, ldz );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // see custom version below
 inline lapack_int LAPACKE_hbgvd(
     char jobz, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
@@ -2850,7 +2850,7 @@ inline lapack_int LAPACKE_hbgvd(
         (lapack_complex_double*) Z, ldz );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Note: LAPACKE_hbgvd does workspace query that may be wrong
 // (e.g., in LAPACK <= 3.6.0, MKL 2018), so custom version fixes it.
 inline lapack_int LAPACKE_hbgvd_custom(
@@ -2993,7 +2993,7 @@ inline lapack_int LAPACKE_hbgvd_custom(
         &rwork[0], lrwork, &iwork[0], liwork );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hbgvx(
     char jobz, char range, char uplo, lapack_int n, lapack_int ka, lapack_int kb,
     float* AB, lapack_int ldab,
@@ -3074,7 +3074,7 @@ inline lapack_int LAPACKE_hbgvx(
         ifail );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hecon(
     char uplo, lapack_int n,
     float* A, lapack_int lda,
@@ -3127,7 +3127,7 @@ inline lapack_int LAPACKE_hecon(
         rcond );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_heev(
     char jobz, char uplo, lapack_int n,
     float* A, lapack_int lda,
@@ -3172,7 +3172,7 @@ inline lapack_int LAPACKE_heev(
         W );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_heevd(
     char jobz, char uplo, lapack_int n,
     float* A, lapack_int lda,
@@ -3217,7 +3217,7 @@ inline lapack_int LAPACKE_heevd(
         W );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_heevr(
     char jobz, char range, char uplo, lapack_int n,
     float* A, lapack_int lda,
@@ -3282,7 +3282,7 @@ inline lapack_int LAPACKE_heevr(
         isuppz );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_heevx(
     char jobz, char range, char uplo, lapack_int n,
     float* A, lapack_int lda,
@@ -3347,7 +3347,7 @@ inline lapack_int LAPACKE_heevx(
         ifail );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hegst(
     lapack_int itype, char uplo, lapack_int n,
     float* A, lapack_int lda,
@@ -3392,7 +3392,7 @@ inline lapack_int LAPACKE_hegst(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hegv(
     lapack_int itype, char jobz, char uplo, lapack_int n,
     float* A, lapack_int lda,
@@ -3445,7 +3445,7 @@ inline lapack_int LAPACKE_hegv(
         W );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hegvd(
     lapack_int itype, char jobz, char uplo, lapack_int n,
     float* A, lapack_int lda,
@@ -3498,7 +3498,7 @@ inline lapack_int LAPACKE_hegvd(
         W );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hegvx(
     lapack_int itype, char jobz, char range, char uplo, lapack_int n,
     float* A, lapack_int lda,
@@ -3571,7 +3571,7 @@ inline lapack_int LAPACKE_hegvx(
         ifail );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_herfs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -3656,7 +3656,7 @@ inline lapack_int LAPACKE_herfs(
         berr );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hesv(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -3709,7 +3709,7 @@ inline lapack_int LAPACKE_hesv(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hetrd(
     char uplo, lapack_int n,
     float* A, lapack_int lda,
@@ -3770,7 +3770,7 @@ inline lapack_int LAPACKE_hetrd(
         (lapack_complex_double*) tau );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hetrf(
     char uplo, lapack_int n,
     float* A, lapack_int lda,
@@ -3815,7 +3815,7 @@ inline lapack_int LAPACKE_hetrf(
         ipiv );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hetri(
     char uplo, lapack_int n,
     float* A, lapack_int lda,
@@ -3860,7 +3860,7 @@ inline lapack_int LAPACKE_hetri(
         ipiv );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hetrs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -3913,7 +3913,7 @@ inline lapack_int LAPACKE_hetrs(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hpcon(
     char uplo, lapack_int n,
     float* AP,
@@ -3966,7 +3966,7 @@ inline lapack_int LAPACKE_hpcon(
         rcond );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hpev(
     char jobz, char uplo, lapack_int n,
     float* AP,
@@ -4019,7 +4019,7 @@ inline lapack_int LAPACKE_hpev(
         (lapack_complex_double*) Z, ldz );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hpevd(
     char jobz, char uplo, lapack_int n,
     float* AP,
@@ -4072,7 +4072,7 @@ inline lapack_int LAPACKE_hpevd(
         (lapack_complex_double*) Z, ldz );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hpevx(
     char jobz, char range, char uplo, lapack_int n,
     float* AP,
@@ -4141,7 +4141,7 @@ inline lapack_int LAPACKE_hpevx(
         ifail );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hpgst(
     lapack_int itype, char uplo, lapack_int n,
     float* AP,
@@ -4186,7 +4186,7 @@ inline lapack_int LAPACKE_hpgst(
         (lapack_complex_double*) BP );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hpgv(
     lapack_int itype, char jobz, char uplo, lapack_int n,
     float* AP,
@@ -4247,7 +4247,7 @@ inline lapack_int LAPACKE_hpgv(
         (lapack_complex_double*) Z, ldz );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hpgvd(
     lapack_int itype, char jobz, char uplo, lapack_int n,
     float* AP,
@@ -4308,7 +4308,7 @@ inline lapack_int LAPACKE_hpgvd(
         (lapack_complex_double*) Z, ldz );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hpgvx(
     lapack_int itype, char jobz, char range, char uplo, lapack_int n,
     float* AP,
@@ -4381,7 +4381,7 @@ inline lapack_int LAPACKE_hpgvx(
         ifail );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hprfs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* AP,
@@ -4458,7 +4458,7 @@ inline lapack_int LAPACKE_hprfs(
         ferr, berr );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hpsv(
     char uplo, lapack_int n, lapack_int nrhs,
     float* AP,
@@ -4511,7 +4511,7 @@ inline lapack_int LAPACKE_hpsv(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hptrd(
     char uplo, lapack_int n,
     float* AP,
@@ -4564,7 +4564,7 @@ inline lapack_int LAPACKE_hptrd(
         (lapack_complex_double*) tau );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hptrf(
     char uplo, lapack_int n,
     float* AP,
@@ -4609,7 +4609,7 @@ inline lapack_int LAPACKE_hptrf(
         ipiv );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hptri(
     char uplo, lapack_int n,
     float* AP,
@@ -4654,7 +4654,7 @@ inline lapack_int LAPACKE_hptri(
         ipiv );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_hptrs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* AP,
@@ -4707,7 +4707,7 @@ inline lapack_int LAPACKE_hptrs(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_lacpy(
     char uplo, lapack_int m, lapack_int n,
     float* A, lapack_int lda,
@@ -4752,7 +4752,7 @@ inline lapack_int LAPACKE_lacpy(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Fortran prototypes if not given via lapacke.h
 extern "C" {
 
@@ -4775,7 +4775,7 @@ void LAPACK_dlaed4(
 
 }  // extern "C"
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_laed4(
     lapack_int n, lapack_int i,
     float const* d, float const* z,
@@ -4802,7 +4802,7 @@ inline lapack_int LAPACKE_laed4(
     //return LAPACKE_dlaed4( n, i, d, z, delta, rho, lambda );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Fortran prototypes if not given via lapacke.h
 extern "C" {
 
@@ -4845,7 +4845,7 @@ double LAPACK_zlangb(
 
 }  // extern "C"
 
-// --------------------
+//---------------------
 // wrappers around LAPACK (not in LAPACKE)
 inline float LAPACKE_langb(
     char norm, lapack_int n, lapack_int kl, lapack_int ku,
@@ -4887,7 +4887,7 @@ inline double LAPACKE_langb(
         (lapack_complex_double*) AB, &ldab, &work[0] );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline float LAPACKE_lange(
     char norm, lapack_int m, lapack_int n,
     float* A, lapack_int lda )
@@ -4924,7 +4924,7 @@ inline double LAPACKE_lange(
         (lapack_complex_double*) A, lda );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Fortran prototypes if not given via lapacke.h
 extern "C" {
 
@@ -4967,7 +4967,7 @@ double LAPACK_zlangt(
 
 }  // extern "C"
 
-// --------------------
+//---------------------
 // wrappers around LAPACK (not in LAPACKE)
 inline float LAPACKE_langt(
     char norm, lapack_int n,
@@ -5021,7 +5021,7 @@ inline double LAPACKE_langt(
         (lapack_complex_double*) DU );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Fortran prototypes if not given via lapacke.h
 extern "C" {
 
@@ -5064,7 +5064,7 @@ double LAPACK_zlanhb(
 
 }  // extern "C"
 
-// --------------------
+//---------------------
 // wrappers around LAPACK (not in LAPACKE)
 inline float LAPACKE_lanhb(
     char norm, char uplo, lapack_int n, lapack_int kd,
@@ -5106,7 +5106,7 @@ inline double LAPACKE_lanhb(
         (lapack_complex_double*) AB, &ldab, &work[0] );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline float LAPACKE_lanhe(
     char norm, char uplo, lapack_int n,
     float* A, lapack_int lda )
@@ -5143,7 +5143,7 @@ inline double LAPACKE_lanhe(
         (lapack_complex_double*) A, lda );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Fortran prototypes if not given via lapacke.h
 extern "C" {
 
@@ -5182,7 +5182,7 @@ double LAPACK_zlanhp(
 
 }  // extern "C"
 
-// --------------------
+//---------------------
 // wrappers around LAPACK (not in LAPACKE)
 inline float LAPACKE_lanhp(
     char norm, char uplo, lapack_int n,
@@ -5224,7 +5224,7 @@ inline double LAPACKE_lanhp(
         (lapack_complex_double*) AP, &work[0] );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Fortran prototypes if not given via lapacke.h
 extern "C" {
 
@@ -5263,7 +5263,7 @@ double LAPACK_zlanhs(
 
 }  // extern "C"
 
-// --------------------
+//---------------------
 // wrappers around LAPACK (not in LAPACKE)
 static float LAPACKE_lanhs(
     char norm, lapack_int n,
@@ -5305,7 +5305,7 @@ static double LAPACKE_lanhs(
         (lapack_complex_double*) A, &lda, &work[0] );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Fortran prototypes if not given via lapacke.h
 extern "C" {
 
@@ -5344,7 +5344,7 @@ double LAPACK_zlanht(
 
 }  // extern "C"
 
-// --------------------
+//---------------------
 // wrappers around LAPACK (not in LAPACKE)
 inline float LAPACKE_lanst(
     char norm, lapack_int n,
@@ -5412,7 +5412,7 @@ inline double LAPACKE_lanht(
         (lapack_complex_double*) E );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Fortran prototypes if not given via lapacke.h
 extern "C" {
 
@@ -5455,7 +5455,7 @@ double LAPACK_zlansb(
 
 }  // extern "C"
 
-// --------------------
+//---------------------
 // wrappers around LAPACK (not in LAPACKE)
 inline float LAPACKE_lansb(
     char norm, char uplo, lapack_int n, lapack_int kd,
@@ -5497,7 +5497,7 @@ inline double LAPACKE_lansb(
         (lapack_complex_double*) AB, &ldab, &work[0] );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Fortran prototypes if not given via lapacke.h
 extern "C" {
 
@@ -5536,7 +5536,7 @@ double LAPACK_zlansp(
 
 }  // extern "C"
 
-// --------------------
+//---------------------
 // wrappers around LAPACK (not in LAPACKE)
 inline float LAPACKE_lansp(
     char norm, char uplo, lapack_int n,
@@ -5578,7 +5578,7 @@ inline double LAPACKE_lansp(
         (lapack_complex_double*) AP, &work[0] );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline float LAPACKE_lansy(
     char norm, char uplo, lapack_int n,
     float* A, lapack_int lda )
@@ -5615,7 +5615,7 @@ inline double LAPACKE_lansy(
         (lapack_complex_double*) A, lda );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Fortran prototypes if not given via lapacke.h
 extern "C" {
 
@@ -5658,7 +5658,7 @@ double LAPACK_zlantb(
 
 }  // extern "C"
 
-// --------------------
+//---------------------
 // wrappers around LAPACK (not in LAPACKE)
 inline float LAPACKE_lantb(
     char norm, char uplo, char diag, lapack_int n, lapack_int k,
@@ -5700,7 +5700,7 @@ inline double LAPACKE_lantb(
         (lapack_complex_double*) AB, &ldab, &work[0] );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Fortran prototypes if not given via lapacke.h
 extern "C" {
 
@@ -5743,7 +5743,7 @@ double LAPACK_zlantp(
 
 }  // extern "C"
 
-// --------------------
+//---------------------
 // wrappers around LAPACK (not in LAPACKE)
 inline float LAPACKE_lantp(
     char norm, char uplo, char diag, lapack_int n,
@@ -5785,7 +5785,7 @@ inline double LAPACKE_lantp(
         (lapack_complex_double*) AP, &work[0] );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline float LAPACKE_lantr(
     char norm, char uplo, char diag, lapack_int m, lapack_int n,
     float* A, lapack_int lda )
@@ -5823,7 +5823,7 @@ inline double LAPACKE_lantr(
 }
 
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Fortran prototypes if not given via lapacke.h
 extern "C" {
 
@@ -5874,7 +5874,7 @@ void LAPACK_zlarf(
 
 }  // extern "C"
 
-// --------------------
+//---------------------
 // wrappers around LAPACK (not in LAPACKE)
 // todo: LAPACK has no error checks for larf
 inline lapack_int LAPACKE_larf(
@@ -5933,7 +5933,7 @@ inline lapack_int LAPACKE_larf(
     return 0;
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_larfb(
     char side, char trans, char direction, char storev, lapack_int m, lapack_int n, lapack_int k,
     float* V, lapack_int ldv,
@@ -5986,7 +5986,7 @@ inline lapack_int LAPACKE_larfb(
         (lapack_complex_double*) C, ldc );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_larfg(
     lapack_int n,
     float* alpha,
@@ -6039,7 +6039,7 @@ inline lapack_int LAPACKE_larfg(
         (lapack_complex_double*) tau );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_larft(
     char direction, char storev, lapack_int n, lapack_int k,
     float* V, lapack_int ldv,
@@ -6092,7 +6092,7 @@ inline lapack_int LAPACKE_larft(
         (lapack_complex_double*) T, ldt );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_larfx(
     char side, lapack_int m, lapack_int n,
     float* V, float tau,
@@ -6143,7 +6143,7 @@ inline lapack_int LAPACKE_larfx(
         (lapack_complex_double*) C, ldc, &work[0] );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30700  // >= 3.7.0
 
 // Fortran prototypes not given via lapacke.h
@@ -6195,7 +6195,7 @@ void LAPACK_zlarfy(
 
 }  // extern "C"
 
-// --------------------
+//---------------------
 // wrappers around LAPACK (not in LAPACKE)
 inline lapack_int LAPACKE_larfy(
     char uplo, lapack_int n,
@@ -6250,7 +6250,7 @@ inline lapack_int LAPACKE_larfy(
 }
 #endif // 30700
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_laset(
     char uplo, lapack_int m, lapack_int n, float alpha, float beta,
     float* A, lapack_int lda )
@@ -6291,7 +6291,7 @@ inline lapack_int LAPACKE_laset(
         (lapack_complex_double*) A, lda );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_laswp(
     lapack_int n,
     float* A, lapack_int lda, lapack_int k1, lapack_int k2,
@@ -6336,7 +6336,7 @@ inline lapack_int LAPACKE_laswp(
         ipiv, incx );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_pbcon(
     char uplo, lapack_int n, lapack_int kd,
     float* AB, lapack_int ldab, float anorm,
@@ -6381,7 +6381,7 @@ inline lapack_int LAPACKE_pbcon(
         rcond );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_pbequ(
     char uplo, lapack_int n, lapack_int kd,
     float* AB, lapack_int ldab,
@@ -6442,7 +6442,7 @@ inline lapack_int LAPACKE_pbequ(
         amax );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_pbrfs(
     char uplo, lapack_int n, lapack_int kd, lapack_int nrhs,
     float* AB, lapack_int ldab,
@@ -6519,7 +6519,7 @@ inline lapack_int LAPACKE_pbrfs(
         berr );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_pbsv(
     char uplo, lapack_int n, lapack_int kd, lapack_int nrhs,
     float* AB, lapack_int ldab,
@@ -6564,7 +6564,7 @@ inline lapack_int LAPACKE_pbsv(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_pbtrf(
     char uplo, lapack_int n, lapack_int kd,
     float* AB, lapack_int ldab )
@@ -6601,7 +6601,7 @@ inline lapack_int LAPACKE_pbtrf(
         (lapack_complex_double*) AB, ldab );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_pbtrs(
     char uplo, lapack_int n, lapack_int kd, lapack_int nrhs,
     float* AB, lapack_int ldab,
@@ -6646,7 +6646,7 @@ inline lapack_int LAPACKE_pbtrs(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_pocon(
     char uplo, lapack_int n,
     float* A, lapack_int lda, float anorm,
@@ -6691,7 +6691,7 @@ inline lapack_int LAPACKE_pocon(
         rcond );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_poequ(
     lapack_int n,
     float* A, lapack_int lda,
@@ -6752,7 +6752,7 @@ inline lapack_int LAPACKE_poequ(
         amax );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_porfs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -6829,7 +6829,7 @@ inline lapack_int LAPACKE_porfs(
         berr );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_posv(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -6874,7 +6874,7 @@ inline lapack_int LAPACKE_posv(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_potrf(
     char uplo, lapack_int n,
     float* A, lapack_int lda )
@@ -6911,7 +6911,7 @@ inline lapack_int LAPACKE_potrf(
         (lapack_complex_double*) A, lda );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_potri(
     char uplo, lapack_int n,
     float* A, lapack_int lda )
@@ -6948,7 +6948,7 @@ inline lapack_int LAPACKE_potri(
         (lapack_complex_double*) A, lda );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_potrs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -6993,7 +6993,7 @@ inline lapack_int LAPACKE_potrs(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_ppcon(
     char uplo, lapack_int n,
     float* AP, float anorm,
@@ -7038,7 +7038,7 @@ inline lapack_int LAPACKE_ppcon(
         rcond );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_ppequ(
     char uplo, lapack_int n,
     float* AP,
@@ -7099,7 +7099,7 @@ inline lapack_int LAPACKE_ppequ(
         amax );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_pprfs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* AP,
@@ -7176,7 +7176,7 @@ inline lapack_int LAPACKE_pprfs(
         berr );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_ppsv(
     char uplo, lapack_int n, lapack_int nrhs,
     float* AP,
@@ -7221,7 +7221,7 @@ inline lapack_int LAPACKE_ppsv(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_pptrf(
     char uplo, lapack_int n,
     float* AP )
@@ -7258,7 +7258,7 @@ inline lapack_int LAPACKE_pptrf(
         (lapack_complex_double*) AP );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_pptri(
     char uplo, lapack_int n,
     float* AP )
@@ -7295,7 +7295,7 @@ inline lapack_int LAPACKE_pptri(
         (lapack_complex_double*) AP );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_pptrs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* AP,
@@ -7340,7 +7340,7 @@ inline lapack_int LAPACKE_pptrs(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_ptcon(
     lapack_int n,
     float* D,
@@ -7393,7 +7393,7 @@ inline lapack_int LAPACKE_ptcon(
         anorm, rcond );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // for [sd]ptrfs, uplo is ignored
 inline lapack_int LAPACKE_ptrfs(
     char uplo, lapack_int n, lapack_int nrhs,
@@ -7479,7 +7479,7 @@ inline lapack_int LAPACKE_ptrfs(
         ferr, berr );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_ptsv(
     lapack_int n, lapack_int nrhs,
     float* D,
@@ -7532,7 +7532,7 @@ inline lapack_int LAPACKE_ptsv(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_pttrf(
     lapack_int n,
     float* D,
@@ -7577,7 +7577,7 @@ inline lapack_int LAPACKE_pttrf(
         (lapack_complex_double*) E );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // for [sd]pttrs, uplo is ignored
 inline lapack_int LAPACKE_pttrs(
     char uplo, lapack_int n, lapack_int nrhs,
@@ -7631,7 +7631,7 @@ inline lapack_int LAPACKE_pttrs(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_spcon(
     char uplo, lapack_int n,
     float* AP,
@@ -7684,7 +7684,7 @@ inline lapack_int LAPACKE_spcon(
         rcond );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_sprfs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* AP,
@@ -7769,7 +7769,7 @@ inline lapack_int LAPACKE_sprfs(
         berr );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_spsv(
     char uplo, lapack_int n, lapack_int nrhs,
     float* AP,
@@ -7822,7 +7822,7 @@ inline lapack_int LAPACKE_spsv(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_sptrf(
     char uplo, lapack_int n,
     float* AP,
@@ -7867,7 +7867,7 @@ inline lapack_int LAPACKE_sptrf(
         ipiv );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_sptri(
     char uplo, lapack_int n,
     float* AP,
@@ -7912,7 +7912,7 @@ inline lapack_int LAPACKE_sptri(
         ipiv );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_sptrs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* AP,
@@ -7965,7 +7965,7 @@ inline lapack_int LAPACKE_sptrs(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_sycon(
     char uplo, lapack_int n,
     float* A, lapack_int lda,
@@ -8018,7 +8018,7 @@ inline lapack_int LAPACKE_sycon(
         rcond );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_syrfs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -8103,7 +8103,7 @@ inline lapack_int LAPACKE_syrfs(
         berr );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_sysv(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -8156,7 +8156,7 @@ inline lapack_int LAPACKE_sysv(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30700
 inline lapack_int LAPACKE_sysv_aa(
     char uplo, lapack_int n, lapack_int nrhs,
@@ -8211,7 +8211,7 @@ inline lapack_int LAPACKE_sysv_aa(
 }
 #endif // 30700
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30700
 inline lapack_int LAPACKE_sysv_rk(
     char uplo, lapack_int n, lapack_int nrhs,
@@ -8274,7 +8274,7 @@ inline lapack_int LAPACKE_sysv_rk(
 }
 #endif // 30700
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30500
 inline lapack_int LAPACKE_sysv_rook(
     char uplo, lapack_int n, lapack_int nrhs,
@@ -8329,7 +8329,7 @@ inline lapack_int LAPACKE_sysv_rook(
 }
 #endif // 30500
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_sytrf(
     char uplo, lapack_int n,
     float* A, lapack_int lda,
@@ -8374,7 +8374,7 @@ inline lapack_int LAPACKE_sytrf(
         ipiv );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Fortran prototypes if not given via lapacke.h
 extern "C" {
 
@@ -8447,7 +8447,7 @@ void LAPACK_zhetrf_aa(
 
 }  // extern "C"
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // TODO: LAPACKE has a bug; use LAPACK for now
 #if LAPACK_VERSION >= 30700
 inline lapack_int LAPACKE_sytrf_aa(
@@ -8523,7 +8523,7 @@ inline lapack_int LAPACKE_sytrf_aa(
 }
 #endif // 30700
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30700
 inline lapack_int LAPACKE_sytrf_rk(
     char uplo, lapack_int n,
@@ -8578,7 +8578,7 @@ inline lapack_int LAPACKE_sytrf_rk(
 }
 #endif // 30700
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30500
 inline lapack_int LAPACKE_sytrf_rook(
     char uplo, lapack_int n,
@@ -8625,7 +8625,7 @@ inline lapack_int LAPACKE_sytrf_rook(
 }
 #endif // 30500
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_sytri(
     char uplo, lapack_int n,
     float* A, lapack_int lda,
@@ -8670,7 +8670,7 @@ inline lapack_int LAPACKE_sytri(
         ipiv );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_sytrs(
     char uplo, lapack_int n, lapack_int nrhs,
     float* A, lapack_int lda,
@@ -8723,7 +8723,7 @@ inline lapack_int LAPACKE_sytrs(
         (lapack_complex_double*) B, ldb );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30700
 inline lapack_int LAPACKE_sytrs_aa(
     char uplo, lapack_int n, lapack_int nrhs,
@@ -8778,7 +8778,7 @@ inline lapack_int LAPACKE_sytrs_aa(
 }
 #endif // 30700
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30500
 inline lapack_int LAPACKE_sytrs_rook(
     char uplo, lapack_int n, lapack_int nrhs,
@@ -9095,7 +9095,7 @@ inline lapack_int LAPACKE_tgsen(
         &work[0], lwork, &iwork[0], liwork );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30700
 
 // Fortran prototypes if not given via lapacke.h
@@ -9152,7 +9152,7 @@ void LAPACK_ztplqt(
 
 }  // extern "C"
 
-// --------------------
+//---------------------
 // wrappers around LAPACK (not in LAPACKE)
 inline lapack_int LAPACKE_tplqt(
     lapack_int m, lapack_int n, lapack_int l, lapack_int mb,
@@ -9227,7 +9227,7 @@ inline lapack_int LAPACKE_tplqt(
 }
 #endif // 30700
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Fortran prototypes if not given via lapacke.h
 extern "C" {
 
@@ -9274,7 +9274,7 @@ void LAPACK_ztplqt2(
 
 }  // extern "C"
 
-// --------------------
+//---------------------
 // wrappers around LAPACK (not in LAPACKE)
 #if LAPACK_VERSION >= 30700
 inline lapack_int LAPACKE_tplqt2(
@@ -9342,7 +9342,7 @@ inline lapack_int LAPACKE_tplqt2(
 }
 #endif // 30700
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Fortran prototypes if not given via lapacke.h
 extern "C" {
 
@@ -9405,7 +9405,7 @@ void LAPACK_ztpmlqt(
 
 }  // extern "C"
 
-// --------------------
+//---------------------
 // wrappers around LAPACK (not in LAPACKE)
 #if LAPACK_VERSION >= 30700
 inline lapack_int LAPACKE_tpmlqt(
@@ -9497,7 +9497,7 @@ inline lapack_int LAPACKE_tpmlqt(
 }
 #endif // 30700
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30400
 inline lapack_int LAPACKE_tpmqrt(
     char side, char trans, lapack_int m, lapack_int n, lapack_int k, lapack_int l, lapack_int nb,
@@ -9564,7 +9564,7 @@ inline lapack_int LAPACKE_tpmqrt(
 }
 #endif // 30400
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30400
 inline lapack_int LAPACKE_tpqrt(
     lapack_int m, lapack_int n, lapack_int l, lapack_int nb,
@@ -9619,7 +9619,7 @@ inline lapack_int LAPACKE_tpqrt(
 }
 #endif // 30400
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30400
 inline lapack_int LAPACKE_tpqrt2(
     lapack_int m, lapack_int n, lapack_int l,
@@ -9674,7 +9674,7 @@ inline lapack_int LAPACKE_tpqrt2(
 }
 #endif // 30400
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 #if LAPACK_VERSION >= 30400
 inline lapack_int LAPACKE_tprfb(
     char side, char trans, char direction, char storev, lapack_int m, lapack_int n, lapack_int k, lapack_int l,
@@ -9737,7 +9737,7 @@ inline lapack_int LAPACKE_tprfb(
 }
 #endif // 30400
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_unghr(
     lapack_int n, lapack_int ilo, lapack_int ihi,
     float* A, lapack_int lda,
@@ -9782,7 +9782,7 @@ inline lapack_int LAPACKE_unghr(
         (lapack_complex_double*) tau );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_unglq(
     lapack_int m, lapack_int n, lapack_int k,
     float* A, lapack_int lda,
@@ -9827,7 +9827,7 @@ inline lapack_int LAPACKE_unglq(
         (lapack_complex_double*) tau );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_ungql(
     lapack_int m, lapack_int n, lapack_int k,
     float* A, lapack_int lda,
@@ -9872,7 +9872,7 @@ inline lapack_int LAPACKE_ungql(
         (lapack_complex_double*) tau );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_ungqr(
     lapack_int m, lapack_int n, lapack_int k,
     float* A, lapack_int lda,
@@ -9917,7 +9917,7 @@ inline lapack_int LAPACKE_ungqr(
         (lapack_complex_double*) tau );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_ungrq(
     lapack_int m, lapack_int n, lapack_int k,
     float* A, lapack_int lda,
@@ -9962,7 +9962,7 @@ inline lapack_int LAPACKE_ungrq(
         (lapack_complex_double*) tau );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_ungtr(
     char uplo, lapack_int n,
     float* A, lapack_int lda,
@@ -10007,7 +10007,7 @@ inline lapack_int LAPACKE_ungtr(
         (lapack_complex_double*) tau );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // LAPACKE_*unhr_col only in Intel MKL until LAPACK 3.12.
 #if LAPACK_VERSION >= 31200 || (LAPACK_VERSION >= 30900 && defined( LAPACK_HAVE_MKL ))
 
@@ -10086,7 +10086,7 @@ inline lapack_int LAPACKE_unhr_col(
 #endif  // 3.12.0 or (3.9.0 and LAPACK_HAVE_MKL)
 
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_unmhr(
     char side, char trans, lapack_int m, lapack_int n, lapack_int ilo, lapack_int ihi,
     float* A, lapack_int lda,
@@ -10143,7 +10143,7 @@ inline lapack_int LAPACKE_unmhr(
         (lapack_complex_double*) C, ldc );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_unmtr(
     char side, char uplo, char trans, lapack_int m, lapack_int n,
     float* A, lapack_int lda,
@@ -10200,7 +10200,7 @@ inline lapack_int LAPACKE_unmtr(
         (lapack_complex_double*) C, ldc );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_upgtr(
     char uplo, lapack_int n,
     float* AP,
@@ -10253,7 +10253,7 @@ inline lapack_int LAPACKE_upgtr(
         (lapack_complex_double*) Q, ldq );
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 inline lapack_int LAPACKE_upmtr(
     char side, char uplo, char trans, lapack_int m, lapack_int n,
     float* AP,

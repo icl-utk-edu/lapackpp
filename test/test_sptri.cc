@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_sptri_work( Params& params, bool run )
 {
@@ -34,7 +34,7 @@ void test_sptri_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     size_t size_AP = (size_t) (n*(n+1)/2);
     size_t size_ipiv = (size_t) (n);
 
@@ -55,7 +55,7 @@ void test_sptri_work( Params& params, bool run )
     std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
     AP_ref = AP_tst;
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::sptri( uplo, n, &AP_tst[0], &ipiv_tst[0] );
@@ -69,7 +69,7 @@ void test_sptri_work( Params& params, bool run )
     params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_sptri( to_char( uplo ), n, &AP_ref[0], &ipiv_ref[0] );
@@ -81,7 +81,7 @@ void test_sptri_work( Params& params, bool run )
         params.ref_time() = time;
         params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -92,7 +92,7 @@ void test_sptri_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_sptri( Params& params, bool run )
 {
     switch (params.datatype()) {

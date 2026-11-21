@@ -13,7 +13,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_getrf_device_work( Params& params, bool run )
 {
@@ -45,7 +45,7 @@ void test_getrf_device_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, m ), align );
     size_t size_A = (size_t) lda * n;
     size_t size_ipiv = (size_t) blas::min( m, n );
@@ -66,14 +66,7 @@ void test_getrf_device_work( Params& params, bool run )
     device_info_int*  d_info = blas::device_malloc< device_info_int >( 1, queue );
     blas::device_copy_matrix( m, n, A_tst.data(), lda, dA_tst, lda, queue );
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "A m=%5lld, n=%5lld, lda=%5lld\n",
-                llong( m ), llong( n ), llong( lda ) );
-    }
-    if (verbose >= 2) {
-        printf( "A = " ); print_matrix( m, n, &A_tst[0], lda );
-    }
+    print_matrix( "A", m, n, &A_tst[0], lda, verbose );
 
     // Allocate workspace
     size_t d_size, h_size;
@@ -89,7 +82,7 @@ void test_getrf_device_work( Params& params, bool run )
         assert_throw( lapack::getrf(  m,  n, dA_tst, m-1, d_ipiv, d_work, d_size, h_work, h_size, d_info, queue ), lapack::Error );
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     queue.sync();
     double time = testsweeper::get_wtime();
@@ -121,18 +114,11 @@ void test_getrf_device_work( Params& params, bool run )
     blas::device_free( d_info, queue );
     blas::device_free( d_work, queue );
 
-    if (verbose >= 2) {
-        printf( "A_factor = " ); print_matrix( m, n, &A_tst[0], lda );
-
-        printf( "ipiv = [" );
-        for (size_t i = 0; i < size_ipiv; ++i) {
-            printf( " %3lld", llong( ipiv_tst[ i ] ) );
-        }
-        printf( "];\n" );
-    }
+    print_matrix( "A_factor", m, n, &A_tst[0], lda, verbose );
+    print_vector( "ipiv", size_ipiv, &ipiv_tst[0], 1, verbose );
 
     if (params.check() == 'y' && m == n) {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error = ||b - Ax|| / (n * ||A|| * ||x||).
         // For m != n, could check PA - LU.
         int64_t nrhs = 1;
@@ -157,9 +143,7 @@ void test_getrf_device_work( Params& params, bool run )
                     -1.0, &A_ref[0], lda,
                           &B_tst[0], ldb,
                      1.0, &B_ref[0], ldb );
-        if (verbose >= 2) {
-            printf( "R = " ); print_matrix( n, nrhs, &B_ref[0], ldb );
-        }
+        print_matrix( "R", n, nrhs, &B_ref[0], ldb, verbose );
 
         real_t error = lapack::lange( lapack::Norm::One, n, nrhs, &B_ref[0], ldb );
         real_t Xnorm = lapack::lange( lapack::Norm::One, n, nrhs, &B_tst[0], ldb );
@@ -170,7 +154,7 @@ void test_getrf_device_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_getrf( m, n, &A_ref[0], lda, &ipiv_ref[0] );
@@ -182,13 +166,11 @@ void test_getrf_device_work( Params& params, bool run )
         params.ref_time() = time;
         params.ref_gflops() = gflop / time;
 
-        if (verbose >= 2) {
-            printf( "Aref_factor = " ); print_matrix( m, n, &A_ref[0], lda );
-        }
+        print_matrix( "Aref_factor", m, n, &A_ref[0], lda, verbose );
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_getrf_device( Params& params, bool run )
 {
     switch (params.datatype()) {

@@ -11,11 +11,11 @@
 #include "lapacke_wrappers.hh"
 
 #include <vector>
-#include <ctgmath>
+#include <cmath>
+#include <complex>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Generate the Kahan matrix and its eigenvalues on three vectors.
-// -----------------------------------------------------------------------------
 template< typename scalar_t >
 void test_sturm_Kahan(int64_t n, std::vector<scalar_t>& diag,
                       std::vector<scalar_t>& offd, std::vector<scalar_t>& eigv,
@@ -64,6 +64,7 @@ void test_sturm_Kahan(int64_t n, std::vector<scalar_t>& diag,
     one_norm[0] = norm;
 }
 
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_sturm_work( Params& params, bool run )
 {
@@ -77,7 +78,7 @@ void test_sturm_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     std::vector< scalar_t > diag( (size_t) n );
     std::vector< scalar_t > eigv( (size_t) n );
     std::vector< scalar_t > offd( (size_t) (n-1) );
@@ -126,7 +127,7 @@ void test_sturm_work( Params& params, bool run )
                 eig_max, eig_max_before, eig_max_after );
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t r_min_before, r_min_after;
@@ -199,7 +200,7 @@ void test_sturm_work( Params& params, bool run )
     params.okay() = (error == 0);
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_sturm( Params& params, bool run )
 {
     switch (params.datatype()) {

@@ -13,7 +13,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_gbrfs_work( Params& params, bool run )
 {
@@ -39,7 +39,7 @@ void test_gbrfs_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     // AB could use kd = kl + ku + 1, but for simplicity make AB = AFB.
     int64_t kd = 2*kl + ku + 1;  // number of diagonals in factor
     int64_t ldab = roundup( kd, align );
@@ -75,17 +75,10 @@ void test_gbrfs_work( Params& params, bool run )
     AFB = AB;
     X_tst = B;
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "AB n=%5lld, kl=%5lld, ku=%5lld, kd=%5lld, ldab=%5lld\n"
-                "B n=%5lld, nrhs=%5lld, ldb=%5lld\n",
-                llong( n ), llong( kl ), llong( ku ), llong( kd ), llong( ldab ),
-                llong( n ), llong( nrhs ), llong( ldb ) );
-    }
-    if (verbose >= 2) {
+    if (verbose) {
         printf( "Input data in rows 0 to kl-1 are ignored.\n" );
-        printf( "AB = " ); print_matrix( kd, n, &AB[0], ldab );
-        printf( "B = " ); print_matrix( n, nrhs, &B[0], ldb );
+        print_matrix( "AB", kd, n, &AB[0], ldab, verbose );
+        print_matrix( "B", n, nrhs, &B[0], ldb, verbose );
     }
 
     // Factor
@@ -101,14 +94,12 @@ void test_gbrfs_work( Params& params, bool run )
     }
     X_ref = X_tst;
 
-    if (verbose >= 2) {
-        printf( "A_factor = " ); print_matrix( kd, n, &AFB[0], ldafb );
-        printf( "X = " ); print_matrix( n, nrhs, &X_tst[0], ldx );
-    }
+    print_matrix( "A_factor", kd, n, &AFB[0], ldafb, verbose );
+    print_matrix( "X", n, nrhs, &X_tst[0], ldx, verbose );
 
     std::copy (ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     // Refine solution in X_tst, using original AB and B, factored AFB.
@@ -126,14 +117,12 @@ void test_gbrfs_work( Params& params, bool run )
     //double gflop = lapack::Gflop< scalar_t >::gbrfs( trans, n, kl, ku, nrhs );
     //params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        printf( "Xrfs = " ); print_matrix( n, nrhs, &X_tst[0], ldx );
-        printf( "ferr = " ); print_vector( n, &ferr_tst[0], 1 );
-        printf( "berr = " ); print_vector( n, &berr_tst[0], 1 );
-    }
+    print_matrix( "Xrfs", n, nrhs, &X_tst[0], ldx, verbose );
+    print_vector( "ferr", n, &ferr_tst[0], 1, verbose );
+    print_vector( "berr", n, &berr_tst[0], 1, verbose );
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error = ||b - Ax|| / (n * ||A|| * ||x||).
         // No gbmm, so loop over RHS.
         // AB rows 0:kl-1 are ignored; start in row kl.
@@ -144,9 +133,7 @@ void test_gbrfs_work( Params& params, bool run )
                               &X_tst[ j*ldx ], 1,
                          1.0, &B[ j*ldb ], 1 );
         }
-        if (verbose >= 2) {
-            printf( "R = " ); print_matrix( n, nrhs, &B[0], ldb );
-        }
+        print_matrix( "R", n, nrhs, &B[0], ldb, verbose );
 
         real_t error = lapack::lange( lapack::Norm::One, n, nrhs, &B[0], ldb );
         real_t Xnorm = lapack::lange( lapack::Norm::One, n, nrhs, &X_tst[0], ldx );
@@ -160,7 +147,7 @@ void test_gbrfs_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_gbrfs(
@@ -177,7 +164,7 @@ void test_gbrfs_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_gbrfs( Params& params, bool run )
 {
     switch (params.datatype()) {

@@ -56,9 +56,7 @@ void test_laev2_work( Params& params, bool run )
     real_t rt1, rt2, cs1;
     scalar_t sn1;
 
-    if (verbose >= 2) {
-        printf( "A = " ); print_matrix( n, n, &A[0], lda );
-    }
+    print_matrix( "A", n, n, &A[0], lda, verbose );
 
     //---------- run test
     testsweeper::flush_cache( params.cache() );
@@ -74,15 +72,13 @@ void test_laev2_work( Params& params, bool run )
     std::vector< scalar_t > Z{ cs1, sn1, -conj( sn1 ), cs1 };
     std::vector< real_t > Lambda{ rt1, rt2 };
 
-    if (verbose >= 2) {
-        printf( "Z = " ); print_matrix( n, n, &Z[0], lda );
-        printf( "Lambda = " ); print_vector( n, &Lambda[0], 1 );
-    }
+    print_matrix( "Z", n, n, &Z[0], lda, verbose );
+    print_vector( "Lambda", n, &Lambda[0], 1, verbose );
 
     if (params.check() == 'y') {
         int64_t ldz = 2;
 
-        // ---------- check numerical error
+        //---------- check numerical error
         // result[ 0 ] = || A - Z Lambda Z^H || / (n ||A||), if jobz != NoVec.
         // result[ 1 ] = || I - Z^H Z || / n, if jobz != NoVec.
         // result[ 2 ] = 0 if Lambda is in non-decreasing order, else >= 1.

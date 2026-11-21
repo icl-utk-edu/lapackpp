@@ -14,7 +14,7 @@
 
 #if LAPACK_VERSION >= 30400  // >= 3.4.0
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // tpqrt is blocked version
 // tpqrt2 is non-blocked version
 // todo: merge test_tpqrt2.cc and test_tpqrt.cc
@@ -48,7 +48,7 @@ void test_tpqrt2_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
     int64_t ldb = roundup( blas::max( 1, m ), align );
     int64_t ldt = roundup( blas::max( 1, n ), align );
@@ -70,21 +70,11 @@ void test_tpqrt2_work( Params& params, bool run )
     A_ref = A_tst;
     B_ref = B_tst;
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "A n-by-n=%5lld, lda=%5lld triangle\n"
-                "B m=%5lld, n=%5lld, ldb=%5lld, rows m-L=%5lld rect, L=%5lld trapezoid\n",
-                llong( n ), llong( lda ),
-                llong( m ), llong( n ), llong( ldb ), llong( (m-L) ), llong( L ) );
-    }
-    if (verbose >= 2) {
-        printf( "A  = " ); print_matrix( n,   n, &A_tst[0],   lda );
-        printf( "B1 = " ); print_matrix( m-L, n, &B_tst[0],   ldb );
-        printf( "B2 = " ); print_matrix( L,   n, &B_tst[m-L], ldb );
-        printf( "\n" );
-    }
+    print_matrix( "A",  n,   n, &A_tst[0],   lda, verbose );
+    print_matrix( "B1", m-L, n, &B_tst[0],   ldb, verbose );
+    print_matrix( "B2", L,   n, &B_tst[m-L], ldb, verbose );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::tpqrt2(
@@ -98,16 +88,13 @@ void test_tpqrt2_work( Params& params, bool run )
     double gflop = lapack::Gflop< scalar_t >::geqrf( m, n );  // under-estimate
     params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        printf( "Ahat  = " ); print_matrix( n,   n, &A_tst[0],   lda );
-        printf( "Bhat1 = " ); print_matrix( m-L, n, &B_tst[0],   ldb );
-        printf( "Bhat2 = " ); print_matrix( L,   n, &B_tst[m-L], ldb );
-        printf( "T = "     ); print_matrix( n,   n, &T_tst[0],   ldt );
-        printf( "\n" );
-    }
+    print_matrix( "Ahat",  n,   n, &A_tst[0],   lda, verbose );
+    print_matrix( "Bhat1", m-L, n, &B_tst[0],   ldb, verbose );
+    print_matrix( "Bhat2", L,   n, &B_tst[m-L], ldb, verbose );
+    print_matrix( "T",     n,   n, &T_tst[0],   ldt, verbose );
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         // Relative backwards error = ||A - QR|| / (m * ||A||).
         // todo: Orthogonality check = ||I - Q^H Q|| / m.
 
@@ -115,22 +102,16 @@ void test_tpqrt2_work( Params& params, bool run )
         std::vector< scalar_t > RA( size_A, 0.0 );
         std::vector< scalar_t > RB( size_B, 0.0 );
         lapack::lacpy( lapack::MatrixType::Upper, n, n, &A_tst[0], lda, &RA[0], lda );
-        if (verbose >= 2) {
-            printf( "RA  = " ); print_matrix( n,   n, &RA[0],   lda );
-            printf( "RB1 = " ); print_matrix( m-L, n, &RB[0],   ldb );
-            printf( "RB2 = " ); print_matrix( L,   n, &RB[m-L], ldb );
-            printf( "\n" );
-        }
+        print_matrix( "RA",  n,   n, &RA[0],   lda, verbose );
+        print_matrix( "RB1", m-L, n, &RB[0],   ldb, verbose );
+        print_matrix( "RB2", L,   n, &RB[m-L], ldb, verbose );
 
         // zero out lower triangle of A (below row 1) and B (below row m-L+1).
         lapack::laset( lapack::MatrixType::Lower, n-1, n-1, 0.0, 0.0, &A_ref[1], lda );
         lapack::laset( lapack::MatrixType::Lower, L-1, L-1, 0.0, 0.0, &B_ref[m-L+1], ldb );
-        if (verbose >= 2) {
-            printf( "Aref  = " ); print_matrix( n,   n, &A_ref[0],   lda );
-            printf( "Bref1 = " ); print_matrix( m-L, n, &B_ref[0],   ldb );
-            printf( "Bref2 = " ); print_matrix( L,   n, &B_ref[m-L], ldb );
-            printf( "\n" );
-        }
+        print_matrix( "Aref", n,   n, &A_ref[0],   lda, verbose );
+        print_matrix( "Bref1", m-L, n, &B_ref[0],   ldb, verbose );
+        print_matrix( "Bref2", L,   n, &B_ref[m-L], ldb, verbose );
 
         // [ RA ] = Q * [ RA ]
         // [ RB ]       [ RB ]
@@ -156,16 +137,13 @@ void test_tpqrt2_work( Params& params, bool run )
         params.error() = error;
         params.okay() = (error < tol);
 
-        if (verbose >= 2) {
-            printf( "A_QR0 = " ); print_matrix( n,   n, &A_ref[0],   lda );
-            printf( "A_QR1 = " ); print_matrix( m-L, n, &B_ref[0],   ldb );
-            printf( "A_QR2 = " ); print_matrix( L,   n, &B_ref[m-L], ldb );
-            printf( "\n" );
-        }
+        print_matrix( "A_QR0", n,   n, &A_ref[0],   lda, verbose );
+        print_matrix( "A_QR1", m-L, n, &B_ref[0],   ldb, verbose );
+        print_matrix( "A_QR2", L,   n, &B_ref[m-L], ldb, verbose );
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         // Reset A, B in case check wiped them out.
         lapack::larnv( idist, iseed, A_ref.size(), &A_ref[0] );
         lapack::larnv( idist, iseed, B_ref.size(), &B_ref[0] );
@@ -183,7 +161,7 @@ void test_tpqrt2_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_tpqrt2( Params& params, bool run )
 {
     switch (params.datatype()) {
@@ -211,7 +189,7 @@ void test_tpqrt2( Params& params, bool run )
 
 #else
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_tpqrt2( Params& params, bool run )
 {
     fprintf( stderr, "tpqrt2 requires LAPACK >= 3.4.0\n\n" );

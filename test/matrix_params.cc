@@ -9,7 +9,7 @@ using testsweeper::ParamType;
 
 const double inf = std::numeric_limits<double>::infinity();
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /// Construct MatrixParams
 MatrixParams::MatrixParams():
     verbose( 0 ),
@@ -26,7 +26,7 @@ MatrixParams::MatrixParams():
     iseed[0] = rand() % 256;
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /// Marks matrix params as used.
 void MatrixParams::mark()
 {

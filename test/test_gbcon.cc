@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_gbcon_work( Params& params, bool run )
 {
@@ -33,7 +33,7 @@ void test_gbcon_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t ldab = roundup( 2*kl+ku+1, align );
     real_t anorm;
     real_t rcond_tst;
@@ -59,7 +59,7 @@ void test_gbcon_work( Params& params, bool run )
 
     std::copy( ipiv_tst.begin(), ipiv_tst.end(), ipiv_ref.begin() );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::gbcon( norm, n, kl, ku, &AB[0], ldab, &ipiv_tst[0], anorm, &rcond_tst );
@@ -73,7 +73,7 @@ void test_gbcon_work( Params& params, bool run )
     //params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_gbcon( to_char( norm ), n, kl, ku, &AB[0], ldab, &ipiv_ref[0], anorm, &rcond_ref );
@@ -85,7 +85,7 @@ void test_gbcon_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -96,7 +96,7 @@ void test_gbcon_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_gbcon( Params& params, bool run )
 {
     switch (params.datatype()) {

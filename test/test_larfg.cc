@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_larfg_work( Params& params, bool run )
 {
@@ -35,7 +35,7 @@ void test_larfg_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     scalar_t tau_tst;
     scalar_t tau_ref;
     size_t size_X = (size_t) (1+(n-2)*std::abs(incx));
@@ -48,16 +48,13 @@ void test_larfg_work( Params& params, bool run )
     lapack::larnv( idist, iseed, X_tst.size(), &X_tst[0] );
     X_ref = X_tst;
 
-    if (verbose >= 1) {
-        printf( "x incx %lld, size %lld\n", llong( incx ), llong( size_X ) );
-    }
-    if (verbose >= 2) {
+    if (verbose) {
         printf( "alpha = %.4e + %.4ei\n", real(alpha_tst), imag(alpha_tst) );
-        printf( "x = " ); print_vector( n-1, &X_tst[0], incx );
-        printf( "xref = " ); print_vector( n-1, &X_ref[0], incx );
+        print_vector( "x", n-1, &X_tst[0], incx, verbose );
+        print_vector( "xref", n-1, &X_ref[0], incx, verbose );
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     lapack::larfg( n, &alpha_tst, &X_tst[0], incx, &tau_tst );
@@ -67,14 +64,14 @@ void test_larfg_work( Params& params, bool run )
     double gflop = lapack::Gflop< scalar_t >::larfg( n );
     params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
+    if (verbose) {
         printf( "alpha2 = %.4e\n", real(alpha_tst) );
-        printf( "x2 = " ); print_vector( n-1, &X_tst[0], incx );
+        print_vector( "x2", n-1, &X_tst[0], incx, verbose );
         printf( "tau = %.4e\n", real(tau_tst) );
     }
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_larfg( n, &alpha_ref, &X_ref[0], incx, &tau_ref );
@@ -86,13 +83,13 @@ void test_larfg_work( Params& params, bool run )
         params.ref_time() = time;
         params.ref_gflops() = gflop / time;
 
-        if (verbose >= 2) {
+        if (verbose) {
             printf( "alpha2ref = %.4e\n", real(alpha_ref) );
-            printf( "x2ref = " ); print_vector( n-1, &X_ref[0], incx );
+            print_vector( "x2ref", n-1, &X_ref[0], incx, verbose );
             printf( "tau_ref = %.4e\n", real(tau_ref) );
         }
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         error += std::abs( alpha_tst - alpha_ref );
         error += abs_error( X_tst, X_ref );
@@ -102,7 +99,7 @@ void test_larfg_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_larfg( Params& params, bool run )
 {
     switch (params.datatype()) {

@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_ptcon_work( Params& params, bool run )
 {
@@ -29,7 +29,7 @@ void test_ptcon_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     real_t anorm;
     real_t rcond_tst;
     real_t rcond_ref;
@@ -58,7 +58,7 @@ void test_ptcon_work( Params& params, bool run )
     // get Anorm
     anorm = lapack::lanht( lapack::Norm::One, n, &D[0], &E[0] );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::ptcon( n, &D[0], &E[0], anorm, &rcond_tst );
@@ -72,7 +72,7 @@ void test_ptcon_work( Params& params, bool run )
     //params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_ptcon( n, &D[0], &E[0], anorm, &rcond_ref );
@@ -84,7 +84,7 @@ void test_ptcon_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -95,7 +95,7 @@ void test_ptcon_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_ptcon( Params& params, bool run )
 {
     switch (params.datatype()) {

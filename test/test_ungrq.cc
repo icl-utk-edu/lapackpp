@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_ungrq_work( Params& params, bool run )
 {
@@ -44,7 +44,7 @@ void test_ungrq_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     // For error check, R needs to be k-by-m;
     // for ortho check, R needs to be m-by-m to store Q*Q^H.
     // zrqt02.f has R to be m-by-n, which is bigger than needed.
@@ -65,7 +65,7 @@ void test_ungrq_work( Params& params, bool run )
     lapack::larnv( idist, iseed, tau.size(), &tau[0] );
     A_ref = A_tst;
 
-    // ---------- factor matrix
+    //---------- factor matrix
     // A is m-by-n, but factor bottom k-by-n portion.
     // (Compare with QR, which would factor the left m-by-k portion.)
     int64_t info_rqf = lapack::gerqf( k, n, &A_tst[(m-k)], lda, &tau[0] );
@@ -79,7 +79,7 @@ void test_ungrq_work( Params& params, bool run )
                    &A_tst[(m-k) + (n-k)*lda], lda,
                        &R[(m-k) + (m-k)*ldr], ldr );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::ungrq( m, n, k, &A_tst[0], lda, &tau[0] );
@@ -93,7 +93,7 @@ void test_ungrq_work( Params& params, bool run )
     params.gflops() = gflop / time;
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         // comparing to ref. solution doesn't work
         // Following lapack/TESTING/LIN/zrqt02.f
         // Note: n >= m;  m >= k; lda >= m
@@ -129,7 +129,7 @@ void test_ungrq_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_ungrq( m, n, k, &A_ref[0], lda, &tau[0] );
@@ -143,7 +143,7 @@ void test_ungrq_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_ungrq( Params& params, bool run )
 {
     switch (params.datatype()) {

@@ -13,7 +13,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_gesvd_work( Params& params, bool run )
 {
@@ -52,7 +52,7 @@ void test_gesvd_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     int64_t u_ncol = (jobu == Job::AllVec ? m : blas::min( m, n ));
     int64_t lda = roundup( blas::max( 1, m ), align );
     int64_t ldu = roundup( m, align );
@@ -75,12 +75,10 @@ void test_gesvd_work( Params& params, bool run )
     lapack::generate_matrix( params.matrix, m, n, &A_tst[0], lda );
     A_ref = A_tst;
 
-    if (verbose >= 2) {
-        printf( "A = " ); print_matrix( m, n, &A_tst[0], lda );
-    }
+    print_matrix( "A", m, n, &A_tst[0], lda, verbose );
 
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::gesvd(
@@ -94,18 +92,16 @@ void test_gesvd_work( Params& params, bool run )
         fprintf( stderr, "lapack::gesvd returned error %lld\n", llong( info_tst ) );
     }
 
-    if (verbose >= 2) {
-        printf( "A_out = " ); print_matrix( m, n, &A_tst[0], lda );
-        printf( "U = "     ); print_matrix( m, u_ncol, &U_tst[0], ldu );
-        printf( "VT = "    ); print_matrix( v_nrow, n, &VT_tst[0], ldvt );
-        printf( "Sigma = " ); print_vector( n, &Sigma_tst[0], 1 );
-    }
+    print_matrix( "A_out", m, n, &A_tst[0], lda, verbose );
+    print_matrix( "U", m, u_ncol, &U_tst[0], ldu, verbose );
+    print_matrix( "VT", v_nrow, n, &VT_tst[0], ldvt, verbose );
+    print_vector( "Sigma", n, &Sigma_tst[0], 1, verbose );
 
     params.time() = time;
     //double gflop = lapack::Gflop< scalar_t >::gesvd( jobu, jobvt, m, n );
     //params.gflops() = gflop / time;
 
-    // ---------- check numerical error
+    //---------- check numerical error
     // result[ 0 ] = || A - U Sigma VT || / (||A|| max( m, n )),
     //                                      if jobu  != NoVec and jobvt != NoVec.
     // result[ 1 ] = || I - U^H U || / m,   if jobu  != NoVec.
@@ -133,14 +129,12 @@ void test_gesvd_work( Params& params, bool run )
         check_svd( jobu, jobvt, m, n, &A_ref[0], lda,
                    &Sigma_tst[0], U2, ldu2, VT2, ldvt2, result );
 
-        if (verbose >= 2) {
-            printf( "U2 = "  ); print_matrix( m, u_ncol, U2, ldu2 );
-            printf( "VT2 = " ); print_matrix( v_nrow, n, VT2, ldvt2 );
-        }
+        print_matrix( "U2", m, u_ncol, U2, ldu2, verbose );
+        print_matrix( "VT2", v_nrow, n, VT2, ldvt2, verbose );
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_gesvd(
@@ -157,7 +151,7 @@ void test_gesvd_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         if (info_tst != info_ref) {
             result[ 0 ] = 1;
         }
@@ -174,7 +168,7 @@ void test_gesvd_work( Params& params, bool run )
         && result[ 3 ] < tol);
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_gesvd( Params& params, bool run )
 {
     switch (params.datatype()) {

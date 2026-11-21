@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_sytri_work( Params& params, bool run )
 {
@@ -36,7 +36,7 @@ void test_sytri_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
     size_t size_A = (size_t) lda * n;
     size_t size_ipiv = (size_t) (n);
@@ -49,13 +49,13 @@ void test_sytri_work( Params& params, bool run )
     lapack::generate_matrix( params.matrix, n, n, &A_tst[0], lda );
     A_ref = A_tst;
 
-    // ---------- factor before test to initialize ipiv
+    //---------- factor before test to initialize ipiv
     int64_t info = lapack::sytrf( uplo, n, &A_tst[0], lda, &ipiv_tst[0] );
     if (info != 0) {
         fprintf( stderr, "lapack::sytrf returned error %lld\n", llong( info ) );
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::sytri( uplo, n, &A_tst[0], lda, &ipiv_tst[0] );
@@ -69,12 +69,12 @@ void test_sytri_work( Params& params, bool run )
     params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- factor
+        //---------- factor
         info = LAPACKE_sytrf( to_char( uplo ), n, &A_ref[0], lda, &ipiv_ref[0] );
         if (info != 0) {
             fprintf( stderr, "LAPACKE_sytrf returned error %lld\n", llong( info ) );
         }
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_sytri( to_char( uplo ), n, &A_ref[0], lda, &ipiv_ref[0] );
@@ -86,7 +86,7 @@ void test_sytri_work( Params& params, bool run )
         params.ref_time() = time;
         params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -97,7 +97,7 @@ void test_sytri_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_sytri( Params& params, bool run )
 {
     switch (params.datatype()) {

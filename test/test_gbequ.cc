@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_gbequ_work( Params& params, bool run )
 {
@@ -33,7 +33,7 @@ void test_gbequ_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t ldab = roundup( kl+ku+1, align );
     real_t rowcnd_tst = 0;
     real_t rowcnd_ref = 0;
@@ -55,7 +55,7 @@ void test_gbequ_work( Params& params, bool run )
     int64_t iseed[4] = { 0, 1, 2, 3 };
     lapack::larnv( idist, iseed, AB.size(), &AB[0] );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     int64_t info_tst = lapack::gbequ( m, n, kl, ku, &AB[0], ldab, &R_tst[0], &C_tst[0], &rowcnd_tst, &colcnd_tst, &amax_tst );
@@ -69,7 +69,7 @@ void test_gbequ_work( Params& params, bool run )
     //params.gflops() = gflop / time;
 
     if (params.ref() == 'y' || params.check() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_gbequ( m, n, kl, ku, &AB[0], ldab, &R_ref[0], &C_ref[0], &rowcnd_ref, &colcnd_ref, &amax_ref );
@@ -81,7 +81,7 @@ void test_gbequ_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         real_t error = 0;
         if (info_tst != info_ref) {
             error = 1;
@@ -96,7 +96,7 @@ void test_gbequ_work( Params& params, bool run )
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_gbequ( Params& params, bool run )
 {
     switch (params.datatype()) {

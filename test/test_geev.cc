@@ -14,7 +14,7 @@
 #include <vector>
 #include <algorithm>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // comparison operator for sorting
 template< typename T >
 bool lessthan( T a, T b )
@@ -22,7 +22,7 @@ bool lessthan( T a, T b )
     return (real(a) < real(b)) || (real(a) == real(b) && imag(a) < imag(b));
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_geev_work( Params& params, bool run )
 {
@@ -63,7 +63,7 @@ void test_geev_work( Params& params, bool run )
     if (! run)
         return;
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, n ), align );
     int64_t ldvl = roundup( n, align );
     int64_t ldvr = roundup( n, align );
@@ -86,16 +86,9 @@ void test_geev_work( Params& params, bool run )
 
     A_ref = A_tst;
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "A n=%5lld, lda=%5lld\n",
-                llong( n ), llong( lda ) );
-    }
-    if (verbose >= 2) {
-        printf( "A = " ); print_matrix( n, n, &A_tst[0], lda );
-    }
+    print_matrix( "A", n, n, &A_tst[0], lda, verbose );
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     double time = testsweeper::get_wtime();
     //printf (" test start\n");
@@ -110,19 +103,17 @@ void test_geev_work( Params& params, bool run )
     //double gflop = lapack::Gflop< scalar_t >::geev( jobvl, jobvr, n );
     //params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        printf( "W = " ); print_vector( n, &W_tst[0], 1 );
-        if (jobvl == lapack::Job::Vec) {
-            printf( "VL = " ); print_matrix( n, n, &VL_tst[0], ldvl );
-        }
-        if (jobvr == lapack::Job::Vec) {
-            printf( "VR = " ); print_matrix( n, n, &VR_tst[0], ldvr );
-        }
+    print_vector( "W", n, &W_tst[0], 1, verbose );
+    if (jobvl == lapack::Job::Vec) {
+        print_matrix( "VL", n, n, &VL_tst[0], ldvl, verbose );
+    }
+    if (jobvr == lapack::Job::Vec) {
+        print_matrix( "VR", n, n, &VR_tst[0], ldvr, verbose );
     }
 
     bool okay = true;
     if (params.check() == 'y') {
-        // ---------- check numerical error
+        //---------- check numerical error
         // formula from get22; differs from LAWN 41, usess ||V||_1 instead of n
         // 1. || A^H Vl - Vl W^H ||_1 / (||V||_1 ||A||_1)
         // 2. max_{j=1, ..., n} | || Vl(j) ||_2 - 1 |
@@ -149,7 +140,7 @@ void test_geev_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
     //printf (" ref start\n");
@@ -163,18 +154,18 @@ void test_geev_work( Params& params, bool run )
         params.ref_time() = time;
         //params.ref_gflops() = gflop / time;
 
-        if (verbose >= 2) {
+        if (verbose) {
             printf( "// note: may be sorted differently than results above\n" );
-            printf( "Wref  = " ); print_vector( n, &W_ref[0], 1 );
+            print_vector( "Wref", n, &W_ref[0], 1, verbose );
             if (jobvl == lapack::Job::Vec) {
-                printf( "VLref = " ); print_matrix( n, n, &VL_ref[0], ldvl );
+                print_matrix( "VLref", n, n, &VL_ref[0], ldvl, verbose );
             }
             if (jobvr == lapack::Job::Vec) {
-                printf( "VRref = " ); print_matrix( n, n, &VR_ref[0], ldvr );
+                print_matrix( "VRref", n, n, &VR_ref[0], ldvr, verbose );
             }
         }
 
-        // ---------- check error compared to reference
+        //---------- check error compared to reference
         // sort eigenvalues into lexical order for comparison
         real_t error = 0;
         std::sort( W_tst.begin(), W_tst.end(), lessthan< std::complex<real_t> > );
@@ -188,7 +179,7 @@ void test_geev_work( Params& params, bool run )
     params.okay() = okay;
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_geev( Params& params, bool run )
 {
     switch (params.datatype()) {

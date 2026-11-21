@@ -13,7 +13,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_geqrf_device_work( Params& params, bool run )
 {
@@ -45,7 +45,7 @@ void test_geqrf_device_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     int64_t lda = roundup( blas::max( 1, m ), align );
     size_t size_A = (size_t) lda * n;
     size_t size_tau = (size_t) blas::min( m, n );
@@ -66,14 +66,7 @@ void test_geqrf_device_work( Params& params, bool run )
     device_info_int* d_info = blas::device_malloc< device_info_int >( 1, queue );
     blas::device_copy_matrix( m, n, A_tst.data(), lda, dA_tst, lda, queue );
 
-    if (verbose >= 1) {
-        printf( "\n"
-                "A m=%5lld, n=%5lld, lda=%5lld\n",
-                llong( m ), llong( n ), llong( lda ) );
-    }
-    if (verbose >= 2) {
-        printf( "A = " ); print_matrix( m, n, &A_tst[0], lda );
-    }
+    print_matrix( "A", m, n, &A_tst[0], lda, verbose );
 
     // Allocate workspace
     size_t d_size, h_size;
@@ -89,7 +82,7 @@ void test_geqrf_device_work( Params& params, bool run )
         assert_throw( lapack::geqrf(  m,  n, dA_tst, m-1, d_tau, d_work, d_size, h_work, h_size, d_info, queue ), lapack::Error );
     }
 
-    // ---------- run test
+    //---------- run test
     testsweeper::flush_cache( params.cache() );
     queue.sync();
     double time = testsweeper::get_wtime();
@@ -121,13 +114,11 @@ void test_geqrf_device_work( Params& params, bool run )
     blas::device_free( d_info, queue );
     blas::device_free( d_work, queue );
 
-    if (verbose >= 2) {
-        printf( "A_factor = " ); print_matrix( m, n, &A_tst[0], lda );
-        printf( "tau = " ); print_matrix( 1, minmn, &tau_tst[0], 1 );
-    }
+    print_matrix( "A_factor", m, n, &A_tst[0], lda, verbose );
+    print_matrix( "tau", 1, minmn, &tau_tst[0], 1, verbose );
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         // comparing to ref. solution doesn't work
         // Following lapack/TESTING/LIN/zqrt01.f but using smaller Q and R
         int64_t ldq = m;
@@ -177,7 +168,7 @@ void test_geqrf_device_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_geqrf( m, n, &A_ref[0], lda, &tau_ref[0] );
@@ -189,13 +180,11 @@ void test_geqrf_device_work( Params& params, bool run )
         params.ref_time() = time;
         params.ref_gflops() = gflop / time;
 
-        if (verbose >= 2) {
-            printf( "Aref_factor = " ); print_matrix( m, n, &A_ref[0], lda );
-        }
+        print_matrix( "Aref_factor", m, n, &A_ref[0], lda, verbose );
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_geqrf_device( Params& params, bool run )
 {
     switch (params.datatype()) {

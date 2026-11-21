@@ -12,7 +12,7 @@
 
 #include <vector>
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 template< typename scalar_t >
 void test_gglse_work( Params& params, bool run )
 {
@@ -53,7 +53,7 @@ void test_gglse_work( Params& params, bool run )
         return;
     }
 
-    // ---------- setup
+    //---------- setup
     bool consistent = true;
     int64_t lda = roundup( blas::max( 1, m ), align );
     int64_t ldb = roundup( blas::max( 1, p ), align );
@@ -99,14 +99,12 @@ void test_gglse_work( Params& params, bool run )
     C_ref = C_tst;
     D_ref = D_tst;
 
-    if (verbose >= 2) {
-        printf( "A = " ); print_matrix( m, n, &A_tst[0], lda );
-        printf( "B = " ); print_matrix( p, n, &B_tst[0], ldb );
-        printf( "c = " ); print_vector( m, &C_tst[0], 1 );
-        printf( "d = " ); print_vector( p, &D_tst[0], 1 );
-    }
+    print_matrix( "A", m, n, &A_tst[0], lda, verbose );
+    print_matrix( "B", p, n, &B_tst[0], ldb, verbose );
+    print_vector( "c", m, &C_tst[0], 1, verbose );
+    print_vector( "d", p, &D_tst[0], 1, verbose );
 
-    // ---------- run test
+    //---------- run test
     // minimize || c - A*x ||_2   subject to   B*x = d
     // A is M-by-N matrix, B is P-by-N matrix, c is M-vector, and d is P-vector
     testsweeper::flush_cache( params.cache() );
@@ -121,12 +119,10 @@ void test_gglse_work( Params& params, bool run )
     // double gflop = lapack::Gflop< scalar_t >::gglse( m, n );
     // params.gflops() = gflop / time;
 
-    if (verbose >= 2) {
-        printf( "x_tst = " ); print_vector( n, &X_tst[0], 1 );
-    }
+    print_vector( "x_tst", n, &X_tst[0], 1, verbose );
 
     if (params.check() == 'y') {
-        // ---------- check error
+        //---------- check error
         real_t x_norm = blas::asum( n, &X_tst[0], 1 );
 
         // r1 = Ax - c is small only for a consistent system.
@@ -164,7 +160,7 @@ void test_gglse_work( Params& params, bool run )
     }
 
     if (params.ref() == 'y') {
-        // ---------- run reference
+        //---------- run reference
         testsweeper::flush_cache( params.cache() );
         time = testsweeper::get_wtime();
         int64_t info_ref = LAPACKE_gglse( m, n, p, &A_ref[0], lda, &B_ref[0], ldb, &C_ref[0], &D_ref[0], &X_ref[0] );
@@ -173,16 +169,14 @@ void test_gglse_work( Params& params, bool run )
             fprintf( stderr, "LAPACKE_gglse returned error %lld\n", llong( info_ref ) );
         }
 
-        if (verbose >= 2) {
-            printf( "x_ref = " ); print_vector( n, &X_ref[0], 1 );
-        }
+        print_vector( "x_ref", n, &X_ref[0], 1, verbose );
 
         params.ref_time() = time;
         // params.ref_gflops() = gflop / time;
     }
 }
 
-// -----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void test_gglse( Params& params, bool run )
 {
     switch (params.datatype()) {
